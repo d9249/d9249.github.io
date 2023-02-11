@@ -1,6 +1,19 @@
 ---
+layout: default
 title: Home
-layout: home
+nav_order: 1
+description: "description"
+permalink: /
+---
+
+# Welcome to github.io
+{: .fs-8 }
+
+Github Description
+{: .fs-6 .fw-300 }
+
+[Get started now](#getting-started){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [View it on GitHub](https://github.com/just-the-docs/just-the-docs){: .btn .fs-5 .mb-4 .mb-md-0 }
+
 ---
 
 This is a *bare-minimum* template to create a Jekyll site that uses the [Just the Docs] theme. You can easily set the created site to be published on [GitHub Pages] – the [README] file explains how to do that, along with other details.
