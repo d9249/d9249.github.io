@@ -2,7 +2,7 @@
 title: 최대 합 부분 배열 2.3
 layout: default
 parent: Algorithm
-nav_order: 2
+nav_order: 1
 ---
 
 # 최대 합 부분 배열 2.3

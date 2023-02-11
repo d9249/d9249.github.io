@@ -2,7 +2,7 @@
 title: 배열에서 최솟값 찾기
 layout: default
 parent: Algorithm
-nav_order: 2
+nav_order: 1
 ---
 
 # 배열에서 최솟값 찾기

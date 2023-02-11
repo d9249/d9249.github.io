@@ -2,7 +2,7 @@
 title: 배열의 원소의 총합 계산하기
 layout: default
 parent: Algorithm
-nav_order: 2
+nav_order: 1
 ---
 
 # 배열의 원소의 총합 계산하기

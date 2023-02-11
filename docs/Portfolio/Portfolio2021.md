@@ -2,7 +2,7 @@
 title: 2021 포트폴리오
 layout: default
 parent: Portfolio
-nav_order: 2
+nav_order: 1
 ---
 
 description: 2021년 4학년 포트폴리오 경진대회 참가를 위한 포트폴리오
