@@ -1,6 +1,6 @@
 ---
 layout: default
-title: iDeal's Github blog
+title: Lee Sangmin
 nav_order: 1
 description: "description"
 permalink: /
@@ -26,8 +26,8 @@ My Description
 
 ## 💡 Research Interests
 
-<img src="https://img.shields.io/badge/Computer_Vision-000000?style=flat-square&logo=Computer_Vision&logoColor=white"/></a>
-<img src="https://img.shields.io/badge/Recommedation_System-000000?style=flat-square&logo=Recommedation_System&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Computer_Vision-000000?style=flat-square&logo=Computer_Vision&logoColor=white"/>
+<img src="https://img.shields.io/badge/Recommedation_System-000000?style=flat-square&logo=Recommedation_System&logoColor=white"/>
 
 ## ⚡️ Git Stats
 
