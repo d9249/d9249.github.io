@@ -1,8 +1,9 @@
 ---
 title: 최대 합 부분 배열 2.3
 layout: default
-parent: Algorithm
-nav_order: 1
+parent: index
+grand_parent: Algorithm
+nav_order: 10
 ---
 
 # 최대 합 부분 배열 2.3

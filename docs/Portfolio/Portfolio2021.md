@@ -1,7 +1,8 @@
 ---
 title: 2021 포트폴리오
 layout: default
-parent: Portfolio
+parent: index
+grand_parent: Portfolio
 nav_order: 1
 ---
 

@@ -1,8 +1,9 @@
 ---
 title: 정렬 후 회전된 배열 2.2 (a)
 layout: default
-parent: Algorithm
-nav_order: 1
+parent: index
+grand_parent: Algorithm
+nav_order: 9
 ---
 
 description: 2021년 4학년 DD772_Algorithms 수업 과제
