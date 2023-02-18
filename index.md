@@ -20,15 +20,9 @@ My Description
 
 ---
 
-<div align="center">
-
 ![header](https://capsule-render.vercel.app/api?type=soft&color=auto&height=170&section=header&text=%20Lee%20Sangmin%20&fontSize=50)
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fd9249&count_bg=%23F73838&title_bg=%23555555&icon=github.svg&icon_color=%23FFFFFF&title=Hits&edge_flat=false)](https://hits.seeyoufarm.com)
-
-</div>
-
-<div align="center">
 
 ## 💡 Research Interests
 
@@ -39,9 +33,8 @@ My Description
 
 [![iDeal's github stats](https://github-readme-stats.vercel.app/api?username=d9249&show_icons=true&count_private=true&theme=dark)](https://github.com/anuraghazra/github-readme-stats)
 
-</div>
 
-### :mortar_board: Career
+### Career
 
 | **Type** | **Date**| **Contents**| **Organization**|
 |---|---|---|---|
@@ -53,7 +46,7 @@ My Description
 | **Research activities** | 2022.03 ~ 2023.02 | DIYA GNN, PyTorch Team 5th | [DIYA. Machine Learning Club.](https://blog.diyaml.com/) |
 | **Research activities** | 2022.09 ~ 2022.12 | 가짜연구소 5기(러너) | [가짜연구소](https://pseudo-lab.com) |
   
-### :trophy: Award
+### Award
   
 | **Date** | **Contents** | **Result** | **Organization**|
 |---|---|---|---|
