@@ -26,9 +26,7 @@ My Description
 
 ### Research Interests
 
-<img src="https://img.shields.io/badge/Computer_Vision-000000?style=flat-square&logo=Computer_Vision&logoColor=white"/>
-
-<img src="https://img.shields.io/badge/Recommedation_System-000000?style=flat-square&logo=Recommedation_System&logoColor=white"/>
+Recommedation System, Graph Neural Network
 
 ### Career
 
