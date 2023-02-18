@@ -3,12 +3,10 @@ title: 최대 합 부분 배열 2.3
 layout: default
 parent: Algorithm
 nav_order: 10
+description: "2021년 4학년 DD772_Algorithms 수업 과제"
 ---
 
 # 최대 합 부분 배열 2.3
-
-description: 2021년 4학년 DD772_Algorithms 수업 과제
-keywords: Algorithm
 
 길이가 n인 정수의 배열 A[0..n-1]가 있다. <br>
 A[a] + A[a+1] +...+ A[b]의 값을 최대화하는 구간 (a,b)를 찾는 방법을 <br>

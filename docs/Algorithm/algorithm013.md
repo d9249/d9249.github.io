@@ -3,10 +3,8 @@ title: 문제 3-3 (동전)
 layout: default
 parent: Algorithm
 nav_order: 13
+description: "2021년 4학년 DD772_Algorithms 수업 과제"
 ---
-
-description: 2021년 4학년 DD772_Algorithms 수업 과제
-keywords: Algorithm
 
 **문제** <br>
 Nadiria 라는 (상상의) 나라에서는 다음과 같은 액면가의 동전(화폐)을 사용한다고 한다. <br>

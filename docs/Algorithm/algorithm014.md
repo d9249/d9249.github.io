@@ -3,10 +3,8 @@ title: 문제 3-4 (최대합 부분배열)
 layout: default
 parent: Algorithm
 nav_order: 14
+description: "2021년 4학년 DD772_Algorithms 수업 과제"
 ---
-
-description: 2021년 4학년 DD772_Algorithms 수업 과제
-keywords: Algorithm
 
 **문제** <br>
 길이가 n 인 정수의 배열 A[0..n-1]가 있다. <br>

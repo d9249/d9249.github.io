@@ -3,10 +3,8 @@ title: 점화식
 layout: default
 parent: Algorithm
 nav_order: 5
+description: "2021년 4학년 DD772_Algorithms 수업 과제"
 ---
-
-description: 2021년 4학년 DD772_Algorithms 수업 과제
-keywords: Algorithm
 
 **[1~5] 아래에서 옳은 표현에는 O, 틀린 표현에는 X를 표시하시오. [각 2점]**
 

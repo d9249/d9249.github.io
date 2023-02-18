@@ -3,11 +3,9 @@ title: Toss style 포트폴리오
 layout: default
 parent: Portfolio
 nav_order: 2
+description: "Toss style의 포트폴리오 제작을 위한 계획안"
 ---
-
 # Toss_Portfolio
-
-description: Toss style의 포트폴리오 제작을 위한 계획안
 
 > Toss 금융 어플리케이션 스타일의 포트폴리오 제작
 

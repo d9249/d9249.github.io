@@ -3,10 +3,8 @@ title: 문제 3-1 (1,2,3)
 layout: default
 parent: Algorithm
 nav_order: 11
+description: "2021년 4학년 DD772_Algorithms 수업 과제"
 ---
-
-description: 2021년 4학년 DD772_Algorithms 수업 과제
-keywords: Algorithm
 
 **문제**
 정수 4는 1, 2, 3의 합으로 표현할 때 아래와 같이 7가지의 방법이있다. <br>
