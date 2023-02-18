@@ -7,8 +7,11 @@ description: "paper review"
 ---
 
 YOUTUBE LINK : https://youtu.be/YsyIXqdhreo
+
 PRESENTER : ‍김상민[ 대학원석사과정재학 / 산업경영공학과 ]
+
 DURATION : 01:00:48
+
 PUBLISHED : 2022-07-15
 
 ---

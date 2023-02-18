@@ -6,7 +6,7 @@ description: "description"
 permalink: /
 ---
 
-# Welcome to My ideal
+# Welcome to My history
 {: .fs-8 }
 
 My Description
@@ -20,18 +20,14 @@ My Description
 
 ---
 
-![header](https://capsule-render.vercel.app/api?type=soft&color=auto&height=170&section=header&text=%20Lee%20Sangmin%20&fontSize=50)
-
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fd9249&count_bg=%23F73838&title_bg=%23555555&icon=github.svg&icon_color=%23FFFFFF&title=Hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
-## 💡 Research Interests
+### 💡 Research Interests
 
 <img src="https://img.shields.io/badge/Computer_Vision-000000?style=flat-square&logo=Computer_Vision&logoColor=white"/>
 <img src="https://img.shields.io/badge/Recommedation_System-000000?style=flat-square&logo=Recommedation_System&logoColor=white"/>
 
-## ⚡️ Git Stats
-
-[![iDeal's github stats](https://github-readme-stats.vercel.app/api?username=d9249&show_icons=true&count_private=true&theme=dark)](https://github.com/anuraghazra/github-readme-stats)
+[![Github stats](https://github-readme-stats.vercel.app/api?username=d9249&show_icons=true&count_private=true&theme=dark)](https://github.com/anuraghazra/github-readme-stats)
 
 
 ### Career
