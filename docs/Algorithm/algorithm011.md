@@ -1,8 +1,7 @@
 ---
 title: 문제 3-1 (1,2,3)
 layout: default
-parent: index
-grand_parent: Algorithm
+parent: Algorithm
 nav_order: 11
 ---
 

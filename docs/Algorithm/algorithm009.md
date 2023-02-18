@@ -1,8 +1,7 @@
 ---
 title: 정렬 후 회전된 배열 2.2 (a)
 layout: default
-parent: index
-grand_parent: Algorithm
+parent: Algorithm
 nav_order: 9
 ---
 

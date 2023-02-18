@@ -1,7 +1,7 @@
 ---
 title: 배열에서 최솟값 찾기
 layout: default
-parent: index
+parent: Algorithm
 nav_order: 1
 ---
 

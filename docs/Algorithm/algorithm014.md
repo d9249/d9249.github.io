@@ -1,8 +1,7 @@
 ---
 title: 문제 3-4 (최대합 부분배열)
 layout: default
-parent: index
-grand_parent: Algorithm
+parent: Algorithm
 nav_order: 14
 ---
 

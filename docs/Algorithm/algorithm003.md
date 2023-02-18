@@ -1,8 +1,7 @@
 ---
 title: 배열의 원소의 총합 계산하기
 layout: default
-parent: index
-grand_parent: Algorithm
+parent: Algorithm
 nav_order: 3
 ---
 

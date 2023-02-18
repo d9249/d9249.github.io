@@ -1,8 +1,7 @@
 ---
 title: 문제 3-2 (치즈 먹기)
 layout: default
-parent: index
-grand_parent: Algorithm
+parent: Algorithm
 nav_order: 12
 ---
 

@@ -1,8 +1,7 @@
 ---
 title: Pancake Sorting
 layout: default
-parent: index
-grand_parent: Algorithm
+parent: Algorithm
 nav_order: 4
 ---
 

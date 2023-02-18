@@ -1,8 +1,7 @@
 ---
 title: 문제 3-5 (최대곱 부분배열)
 layout: default
-parent: index
-grand_parent: Algorithm
+parent: Algorithm
 nav_order: 15
 ---
 

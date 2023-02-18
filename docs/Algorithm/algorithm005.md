@@ -1,8 +1,7 @@
 ---
 title: 점화식
 layout: default
-parent: index
-grand_parent: Algorithm
+parent: Algorithm
 nav_order: 5
 ---
 
