@@ -41,7 +41,7 @@ DACON의 대회에 참여한 결과들을 남기기 위한 기록입니다.
 > 
 > Private Leaderboard
 
-![image](../../assets/Competition_image/컴퓨터%20비전%20학습%20경진%20대회_Leaderboard_Private.jpg))
+![image](../../assets/Competition_image/컴퓨터%20비전%20학습%20경진%20대회_Leaderboard_Private.jpg)
 
 {: .highlight }
 > Private score
@@ -51,7 +51,7 @@ DACON의 대회에 참여한 결과들을 남기기 위한 기록입니다.
 {: .highlight }
 > Public score
 
-![image](./docs/../result_image/컴퓨터%20비전%20학습%20경진대회_Public.jpg)
+![image](../../assets/Competition_image/컴퓨터%20비전%20학습%20경진대회_Public.jpg)
 
 ## 2. 2021 Ego-Vision 손동작 인식 AI 경진대회
 
