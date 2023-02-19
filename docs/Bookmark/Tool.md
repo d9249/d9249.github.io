@@ -6,6 +6,9 @@ nav_order: 3
 description: "유용한 Tool 링크"
 ---
 
+Description: "유용한 Tool 링크"
+{: .fs-6 .fw-300 }
+
 # Tool
 
 1. [microsoft/PowerToys](https://github.com/microsoft/PowerToys)

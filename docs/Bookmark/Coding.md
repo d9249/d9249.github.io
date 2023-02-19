@@ -6,6 +6,8 @@ nav_order: 2
 description: "Coding에 도움되는 링크"
 ---
 
+Description: "Coding 관련된 도움될 링크"
+{: .fs-6 .fw-300 }
 # Coding Test
 
 1. [qiyuangong/leetcode](https://github.com/qiyuangong/leetcode)

@@ -6,6 +6,9 @@ nav_order: 1
 description: "Paper 읽는데 도움되는 링크"
 ---
 
+Description: "Paper 읽는데 도움되는 링크"
+{: .fs-6 .fw-300 }
+
 # Paper
 
 1. [eugeneyan/ml-surveys](https://github.com/eugeneyan/ml-surveys)

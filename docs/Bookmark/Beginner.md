@@ -6,6 +6,8 @@ nav_order: 6
 description: "Beginner를 위한 링크"
 ---
 
+Description: "Beginner를 위한 링크"
+{: .fs-6 .fw-300 }
 # Developer Beginner
 
 1. [gyoogle/tech-interview-for-developer](https://github.com/gyoogle/tech-interview-for-developer)
