@@ -5,6 +5,7 @@ parent: University
 grand_parent: Algorithm
 nav_order: 3
 description: "2021년 4학년 DD772_Algorithms 수업 과제"
+permalink: /docs/Algorithm/University/algorithm003/
 ---
 
 # 배열의 원소의 총합 계산하기

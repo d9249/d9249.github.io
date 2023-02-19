@@ -5,6 +5,7 @@ parent: University
 grand_parent: Algorithm
 nav_order: 8
 description: "2021년 4학년 DD772_Algorithms 수업 과제"
+permalink: /docs/Algorithm/University/algorithm008/
 ---
 
 # 정렬 후 회전된 배열 2.1_(c)

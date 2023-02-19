@@ -5,6 +5,7 @@ parent: University
 grand_parent: Algorithm
 nav_order: 5
 description: "2021년 4학년 DD772_Algorithms 수업 과제"
+permalink: /docs/Algorithm/University/algorithm005/
 ---
 
 **[1~5] 아래에서 옳은 표현에는 O, 틀린 표현에는 X를 표시하시오. [각 2점]**

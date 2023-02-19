@@ -5,6 +5,7 @@ parent: University
 grand_parent: Algorithm
 nav_order: 1
 description: "2021년 4학년 DD772_Algorithms 수업 과제"
+permalink: /docs/Algorithm/University/algorithm001/
 ---
 
 # 배열에서 최솟값 찾기
