@@ -8,6 +8,10 @@ description: "Graph Neural Network 관련 링크"
 
 Description: "Coding에 도움되는 링크"
 {: .fs-6 .fw-300 }
+
+## Table of contents
+{: .no_toc .text-delta }
+
 # Graph Neural Network Framework
 
 1. [CrawlScript/tf_geometric](https://github.com/CrawlScript/tf_geometric)

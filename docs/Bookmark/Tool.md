@@ -9,6 +9,9 @@ description: "유용한 Tool 링크"
 Description: "유용한 Tool 링크"
 {: .fs-6 .fw-300 }
 
+## Table of contents
+{: .no_toc .text-delta }
+
 # Tool
 
 1. [microsoft/PowerToys](https://github.com/microsoft/PowerToys)

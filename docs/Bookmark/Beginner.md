@@ -8,6 +8,10 @@ description: "Beginner를 위한 링크"
 
 Description: "Beginner를 위한 링크"
 {: .fs-6 .fw-300 }
+
+## Table of contents
+{: .no_toc .text-delta }
+
 # Developer Beginner
 
 1. [gyoogle/tech-interview-for-developer](https://github.com/gyoogle/tech-interview-for-developer)

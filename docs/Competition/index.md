@@ -10,6 +10,9 @@ permalink: /docs/Competition
 
 DACON의 대회에 참여한 결과들을 남기기 위한 기록입니다.
 
+## Table of contents
+{: .no_toc .text-delta }
+
 ------
 
 ## Summary
@@ -168,7 +171,7 @@ DACON의 대회에 참여한 결과들을 남기기 위한 기록입니다.
 {: .highlight }
 > Result Description
 > 
-> Public 8위/113명, 0.99, Private 명
+> Public 위/명, 0., Private 위/명, 0.
 > 
 > Competition period: 2022.06.13 ~ 2022.06.24 18:00
 
