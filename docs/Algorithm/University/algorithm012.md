@@ -1,7 +1,8 @@
 ---
 title: 문제 3-2 (치즈 먹기)
 layout: default
-parent: Algorithm
+parent: University
+grand_parent: Algorithm
 nav_order: 12
 description: "2021년 4학년 DD772_Algorithms 수업 과제"
 ---

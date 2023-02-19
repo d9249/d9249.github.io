@@ -1,7 +1,8 @@
 ---
 title: 문제 3-1 (1,2,3)
 layout: default
-parent: Algorithm
+parent: University
+grand_parent: Algorithm
 nav_order: 11
 description: "2021년 4학년 DD772_Algorithms 수업 과제"
 ---
