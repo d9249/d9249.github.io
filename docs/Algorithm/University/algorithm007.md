@@ -2,6 +2,7 @@
 title: 정렬 후 회전된 배열 2.1 (b)
 layout: default
 parent: University
+grand_parent: Algorithm
 nav_order: 7
 description: "2021년 4학년 DD772_Algorithms 수업 과제"
 ---
