@@ -2,7 +2,6 @@
 title: 문제 3-5 (최대곱 부분배열)
 layout: default
 parent: University
-grand_parent: Algorithm
 nav_order: 15
 description: "2021년 4학년 DD772_Algorithms 수업 과제"
 ---

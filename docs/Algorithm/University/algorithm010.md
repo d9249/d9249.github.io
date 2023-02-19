@@ -2,7 +2,6 @@
 title: 최대 합 부분 배열 2.3
 layout: default
 parent: University
-grand_parent: Algorithm
 nav_order: 10
 description: "2021년 4학년 DD772_Algorithms 수업 과제"
 ---
