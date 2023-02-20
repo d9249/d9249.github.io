@@ -1,12 +1,12 @@
 ---
-title: 2021 Ego-Vision 손동작 인식 AI 경진대회
+title: DPhi Data Sprint @35 Osteoarthritis Knee X-ray
 layout: default
-parent: Bookmark
+parent: Competition
 nav_order: 7
-description: "2021 Ego-Vision 손동작 인식 AI 경진대회"
+description: "DPhi Data Sprint #35 Osteoarthritis Knee X-ray"
 ---
 
-Description: 2021 Ego-Vision 손동작 인식 AI 경진대회
+Description: DPhi Data Sprint #35 Osteoarthritis Knee X-ray
 {: .fs-6 .fw-300 }
 
 ## Table of contents

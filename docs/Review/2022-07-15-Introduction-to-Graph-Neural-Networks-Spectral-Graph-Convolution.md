@@ -1,9 +1,11 @@
 ---
 title: Introduction to Graph Neural Networks_Spectral Graph Convolution
 layout: default
-parent: Review
+parent: Graph
+grand_parent: Review
 nav_order: 1
 description: "paper review"
+permalink: /docs/Review/Graph/2022-07-15-Introduction-to-Graph-Neural-Networks-Spectral-Graph-Convolution/
 ---
 
 YOUTUBE LINK : https://youtu.be/YsyIXqdhreo

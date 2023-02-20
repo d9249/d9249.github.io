@@ -1,12 +1,12 @@
 ---
-title: 2021 Ego-Vision 손동작 인식 AI 경진대회
+title: 유전체 정보 품종 분류 AI 경진대회
 layout: default
-parent: Bookmark
+parent: Competition
 nav_order: 7
-description: "2021 Ego-Vision 손동작 인식 AI 경진대회"
+description: "유전체 정보 품종 분류 AI 경진대회"
 ---
 
-Description: 2021 Ego-Vision 손동작 인식 AI 경진대회
+Description: 유전체 정보 품종 분류 AI 경진대회
 {: .fs-6 .fw-300 }
 
 ## Table of contents

@@ -1,7 +1,7 @@
 ---
 title: 2021 Ego-Vision 손동작 인식 AI 경진대회
 layout: default
-parent: Bookmark
+parent: Competition
 nav_order: 7
 description: "2021 Ego-Vision 손동작 인식 AI 경진대회"
 ---
