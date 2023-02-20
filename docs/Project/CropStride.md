@@ -1,3 +1,10 @@
+---
+title: Image Stride and Patch Size 별로 Crop
+layout: default
+parent: Project
+nav_order: 4
+---
+
 # Image Stride and Patch Size 별로 Crop.
 
 이미지 파일을 원하는 stride와 patch size를 입력받아 분할하기 위한 tool. 

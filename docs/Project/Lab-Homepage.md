@@ -1,3 +1,10 @@
+---
+title: Smart IoT Lab Website - v2.0.1
+layout: default
+parent: Project
+nav_order: 9
+---
+
 # Smart IoT Lab Website - v2.0.1
 경기대학교 네트워크 연구실 <b>Smart IoT Lab</b> 웹사이트
 

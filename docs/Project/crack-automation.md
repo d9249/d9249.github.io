@@ -1,3 +1,10 @@
+---
+title: Code_Crack
+layout: default
+parent: Project
+nav_order: 2
+---
+
 # crack-automation
 
 ## 1. 목표

@@ -1,3 +1,10 @@
+---
+title: crack-detection
+layout: default
+parent: Project
+nav_order: 3
+---
+
 # crack-detection
 Version 1.0.0
 

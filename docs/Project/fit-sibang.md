@@ -1,3 +1,10 @@
+---
+title: Fit-sibang
+layout: default
+parent: Project
+nav_order: 6
+---
+
 # Fit-sibang(시간에 구애받지 말고 방에서 운동하자!)
 
 ## Contributors

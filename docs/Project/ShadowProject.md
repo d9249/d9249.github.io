@@ -1,3 +1,10 @@
+---
+title: ShadowProject
+layout: default
+parent: Project
+nav_order: 12
+---
+
 # ShadowProject
 Shadow Detection &amp; Removal 
  * Deep Learning code : /cGAN-ShadowRemove
