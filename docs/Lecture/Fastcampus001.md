@@ -1,10 +1,10 @@
 ---
 title: 머신러닝과 데이터분석 A-Z
 layout: default
-parent: Lecture
-grand_parent: Fastcampus
+parent: Fastcampus
+grand_parent: Lecture
 nav_order: 1
-permalink: /docs/Lecture/Inflearn/Fastcampus001/
+permalink: /docs/Lecture/Fastcampus/Fastcampus001/
 ---
 
 # 머신러닝과 데이터분석 A-Z

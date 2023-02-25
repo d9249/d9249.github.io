@@ -1,8 +1,8 @@
 ---
 title: 추천 시스템 입문편
 layout: default
-parent: Lecture
-grand_parent: Inflearn
+parent: Inflearn
+grand_parent: Lecture
 nav_order: 6
 permalink: /docs/Lecture/Inflearn/Inflearn006/
 ---

@@ -1,10 +1,10 @@
 ---
 title: The Red_딥러닝 뉴럴네트워크 GNN
 layout: default
-parent: Lecture
-grand_parent: Fastcampus
+parent: Fastcampus
+grand_parent: Lecture
 nav_order: 1
-permalink: /docs/Lecture/Inflearn/Fastcampus002/
+permalink: /docs/Lecture/Fastcampus/Fastcampus002/
 ---
 
 # The Red : 딥러닝 뉴럴네트워크 GNN

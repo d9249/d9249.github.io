@@ -1,8 +1,8 @@
 ---
 title: 추천시스템 분석 입문하기 1강 - 추천시스템의 이해 (연관분석, Apriori, FP-Growth)
 layout: default
-parent: Lecture
-grand_parent: Youtube
+parent: Youtube
+grand_parent: Lecture
 nav_order: 4
 permalink: /docs/Lecture/Youtube/Youtube004/
 ---

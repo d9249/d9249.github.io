@@ -1,8 +1,8 @@
 ---
 title: Graph Neural Network(GNN)의 정의부터 응용까지
 layout: default
-parent: Lecture
-grand_parent: Youtube
+parent: Youtube
+grand_parent: Lecture
 nav_order: 3
 permalink: /docs/Lecture/Youtube/Youtube003/
 ---

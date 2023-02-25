@@ -1,8 +1,8 @@
 ---
 title: 혼자 공부하는 머신러닝+딥러닝
 layout: default
-parent: Lecture
-grand_parent: Inflearn
+parent: Inflearn
+grand_parent: Lecture
 nav_order: 10
 permalink: /docs/Lecture/Inflearn/Inflearn010/
 ---

@@ -1,8 +1,8 @@
 ---
 title: 딥러닝 컴퓨터 비전 완벽 가이드
 layout: default
-parent: Lecture
-grand_parent: Inflearn
+parent: Inflearn
+grand_parent: Lecture
 nav_order: 1
 permalink: /docs/Lecture/Inflearn/Inflearn001/
 ---

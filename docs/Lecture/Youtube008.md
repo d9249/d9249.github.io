@@ -1,8 +1,8 @@
 ---
 title: 추천시스템 분석 입문하기 5강 - 평가함수 (Accuracy, MAP, NDCG)
 layout: default
-parent: Lecture
-grand_parent: Youtube
+parent: Youtube
+grand_parent: Lecture
 nav_order: 8
 permalink: /docs/Lecture/Youtube/Youtube008/
 ---

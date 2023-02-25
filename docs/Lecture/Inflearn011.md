@@ -1,8 +1,8 @@
 ---
 title: Google 공인! 텐서플로(TensorFlow) 개발자 자격증 취득
 layout: default
-parent: Lecture
-grand_parent: Inflearn
+parent: Inflearn
+grand_parent: Lecture
 nav_order: 11
 permalink: /docs/Lecture/Inflearn/Inflearn011/
 ---

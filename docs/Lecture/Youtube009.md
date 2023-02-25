@@ -1,8 +1,8 @@
 ---
 title: 추천시스템 분석 입문하기 6강 - Goodbooks-10k 데이터를 이용한 추천시스템 실습
 layout: default
-parent: Lecture
-grand_parent: Youtube
+parent: Youtube
+grand_parent: Lecture
 nav_order: 9
 permalink: /docs/Lecture/Youtube/Youtube009/
 ---

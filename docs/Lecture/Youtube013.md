@@ -1,8 +1,8 @@
 ---
 title: 추천 시스템의 원리와 구축 사례
 layout: default
-parent: Lecture
-grand_parent: Youtube
+parent: Youtube
+grand_parent: Lecture
 nav_order: 13
 permalink: /docs/Lecture/Youtube/Youtube013/
 ---

@@ -1,8 +1,8 @@
 ---
 title: 캐글 Advanced 머신러닝 실전 박치기
 layout: default
-parent: Lecture
-grand_parent: Inflearn
+parent: Inflearn
+grand_parent: Lecture
 nav_order: 7
 permalink: /docs/Lecture/Inflearn/Inflearn007/
 ---

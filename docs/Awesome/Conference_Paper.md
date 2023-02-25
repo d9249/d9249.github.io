@@ -4,10 +4,18 @@ title: Conference Paper
 parent: Awesome
 nav_order: 2
 has_children: true
-permalink: /docs/Awesome
+permalink: /docs/Awesome/Conference_Paper
 ---
 
-## Conference Paper
+# Conference Paper
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+
 
 `SIGIR`, `Recsys`, `WSDM`, `KDD`, `etc`. 
 

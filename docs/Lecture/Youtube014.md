@@ -1,8 +1,8 @@
 ---
 title: 인공지능 1위 대학원에서 배워보는 딥러닝 입문 3시간 완성 강의 (part 1)
 layout: default
-parent: Lecture
-grand_parent: Youtube
+parent: Youtube
+grand_parent: Lecture
 nav_order: 14
 permalink: /docs/Lecture/Youtube/Youtube014/
 ---

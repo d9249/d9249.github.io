@@ -4,7 +4,7 @@ title: University
 parent: Algorithm
 nav_order: 3
 has_children: true
-permalink: /docs/Algorithm
+permalink: /docs/Algorithm/University
 ---
 
 # University

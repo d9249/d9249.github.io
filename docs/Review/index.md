@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Review
-nav_order: 3
+title: Paper Review
+nav_order: 1
 has_children: true
 permalink: /docs/Review
 ---

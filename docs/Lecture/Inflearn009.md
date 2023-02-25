@@ -1,8 +1,8 @@
 ---
 title: 파이썬 머신러닝 완벽 가이드
 layout: default
-parent: Lecture
-grand_parent: Inflearn
+parent: Inflearn
+grand_parent: Lecture
 nav_order: 9
 permalink: /docs/Lecture/Inflearn/Inflearn009/
 ---

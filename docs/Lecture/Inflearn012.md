@@ -1,8 +1,8 @@
 ---
 title: 강화학습 기초 이론
 layout: default
-parent: Lecture
-grand_parent: Inflearn
+parent: Inflearn
+grand_parent: Lecture
 nav_order: 12
 permalink: /docs/Lecture/Inflearn/Inflearn012/
 ---

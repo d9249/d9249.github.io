@@ -4,13 +4,20 @@ title: Awesome Recsys
 parent: Awesome
 nav_order: 1
 has_children: true
-permalink: /docs/Awesome
+permalink: /docs/Awesome/Awesome-Recsys
 ---
 
 # Awesome Recsys
 I share information related to the Recommender Systems that I am interested in. They consist of `SIGIR`, `RecSys`, `ICLR`, `NeurIPS`, `ICML`, `AAAI`, `IJCAI`, `KDD`, `etc`. If you want to see each Conference paper chronologically, Click [here](https://github.com/ceo21ckim/Awesome-Recsys/tree/main/Conference_Paper).
 
 - modified : 2023-02-20
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
 
 
 ## Recommendation

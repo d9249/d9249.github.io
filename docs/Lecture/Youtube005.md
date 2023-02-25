@@ -1,8 +1,8 @@
 ---
 title: 추천시스템 분석 입문하기 2강 - 컨텐츠 기반 모델 (유사도 함수, TF-IDF)
 layout: default
-parent: Lecture
-grand_parent: Youtube
+parent: Youtube
+grand_parent: Lecture
 nav_order: 5
 permalink: /docs/Lecture/Youtube/Youtube005/
 ---

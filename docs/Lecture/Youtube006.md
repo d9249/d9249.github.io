@@ -1,8 +1,8 @@
 ---
 title: 추천시스템 분석 입문하기 3강 - 컨텐츠 기반 모델 - Word2Vec(CBOW, Skip-gram)
 layout: default
-parent: Lecture
-grand_parent: Youtube
+parent: Youtube
+grand_parent: Lecture
 nav_order: 6
 permalink: /docs/Lecture/Youtube/Youtube006/
 ---

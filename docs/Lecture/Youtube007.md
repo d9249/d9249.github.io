@@ -1,8 +1,8 @@
 ---
 title: 추천시스템 분석 입문하기 4강 - 협업 필터링 (KNN, SGD, ALS)
 layout: default
-parent: Lecture
-grand_parent: Youtube
+parent: Youtube
+grand_parent: Lecture
 nav_order: 7
 permalink: /docs/Lecture/Youtube/Youtube007/
 ---

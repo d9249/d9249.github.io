@@ -1,8 +1,8 @@
 ---
 title: 실전 인공지능으로 이어지는 딥러닝 개념 잡기
 layout: default
-parent: Lecture
-grand_parent: Inflearn
+parent: Inflearn
+grand_parent: Lecture
 nav_order: 4
 permalink: /docs/Lecture/Inflearn/Inflearn004/
 ---

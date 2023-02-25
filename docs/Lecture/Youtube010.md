@@ -1,8 +1,8 @@
 ---
 title: 개별 맞춤형 학습을 위한 지식 추적 및 추천에 대한 연구
 layout: default
-parent: Lecture
-grand_parent: Youtube
+parent: Youtube
+grand_parent: Lecture
 nav_order: 10
 permalink: /docs/Lecture/Youtube/Youtube010/
 ---

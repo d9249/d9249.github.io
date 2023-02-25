@@ -1,8 +1,8 @@
 ---
 title: 꼼꼼한 논문 리뷰
 layout: default
-parent: Lecture
-grand_parent: Youtube
+parent: Youtube
+grand_parent: Lecture
 nav_order: 2
 permalink: /docs/Lecture/Youtube/Youtube002/
 ---

@@ -1,8 +1,8 @@
 ---
 title: 추천 서비스를 위한 데이터 분석 시스템 구축하기
 layout: default
-parent: Lecture
-grand_parent: Youtube
+parent: Youtube
+grand_parent: Lecture
 nav_order: 11
 permalink: /docs/Lecture/Youtube/Youtube011/
 ---

@@ -1,8 +1,8 @@
 ---
 title: Do It! 딥러닝 입문
 layout: default
-parent: Lecture
-grand_parent: Inflearn
+parent: Inflearn
+grand_parent: Lecture
 nav_order: 13
 permalink: /docs/Lecture/Inflearn/Inflearn013/
 ---

@@ -1,8 +1,8 @@
 ---
 title: 최신 딥러닝 기술 Vision Transformer 개념부터 Pytorch 구현까지
 layout: default
-parent: Lecture
-grand_parent: Inflearn
+parent: Inflearn
+grand_parent: Lecture
 nav_order: 5
 permalink: /docs/Lecture/Inflearn/Inflearn005/
 ---

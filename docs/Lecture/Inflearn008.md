@@ -1,8 +1,8 @@
 ---
 title: 캐글로 시작하는 머신러닝 딥러닝 분석
 layout: default
-parent: Lecture
-grand_parent: Inflearn
+parent: Inflearn
+grand_parent: Lecture
 nav_order: 8
 permalink: /docs/Lecture/Inflearn/Inflearn008/
 ---

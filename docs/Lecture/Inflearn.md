@@ -4,7 +4,7 @@ title: Inflearn
 parent: Lecture
 nav_order: 2
 has_children: true
-permalink: /docs/Lecture
+permalink: /docs/Lecture/Inflearn
 ---
 
 # Inflearn

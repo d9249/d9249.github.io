@@ -1,8 +1,8 @@
 ---
 title: 딥러닝 CNN 완벽 가이드 - Fundamental 편
 layout: default
-parent: Lecture
-grand_parent: Inflearn
+parent: Inflearn
+grand_parent: Lecture
 nav_order: 2
 permalink: /docs/Lecture/Inflearn/Inflearn002/
 ---

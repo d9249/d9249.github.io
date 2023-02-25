@@ -1,8 +1,8 @@
 ---
 title: 좋은 추천, 잘 맞는 추천, 새로운 추천
 layout: default
-parent: Lecture
-grand_parent: Youtube
+parent: Youtube
+grand_parent: Lecture
 nav_order: 15
 permalink: /docs/Lecture/Youtube/Youtube015/
 ---
