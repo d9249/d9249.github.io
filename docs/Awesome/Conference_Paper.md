@@ -1,3 +1,12 @@
+---
+layout: default
+title: Conference Paper
+parent: Awesome
+nav_order: 2
+has_children: true
+permalink: /docs/Awesome
+---
+
 ## Conference Paper
 
 `SIGIR`, `Recsys`, `WSDM`, `KDD`, `etc`. 

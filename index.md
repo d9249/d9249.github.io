@@ -85,7 +85,7 @@ Recommedation System, Graph Neural Network
 | Conference | 2021.10.23 | [겹친 문자 이미지 분류를 위한 합성곱 신경망 모델의 정확도 분석](https://github.com/d9249/Master/blob/main/논문/겹친%20문자%20이미지%20분류를%20위한%20합성곱%20신경망%20모델의%20정확도%20분석/2021%20한국인터넷정보학회%20추계학술발표대회/겹친%20문자%20이미지%20분류를%20위한%20합성곱%20신경망%20모델의%20정확도%20분석.pdf) | [한국인터넷정보학회 2021 추계학술발표대회](https://www.manuscriptlink.com/society/ksii/conference/fall2021) |
 | Journal    | 2022.05.31 | [의료 영상 시스템에서 다중 연쇄 U-Net 모델을 이용한 개선된 췌장 영역 분할 탐지](http://ki-it.com/_PR/view/?aidx=33215&bidx=2956) | [한국정보기술학회논문지](https://ki-it.or.kr) |
 | Conference | 2022.06.19 | [Classification of degenerative arthritis using Xception model in radiographic images](http://apicist.org/2022/Final_APIC-IST_2022_program_KSII.pdf) | [한국인터넷정보학회 APIC-IST 2022 CFP](http://apicist.org/2022/) |
-| Journal    | 2022.12.14 | [Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis](https://techscience.com/cmc/v75n1/51491) | [CMC-Computers, Materials & Continua](https://techscience.com/journal/cmc) |
+| Journal    | 2022.12.14 | [Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis](https://doi.org/10.32604/cmc.2023.035245) | [CMC-Computers, Materials & Continua](https://techscience.com/journal/cmc) |
 | Conference | 2022.12.16 | [추천 시스템을 활용한 캐싱 서버 최적화](https://github.com/d9249/Learning/blob/main/%EB%8C%80%ED%95%99/%5BSEBS%5D2022%E1%84%8E%E1%85%AE%E1%84%80%E1%85%A8%E1%84%92%E1%85%A1%E1%86%A8%E1%84%89%E1%85%AE%E1%86%AF%E1%84%83%E1%85%A2%E1%84%92%E1%85%AC_%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%80%E1%85%B3%E1%84%85%E1%85%A2%E1%86%B7.pdf) | [한국전자거래학회](http://www.calsec.or.kr/) |
 | Conference | 2023.01.12 | [Using Deep Learning for Medical Automation in Diagnosis of Degenerative Arthritis](https://github.com/d9249/Learning/blob/main/%EB%8C%80%ED%95%99/ICSMB2023%20Program%20%26%20Proceedings_fin.pdf) | [International Conference for Small & Medium Business](https://www.manuscriptlink.com/society/icsmb/conference/icsmb2023) |
 
@@ -108,7 +108,7 @@ Recommedation System, Graph Neural Network
 | 2021.12.28 ~ 2021.04.16 | Smart I.o.T Labratory Homepage | [Deploy](https://netlab.kyonggi.ac.kr/)    |  Vue.js, JS, Node.js |
 | 2021.03.02 ~ 2021.06.15 | Fit-sibang | [Repo](https://github.com/KGU-Code-15/fit-sibang)    | React.js, Node.js, JS |
 | 2021.06.29 ~ 2021.07.10 | Image_crop | [Repo](https://github.com/d9249/Learning/tree/main/프로젝트/CropStride)       | Python |
-| 2021.10.01 ~ 2022.02.28 | IA^2S(Image Analysis Automation System | [Repo](https://github.com/HHFEHH/crack-automation), [Deploy](http://ideal96.synology.me:7000/), [Docker](https://hub.docker.com/repository/docker/dodo9249/auto-crack/general)    | Django, opencv, Python, JS |
+| 2021.10.01 ~ 2022.02.28 | IA^2S(Image Analysis Automation System | [Repo](https://github.com/HHFEHH/crack-automation), [Docker](https://hub.docker.com/repository/docker/dodo9249/auto-crack/general)    | Django, opencv, Python, JS |
 | 2022.07.06 ~ 2022.09.07 | CS224W-KOR Blog | [Repo](https://github.com/CS224W-KOR/blog), [Deploy](https://cs224w-kor.github.io/blog/)    | Review |
 
 ### Lecture Learning Log
