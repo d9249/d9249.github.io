@@ -1,5 +1,5 @@
 ---
-title: JSP_Pic Project
+title: Pic
 layout: default
 parent: Project
 nav_order: 4

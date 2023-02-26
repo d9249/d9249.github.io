@@ -1,5 +1,5 @@
 ---
-title: ShadowProject
+title: Shadow Project
 layout: default
 parent: Project
 nav_order: 3

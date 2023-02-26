@@ -1,5 +1,5 @@
 ---
-title: Smart IoT Lab Website - v2.0.1
+title: Smart IoT Lab Website
 layout: default
 parent: Project
 nav_order: 2

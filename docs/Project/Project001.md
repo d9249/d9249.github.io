@@ -1,12 +1,12 @@
 ---
-title: IA^2S(Image Analysis Automation System)
+title: IA^2S
 layout: default
 parent: Project
 nav_order: 1
 permalink: /docs/Project/Project001
 ---
 
-# IA^2S(Image Analysis Automation System)
+# IA^2S (Image Analysis Automation System)
 
 ## Table of contents
 {: .no_toc .text-delta }

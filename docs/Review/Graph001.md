@@ -4,6 +4,7 @@ layout: default
 parent: Graph
 grand_parent: Review
 nav_order: 1
+has_children: true
 permalink: /docs/Review/Graph/Graph001/
 ---
 
