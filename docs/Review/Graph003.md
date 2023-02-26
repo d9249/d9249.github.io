@@ -1,5 +1,5 @@
 ---
-title: [Paper Review] Knowledge Graph Construction
+title: Knowledge Graph Construction
 layout: default
 parent: Graph
 grand_parent: Review

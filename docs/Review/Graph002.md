@@ -1,5 +1,5 @@
 ---
-title: [Paper Review] GNN for Link Prediction
+title: GNN for Link Prediction
 layout: default
 parent: Graph
 grand_parent: Review

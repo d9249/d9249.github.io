@@ -10,11 +10,15 @@ permalink: /docs/Lecture
 
 출처: https://bbongcol.github.io/deep-learning-bookmarks/
 
+---
+
 ## Table of contents
 {: .no_toc .text-delta }
 
 1. TOC
 {:toc}
+
+---
 
 #  강의 모음
 - **김성훈 교수님 강의**
