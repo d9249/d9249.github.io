@@ -1,5 +1,5 @@
 ---
-title: 자주 사용하는 Ubuntu 명령어 1
+title: Ubuntu 명령어 1
 layout: default
 parent: Ubuntu
 grand_parent: Etc
