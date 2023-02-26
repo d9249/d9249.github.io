@@ -1,6 +1,7 @@
 ---
-layout: default
 title: 글로벌 1위 기업 시니어 머신러닝 사이언티스트가 말하는 “GNN”
+layout: default
+parent: News
 nav_order: 1
 has_children: true
 permalink: /docs/News/News001

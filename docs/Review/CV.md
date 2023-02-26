@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Computer Vision
+title: CV
 parent: Review
 nav_order: 2
 has_children: true
