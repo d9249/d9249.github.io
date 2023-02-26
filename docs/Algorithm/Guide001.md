@@ -1,8 +1,8 @@
 ---
 title: 알고리즘 가이드
 layout: default
-parent: University
-grand_parent: Guide
+parent: Guide
+grand_parent: Algorithm
 nav_order: 1
 permalink: /docs/Algorithm/Guide/Guide001/
 ---

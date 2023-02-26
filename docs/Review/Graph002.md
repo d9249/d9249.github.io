@@ -20,6 +20,7 @@ PUBLISHED : 2022-01-18
 1. TOC
 {:toc}
 
+---
 # FULL SCRIPT
 
 안녕하세요. 저는 오늘 GNN for Link Prediction 이라는 주제로 발표를 진행하게 될 고려대학교 DSPA 연구실의 이종호 입니다.

@@ -4,7 +4,6 @@ layout: default
 parent: Graph
 grand_parent: Review
 nav_order: 1
-description: "paper review"
 permalink: /docs/Review/Graph/Graph001/
 ---
 
@@ -19,6 +18,8 @@ PUBLISHED : 2022-07-15
 
 1. TOC
 {:toc}
+
+---
 
 # FULL SCRIPT
 

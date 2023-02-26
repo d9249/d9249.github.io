@@ -2,10 +2,20 @@
 title: ShadowProject
 layout: default
 parent: Project
-nav_order: 12
+nav_order: 3
+permalink: /docs/Project/Project003
 ---
 
 # ShadowProject
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
 Shadow Detection &amp; Removal 
  * Deep Learning code : /cGAN-ShadowRemove
  * Unity3d : /Web3DS

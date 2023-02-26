@@ -20,6 +20,8 @@ PUBLISHED : 2022-12-30
 1. TOC
 {:toc}
 
+---
+
 # FULL SCRIPT
 
 안녕하세요.

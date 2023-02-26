@@ -14,6 +14,8 @@ permalink: /docs/Project/Project001
 1. TOC
 {:toc}
 
+---
+
 ![](../../assets/Project/IA^2/IA^2-Logo.png)
 
 # 1. 개발 이유
@@ -82,6 +84,7 @@ permalink: /docs/Project/Project001
 
 | 층별 | 3층 | 전차안전등급 | B등급 | 점검결과 안전등급 | B등급(8.7점) |
 | --- | --- | --- | --- | --- | --- |
+| A | B | C | D | E | F |
 
 ---
 
