@@ -9,3 +9,5 @@ _site/
 .bundle/
 vendor/
 assets/Competition_Code/.DS_Store
+*.iml
+*.xml
