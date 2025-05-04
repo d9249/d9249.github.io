@@ -34,23 +34,16 @@
             overflow-x: hidden;
             padding: 20px;
             box-sizing: border-box;
-            scrollbar-width: thin;
-            scrollbar-color: #444 #222;
+            /* 스크롤바 완전히 숨기기 */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
         }
         
-        /* Customize scrollbar for Webkit browsers */
+        /* Webkit 브라우저에서 스크롤바 숨기기 */
         .terminal::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .terminal::-webkit-scrollbar-track {
-            background: #222;
-            border-radius: 4px;
-        }
-        
-        .terminal::-webkit-scrollbar-thumb {
-            background-color: #444;
-            border-radius: 4px;
+            width: 0;
+            height: 0;
+            display: none;
         }
         
         .header {
@@ -220,7 +213,7 @@
                         </div>
                         <div style="display: flex">
                             <div style="width: 120px">research</div>
-                            <div>- 연구 경험 보기</div>
+                            <div>- 연구 경험 보기 (서브명령어: thesis, international-journal, international-conference, domestic-journal, domestic-conference, all)</div>
                         </div>
                         <div style="display: flex">
                             <div style="width: 120px">education</div>
@@ -229,6 +222,10 @@
                         <div style="display: flex">
                             <div style="width: 120px">clear</div>
                             <div>- 터미널 화면 지우기</div>
+                        </div>
+                        <div style="display: flex">
+                            <div style="width: 120px">whoami</div>
+                            <div>- 이상민 정보 확인</div>
                         </div>
                     </div>
                 </div>
@@ -257,6 +254,7 @@
         
         // 자동완성 관련 변수
         let availableCommands = ['help', 'about', 'skills', 'projects', 'contact', 'career', 'research', 'education', 'clear', 'whoami'];
+        let researchSubcommands = ['thesis', 'international-journal', 'international-conference', 'domestic-journal', 'domestic-conference', 'all'];
         let selectedAutocompleteIndex = -1;
         
         // 포트폴리오 콘텐츠
@@ -286,7 +284,7 @@
     </div>
     <div style="display: flex">
         <div style="width: 120px">research</div>
-        <div>- 연구 경험 보기</div>
+        <div>- 연구 경험 보기 (서브명령어: thesis, international-journal, international-conference, domestic-journal, domestic-conference, all)</div>
     </div>
     <div style="display: flex">
         <div style="width: 120px">education</div>
@@ -295,6 +293,10 @@
     <div style="display: flex">
         <div style="width: 120px">clear</div>
         <div>- 터미널 화면 지우기</div>
+    </div>
+    <div style="display: flex">
+        <div style="width: 120px">whoami</div>
+        <div>- 이상민 정보 확인</div>
     </div>
 </div>`,
             about: `안녕하세요! 저는 웹 기술과 인공지능에 관심이 많은 개발자입니다. 프론트엔드에서 백엔드까지 전체 스택을 다루고 있으며, 최근에는 LLM 기반 AI 시스템과 그래프 신경망 연구에 집중하고 있습니다.
@@ -424,7 +426,157 @@ LinkedIn: https://linkedin.com/in/meanl
    - GCN 최적화, 추천 시스템 성능 향상
 
 2. <strong>의료 영상 / 딥러닝</strong>: SCIE 1편, KCI 1편, 인용 7회
-   - 관절염 진단, 의료 영상 분할`,
+   - 관절염 진단, 의료 영상 분할
+   
+<p style="margin-top: 15px">특정 카테고리의 연구를 보시려면 다음 명령어를 사용하세요:</p>
+<code>research thesis</code> - 학위 논문
+<code>research international-journal</code> - 국제 저널 논문
+<code>research international-conference</code> - 국제 학회 논문
+<code>research domestic-journal</code> - 국내 저널 논문
+<code>research domestic-conference</code> - 국내 학회 논문
+<code>research all</code> - 모든 연구 실적`,
+            'research thesis': `<h1>Master's thesis (학위 논문)</h1>
+
+<strong>추천 시스템에서 그래프 컨볼루션 네트워크 최적화 방법</strong> : Optimization methods of Graph Convolution Networks for Recommendation Systems
+* Master's thesis, UCI: I804:41002-000000057783, 22 February 2024.
+* dCollection: http://www.dcollection.net/handler/kyonggi/000000057783, 1st author.`,
+            'research international-journal': `<h1>International journal (국제 논문)</h1>
+
+<h2>Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis</h2>
+* <strong>SCIE(Q2)</strong>-Computers Materials & Continua (CMC), vol. 75, no. 1, pp. 1981-1994, 06 February 2023. 
+* Citation 7회, DOI: https://doi.org/10.32604/cmc.2023.035245, 1st author.
+
+<h2>Weighted Forwarding in Graph Convolution Networks for Recommendation Information System</h2>
+* <strong>SCIE(Q2)</strong>-Computers Materials & Continua (CMC), vol. 78, no.2, pp. 1897–1914, 31 January 2024. 
+* DOI: https://doi.org/10.32604/cmc.2023.046346, 1st author.
+
+<h2>Embedding Enhancement method for LightGCN in Recommendation Information Systems</h2>
+* <strong>SCIE(Q2)</strong>-Multidisciplinary Digital Publishing Institute(MDPI) in Electronics, vol. 13 no. 12, 11 June 2024. 
+* Citation 4회, DOI: https://doi.org/10.3390/electronics13122282, 1st author`,
+            'research international-conference': `<h1>International conference (국제 학회)</h1>
+
+<h2>Egress Initialization for Graph Convolution Network in Recommendation Systems</h2>
+* The 15th International Conference on Internet (ICONI 2023), 1st author.
+
+<h2>Thin Graph Convolution Network in Recommendation Systems</h2>
+* The 15th International Conference on Internet (ICONI 2023), 1st author.
+
+<h2>Over-smoothing in LightGCN doesn't happen much</h2>
+* The 15th International Conference on Internet (ICONI 2023), 1st author.
+
+<h2>Leverage time-based data to improve recommendation system accuracy</h2>
+* The 18th Asia Pacific International Conference on Information Science and Technology(APIC-IST), 1st author
+
+<h2>Using Deep Learning for Medical Automation in Diagnosis of Degenerative Arthritis</h2>
+* The 8th international Conference for Small and Medium Business 2023(ICSMB), 1st author
+
+<h2>Classification of degenerative arthritis using Xception model in radiographic images</h2>
+* The 17th Asia Pacific International Conference on Information Science and Technology(APIC-IST), 1st author
+* This paper was selected as one of the best papers of APIC-IST 2022 and recommended for publication in CMC-Computers, Materials & Continua (CMC).`,
+            'research domestic-journal': `<h1>Domestic journal (국내 논문)</h1>
+
+<h2>Graph Neural Network 기반 추천시스템 성능 향상을 위한 유저 행동 시간 기반 데이터 사용 방안 분석</h2>
+* <strong>KCI</strong>-The Journal of Korean Institute of Information Technology(JKIIT), 
+* vol. 21, No. 5, pp. 21-28, 2023, ISSN: 1598-8619 (Print) 2093-7571 (Online),
+* DOI : https://doi.org/10.14801/jkiit.2023.21.5.21, 1st author
+
+<h2>의료 영상 시스템에서 다중 연쇄 U-Net 모델을 이용한 개선된 췌장 영역 분할 탐지</h2>
+* <strong>KCI</strong>-The Journal of Korean Institute of Information Technology(JKIIT), 
+* vol. 20, No. 5, pp. 81-87, 2022, ISSN: 1598-8619 (Print), 2093-7571 (Online),
+* DOI: https://doi.org/10.14801/jkiit.2022.20.5.81, 1st author`,
+            'research domestic-conference': `<h1>Domestic conference (국내 학회)</h1>
+
+<h2>이상 점수 임계값 선택 기준에 따른 비지도 이상치 탐지 방법의 성능 분석</h2>
+* KSII Summer Conference, 2023, 2st author
+
+<h2>GNN 기반 딥러닝 모델에서 시간-공간 Attention 모듈 구조에 따른 교통 흐름 예측 성능 분석</h2>
+* KSII SPRING Conference, 2023, 2st author
+
+<h2>추천 시스템 성능 개선을 위한 시간 기반 데이터 분석</h2>
+* KSII SPRING Conference, 2023, 1st author
+
+<h2>SDN 환경에서 오토 인코더 모델을 활용한 플로우 분류 기법</h2>
+* KICS Winter Conference, vol.80, 2023, ISSN 2383-8302, 2023, 3st author
+
+<h2>추천 시스템을 활용한 캐싱 서버 최적화</h2>
+* SEBS Fall Conference, 2022, 1st author
+
+<h2>RFID 태그를 통한 출결 확인 시스템 구현</h2>
+* KSII SPRING Conference, 2022, 3st author
+
+<h2>겹친 문자 이미지 분류를 위한 합성곱 신경망 모델의 정확도 분석</h2>
+* KSII Fall Conference, 2021, 1st author
+
+<h2>PoseNet을 활용한 헬스 트레이너 웹 서비스</h2>
+* KIIT Conference, pp. 729 - 733. 2021.06, 1st author
+* Citation 1회, <strong>KIIT Best Paper Award</strong>`,
+            'research all': `<h1>연구 출판물 전체 목록 (2021-2024): 총 16편</h1>
+
+<h2>Master's thesis (학위 논문)</h2>
+<strong>추천 시스템에서 그래프 컨볼루션 네트워크 최적화 방법</strong> : Optimization methods of Graph Convolution Networks for Recommendation Systems
+* Master's thesis, UCI: I804:41002-000000057783, 22 February 2024.
+* dCollection: http://www.dcollection.net/handler/kyonggi/000000057783, 1st author.
+
+<h2>International journal (국제 논문): 3편</h2>
+
+<h3>Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis</h3>
+* <strong>SCIE(Q2)</strong>-Computers Materials & Continua (CMC), vol. 75, no. 1, pp. 1981-1994, 06 February 2023. 
+* Citation 7회, DOI: https://doi.org/10.32604/cmc.2023.035245, 1st author.
+
+<h3>Weighted Forwarding in Graph Convolution Networks for Recommendation Information System</h3>
+* <strong>SCIE(Q2)</strong>-Computers Materials & Continua (CMC), vol. 78, no.2, pp. 1897–1914, 31 January 2024. 
+* DOI: https://doi.org/10.32604/cmc.2023.046346, 1st author.
+
+<h3>Embedding Enhancement method for LightGCN in Recommendation Information Systems</h3>
+* <strong>SCIE(Q2)</strong>-Multidisciplinary Digital Publishing Institute(MDPI) in Electronics, vol. 13 no. 12, 11 June 2024. 
+* Citation 4회, DOI: https://doi.org/10.3390/electronics13122282, 1st author
+
+<h2>International conference (국제 학회): 6편</h2>
+
+<h3>Egress Initialization for Graph Convolution Network in Recommendation Systems</h3>
+* The 15th International Conference on Internet (ICONI 2023), 1st author.
+
+<h3>Thin Graph Convolution Network in Recommendation Systems</h3>
+* The 15th International Conference on Internet (ICONI 2023), 1st author.
+
+<h3>Over-smoothing in LightGCN doesn't happen much</h3>
+* The 15th International Conference on Internet (ICONI 2023), 1st author.
+
+<h3>Leverage time-based data to improve recommendation system accuracy</h3>
+* The 18th Asia Pacific International Conference on Information Science and Technology(APIC-IST), 1st author
+
+<h3>Using Deep Learning for Medical Automation in Diagnosis of Degenerative Arthritis</h3>
+* The 8th international Conference for Small and Medium Business 2023(ICSMB), 1st author
+
+<h3>Classification of degenerative arthritis using Xception model in radiographic images</h3>
+* The 17th Asia Pacific International Conference on Information Science and Technology(APIC-IST), 1st author
+* This paper was selected as one of the best papers of APIC-IST 2022 and recommended for publication in CMC-Computers, Materials & Continua (CMC).
+
+<h2>Domestic journal (국내 논문): 2편</h2>
+
+<h3>Graph Neural Network 기반 추천시스템 성능 향상을 위한 유저 행동 시간 기반 데이터 사용 방안 분석</h3>
+* <strong>KCI</strong>-The Journal of Korean Institute of Information Technology(JKIIT), 
+* vol. 21, No. 5, pp. 21-28, 2023, ISSN: 1598-8619 (Print) 2093-7571 (Online),
+* DOI : https://doi.org/10.14801/jkiit.2023.21.5.21, 1st author
+
+<h3>의료 영상 시스템에서 다중 연쇄 U-Net 모델을 이용한 개선된 췌장 영역 분할 탐지</h3>
+* <strong>KCI</strong>-The Journal of Korean Institute of Information Technology(JKIIT), 
+* vol. 20, No. 5, pp. 81-87, 2022, ISSN: 1598-8619 (Print), 2093-7571 (Online),
+* DOI: https://doi.org/10.14801/jkiit.2022.20.5.81, 1st author
+
+<h2>Domestic conference (국내 학회): 4편+</h2>
+
+<h3>이상 점수 임계값 선택 기준에 따른 비지도 이상치 탐지 방법의 성능 분석</h3>
+* KSII Summer Conference, 2023, 2st author
+
+<h3>GNN 기반 딥러닝 모델에서 시간-공간 Attention 모듈 구조에 따른 교통 흐름 예측 성능 분석</h3>
+* KSII SPRING Conference, 2023, 2st author
+
+<h3>추천 시스템 성능 개선을 위한 시간 기반 데이터 분석</h3>
+* KSII SPRING Conference, 2023, 1st author
+
+<h3>SDN 환경에서 오토 인코더 모델을 활용한 플로우 분류 기법</h3>
+* KICS Winter Conference, vol.80, 2023, ISSN 2383-8302, 2023, 3st author`,
             whoami: `당신은 제 이력을 탐색하는 호기심 많은 방문자입니다. 환영합니다!`,
             clear: 'clear'
         };
@@ -437,10 +589,24 @@ LinkedIn: https://linkedin.com/in/meanl
                 return;
             }
             
-            // 입력값에 맞는 명령어 필터링
-            const matchingCommands = availableCommands.filter(cmd => 
-                cmd.startsWith(inputValue.toLowerCase())
-            );
+            // 명령어 및 서브 명령어 처리
+            const parts = inputValue.toLowerCase().trim().split(' ');
+            const mainCommand = parts[0];
+            const subCommand = parts.length > 1 ? parts.slice(1).join(' ') : '';
+            
+            let matchingCommands = [];
+            
+            // research 명령어와 서브 명령어 처리
+            if (mainCommand === 'research' && subCommand) {
+                matchingCommands = researchSubcommands.filter(cmd => 
+                    cmd.startsWith(subCommand)
+                ).map(cmd => `research ${cmd}`);
+            } else {
+                // 일반 명령어 처리
+                matchingCommands = availableCommands.filter(cmd => 
+                    cmd.startsWith(mainCommand)
+                );
+            }
             
             // 일치하는 명령어가 없으면 자동완성 숨기기
             if (matchingCommands.length === 0) {
@@ -540,14 +706,32 @@ LinkedIn: https://linkedin.com/in/meanl
                         autocompleteContainer.style.display = 'none';
                     }
                 } else if (input.value) {
-                    const matchingCommands = availableCommands.filter(cmd => 
-                        cmd.startsWith(input.value.toLowerCase())
-                    );
+                    const parts = input.value.toLowerCase().trim().split(' ');
+                    const mainCommand = parts[0];
+                    const subCommand = parts.length > 1 ? parts.slice(1).join(' ') : '';
                     
-                    if (matchingCommands.length === 1) {
-                        input.value = matchingCommands[0];
-                    } else if (matchingCommands.length > 1) {
-                        showAutocomplete(input.value);
+                    let matchingCommands = [];
+                    
+                    if (mainCommand === 'research' && subCommand) {
+                        matchingCommands = researchSubcommands.filter(cmd => 
+                            cmd.startsWith(subCommand)
+                        ).map(cmd => `research ${cmd}`);
+                        
+                        if (matchingCommands.length === 1) {
+                            input.value = matchingCommands[0];
+                        } else if (matchingCommands.length > 1) {
+                            showAutocomplete(input.value);
+                        }
+                    } else {
+                        matchingCommands = availableCommands.filter(cmd => 
+                            cmd.startsWith(mainCommand)
+                        );
+                        
+                        if (matchingCommands.length === 1) {
+                            input.value = matchingCommands[0];
+                        } else if (matchingCommands.length > 1) {
+                            showAutocomplete(input.value);
+                        }
                     }
                 }
                 return;
