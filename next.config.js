@@ -2,15 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   // GitHub Pages 배포를 위한 설정
-  // 저장소 이름이 username.github.io 형태이므로 basePath와 assetPrefix는 빈 문자열로 설정
-  basePath: '',
-  assetPrefix: '',
+  // username.github.io 저장소에 배포하므로 basePath와 assetPrefix는 빈 문자열로 설정
+  output: 'export',  // 정적 HTML 내보내기 설정
   images: {
-    unoptimized: true,
+    unoptimized: true,  // 이미지 최적화 비활성화 (GitHub Pages에 필요)
   },
-  output: 'export',
-  distDir: 'out',
-  trailingSlash: true,
+  trailingSlash: true,  // 각 페이지 끝에 슬래시 추가
 }
 
 module.exports = nextConfig
