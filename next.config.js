@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  basePath: process.env.NODE_ENV === 'production' ? '/d9249.github.io' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/d9249.github.io/' : '',
+  // GitHub Pages 배포를 위한 설정
+  // 저장소 이름이 username.github.io 형태이므로 basePath와 assetPrefix는 빈 문자열로 설정
+  basePath: '',
+  assetPrefix: '',
   images: {
     unoptimized: true,
   },
