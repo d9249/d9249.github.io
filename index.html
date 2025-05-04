@@ -1,0 +1,437 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이상민 터미널 포트폴리오</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            font-family: 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+            color: #fff;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .terminal {
+            width: 100%;
+            max-width: 900px;
+            height: 100%;
+            background-color: #000;
+            border-radius: 5px;
+            overflow: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .header {
+            color: #0f0;
+            font-weight: bold;
+            margin-bottom: 10px;
+            white-space: pre;
+        }
+        
+        .prompt {
+            color: #0f0;
+            margin-right: 8px;
+        }
+        
+        .output {
+            margin-bottom: 16px;
+            white-space: pre-wrap;
+        }
+        
+        .command-line {
+            margin-bottom: 5px;
+            display: flex;
+        }
+        
+        .input-area {
+            position: relative;
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: inherit;
+            font-size: inherit;
+            width: 100%;
+            outline: none;
+            padding: 0;
+        }
+
+        /* 마크다운 스타일링 */
+        strong {
+            color: #ffff00;
+            font-weight: bold;
+        }
+        
+        h1, h2, h3 {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #ff66ff;
+            font-size: 1.5em;
+        }
+        
+        h2 {
+            color: #66ffff;
+            font-size: 1.3em;
+        }
+        
+        h3 {
+            color: #ff9966;
+            font-size: 1.1em;
+        }
+        
+        em {
+            color: #99ff99;
+            font-style: italic;
+        }
+        
+        code {
+            background-color: #333;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        /* 깜빡이는 커서 애니메이션 */
+        .cursor {
+            width: 8px;
+            height: 16px;
+            background-color: #fff;
+            display: inline-block;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="terminal">
+            <div class="header">
+███╗   ███╗███████╗ █████╗ ███╗   ██╗
+████╗ ████║██╔════╝██╔══██╗████╗  ██║
+██╔████╔██║█████╗  ███████║██╔██╗ ██║
+██║╚██╔╝██║██╔══╝  ██╔══██║██║╚██╗██║
+██║ ╚═╝ ██║███████╗██║  ██║██║ ╚████║
+╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝
+
+터미널 포트폴리오 v1.0.0 ( 환영합니다! )
+
+  * GitHub: https://github.com/d9249
+  * LinkedIn: https://linkedin.com/in/meanl
+
+마지막 로그인: 2025. 5. 4. (한국 표준시)
+사용법을 보려면 'help'를 입력하세요.</div>
+            
+            <!-- 명령어 히스토리 및 결과 -->
+            <div class="command-history">
+                <div class="command-line">
+                    <span class="prompt">mean@portfolio:~$</span>
+                    <span>help</span>
+                </div>
+                <div class="output">
+                    <h2>도움말</h2>
+                    <p>터미널 포트폴리오에 오신 것을 환영합니다! 다음 명령어를 사용할 수 있습니다:</p>
+                    <div style="margin-top: 10px">
+                        <div style="display: flex">
+                            <div style="width: 120px">about</div>
+                            <div>- 소개 정보 보기</div>
+                        </div>
+                        <div style="display: flex">
+                            <div style="width: 120px">skills</div>
+                            <div>- 기술 스택 보기</div>
+                        </div>
+                        <div style="display: flex">
+                            <div style="width: 120px">projects</div>
+                            <div>- 프로젝트 목록 보기</div>
+                        </div>
+                        <div style="display: flex">
+                            <div style="width: 120px">contact</div>
+                            <div>- 연락처 정보 보기</div>
+                        </div>
+                        <div style="display: flex">
+                            <div style="width: 120px">career</div>
+                            <div>- 경력 정보 보기</div>
+                        </div>
+                        <div style="display: flex">
+                            <div style="width: 120px">research</div>
+                            <div>- 연구 경험 보기</div>
+                        </div>
+                        <div style="display: flex">
+                            <div style="width: 120px">education</div>
+                            <div>- 학력 정보 보기</div>
+                        </div>
+                        <div style="display: flex">
+                            <div style="width: 120px">clear</div>
+                            <div>- 터미널 화면 지우기</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="input-area">
+                <span class="prompt">mean@portfolio:~$</span>
+                <input type="text" class="input" id="terminal-input" autofocus>
+                <span class="cursor"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 간단한 터미널 동작 구현
+        const input = document.getElementById('terminal-input');
+        const terminal = document.querySelector('.terminal');
+        const commandHistory = document.querySelector('.command-history');
+        const prompt = "mean@portfolio:~$";
+        
+        // 포트폴리오 콘텐츠
+        const commands = {
+            help: `<h2>도움말</h2>
+<p>터미널 포트폴리오에 오신 것을 환영합니다! 다음 명령어를 사용할 수 있습니다:</p>
+<div style="margin-top: 10px">
+    <div style="display: flex">
+        <div style="width: 120px">about</div>
+        <div>- 소개 정보 보기</div>
+    </div>
+    <div style="display: flex">
+        <div style="width: 120px">skills</div>
+        <div>- 기술 스택 보기</div>
+    </div>
+    <div style="display: flex">
+        <div style="width: 120px">projects</div>
+        <div>- 프로젝트 목록 보기</div>
+    </div>
+    <div style="display: flex">
+        <div style="width: 120px">contact</div>
+        <div>- 연락처 정보 보기</div>
+    </div>
+    <div style="display: flex">
+        <div style="width: 120px">career</div>
+        <div>- 경력 정보 보기</div>
+    </div>
+    <div style="display: flex">
+        <div style="width: 120px">research</div>
+        <div>- 연구 경험 보기</div>
+    </div>
+    <div style="display: flex">
+        <div style="width: 120px">education</div>
+        <div>- 학력 정보 보기</div>
+    </div>
+    <div style="display: flex">
+        <div style="width: 120px">clear</div>
+        <div>- 터미널 화면 지우기</div>
+    </div>
+</div>`,
+            about: `안녕하세요! 저는 웹 기술과 인공지능에 관심이 많은 개발자입니다. 프론트엔드에서 백엔드까지 전체 스택을 다루고 있으며, 최근에는 LLM 기반 AI 시스템과 그래프 신경망 연구에 집중하고 있습니다.
+
+저는 사용자 경험을 향상시키고 효율적인 웹 애플리케이션을 개발하는 데 열정을 가지고 있습니다. 문제 해결을 위한 창의적인 접근 방식과 지속적인 학습을 중요시합니다.
+
+학부에서는 코드15 팀의 일원으로 AI 기반 홈트레이닝 플랫폼 "핏-시방"을 개발했으며, 해당 프로젝트로 학술대회 우수논문상을 수상했습니다. 석사과정에서는 그래프 컨볼루션 네트워크 최적화 연구로 SCIE 저널에 논문을 게재하였습니다.`,
+            skills: `<h2>기술 스택</h2>
+<p>다음은 제가 가진 주요 기술 스택입니다:</p>
+
+<div style="margin-top: 15px">
+    <div style="display: flex; margin-top: 5px">
+        <div style="width: 120px">Back-end:</div>
+        <div>
+            <strong>Python</strong>, <strong>FastAPI</strong>, 
+            <strong>Uvicorn</strong>, <strong>AIOHTTP</strong>,
+            <strong>Kafka</strong>, <strong>Streamlit</strong>
+        </div>
+    </div>
+    
+    <div style="display: flex; margin-top: 5px">
+        <div style="width: 120px">Data:</div>
+        <div>
+            <strong>MySQL</strong>, <strong>Elasticsearch</strong>, 
+            <strong>LogStash</strong>, <strong>Kibana</strong>,
+            <strong>Qdrant</strong>
+        </div>
+    </div>
+    
+    <div style="display: flex; margin-top: 5px">
+        <div style="width: 120px">Analytics/ML:</div>
+        <div>
+            <strong>NumPy</strong>, <strong>Pandas</strong>, 
+            <strong>PyTorch</strong>, <strong>openCV</strong>,
+            <strong>scikit-learn</strong>
+        </div>
+    </div>
+    
+    <div style="display: flex; margin-top: 5px">
+        <div style="width: 120px">Infrastructure:</div>
+        <div>
+            <strong>AWS</strong>, <strong>Naver Cloud</strong>, 
+            <strong>Docker</strong>, <strong>Kubernetes</strong>
+        </div>
+    </div>
+</div>`,
+            projects: `다음은 제가 진행한 주요 프로젝트들입니다:
+
+1. 쌤모아 (현재) - AI 엔지니어링 및 API 개발
+   - LLM 기반 교육 플랫폼 개발, LangGraph 활용 상태 기반 에이전트 구현
+   - Next.js, FastAPI, LangChain, Docker 기술 스택 활용
+
+2. 연구실 홈페이지 개편 (2023) - 프론트 개발, 유지관리
+   - 경기대학교 Smart IoT 연구실 웹사이트 아키텍처 현대화
+   - Vue.js, Node.js, Express, MySQL, Nginx 기술 스택 활용
+
+3. 가짜연구소 GNN 연구 (2022) - Docker 기반 통합 학습 환경 구축
+   - GraphGym 라이브러리 기반 실험 환경 셋업
+   - HIV 억제 분자 탐색을 위한 프로젝트 실험 구현
+
+4. Crack-Automation 외주 (2021-2022) - 팀리더, 프론트 개발
+   - 건물 손상 점검 및 보고 자동화 시스템 개발
+   - Python, Django, OpenCV, OpenPyXL 기술 스택 활용
+
+5. 핏-시방 캡스톤 디자인 (2021) - 팀리더, 프론트 개발
+   - AI 기반 홈트레이닝 플랫폼 개발, PoseNet 활용 자세 추정
+   - React, Node.js, MongoDB, PoseNet 기술 스택 활용`,
+            contact: `다음 방법으로 연락하실 수 있습니다:
+
+이메일: dodo9249@gmail.com
+GitHub: https://github.com/d9249
+LinkedIn: https://linkedin.com/in/meanl
+
+협업 또는 그냥 인사를 나누고 싶으시면 언제든지 연락해주세요!`,
+            career: `<h1>인공지능연구소: Deep Learning</h1>
+
+<h2>핵심 기술 역량</h2>
+
+* <strong>언어 모델 & RAG 기술</strong>
+   * 거대/소형 언어 모델 활용 시스템 개발 (Agent, RAG, Prompt Engineering)
+   * 멀티모달, 임베딩 모델 활용 시스템 개발
+
+* <strong>컴퓨터 비전 & 멀티모달 기술</strong>
+   * 영상처리 알고리즘 개발 (OpenCV, imagehash)
+   * 특정 객체 인식 멀티모달 모델 및 개방형 객체 탐지 시스템 개발
+
+* <strong>MLOps & 인프라 구축</strong>
+   * 머신러닝 모델 서빙 및 API 구축 (Docker, FastAPI, Apache Kafka, OAuth2)
+   * 컨테이너 기반 배포 자동화 및 모니터링 (Kubernetes, ELK Stack)
+   * CI/CD 및 클라우드 인프라 관리 (GitHub Actions, NCP, AWS, GCP)
+   * 벡터 데이터베이스 구축 및 활용 (Qdrant)
+
+<h2>주요 성과</h2>
+
+* <strong>혁신 제품 개발 및 기술 리더십</strong>
+   * 'Booxedit' 사업 기획 및 시스템 개발
+   * 'arti': CES 2025 인공지능 부문 Best of Innovation - Honoree 수상 (기술 자문/개발 주도)
+   * 'booxTory': CES 2025 인공지능 부문 Best of Innovation 수상 (AI 엔진 개발 총괄)`,
+            education: `<h1>학력 정보</h1>
+
+<h2>[2022 - 2024] 경기대학교 컴퓨터공학과 석사</h2>
+- 논문: "추천 시스템에서 그래프 컨볼루션 네트워크 최적화 방법"
+- GPA: <strong>4.3/4.5</strong>
+- SCIE 논문 3편 게재 (인용 13회)
+
+<h2>[2017 - 2022] 경기대학교 컴퓨터공학부 학사</h2>
+- GPA: <strong>3.9/4.5</strong>
+- 캡스톤디자인 프로젝트 장려상 수상
+- KIIT 학술대회 우수논문상(동상) 수상`,
+            research: `<h1>연구 출판물 (2021-2024): 총 16편</h1>
+
+<h2>국제 저널 (SCIE): 3편</h2>
+- Computers Materials & Continua (CMC): 2편
+- MDPI in Electronics: 1편
+
+<h2>국내 저널 (KCI): 2편</h2>
+- JKIIT: 2편
+
+<h2>국제 학회: 6편</h2>
+- APIC-IST, ICONI, ICSMB 등 발표
+
+<h2>국내 학회: 4편</h2>
+- KIIT, KSII, SEBS 등 발표
+
+<h2>주요 연구 분야:</h2>
+1. <strong>추천 시스템 / GNN</strong>: SCIE 2편, KCI 1편, 인용 5회
+   - GCN 최적화, 추천 시스템 성능 향상
+
+2. <strong>의료 영상 / 딥러닝</strong>: SCIE 1편, KCI 1편, 인용 7회
+   - 관절염 진단, 의료 영상 분할`,
+            whoami: `당신은 제 이력을 탐색하는 호기심 많은 방문자입니다. 환영합니다!`,
+            clear: 'clear'
+        };
+        
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const command = input.value.trim().toLowerCase();
+                input.value = '';
+                
+                if (command !== '') {
+                    // 명령어 추가
+                    const cmdLine = document.createElement('div');
+                    cmdLine.className = 'command-line';
+                    
+                    const promptSpan = document.createElement('span');
+                    promptSpan.className = 'prompt';
+                    promptSpan.textContent = prompt;
+                    
+                    const commandSpan = document.createElement('span');
+                    commandSpan.textContent = command;
+                    
+                    cmdLine.appendChild(promptSpan);
+                    cmdLine.appendChild(commandSpan);
+                    commandHistory.appendChild(cmdLine);
+                    
+                    // 결과 추가
+                    const output = document.createElement('div');
+                    output.className = 'output';
+                    
+                    if (command === 'clear') {
+                        // 화면 지우기
+                        commandHistory.innerHTML = '';
+                    } else if (commands[command]) {
+                        // 명령어 실행
+                        output.innerHTML = commands[command];
+                        commandHistory.appendChild(output);
+                    } else {
+                        // 알 수 없는 명령어
+                        output.innerHTML = `'${command}': 명령어를 찾을 수 없습니다. 사용 가능한 명령어 목록을 보려면 'help'를 입력하세요!`;
+                        output.style.color = '#ff0000';
+                        commandHistory.appendChild(output);
+                    }
+                    
+                    // 스크롤 맨 아래로
+                    terminal.scrollTop = terminal.scrollHeight;
+                }
+            }
+        });
+        
+        // 항상 입력 필드에 포커스
+        document.addEventListener('click', function() {
+            input.focus();
+        });
+        
+        window.addEventListener('load', function() {
+            input.focus();
+        });
+    </script>
+</body>
+</html>
