@@ -3,7 +3,7 @@ title: "TinyLoRA는 추론 파인튜닝을 13개 파라미터까지 압축한다
 date: "2026-05-06"
 description: "Learning to Reason in 13 Parameters는 RL 기반 post-training이 SFT보다 훨씬 정보 밀도가 높은 업데이트를 만든다는 가설 아래, TinyLoRA로 Qwen2.5-7B의 추론 성능을 단 13개 파라미터와 26바이트만으로 크게 끌어올릴 수 있음을 보여준다."
 author: "Sangmin Lee"
-category: "mlops"
+category: "model-training"
 tags:
   - TinyLoRA
   - Reinforcement Learning

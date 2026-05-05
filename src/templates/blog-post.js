@@ -2,6 +2,7 @@ import * as React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
 import categories from "../data/categories.json";
+import { getTagPath } from "../utils/tags";
 
 const labelByCategory = new Map(
   categories.map((category) => [category.slug, category.label]),
@@ -121,7 +122,9 @@ const BlogPostTemplate = ({ data, pageContext }) => {
               {post.frontmatter.tags?.length ? (
                 <div className="post-info-tags" aria-label="Post tags">
                   {post.frontmatter.tags.map((tag) => (
-                    <span key={tag}>#{tag}</span>
+                    <Link key={tag} to={getTagPath(tag)}>
+                      #{tag}
+                    </Link>
                   ))}
                 </div>
               ) : null}

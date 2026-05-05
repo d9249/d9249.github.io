@@ -3,7 +3,7 @@ title: "AI 연구 경험을 제품 언어로 번역하기"
 date: "2026-03-30"
 description: "논문, 벤치마크, 제품 출시 경험을 한 프로필로 묶으려면 성과보다 판단의 구조가 먼저 보여야 한다."
 author: "Sangmin Lee"
-category: "career"
+category: "career-notes"
 tags:
   - Career
   - Research

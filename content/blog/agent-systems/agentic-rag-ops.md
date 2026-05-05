@@ -3,7 +3,7 @@ title: "Agentic RAG는 검색 문제가 아니라 운영 문제다"
 date: "2026-05-05"
 description: "RAG가 데모에서 제품으로 넘어가는 순간, 질문은 어떤 검색기가 더 좋은가에서 실패한 추론을 어떻게 발견하고 복구할 것인가로 바뀐다."
 author: "Sangmin Lee"
-category: "ai-systems"
+category: "agent-systems"
 tags:
   - RAG
   - Agents

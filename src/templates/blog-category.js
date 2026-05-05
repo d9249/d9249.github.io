@@ -4,6 +4,7 @@ import CategoryNav from "../components/CategoryNav";
 import Layout from "../components/Layout";
 import PostCard from "../components/PostCard";
 import SectionHeading from "../components/SectionHeading";
+import TagNav from "../components/TagNav";
 
 const BlogCategoryTemplate = ({ data, pageContext }) => {
   const posts = data.posts.nodes;
@@ -17,6 +18,7 @@ const BlogCategoryTemplate = ({ data, pageContext }) => {
           description={pageContext.description}
         />
         <CategoryNav />
+        <TagNav posts={data.allPosts.nodes} />
         {posts.length > 0 ? (
           <div className="post-grid">
             {posts.map((post) => (
@@ -42,6 +44,19 @@ export const Head = ({ pageContext }) => (
 
 export const query = graphql`
   query BlogCategoryPage($category: String!) {
+    allPosts: allMarkdownRemark(
+      filter: {
+        fields: { contentType: { eq: "blog-post" } }
+        frontmatter: { draft: { ne: true } }
+      }
+      sort: { frontmatter: { date: DESC } }
+    ) {
+      nodes {
+        frontmatter {
+          tags
+        }
+      }
+    }
     posts: allMarkdownRemark(
       filter: {
         fields: {

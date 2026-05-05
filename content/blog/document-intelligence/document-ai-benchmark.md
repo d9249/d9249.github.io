@@ -3,7 +3,7 @@ title: "문서 AI 벤치마크는 왜 단일 정확도로 설명되지 않는가
 date: "2026-04-28"
 description: "문서 복원 품질은 OCR 텍스트 정확도와 테이블 구조 품질이 함께 움직일 때 비로소 사용자 체감 품질에 가까워진다."
 author: "Sangmin Lee"
-category: "document-ai"
+category: "document-intelligence"
 tags:
   - OCR
   - Benchmark

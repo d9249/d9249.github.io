@@ -6,41 +6,49 @@ import PostCard from "../components/PostCard";
 import SectionHeading from "../components/SectionHeading";
 import TagNav from "../components/TagNav";
 
-const BlogPage = ({ data }) => {
-  const posts = data.posts.nodes;
-  const [featured, ...others] = posts;
+const BlogTagTemplate = ({ data, pageContext }) => {
+  const posts = data.posts.nodes.filter((post) =>
+    (post.frontmatter.tags || []).includes(pageContext.tag),
+  );
 
   return (
     <Layout>
       <section className="shell section">
-        <SectionHeading kicker="Blog" title="Log" />
+        <SectionHeading
+          kicker="Tag"
+          title={`#${pageContext.tag}`}
+          description={`${pageContext.tag} 태그가 붙은 글입니다.`}
+        />
         <CategoryNav />
-        <TagNav posts={posts} />
-        {featured && <PostCard post={featured} featured />}
-        <div className="post-grid">
-          {others.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
-        </div>
+        <TagNav posts={data.posts.nodes} activeTag={pageContext.tag} />
+        {posts.length > 0 ? (
+          <div className="post-grid">
+            {posts.map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">아직 공개된 글이 없습니다.</div>
+        )}
       </section>
     </Layout>
   );
 };
 
-export default BlogPage;
+export default BlogTagTemplate;
 
-export const Head = () => (
+export const Head = ({ pageContext }) => (
   <>
-    <title>Blog | Mean Log</title>
+    <title>#{pageContext.tag} | Mean Log</title>
     <meta
       name="description"
-      content="Mean Log의 전체 기술 블로그 글 목록입니다."
+      content={`${pageContext.tag} 태그가 붙은 Mean Log 글 목록입니다.`}
     />
   </>
 );
 
 export const query = graphql`
-  query BlogPage {
+  query BlogTagPage {
     posts: allMarkdownRemark(
       filter: {
         fields: { contentType: { eq: "blog-post" } }

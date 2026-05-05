@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const categories = require("./src/data/categories.json");
+const { slugifyTag } = require("./src/utils/tags");
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
@@ -55,6 +56,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             title
             draft
             date
+            tags
           }
         }
       }
@@ -68,9 +70,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const postTemplate = path.resolve("./src/templates/blog-post.js");
   const categoryTemplate = path.resolve("./src/templates/blog-category.js");
+  const tagTemplate = path.resolve("./src/templates/blog-tag.js");
   const posts = result.data.posts.nodes.filter(
     (post) => !post.frontmatter.draft,
   );
+  const tagsBySlug = new Map();
 
   posts.forEach((post, index) => {
     createPage({
@@ -92,6 +96,26 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         category: category.slug,
         label: category.label,
         description: category.description,
+      },
+    });
+  });
+
+  posts.forEach((post) => {
+    (post.frontmatter.tags || []).forEach((tag) => {
+      const slug = slugifyTag(tag);
+
+      if (!tagsBySlug.has(slug)) {
+        tagsBySlug.set(slug, tag);
+      }
+    });
+  });
+
+  tagsBySlug.forEach((tag, slug) => {
+    createPage({
+      path: `/blog/tags/${slug}/`,
+      component: tagTemplate,
+      context: {
+        tag,
       },
     });
   });
