@@ -290,11 +290,19 @@ const IndexPage = ({ data }) => {
           {skillGroups.map((group) => (
             <article className="skill-card" key={group.title}>
               <h3>{group.title}</h3>
+              <p>{group.summary}</p>
               <ul className="skill-list">
                 {group.skills.map((skill) => (
                   <li key={skill}>{skill}</li>
                 ))}
               </ul>
+              {group.contexts?.length ? (
+                <ul className="skill-context-list">
+                  {group.contexts.map((context) => (
+                    <li key={context}>{context}</li>
+                  ))}
+                </ul>
+              ) : null}
             </article>
           ))}
         </div>

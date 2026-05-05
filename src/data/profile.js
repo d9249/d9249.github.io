@@ -991,32 +991,68 @@ export const daconCompetitionItems = [
 
 export const skillGroups = [
   {
-    title: "AI / ML",
-    skills: [
-      "LLM",
-      "RAG",
-      "Multi-Agent",
-      "Prompt Engineering",
-      "PyTorch",
-      "CNN / RNN / GCN",
-      "OpenCV",
-      "Pandas",
-    ],
-  },
-  {
-    title: "RAG / Agent Systems",
+    title: "RAG / Agent",
+    summary:
+      "엔터프라이즈 지식 검색과 시장조사 자동화를 운영 가능한 에이전트 흐름으로 설계합니다.",
     skills: [
       "LangGraph",
       "LangSmith",
       "Langfuse",
       "Knowledge Graph",
-      "Vector Search",
       "Hybrid Retrieval",
-      "LLM Observability",
+      "Multi-Agent Orchestration",
+      "Prompt Engineering",
+    ],
+    contexts: [
+      "Knowledge Graph와 Vector retrieval을 결합한 hybrid RAG",
+      "25-agent Market Intelligence orchestration",
+      "근거, latency, fallback을 추적하는 LLM observability",
+    ],
+  },
+  {
+    title: "Document AI / OCR",
+    summary:
+      "문서 이미지에서 텍스트와 표 구조를 복원하고, 품질 지표를 반복 검증하는 플랫폼을 만듭니다.",
+    skills: [
+      "Python",
+      "OCR bbox",
+      "Line Segment",
+      "Table Reconstruction",
+      "Parser-driven Reconstruction",
+      "TEDS Benchmark",
+      "Cell F1",
+      "Next.js Console",
+    ],
+    contexts: [
+      "row/column grouping과 spanned cell 복원",
+      "hf_finance_legal_mrc 기준 TEDS 0.9188",
+      "benchmark router와 콘솔 기반 반복 검증",
+    ],
+  },
+  {
+    title: "Research ML",
+    summary:
+      "추천 시스템, 의료영상, 경진대회 모델링을 논문과 실험 지표로 검증합니다.",
+    skills: [
+      "PyTorch",
+      "LightGCN",
+      "WF-GCN",
+      "CNN",
+      "U-Net",
+      "OpenCV",
+      "XGBoost",
+      "Pandas",
+    ],
+    contexts: [
+      "MovieLens, FilmTrust, Yelp 기반 Recall/NDCG 실험",
+      "MCU-Net과 의료영상 딥러닝 연구",
+      "DACON 39개 대회 기반 모델링과 튜닝",
     ],
   },
   {
     title: "Backend / Product",
+    summary:
+      "AI 모델을 제품 기능과 API, 운영 콘솔로 연결하는 서버와 프론트엔드 흐름을 구현합니다.",
     skills: [
       "FastAPI",
       "Python",
@@ -1026,10 +1062,17 @@ export const skillGroups = [
       "Streamlit",
       "AWS Lambda",
       "EventBridge",
+      "Brave Search",
+    ],
+    contexts: [
+      "Document AI 운영 콘솔과 benchmark UI",
+      "시장조사 에이전트의 serverless workflow",
+      "콘텐츠 생성, 편집, 추천 제품 기능 개발",
     ],
   },
   {
-    title: "Data / DB",
+    title: "Data / Search",
+    summary: "벡터, 그래프, 검색, 관계형 저장소를 문제 성격에 맞게 조합합니다.",
     skills: [
       "Milvus",
       "Neo4j",
@@ -1040,9 +1083,15 @@ export const skillGroups = [
       "DynamoDB",
       "MySQL",
     ],
+    contexts: [
+      "문서-관계-답변 흐름을 표현하는 Knowledge Graph",
+      "내부 자산 검색과 외부 웹 검색을 결합한 Dual Knowledge Base",
+      "RAG, 추천, 운영 로그를 위한 저장소 분리",
+    ],
   },
   {
     title: "MLOps / Infra",
+    summary: "빌드, 배포, 모니터링, 벤치마크를 제품 운영 흐름 안에 묶습니다.",
     skills: [
       "Docker",
       "Docker Compose",
@@ -1052,6 +1101,11 @@ export const skillGroups = [
       "Loki",
       "wandb",
       "GitHub Actions",
+    ],
+    contexts: [
+      "Prometheus/Grafana 기반 실행 상태 관찰",
+      "secure build와 GitHub Actions 배포 흐름",
+      "실험 추적과 벤치마크 재현성 관리",
     ],
   },
 ];

@@ -1305,27 +1305,57 @@ h3 {
 }
 
 .skill-grid {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .skill-card {
-  padding: 20px;
+  display: grid;
+  gap: 16px;
+  min-height: 360px;
+  padding: 22px;
+}
+
+.skill-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
 }
 
 .skill-list {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
-  margin: 16px 0 0;
+  align-content: start;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .skill-list li {
-  padding: 8px 0;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: color-mix(in oklch, var(--bg) 50%, transparent);
+  color: color-mix(in oklch, var(--fg) 78%, var(--muted));
   font-family: var(--font-mono);
   font-size: 12px;
+  line-height: 1.2;
+}
+
+.skill-context-list {
+  display: grid;
+  gap: 9px;
+  margin: auto 0 0;
+  padding: 16px 0 0 18px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.skill-context-list li::marker {
+  color: color-mix(in oklch, var(--accent) 80%, var(--fg));
 }
 
 .compact-posts {
@@ -2037,7 +2067,7 @@ figcaption,
 
 .related-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
   gap: 18px;
   margin-top: 22px;
 }
@@ -2048,6 +2078,11 @@ figcaption,
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
+}
+
+.adjacent-posts .related-card {
+  min-height: 132px;
+  padding: 16px 18px;
 }
 
 .thumb {

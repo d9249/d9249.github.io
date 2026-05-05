@@ -68,8 +68,11 @@ const BlogPostTemplate = ({ data, pageContext }) => {
               className="article-body"
               dangerouslySetInnerHTML={{ __html: postHtml }}
             />
-            <nav className="related-grid" aria-label="Adjacent posts">
-              {pageContext.previous ? (
+            <nav
+              className="related-grid adjacent-posts"
+              aria-label="Adjacent posts"
+            >
+              {pageContext.previous && (
                 <Link
                   className="related-card"
                   to={pageContext.previous.fields.slug}
@@ -78,8 +81,6 @@ const BlogPostTemplate = ({ data, pageContext }) => {
                   <h3>{pageContext.previous.frontmatter.title}</h3>
                   <p>{pageContext.previous.frontmatter.date}</p>
                 </Link>
-              ) : (
-                <div />
               )}
               {pageContext.next && (
                 <Link
