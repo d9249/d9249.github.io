@@ -483,6 +483,24 @@ export const paperItems = [
 
 export const awardItems = [
   {
+    title: "Plan2Do 안전산업진흥유공 표창",
+    result: "행정안전부 장관상",
+    period: "2025.12",
+    description:
+      "Plan2Do에 탑재되는 AI 안전도우미와 위험성평가 지원 시스템을 고도화해 AI 산업안전보건 플랫폼의 수상 성과에 기여했습니다.",
+    facts: ["Plan2Do", "AI Safety", "Minister Award"],
+    links: [
+      {
+        label: "아시아나IDT 뉴스",
+        href: "https://www.asianaidt.com/idthome/pages/ko/company/news_view?mid=2&postid=5109&menu1=1000&menu2=1200",
+      },
+      {
+        label: "아시아나IDT 연혁",
+        href: "https://www.asianaidt.com/idthome/pages/ko/company/history?menu1=1000&menu2=1100",
+      },
+    ],
+  },
+  {
     title: "CES 2025 AI Innovation Awards",
     result: "booxTory Best of Innovation / arti Honoree",
     period: "2025",
@@ -553,7 +571,7 @@ export const competitionItems = [
   {
     title: "HD현대 AI Challenge",
     result: "4위",
-    period: "2025",
+    period: "2023",
     description:
       "건설기계 센서데이터를 활용한 작업 중량 예측 모델을 개발하고, 시계열 Transformer와 맞춤형 손실 함수로 성능을 끌어올렸습니다.",
     facts: ["4th Place", "Public Score 98.21432", "Time Series Transformer"],

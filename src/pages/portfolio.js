@@ -29,6 +29,10 @@ const PortfolioPage = () => {
     [slides.length],
   );
 
+  const goFirst = React.useCallback(() => {
+    goToSlide(0);
+  }, [goToSlide]);
+
   const goNext = React.useCallback(() => {
     setActiveIndex((current) => clampSlideIndex(current + 1, slides.length));
   }, [slides.length]);
@@ -189,6 +193,14 @@ const PortfolioPage = () => {
             </div>
 
             <div className="deck-controls">
+              <button
+                className="deck-button"
+                type="button"
+                onClick={goFirst}
+                disabled={activeIndex === 0}
+              >
+                첫 화면
+              </button>
               <button
                 className="deck-button"
                 type="button"
