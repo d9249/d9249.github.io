@@ -1,0 +1,938 @@
+{
+  "generatedAt": "2026-05-05T15:10:56.695Z",
+  "source": {
+    "keynoteFile": "Portfolio-이상민.key",
+    "slideCount": 103,
+    "imageFormat": "jpeg",
+    "imageQuality": 0.92
+  },
+  "slides": [
+    {
+      "index": 1,
+      "src": "/portfolio/slides/slide-001.jpeg",
+      "title": "Slide 1",
+      "alt": "Portfolio slide 1",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 2,
+      "src": "/portfolio/slides/slide-002.jpeg",
+      "title": "Slide 2",
+      "alt": "Portfolio slide 2",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 3,
+      "src": "/portfolio/slides/slide-003.jpeg",
+      "title": "연구 배경:",
+      "alt": "Portfolio slide 3: 연구 배경:",
+      "width": 1920,
+      "height": 1080,
+      "text": "연구 배경: 의료 영상 분석은 장기 관찰과 질병 진단에 필수적입니다. 특히 췌장은 크기가 작고 위치적 특성 때문에 탐지 난이도가 높습니다. 문제점: 기존 U-Net, Attention U-Net, RSTN 모델은 췌장 분할 정확도가 90%를 넘지 못했습니다. 1. 관련 연구 • 딥러닝 모델: U-Net, Attention U-Net, RSTN 모델이 사용되었으나, 여전히 췌장 분할 성능이 충분하지 않았습니다. 2. MCU-Net 모델 • 구조: 다양한 크기의 패치 를 사용하는 여러 U-Net 모델을 마지막 단계에서 결합 하여 정보를 통합합니다. • 이점: 필터 슬라이딩 방식 대신 패치 기반 탐색 방식을 사용 하여 학습 속도를 향상시키고 정보 손실을 줄입니다. • 결합: 서로 다른 크기의 패치를 가지는 U-Net 모델을 연쇄 결합 하여 더 많은 컨텍스트 정보 를 얻습니다. 3. 실험 • 데이터셋: Pancreas-CT 세트를 사용하여 모델을 학습 및 평가했습니다. • 실험 결과: 제안된 MCU-Net 모델은 91.6% 의 정확도로, 기존 모델보다 약 2% 높은 성능 을 보였습니다. 다양한 패치 크기를 결합한 M5 모델이 가장 높은 성능을 보였습니다. • 비교: Attention U-Net, RSTN, U-Net 모델과 비교했을 때 MCU-Net 모델이 가장 높은 정확도를 기록했습니다. 4. 결론 • 성과: MCU-Net 모델은 췌장 분할 성능을 향상시켰으며, 향후 다른 장기 분류 문제에서도 유용할 것으로 예상됩니다. M5 모델 기준: 3개의 U-Net 모델 사용하여 각 모델을 학습. 3x3 패치: 특징 맵 추출, 5x5 패치: 특징 맵 추출, 7x7 패치: 특징 맵 추출, 패치 크기에 따른 모델 별 마지막 컨볼루션 레이어의 출력 활용. : 추출된 3개의 채널을 1개로 결합. 결합된 특징 맵은 다양한 크기의 패치에서 추출된 정보를 모두 포함하고 있으므로, 더 풍부한 특징을 반영하여 분할 성능을 향상. Models DSC Attention U-Net model [4] 0.832 Recurrent saliency transformation network model (RSTN) [5] [14] 0.846 U-Net model [3] 0.896 MCU-Net model (Proposed) 0.916 Table 3. Performance comparison between models"
+    },
+    {
+      "index": 4,
+      "src": "/portfolio/slides/slide-004.jpeg",
+      "title": "실험 결과:",
+      "alt": "Portfolio slide 4: 실험 결과:",
+      "width": 1920,
+      "height": 1080,
+      "text": "실험 결과: • 최신 데이터를 학습하는 것이 Precision@20에서 높은 성능을 보였으나, Recall@20에서는 전체 데이터를 학습하는 것이 더 나은 성능을 보였다. • F1 점수를 기준으로 평가한 결과, 최신 데이터를 사용한 모델이 더 높은 점수를 기록했다. • 시간 기반 데이터 활용이 추천 시스템 성능 향상에 효과적임을 확인. 결론 및 향후 과제: • 최신 데이터만을 학습하는 모델은 Precision@20의 정확도가 높아지지만, Recall@20에서는 성능이 떨어지는 한계가 있음. • 전체 데이터를 학습하는 대신, 시간 기반 데이터를 통해 실시간 추천을 수행하는 것이 바람직함. • 향후 연구에서는 Continual Learning을 통해 과거 데이터와 최신 데이터를 균형 있게 학습하여 Precision과 Recall를 개선하는 방법을 제안."
+    },
+    {
+      "index": 5,
+      "src": "/portfolio/slides/slide-005.jpeg",
+      "title": "KneeXray 데이터셋",
+      "alt": "Portfolio slide 5: KneeXray 데이터셋",
+      "width": 1920,
+      "height": 1080,
+      "text": "KneeXray 데이터셋 : 총 8,260개의 무릎 X-ray 이미지를 사용하여 훈련 및 테스트. 데이터는 5개의 K-L 등급 (0: 정상, 1: 의심, 2: 경미, 3: 중등도, 4: 중증)으로 나누어져 있음. 1. 제안하는 앙상블 방법 1.1. Weight Ensemble: • 각 모델의 예측 값을 가중 평균하여 최종 예측 값을 도출. • 모델의 예측 값에 가중치를 부여하고, 이를 합산하여 최종 결과를 계산. • 가중치는 모델의 개별 성능에 따라 부여됨. 1.2. Specialist Ensemble: • 각 K-L 등급에서 가장 높은 정확도를 보이는 모델을 선택하여 해당 등급의 예측에 사용. • 각 등급에 대해 전문화된 모델을 사용함으로써, 전체적인 분류 성능을 향상. • 예를 들어, 0등급(정상)에서는 TinyNetA 모델이 가장 높은 정확도를 보였기 때문에 해당 모델을 선택하고, 다른 등급에서는 다른 모델들을 선택하여 결합. 3. 실험 및 결과 • Weight Ensemble 의 경우, 기존 연구 대비 약 1%의 정확도 향상을 보였음. • Specialist Ensemble 의 경우, 정확도 77.05%를 달성하며, 기존 연구 대비 정확도 5%, 정밀도 6%, 재현율 6%, F1 점수 6% 향상. 2. 실험 과정 2.1. 데이터 전처리: • 이미지를 224x224x3 크기로 조정. • 5-Fold 교차 검증 기법을 사용하여 데이터셋을 나누고, 각 모델을 5번씩 훈련. • 각 훈련 단계에서 다른 검증 데이터를 사용하여 모델의 일반화 성능을 평가. 2.2. 전이 학습: • ImageNet 데이터셋으로 사전 훈련된 모델을 사용하여 전이 학습을 수행. • AdamW 최적화 기법을 사용하여 학습. 2.3. 성능 평가: • F1 스코어를 주요 성능 지표로 사용하여 모델의 학습 과정을 평가. • 최종적으로 각 모델의 성능을 비교하고, 가장 우수한 모델을 선택하여 앙상블 구성. 결론 이 연구는 다양한 최신 딥러닝 모델을 사용하고, 그 모델들을 앙상블 기법으로 결합함으로써 퇴행성 관절염의 분류 정확도를 크게 향상시켰습니다. 특히, Specialist Ensemble 기법이 높은 성능을 보였으며, 이는 각 클래스에 전문화된 모델을 사용하는 접근 방식이 효과적임을 입증했습니다. 이 방법론은 향후 의료 영상 분석에서 다양한 질병 진단에 활용될 수 있으며, 더 나아가 정확도 향상 및 조기 진단에 중요한 역할을 할 수 있을 것으로 기대됩니다."
+    },
+    {
+      "index": 6,
+      "src": "/portfolio/slides/slide-006.jpeg",
+      "title": "MoE (Mixture of Experts)",
+      "alt": "Portfolio slide 6: MoE (Mixture of Experts)",
+      "width": 1920,
+      "height": 1080,
+      "text": "MoE (Mixture of Experts) : 특정 테스크에 맞게 잘 작동하는 모델을 모운 방식 이러한 모델들을 모아서 하나의 큰 모델을 구성. 개선할 수 있는 점 : 각 클래스 에 더욱 우수한 모델 활용 가능. : 양자화 , 프루닝과 같은 경량화 기술을 활 용하여 더욱 가벼운 모델 생성 가능."
+    },
+    {
+      "index": 7,
+      "src": "/portfolio/slides/slide-007.jpeg",
+      "title": "배경 및 문제 정의",
+      "alt": "Portfolio slide 7: 배경 및 문제 정의",
+      "width": 1920,
+      "height": 1080,
+      "text": "1. 배경 및 문제 정의 • 추천 시스템(RIS) : 사용자가 인터넷에서 원하는 콘텐츠를 신속하게 찾을 수 있도록 돕는 시스템. YouTube, Netflix, Amazon과 같은 플랫폼에서 사용됨. • 문제점 : 그래프 컨볼루션 네트워크(GCN) 기반의 추천 시스템은 인접 노드의 정보를 결합하여 임베딩 값을 업데이트하는 과정에서 임베딩 값이 소실되는 문제가 발생함. 이로 인해 다양성이 감소하고 성능이 저하됨. 2. 제안된 방법 • WF-GCN (Weighted Forwarding GCN) : 각 계층에서 학습된 임베딩 값에 가중치를 곱하여 다음 계층으로 전달. 이를 통해 임베딩 값 소실 문제를 완화하고 더 깊은 계층까지 학습할 수 있도록 함. • 효과 : 노드가 많은 이웃을 가진 경우 더 높은 임베딩 값을 가지게 하여, 다양한 임베딩 값을 학습할 수 있게 함. 3 . 결론 • WF-GCN의 장점 : 임베딩 값 소실 문제를 완화하여 GCN 기반 추천 시스템의 성능을 크게 향상시킴. 다양한 알고리즘(SGL, SimGCL)에도 적용 가능. • 미래 연구 방향 : 계층 결합 아키텍처를 개선하여 추천 성능을 더욱 높일 수 있는 방법을 탐구할 예정. 요약 본 논문은 추천 시스템에서 GCN 알고리즘의 임베딩 값 소실 문제를 해결하기 위해 WF-GCN 알고리즘을 제안 했습니다. 제안된 방법은 각 계층에서 가중치를 적용하여 임베딩 값을 전달함으로써 성능을 향상시켰습니다. 실험 결과는 다양한 데이터셋에서 큰 성능 향상을 보였으며, 제안된 방법이 추천 시스템의 다양성과 정확성을 높이는 데 효과적임을 입증했습니다."
+    },
+    {
+      "index": 8,
+      "src": "/portfolio/slides/slide-008.jpeg",
+      "title": "MovieLens-100K",
+      "alt": "Portfolio slide 8: MovieLens-100K",
+      "width": 1920,
+      "height": 1080,
+      "text": "MovieLens-100K MovieLens-1m MovieLens-10m Last.FM User 944 6,040 69,864 1,886 Item 1,575 3,629 10,599 17,389 Interaction 82,520 836,478 8,242,124 91,779 Sparsity 94.45% 96.18% 98.89% 99.72% Table 1: Datasets used in the experiment Data split Random Split, Train: 80%, Validation: 10%, Test: 10% Order Random Ordering, Ratio-based Splitting Mode Full ranking with all item candidates Epochs 500 Validation metric MRR@20 Batch size Train batch size: 32,768, Eval batch size: 4,096,000 (SGL’s Train batch size: 16,384) Table 3: Environment variables 기존 추천시스템 모델에 사용되는 임베딩 전달 방정식 (LightGCN, SGL, SimGCL) 기존 임베딩 전달 방정식에 제안하는 WF기법을 적용한 방정식"
+    },
+    {
+      "index": 9,
+      "src": "/portfolio/slides/slide-009.jpeg",
+      "title": "LightGCN",
+      "alt": "Portfolio slide 9: LightGCN",
+      "width": 1920,
+      "height": 1080,
+      "text": "LightGCN SGL(ED) SimGCL Weight Recall NDCG Recall NDCG Recall NDCG [1, 1, 1] (base) 0.1511 (0%) 0.1154 (0%) 0.3341 (0%) 0.2894 (0%) 0.3261 (0%) 0.275 (0%) [2, 2, 2] 0.1623 (+7.41%) 0.1203 (+4.25%) 0.3391 (+1.5%) 0.2922 (+0.97%) 0.3156 (-3.22%) 0.2629 (-4.4%) [4, 4, 4] 0.1481 (-1.99%) 0.1255 (+8.75%) 0.3443 (+3.05%) 0.2953 (+2.04%) 0.3206 (-1.69%) 0.2693 (-2.07%) [8, 8, 8] 0.1476 (-2.32%) 0.1251 (+8.41%) 0.3474 (+3.98%) 0.2954 (+2.07%) 0.3237 (-0.74%) 0.2694 (-2.04%) [16, 16, 16] 0.1474 (-2.45%) 0.1251 (+8.41%) 0.3508 (+5%) 0.2967 (+2.52%) 0.1534 (-52.96%) 0.1275 (-53.64%) [32, 32, 32] 0.1953 (+29.25%) 0.158 (+36.92%) 0.3505 (+4.91%) 0.2958 (+2.21%) 0.2051 (-37.11%) 0.1705 (-38%) [64, 64, 64] 0.2178 (+44.14%) 0.1829 (+58.49%) 0.3455 (+3.41%) 0.2885 (-0.31%) 0.2398 (-26.46%) 0.2041 (-25.78%) [128, 128, 128] 0.2761 (+82.73%) 0.2339 (+102.69%) 0.3326 (-0.45%) 0.278 (-3.94%) 0.2932 (-10.09%) 0.2523 (-8.25%) [192, 192, 192] 0.2956 (+95.63%) 0.2509 (+117.42%) 0.3193 (-4.43%) 0.263 (-9.12%) 0.3265 (+0.12%) 0.2821 (+2.58%) [256, 256, 256] 0.306 (+102.51%) 0.2596 (+124.96%) 0.3143 (-5.93%) 0.2579 (-10.88%) 0.3336 (+2.30%) 0.2863 (+4.11%) [512, 512, 512] 0.3227 (+113.57%) 0.2729 (+136.48%) 0.2753 (-17.6%) 0.215 (-35.65%) 0.3386 (+3.83%) 0.287 (+4.36%) [1024,1024,1024] 0.298 (+97.22%) 0.2433 (+110.83%) 0.24 (-28.17%) 0.1904 (-34.21%) 0.2978 (-8.68%) 0.2484 (-9.67%) Table 7: Experimental results of applying the proposed method to the model (layer 3, MovieLens-10m) LightGCN SGL(ED) SimGCL Weight Recall NDCG Recall NDCG Recall NDCG [1, 1, 1] (base) 0.0992 (0%) 0.0812 (0%) 0.2594 (0%) 0.2081 (0%) 0.2626 (0%) 0.2101 (0%) [2, 2, 2] 0.1038 (+4.64%) 0.0858 (+5.67%) 0.273 (+5.24%) 0.2189 (+5.19%) 0.2612 (-0.53%) 0.2061 (-1.9%) [4, 4, 4] 0.1132 (+14.11%) 0.0929 (+14.41%) 0.281 (+8.33%) 0.2241 (+7.69%) 0.1503 (-42.76%) 0.1208 (-42.5%) [8, 8, 8] 0.169 (+70.36%) 0.136 (+67.49%) 0.2805 (+8.13%) 0.2235 (+7.40%) 0.2082 (-20.72%) 0.1695 (-19.32%) [16, 16, 16] 0.2058 (+107.46%) 0.1668 (+105.42%) 0.2749 (+7.85%) 0.2206 (+6.01%) 0.2422 (-7.77%) 0.1971 (-6.19%) [32, 32, 32] 0.2425 (+144.46%) 0.1971 (+142.73%) 0.2725 (+5.05%) 0.2171 (+4.32%) 0.2652 (+0.99%) 0.2144 (+2.05%) [64, 64, 64] 0.2722 (+174.40%) 0.2192 (+169.95%) 0.2605 (+0.42%) 0.2059 (-1.06%) 0.2791 (+6.28%) 0.2212 (+5.28%) [128, 128, 128] 0.26 (+162.10%) 0.2065 (+154.31%) 0.2347 (-9.52%) 0.1819 (-12.59%) 0.2286 (-12.95%) 0.1821 (-13.33%) [192, 192, 192] 0.2256 (+127.42%) 0.1764 (+117.24%) 0.2201 (-15.15%) 0.1728 (-16.96%) 0.1986 (-24.37%) 0.1567 (-25.42%) [256, 256, 256] 0.2054 (+107.06%) 0.1596 (+96.55%) 0.2151 (-17.08%) 0.1652 (-20.62%) 0.2035 (-22.51%) 0.1626 (-22.61%) [512, 512, 512] 0.2189 (+120.67%) 0.1753 (+115.89%) 0.1975 (-23.86%) 0.1553 (-25.37%) 0.2223 (-15.35%) 0.1761 (-16.18%) [1024,1024,1024] 0.2147 (+116.43%) 0.1712 (+110.84%) 0.1933 (-25.48%) 0.1523 (-26.81%) 0.2083 (-20.68%) 0.1647 (-37.28%) Table 8: Experimental results of applying the proposed method to the model (layer 3, Last. FM)"
+    },
+    {
+      "index": 10,
+      "src": "/portfolio/slides/slide-010.jpeg",
+      "title": "Figure 4:",
+      "alt": "Portfolio slide 10: Figure 4:",
+      "width": 1920,
+      "height": 1080,
+      "text": "Figure 4: Visualize LightGCN (non weight), PCA, and KDE on the MovieLens-1m dataset Figure 5: Visualize LightGCN (weight = 256), PCA, and KDE on the MovieLens-1m dataset 4 . 통계 분석 및 평가 • 통계적 분석 : 각 계층의 임베딩 값을 비교한 결과, 가중치를 적용한 모델의 임베딩 값 평균이 더 높고 다양성이 증가함을 확인 . • 차원 축소 기법 : PCA와 KDE를 사용하여 임베딩 값의 분포를 시각화한 결과, 가중치를 적용한 모델이 더 넓고 다양한 정보를 포함하고 있음을 확인. 4.1. 주성분 분석 (Principal Component Analysis, PCA) • 목적 : 고차원 데이터를 저차원으로 변환하여 주요 패턴을 시각화하고 분석. • 방법 : 데이터의 분산을 최대화하는 방향으로 주성분(Principal Components)을 찾고, 이 주성분들을 기준으로 데이터를 변환. • 결과 해석 : • 가중치를 적용하지 않은 모델의 경우, 데이터 포인트가 여러 클러스터에 걸쳐 있지만 경계가 명확하지 않음. • 가중치를 적용한 모델의 경우, 클러스터가 명확하게 정의되고, 데이터가 잘 분리됨 . 4.2. 커널 밀도 추정 (Kernel Density Estimation, KDE) • 목적 : 임베딩의 확률 밀도 함수를 추정하여 임베딩이 어떤 분포를 가지는지 파악. • 방법 : 데이터 포인트 주변의 밀도를 커널 함수(예: 가우시안 커널)를 사용하여 추정. • 결과 해석 : • 가중치를 적용하지 않은 모델의 경우, 주요 분포 피크는 하나이지만 다중 중심이나 클러스터를 구별하기 어려움. • 가중치를 적용한 모델의 경우, 분포 피크가 명확하고 밀도 영역이 더 뚜렷하게 나타남 ."
+    },
+    {
+      "index": 11,
+      "src": "/portfolio/slides/slide-011.jpeg",
+      "title": "Figure 3.",
+      "alt": "Portfolio slide 11: Figure 3.",
+      "width": 1920,
+      "height": 1080,
+      "text": "Figure 3. Non-combination structure of LightGCN that does not perform weight sum using the embedding enhancement method. 연구 배경 1. 정보 과부하 문제 : 현대 디지털 시대에 매 순간 방대한 양의 콘텐츠와 정보가 생성되면서 사용자들은 원하는 정보를 찾기 위해 많은 데이터를 필터링해야 하는 어려움을 겪고 있다. 추천 시스템은 이러한 정보 과부하 상태에서 사용자에게 필요한 정보를 제공하는 주요 도구로 작용 2. 전통적인 추천 시스템의 한계 : 매트릭스 분해(MF)와 협업 필터링(CF) 방법을 주로 사용하는 전통적인 추천 시스템은 데이터 양의 증가에 따른 확장성 문제와 계산량 증가로 인한 느린 학습 및 추론 속도를 겪고 있다. 3. LightGCN 모델 : LightGCN은 GCN 기반 추천 시스템에서 주로 사용되는 모델로, 복잡한 가중치 학습을 단순화하고 학습 및 추론 시간을 줄입니다. 그러나 반복적인 대칭 정규화 과정에서 임베딩 값이 감소하는 문제를 겪어 학습 과정과 추천 성능이 저하. 제안 방법 • 본 연구는 대칭 정규화 후 임베딩 값에 스칼라 곱셈을 수행하여 강화된 임베딩 값을 생성하는 임베딩 강화 방법을 제안. • 각 층의 임베딩 값을 가중합하는 대신 마지막 층의 임베딩 값만 사용하여 추천 다양성과 정확성을 향상. • 이 비결합 구조는 임베딩 값을 평균하는 것을 피하고 최종 층의 임베딩 값만 활용하여 LightGCN의 가중치 합 문제를 해결. 연구 목표 : 본 연구는 LightGCN 모델의 최적화와 임베딩 강화를 통해 기존보다 더 높은 정확성과 효율성을 달성하는 것을 목표 이를 위해 비결합 구조를 제안하여 다양한 아이템을 추천할 수 있도록 개선"
+    },
+    {
+      "index": 12,
+      "src": "/portfolio/slides/slide-012.jpeg",
+      "title": "Yelp2018",
+      "alt": "Portfolio slide 12: Yelp2018",
+      "width": 1920,
+      "height": 1080,
+      "text": "Yelp2018 MovieLens-1M [21] Train Test Train Test User 1,499 812 12,638 10,882 Item 2,033 340 22,222 19,075 Interaction 33,750 1,747 478,730 119,690 Rating Range 0.5~4 0.5~4 4~5 4~5 Sparsity 98.89% 99.37% 99.83% 99.94% Table 1. Datasets used in the experiment. FilmTrust [22] Douban-book [23] Train Test Train Test User 6,038 5,989 31,668 31,668 Item 3,492 3,190 38,048 36,073 Interaction 460,359 114,922 1,237,259 324,147 Rating Range 4 ∼ 5 4 ∼ 5 None None Sparsity 97.82% 99.40% 99.90% 99.97%"
+    },
+    {
+      "index": 13,
+      "src": "/portfolio/slides/slide-013.jpeg",
+      "title": "분석 과정",
+      "alt": "Portfolio slide 13: 분석 과정",
+      "width": 1920,
+      "height": 1080,
+      "text": "분석 과정 1. 데이터 샘플링 : • 각 데이터셋에서 인기 있는 사용자와 아이템 그룹의 상위 5%에서 500명의 사용자(블루)와 아이템(그린)을 무작위로 선택하였습니다. • 하위 80%의 사용자(레드)와 아이템(오렌지) 그룹에서도 각각 500명을 무작위로 샘플링하였습니다. 2. 차원 축소 및 시각화 : • 샘플링된 데이터를 t-SNE를 통해 2차원 공간으로 매핑. • 매핑된 데이터를 PCA로 시각화하여 임베딩 분포와 클러스터링을 평가. • GKDE를 사용하여 각 포인트(x, y)를 부드럽게 시각화하고, 특정 특징 값이 집중되는 영역을 확인. 결과 분석 • 클러스터링 : PCA 시각화에서 기존 LightGCN과 비교하여 제안된 방법이 더 명확한 클러스터를 형성 하는 것을 확인. • 밀도 및 분포 : GKDE 시각화에서 제안된 방법은 기존 LightGCN보다 임베딩 값의 분포가 더 균일하고, 특정 영역에 값이 집중되지 않음 을 입증. • 다양성 및 특징 반영 : 제안된 방법이 데이터의 다양성과 특징을 더 효과적으로 반영 하여, 더 나은 임베딩 품질을 제공 한다는 결론 도출."
+    },
+    {
+      "index": 14,
+      "src": "/portfolio/slides/slide-014.jpeg",
+      "title": "Dataset",
+      "alt": "Portfolio slide 14: Dataset",
+      "width": 1920,
+      "height": 1080,
+      "text": "Dataset Weight Best Epoch Model Precision Recall NDCG Hit Ratio Yelp2018 - 101 MF 0.02235 0.04998 0.04055 0.04367 - 231 LightGCN 0.02688 0.05949 0.04887 0.05253 8, 8, 8 56 LightGCN_W 0.02809 0.06191 0.05086 0.05488 8, 8, 8 271 LightGCN_N 0.03093 0.06873 0.05656 0.06044 MovieLens-1M - 46 MF 0.189 0.249 0.2831 0.197 - 261 LightGCN 0.19987 0.27196 0.30274 0.20838 64, 64, 64 11 LightGCN_W 0.19937 0.27716 0.30852 0.20786 128,128,128 271 LightGCN_N 0.20214 0.27748 0.3083 0.21074 FilmTrust - 296 MF 0.0868 0.848 0.6169 0.8178 - 276 LightGCN 0.08761 0.85376 0.61566 0.82547 8, 8, 8 76 LightGCN_W 0.08817 0.86131 0.6197 0.83481 32, 32, 32 226 LightGCN_N 0.08824 0.85874 0.62453 0.83137 Douban-book - 66 MF 0.05407 0.1247 0.1039 0.09662 - 266 LightGCN 0.06209 0.14783 0.12508 0.11095 16, 16, 16 26 LightGCN_W 0.06315 0.15127 0.12867 0.11284 16, 16, 16 181 LightGCN_N 0.07103 0.16701 0.14632 0.12692 Table 4. Quantitative results of the entire experiment with both the traditional model and the proposed method per dataset."
+    },
+    {
+      "index": 15,
+      "src": "/portfolio/slides/slide-015.jpeg",
+      "title": "https://github.com/d9249/OptGCN",
+      "alt": "Portfolio slide 15: https://github.com/d9249/OptGCN",
+      "width": 1920,
+      "height": 1080,
+      "text": "https://github.com/d9249/OptGCN"
+    },
+    {
+      "index": 16,
+      "src": "/portfolio/slides/slide-016.jpeg",
+      "title": "Slide 16",
+      "alt": "Portfolio slide 16",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 17,
+      "src": "/portfolio/slides/slide-017.jpeg",
+      "title": "Slide 17",
+      "alt": "Portfolio slide 17",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 18,
+      "src": "/portfolio/slides/slide-018.jpeg",
+      "title": "‘booxTory’ 서비스의 전임 AI 엔지니어로 전체 AI기반 엔진 개발",
+      "alt": "Portfolio slide 18: ‘booxTory’ 서비스의 전임 AI 엔지니어로 전체 AI기반 엔진 개발",
+      "width": 1920,
+      "height": 1080,
+      "text": "‘booxTory’ 서비스의 전임 AI 엔지니어로 전체 AI기반 엔진 개발 개발 인원: 클라이언트 2명, 중계 서버 1명, AI 엔지니어 2명 ‘Arti’ 엔진의 전임 AI 엔지니어로 기술 개발 및 개발 리드 핵심 기술 역량 언어 모델 & RAG 시스템 구축 및 활용 거대/소형 언어 모델 활용 시스템 개발, 멀티모달, 임베딩 모델 활용 시스템 개발 컴퓨터 비전 & 멀티모달 시스템 구축 및 활용 영상처리 알고리즘 개발, 특정 객체 인식 멀티모달 모델 및 개방형 객체 탐지 시스템 개발 MLOps & 인프라 시스템 구축 및 활용 머신러닝 모델 서빙 및 API 구축, 컨테이너 기반 배포 자동화 및 모니터링 CI/CD 및 클라우드 인프라 관리, 벡터 데이터베이스 구축 및 활용 주요 성과 혁신 제품 개발 및 기술 리더십 “Booxedit\" 사업 기획 및 시스템 개발 “arti\" CES 2025 인공지능 부문 Best of Innovation - Honoree 수상 (기술 자문/개발 주도) “booxTory” CES 2025 인공지능 부문 Best of Innovation 수상 (AI 엔진 개발 총괄) R&D 및 정부 사업 수행 - 인공지능 과제 수주 및 기술 Lead 수행, 사업계획서 작성 및 PoC 제안. 문화체육관광부 한국콘텐츠진흥원 인공지능 콘텐츠 제작지원 사업 협약 수행 (2024년, 2025년) 2025 월드IT쇼(WIS 2025) 혁신상 과학기술정보통신부 장관상 수상 2025년 AI바우처 운영지원 사업 공급기업 선정 (AI 기술 리드 및 총괄) - CLEAR, MAVIS, MERGE, NEXIS 2025년 서울 AI 허브 입주 선정 2025 년 중소기업 연구인력지원사업 ( 신진 ) 협약"
+    },
+    {
+      "index": 19,
+      "src": "/portfolio/slides/slide-019.jpeg",
+      "title": "Slide 19",
+      "alt": "Portfolio slide 19",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 20,
+      "src": "/portfolio/slides/slide-020.jpeg",
+      "title": "Slide 20",
+      "alt": "Portfolio slide 20",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 21,
+      "src": "/portfolio/slides/slide-021.jpeg",
+      "title": "Slide 21",
+      "alt": "Portfolio slide 21",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 22,
+      "src": "/portfolio/slides/slide-022.jpeg",
+      "title": "Slide 22",
+      "alt": "Portfolio slide 22",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 23,
+      "src": "/portfolio/slides/slide-023.jpeg",
+      "title": "Slide 23",
+      "alt": "Portfolio slide 23",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 24,
+      "src": "/portfolio/slides/slide-024.jpeg",
+      "title": "Slide 24",
+      "alt": "Portfolio slide 24",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 25,
+      "src": "/portfolio/slides/slide-025.jpeg",
+      "title": "프로젝트",
+      "alt": "Portfolio slide 25: 프로젝트",
+      "width": 1920,
+      "height": 1080,
+      "text": "프로젝트 경기대학교 캡스톤디자인전시회 | 리더, 프론트개발 |"
+    },
+    {
+      "index": 26,
+      "src": "/portfolio/slides/slide-026.jpeg",
+      "title": "프로젝트",
+      "alt": "Portfolio slide 26: 프로젝트",
+      "width": 1920,
+      "height": 1080,
+      "text": "프로젝트 연구실 개편 | 프론트개발 |"
+    },
+    {
+      "index": 27,
+      "src": "/portfolio/slides/slide-027.jpeg",
+      "title": "프로젝트",
+      "alt": "Portfolio slide 27: 프로젝트",
+      "width": 1920,
+      "height": 1080,
+      "text": "프로젝트 외주 | 리더, 프론트개발 |"
+    },
+    {
+      "index": 28,
+      "src": "/portfolio/slides/slide-028.jpeg",
+      "title": "외부 활동",
+      "alt": "Portfolio slide 28: 외부 활동",
+      "width": 1920,
+      "height": 1080,
+      "text": "외부 활동 비영리 연구 단체 | 팀원 |"
+    },
+    {
+      "index": 29,
+      "src": "/portfolio/slides/slide-029.jpeg",
+      "title": "외부 활동",
+      "alt": "Portfolio slide 29: 외부 활동",
+      "width": 1920,
+      "height": 1080,
+      "text": "외부 활동 비영리 연구 단체 | 팀원 |"
+    },
+    {
+      "index": 30,
+      "src": "/portfolio/slides/slide-030.jpeg",
+      "title": "외부 활동",
+      "alt": "Portfolio slide 30: 외부 활동",
+      "width": 1920,
+      "height": 1080,
+      "text": "외부 활동 비영리 연구 단체 가짜연구소 6기 | “그래프로 설득하기” 팀원 |"
+    },
+    {
+      "index": 31,
+      "src": "/portfolio/slides/slide-031.jpeg",
+      "title": "외부 활동",
+      "alt": "Portfolio slide 31: 외부 활동",
+      "width": 1920,
+      "height": 1080,
+      "text": "외부 활동 비영리 연구 단체 가짜연구소 6기 | “그래프로 설득하기” 팀원 |"
+    },
+    {
+      "index": 32,
+      "src": "/portfolio/slides/slide-032.jpeg",
+      "title": "외부 활동",
+      "alt": "Portfolio slide 32: 외부 활동",
+      "width": 1920,
+      "height": 1080,
+      "text": "외부 활동 LG Aimers 4기 | MQL 데이터 기반 B2B 영업 기회 창출 예측 모델 개발 | 팀리더 |"
+    },
+    {
+      "index": 33,
+      "src": "/portfolio/slides/slide-033.jpeg",
+      "title": "외부 활동",
+      "alt": "Portfolio slide 33: 외부 활동",
+      "width": 1920,
+      "height": 1080,
+      "text": "외부 활동 LG Aimers 4기 | MQL 데이터 기반 B2B 영업 기회 창출 예측 모델 개발 | 팀리더 |"
+    },
+    {
+      "index": 34,
+      "src": "/portfolio/slides/slide-034.jpeg",
+      "title": "Slide 34",
+      "alt": "Portfolio slide 34",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 35,
+      "src": "/portfolio/slides/slide-035.jpeg",
+      "title": "외부 활동",
+      "alt": "Portfolio slide 35: 외부 활동",
+      "width": 1920,
+      "height": 1080,
+      "text": "외부 활동 HD현대 AI Challenge | 건설기계 센서데이터를 활용한 작업 중량 예측 모델 |"
+    },
+    {
+      "index": 36,
+      "src": "/portfolio/slides/slide-036.jpeg",
+      "title": "외부 활동",
+      "alt": "Portfolio slide 36: 외부 활동",
+      "width": 1920,
+      "height": 1080,
+      "text": "외부 활동 HD현대 AI Challenge | 건설기계 센서데이터를 활용한 작업 중량 예측 모델 |"
+    },
+    {
+      "index": 37,
+      "src": "/portfolio/slides/slide-037.jpeg",
+      "title": "Slide 37",
+      "alt": "Portfolio slide 37",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 38,
+      "src": "/portfolio/slides/slide-038.jpeg",
+      "title": "이상민 (Lee Sang-min)",
+      "alt": "Portfolio slide 38: 이상민 (Lee Sang-min)",
+      "width": 1920,
+      "height": 1080,
+      "text": "이상민 (Lee Sang-min) 개인 정보 이메일 dodo9249@gmail.com 번호 +82 10-9130-9249 주소 경기도 안산시 학력 Degree B.S. of Computer Engineering M.S. of Computer Science Period 2015.03 ~ 2022.02 2022.03 ~ 2024.02 Institution Kyonggi University Kyonggi University GPA 3.62 / 4.5 4.25 / 4.5 Additional Coursework 공학인증(ABEEK) 이수 산업인공지능 전문인력 양성사업 수료 Research Field 컴퓨터비전 추천시스템, 컴퓨터비전 Advisor Prof. Namgi Kim Prof. Namgi Kim 어학 English, TOEIC Speaking Intermediate Mid 1 (Speaking Score 110) 개인 사이트 Github https://github.com/d9249 Linkedin www.linkedin.com/in/meanl Google scholar https://scholar.google.co.kr/citations?hl=ko&user=JcGG1pMAAAAJ"
+    },
+    {
+      "index": 39,
+      "src": "/portfolio/slides/slide-039.jpeg",
+      "title": "연구 이력",
+      "alt": "Portfolio slide 39: 연구 이력",
+      "width": 1920,
+      "height": 1080,
+      "text": "연구 이력 2021년 1월 ~ 2024년 2월"
+    },
+    {
+      "index": 40,
+      "src": "/portfolio/slides/slide-040.jpeg",
+      "title": "Artygenspace",
+      "alt": "Portfolio slide 40: Artygenspace",
+      "width": 1920,
+      "height": 1080,
+      "text": "Artygenspace 인공지능연구소 | 전임연구원 | 인공지능 기술 Lead |"
+    },
+    {
+      "index": 41,
+      "src": "/portfolio/slides/slide-041.jpeg",
+      "title": "Artygenspace",
+      "alt": "Portfolio slide 41: Artygenspace",
+      "width": 1920,
+      "height": 1080,
+      "text": "Artygenspace 인공지능연구소 | 전임연구원 | 인공지능 기술 Lead |"
+    },
+    {
+      "index": 42,
+      "src": "/portfolio/slides/slide-042.jpeg",
+      "title": "기술 스택",
+      "alt": "Portfolio slide 42: 기술 스택",
+      "width": 1920,
+      "height": 1080,
+      "text": "기술 스택 CI/CD Monitoring Development Utils Infrastructure Data Collaboration Notion Back-end Analytics / ML Imagehash Kafka UI Python FastAPI aiohttp Qdrant Langsmith Langgraph Artygenspace 인공지능연구소 | 전임연구원 | 인공지능 기술 Lead |"
+    },
+    {
+      "index": 43,
+      "src": "/portfolio/slides/slide-043.jpeg",
+      "title": "ArtygenSpace",
+      "alt": "Portfolio slide 43: ArtygenSpace",
+      "width": 1920,
+      "height": 1080,
+      "text": "ArtygenSpace ‘booxTory’ 서비스의 전임 AI 엔지니어로 전체 AI기반 엔진 개발 주도 개발 인원: 클라이언트 2명, 중계 서버 1명, AI 엔지니어 2명 ‘Arti’ 서비스의 전임 AI 엔지니어로 기술 자문 및 개발 주도"
+    },
+    {
+      "index": 44,
+      "src": "/portfolio/slides/slide-044.jpeg",
+      "title": "ArtygenSpace - booxtory",
+      "alt": "Portfolio slide 44: ArtygenSpace - booxtory",
+      "width": 1920,
+      "height": 1080,
+      "text": "ArtygenSpace - booxtory 개발 기능"
+    },
+    {
+      "index": 45,
+      "src": "/portfolio/slides/slide-045.jpeg",
+      "title": "ArtygenSpace - booxtory",
+      "alt": "Portfolio slide 45: ArtygenSpace - booxtory",
+      "width": 1920,
+      "height": 1080,
+      "text": "ArtygenSpace - booxtory 통합 및 관리 기능"
+    },
+    {
+      "index": 46,
+      "src": "/portfolio/slides/slide-046.jpeg",
+      "title": "Artygenspace",
+      "alt": "Portfolio slide 46: Artygenspace",
+      "width": 1920,
+      "height": 1080,
+      "text": "Artygenspace 인공지능연구소 | 전임연구원 | 인공지능 기술 Lead |"
+    },
+    {
+      "index": 47,
+      "src": "/portfolio/slides/slide-047.jpeg",
+      "title": "팀 프로젝트 (개발)",
+      "alt": "Portfolio slide 47: 팀 프로젝트 (개발)",
+      "width": 1920,
+      "height": 1080,
+      "text": "활동 팀 프로젝트 (개발) Fit-sibang : 비대면 PT를 위한 웹앱 👤 개발 인원 5명 (팀프로젝트) 🗓️ 개발 기간 2021.03 ~ 2021.06 Smart I.o.T 연구실 홈페이지 : 연구실 홍보 및 수업자료 배포 👤 개발 인원 프론트 1명, 풀스택 1명 🗓️ 개발 기간 2021.12 ~ 2022.04 IA^2S : 도제식 시스템 개선을 위한 데이터 자동화 👤 개발 인원 프론트 1명, 풀스택 2명 🗓️ 개발 기간 2021.10 ~ 2022.02 대외 활동 DIYA(Do It Yourself AI) CV, GNN, Pytorch Team 👤 참여 인원 30명 🗓️ 활동 기간 2021.03 ~ 2023.02 가짜연구소 6기: 그래프로 설득하기 👤 참여 인원 9명 🗓️ 활동 기간 2023.09 ~ 2023.12 LG Aimers 4기 👤 참여 인원 3명 🗓️ 활동 기간 2023.07 ~ 2024.02"
+    },
+    {
+      "index": 48,
+      "src": "/portfolio/slides/slide-048.jpeg",
+      "title": "외부 활동",
+      "alt": "Portfolio slide 48: 외부 활동",
+      "width": 1920,
+      "height": 1080,
+      "text": "외부 활동 DACON"
+    },
+    {
+      "index": 49,
+      "src": "/portfolio/slides/slide-049.jpeg",
+      "title": "의료 영상 시스템에서 다중 연쇄 U-Net 모델을 이용한 개선된 췌장 영역 분할 탐지",
+      "alt": "Portfolio slide 49: 의료 영상 시스템에서 다중 연쇄 U-Net 모델을 이용한 개선된 췌장 영역 분할 탐지",
+      "width": 1920,
+      "height": 1080,
+      "text": "의료 영상 시스템에서 다중 연쇄 U-Net 모델을 이용한 개선된 췌장 영역 분할 탐지 연구 - Computer Vision (Medical) 연구 배경: 의료 영상 분석은 장기 관찰과 질병 진단에 필수적입니다. 특히 췌장은 크기가 작고 위치적 특성 때문에 탐지 난이도가 높습니다. 문제점: 기존 U-Net, Attention U-Net, RSTN 모델은 췌장 분할 정확도가 90%를 넘지 못했습니다. 1. 관련 연구 • 딥러닝 모델: U-Net, Attention U-Net, RSTN 모델이 사용되었으나, 여전히 췌장 분할 성능이 충분하지 않았습니다. 2. MCU-Net 모델 • 구조: 다양한 크기의 패치를 사용하는 여러 U-Net 모델을 마지막 단계에서 결합하여 정보를 통합합니다. • 이점: 필터 슬라이딩 방식 대신 패치 기반 탐색 방식을 사용 하여 학습 속도를 향상시키고 정보 손실을 줄입니다. • 결합: 서로 다른 크기의 패치를 가지는 U-Net 모델을 연쇄 결합 하여 더 많은 컨텍스트 정보 를 얻습니다. 3. 실험 • 데이터셋: Pancreas-CT 세트를 사용하여 모델을 학습 및 평가했습니다. • 실험 결과: 제안된 MCU-Net 모델은 91.6%의 정확도로, 기존 모델보다 약 2% 높은 성능을 보였습니다. 다양한 패치 크기를 결합한 M5 모델이 가장 높은 성능을 보였습니다. • 비교: Attention U-Net, RSTN, U-Net 모델과 비교했을 때 MCU-Net 모델이 가장 높은 정확도를 기록했습니다. 4. 결론 • 성과: MCU-Net 모델은 췌장 분할 성능을 향상시켰으며, 향후 다른 장기 분류 문제에서도 유용할 것으로 예상됩니다. M5 모델 기준: 3개의 U-Net 모델 사용하여 각 모델을 학습. 3x3 패치: 특징 맵 추출, 5x5 패치: 특징 맵 추출, 7x7 패치: 특징 맵 추출, 패치 크기에 따른 모델 별 마지막 컨볼루션 레이어의 출력 활용. : 추출된 3개의 채널을 1개로 결합. 결합된 특징 맵은 다양한 크기의 패치에서 추출된 정보를 모두 포함하고 있으므로, 더 풍부한 특징을 반영하여 분할 성능을 향상."
+    },
+    {
+      "index": 50,
+      "src": "/portfolio/slides/slide-050.jpeg",
+      "title": "의료 영상 시스템에서 다중 연쇄 U-Net 모델을 이용한 개선된 췌장 영역 분할 탐지",
+      "alt": "Portfolio slide 50: 의료 영상 시스템에서 다중 연쇄 U-Net 모델을 이용한 개선된 췌장 영역 분할 탐지",
+      "width": 1920,
+      "height": 1080,
+      "text": "의료 영상 시스템에서 다중 연쇄 U-Net 모델을 이용한 개선된 췌장 영역 분할 탐지 연구 - Computer Vision (Medical) Models DSC Attention U-Net model [4] 0.832 Recurrent saliency transformation network model (RSTN) [5] [14] 0.846 U-Net model [3] 0.896 MCU-Net model (Proposed) 0.916 Table 3. Performance comparison between models"
+    },
+    {
+      "index": 51,
+      "src": "/portfolio/slides/slide-051.jpeg",
+      "title": "Graph Neural Network 기반 추천시스템 성능 향상을 위한 유저 행동 시간 기반 데이터 사용 방안 분석",
+      "alt": "Portfolio slide 51: Graph Neural Network 기반 추천시스템 성능 향상을 위한 유저 행동 시간 기반 데이터 사용 방안 분석",
+      "width": 1920,
+      "height": 1080,
+      "text": "Graph Neural Network 기반 추천시스템 성능 향상을 위한 유저 행동 시간 기반 데이터 사용 방안 분석 연구 - Graph (RecSys) 실험 결과: • 최신 데이터를 학습하는 것이 Precision@20에서 높은 성능을 보였으나, Recall@20에서는 전체 데이터를 학습하는 것이 더 나은 성능을 보였다. • F1 점수를 기준으로 평가한 결과, 최신 데이터를 사용한 모델이 더 높은 점수를 기록했다. • 시간 기반 데이터 활용이 추천 시스템 성능 향상에 효과적임을 확인. 결론 및 향후 과제: • 최신 데이터만을 학습하는 모델은 Precision@20의 정확도가 높아지지만, Recall@20에서는 성능이 떨어지는 한계가 있음. • 전체 데이터를 학습하는 대신, 시간 기반 데이터를 통해 실시간 추천을 수행하는 것이 바람직함. • 향후 연구에서는 Continual Learning을 통해 과거 데이터와 최신 데이터를 균형 있게 학습하여 Precision과 Recall 모두를 개선하는 방법을 제안."
+    },
+    {
+      "index": 52,
+      "src": "/portfolio/slides/slide-052.jpeg",
+      "title": "Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis",
+      "alt": "Portfolio slide 52: Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis",
+      "width": 1920,
+      "height": 1080,
+      "text": "Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis 연구 - Computer Vision (Medical) KneeXray 데이터셋 : 총 8,260개의 무릎 X-ray 이미지를 사용하여 훈련 및 테스트. 데이터는 5개의 K-L 등급 (0: 정상, 1: 의심, 2: 경미, 3: 중등도, 4: 중증)으로 나누어져 있음. 1. 제안하는 앙상블 방법 1.1. Weight Ensemble: • 각 모델의 예측 값을 가중 평균하여 최종 예측 값을 도출. • 모델의 예측 값에 가중치를 부여하고, 이를 합산하여 최종 결과를 계산. • 가중치는 모델의 개별 성능에 따라 부여됨. 1.2. Specialist Ensemble: • 각 K-L 등급에서 가장 높은 정확도를 보이는 모델을 선택하여 해당 등급의 예측에 사용. • 각 등급에 대해 전문화된 모델을 사용함으로써, 전체적인 분류 성능을 향상. • 예를 들어, 0등급(정상)에서는 TinyNetA 모델이 가장 높은 정확도를 보였기 때문에 해당 모델을 선택하고, 다른 등급에서는 다른 모델들을 선택하여 결합. 3. 실험 및 결과 • Weight Ensemble 의 경우, 기존 연구 대비 약 1%의 정확도 향상을 보였음. • Specialist Ensemble 의 경우, 정확도 77.05%를 달성하며, 기존 연구 대비 정확도 5%, 정밀도 6%, 재현율 6%, F1 점수 6% 향상. 2. 실험 과정 2.1. 데이터 전처리: • 이미지를 224x224x3 크기로 조정. • 5-Fold 교차 검증 기법을 사용하여 데이터셋을 나누고, 각 모델을 5번씩 훈련. • 각 훈련 단계에서 다른 검증 데이터를 사용하여 모델의 일반화 성능을 평가. 2.2. 전이 학습: • ImageNet 데이터셋으로 사전 훈련된 모델을 사용하여 전이 학습을 수행. • AdamW 최적화 기법을 사용하여 학습. 2.3. 성능 평가: • F1 스코어를 주요 성능 지표로 사용하여 모델의 학습 과정을 평가. • 최종적으로 각 모델의 성능을 비교하고, 가장 우수한 모델을 선택하여 앙상블 구성. 결론 이 연구는 다양한 최신 딥러닝 모델을 사용하고, 그 모델들을 앙상블 기법으로 결합함으로써 퇴행성 관절염의 분류 정확도를 크게 향상시켰습니다. 특히, Specialist Ensemble 기법이 높은 성능을 보였으며, 이는 각 클래스에 전문화된 모델을 사용하는 접근 방식이 효과적임을 입증했습니다. 이 방법론은 향후 의료 영상 분석에서 다양한 질병 진단에 활용될 수 있으며, 더 나아가 정확도 향상 및 조기 진단에 중요한 역할을 할 수 있을 것으로 기대됩니다."
+    },
+    {
+      "index": 53,
+      "src": "/portfolio/slides/slide-053.jpeg",
+      "title": "Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis",
+      "alt": "Portfolio slide 53: Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis",
+      "width": 1920,
+      "height": 1080,
+      "text": "Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis 연구 - Computer Vision (Medical) MoE (Mixture of Experts) : 특정 테스크에 맞게 잘 작동하는 모델을 모운 방식 이러한 모델들을 모아서 하나의 큰 모델을 구성. 개선할 수 있는 점 : 각 클래스 에 더욱 우수한 모델 활용 가능. : 양자화 , 프루닝과 같은 경량화 기술을 활 용하여 더욱 가벼운 모델 생성 가능."
+    },
+    {
+      "index": 54,
+      "src": "/portfolio/slides/slide-054.jpeg",
+      "title": "Weighted Forwarding in Graph Convolution Networks for Recommendation Information System",
+      "alt": "Portfolio slide 54: Weighted Forwarding in Graph Convolution Networks for Recommendation Information System",
+      "width": 1920,
+      "height": 1080,
+      "text": "Weighted Forwarding in Graph Convolution Networks for Recommendation Information System 연구 - Graph (RecSys) 1. 배경 및 문제 정의 • 추천 시스템(RIS) : 사용자가 인터넷에서 원하는 콘텐츠를 신속하게 찾을 수 있도록 돕는 시스템. YouTube, Netflix, Amazon과 같은 플랫폼에서 사용됨. • 문제점 : 그래프 컨볼루션 네트워크(GCN) 기반의 추천 시스템은 인접 노드의 정보를 결합하여 임베딩 값을 업데이트하는 과정에서 임베딩 값이 소실되는 문제가 발생함. 이로 인해 다양성이 감소하고 성능이 저하됨. 2. 제안된 방법 • WF-GCN (Weighted Forwarding GCN) : 각 계층에서 학습된 임베딩 값에 가중치를 곱하여 다음 계층으로 전달. 이를 통해 임베딩 값 소실 문제를 완화하고 더 깊은 계층까지 학습할 수 있도록 함. • 효과 : 노드가 많은 이웃을 가진 경우 더 높은 임베딩 값을 가지게 하여, 다양한 임베딩 값을 학습할 수 있게 함. 3 . 결론 • WF-GCN의 장점 : 임베딩 값 소실 문제를 완화하여 GCN 기반 추천 시스템의 성능을 크게 향상시킴. 다양한 알고리즘(SGL, SimGCL)에도 적용 가능. • 미래 연구 방향 : 계층 결합 아키텍처를 개선하여 추천 성능을 더욱 높일 수 있는 방법을 탐구할 예정. 요약 본 논문은 추천 시스템에서 GCN 알고리즘의 임베딩 값 소실 문제를 해결하기 위해 WF-GCN 알고리즘을 제안했습니다. 제안된 방법은 각 계층에서 가중치를 적용하여 임베딩 값을 전달함으로써 성능을 향상시켰습니다. 실험 결과는 다양한 데이터셋에서 큰 성능 향상을 보였으며, 제안된 방법이 추천 시스템의 다양성과 정확성을 높이는 데 효과적임을 입증했습니다."
+    },
+    {
+      "index": 55,
+      "src": "/portfolio/slides/slide-055.jpeg",
+      "title": "Weighted Forwarding in Graph Convolution Networks for Recommendation Information System",
+      "alt": "Portfolio slide 55: Weighted Forwarding in Graph Convolution Networks for Recommendation Information System",
+      "width": 1920,
+      "height": 1080,
+      "text": "Weighted Forwarding in Graph Convolution Networks for Recommendation Information System 연구 - Graph (RecSys) MovieLens-100K MovieLens-1m MovieLens-10m Last.FM User 944 6,040 69,864 1,886 Item 1,575 3,629 10,599 17,389 Interaction 82,520 836,478 8,242,124 91,779 Sparsity 94.45% 96.18% 98.89% 99.72% Table 1: Datasets used in the experiment Data split Random Split, Train: 80%, Validation: 10%, Test: 10% Order Random Ordering, Ratio-based Splitting Mode Full ranking with all item candidates Epochs 500 Validation metric MRR@20 Batch size Train batch size: 32,768, Eval batch size: 4,096,000 (SGL’s Train batch size: 16,384) Table 3: Environment variables 기존 추천시스템 모델에 사용되는 임베딩 전달 방정식(LightGCN, SGL, SimGCL) 기존 임베딩 전달 방정식에 제안하는 WF기법을 적용한 방정식"
+    },
+    {
+      "index": 56,
+      "src": "/portfolio/slides/slide-056.jpeg",
+      "title": "Weighted Forwarding in Graph Convolution Networks for Recommendation Information System",
+      "alt": "Portfolio slide 56: Weighted Forwarding in Graph Convolution Networks for Recommendation Information System",
+      "width": 1920,
+      "height": 1080,
+      "text": "Weighted Forwarding in Graph Convolution Networks for Recommendation Information System 연구 - Graph (RecSys) LightGCN SGL(ED) SimGCL Weight Recall NDCG Recall NDCG Recall NDCG [1, 1, 1] (base) 0.1511 (0%) 0.1154 (0%) 0.3341 (0%) 0.2894 (0%) 0.3261 (0%) 0.275 (0%) [2, 2, 2] 0.1623 (+7.41%) 0.1203 (+4.25%) 0.3391 (+1.5%) 0.2922 (+0.97%) 0.3156 (-3.22%) 0.2629 (-4.4%) [4, 4, 4] 0.1481 (-1.99%) 0.1255 (+8.75%) 0.3443 (+3.05%) 0.2953 (+2.04%) 0.3206 (-1.69%) 0.2693 (-2.07%) [8, 8, 8] 0.1476 (-2.32%) 0.1251 (+8.41%) 0.3474 (+3.98%) 0.2954 (+2.07%) 0.3237 (-0.74%) 0.2694 (-2.04%) [16, 16, 16] 0.1474 (-2.45%) 0.1251 (+8.41%) 0.3508 (+5%) 0.2967 (+2.52%) 0.1534 (-52.96%) 0.1275 (-53.64%) [32, 32, 32] 0.1953 (+29.25%) 0.158 (+36.92%) 0.3505 (+4.91%) 0.2958 (+2.21%) 0.2051 (-37.11%) 0.1705 (-38%) [64, 64, 64] 0.2178 (+44.14%) 0.1829 (+58.49%) 0.3455 (+3.41%) 0.2885 (-0.31%) 0.2398 (-26.46%) 0.2041 (-25.78%) [128, 128, 128] 0.2761 (+82.73%) 0.2339 (+102.69%) 0.3326 (-0.45%) 0.278 (-3.94%) 0.2932 (-10.09%) 0.2523 (-8.25%) [192, 192, 192] 0.2956 (+95.63%) 0.2509 (+117.42%) 0.3193 (-4.43%) 0.263 (-9.12%) 0.3265 (+0.12%) 0.2821 (+2.58%) [256, 256, 256] 0.306 (+102.51%) 0.2596 (+124.96%) 0.3143 (-5.93%) 0.2579 (-10.88%) 0.3336 (+2.30%) 0.2863 (+4.11%) [512, 512, 512] 0.3227 (+113.57%) 0.2729 (+136.48%) 0.2753 (-17.6%) 0.215 (-35.65%) 0.3386 (+3.83%) 0.287 (+4.36%) [1024,1024,1024] 0.298 (+97.22%) 0.2433 (+110.83%) 0.24 (-28.17%) 0.1904 (-34.21%) 0.2978 (-8.68%) 0.2484 (-9.67%) Table 7: Experimental results of applying the proposed method to the model (layer 3, MovieLens-10m) LightGCN SGL(ED) SimGCL Weight Recall NDCG Recall NDCG Recall NDCG [1, 1, 1] (base) 0.0992 (0%) 0.0812 (0%) 0.2594 (0%) 0.2081 (0%) 0.2626 (0%) 0.2101 (0%) [2, 2, 2] 0.1038 (+4.64%) 0.0858 (+5.67%) 0.273 (+5.24%) 0.2189 (+5.19%) 0.2612 (-0.53%) 0.2061 (-1.9%) [4, 4, 4] 0.1132 (+14.11%) 0.0929 (+14.41%) 0.281 (+8.33%) 0.2241 (+7.69%) 0.1503 (-42.76%) 0.1208 (-42.5%) [8, 8, 8] 0.169 (+70.36%) 0.136 (+67.49%) 0.2805 (+8.13%) 0.2235 (+7.40%) 0.2082 (-20.72%) 0.1695 (-19.32%) [16, 16, 16] 0.2058 (+107.46%) 0.1668 (+105.42%) 0.2749 (+7.85%) 0.2206 (+6.01%) 0.2422 (-7.77%) 0.1971 (-6.19%) [32, 32, 32] 0.2425 (+144.46%) 0.1971 (+142.73%) 0.2725 (+5.05%) 0.2171 (+4.32%) 0.2652 (+0.99%) 0.2144 (+2.05%) [64, 64, 64] 0.2722 (+174.40%) 0.2192 (+169.95%) 0.2605 (+0.42%) 0.2059 (-1.06%) 0.2791 (+6.28%) 0.2212 (+5.28%) [128, 128, 128] 0.26 (+162.10%) 0.2065 (+154.31%) 0.2347 (-9.52%) 0.1819 (-12.59%) 0.2286 (-12.95%) 0.1821 (-13.33%) [192, 192, 192] 0.2256 (+127.42%) 0.1764 (+117.24%) 0.2201 (-15.15%) 0.1728 (-16.96%) 0.1986 (-24.37%) 0.1567 (-25.42%) [256, 256, 256] 0.2054 (+107.06%) 0.1596 (+96.55%) 0.2151 (-17.08%) 0.1652 (-20.62%) 0.2035 (-22.51%) 0.1626 (-22.61%) [512, 512, 512] 0.2189 (+120.67%) 0.1753 (+115.89%) 0.1975 (-23.86%) 0.1553 (-25.37%) 0.2223 (-15.35%) 0.1761 (-16.18%) [1024,1024,1024] 0.2147 (+116.43%) 0.1712 (+110.84%) 0.1933 (-25.48%) 0.1523 (-26.81%) 0.2083 (-20.68%) 0.1647 (-37.28%) Table 8: Experimental results of applying the proposed method to the model (layer 3, Last. FM)"
+    },
+    {
+      "index": 57,
+      "src": "/portfolio/slides/slide-057.jpeg",
+      "title": "Weighted Forwarding in Graph Convolution Networks for Recommendation Information System",
+      "alt": "Portfolio slide 57: Weighted Forwarding in Graph Convolution Networks for Recommendation Information System",
+      "width": 1920,
+      "height": 1080,
+      "text": "Weighted Forwarding in Graph Convolution Networks for Recommendation Information System 연구 - Graph (RecSys) Figure 4: Visualize LightGCN (non weight), PCA, and KDE on the MovieLens-1m dataset Figure 5: Visualize LightGCN (weight = 256), PCA, and KDE on the MovieLens-1m dataset 4 . 통계 분석 및 평가 • 통계적 분석 : 각 계층의 임베딩 값을 비교한 결과, 가중치를 적용한 모델의 임베딩 값 평균이 더 높고 다양성이 증가함을 확인. • 차원 축소 기법 : PCA와 KDE를 사용하여 임베딩 값의 분포를 시각화한 결과, 가중치를 적용한 모델이 더 넓고 다양한 정보를 포함하고 있음을 확인. 4.1. 주성분 분석 (Principal Component Analysis, PCA) • 목적 : 고차원 데이터를 저차원으로 변환하여 주요 패턴을 시각화하고 분석. • 방법 : 데이터의 분산을 최대화하는 방향으로 주성분(Principal Components)을 찾고, 이 주성분들을 기준으로 데이터를 변환. • 결과 해석 : • 가중치를 적용하지 않은 모델의 경우, 데이터 포인트가 여러 클러스터에 걸쳐 있지만 경계가 명확하지 않음. • 가중치를 적용한 모델의 경우, 클러스터가 명확하게 정의되고, 데이터가 잘 분리됨. 4.2. 커널 밀도 추정 (Kernel Density Estimation, KDE) • 목적 : 임베딩의 확률 밀도 함수를 추정하여 임베딩이 어떤 분포를 가지는지 파악. • 방법 : 데이터 포인트 주변의 밀도를 커널 함수(예: 가우시안 커널)를 사용하여 추정. • 결과 해석 : • 가중치를 적용하지 않은 모델의 경우, 주요 분포 피크는 하나이지만 다중 중심이나 클러스터를 구별하기 어려움. • 가중치를 적용한 모델의 경우, 분포 피크가 명확하고 밀도 영역이 더 뚜렷하게 나타남."
+    },
+    {
+      "index": 58,
+      "src": "/portfolio/slides/slide-058.jpeg",
+      "title": "Embedding Enhancement method for LightGCN in Recommendation Information Systems",
+      "alt": "Portfolio slide 58: Embedding Enhancement method for LightGCN in Recommendation Information Systems",
+      "width": 1920,
+      "height": 1080,
+      "text": "Embedding Enhancement method for LightGCN in Recommendation Information Systems 연구 - Graph (RecSys) Figure 3. Non-combination structure of LightGCN that does not perform weight sum using the embedding enhancement method. 연구 배경 1. 정보 과부하 문제 : 현대 디지털 시대에 매 순간 방대한 양의 콘텐츠와 정보가 생성되면서 사용자들은 원하는 정보를 찾기 위해 많은 데이터를 필터링해야 하는 어려움을 겪고 있다. 추천 시스템은 이러한 정보 과부하 상태에서 사용자에게 필요한 정보를 제공하는 주요 도구로 작용 2. 전통적인 추천 시스템의 한계 : 매트릭스 분해(MF)와 협업 필터링(CF) 방법을 주로 사용하는 전통적인 추천 시스템은 데이터 양의 증가에 따른 확장성 문제와 계산량 증가로 인한 느린 학습 및 추론 속도를 겪고 있다. 3. LightGCN 모델 : LightGCN은 GCN 기반 추천 시스템에서 주로 사용되는 모델로, 복잡한 가중치 학습을 단순화하고 학습 및 추론 시간을 줄입니다. 그러나 반복적인 대칭 정규화 과정에서 임베딩 값이 감소하는 문제를 겪어 학습 과정과 추천 성능이 저하. 제안 방법 • 본 연구는 대칭 정규화 후 임베딩 값에 스칼라 곱셈을 수행하여 강화된 임베딩 값을 생성하는 임베딩 강화 방법을 제안. • 각 층의 임베딩 값을 가중합하는 대신 마지막 층의 임베딩 값만 사용하여 추천 다양성과 정확성을 향상. • 이 비결합 구조는 임베딩 값을 평균하는 것을 피하고 최종 층의 임베딩 값만 활용하여 LightGCN의 가중치 합 문제를 해결. 연구 목표 : 본 연구는 LightGCN 모델의 최적화와 임베딩 강화를 통해 기존보다 더 높은 정확성과 효율성을 달성하는 것을 목표 이를 위해 비결합 구조를 제안하여 다양한 아이템을 추천할 수 있도록 개선"
+    },
+    {
+      "index": 59,
+      "src": "/portfolio/slides/slide-059.jpeg",
+      "title": "Embedding Enhancement method for LightGCN in Recommendation Information Systems",
+      "alt": "Portfolio slide 59: Embedding Enhancement method for LightGCN in Recommendation Information Systems",
+      "width": 1920,
+      "height": 1080,
+      "text": "Embedding Enhancement method for LightGCN in Recommendation Information Systems 연구 - Graph (RecSys) Yelp2018 MovieLens-1M [21] Train Test Train Test User 1,499 812 12,638 10,882 Item 2,033 340 22,222 19,075 Interaction 33,750 1,747 478,730 119,690 Rating Range 0.5~4 0.5~4 4~5 4~5 Sparsity 98.89% 99.37% 99.83% 99.94% Table 1. Datasets used in the experiment. FilmTrust [22] Douban-book [23] Train Test Train Test User 6,038 5,989 31,668 31,668 Item 3,492 3,190 38,048 36,073 Interaction 460,359 114,922 1,237,259 324,147 Rating Range 4 ∼ 5 4 ∼ 5 None None Sparsity 97.82% 99.40% 99.90% 99.97%"
+    },
+    {
+      "index": 60,
+      "src": "/portfolio/slides/slide-060.jpeg",
+      "title": "Embedding Enhancement method for LightGCN in Recommendation Information Systems",
+      "alt": "Portfolio slide 60: Embedding Enhancement method for LightGCN in Recommendation Information Systems",
+      "width": 1920,
+      "height": 1080,
+      "text": "Embedding Enhancement method for LightGCN in Recommendation Information Systems 연구 - Graph (RecSys) 분석 과정 1. 데이터 샘플링 : • 각 데이터셋에서 인기 있는 사용자와 아이템 그룹의 상위 5%에서 500명의 사용자(블루)와 아이템(그린)을 무작위로 선택하였습니다. • 하위 80%의 사용자(레드)와 아이템(오렌지) 그룹에서도 각각 500명을 무작위로 샘플링하였습니다. 2. 차원 축소 및 시각화 : • 샘플링된 데이터를 t-SNE를 통해 2차원 공간으로 매핑. • 매핑된 데이터를 PCA로 시각화하여 임베딩 분포와 클러스터링을 평가. • GKDE를 사용하여 각 포인트(x, y)를 부드럽게 시각화하고, 특정 특징 값이 집중되는 영역을 확인. 결과 분석 • 클러스터링 : PCA 시각화에서 기존 LightGCN과 비교하여 제안된 방법이 더 명확한 클러스터를 형성하는 것을 확인하였습니다. • 밀도 및 분포 : GKDE 시각화에서 제안된 방법은 기존 LightGCN보다 임베딩 값의 분포가 더 균일하고, 특정 영역에 값이 집중되지 않음을 보여주었습니다. • 다양성 및 특징 반영 : 제안된 방법이 데이터의 다양성과 특징을 더 효과적으로 반영하여, 더 나은 임베딩 품질을 제공한다는 결론을 도출하였습니다."
+    },
+    {
+      "index": 61,
+      "src": "/portfolio/slides/slide-061.jpeg",
+      "title": "Embedding Enhancement method for LightGCN in Recommendation Information Systems",
+      "alt": "Portfolio slide 61: Embedding Enhancement method for LightGCN in Recommendation Information Systems",
+      "width": 1920,
+      "height": 1080,
+      "text": "Embedding Enhancement method for LightGCN in Recommendation Information Systems 연구 - Graph (RecSys) Dataset Weight Best Epoch Model Precision Recall NDCG Hit Ratio Yelp2018 - 101 MF 0.02235 0.04998 0.04055 0.04367 - 231 LightGCN 0.02688 0.05949 0.04887 0.05253 8, 8, 8 56 LightGCN_W 0.02809 0.06191 0.05086 0.05488 8, 8, 8 271 LightGCN_N 0.03093 0.06873 0.05656 0.06044 MovieLens-1M - 46 MF 0.189 0.249 0.2831 0.197 - 261 LightGCN 0.19987 0.27196 0.30274 0.20838 64, 64, 64 11 LightGCN_W 0.19937 0.27716 0.30852 0.20786 128,128,128 271 LightGCN_N 0.20214 0.27748 0.3083 0.21074 FilmTrust - 296 MF 0.0868 0.848 0.6169 0.8178 - 276 LightGCN 0.08761 0.85376 0.61566 0.82547 8, 8, 8 76 LightGCN_W 0.08817 0.86131 0.6197 0.83481 32, 32, 32 226 LightGCN_N 0.08824 0.85874 0.62453 0.83137 Douban-book - 66 MF 0.05407 0.1247 0.1039 0.09662 - 266 LightGCN 0.06209 0.14783 0.12508 0.11095 16, 16, 16 26 LightGCN_W 0.06315 0.15127 0.12867 0.11284 16, 16, 16 181 LightGCN_N 0.07103 0.16701 0.14632 0.12692 Table 4. Quantitative results of the entire experiment with both the traditional model and the proposed method per dataset."
+    },
+    {
+      "index": 62,
+      "src": "/portfolio/slides/slide-062.jpeg",
+      "title": "Optimization methods for Graph Convolution Networks in Recommendation Systems",
+      "alt": "Portfolio slide 62: Optimization methods for Graph Convolution Networks in Recommendation Systems",
+      "width": 1920,
+      "height": 1080,
+      "text": "Optimization methods for Graph Convolution Networks in Recommendation Systems https://github.com/d9249/OptGCN 연구 - Graph (RecSys)"
+    },
+    {
+      "index": 63,
+      "src": "/portfolio/slides/slide-063.jpeg",
+      "title": "Optimization methods for Graph Convolution Networks in Recommendation Systems",
+      "alt": "Portfolio slide 63: Optimization methods for Graph Convolution Networks in Recommendation Systems",
+      "width": 1920,
+      "height": 1080,
+      "text": "Optimization methods for Graph Convolution Networks in Recommendation Systems 연구 - Graph (RecSys)"
+    },
+    {
+      "index": 64,
+      "src": "/portfolio/slides/slide-064.jpeg",
+      "title": "Optimization methods for Graph Convolution Networks in Recommendation Systems",
+      "alt": "Portfolio slide 64: Optimization methods for Graph Convolution Networks in Recommendation Systems",
+      "width": 1920,
+      "height": 1080,
+      "text": "Optimization methods for Graph Convolution Networks in Recommendation Systems 연구 - Graph (RecSys)"
+    },
+    {
+      "index": 65,
+      "src": "/portfolio/slides/slide-065.jpeg",
+      "title": "프로젝트 및 대외활동",
+      "alt": "Portfolio slide 65: 프로젝트 및 대외활동",
+      "width": 1920,
+      "height": 1080,
+      "text": "프로젝트 및 대외활동 팀프로젝트(개발) Fit-sibang 연구실 홈페이지 IA^2S CS224W-KOR 대외활동 DIYA(Do ti Yourself AI) 가짜연구소 LG Aimers"
+    },
+    {
+      "index": 66,
+      "src": "/portfolio/slides/slide-066.jpeg",
+      "title": "프로젝트 - Web(AI)",
+      "alt": "Portfolio slide 66: 프로젝트 - Web(AI)",
+      "width": 1920,
+      "height": 1080,
+      "text": "프로젝트 - Web(AI) Fit-sibang (캡스톤 디자인) 역할: 팀리더, 프론트 개발 1. 목적 : 시간과 장소에 구애받지 말고 집에서 운동하자! 설명: AI를 이용한자세 추정을 통해 모든 기기로 해당 웹 서비스에 접속하여 운동 2. 기능 a. 자세 추정을 통한 운동 자세 교정 b. 업적, 월간/주간 분석, 운동 기록 확인, 운동 영상 공유 c. 지역 트레이너와의 채팅을 통한 온/오프라인 Meet-Up 3. 개발환경 a. FrontEnd : HTML, CSS, React b. BackEnd : Node.js MongoDB"
+    },
+    {
+      "index": 67,
+      "src": "/portfolio/slides/slide-067.jpeg",
+      "title": "프로젝트 - Web",
+      "alt": "Portfolio slide 67: 프로젝트 - Web",
+      "width": 1920,
+      "height": 1080,
+      "text": "프로젝트 - Web Smart I.o.T 연구실 홈페이지 역할: 프론트 개발 1. 목적 : 경기대학교 Smart IoT 연구실 홍보 및 수업관련 홈페이지 제작 2. 개발환경 스택 : HTML, CSS, Javascript, Vue.js, Node.js, NPM, certbot, Nginx, MariaDB, CentOS 7 3. 기능 a. 수업 공지사항 b. 연구실 홍보 (개제 논문 및 활동 내역) c. 수업자료 배포"
+    },
+    {
+      "index": 68,
+      "src": "/portfolio/slides/slide-068.jpeg",
+      "title": "프로젝트 - Web",
+      "alt": "Portfolio slide 68: 프로젝트 - Web",
+      "width": 1920,
+      "height": 1080,
+      "text": "프로젝트 - Web IA^2S(Image Analysis Automation System) 역할: 팀리더, 프론트 개발 결과물 : https://github.com/HHFEHH/crack-automation 1. 목적 D jango / OpenCV를 이용한 균열의 평탄화, 균열의 길이측정, 데이터자동화 설명: 균열 평탄화, 균열 길이 측정, 데이터 자동화를 위한 웹 서비스로 물리적 외벽 수리 및 건물 유지 관리 회사의 기존 방법을 개선. 2. 개발환경 스택 : Python, Django, HTML, CSS, Javascript, OpenCV 3. 기능 a. 균열이미지 평탄화 b. 균열의 길이 측정 c. openpyxl을 이용한 데이터 자동화"
+    },
+    {
+      "index": 69,
+      "src": "/portfolio/slides/slide-069.jpeg",
+      "title": "프로젝트 - 스터디",
+      "alt": "Portfolio slide 69: 프로젝트 - 스터디",
+      "width": 1920,
+      "height": 1080,
+      "text": "프로젝트 - 스터디 CS224W-KOR ( https://cs224w-kor.github.io/blog/ ) 역할: 팀멤버 설명: 스탠포드 CS224W 강의를 보고 공부한 부분을 발표하고 정리하여 한국어로 번역 연구분야 : 그래프 신경망."
+    },
+    {
+      "index": 70,
+      "src": "/portfolio/slides/slide-070.jpeg",
+      "title": "대외활동 - AI (CV, GNN)",
+      "alt": "Portfolio slide 70: 대외활동 - AI (CV, GNN)",
+      "width": 1920,
+      "height": 1080,
+      "text": "대외활동 - AI (CV, GNN) DIYA (Do it Yourself AI) - 4,5기 Link: https://doityourselfai.github.io/ 4기: 다양한 분야의 Computer Vision 역할: 팀멤버 연구 영역 : Computer Vision (논문 리뷰, 대회 참여). 5기: CV, GNN, PyTorch 3개팀에 참여. 역할: 팀멤버 연구 영역: Computer Vision, Graph Neural Network. (논문 리뷰, 강의 수강, 대회 참여) Certificate : https://drive.google.com/file/d/1NxSxsWUAXOWbk2WgKtwxHrU4dsBsbY8Y"
+    },
+    {
+      "index": 71,
+      "src": "/portfolio/slides/slide-071.jpeg",
+      "title": "대외활동 -  Graph (Medical)",
+      "alt": "Portfolio slide 71: 대외활동 -  Graph (Medical)",
+      "width": 1920,
+      "height": 1080,
+      "text": "대외활동 - Graph (Medical) 가짜연구소 (6기, 그래프로 설득하기) HIV 바이러스(인체 면역결핍 바이러스)를 억제하는 분자를 찾기 위한 프로젝트 https://www.notion.so/chanrankim/ac12010e21af4431a5f3e8ae2bdc4ee3?pvs=4 - 칼레트라(Kaletra)는 리토나비르(Ritonavir)와 로피나비르(Lopinavir)의 혼합물 - 단백질가위의 기능을 차단하는 에이즈 치료제 다루나비르(Darunavir) - 렘데시비르(Remdesivir, GS-5734)는 ATP 핵산과 모양이 비슷하여 RNA 중합효소에 의한 바이러스 RNA 합성을 봉쇄 - RNA 중합효소의 기능을 차단하는 신종플루 치료제 파비피라비르(Favipiravir, 아비간), C형 간염치료제 리바비린(Ribavirin) 예측 작업: 분자 특성이 이진 라벨(예: 분자가 HIV 바이러스 복제를 억제하는지 여부)로 캐스팅되는 대상 분자 특성을 가능한 한 정확하게 예측하는 것."
+    },
+    {
+      "index": 72,
+      "src": "/portfolio/slides/slide-072.jpeg",
+      "title": "대외활동 -  Graph (Medical)",
+      "alt": "Portfolio slide 72: 대외활동 -  Graph (Medical)",
+      "width": 1920,
+      "height": 1080,
+      "text": "대외활동 - Graph (Medical) 가짜연구소 6기 (그래프로 설득하기) HIV 바이러스(인체 면역결핍 바이러스)를 억제하는 분자를 찾기 위한 프로젝트 ogbg-molpcba: 클래스 균형이 극도로 왜곡되어 있고(데이터의 1.4%만이 양수임) 데이터 세트에 여러 분류 작업이 포함되어 있으므로 작업에 대해 평균을 낸 평균 정밀도(AP)를 평가 지표로 사용합니다. https://ogb.stanford.edu/docs/graphprop/ 동일한 학습환경 유지하여 실험을 수행할 수 있도록 Docker 를 활용하여 팀원들에게 배포하였습니다. snap-stanford/GraphGym 라이브러리 기반의 통합된 환경을 준비하였습니다. HIV 바이러스를 억제하는 분자를 찾기 위한 문제 발표를 듣고 다른 문제를 해결하는 방안도 추천시스템에 사용할 수 있으리라 판단해 새로운 분자를 찾기 위한 프로젝트를 수행했습니다. 해당 프로젝트에서 생물학, 화학 쪽 등의 다양한 분야의 도메인 지식이 뛰어나신 분들은 데이터 분석 구현 쪽에 강하였기에 실험 부분을 맡아 프로젝트를 진행 하면서 각자 부족한 부분을 채울 수 있었습니다. 이로써 각자의 역량을 한층 키울 수 있는 프로젝트였습니다."
+    },
+    {
+      "index": 73,
+      "src": "/portfolio/slides/slide-073.jpeg",
+      "title": "대외활동 - AI (Industry)",
+      "alt": "Portfolio slide 73: 대외활동 - AI (Industry)",
+      "width": 1920,
+      "height": 1080,
+      "text": "대외활동 - AI (Industry) LG Aimers 4기"
+    },
+    {
+      "index": 74,
+      "src": "/portfolio/slides/slide-074.jpeg",
+      "title": "인공지능 대회 - HD현대 AI Challenge(본선)",
+      "alt": "Portfolio slide 74: 인공지능 대회 - HD현대 AI Challenge(본선)",
+      "width": 1920,
+      "height": 1080,
+      "text": "인공지능 대회 - HD현대 AI Challenge(본선) 건설기계 센서데이터( 다중 시계열 )를 활용한 작업 중량 예측 모델 개발 중량별 비식별화 된 Signal 및 Sensor 시계열 데이터 (약 10초)"
+    },
+    {
+      "index": 75,
+      "src": "/portfolio/slides/slide-075.jpeg",
+      "title": "인공지능 대회 - HD현대 AI Challenge(본선)",
+      "alt": "Portfolio slide 75: 인공지능 대회 - HD현대 AI Challenge(본선)",
+      "width": 1920,
+      "height": 1080,
+      "text": "인공지능 대회 - HD현대 AI Challenge(본선) 건설기계 센서데이터( 다중 시계열 )를 활용한 작업 중량 예측 모델 개발 Variable Time[s] Signal A Signal B Signal C Sensor A Sensor B Sensor C Sensor D Mean 65.36 318.37 315.55 316.07 648.71 358.88 364.24 542.52 Std 46.24 9.31 7.25 5.28 63.73 47.03 56.07 96.34 Min 0 299.25 292.5 296.7 417.27 316.07 316.07 316.07 25% 30.06 311.23 311.48 316.07 607.23 317.03 316.07 476.43 50% 60.13 316.07 316.07 316.07 647.59 340.62 339.73 526.15 75% 90.2 325.63 321.44 316.07 694.91 394.92 405.49 608.18 Max 244.75 339.64 332.25 339.64 878.78 611.89 598.91 980.87 Variance 2138.57 86.66 52.63 27.84 4061.75 2211.52 3144.14 9281.71 Range 244.75 40.39 39.75 42.94 461.51 295.81 282.84 664.79 IQR 60.14 14.39 9.96 0 87.68 77.89 89.42 131.75 Skew 1.16 0.66 -0.47 0.14 -0.25 1.02 1.01 0.54 Kurtosis 1.89 -0.33 -0.38 4.16 1.07 0.49 0.1 0.05 시계열 데이터의 효과적인 반영(스케일링)을 위해 특성별 통계치 분석 및 상관관계 분석 수행"
+    },
+    {
+      "index": 76,
+      "src": "/portfolio/slides/slide-076.jpeg",
+      "title": "인공지능 대회 - HD현대 AI Challenge(본선)",
+      "alt": "Portfolio slide 76: 인공지능 대회 - HD현대 AI Challenge(본선)",
+      "width": 1920,
+      "height": 1080,
+      "text": "인공지능 대회 - HD현대 AI Challenge(본선) 건설기계 센서데이터( 다중 시계열 )를 활용한 작업 중량 예측 모델 개발 특성 별 스케일링 반영: MAE 64점 향상 1.최소-최대 정규화 (Min-Max Scaling): Signal A, Signal B, Signal C는 비교적 작은 범위와 왜도 를 가지고 있기에, 해당 방법을 사용하여 0과 1 사이로 값을 제한하였다. 이를 통해 모든 특성이 동일한 스케일 을 갖도록 하였으며, 모델이 모든 입력을 동일하게 취급. 2.표준 정규화 (Standardization): Time[s]는 큰 범위와 높은 표준편차 를 가지고 있기에, 표준 정규화를 통해 특성의 평균을 0으로, 표준편차를 1로 만들어주었으며, 이를 통해 다른 특성들과의 균형 을 맞추었다. 3.로버스트 스케일링 (Robust Scaling): Sensor A, Sensor B, Sensor C, Sensor D는 이상치의 영향 을 받을 수 있어, 중앙값과 사분위 범위를 사용하여 로버스트 스케일링을 진행, 로버스트 스케일링을 통해 이상치에 견고 하게 하였다."
+    },
+    {
+      "index": 77,
+      "src": "/portfolio/slides/slide-077.jpeg",
+      "title": "인공지능 대회 - HD현대 AI Challenge(본선)",
+      "alt": "Portfolio slide 77: 인공지능 대회 - HD현대 AI Challenge(본선)",
+      "width": 1920,
+      "height": 1080,
+      "text": "인공지능 대회 - HD현대 AI Challenge(본선) 건설기계 센서데이터( 다중 시계열 )를 활용한 작업 중량 예측 모델 개발 Time Series Transformer (TST): MAE 21점 향상 1. Transformer의 Encoder 구조만 사용 2. 위치 인코딩을 사용하여, 시계열 데이터의 시간적 특성을 캡처 → 다양한 Task에 적용 가능 Overpred MAE: MAE 5점 향상 손실 함수에 조건부 로직을 추가하여 예측값이 실제값보다 클 경우 추가 패널티를 부여 → 과대 예측에 대한 패널티를 부여 K-fold Cross Validation: MAE 3점 향상 1. 일반화 성능 강화 2. 데이터 양이 제한적이였기에, 데이터 활용 효율성 강화 3. 검증 데이터에 대한 편향 감소 4. 예측치의 평균 값을 통해 결과 신뢰성 향상 5. 과적합 방지 Prediction mapping: MAE 4점 향상 1. 학습 데이터에 존재하는 weight를 타겟으로 하여 모델이 예측한 값을 가장 가까운 값으로 매핑 2. 후처리 기법을 통해 전체적인 예측 값의 보정을 통해 예측 성능 증가 최종 점수 : MAE(평균제곱오차) 98.21432 아쉬웠던 점 : 시계열 데이터 증강(데이터 분할)을 통해 시계열 모델이 아닌 회귀 모델 사용 Prediction mapping"
+    },
+    {
+      "index": 78,
+      "src": "/portfolio/slides/slide-078.jpeg",
+      "title": "Slide 78",
+      "alt": "Portfolio slide 78",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 79,
+      "src": "/portfolio/slides/slide-079.jpeg",
+      "title": "Artygenspace",
+      "alt": "Portfolio slide 79: Artygenspace",
+      "width": 1920,
+      "height": 1080,
+      "text": "Artygenspace 인공지능연구소 | 전임연구원 | 인공지능 기술 Lead |"
+    },
+    {
+      "index": 80,
+      "src": "/portfolio/slides/slide-080.jpeg",
+      "title": "Slide 80",
+      "alt": "Portfolio slide 80",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 81,
+      "src": "/portfolio/slides/slide-081.jpeg",
+      "title": "Slide 81",
+      "alt": "Portfolio slide 81",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 82,
+      "src": "/portfolio/slides/slide-082.jpeg",
+      "title": "Slide 82",
+      "alt": "Portfolio slide 82",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 83,
+      "src": "/portfolio/slides/slide-083.jpeg",
+      "title": "Slide 83",
+      "alt": "Portfolio slide 83",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 84,
+      "src": "/portfolio/slides/slide-084.jpeg",
+      "title": "Slide 84",
+      "alt": "Portfolio slide 84",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 85,
+      "src": "/portfolio/slides/slide-085.jpeg",
+      "title": "ArtygenSpace - booxtory",
+      "alt": "Portfolio slide 85: ArtygenSpace - booxtory",
+      "width": 1920,
+      "height": 1080,
+      "text": "ArtygenSpace - booxtory 수행 업무 인공지능연구소: Deep Learning Research (Computer Vision, Language Model, MLOps, AI model serving) - 거대 및 소형 언어 모델 활용 시스템 개발 (LangChain, LangGraph, RAG, Prompt Engineering) 임베딩 모델 활용 시스템 개발 (Text Embedding, Multi-modal Embedding) 영상처리 알고리즘 개발 및 활용 시스템 개발 (OpenCV, imagehash) 특정 객체 인식을 위한 멀티 모달 모델 및 객체 탐지 시스템 개발 (Open-set object detection) 머신러닝 모델 서빙 및 추론 API 제작 및 관리 (k3s, Docker, FastAPI(MVC pattern), Apache kafka, OAuth2, SageMaker) API 유지 보수 및 관리를 위한 ELK 시스템 구축 (Elastic Search, LogStash, Kibana, Kafka ui) 클라우드 서버의 컨테이너화된 애플리케이션의 배포, 관리 및 확장 예약 자동화 파이프라인 구축 (GitHub Actions, NCP, AWS, GCP) 연구개발사업 수행 및 성과보고서 작성 (과제수행/결과보고/성과관리) 인공지능 기반 과제 수주, 솔루션 기술 및 문서 제작, 사업계획서(기술) 작성 및 PoC 제안 - 2024년 인공지능 콘텐츠 제작지원 과제 수행, 인공지능 리더 (한국콘텐츠진흥원, (주)아티젠스페이스, (주)웅진씽크빅) - Tokyo Electron(TEL) PoC 제안 및 기술 솔루션 리드 수행 - AI 솔루션 지원사업 공급기업 선정, 인공지능 리더 1. CLEAR (Correction, Layout, Extraction, Analysis, Refinement) 2. MAVIS (Multilingual Audio & Voice Intelligent Synthesis) 3. MERGE (Multimodal, Entity, Recognition, Grounding, Engine) 4. NEXIS (Neural, X-lingual, Intelligence, Summaries)"
+    },
+    {
+      "index": 86,
+      "src": "/portfolio/slides/slide-086.jpeg",
+      "title": "팀 프로젝트 (개발)",
+      "alt": "Portfolio slide 86: 팀 프로젝트 (개발)",
+      "width": 1920,
+      "height": 1080,
+      "text": "활동 팀 프로젝트 (개발) Fit-sibang : 비대면 PT를 위한 웹앱 👤 개발 인원 5명 (팀프로젝트) 🗓️ 개발 기간 2021.03 ~ 2021.06 Smart I.o.T 연구실 홈페이지 : 연구실 홍보 및 수업자료 배포 👤 개발 인원 프론트 1명, 풀스택 1명 🗓️ 개발 기간 2021.12 ~ 2022.04 IA^2S : 도제식 시스템 개선을 위한 데이터 자동화 👤 개발 인원 프론트 1명, 풀스택 2명 🗓️ 개발 기간 2021.10 ~ 2022.02 대외 활동 DIYA(Do It Yourself AI) CV, GNN, Pytorch Team 👤 참여 인원 30명 🗓️ 활동 기간 2021.03 ~ 2023.02 가짜연구소 6기: 그래프로 설득하기 👤 참여 인원 9명 🗓️ 활동 기간 2023.09 ~ 2023.12 LG Aimers 4기 👤 참여 인원 3명 🗓️ 활동 기간 2023.07 ~ 2024.02 개인 프로젝트 TeacherMoa : 어린이집 선생님을 위한 Agent 기반 문서 생성 👤 개발 인원 1명 🗓️ 개발 기간 2025.03 ~ 2025.05"
+    },
+    {
+      "index": 87,
+      "src": "/portfolio/slides/slide-087.jpeg",
+      "title": "프론트엔드",
+      "alt": "Portfolio slide 87: 프론트엔드",
+      "width": 1920,
+      "height": 1080,
+      "text": "프론트엔드 핵심 프레임워크 : Next.js (React 기반) 스타일링 시스템 : Tailwind CSS, PostCSS 상태 관리 : React Context API 데이터 처리 : SWR (캐싱 및 데이터 페칭) UI 컴포넌트 : @headlessui/react, react-icons 폼 처리 : react-hook-form 유틸리티 : date-fns (날짜 처리) 백엔드 웹 서버 (JavaScript) 서버 환경 : Next.js API 라우트 인증 시스템 : NextAuth.js DB 접근 : Prisma ORM API 서버 (Python) 프레임워크 : FastAPI 서버 실행 : Uvicorn (ASGI) 데이터 검증 : Pydantic DB 접근 : SQLAlchemy ORM 언어 버전 : Python 3.10 TeacherMoa 역할: 기획, 풀스택(웹(Next.js), 앱(swift)), Agent(langGraph) 구현 및 배포 AI 및 LLM 아키텍처 에이전트 프레임워크 : LangGraph (상태 기반 워크플로우) LLM 통합 : LangChain, LangChain-OpenAI 모델 : OpenAI GPT-4o-mini 모니터링 : LangSmith (성능 추적 및 분석) 추론 파이프라인 : 입력 평가 → 계획 생성 다단계 처리 프롬프트 시스템 : 템플릿 기반 동적 프롬프트 생성 데이터베이스 ORM : Prisma (JS), SQLAlchemy (Python) DBMS : PostgreSQL/MySQL 지원 인프라 및 배포 컨테이너화 : Docker 주요 통합 흐름 사용자 입력 → 프론트엔드(Next.js) → 백엔드 API(FastAPI) 백엔드 → LangGraph 에이전트 → GPT 모델 → 응답 생성 결과 데이터 저장(SQLAlchemy) → 프론트엔드 표시(SWR 캐싱) 에이전트 실행 전체 과정 LangSmith로 모니터링"
+    },
+    {
+      "index": 88,
+      "src": "/portfolio/slides/slide-088.jpeg",
+      "title": "Slide 88",
+      "alt": "Portfolio slide 88",
+      "width": 1920,
+      "height": 1080,
+      "text": ""
+    },
+    {
+      "index": 89,
+      "src": "/portfolio/slides/slide-089.jpeg",
+      "title": "역할: 기획, 풀스택(웹(Next.js), 앱(swift)), Agent(langGraph) 구현 및 배포",
+      "alt": "Portfolio slide 89: 역할: 기획, 풀스택(웹(Next.js), 앱(swift)), Agent(langGraph) 구현 및 배포",
+      "width": 1920,
+      "height": 1080,
+      "text": "역할: 기획, 풀스택(웹(Next.js), 앱(swift)), Agent(langGraph) 구현 및 배포"
+    },
+    {
+      "index": 90,
+      "src": "/portfolio/slides/slide-090.jpeg",
+      "title": "DIYA (Do it Yourself AI) - 4, 5기",
+      "alt": "Portfolio slide 90: DIYA (Do it Yourself AI) - 4, 5기",
+      "width": 1920,
+      "height": 1080,
+      "text": "DIYA (Do it Yourself AI) - 4, 5기 Link: https://doityourselfai.github.io/ Certificate : https://drive.google.com/file/d/1NxSxsWUAXOWbk2WgKtwxHrU4dsBsbY8Y : 2년간 활동하여 CV, GNN, PyTorch 팀 참여"
+    },
+    {
+      "index": 91,
+      "src": "/portfolio/slides/slide-091.jpeg",
+      "title": "가짜연구소 6기 (그래프로 설득하기)",
+      "alt": "Portfolio slide 91: 가짜연구소 6기 (그래프로 설득하기)",
+      "width": 1920,
+      "height": 1080,
+      "text": "가짜연구소 6기 (그래프로 설득하기) : HIV 바이러스(인체 면역결핍 바이러스)를 억제하는 분자를 찾기 위한 프로젝트"
+    },
+    {
+      "index": 92,
+      "src": "/portfolio/slides/slide-092.jpeg",
+      "title": "개발환경",
+      "alt": "Portfolio slide 92: 개발환경",
+      "width": 1920,
+      "height": 1080,
+      "text": "개발환경 FrontEnd : HTML, CSS, React BackEnd : Node.js MongoDB Fit-sibang 역할: 팀리더, 프론트, AI 모델 개발"
+    },
+    {
+      "index": 93,
+      "src": "/portfolio/slides/slide-093.jpeg",
+      "title": "Smart I.o.T 연구실 홈페이지",
+      "alt": "Portfolio slide 93: Smart I.o.T 연구실 홈페이지",
+      "width": 1920,
+      "height": 1080,
+      "text": "Smart I.o.T 연구실 홈페이지 역할: 프론트 개발, 유지관리."
+    },
+    {
+      "index": 94,
+      "src": "/portfolio/slides/slide-094.jpeg",
+      "title": "IA^2S(Image Analysis Automation System)",
+      "alt": "Portfolio slide 94: IA^2S(Image Analysis Automation System)",
+      "width": 1920,
+      "height": 1080,
+      "text": "IA^2S(Image Analysis Automation System) 역할: 팀리더, 프론트 개발 https://github.com/HHFEHH/crack-automation"
+    },
+    {
+      "index": 95,
+      "src": "/portfolio/slides/slide-095.jpeg",
+      "title": "LG Aimers 4기",
+      "alt": "Portfolio slide 95: LG Aimers 4기",
+      "width": 1920,
+      "height": 1080,
+      "text": "LG Aimers 4기 해커톤"
+    },
+    {
+      "index": 96,
+      "src": "/portfolio/slides/slide-096.jpeg",
+      "title": "인공지능 대회 - HD현대 AI Challenge(본선)",
+      "alt": "Portfolio slide 96: 인공지능 대회 - HD현대 AI Challenge(본선)",
+      "width": 1920,
+      "height": 1080,
+      "text": "인공지능 대회 - HD현대 AI Challenge(본선) 중량별 비식별화 된 Signal 및 Sensor 시계열 데이터 (약 10초) Variable Time[s] Signal A Signal B Signal C Sensor A Sensor B Sensor C Sensor D Mean 65.36 318.37 315.55 316.07 648.71 358.88 364.24 542.52 Std 46.24 9.31 7.25 5.28 63.73 47.03 56.07 96.34 Min 0 299.25 292.5 296.7 417.27 316.07 316.07 316.07 25% 30.06 311.23 311.48 316.07 607.23 317.03 316.07 476.43 50% 60.13 316.07 316.07 316.07 647.59 340.62 339.73 526.15 75% 90.2 325.63 321.44 316.07 694.91 394.92 405.49 608.18 Max 244.75 339.64 332.25 339.64 878.78 611.89 598.91 980.87 Variance 2138.57 86.66 52.63 27.84 4061.75 2211.52 3144.14 9281.71 Range 244.75 40.39 39.75 42.94 461.51 295.81 282.84 664.79 IQR 60.14 14.39 9.96 0 87.68 77.89 89.42 131.75 Skew 1.16 0.66 -0.47 0.14 -0.25 1.02 1.01 0.54 Kurtosis 1.89 -0.33 -0.38 4.16 1.07 0.49 0.1 0.05 시계열 데이터의 효과적인 반영(스케일링)을 위해 특성별 통계치 분석 및 상관관계 분석 수행 건설기계 센서데이터( 다중 시계열 )를 활용한 작업 중량 예측 모델 개발"
+    },
+    {
+      "index": 97,
+      "src": "/portfolio/slides/slide-097.jpeg",
+      "title": "인공지능 대회 - HD현대 AI Challenge(본선)",
+      "alt": "Portfolio slide 97: 인공지능 대회 - HD현대 AI Challenge(본선)",
+      "width": 1920,
+      "height": 1080,
+      "text": "인공지능 대회 - HD현대 AI Challenge(본선) 건설기계 센서데이터( 다중 시계열 )를 활용한 작업 중량 예측 모델 개발 특성 별 스케일링 반영: MAE 64점 향상 MAE(mean absolute error - 평균절대오차)"
+    },
+    {
+      "index": 98,
+      "src": "/portfolio/slides/slide-098.jpeg",
+      "title": "인공지능 대회 - HD현대 AI Challenge(본선)",
+      "alt": "Portfolio slide 98: 인공지능 대회 - HD현대 AI Challenge(본선)",
+      "width": 1920,
+      "height": 1080,
+      "text": "인공지능 대회 - HD현대 AI Challenge(본선) 최종 점수 : MAE(평균제곱오차) 98.21432 아쉬웠던 점 : 시계열 데이터 증강(데이터 분할)을 통해 시계열 모델이 아닌 회귀 모델 사용 건설기계 센서데이터( 다중 시계열 )를 활용한 작업 중량 예측 모델 개발"
+    },
+    {
+      "index": 99,
+      "src": "/portfolio/slides/slide-099.jpeg",
+      "title": "연구경력 - 컨퍼런스",
+      "alt": "Portfolio slide 99: 연구경력 - 컨퍼런스",
+      "width": 1920,
+      "height": 1080,
+      "text": "연구경력 - 컨퍼런스 Domestic conference (국내 컨퍼런스) 1. 추천 시스템 성능 개선을 위한 시간 기반 데이터 분석 * KSII SPRING Conference, 2023, 1st author 2. 추천 시스템을 활용한 캐싱 서버 최적화 * SEBS Fall Conference, 2022, 1st author 3. 겹친 문자 이미지 분류를 위한 합성곱 신경망 모델의 정확도 분석 * KSII Fall Conference, 2021, 1st author 4. PostNet을 활용한 헬스 트레이너 웹 서비스 * Citations 1회, Proceedings of KIIT Conference, pp. 729 - 733. 2021.06, 1st author * KIIT Best Paper Award"
+    },
+    {
+      "index": 100,
+      "src": "/portfolio/slides/slide-100.jpeg",
+      "title": "International conference (해외 컨퍼런스)",
+      "alt": "Portfolio slide 100: International conference (해외 컨퍼런스)",
+      "width": 1920,
+      "height": 1080,
+      "text": "International conference (해외 컨퍼런스) 1. Egress Initialization for Graph Convolution Network in Recommendation Systems * The 15th International Conference on Internet (ICONI 2023), 1st author. 2. Thin Graph Convolution Network in Recommendation Systems * The 15th International Conference on Internet (ICONI 2023), 1st author. 3. Over-smoothing in LightGCN doesn’t happen much * The 15th International Conference on Internet (ICONI 2023), 1st author. 4. Leverage time-based data to improve recommendation system accuracy * The 18th Asia Pacific International Conference on Information Science and Technology(APIC-IST), 1st author 5. Using Deep Learning for Medical Automation in Diagnosis of Degenerative Arthritis * The 8th international Conference for Small and Medium Business 2023(ICSMB), 1st author 6. Classification of degenerative arthritis using Xception model in radiographic images * The 17th Asia Pacific International Conference on Information Science and Technology(APIC-IST), 1st author * This paper was selected as one of the best papers of APIC-IST 2022 and recommended for publication in CMC-Computers, Materials & Continua (CMC). 연구경력 - 컨퍼런스"
+    },
+    {
+      "index": 101,
+      "src": "/portfolio/slides/slide-101.jpeg",
+      "title": "연구경력 - 저널",
+      "alt": "Portfolio slide 101: 연구경력 - 저널",
+      "width": 1920,
+      "height": 1080,
+      "text": "연구경력 - 저널 Domestic journal (국내 저널) 1. Graph Neural Network 기반 추천시스템 성능 향상을 위한 유저 행동 시간 기반 데이터 사용 방안 분석 (Analyzing the use of time-based user behavior data to improve the performance of graph neural network-based recommendation systems) KCI -The Journal of Korean Institute of Information Technology(JKIIT), vol. 21, No. 5, pp. 21-28, 2023. ISSN: 1598-8619 (Print) 2093-7571 (Online), DOI : https://doi.org/10.14801/jkiit.2023.21.5.21 , 1st author 2. 의료 영상 시스템에서 다중 연쇄 U-Net 모델을 이용한 개선된 췌장 영역 분할 탐지 (Improved Pancreas Segmentation using Multiple Concatenated U-Net Model for Medical Image Systems) KCI -The Journal of Korean Institute of Information Technology(JKIIT), vol. 20, No. 5, pp. 81-87, 2022. ISSN: 1598-8619 (Print), 2093-7571 (Online), DOI: https://doi.org/10.14801/jkiit.2022.20.5.81 , 1st author Master’s thesis (석사 학위) 추천 시스템에서 그래프 컨볼루션 네트워크 최적화 방법 ( Optimization methods of Graph Convolution Networks for Recommendation Systems) * UCI: I804:41002-000000057783, 22 February 2024. * dCollection: http://www.dcollection.net/handler/kyonggi/000000057783 , 1st author."
+    },
+    {
+      "index": 102,
+      "src": "/portfolio/slides/slide-102.jpeg",
+      "title": "연구경력 - 저널",
+      "alt": "Portfolio slide 102: 연구경력 - 저널",
+      "width": 1920,
+      "height": 1080,
+      "text": "연구경력 - 저널 International journal (국제 저널) 1. Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis SCIE(Q2) -Computers Materials & Continua (CMC), vol. 75, no. 1, pp. 1981-1994,06 February 2023. IF, Citations 7회, DOI: https://doi.org/10.32604/cmc.2023.035245 , 1st author. 2. Weighted Forwarding in Graph Convolution Networks for Recommendation Information System SCIE(Q2) -Computers Materials & Continua (CMC), vol. 78, no.2, pp. 1897–1914, 31 January 2024. DOI: https://doi.org/10.32604/cmc.2023.046346 , 1st author. 3. Embedding Enhancement method for LightGCN in Recommendation Information Systems * SCIE(Q2) -MDPI in Electronics, vol. 13 no. 12, 11 June 2024. * IF, Citations 5회, DOI: https://doi.org/10.3390/electronics13122282 , 1st author."
+    },
+    {
+      "index": 103,
+      "src": "/portfolio/slides/slide-103.jpeg",
+      "title": "인공지능 대회",
+      "alt": "Portfolio slide 103: 인공지능 대회",
+      "width": 1920,
+      "height": 1080,
+      "text": "인공지능 대회 DACON Ranking 20등/123,690명, Challenger , Top 0.07%"
+    }
+  ]
+}

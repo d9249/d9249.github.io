@@ -5,33 +5,42 @@ import PostCard from "../components/PostCard";
 import SectionHeading from "../components/SectionHeading";
 import {
   evidenceItems,
+  heroLinks,
   profileTags,
-  relatedNotes,
+  projectItems,
+  researchItems,
+  skillGroups,
   timelineItems,
 } from "../data/profile";
 
 const IndexPage = ({ data }) => {
   const posts = data.posts.nodes;
-  const latest = posts[0];
 
   return (
     <Layout>
       <section className="shell hero">
         <div>
-          <p className="eyebrow">AI engineer and researcher</p>
-          <h1>연구의 깊이를 제품 가치로 연결하는 AI 시스템 기록.</h1>
+          <p className="eyebrow">AI Engineer &amp; Researcher</p>
+          <h1>AI 연구를 제품 가치와 운영 가능한 시스템으로 연결합니다.</h1>
           <p className="hero-copy">
-            이상민의 커리어, 연구, 엔터프라이즈 AI 구축 경험을 긴 글과 기술
-            노트로 정리하는 개인 블로그입니다. Markdown 글을 올리면 목록,
-            카테고리, 상세 페이지가 같은 시각 체계로 이어집니다.
+            Building Bridge between AI Research and Real-World Value. RAG, 멀티
+            에이전트, 문서 OCR, 추천 시스템, 의료영상 연구를 실제 제품과 운영
+            지표로 번역하는 이상민의 포트폴리오입니다.
           </p>
           <div className="hero-actions">
-            <Link className="button-primary" to="/blog/">
+            <Link className="button-primary" to="/#projects">
+              프로젝트 보기
+            </Link>
+            <Link className="button-secondary" to="/blog/">
               블로그 글 읽기
             </Link>
-            <Link className="button-secondary" to="/#career">
-              커리어 증거 보기
-            </Link>
+          </div>
+          <div className="link-row" aria-label="Profile links">
+            {heroLinks.map((link) => (
+              <a key={link.href} href={link.href}>
+                {link.label}
+              </a>
+            ))}
           </div>
         </div>
         <aside className="terminal-card" aria-label="Profile summary">
@@ -41,29 +50,33 @@ const IndexPage = ({ data }) => {
               <span />
               <span />
             </div>
-            <span>profile/readme.md</span>
+            <span>portfolio/profile.js</span>
           </div>
           <div className="terminal-body">
             <p>
               <span className="cmd">$</span> whoami
             </p>
             <p>
-              AI Engineer &amp; Researcher
+              Sangmin Lee
               <br />
-              Building Bridge between AI Research and Real-World Value
+              AI Engineer &amp; Researcher
             </p>
             <div className="terminal-output">
               <div className="terminal-row">
+                <span>current</span>
+                <strong>AsianaIDT AI/ML</strong>
+              </div>
+              <div className="terminal-row">
                 <span>focus</span>
-                <strong>RAG / Multi-Agent / OCR</strong>
+                <strong>RAG / Agents / OCR / Recommender</strong>
               </div>
               <div className="terminal-row">
                 <span>recognition</span>
-                <strong>CES 2025 Innovation</strong>
+                <strong>CES 2025 / Minister Award</strong>
               </div>
               <div className="terminal-row">
-                <span>current</span>
-                <strong>AsianaIDT AI/ML</strong>
+                <span>research</span>
+                <strong>SCIE 3 / KCI 2</strong>
               </div>
             </div>
           </div>
@@ -72,9 +85,9 @@ const IndexPage = ({ data }) => {
 
       <section className="shell section" aria-labelledby="proof-title">
         <SectionHeading
-          kicker="Proof blocks"
-          title="README를 이력서가 아니라 증거 패널로 재구성"
-          description="방문자가 한 번에 스캔할 수 있도록 수상, 연구, 제품화, 벤치마크를 분리했습니다. 숫자는 기존 정적 페이지에 있던 내용만 사용했습니다."
+          kicker="Highlights"
+          title="수상, 논문, 벤치마크를 먼저 보여주는 포트폴리오"
+          description="기존 포트폴리오의 프로젝트 흐름과 최신 README, 이력서의 정량 성과를 합쳐 방문자가 한 번에 스캔할 수 있는 증거 블록으로 정리했습니다."
         />
         <div className="evidence-grid">
           {evidenceItems.map((item) => (
@@ -93,9 +106,9 @@ const IndexPage = ({ data }) => {
         aria-labelledby="career-title"
       >
         <SectionHeading
-          kicker="Career architecture"
+          kicker="Experience"
           title="연구자와 제품 엔지니어 사이의 궤적"
-          description="직무 특성은 연구 논문보다 넓고, 일반 백엔드보다 깊습니다. 그래서 경력 소개는 회사명 나열보다 문제 정의, AI 아키텍처, 운영 증거가 먼저 보이도록 구성했습니다."
+          description="회사명보다 먼저 문제의 성격, AI 아키텍처, 운영 증거가 보이도록 경력 서사를 재구성했습니다."
         />
         <div className="career-layout">
           <aside className="profile-panel">
@@ -106,10 +119,24 @@ const IndexPage = ({ data }) => {
               AI Engineer &amp; Researcher
             </h3>
             <p>
-              연구의 깊이를 실제 제품 가치로 연결하는 AI 시스템 엔지니어. RAG,
-              지식 그래프, 멀티 에이전트, 문서 OCR 복원 플랫폼을 중심으로 복잡한
-              도메인 문제를 구조화합니다.
+              AI 연구와 제품 개발의 접점을 다룹니다. 논문, 벤치마크, 모델링,
+              백엔드, 관찰성, 배포까지 이어지는 실제 시스템을 만드는 데
+              집중합니다.
             </p>
+            <dl className="profile-facts">
+              <div>
+                <dt>email</dt>
+                <dd>dodo9249@gmail.com</dd>
+              </div>
+              <div>
+                <dt>research</dt>
+                <dd>SCIE 3 / KCI 2</dd>
+              </div>
+              <div>
+                <dt>domain</dt>
+                <dd>Enterprise AI / Document AI / Recommender</dd>
+              </div>
+            </dl>
             <div className="tag-cloud">
               {profileTags.map((tag) => (
                 <span className="tag" key={tag}>
@@ -128,6 +155,11 @@ const IndexPage = ({ data }) => {
                 <div>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
+                  <ul className="timeline-bullets">
+                    {item.bullets.map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
                 </div>
               </article>
             ))}
@@ -137,140 +169,111 @@ const IndexPage = ({ data }) => {
 
       <section
         className="shell section"
-        id="trends"
-        aria-labelledby="trend-title"
+        id="projects"
+        aria-labelledby="projects-title"
       >
         <SectionHeading
-          kicker="Trend notes"
-          title="트렌드 MD가 글이 되는 블로그 구조"
-          description="`content/blog/<category>/<post>.md`에 글을 추가하면 Gatsby가 목록, 카테고리, 상세 글을 자동으로 생성합니다."
+          kicker="Projects"
+          title="제품, 플랫폼, 연구 프로젝트를 하나의 흐름으로 정리"
+          description="엔터프라이즈 RAG, 문서 OCR, 시장조사 에이전트, CES 수상 제품, 추천 시스템, 의료영상 연구를 실제 자료 기준으로 묶었습니다."
         />
-        <div className="trend-grid">
-          <div className="post-list">
-            {posts.slice(0, 3).map((post) => (
-              <article className="post-row" key={post.id}>
+        <div className="project-grid">
+          {projectItems.map((project) => (
+            <article className="project-card" key={project.title}>
+              <div className="project-card-header">
                 <div>
-                  <div className="meta">
-                    content{post.fields.slug.slice(0, -1)}.md
-                  </div>
-                  <h3>
-                    <Link to={post.fields.slug}>{post.frontmatter.title}</Link>
-                  </h3>
-                  <p>{post.frontmatter.description}</p>
+                  <div className="meta">{project.period}</div>
+                  <h3>{project.title}</h3>
                 </div>
-                <time className="post-date">{post.frontmatter.date}</time>
-              </article>
-            ))}
-          </div>
-          <aside className="markdown-panel">
-            <div className="meta">Publishing model</div>
-            <h3>MD 업로드 상태</h3>
-            <p>
-              글 작성자는 Markdown만 올리고, 블로그는 frontmatter와 본문을 읽어
-              카드와 상세 화면으로 보여줍니다.
-            </p>
-            <div className="file-stack">
-              <div className="file-item">
-                <span>title</span>
-                <span>Agentic RAG 운영</span>
+                <div className="project-metrics">
+                  {project.metrics.map((metric) => (
+                    <span className="metric-chip" key={metric}>
+                      {metric}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div className="file-item">
-                <span>tags</span>
-                <span>rag, agents, ops</span>
+              <p>{project.summary}</p>
+              <ul className="project-details">
+                {project.details.map((detail) => (
+                  <li key={detail}>{detail}</li>
+                ))}
+              </ul>
+              <div
+                className="project-stack"
+                aria-label={`${project.title} stack`}
+              >
+                {project.stack.map((tool) => (
+                  <span key={tool}>{tool}</span>
+                ))}
               </div>
-              <div className="file-item">
-                <span>render</span>
-                <span className="status">ready</span>
-              </div>
-            </div>
-          </aside>
+            </article>
+          ))}
         </div>
       </section>
 
-      {latest && (
-        <section
-          className="shell section"
-          id="latest"
-          aria-labelledby="latest-title"
-        >
-          <div className="article-shell">
-            <article className="article">
-              <div className="article-kicker">Latest article</div>
-              <h2 id="latest-title">{latest.frontmatter.title}</h2>
-              <p className="deck">{latest.frontmatter.description}</p>
-              <div className="byline">
-                <span>By {latest.frontmatter.author}</span>
-                <span>AI Engineer &amp; Researcher</span>
-                <span>{latest.frontmatter.date}</span>
-                <span>{latest.timeToRead} min read</span>
-              </div>
-              <figure>
-                <div className="hero-image" />
-                <figcaption>
-                  Markdown 원문이 기술 아티클로 렌더링되는 상세 화면의 시각
-                  방향.
-                </figcaption>
-              </figure>
-              <div className="article-body">
-                <p>{latest.excerpt}</p>
-                <p>
-                  <Link className="button-primary" to={latest.fields.slug}>
-                    전체 글 읽기
-                  </Link>
-                </p>
-              </div>
-              <div className="author-box" id="contact">
-                <div className="avatar-large">SM</div>
-                <div>
-                  <div className="meta">Author</div>
-                  <p>
-                    Sangmin Lee는 RAG, 멀티 에이전트, 문서 OCR, 연구 벤치마크,
-                    AI 제품 운영을 연결하는 AI Engineer &amp; Researcher입니다.
-                    연락: dodo9249@gmail.com
-                  </p>
-                </div>
+      <section
+        className="shell section"
+        id="research"
+        aria-labelledby="research-title"
+      >
+        <SectionHeading
+          kicker="Research"
+          title="학위논문, 저널, 학회, 수상 기록"
+          description="추천 시스템과 의료영상 연구를 중심으로 논문 성과를 제품 포트폴리오와 분리해 읽을 수 있게 정리했습니다."
+        />
+        <div className="research-grid">
+          {researchItems.map((item) => (
+            <article className="research-card" key={item.title}>
+              <div className="meta">{item.category}</div>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <div className="research-facts">
+                {item.facts.map((fact) => (
+                  <span key={fact}>{fact}</span>
+                ))}
               </div>
             </article>
+          ))}
+        </div>
+      </section>
 
-            <aside className="aside">
-              <div className="toc">
-                <div className="meta">On this site</div>
-                <Link to="/#latest">00. latest article</Link>
-                <Link to="/#career">01. career proof</Link>
-                <Link to="/#trends">02. markdown flow</Link>
-                <Link to="/contact/">03. author</Link>
-              </div>
-              <div className="source-card">
-                <div className="meta">Source MD preview</div>
-                <code>{`---
-title: ${latest.frontmatter.title}
-tags: [rag, agents, observability]
----`}</code>
-              </div>
-            </aside>
-          </div>
-
-          <div className="related-grid">
-            {relatedNotes.map((note) => (
-              <article className="related-card" key={note.title}>
-                <div className="thumb" />
-                <div className="meta">{note.category}</div>
-                <h3>{note.title}</h3>
-                <p>{note.description}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-      )}
-
-      <section className="shell section">
+      <section
+        className="shell section"
+        id="skills"
+        aria-labelledby="skills-title"
+      >
         <SectionHeading
-          kicker="Posts"
+          kicker="Skills"
+          title="AI 시스템을 끝까지 밀어붙이는 기술 스택"
+          description="자료에 흩어져 있던 기술을 AI/ML, RAG/Agent, Backend, Data/DB, MLOps/Infra 관점으로 다시 분류했습니다."
+        />
+        <div className="skill-grid">
+          {skillGroups.map((group) => (
+            <article className="skill-card" key={group.title}>
+              <h3>{group.title}</h3>
+              <ul className="skill-list">
+                {group.skills.map((skill) => (
+                  <li key={skill}>{skill}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section
+        className="shell section"
+        id="latest"
+        aria-labelledby="latest-title"
+      >
+        <SectionHeading
+          kicker="Blog"
           title="최근 글"
-          description="AI 시스템을 실제 제품으로 옮길 때 생기는 판단, 운영, 보안, 벤치마크의 흔적을 남깁니다."
+          description="블로그는 포트폴리오 하단의 기술 노트로 유지합니다. RAG, 에이전트, OCR, 운영형 AI 시스템을 제품으로 옮기며 남긴 판단을 기록합니다."
           action={<Link to="/blog/">전체 글 보기 -&gt;</Link>}
         />
-        <div className="post-grid">
+        <div className="post-grid compact-posts">
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
@@ -284,10 +287,10 @@ export default IndexPage;
 
 export const Head = () => (
   <>
-    <title>Mean Log - AI Research to Product Notes</title>
+    <title>이상민 - AI Engineer & Researcher Portfolio</title>
     <meta
       name="description"
-      content="이상민의 AI 연구, 제품화, RAG, 문서 OCR, 운영형 AI 시스템 기록을 모으는 개인 기술 블로그입니다."
+      content="이상민의 AI 연구, 엔터프라이즈 RAG, 문서 OCR, 추천 시스템, 의료영상 연구, CES 수상 제품 개발 경험을 정리한 포트폴리오입니다."
     />
   </>
 );
