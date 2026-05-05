@@ -1,0 +1,34 @@
+{
+  "index": 50,
+  "slug": "slide-050",
+  "title": "Table 3. Performance comparison between models",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "Table 3. Performance comparison between models",
+      "style": {
+        "x": 132.004,
+        "y": 801.255,
+        "width": 454.452,
+        "height": 68,
+        "rotation": 0,
+        "fontFamily": "Apple SD 산돌고딕 Neo 일반체",
+        "fontSize": 28,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    }
+  ],
+  "rawText": "Table 3. Performance comparison between models"
+}

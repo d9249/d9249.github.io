@@ -1,0 +1,73 @@
+{
+  "index": 15,
+  "slug": "slide-015",
+  "title": "https://github.com/d9249/OptGCN",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "https://github.com/d9249/OptGCN",
+      "style": {
+        "x": 100.676,
+        "y": 819.76,
+        "width": 381.669,
+        "height": 39.473,
+        "rotation": 0,
+        "fontFamily": "Avenir Next Medium",
+        "fontSize": 27,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "shape",
+      "id": "shape-002",
+      "shape": "rect",
+      "style": {
+        "x": 5.126,
+        "y": 214.297,
+        "width": 120.333,
+        "height": 134.921,
+        "rotation": 0,
+        "fill": "transparent",
+        "stroke": "#4BACC6",
+        "opacity": 1
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-003",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1080,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-004",
+      "src": "assets/image-002.png",
+      "style": {
+        "x": 0,
+        "y": 0,
+        "width": 1865.851,
+        "height": 896.725,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": "https://github.com/d9249/OptGCN"
+}

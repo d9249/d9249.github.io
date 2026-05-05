@@ -1,0 +1,46 @@
+{
+  "index": 38,
+  "slug": "slide-038",
+  "title": "이상민 (Lee Sang-min)",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "이상민 (Lee Sang-min)",
+      "style": {
+        "x": 120.392,
+        "y": 63.832,
+        "width": 609.239,
+        "height": 100.309,
+        "rotation": 0,
+        "fontFamily": "Apple SD 산돌고딕 Neo 볼드체",
+        "fontSize": 88,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#000000",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-002",
+      "src": "assets/image-001.jpeg",
+      "style": {
+        "x": 173.524,
+        "y": 196.302,
+        "width": 366,
+        "height": 484,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": "이상민 (Lee Sang-min)"
+}

@@ -1,0 +1,66 @@
+{
+  "index": 75,
+  "slug": "slide-075",
+  "title": "건설기계 센서데이터(다중 시계열)를 활용한 작업 중량 예측 모델 개발",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "건설기계 센서데이터(다중 시계열)를 활용한 작업 중량 예측 모델 개발",
+      "style": {
+        "x": 100,
+        "y": 168,
+        "width": 1720,
+        "height": 80,
+        "rotation": 0,
+        "fontFamily": "Helvetica Neue",
+        "fontSize": 24,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#4BACC6",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-002",
+      "text": "시계열 데이터의 효과적인 반영(스케일링)을 위해 특성별 통계치 분석 및 상관관계 분석 수행",
+      "style": {
+        "x": 673.404,
+        "y": 901,
+        "width": 573.191,
+        "height": 88,
+        "rotation": 0,
+        "fontFamily": "-apple-system, BlinkMacSystemFont, sans-serif",
+        "fontSize": 39,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-003",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 239.5,
+        "y": 252.873,
+        "width": 721.1,
+        "height": 633.92,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": "건설기계 센서데이터(다중 시계열)를 활용한 작업 중량 예측 모델 개발\n\n시계열 데이터의 효과적인 반영(스케일링)을 위해 특성별 통계치 분석 및 상관관계 분석 수행"
+}

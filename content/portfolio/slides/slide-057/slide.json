@@ -1,0 +1,98 @@
+{
+  "index": 57,
+  "slug": "slide-057",
+  "title": "Figure 4: Visualize LightGCN (non weight), PCA, and KDE on the MovieLens-1m dataset",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "Figure 4: Visualize LightGCN (non weight), PCA, and KDE on the MovieLens-1m dataset",
+      "style": {
+        "x": 953.274,
+        "y": 240.5,
+        "width": 562.786,
+        "height": 25,
+        "rotation": 0,
+        "fontFamily": "Helvetica",
+        "fontSize": 19,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#606060",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-002",
+      "text": "Figure 5: Visualize LightGCN (weight = 256), PCA, and KDE on the MovieLens-1m dataset",
+      "style": {
+        "x": 947.241,
+        "y": 655.828,
+        "width": 574.852,
+        "height": 25,
+        "rotation": 0,
+        "fontFamily": "Helvetica",
+        "fontSize": 19,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#606060",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-003",
+      "text": "4.\t통계 분석 및 평가\n•\t통계적 분석: 각 계층의 임베딩 값을 비교한 결과, 가중치를 적용한 모델의 임베딩 값 평균이\n더 높고 다양성이 증가함을 확인.\n•\t차원 축소 기법: PCA와 KDE를 사용하여 임베딩 값의 분포를 시각화한 결과,\n가중치를 적용한 모델이 더 넓고 다양한 정보를 포함하고 있음을 확인.\n4.1. 주성분 분석 (Principal Component Analysis, PCA)\n•\t목적: 고차원 데이터를 저차원으로 변환하여 주요 패턴을 시각화하고 분석.\n•\t방법: 데이터의 분산을 최대화하는 방향으로 주성분(Principal Components)을 찾고,\n이 주성분들을 기준으로 데이터를 변환.\n•\t결과 해석:\n•\t가중치를 적용하지 않은 모델의 경우, 데이터 포인트가 여러 클러스터에 걸쳐 있지만경계가 명확하지 않음.\n•\t가중치를 적용한 모델의 경우, 클러스터가 명확하게 정의되고, 데이터가 잘 분리됨.\n4.2. 커널 밀도 추정 (Kernel Density Estimation, KDE)\n•\t목적: 임베딩의 확률 밀도 함수를 추정하여 임베딩이 어떤 분포를 가지는지 파악.\n•\t방법: 데이터 포인트 주변의 밀도를 커널 함수(예: 가우시안 커널)를 사용하여 추정.\n•\t결과 해석:\n•\t가중치를 적용하지 않은 모델의 경우, 주요 분포 피크는 하나이지만 다중 중심이나 클러스터를 구별하기 어려움.\n•\t가중치를 적용한 모델의 경우, 분포 피크가 명확하고 밀도 영역이 더 뚜렷하게 나타남.",
+      "style": {
+        "x": 88.088,
+        "y": 277.627,
+        "width": 837.361,
+        "height": 781.403,
+        "rotation": 0,
+        "fontFamily": "Helvetica",
+        "fontSize": 28,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-004",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 936.814,
+        "y": 272.822,
+        "width": 897.039,
+        "height": 373.689,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-005",
+      "src": "assets/image-002.png",
+      "style": {
+        "x": 936.814,
+        "y": 688,
+        "width": 897.039,
+        "height": 367.646,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": "Figure 4: Visualize LightGCN (non weight), PCA, and KDE on the MovieLens-1m dataset\n\nFigure 5: Visualize LightGCN (weight = 256), PCA, and KDE on the MovieLens-1m dataset\n\n4.\t통계 분석 및 평가\n•\t통계적 분석: 각 계층의 임베딩 값을 비교한 결과, 가중치를 적용한 모델의 임베딩 값 평균이\n더 높고 다양성이 증가함을 확인.\n•\t차원 축소 기법: PCA와 KDE를 사용하여 임베딩 값의 분포를 시각화한 결과,\n가중치를 적용한 모델이 더 넓고 다양한 정보를 포함하고 있음을 확인.\n4.1. 주성분 분석 (Principal Component Analysis, PCA)\n•\t목적: 고차원 데이터를 저차원으로 변환하여 주요 패턴을 시각화하고 분석.\n•\t방법: 데이터의 분산을 최대화하는 방향으로 주성분(Principal Components)을 찾고,\n이 주성분들을 기준으로 데이터를 변환.\n•\t결과 해석:\n•\t가중치를 적용하지 않은 모델의 경우, 데이터 포인트가 여러 클러스터에 걸쳐 있지만경계가 명확하지 않음.\n•\t가중치를 적용한 모델의 경우, 클러스터가 명확하게 정의되고, 데이터가 잘 분리됨.\n4.2. 커널 밀도 추정 (Kernel Density Estimation, KDE)\n•\t목적: 임베딩의 확률 밀도 함수를 추정하여 임베딩이 어떤 분포를 가지는지 파악.\n•\t방법: 데이터 포인트 주변의 밀도를 커널 함수(예: 가우시안 커널)를 사용하여 추정.\n•\t결과 해석:\n•\t가중치를 적용하지 않은 모델의 경우, 주요 분포 피크는 하나이지만 다중 중심이나 클러스터를 구별하기 어려움.\n•\t가중치를 적용한 모델의 경우, 분포 피크가 명확하고 밀도 영역이 더 뚜렷하게 나타남."
+}

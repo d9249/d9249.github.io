@@ -1,0 +1,66 @@
+{
+  "index": 76,
+  "slug": "slide-076",
+  "title": "건설기계 센서데이터(다중 시계열)를 활용한 작업 중량 예측 모델 개발",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "건설기계 센서데이터(다중 시계열)를 활용한 작업 중량 예측 모델 개발",
+      "style": {
+        "x": 100,
+        "y": 168,
+        "width": 1720,
+        "height": 80,
+        "rotation": 0,
+        "fontFamily": "Helvetica Neue",
+        "fontSize": 24,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#4BACC6",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-002",
+      "text": "특성 별 스케일링 반영: MAE 64점 향상\n1.최소-최대 정규화 (Min-Max Scaling):\nSignal A, Signal B, Signal C는 비교적 작은 범위와 왜도를 가지고 있기에, 해당 방법을 사용하여 0과 1 사이로 값을 제한하였다. 이를 통해 모든 특성이\n동일한 스케일을 갖도록 하였으며, 모델이 모든 입력을 동일하게 취급.\n2.표준 정규화 (Standardization):\nTime[s]는 큰 범위와 높은 표준편차를 가지고 있기에,\n표준 정규화를 통해 특성의 평균을 0으로, 표준편차를 1로 만들어주었으며, 이를 통해 다른 특성들과의 균형을 맞추었다.\n3.로버스트 스케일링 (Robust Scaling):\nSensor A, Sensor B, Sensor C, Sensor D는 이상치의 영향을 받을 수 있어, 중앙값과 사분위 범위를 사용하여 로버스트 스케일링을 진행,\n로버스트 스케일링을 통해 이상치에 견고하게 하였다.",
+      "style": {
+        "x": 122.999,
+        "y": 330.667,
+        "width": 801.327,
+        "height": 600,
+        "rotation": 0,
+        "fontFamily": "-apple-system, BlinkMacSystemFont, sans-serif",
+        "fontSize": 43,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-003",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 936.815,
+        "y": 257.744,
+        "width": 928.762,
+        "height": 745.846,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": "건설기계 센서데이터(다중 시계열)를 활용한 작업 중량 예측 모델 개발\n\n특성 별 스케일링 반영: MAE 64점 향상\n1.최소-최대 정규화 (Min-Max Scaling):\nSignal A, Signal B, Signal C는 비교적 작은 범위와 왜도를 가지고 있기에, 해당 방법을 사용하여 0과 1 사이로 값을 제한하였다. 이를 통해 모든 특성이\n동일한 스케일을 갖도록 하였으며, 모델이 모든 입력을 동일하게 취급.\n2.표준 정규화 (Standardization):\nTime[s]는 큰 범위와 높은 표준편차를 가지고 있기에,\n표준 정규화를 통해 특성의 평균을 0으로, 표준편차를 1로 만들어주었으며, 이를 통해 다른 특성들과의 균형을 맞추었다.\n3.로버스트 스케일링 (Robust Scaling):\nSensor A, Sensor B, Sensor C, Sensor D는 이상치의 영향을 받을 수 있어, 중앙값과 사분위 범위를 사용하여 로버스트 스케일링을 진행,\n로버스트 스케일링을 통해 이상치에 견고하게 하였다."
+}

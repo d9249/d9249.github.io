@@ -1,0 +1,86 @@
+{
+  "index": 72,
+  "slug": "slide-072",
+  "title": "가짜연구소 6기 (그래프로 설득하기)",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "가짜연구소 6기 (그래프로 설득하기)\nHIV 바이러스(인체 면역결핍 바이러스)를 억제하는 분자를 찾기 위한 프로젝트",
+      "style": {
+        "x": 100,
+        "y": 168,
+        "width": 1720,
+        "height": 93.701,
+        "rotation": 0,
+        "fontFamily": "Avenir Next Regular",
+        "fontSize": 42,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-002",
+      "text": "ogbg-molpcba: 클래스 균형이 극도로 왜곡되어 있고(데이터의 1.4%만이 양수임) 데이터 세트에 여러 분류 작업이 포함되어 있으므로 작업에 대해 평균을 낸 평균 정밀도(AP)를 평가 지표로 사용합니다.\nhttps://ogb.stanford.edu/docs/graphprop/",
+      "style": {
+        "x": 76.894,
+        "y": 350.576,
+        "width": 488.122,
+        "height": 163,
+        "rotation": 0,
+        "fontFamily": "Avenir Next Medium",
+        "fontSize": 31,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-003",
+      "text": "동일한 학습환경 유지하여 실험을 수행할 수 있도록 Docker를 활용하여 팀원들에게 배포하였습니다.\nsnap-stanford/GraphGym 라이브러리기반의 통합된 환경을 준비하였습니다.\nHIV 바이러스를 억제하는 분자를 찾기 위한 문제 발표를 듣고 다른 문제를 해결하는 방안도 추천시스템에 사용할 수 있으리라 판단해 새로운 분자를 찾기 위한 프로젝트를 수행했습니다.\n해당 프로젝트에서 생물학, 화학 쪽 등의 다양한 분야의 도메인 지식이 뛰어나신 분들은 데이터 분석\n구현 쪽에 강하였기에 실험 부분을 맡아 프로젝트를 진행하면서 각자 부족한 부분을 채울 수 있었습니다. 이로써 각자의 역량을 한층 키울 수 있는 프로젝트였습니다.",
+      "style": {
+        "x": 76.894,
+        "y": 544.08,
+        "width": 488.122,
+        "height": 442,
+        "rotation": 0,
+        "fontFamily": "-apple-system, BlinkMacSystemFont, sans-serif",
+        "fontSize": 31,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#000000",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-004",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 602.26,
+        "y": 351.172,
+        "width": 1283.627,
+        "height": 634.316,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": "가짜연구소 6기 (그래프로 설득하기)\nHIV 바이러스(인체 면역결핍 바이러스)를 억제하는 분자를 찾기 위한 프로젝트\n\nogbg-molpcba: 클래스 균형이 극도로 왜곡되어 있고(데이터의 1.4%만이 양수임) 데이터 세트에 여러 분류 작업이 포함되어 있으므로 작업에 대해 평균을 낸 평균 정밀도(AP)를 평가 지표로 사용합니다.\nhttps://ogb.stanford.edu/docs/graphprop/\n\n동일한 학습환경 유지하여 실험을 수행할 수 있도록 Docker를 활용하여 팀원들에게 배포하였습니다.\nsnap-stanford/GraphGym 라이브러리기반의 통합된 환경을 준비하였습니다.\nHIV 바이러스를 억제하는 분자를 찾기 위한 문제 발표를 듣고 다른 문제를 해결하는 방안도 추천시스템에 사용할 수 있으리라 판단해 새로운 분자를 찾기 위한 프로젝트를 수행했습니다.\n해당 프로젝트에서 생물학, 화학 쪽 등의 다양한 분야의 도메인 지식이 뛰어나신 분들은 데이터 분석\n구현 쪽에 강하였기에 실험 부분을 맡아 프로젝트를 진행하면서 각자 부족한 부분을 채울 수 있었습니다. 이로써 각자의 역량을 한층 키울 수 있는 프로젝트였습니다."
+}

@@ -1,0 +1,124 @@
+{
+  "index": 55,
+  "slug": "slide-055",
+  "title": "Table 1: Datasets used in the experiment",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "Table 1: Datasets used in the experiment",
+      "style": {
+        "x": 1096.766,
+        "y": 272.744,
+        "width": 434.81,
+        "height": 67.066,
+        "rotation": 0,
+        "fontFamily": "Times New Roman",
+        "fontSize": 29,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-002",
+      "text": "Table 3: Environment variables",
+      "style": {
+        "x": 1055.433,
+        "y": 596.059,
+        "width": 434.81,
+        "height": 67.066,
+        "rotation": 0,
+        "fontFamily": "Times New Roman",
+        "fontSize": 29,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-003",
+      "text": "기존 추천시스템 모델에 사용되는 임베딩 전달 방정식(LightGCN, SGL, SimGCL)",
+      "style": {
+        "x": 177.433,
+        "y": 271.624,
+        "width": 826.232,
+        "height": 69.304,
+        "rotation": 0,
+        "fontFamily": "Times New Roman",
+        "fontSize": 29,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-004",
+      "text": "기존 임베딩 전달 방정식에 제안하는 WF기법을 적용한 방정식",
+      "style": {
+        "x": 177.433,
+        "y": 625.31,
+        "width": 826.232,
+        "height": 69.304,
+        "rotation": 0,
+        "fontFamily": "Times New Roman",
+        "fontSize": 29,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "shape",
+      "id": "shape-005",
+      "shape": "rect",
+      "style": {
+        "x": 747,
+        "y": 688.177,
+        "width": 42.063,
+        "height": 45.875,
+        "rotation": 0,
+        "fill": "#4BACC6",
+        "stroke": "#4BACC6",
+        "opacity": 1
+      }
+    },
+    {
+      "type": "shape",
+      "id": "shape-006",
+      "shape": "rect",
+      "style": {
+        "x": 302.333,
+        "y": 688.177,
+        "width": 42.063,
+        "height": 45.875,
+        "rotation": 0,
+        "fill": "#4BACC6",
+        "stroke": "#4BACC6",
+        "opacity": 1
+      }
+    }
+  ],
+  "rawText": "Table 1: Datasets used in the experiment\n\nTable 3: Environment variables\n\n기존 추천시스템 모델에 사용되는 임베딩 전달 방정식(LightGCN, SGL, SimGCL)\n\n기존 임베딩 전달 방정식에 제안하는 WF기법을 적용한 방정식"
+}

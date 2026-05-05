@@ -1,0 +1,46 @@
+{
+  "index": 70,
+  "slug": "slide-070",
+  "title": "Link: https://doityourselfai.github.io/",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "Link: https://doityourselfai.github.io/\n4기: 다양한 분야의 Computer Vision\n역할: 팀멤버\n연구 영역: Computer Vision (논문 리뷰, 대회 참여).\n5기: CV, GNN, PyTorch 3개팀에 참여.\n역할: 팀멤버\n연구 영역: Computer Vision, Graph Neural Network.\n(논문 리뷰, 강의 수강, 대회 참여)\nCertificate: https://drive.google.com/file/d/1NxSxsWUAXOWbk2WgKtwxHrU4dsBsbY8Y",
+      "style": {
+        "x": 66.776,
+        "y": 387.328,
+        "width": 1320.2,
+        "height": 562,
+        "rotation": 0,
+        "fontFamily": "Avenir Next Medium",
+        "fontSize": 43,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-002",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 849.346,
+        "y": 386.326,
+        "width": 1035.937,
+        "height": 391.944,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": "Link: https://doityourselfai.github.io/\n4기: 다양한 분야의 Computer Vision\n역할: 팀멤버\n연구 영역: Computer Vision (논문 리뷰, 대회 참여).\n5기: CV, GNN, PyTorch 3개팀에 참여.\n역할: 팀멤버\n연구 영역: Computer Vision, Graph Neural Network.\n(논문 리뷰, 강의 수강, 대회 참여)\nCertificate: https://drive.google.com/file/d/1NxSxsWUAXOWbk2WgKtwxHrU4dsBsbY8Y"
+}

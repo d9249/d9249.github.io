@@ -1,0 +1,62 @@
+{
+  "index": 103,
+  "slug": "slide-103",
+  "title": "Slide 103",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "image",
+      "id": "image-001",
+      "src": "assets/image-001.jpeg",
+      "style": {
+        "x": 41.406,
+        "y": 468.766,
+        "width": 590.882,
+        "height": 521.125,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-002",
+      "src": "assets/image-002.jpeg",
+      "style": {
+        "x": 670.741,
+        "y": 470.592,
+        "width": 590.882,
+        "height": 580.213,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-003",
+      "src": "assets/image-003.jpeg",
+      "style": {
+        "x": 1300.075,
+        "y": 475.911,
+        "width": 590.882,
+        "height": 569.574,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-004",
+      "src": "assets/image-004.png",
+      "style": {
+        "x": 686.818,
+        "y": 257.053,
+        "width": 546.363,
+        "height": 204.487,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": ""
+}

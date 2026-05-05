@@ -1,0 +1,74 @@
+{
+  "index": 87,
+  "slug": "slide-087",
+  "title": "프론트엔드",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "프론트엔드\n핵심 프레임워크: Next.js (React 기반)\n스타일링 시스템: Tailwind CSS, PostCSS\n상태 관리: React Context API\n데이터 처리: SWR (캐싱 및 데이터 페칭)\nUI 컴포넌트: @headlessui/react, react-icons\n폼 처리: react-hook-form\n유틸리티: date-fns (날짜 처리)\n백엔드\n웹 서버 (JavaScript)\n서버 환경: Next.js API 라우트\n인증 시스템: NextAuth.js\nDB 접근: Prisma ORM\nAPI 서버 (Python)\n프레임워크: FastAPI\n서버 실행: Uvicorn (ASGI)\n데이터 검증: Pydantic\nDB 접근: SQLAlchemy ORM\n언어 버전: Python 3.10",
+      "style": {
+        "x": 421.18,
+        "y": 331.328,
+        "width": 677.753,
+        "height": 674,
+        "rotation": 0,
+        "fontFamily": "Apple SD 산돌고딕 Neo 볼드체",
+        "fontSize": 40,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#000000",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-002",
+      "text": "역할: 기획, 풀스택(웹(Next.js), 앱(swift)), Agent(langGraph) 구현 및 배포",
+      "style": {
+        "x": 562.64,
+        "y": 188.478,
+        "width": 794.72,
+        "height": 39,
+        "rotation": 0,
+        "fontFamily": "Apple SD 산돌고딕 Neo 볼드체",
+        "fontSize": 35,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-003",
+      "text": "AI 및 LLM 아키텍처\n에이전트 프레임워크: LangGraph (상태 기반 워크플로우)\nLLM 통합: LangChain, LangChain-OpenAI\n모델: OpenAI GPT-4o-mini\n모니터링: LangSmith (성능 추적 및 분석)\n추론 파이프라인: 입력 평가 → 계획 생성 다단계 처리\n프롬프트 시스템: 템플릿 기반 동적 프롬프트 생성\n데이터베이스\nORM: Prisma (JS), SQLAlchemy (Python)\nDBMS: PostgreSQL/MySQL 지원\n인프라 및 배포\n컨테이너화: Docker\n주요 통합 흐름\n사용자 입력 → 프론트엔드(Next.js) → 백엔드 API(FastAPI)\n백엔드 → LangGraph 에이전트 → GPT 모델 → 응답 생성\n결과 데이터 저장(SQLAlchemy) → 프론트엔드 표시(SWR 캐싱)\n에이전트 실행 전체 과정 LangSmith로 모니터링",
+      "style": {
+        "x": 1041.847,
+        "y": 324.328,
+        "width": 810.816,
+        "height": 648,
+        "rotation": 0,
+        "fontFamily": "Apple SD 산돌고딕 Neo 볼드체",
+        "fontSize": 40,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#000000",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "#FFFFFF"
+      }
+    }
+  ],
+  "rawText": "프론트엔드\n핵심 프레임워크: Next.js (React 기반)\n스타일링 시스템: Tailwind CSS, PostCSS\n상태 관리: React Context API\n데이터 처리: SWR (캐싱 및 데이터 페칭)\nUI 컴포넌트: @headlessui/react, react-icons\n폼 처리: react-hook-form\n유틸리티: date-fns (날짜 처리)\n백엔드\n웹 서버 (JavaScript)\n서버 환경: Next.js API 라우트\n인증 시스템: NextAuth.js\nDB 접근: Prisma ORM\nAPI 서버 (Python)\n프레임워크: FastAPI\n서버 실행: Uvicorn (ASGI)\n데이터 검증: Pydantic\nDB 접근: SQLAlchemy ORM\n언어 버전: Python 3.10\n\n역할: 기획, 풀스택(웹(Next.js), 앱(swift)), Agent(langGraph) 구현 및 배포\n\nAI 및 LLM 아키텍처\n에이전트 프레임워크: LangGraph (상태 기반 워크플로우)\nLLM 통합: LangChain, LangChain-OpenAI\n모델: OpenAI GPT-4o-mini\n모니터링: LangSmith (성능 추적 및 분석)\n추론 파이프라인: 입력 평가 → 계획 생성 다단계 처리\n프롬프트 시스템: 템플릿 기반 동적 프롬프트 생성\n데이터베이스\nORM: Prisma (JS), SQLAlchemy (Python)\nDBMS: PostgreSQL/MySQL 지원\n인프라 및 배포\n컨테이너화: Docker\n주요 통합 흐름\n사용자 입력 → 프론트엔드(Next.js) → 백엔드 API(FastAPI)\n백엔드 → LangGraph 에이전트 → GPT 모델 → 응답 생성\n결과 데이터 저장(SQLAlchemy) → 프론트엔드 표시(SWR 캐싱)\n에이전트 실행 전체 과정 LangSmith로 모니터링"
+}

@@ -1,0 +1,118 @@
+{
+  "index": 71,
+  "slug": "slide-071",
+  "title": "가짜연구소 (6기, 그래프로 설득하기)",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "가짜연구소 (6기, 그래프로 설득하기)\nHIV 바이러스(인체 면역결핍 바이러스)를 억제하는 분자를 찾기 위한 프로젝트",
+      "style": {
+        "x": 100,
+        "y": 168,
+        "width": 1720,
+        "height": 93.701,
+        "rotation": 0,
+        "fontFamily": "Avenir Next Regular",
+        "fontSize": 42,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-002",
+      "text": "https://www.notion.so/chanrankim/ac12010e21af4431a5f3e8ae2bdc4ee3?pvs=4",
+      "style": {
+        "x": 1114.612,
+        "y": 793.878,
+        "width": 762.44,
+        "height": 35,
+        "rotation": 0,
+        "fontFamily": "Avenir Next Medium",
+        "fontSize": 27,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-003",
+      "text": "- 칼레트라(Kaletra)는 리토나비르(Ritonavir)와 로피나비르(Lopinavir)의 혼합물\n- 단백질가위의 기능을 차단하는 에이즈 치료제 다루나비르(Darunavir)\n- 렘데시비르(Remdesivir, GS-5734)는 ATP 핵산과 모양이 비슷하여 RNA 중합효소에 의한 바이러스 RNA 합성을 봉쇄\n- RNA 중합효소의 기능을 차단하는 신종플루 치료제 파비피라비르(Favipiravir, 아비간), C형 간염치료제 리바비린(Ribavirin)",
+      "style": {
+        "x": 1111.269,
+        "y": 600.055,
+        "width": 698.975,
+        "height": 170,
+        "rotation": 0,
+        "fontFamily": "Avenir Next Medium",
+        "fontSize": 27,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-004",
+      "text": "예측 작업: 분자 특성이 이진 라벨(예: 분자가 HIV 바이러스 복제를 억제하는지 여부)로 캐스팅되는 대상 분자 특성을 가능한 한 정확하게 예측하는 것.",
+      "style": {
+        "x": 1112.484,
+        "y": 840.701,
+        "width": 730.6,
+        "height": 58,
+        "rotation": 0,
+        "fontFamily": "Apple SD 산돌고딕 Neo 일반체",
+        "fontSize": 27,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#4BACC6",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-005",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 143.947,
+        "y": 266.694,
+        "width": 959.5,
+        "height": 661.095,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-006",
+      "src": "assets/image-002.png",
+      "style": {
+        "x": 1111.269,
+        "y": 273.523,
+        "width": 638.627,
+        "height": 302.709,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": "가짜연구소 (6기, 그래프로 설득하기)\nHIV 바이러스(인체 면역결핍 바이러스)를 억제하는 분자를 찾기 위한 프로젝트\n\nhttps://www.notion.so/chanrankim/ac12010e21af4431a5f3e8ae2bdc4ee3?pvs=4\n\n- 칼레트라(Kaletra)는 리토나비르(Ritonavir)와 로피나비르(Lopinavir)의 혼합물\n- 단백질가위의 기능을 차단하는 에이즈 치료제 다루나비르(Darunavir)\n- 렘데시비르(Remdesivir, GS-5734)는 ATP 핵산과 모양이 비슷하여 RNA 중합효소에 의한 바이러스 RNA 합성을 봉쇄\n- RNA 중합효소의 기능을 차단하는 신종플루 치료제 파비피라비르(Favipiravir, 아비간), C형 간염치료제 리바비린(Ribavirin)\n\n예측 작업: 분자 특성이 이진 라벨(예: 분자가 HIV 바이러스 복제를 억제하는지 여부)로 캐스팅되는 대상 분자 특성을 가능한 한 정확하게 예측하는 것."
+}

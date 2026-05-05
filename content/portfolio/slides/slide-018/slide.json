@@ -1,0 +1,70 @@
+{
+  "index": 18,
+  "slug": "slide-018",
+  "title": "‘booxTory’ 서비스의 전임 AI 엔지니어로 전체 AI기반 엔진 개발",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "‘booxTory’ 서비스의 전임 AI 엔지니어로 전체 AI기반 엔진 개발\n개발 인원: 클라이언트 2명, 중계 서버 1명, AI 엔지니어 2명\n‘Arti’ 엔진의 전임 AI 엔지니어로 기술 개발 및 개발 리드\n핵심 기술 역량\n언어 모델 & RAG 시스템 구축 및 활용거대/소형 언어 모델 활용 시스템 개발, 멀티모달, 임베딩 모델 활용 시스템 개발\n컴퓨터 비전 & 멀티모달 시스템 구축 및 활용영상처리 알고리즘 개발, 특정 객체 인식 멀티모달 모델 및 개방형 객체 탐지 시스템 개발\nMLOps & 인프라 시스템 구축 및 활용머신러닝 모델 서빙 및 API 구축, 컨테이너 기반 배포 자동화 및 모니터링CI/CD 및 클라우드 인프라 관리, 벡터 데이터베이스 구축 및 활용\n주요 성과\n혁신 제품 개발 및 기술 리더십“Booxedit\" 사업 기획 및 시스템 개발“arti\" CES 2025 인공지능 부문 Best of Innovation - Honoree 수상 (기술 자문/개발 주도)“booxTory” CES 2025 인공지능 부문 Best of Innovation 수상 (AI 엔진 개발 총괄)\nR&D 및 정부 사업 수행 - 인공지능 과제 수주 및 기술 Lead 수행, 사업계획서 작성 및 PoC 제안.문화체육관광부 한국콘텐츠진흥원 인공지능 콘텐츠 제작지원 사업 협약 수행 (2024년, 2025년)2025 월드IT쇼(WIS 2025) 혁신상 과학기술정보통신부 장관상 수상2025년 AI바우처 운영지원 사업 공급기업 선정 (AI 기술 리드 및 총괄) - CLEAR, MAVIS, MERGE, NEXIS2025년 서울 AI 허브 입주 선정2025년 중소기업 연구인력지원사업 (신진) 협약",
+      "style": {
+        "x": 61.432,
+        "y": 147.573,
+        "width": 1138.273,
+        "height": 896.534,
+        "rotation": 0,
+        "fontFamily": "+mn-lt",
+        "fontSize": 35,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#000000",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-002",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1080,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-003",
+      "src": "assets/image-002.jpeg",
+      "style": {
+        "x": 1277.184,
+        "y": 442.29,
+        "width": 595.968,
+        "height": 604.076,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-004",
+      "src": "assets/image-003.png",
+      "style": {
+        "x": 1269.797,
+        "y": 20.316,
+        "width": 610.742,
+        "height": 626.537,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": "‘booxTory’ 서비스의 전임 AI 엔지니어로 전체 AI기반 엔진 개발\n개발 인원: 클라이언트 2명, 중계 서버 1명, AI 엔지니어 2명\n‘Arti’ 엔진의 전임 AI 엔지니어로 기술 개발 및 개발 리드\n핵심 기술 역량\n언어 모델 & RAG 시스템 구축 및 활용거대/소형 언어 모델 활용 시스템 개발, 멀티모달, 임베딩 모델 활용 시스템 개발\n컴퓨터 비전 & 멀티모달 시스템 구축 및 활용영상처리 알고리즘 개발, 특정 객체 인식 멀티모달 모델 및 개방형 객체 탐지 시스템 개발\nMLOps & 인프라 시스템 구축 및 활용머신러닝 모델 서빙 및 API 구축, 컨테이너 기반 배포 자동화 및 모니터링CI/CD 및 클라우드 인프라 관리, 벡터 데이터베이스 구축 및 활용\n주요 성과\n혁신 제품 개발 및 기술 리더십“Booxedit\" 사업 기획 및 시스템 개발“arti\" CES 2025 인공지능 부문 Best of Innovation - Honoree 수상 (기술 자문/개발 주도)“booxTory” CES 2025 인공지능 부문 Best of Innovation 수상 (AI 엔진 개발 총괄)\nR&D 및 정부 사업 수행 - 인공지능 과제 수주 및 기술 Lead 수행, 사업계획서 작성 및 PoC 제안.문화체육관광부 한국콘텐츠진흥원 인공지능 콘텐츠 제작지원 사업 협약 수행 (2024년, 2025년)2025 월드IT쇼(WIS 2025) 혁신상 과학기술정보통신부 장관상 수상2025년 AI바우처 운영지원 사업 공급기업 선정 (AI 기술 리드 및 총괄) - CLEAR, MAVIS, MERGE, NEXIS2025년 서울 AI 허브 입주 선정2025년 중소기업 연구인력지원사업 (신진) 협약"
+}

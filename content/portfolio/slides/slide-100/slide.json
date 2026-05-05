@@ -1,0 +1,34 @@
+{
+  "index": 100,
+  "slug": "slide-100",
+  "title": "International conference (해외 컨퍼런스)",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "International conference (해외 컨퍼런스)\n1. Egress Initialization for Graph Convolution Network in Recommendation Systems\n* The 15th International Conference on Internet (ICONI 2023), 1st author.\n2. Thin Graph Convolution Network in Recommendation Systems\n* The 15th International Conference on Internet (ICONI 2023), 1st author.\n3. Over-smoothing in LightGCN doesn’t happen much\n* The 15th International Conference on Internet (ICONI 2023), 1st author.\n4. Leverage time-based data to improve recommendation system accuracy\n* The 18th Asia Pacific International Conference on Information Science and Technology(APIC-IST), 1st author\n5. Using Deep Learning for Medical Automation in Diagnosis of Degenerative Arthritis\n* The 8th international Conference for Small and Medium Business 2023(ICSMB), 1st author\n6. Classification of degenerative arthritis using Xception model in radiographic images\n* The 17th Asia Pacific International Conference on Information Science and Technology(APIC-IST), 1st author\n* This paper was selected as one of the best papers of APIC-IST 2022 and recommended for publication in CMC-Computers, Materials & Continua (CMC).",
+      "style": {
+        "x": 238.795,
+        "y": 222.248,
+        "width": 1442.41,
+        "height": 785,
+        "rotation": 0,
+        "fontFamily": "Apple SD 산돌고딕 Neo 볼드체",
+        "fontSize": 42,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#434343",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    }
+  ],
+  "rawText": "International conference (해외 컨퍼런스)\n1. Egress Initialization for Graph Convolution Network in Recommendation Systems\n* The 15th International Conference on Internet (ICONI 2023), 1st author.\n2. Thin Graph Convolution Network in Recommendation Systems\n* The 15th International Conference on Internet (ICONI 2023), 1st author.\n3. Over-smoothing in LightGCN doesn’t happen much\n* The 15th International Conference on Internet (ICONI 2023), 1st author.\n4. Leverage time-based data to improve recommendation system accuracy\n* The 18th Asia Pacific International Conference on Information Science and Technology(APIC-IST), 1st author\n5. Using Deep Learning for Medical Automation in Diagnosis of Degenerative Arthritis\n* The 8th international Conference for Small and Medium Business 2023(ICSMB), 1st author\n6. Classification of degenerative arthritis using Xception model in radiographic images\n* The 17th Asia Pacific International Conference on Information Science and Technology(APIC-IST), 1st author\n* This paper was selected as one of the best papers of APIC-IST 2022 and recommended for publication in CMC-Computers, Materials & Continua (CMC)."
+}

@@ -1,6 +1,30 @@
 import * as React from "react";
 import Layout from "../components/Layout";
-import deck from "../data/portfolioSlides.json";
+import deck from "../../content/portfolio/deck.json";
+
+const slideContext = require.context(
+  "../../content/portfolio/slides",
+  true,
+  /slide\.json$/,
+);
+const assetContext = require.context(
+  "../../content/portfolio/slides",
+  true,
+  /\.(gif|jpe?g|png|svg|webp)$/,
+);
+
+const unwrapModule = (module) => module.default || module;
+
+const slides = slideContext
+  .keys()
+  .map((key) => unwrapModule(slideContext(key)))
+  .sort((a, b) => a.index - b.index);
+
+const resolveSlideAsset = (slide, assetPath) => {
+  const normalized = assetPath.replace(/^\.\//, "");
+  const key = `./${slide.slug}/${normalized}`;
+  return unwrapModule(assetContext(key));
+};
 
 const clampSlideIndex = (index, length) => {
   if (length === 0) {
@@ -10,8 +34,89 @@ const clampSlideIndex = (index, length) => {
   return Math.min(Math.max(index, 0), length - 1);
 };
 
+const renderTransform = (style) => {
+  if (!style.rotation) {
+    return undefined;
+  }
+
+  return `rotate(${style.rotation} ${style.x + style.width / 2} ${
+    style.y + style.height / 2
+  })`;
+};
+
+const CodeSlideObject = ({ object, slide }) => {
+  const { style } = object;
+  const transform = renderTransform(style);
+
+  if (object.type === "image") {
+    return (
+      <image
+        key={object.id}
+        href={resolveSlideAsset(slide, object.src)}
+        x={style.x}
+        y={style.y}
+        width={style.width}
+        height={style.height}
+        transform={transform}
+        preserveAspectRatio="none"
+      />
+    );
+  }
+
+  if (object.type === "shape") {
+    return (
+      <rect
+        key={object.id}
+        x={style.x}
+        y={style.y}
+        width={style.width}
+        height={style.height}
+        rx={object.shape === "roundRect" ? 16 : 0}
+        fill={style.fill}
+        stroke={style.stroke}
+        opacity={style.opacity}
+        transform={transform}
+      />
+    );
+  }
+
+  if (object.type === "text") {
+    return (
+      <foreignObject
+        key={object.id}
+        x={style.x}
+        y={style.y}
+        width={style.width}
+        height={style.height}
+        transform={transform}
+      >
+        <div
+          className="code-slide-text"
+          xmlns="http://www.w3.org/1999/xhtml"
+          style={{
+            backgroundColor:
+              style.backgroundColor === "transparent"
+                ? undefined
+                : style.backgroundColor,
+            color: style.color,
+            fontFamily: style.fontFamily,
+            fontSize: `${style.fontSize}px`,
+            fontStyle: style.fontStyle,
+            fontWeight: style.fontWeight,
+            lineHeight: style.lineHeight,
+            textAlign: style.textAlign,
+          }}
+        >
+          {object.text}
+        </div>
+      </foreignObject>
+    );
+  }
+
+  return null;
+};
+
 const PortfolioPage = () => {
-  const slides = deck.slides || [];
   const [activeIndex, setActiveIndex] = React.useState(0);
   const [isFullscreen, setIsFullscreen] = React.useState(false);
   const stageRef = React.useRef(null);
@@ -111,8 +216,8 @@ const PortfolioPage = () => {
             <h1>Keynote 원본을 웹 발표 화면으로 최신화합니다.</h1>
             <p className="portfolio-copy">
               원본 Keynote에서 export한 {deck.source.slideCount}장의 슬라이드를
-              정적 웹 자산으로 관리합니다. 배포된 페이지에서도 전체화면 발표와
-              슬라이드 이동이 가능합니다.
+              슬라이드별 content bundle로 관리합니다. 각 슬라이드는 텍스트,
+              스타일, 이미지 asset을 가진 코드 데이터로 렌더링됩니다.
             </p>
           </div>
           <div className="portfolio-meta-card">
@@ -126,14 +231,25 @@ const PortfolioPage = () => {
           <div className="deck-stage" ref={stageRef}>
             <div className="deck-frame">
               {activeSlide ? (
-                <img
-                  className="deck-image"
-                  src={activeSlide.src}
-                  alt={activeSlide.alt}
-                  width={activeSlide.width}
-                  height={activeSlide.height}
-                  draggable="false"
-                />
+                <svg
+                  className="code-slide-svg"
+                  viewBox={`0 0 ${activeSlide.canvas.width} ${activeSlide.canvas.height}`}
+                  role="img"
+                  aria-label={`Portfolio slide ${activeSlide.index}: ${activeSlide.title}`}
+                >
+                  <rect
+                    width={activeSlide.canvas.width}
+                    height={activeSlide.canvas.height}
+                    fill={activeSlide.canvas.background}
+                  />
+                  {activeSlide.objects.map((object) => (
+                    <CodeSlideObject
+                      key={object.id}
+                      object={object}
+                      slide={activeSlide}
+                    />
+                  ))}
+                </svg>
               ) : (
                 <div className="deck-placeholder">No portfolio slides</div>
               )}
@@ -182,7 +298,11 @@ const PortfolioPage = () => {
                 onClick={() => goToSlide(index)}
                 aria-label={`${slide.index}번 슬라이드로 이동`}
               >
-                <img src={slide.src} alt="" loading="lazy" />
+                <img
+                  src={resolveSlideAsset(slide, slide.preview)}
+                  alt=""
+                  loading="lazy"
+                />
                 <span>{String(slide.index).padStart(3, "0")}</span>
               </button>
             ))}

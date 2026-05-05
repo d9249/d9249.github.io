@@ -1,0 +1,78 @@
+{
+  "index": 66,
+  "slug": "slide-066",
+  "title": "Fit-sibang (캡스톤 디자인)",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "Fit-sibang (캡스톤 디자인)",
+      "style": {
+        "x": 796.185,
+        "y": 181.478,
+        "width": 378.369,
+        "height": 53,
+        "rotation": 0,
+        "fontFamily": "-apple-system, BlinkMacSystemFont, sans-serif",
+        "fontSize": 24,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-002",
+      "text": "역할: 팀리더, 프론트 개발\n1. 목적: 시간과 장소에 구애받지 말고 집에서 운동하자!\n설명: AI를 이용한자세 추정을 통해\n모든 기기로 해당 웹 서비스에 접속하여 운동\n2. 기능\na. 자세 추정을 통한 운동 자세 교정\nb. 업적, 월간/주간 분석, 운동 기록 확인, 운동 영상 공유\nc. 지역 트레이너와의 채팅을 통한 온/오프라인 Meet-Up\n3. 개발환경\na. FrontEnd : HTML, CSS, React\nb. BackEnd : Node.js MongoDB",
+      "style": {
+        "x": 169.18,
+        "y": 290.328,
+        "width": 755.976,
+        "height": 756,
+        "rotation": 0,
+        "fontFamily": "Avenir Next Medium",
+        "fontSize": 43,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-003",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 968.073,
+        "y": 251.79,
+        "width": 819.4,
+        "height": 406.524,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-004",
+      "src": "assets/image-002.png",
+      "style": {
+        "x": 972.576,
+        "y": 629.489,
+        "width": 810.393,
+        "height": 388.809,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": "Fit-sibang (캡스톤 디자인)\n\n역할: 팀리더, 프론트 개발\n1. 목적: 시간과 장소에 구애받지 말고 집에서 운동하자!\n설명: AI를 이용한자세 추정을 통해\n모든 기기로 해당 웹 서비스에 접속하여 운동\n2. 기능\na. 자세 추정을 통한 운동 자세 교정\nb. 업적, 월간/주간 분석, 운동 기록 확인, 운동 영상 공유\nc. 지역 트레이너와의 채팅을 통한 온/오프라인 Meet-Up\n3. 개발환경\na. FrontEnd : HTML, CSS, React\nb. BackEnd : Node.js MongoDB"
+}

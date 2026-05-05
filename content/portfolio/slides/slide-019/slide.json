@@ -1,0 +1,38 @@
+{
+  "index": 19,
+  "slug": "slide-019",
+  "title": "Slide 19",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "image",
+      "id": "image-001",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1080,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-002",
+      "src": "assets/image-002.jpeg",
+      "style": {
+        "x": 66.65,
+        "y": 143.635,
+        "width": 1786.7,
+        "height": 905.874,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": ""
+}

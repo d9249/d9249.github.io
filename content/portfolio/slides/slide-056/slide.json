@@ -1,0 +1,54 @@
+{
+  "index": 56,
+  "slug": "slide-056",
+  "title": "Table 7: Experimental results of applying the proposed method to the model (layer 3, MovieLens-10m)",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "Table 7: Experimental results of applying the proposed method to the model (layer 3, MovieLens-10m)",
+      "style": {
+        "x": 227.163,
+        "y": 250.429,
+        "width": 672.719,
+        "height": 51.32,
+        "rotation": 0,
+        "fontFamily": "Times New Roman",
+        "fontSize": 21,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-002",
+      "text": "Table 8: Experimental results of applying the proposed method to the model (layer 3, Last. FM)",
+      "style": {
+        "x": 1012.99,
+        "y": 250.429,
+        "width": 624.742,
+        "height": 51.32,
+        "rotation": 0,
+        "fontFamily": "Times New Roman",
+        "fontSize": 21,
+        "fontWeight": 700,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    }
+  ],
+  "rawText": "Table 7: Experimental results of applying the proposed method to the model (layer 3, MovieLens-10m)\n\nTable 8: Experimental results of applying the proposed method to the model (layer 3, Last. FM)"
+}

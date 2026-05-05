@@ -1,0 +1,26 @@
+{
+  "index": 24,
+  "slug": "slide-024",
+  "title": "Slide 24",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "image",
+      "id": "image-001",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1080,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": ""
+}

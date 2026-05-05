@@ -1,0 +1,26 @@
+{
+  "index": 64,
+  "slug": "slide-064",
+  "title": "Slide 64",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "image",
+      "id": "image-001",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 131.581,
+        "y": 226.165,
+        "width": 1656.839,
+        "height": 815.674,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": ""
+}

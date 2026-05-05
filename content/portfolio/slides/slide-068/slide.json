@@ -1,0 +1,66 @@
+{
+  "index": 68,
+  "slug": "slide-068",
+  "title": "IA^2S(Image Analysis Automation System)",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "IA^2S(Image Analysis Automation System)",
+      "style": {
+        "x": 639.27,
+        "y": 181.478,
+        "width": 692.199,
+        "height": 53,
+        "rotation": 0,
+        "fontFamily": "-apple-system, BlinkMacSystemFont, sans-serif",
+        "fontSize": 24,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-002",
+      "text": "역할: 팀리더, 프론트 개발\n결과물: https://github.com/HHFEHH/crack-automation\n1. 목적\nDjango / OpenCV를 이용한 균열의 평탄화, 균열의 길이측정, 데이터자동화\n설명: 균열 평탄화, 균열 길이 측정, 데이터 자동화를 위한 웹 서비스로 물리적 외벽 수리 및 건물 유지 관리 회사의 기존 방법을 개선.\n2. 개발환경\n스택 : Python, Django, HTML, CSS, Javascript, OpenCV\n3. 기능\na. 균열이미지 평탄화\nb. 균열의 길이 측정\nc. openpyxl을 이용한 데이터 자동화",
+      "style": {
+        "x": 492.582,
+        "y": 289.993,
+        "width": 1008.52,
+        "height": 712,
+        "rotation": 0,
+        "fontFamily": "Avenir Next Medium",
+        "fontSize": 43,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-003",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 133.976,
+        "y": 295.178,
+        "width": 307.69,
+        "height": 172.567,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": "IA^2S(Image Analysis Automation System)\n\n역할: 팀리더, 프론트 개발\n결과물: https://github.com/HHFEHH/crack-automation\n1. 목적\nDjango / OpenCV를 이용한 균열의 평탄화, 균열의 길이측정, 데이터자동화\n설명: 균열 평탄화, 균열 길이 측정, 데이터 자동화를 위한 웹 서비스로 물리적 외벽 수리 및 건물 유지 관리 회사의 기존 방법을 개선.\n2. 개발환경\n스택 : Python, Django, HTML, CSS, Javascript, OpenCV\n3. 기능\na. 균열이미지 평탄화\nb. 균열의 길이 측정\nc. openpyxl을 이용한 데이터 자동화"
+}

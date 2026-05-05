@@ -1,0 +1,102 @@
+{
+  "index": 30,
+  "slug": "slide-030",
+  "title": "외부 활동",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "외부 활동",
+      "style": {
+        "x": 0,
+        "y": 0,
+        "width": 959.773,
+        "height": 59.641,
+        "rotation": 0,
+        "fontFamily": "Apple SD 산돌고딕 Neo 볼드체",
+        "fontSize": 32,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#FFFFFF",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "#9BBB59"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-002",
+      "text": "비영리 연구 단체 가짜연구소 6기 | “그래프로 설득하기” 팀원\n|",
+      "style": {
+        "x": 914.863,
+        "y": 0,
+        "width": 1004.91,
+        "height": 59.641,
+        "rotation": 0,
+        "fontFamily": "Apple SD 산돌고딕 Neo 볼드체",
+        "fontSize": 32,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#FFFFFF",
+        "textAlign": "right",
+        "lineHeight": 1.18,
+        "backgroundColor": "#9BBB59"
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-003",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 0,
+        "y": 519.403,
+        "width": 869.987,
+        "height": 445.289,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-004",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 870.307,
+        "y": 518.934,
+        "width": 970.16,
+        "height": 445.221,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-005",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 868.56,
+        "y": 1.281,
+        "width": 969.919,
+        "height": 519.652,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-006",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 0.474,
+        "y": 0,
+        "width": 869.877,
+        "height": 520.05,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": "외부 활동\n\n비영리 연구 단체 가짜연구소 6기 | “그래프로 설득하기” 팀원\n|"
+}

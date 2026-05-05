@@ -1,0 +1,66 @@
+{
+  "index": 67,
+  "slug": "slide-067",
+  "title": "Smart I.o.T 연구실 홈페이지",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "Smart I.o.T 연구실 홈페이지",
+      "style": {
+        "x": 788.793,
+        "y": 181.478,
+        "width": 393.153,
+        "height": 53,
+        "rotation": 0,
+        "fontFamily": "-apple-system, BlinkMacSystemFont, sans-serif",
+        "fontSize": 24,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-002",
+      "text": "역할: 프론트 개발\n1. 목적\n: 경기대학교 Smart IoT 연구실 홍보 및 수업관련 홈페이지 제작\n2. 개발환경\n스택 : HTML, CSS, Javascript, Vue.js, Node.js, NPM, certbot, Nginx, MariaDB, CentOS 7\n3. 기능\na. 수업 공지사항\nb. 연구실 홍보 (개제 논문 및 활동 내역)\nc. 수업자료 배포",
+      "style": {
+        "x": 179.757,
+        "y": 274.892,
+        "width": 839.176,
+        "height": 580,
+        "rotation": 0,
+        "fontFamily": "Avenir Next Medium",
+        "fontSize": 43,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-003",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 1067.859,
+        "y": 266.731,
+        "width": 713.75,
+        "height": 803.194,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": "Smart I.o.T 연구실 홈페이지\n\n역할: 프론트 개발\n1. 목적\n: 경기대학교 Smart IoT 연구실 홍보 및 수업관련 홈페이지 제작\n2. 개발환경\n스택 : HTML, CSS, Javascript, Vue.js, Node.js, NPM, certbot, Nginx, MariaDB, CentOS 7\n3. 기능\na. 수업 공지사항\nb. 연구실 홍보 (개제 논문 및 활동 내역)\nc. 수업자료 배포"
+}

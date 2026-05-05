@@ -1,0 +1,102 @@
+{
+  "index": 51,
+  "slug": "slide-051",
+  "title": "실험 결과:",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "text",
+      "id": "text-001",
+      "text": "실험 결과:\n•\t최신 데이터를 학습하는 것이 Precision@20에서 높은 성능을 보였으나, Recall@20에서는 전체 데이터를 학습하는 것이 더 나은 성능을 보였다.\n•\tF1 점수를 기준으로 평가한 결과, 최신 데이터를 사용한 모델이 더 높은 점수를 기록했다.\n•\t시간 기반 데이터 활용이 추천 시스템 성능 향상에 효과적임을 확인.",
+      "style": {
+        "x": 1018.049,
+        "y": 921.614,
+        "width": 876.324,
+        "height": 151.439,
+        "rotation": 0,
+        "fontFamily": "Helvetica",
+        "fontSize": 24,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "text",
+      "id": "text-002",
+      "text": "결론 및 향후 과제:\n•\t최신 데이터만을 학습하는 모델은 Precision@20의 정확도가 높아지지만, Recall@20에서는 성능이 떨어지는 한계가 있음.\n•\t전체 데이터를 학습하는 대신, 시간 기반 데이터를 통해 실시간 추천을 수행하는 것이 바람직함.\n•\t향후 연구에서는 Continual Learning을 통해 과거 데이터와 최신 데이터를 균형 있게 학습하여 Precision과 Recall 모두를 개선하는 방법을 제안.",
+      "style": {
+        "x": 31.383,
+        "y": 808.547,
+        "width": 482.063,
+        "height": 241.573,
+        "rotation": 0,
+        "fontFamily": "Helvetica",
+        "fontSize": 24,
+        "fontWeight": 400,
+        "fontStyle": "normal",
+        "color": "#111111",
+        "textAlign": "left",
+        "lineHeight": 1.18,
+        "backgroundColor": "transparent"
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-003",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 31.383,
+        "y": 222.298,
+        "width": 482.056,
+        "height": 582.698,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-004",
+      "src": "assets/image-002.png",
+      "style": {
+        "x": 520.213,
+        "y": 222.694,
+        "width": 491.069,
+        "height": 775.269,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-005",
+      "src": "assets/image-003.png",
+      "style": {
+        "x": 1007.263,
+        "y": 233.086,
+        "width": 449.52,
+        "height": 690.594,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-006",
+      "src": "assets/image-004.png",
+      "style": {
+        "x": 1454.965,
+        "y": 238.506,
+        "width": 443.555,
+        "height": 679.755,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": "실험 결과:\n•\t최신 데이터를 학습하는 것이 Precision@20에서 높은 성능을 보였으나, Recall@20에서는 전체 데이터를 학습하는 것이 더 나은 성능을 보였다.\n•\tF1 점수를 기준으로 평가한 결과, 최신 데이터를 사용한 모델이 더 높은 점수를 기록했다.\n•\t시간 기반 데이터 활용이 추천 시스템 성능 향상에 효과적임을 확인.\n\n결론 및 향후 과제:\n•\t최신 데이터만을 학습하는 모델은 Precision@20의 정확도가 높아지지만, Recall@20에서는 성능이 떨어지는 한계가 있음.\n•\t전체 데이터를 학습하는 대신, 시간 기반 데이터를 통해 실시간 추천을 수행하는 것이 바람직함.\n•\t향후 연구에서는 Continual Learning을 통해 과거 데이터와 최신 데이터를 균형 있게 학습하여 Precision과 Recall 모두를 개선하는 방법을 제안."
+}

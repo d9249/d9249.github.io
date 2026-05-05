@@ -1,0 +1,38 @@
+{
+  "index": 84,
+  "slug": "slide-084",
+  "title": "Slide 84",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "background": "#ffffff"
+  },
+  "preview": "preview.jpeg",
+  "objects": [
+    {
+      "type": "image",
+      "id": "image-001",
+      "src": "assets/image-001.png",
+      "style": {
+        "x": 88.75,
+        "y": 53.184,
+        "width": 1742.49,
+        "height": 1025.297,
+        "rotation": 0
+      }
+    },
+    {
+      "type": "image",
+      "id": "image-002",
+      "src": "assets/image-002.png",
+      "style": {
+        "x": 0,
+        "y": -1.376,
+        "width": 1920,
+        "height": 52,
+        "rotation": 0
+      }
+    }
+  ],
+  "rawText": ""
+}
