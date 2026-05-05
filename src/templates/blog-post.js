@@ -41,12 +41,17 @@ const getPostSources = (rawMarkdownBody) => {
 const removeSourceParagraph = (html) =>
   html.replace(/\s*<p>Sources:\s*[\s\S]*?<\/p>\s*$/i, "");
 
+const wrapArticleTables = (html) =>
+  html
+    .replace(/<table>/g, '<div class="article-table-wrap"><table>')
+    .replace(/<\/table>/g, "</table></div>");
+
 const BlogPostTemplate = ({ data, pageContext }) => {
   const post = data.post;
   const categoryLabel =
     labelByCategory.get(post.fields.category) || post.frontmatter.category;
   const postSources = getPostSources(post.rawMarkdownBody);
-  const postHtml = removeSourceParagraph(post.html);
+  const postHtml = wrapArticleTables(removeSourceParagraph(post.html));
 
   return (
     <Layout>

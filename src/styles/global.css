@@ -1925,6 +1925,61 @@ figcaption,
   margin: 10px 0;
 }
 
+.article-table-wrap {
+  width: 100%;
+  max-width: 100%;
+  margin: 30px 0;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in oklch, var(--surface) 94%, var(--bg));
+}
+
+.article-body table {
+  width: 100%;
+  min-width: 100%;
+  border-spacing: 0;
+  border-collapse: separate;
+  background: color-mix(in oklch, var(--surface) 94%, var(--bg));
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.article-body thead {
+  background: color-mix(in oklch, var(--border) 34%, var(--surface));
+}
+
+.article-body th,
+.article-body td {
+  min-width: 136px;
+  padding: 11px 13px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.article-body th {
+  color: var(--fg);
+  font-weight: 800;
+}
+
+.article-body td {
+  color: color-mix(in oklch, var(--fg) 82%, var(--muted));
+}
+
+.article-body tbody tr:nth-child(even) {
+  background: color-mix(in oklch, var(--bg) 44%, transparent);
+}
+
+.article-body th:last-child,
+.article-body td:last-child {
+  border-right: 0;
+}
+
+.article-body tbody tr:last-child td {
+  border-bottom: 0;
+}
+
 .article-body code {
   padding: 2px 5px;
   border: 1px solid var(--border);
