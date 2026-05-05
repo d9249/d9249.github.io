@@ -1,841 +1,984 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이상민 터미널 포트폴리오</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            font-family: 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
-            color: #fff;
-            height: 100vh;
-            overflow: hidden;
-        }
-        
-        .container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        
-        .terminal {
-            width: 100%;
-            max-width: 900px;
-            height: 100%;
-            background-color: #000;
-            border-radius: 5px;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding: 20px;
-            box-sizing: border-box;
-            /* 스크롤바 완전히 숨기기 */
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
-        }
-        
-        /* Webkit 브라우저에서 스크롤바 숨기기 */
-        .terminal::-webkit-scrollbar {
-            width: 0;
-            height: 0;
-            display: none;
-        }
-        
-        .header {
-            color: #0f0;
-            font-weight: bold;
-            margin-bottom: 10px;
-            white-space: pre;
-        }
-        
-        .prompt {
-            color: #0f0;
-            margin-right: 8px;
-        }
-        
-        .output {
-            margin-bottom: 16px;
-            white-space: pre-wrap;
-        }
-        
-        .command-line {
-            margin-bottom: 5px;
-            display: flex;
-        }
-        
-        .input-area {
-            position: relative;
-            display: flex;
-            margin-top: 20px;
-        }
-        
-        .input {
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-family: inherit;
-            font-size: inherit;
-            width: 100%;
-            outline: none;
-            padding: 0;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mean Log - AI Research to Product Notes</title>
+  <style>
+    :root {
+      --bg:      oklch(98% 0.005 250);
+      --surface: oklch(100% 0 0);
+      --fg:      oklch(19% 0.018 245);
+      --muted:   oklch(48% 0.018 245);
+      --border:  oklch(88% 0.01 245);
+      --accent:  oklch(70% 0.18 145);
 
-        /* 추천 메뉴 스타일 */
-        .autocomplete-container {
-            position: absolute;
-            left: 0;
-            top: 100%;
-            background-color: #222;
-            border: 1px solid #333;
-            border-radius: 3px;
-            width: auto;
-            max-width: 300px;
-            z-index: 10;
-            display: none;
-        }
-        
-        .autocomplete-item {
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        
-        .autocomplete-item:hover, .autocomplete-item.selected {
-            background-color: #333;
-        }
+      --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+      --font-body:    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', system-ui, sans-serif;
+      --font-mono:    'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', ui-monospace, monospace;
+    }
 
-        /* 마크다운 스타일링 */
-        strong {
-            color: #ffff00;
-            font-weight: bold;
-        }
-        
-        h1, h2, h3 {
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
-        h1 {
-            color: #ff66ff;
-            font-size: 1.5em;
-        }
-        
-        h2 {
-            color: #66ffff;
-            font-size: 1.3em;
-        }
-        
-        h3 {
-            color: #ff9966;
-            font-size: 1.1em;
-        }
-        
-        em {
-            color: #99ff99;
-            font-style: italic;
-        }
-        
-        code {
-            background-color: #333;
-            padding: 2px 4px;
-            border-radius: 3px;
-            font-family: monospace;
-        }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(90deg, color-mix(in oklch, var(--border) 36%, transparent) 1px, transparent 1px),
+        linear-gradient(180deg, color-mix(in oklch, var(--border) 30%, transparent) 1px, transparent 1px),
+        var(--bg);
+      background-size: 64px 64px;
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      letter-spacing: 0;
+    }
 
-        /* 깜빡이는 커서 애니메이션 */
-        .cursor {
-            width: 8px;
-            height: 16px;
-            background-color: #fff;
-            display: inline-block;
-            animation: blink 1s step-end infinite;
-        }
+    a { color: inherit; text-decoration: none; }
+    .page { min-height: 100vh; }
+    .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
 
-        @keyframes blink {
-            50% {
-                opacity: 0;
-            }
-        }
-    </style>
+    .masthead {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: color-mix(in oklch, var(--bg) 86%, transparent);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+    }
+
+    .masthead-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 68px;
+    }
+
+    .wordmark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .prompt-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent) 14%, transparent);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .nav a { border-bottom: 1px solid transparent; }
+    .nav a:hover { color: var(--fg); border-bottom-color: var(--fg); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.65fr);
+      gap: 56px;
+      align-items: end;
+      padding: 92px 0 72px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: color-mix(in oklch, var(--accent) 78%, var(--fg));
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      letter-spacing: -0.01em;
+    }
+
+    .hero h1 {
+      max-width: 860px;
+      font-size: clamp(48px, 7vw, 92px);
+      line-height: 0.96;
+      text-wrap: balance;
+    }
+
+    .hero-copy {
+      max-width: 700px;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 23px);
+      line-height: 1.5;
+      text-wrap: pretty;
+    }
+
+    .terminal-card {
+      background: oklch(16% 0.018 245);
+      color: oklch(94% 0.006 245);
+      border: 1px solid oklch(26% 0.018 245);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 18px 55px color-mix(in oklch, var(--fg) 12%, transparent);
+    }
+
+    .terminal-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid oklch(26% 0.018 245);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: oklch(71% 0.025 245);
+    }
+
+    .traffic { display: flex; gap: 6px; }
+    .traffic span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: oklch(58% 0.18 35);
+    }
+    .traffic span:nth-child(2) { background: oklch(83% 0.15 88); }
+    .traffic span:nth-child(3) { background: var(--accent); }
+
+    .terminal-body {
+      padding: 22px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .terminal-body p { margin: 0 0 12px; }
+    .cmd { color: var(--accent); }
+
+    .terminal-output {
+      display: grid;
+      gap: 8px;
+      margin-top: 18px;
+      color: oklch(85% 0.012 245);
+    }
+
+    .terminal-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 8px;
+      border-top: 1px solid oklch(25% 0.016 245);
+    }
+
+    .terminal-row strong {
+      color: oklch(96% 0.005 245);
+      font-weight: 700;
+    }
+
+    .section {
+      padding: 72px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.64fr) minmax(300px, 0.36fr);
+      gap: 44px;
+      align-items: end;
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
+      font-size: clamp(34px, 4vw, 56px);
+      line-height: 1;
+      text-wrap: balance;
+    }
+
+    .section-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      text-wrap: pretty;
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .evidence-card {
+      min-height: 220px;
+      padding: 24px;
+      border-right: 1px solid var(--border);
+    }
+
+    .evidence-card:last-child { border-right: 0; }
+
+    .meta {
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .value {
+      margin-top: 20px;
+      font-family: var(--font-display);
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 760;
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .evidence-card p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .career-layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.36fr) minmax(0, 0.64fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .profile-panel, .timeline, .post-list, .markdown-panel, .article-shell, .author-box {
+      background: color-mix(in oklch, var(--surface) 92%, var(--bg));
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .profile-panel {
+      position: sticky;
+      top: 92px;
+      padding: 24px;
+    }
+
+    .avatar-large {
+      display: grid;
+      place-items: center;
+      width: 72px;
+      height: 72px;
+      margin-bottom: 22px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: color-mix(in oklch, var(--accent) 12%, var(--surface));
+      color: var(--fg);
+      font-family: var(--font-mono);
+      font-weight: 800;
+    }
+
+    .profile-panel h3 { font-size: 26px; line-height: 1.1; }
+    .profile-panel p {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .tag {
+      padding: 5px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: var(--surface);
+    }
+
+    .timeline { overflow: hidden; }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 22px;
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .timeline-item:last-child { border-bottom: 0; }
+    .timeline-date {
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+    .timeline h3 { font-size: 22px; line-height: 1.2; }
+    .timeline p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .trend-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.44fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .post-list { overflow: hidden; }
+    .post-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 130px;
+      gap: 18px;
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .post-row:last-child { border-bottom: 0; }
+
+    .post-row h3 {
+      margin-top: 8px;
+      font-size: clamp(23px, 2.6vw, 34px);
+      line-height: 1.1;
+      text-wrap: balance;
+    }
+
+    .post-row p {
+      max-width: 680px;
+      margin: 12px 0 0;
+      color: var(--muted);
+    }
+
+    .post-date {
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .markdown-panel { padding: 22px; }
+    .file-stack {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .status {
+      color: color-mix(in oklch, var(--accent) 78%, var(--fg));
+      font-weight: 700;
+    }
+
+    .article-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 36px;
+      padding: 34px;
+    }
+
+    .article { max-width: 720px; }
+
+    .article-kicker {
+      color: color-mix(in oklch, var(--accent) 78%, var(--fg));
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .article h2 {
+      margin-top: 14px;
+      font-size: clamp(36px, 5vw, 62px);
+      line-height: 1.02;
+    }
+
+    .deck {
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.5;
+      text-wrap: pretty;
+    }
+
+    .byline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 24px 0 28px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .hero-image {
+      position: relative;
+      display: grid;
+      min-height: 370px;
+      margin: 28px 0 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, color-mix(in oklch, var(--accent) 18%, transparent), transparent 42%),
+        repeating-linear-gradient(0deg, color-mix(in oklch, var(--fg) 5%, transparent) 0 1px, transparent 1px 19px),
+        repeating-linear-gradient(90deg, color-mix(in oklch, var(--fg) 5%, transparent) 0 1px, transparent 1px 19px),
+        var(--surface);
+    }
+
+    .hero-image::before {
+      content: "knowledge_graph.md -> rendered article";
+      align-self: end;
+      margin: 24px;
+      padding: 9px 11px;
+      width: fit-content;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: color-mix(in oklch, var(--surface) 88%, transparent);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    figcaption, .caption {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .article-body {
+      margin-top: 38px;
+      color: var(--fg);
+      font-size: 18px;
+      line-height: 1.82;
+    }
+
+    .article-body h3 {
+      margin: 52px 0 12px;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    .article-body p {
+      margin: 20px 0;
+      text-wrap: pretty;
+    }
+
+    .article-body blockquote {
+      margin: 34px 0;
+      padding: 0 0 0 22px;
+      border-left: 3px solid var(--accent);
+      color: var(--fg);
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 720;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+    }
+
+    .article-body .inline-quote {
+      margin: 26px 0;
+      padding: 18px 20px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .article-body ul { margin: 18px 0 22px; padding-left: 22px; }
+    .article-body li { margin: 10px 0; }
+    .article-figure { margin: 36px 0; }
+
+    .figure-block {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      min-height: 170px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .figure-cell {
+      padding: 18px;
+      border-right: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .figure-cell:last-child { border-right: 0; }
+    .figure-cell strong {
+      display: block;
+      margin: 22px 0 8px;
+      color: var(--fg);
+      font-family: var(--font-display);
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .aside {
+      position: sticky;
+      top: 92px;
+      align-self: start;
+      display: grid;
+      gap: 14px;
+    }
+
+    .toc, .source-card {
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .toc a {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .source-card code {
+      display: block;
+      margin-top: 10px;
+      color: var(--fg);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      white-space: normal;
+    }
+
+    .author-box {
+      display: grid;
+      grid-template-columns: 80px minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      margin-top: 28px;
+      padding: 22px;
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .related-card {
+      min-height: 210px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .thumb {
+      height: 70px;
+      margin-bottom: 18px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background:
+        linear-gradient(135deg, color-mix(in oklch, var(--accent) 14%, transparent), transparent),
+        repeating-linear-gradient(90deg, color-mix(in oklch, var(--fg) 8%, transparent) 0 1px, transparent 1px 12px),
+        var(--bg);
+    }
+
+    .related-card h3 { font-size: 19px; line-height: 1.2; }
+    .related-card p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer {
+      padding: 36px 0 56px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    @media (max-width: 980px) {
+      .hero, .section-head, .career-layout, .trend-grid, .article-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .evidence-grid, .related-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .profile-panel, .aside { position: static; }
+    }
+
+    @media (max-width: 680px) {
+      .shell { width: min(100% - 28px, 1180px); }
+
+      .masthead-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 14px 0;
+      }
+
+      .nav {
+        width: 100%;
+        gap: 14px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .hero { padding: 58px 0 48px; }
+      .terminal-card { border-radius: 7px; }
+      .section { padding: 52px 0; }
+
+      .evidence-grid, .related-grid, .figure-block {
+        grid-template-columns: 1fr;
+      }
+
+      .evidence-card, .figure-cell {
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .evidence-card:last-child, .figure-cell:last-child {
+        border-bottom: 0;
+      }
+
+      .timeline-item, .post-row, .author-box {
+        grid-template-columns: 1fr;
+      }
+
+      .post-date { text-align: left; }
+      .article-shell { padding: 22px; }
+      .article-body { font-size: 17px; }
+      .article-body blockquote { font-size: 23px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="terminal" id="terminal">
-            <div class="header">
-███╗   ███╗███████╗ █████╗ ███╗   ██╗
-████╗ ████║██╔════╝██╔══██╗████╗  ██║
-██╔████╔██║█████╗  ███████║██╔██╗ ██║
-██║╚██╔╝██║██╔══╝  ██╔══██║██║╚██╗██║
-██║ ╚═╝ ██║███████╗██║  ██║██║ ╚████║
-╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝
+  <div class="page">
+    <header class="masthead">
+      <div class="shell masthead-inner">
+        <a class="wordmark" href="#top" aria-label="Mean Log home">
+          <span class="prompt-dot"></span>
+          <span>mean@log:~/research-to-product</span>
+        </a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="#career">career</a>
+          <a href="#trends">trend-notes</a>
+          <a href="#article">latest.md</a>
+          <a href="#contact">contact</a>
+        </nav>
+      </div>
+    </header>
 
-터미널 포트폴리오 v1.0.0 ( 환영합니다! )
-
-  * GitHub: https://github.com/d9249
-  * LinkedIn: https://linkedin.com/in/meanl
-
-마지막 로그인: 2025. 5. 4. (한국 표준시)
-사용법을 보려면 'help'를 입력하세요.</div>
-            
-            <!-- 명령어 히스토리 및 결과 -->
-            <div class="command-history" id="command-history">
-                <div class="command-line">
-                    <span class="prompt">mean@portfolio:~$</span>
-                    <span>help</span>
-                </div>
-                <div class="output">
-                    <h2>도움말</h2>
-                    <p>터미널 포트폴리오에 오신 것을 환영합니다! 다음 명령어를 사용할 수 있습니다:</p>
-                    <div style="margin-top: 10px">
-                        <div style="display: flex">
-                            <div style="width: 120px">about</div>
-                            <div>- 소개 정보 보기</div>
-                        </div>
-                        <div style="display: flex">
-                            <div style="width: 120px">skills</div>
-                            <div>- 기술 스택 보기</div>
-                        </div>
-                        <div style="display: flex">
-                            <div style="width: 120px">projects</div>
-                            <div>- 프로젝트 목록 보기</div>
-                        </div>
-                        <div style="display: flex">
-                            <div style="width: 120px">contact</div>
-                            <div>- 연락처 정보 보기</div>
-                        </div>
-                        <div style="display: flex">
-                            <div style="width: 120px">career</div>
-                            <div>- 경력 정보 보기</div>
-                        </div>
-                        <div style="display: flex">
-                            <div style="width: 120px">research</div>
-                            <div>- 연구 경험 보기 (서브명령어: thesis, international-journal, international-conference, domestic-journal, domestic-conference, all)</div>
-                        </div>
-                        <div style="display: flex">
-                            <div style="width: 120px">education</div>
-                            <div>- 학력 정보 보기</div>
-                        </div>
-                        <div style="display: flex">
-                            <div style="width: 120px">clear</div>
-                            <div>- 터미널 화면 지우기</div>
-                        </div>
-                        <div style="display: flex">
-                            <div style="width: 120px">whoami</div>
-                            <div>- 이상민 정보 확인</div>
-                        </div>
-                    </div>
-                </div>
+    <main id="top">
+      <section class="shell hero" data-od-id="hero">
+        <div>
+          <p class="eyebrow">AI engineer and researcher</p>
+          <h1 data-od-id="headline">연구의 깊이를 제품 가치로 연결하는 AI 시스템 기록.</h1>
+          <p class="hero-copy">이상민의 커리어, 연구, 엔터프라이즈 AI 구축 경험을 긴 글과 기술 노트로 정리하는 개인 블로그입니다. README의 경력 증거는 구조화하고, 앞으로 업로드하는 트렌드 MD는 바로 읽히는 아티클처럼 보이도록 설계했습니다.</p>
+        </div>
+        <aside class="terminal-card" aria-label="Profile summary">
+          <div class="terminal-top">
+            <div class="traffic"><span></span><span></span><span></span></div>
+            <span>profile/readme.md</span>
+          </div>
+          <div class="terminal-body">
+            <p><span class="cmd">$</span> whoami</p>
+            <p>AI Engineer &amp; Researcher<br />Building Bridge between AI Research and Real-World Value</p>
+            <div class="terminal-output">
+              <div class="terminal-row"><span>focus</span><strong>RAG / Multi-Agent / OCR</strong></div>
+              <div class="terminal-row"><span>recognition</span><strong>CES 2025 Innovation</strong></div>
+              <div class="terminal-row"><span>current</span><strong>AsianaIDT AI/ML</strong></div>
             </div>
-            
-            <div class="input-area">
-                <span class="prompt">mean@portfolio:~$</span>
-                <input type="text" class="input" id="terminal-input" autocomplete="off" spellcheck="false" autofocus>
-                <span class="cursor"></span>
-                <div class="autocomplete-container" id="autocomplete-container"></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="shell section" aria-labelledby="proof-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Proof blocks</p>
+            <h2 id="proof-title">README를 이력서가 아니라 증거 패널로 재구성</h2>
+          </div>
+          <p class="section-note">방문자가 한 번에 스캔할 수 있도록 수상, 연구, 제품화, 벤치마크를 분리했습니다. 숫자는 README에 있는 내용만 사용했습니다.</p>
+        </div>
+        <div class="evidence-grid" data-od-id="evidence-grid">
+          <article class="evidence-card">
+            <div class="meta">awards</div>
+            <div class="value">CES 2025</div>
+            <p>booxTory와 arti에서 AI 부문 Best of Innovation 및 Honoree 성과를 만든 제품 개발 경험.</p>
+          </article>
+          <article class="evidence-card">
+            <div class="meta">table OCR</div>
+            <div class="value">TEDS 0.9188</div>
+            <p>hf_finance_legal_mrc 480샘플 실행 기준 문서 OCR 및 테이블 구조 복원 고도화.</p>
+          </article>
+          <article class="evidence-card">
+            <div class="meta">research</div>
+            <div class="value">SCIE 3</div>
+            <p>추천 시스템, LightGCN, 의료 영상 딥러닝을 중심으로 한 국제 저널 연구 실적.</p>
+          </article>
+          <article class="evidence-card">
+            <div class="meta">systems</div>
+            <div class="value">25 agents</div>
+            <p>Market Intelligence 시스템에서 4-Layer 기반 전문 에이전트 협업 구조 설계.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="shell section" id="career" aria-labelledby="career-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Career architecture</p>
+            <h2 id="career-title">연구자와 제품 엔지니어 사이의 궤적</h2>
+          </div>
+          <p class="section-note">직무 특성은 연구 논문보다 넓고, 일반 백엔드보다 깊습니다. 그래서 경력 소개는 회사명 나열보다 문제 정의, AI 아키텍처, 운영 증거가 먼저 보이도록 구성했습니다.</p>
+        </div>
+        <div class="career-layout">
+          <aside class="profile-panel">
+            <div class="avatar-large">SM</div>
+            <h3>이상민<br />AI Engineer &amp; Researcher</h3>
+            <p>연구의 깊이를 실제 제품 가치로 연결하는 AI 시스템 엔지니어. RAG, 지식 그래프, 멀티 에이전트, 문서 OCR 복원 플랫폼을 중심으로 복잡한 도메인 문제를 구조화합니다.</p>
+            <div class="tag-cloud">
+              <span class="tag">Advanced RAG</span>
+              <span class="tag">Knowledge Graph</span>
+              <span class="tag">LangGraph</span>
+              <span class="tag">FastAPI</span>
+              <span class="tag">Next.js</span>
+              <span class="tag">Observability</span>
             </div>
+          </aside>
+          <div class="timeline">
+            <article class="timeline-item">
+              <div class="timeline-date">2025.07 - now</div>
+              <div>
+                <h3>AsianaIDT, AI/ML Engineer &amp; Researcher</h3>
+                <p>산업 특화 규정, 법령 도메인 대상으로 Knowledge Graph와 Vector를 결합한 하이브리드 RAG, 상태 기반 자동화 에이전트, LLM 관찰성 인프라를 구축.</p>
+              </div>
+            </article>
+            <article class="timeline-item">
+              <div class="timeline-date">2026.02 - now</div>
+              <div>
+                <h3>문서 OCR 및 테이블 구조 복원 플랫폼</h3>
+                <p>OCR bbox와 선분 정보를 결합해 row/column grouping, spanned cell 복원, benchmark console, secure build, 운영 모니터링까지 제품/연구 플랫폼으로 확장.</p>
+              </div>
+            </article>
+            <article class="timeline-item">
+              <div class="timeline-date">2024.07 - 2025.07</div>
+              <div>
+                <h3>ArtygenSpace, AI/ML Engineer</h3>
+                <p>booxTory, arti, StoryMate, Booxedit의 AI 엔진 및 기술 리더십을 맡고 CES 2025 AI 부문 성과와 정부 R&amp;D 과제를 수행.</p>
+              </div>
+            </article>
+            <article class="timeline-item">
+              <div class="timeline-date">2022 - 2024</div>
+              <div>
+                <h3>경기대학교 컴퓨터공학 석사</h3>
+                <p>추천 시스템에서 그래프 컨볼루션 네트워크 최적화 방법을 연구하고 LightGCN, 추천 시스템, 의료 영상 분야 논문을 발표.</p>
+              </div>
+            </article>
+          </div>
         </div>
-    </div>
+      </section>
 
-    <script>
-        // 간단한 터미널 동작 구현
-        const input = document.getElementById('terminal-input');
-        const terminal = document.getElementById('terminal');
-        const commandHistory = document.getElementById('command-history');
-        const autocompleteContainer = document.getElementById('autocomplete-container');
-        const prompt = "mean@portfolio:~$";
-        
-        // 명령어 히스토리 관리
-        let history = [];
-        let historyIndex = -1;
-        
-        // 자동완성 관련 변수
-        let availableCommands = ['help', 'about', 'skills', 'projects', 'contact', 'career', 'research', 'education', 'clear', 'whoami'];
-        let researchSubcommands = ['thesis', 'international-journal', 'international-conference', 'domestic-journal', 'domestic-conference', 'all'];
-        let selectedAutocompleteIndex = -1;
-        
-        // 포트폴리오 콘텐츠
-        const commands = {
-            help: `<h2>도움말</h2>
-<p>터미널 포트폴리오에 오신 것을 환영합니다! 다음 명령어를 사용할 수 있습니다:</p>
-<div style="margin-top: 10px">
-    <div style="display: flex">
-        <div style="width: 120px">about</div>
-        <div>- 소개 정보 보기</div>
-    </div>
-    <div style="display: flex">
-        <div style="width: 120px">skills</div>
-        <div>- 기술 스택 보기</div>
-    </div>
-    <div style="display: flex">
-        <div style="width: 120px">projects</div>
-        <div>- 프로젝트 목록 보기</div>
-    </div>
-    <div style="display: flex">
-        <div style="width: 120px">contact</div>
-        <div>- 연락처 정보 보기</div>
-    </div>
-    <div style="display: flex">
-        <div style="width: 120px">career</div>
-        <div>- 경력 정보 보기</div>
-    </div>
-    <div style="display: flex">
-        <div style="width: 120px">research</div>
-        <div>- 연구 경험 보기 (서브명령어: thesis, international-journal, international-conference, domestic-journal, domestic-conference, all)</div>
-    </div>
-    <div style="display: flex">
-        <div style="width: 120px">education</div>
-        <div>- 학력 정보 보기</div>
-    </div>
-    <div style="display: flex">
-        <div style="width: 120px">clear</div>
-        <div>- 터미널 화면 지우기</div>
-    </div>
-    <div style="display: flex">
-        <div style="width: 120px">whoami</div>
-        <div>- 이상민 정보 확인</div>
-    </div>
-</div>`,
-            about: `안녕하세요! 저는 웹 기술과 인공지능에 관심이 많은 개발자입니다. 프론트엔드에서 백엔드까지 전체 스택을 다루고 있으며, 최근에는 LLM 기반 AI 시스템과 그래프 신경망 연구에 집중하고 있습니다.
-
-저는 사용자 경험을 향상시키고 효율적인 웹 애플리케이션을 개발하는 데 열정을 가지고 있습니다. 문제 해결을 위한 창의적인 접근 방식과 지속적인 학습을 중요시합니다.
-
-학부에서는 코드15 팀의 일원으로 AI 기반 홈트레이닝 플랫폼 "핏-시방"을 개발했으며, 해당 프로젝트로 학술대회 우수논문상을 수상했습니다. 석사과정에서는 그래프 컨볼루션 네트워크 최적화 연구로 SCIE 저널에 논문을 게재하였습니다.`,
-            skills: `<h2>기술 스택</h2>
-<p>다음은 제가 가진 주요 기술 스택입니다:</p>
-
-<div style="margin-top: 15px">
-    <div style="display: flex; margin-top: 5px">
-        <div style="width: 120px">Back-end:</div>
-        <div>
-            <strong>Python</strong>, <strong>FastAPI</strong>, 
-            <strong>Uvicorn</strong>, <strong>AIOHTTP</strong>,
-            <strong>Kafka</strong>, <strong>Streamlit</strong>
+      <section class="shell section" id="trends" aria-labelledby="trend-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Trend notes</p>
+            <h2 id="trend-title">트렌드 MD가 글이 되는 블로그 구조</h2>
+          </div>
+          <p class="section-note">이번 버전은 실제 렌더링 구현 대신 디자인 흐름만 보여줍니다. 나중에 `posts/*.md`를 붙이면 목록, 태그, 상세 글이 같은 시각 체계로 이어지게 됩니다.</p>
         </div>
-    </div>
-    
-    <div style="display: flex; margin-top: 5px">
-        <div style="width: 120px">Data:</div>
-        <div>
-            <strong>MySQL</strong>, <strong>Elasticsearch</strong>, 
-            <strong>LogStash</strong>, <strong>Kibana</strong>,
-            <strong>Qdrant</strong>
+        <div class="trend-grid">
+          <div class="post-list">
+            <article class="post-row">
+              <div>
+                <div class="meta">posts/agentic-rag-ops.md</div>
+                <h3>Agentic RAG는 검색 문제가 아니라 운영 문제다</h3>
+                <p>멀티 에이전트와 하이브리드 검색을 실제 업무 흐름에 넣을 때, 품질은 모델보다 상태 관리, 추적성, 재시도 설계에서 결정된다.</p>
+              </div>
+              <time class="post-date">2026.05.05</time>
+            </article>
+            <article class="post-row">
+              <div>
+                <div class="meta">posts/document-ai-benchmark.md</div>
+                <h3>문서 AI 벤치마크는 왜 단일 정확도로 설명되지 않는가</h3>
+                <p>Row, Col, Cell F1, CER, TEDS를 함께 봐야 문서 복원 품질과 사용자 체감 품질 사이의 간극을 줄일 수 있다.</p>
+              </div>
+              <time class="post-date">2026.04.28</time>
+            </article>
+            <article class="post-row">
+              <div>
+                <div class="meta">posts/local-ai-security.md</div>
+                <h3>폐쇄망 AI 제품에서 보안 배포가 제품 경험이 되는 순간</h3>
+                <p>모델 파일 암호화, 권한, manifest, runtime role mapping이 사용자의 신뢰와 운영 가능성을 동시에 결정한다.</p>
+              </div>
+              <time class="post-date">2026.04.12</time>
+            </article>
+          </div>
+          <aside class="markdown-panel">
+            <div class="meta">Design-only publishing model</div>
+            <h3 style="margin-top: 10px; font-size: 24px;">MD 업로드 상태</h3>
+            <p style="margin: 10px 0 0; color: var(--muted); font-size: 14px;">글 작성자는 Markdown만 올리고, 블로그는 frontmatter와 본문을 읽어 카드와 상세 화면으로 보여줍니다.</p>
+            <div class="file-stack">
+              <div class="file-item"><span>title</span><span>Agentic RAG 운영</span></div>
+              <div class="file-item"><span>tags</span><span>rag, agents, ops</span></div>
+              <div class="file-item"><span>render</span><span class="status">ready</span></div>
+            </div>
+          </aside>
         </div>
-    </div>
-    
-    <div style="display: flex; margin-top: 5px">
-        <div style="width: 120px">Analytics/ML:</div>
-        <div>
-            <strong>NumPy</strong>, <strong>Pandas</strong>, 
-            <strong>PyTorch</strong>, <strong>openCV</strong>,
-            <strong>scikit-learn</strong>
+      </section>
+
+      <section class="shell section" id="article" aria-labelledby="article-title">
+        <div class="article-shell">
+          <article class="article">
+            <div class="article-kicker">Latest article</div>
+            <h2 id="article-title" data-od-id="article-headline">Agentic RAG는 검색 문제가 아니라 운영 문제다</h2>
+            <p class="deck">RAG가 데모에서 제품으로 넘어가는 순간, 질문은 "어떤 검색기가 더 좋은가"에서 "실패한 추론을 어떻게 발견하고 복구할 것인가"로 바뀐다.</p>
+            <div class="byline">
+              <span>By Sangmin Lee</span>
+              <span>AI Engineer &amp; Researcher</span>
+              <span>2026.05.05</span>
+              <span>8 min read</span>
+            </div>
+            <figure>
+              <div class="hero-image" data-od-id="hero-image"></div>
+              <figcaption>Markdown 원문이 기술 아티클로 렌더링되는 상세 화면의 시각 방향.</figcaption>
+            </figure>
+
+            <div class="article-body" data-od-id="article-body">
+              <p>최근의 RAG 논의는 여전히 검색기의 종류, 임베딩 모델, reranker 성능에 집중되는 경우가 많다. 물론 검색 품질은 중요하다. 하지만 기업 내부 문서, 법령, 규정, 기술 매뉴얼처럼 실패 비용이 큰 도메인에서는 검색 품질 하나만으로 제품이 되지 않는다. 실제 현장에서 더 큰 문제는 검색 이후의 상태 전이, 근거 추적, 실패 감지, 그리고 사용자에게 설명 가능한 복구 흐름이다.</p>
+
+              <p>내가 엔터프라이즈 AI 지식 관리 시스템을 만들며 배운 가장 큰 교훈은 단순하다. Agentic RAG는 검색 파이프라인이 아니라 운영 시스템이다. 사용자는 "답변"을 구매하는 것이 아니라 반복 가능한 업무 흐름, 오류를 확인할 수 있는 증거, 그리고 조직 안에서 신뢰받을 수 있는 자동화 단위를 기대한다.</p>
+
+              <h3>검색 모드는 제품의 언어가 되어야 한다</h3>
+              <p>하이브리드 검색, 그래프 탐색, 다중 쿼리, rank fusion은 내부 구현 용어로 남겨둘 수도 있다. 하지만 제품에서는 이 선택이 사용자의 작업 방식과 연결되어야 한다. 규정을 찾는 사람, 사고 원인을 분석하는 사람, 조치 계획을 쓰는 사람은 서로 다른 검색 깊이와 근거 형태를 필요로 한다. 그래서 검색 모드는 모델 옵션이 아니라 업무 모드가 되어야 한다.</p>
+
+              <blockquote data-od-id="pull-quote">좋은 RAG 제품은 답을 빨리 내는 시스템이 아니라, 왜 그 답에 도달했는지 운영자가 다시 걸어갈 수 있는 시스템이다.</blockquote>
+
+              <p>이 관점에서 멀티 에이전트는 화려한 자동화 장치가 아니다. 역할을 나누고, 각 단계의 입력과 출력을 저장하고, 어떤 노드에서 품질이 떨어졌는지 관찰하기 위한 구조다. 검색 에이전트, 분석 에이전트, 대책 수립 에이전트, 검증 에이전트를 나누는 이유도 "에이전트가 많아 보여서"가 아니라 장애 지점을 좁히기 위해서다.</p>
+
+              <h3>관찰성은 나중에 붙이는 로그가 아니다</h3>
+              <p>LLM 관찰성은 출시 직전에 붙이는 대시보드가 아니다. 검색 모드별 tracing, 에이전트 노드별 latency, LLM 호출 비용, retrieved context의 문서 출처, fallback 발생 횟수는 설계 초기에 데이터 모델로 들어가야 한다. 이 정보가 없으면 품질 이슈가 발생했을 때 운영자는 모델 문제인지, 검색 문제인지, 청킹 문제인지, 프롬프트 문제인지 판단할 수 없다.</p>
+
+              <figure class="article-figure">
+                <div class="figure-block">
+                  <div class="figure-cell">step 01<strong>Retrieve</strong>Graph + Vector hybrid context</div>
+                  <div class="figure-cell">step 02<strong>Reason</strong>Stateful agent workflow</div>
+                  <div class="figure-cell">step 03<strong>Trace</strong>Latency, source, fallback evidence</div>
+                </div>
+                <figcaption>Agentic RAG 글에서 사용할 수 있는 구조도 블록. 실제 구현 단계에서는 MD의 figure 문법과 연결할 수 있다.</figcaption>
+              </figure>
+
+              <h3>제품화 단계에서 봐야 할 체크리스트</h3>
+              <p>RAG가 데모에서 제품으로 이동할 때는 모델 정확도보다 운영 체크리스트가 먼저 필요하다. 특히 폐쇄망이나 산업 도메인에서는 다음 질문에 답하지 못하면 기능이 좋아도 도입이 막힌다.</p>
+              <ul>
+                <li>검색 결과와 생성 답변 사이의 근거 연결을 저장하고 다시 보여줄 수 있는가.</li>
+                <li>에이전트 노드별 실패를 개별적으로 재실행하거나 우회할 수 있는가.</li>
+                <li>문서 갱신, 청킹 변경, 임베딩 재생성 시 기존 결과와 비교할 기준이 있는가.</li>
+                <li>사용자가 신뢰하지 않는 답변을 신고했을 때 원인 분석에 필요한 로그가 남는가.</li>
+              </ul>
+
+              <p class="inline-quote">현장형 AI 시스템에서 "그럴듯함"은 초기 데모를 통과시키지만, "추적 가능함"이 장기 운영을 통과시킨다.</p>
+
+              <h3>이 블로그의 역할</h3>
+              <p>이 블로그는 경력 소개 페이지이면서 동시에 이런 운영 관점을 정리하는 개인 기술 저널이다. README의 수상과 프로젝트를 단순히 나열하는 대신, 어떤 문제를 어떤 구조로 풀었는지 기록한다. 트렌드 글도 뉴스 요약보다 한 단계 더 들어가서, 실제 제품과 연구 플랫폼에 적용할 때 무엇이 바뀌는지 설명하는 방식이 어울린다.</p>
+
+              <p>앞으로 업로드할 MD 글은 이러한 구조를 그대로 따르면 된다. frontmatter에는 제목, 날짜, 태그, 요약을 넣고, 본문에는 문제 정의, 아키텍처 관점, 구현상의 함정, 운영 체크리스트를 둔다. 그러면 블로그는 단순 아카이브가 아니라 AI 엔지니어로서의 판단 과정을 보여주는 공개 노트가 된다.</p>
+            </div>
+
+            <div class="author-box" id="contact">
+              <div class="avatar-large">SM</div>
+              <div>
+                <div class="meta">Author</div>
+                <p style="margin: 8px 0 0; color: var(--muted);">Sangmin Lee는 RAG, 멀티 에이전트, 문서 OCR, 연구 벤치마크, AI 제품 운영을 연결하는 AI Engineer &amp; Researcher입니다. 연락: dodo9249@gmail.com</p>
+              </div>
+            </div>
+          </article>
+
+          <aside class="aside">
+            <div class="toc">
+              <div class="meta">On this post</div>
+              <a href="#article-title">00. article header</a>
+              <a href="#career">01. career proof</a>
+              <a href="#trends">02. markdown flow</a>
+              <a href="#contact">03. author</a>
+            </div>
+            <div class="source-card">
+              <div class="meta">Source MD preview</div>
+              <code>---
+title: Agentic RAG는 검색 문제가 아니라 운영 문제다
+tags: [rag, agents, observability]
+---</code>
+            </div>
+          </aside>
         </div>
-    </div>
-    
-    <div style="display: flex; margin-top: 5px">
-        <div style="width: 120px">Infrastructure:</div>
-        <div>
-            <strong>AWS</strong>, <strong>Naver Cloud</strong>, 
-            <strong>Docker</strong>, <strong>Kubernetes</strong>
+
+        <div style="margin-top: 28px;">
+          <div class="section-head" style="margin-bottom: 18px;">
+            <div>
+              <p class="eyebrow">Related</p>
+              <h2 style="font-size: clamp(30px, 3vw, 42px);">다음 글 묶음</h2>
+            </div>
+          </div>
+          <div class="related-grid" data-od-id="related-grid">
+            <article class="related-card">
+              <div class="thumb"></div>
+              <div class="meta">document ai</div>
+              <h3>TEDS와 Cell F1을 같이 봐야 하는 이유</h3>
+              <p>문서 복원 품질을 구조와 텍스트 양쪽에서 읽는 방법.</p>
+            </article>
+            <article class="related-card">
+              <div class="thumb"></div>
+              <div class="meta">mlops</div>
+              <h3>LLM 관찰성은 어떤 이벤트를 남겨야 하는가</h3>
+              <p>latency, source, fallback, node state를 기준으로 한 추적 설계.</p>
+            </article>
+            <article class="related-card">
+              <div class="thumb"></div>
+              <div class="meta">career</div>
+              <h3>AI 연구 경험을 제품 언어로 번역하기</h3>
+              <p>논문, 벤치마크, 제품 출시 경험을 한 프로필로 묶는 법.</p>
+            </article>
+          </div>
         </div>
-    </div>
-</div>`,
-            projects: `다음은 제가 진행한 주요 프로젝트들입니다:
+      </section>
+    </main>
 
-1. 쌤모아 (현재) - AI 엔지니어링 및 API 개발
-   - LLM 기반 교육 플랫폼 개발, LangGraph 활용 상태 기반 에이전트 구현
-   - Next.js, FastAPI, LangChain, Docker 기술 스택 활용
-
-2. 연구실 홈페이지 개편 (2023) - 프론트 개발, 유지관리
-   - 경기대학교 Smart IoT 연구실 웹사이트 아키텍처 현대화
-   - Vue.js, Node.js, Express, MySQL, Nginx 기술 스택 활용
-
-3. 가짜연구소 GNN 연구 (2022) - Docker 기반 통합 학습 환경 구축
-   - GraphGym 라이브러리 기반 실험 환경 셋업
-   - HIV 억제 분자 탐색을 위한 프로젝트 실험 구현
-
-4. Crack-Automation 외주 (2021-2022) - 팀리더, 프론트 개발
-   - 건물 손상 점검 및 보고 자동화 시스템 개발
-   - Python, Django, OpenCV, OpenPyXL 기술 스택 활용
-
-5. 핏-시방 캡스톤 디자인 (2021) - 팀리더, 프론트 개발
-   - AI 기반 홈트레이닝 플랫폼 개발, PoseNet 활용 자세 추정
-   - React, Node.js, MongoDB, PoseNet 기술 스택 활용`,
-            contact: `다음 방법으로 연락하실 수 있습니다:
-
-이메일: dodo9249@gmail.com
-GitHub: https://github.com/d9249
-LinkedIn: https://linkedin.com/in/meanl
-
-협업 또는 그냥 인사를 나누고 싶으시면 언제든지 연락해주세요!`,
-            career: `<h1>인공지능연구소: Deep Learning</h1>
-
-<h2>핵심 기술 역량</h2>
-
-* <strong>언어 모델 & RAG 기술</strong>
-   * 거대/소형 언어 모델 활용 시스템 개발 (Agent, RAG, Prompt Engineering)
-   * 멀티모달, 임베딩 모델 활용 시스템 개발
-
-* <strong>컴퓨터 비전 & 멀티모달 기술</strong>
-   * 영상처리 알고리즘 개발 (OpenCV, imagehash)
-   * 특정 객체 인식 멀티모달 모델 및 개방형 객체 탐지 시스템 개발
-
-* <strong>MLOps & 인프라 구축</strong>
-   * 머신러닝 모델 서빙 및 API 구축 (Docker, FastAPI, Apache Kafka, OAuth2)
-   * 컨테이너 기반 배포 자동화 및 모니터링 (Kubernetes, ELK Stack)
-   * CI/CD 및 클라우드 인프라 관리 (GitHub Actions, NCP, AWS, GCP)
-   * 벡터 데이터베이스 구축 및 활용 (Qdrant)
-
-<h2>주요 성과</h2>
-
-* <strong>혁신 제품 개발 및 기술 리더십</strong>
-   * 'Booxedit' 사업 기획 및 시스템 개발
-   * 'arti': CES 2025 인공지능 부문 Best of Innovation - Honoree 수상 (기술 자문/개발 주도)
-   * 'booxTory': CES 2025 인공지능 부문 Best of Innovation 수상 (AI 엔진 개발 총괄)`,
-            education: `<h1>학력 정보</h1>
-
-<h2>[2022 - 2024] 경기대학교 컴퓨터공학과 석사</h2>
-- 논문: "추천 시스템에서 그래프 컨볼루션 네트워크 최적화 방법"
-- GPA: <strong>4.3/4.5</strong>
-- SCIE 논문 3편 게재 (인용 13회)
-
-<h2>[2017 - 2022] 경기대학교 컴퓨터공학부 학사</h2>
-- GPA: <strong>3.9/4.5</strong>
-- 캡스톤디자인 프로젝트 장려상 수상
-- KIIT 학술대회 우수논문상(동상) 수상`,
-            research: `<h1>연구 출판물 (2021-2024): 총 16편</h1>
-
-<h2>국제 저널 (SCIE): 3편</h2>
-- Computers Materials & Continua (CMC): 2편
-- MDPI in Electronics: 1편
-
-<h2>국내 저널 (KCI): 2편</h2>
-- JKIIT: 2편
-
-<h2>국제 학회: 6편</h2>
-- APIC-IST, ICONI, ICSMB 등 발표
-
-<h2>국내 학회: 4편</h2>
-- KIIT, KSII, SEBS 등 발표
-
-<h2>주요 연구 분야:</h2>
-1. <strong>추천 시스템 / GNN</strong>: SCIE 2편, KCI 1편, 인용 5회
-   - GCN 최적화, 추천 시스템 성능 향상
-
-2. <strong>의료 영상 / 딥러닝</strong>: SCIE 1편, KCI 1편, 인용 7회
-   - 관절염 진단, 의료 영상 분할
-   
-<p style="margin-top: 15px">특정 카테고리의 연구를 보시려면 다음 명령어를 사용하세요:</p>
-<code>research thesis</code> - 학위 논문
-<code>research international-journal</code> - 국제 저널 논문
-<code>research international-conference</code> - 국제 학회 논문
-<code>research domestic-journal</code> - 국내 저널 논문
-<code>research domestic-conference</code> - 국내 학회 논문
-<code>research all</code> - 모든 연구 실적`,
-            'research thesis': `<h1>Master's thesis (학위 논문)</h1>
-
-<strong>추천 시스템에서 그래프 컨볼루션 네트워크 최적화 방법</strong> : Optimization methods of Graph Convolution Networks for Recommendation Systems
-* Master's thesis, UCI: I804:41002-000000057783, 22 February 2024.
-* dCollection: http://www.dcollection.net/handler/kyonggi/000000057783, 1st author.`,
-            'research international-journal': `<h1>International journal (국제 논문)</h1>
-
-<h2>Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis</h2>
-* <strong>SCIE(Q2)</strong>-Computers Materials & Continua (CMC), vol. 75, no. 1, pp. 1981-1994, 06 February 2023. 
-* Citation 7회, DOI: https://doi.org/10.32604/cmc.2023.035245, 1st author.
-
-<h2>Weighted Forwarding in Graph Convolution Networks for Recommendation Information System</h2>
-* <strong>SCIE(Q2)</strong>-Computers Materials & Continua (CMC), vol. 78, no.2, pp. 1897–1914, 31 January 2024. 
-* DOI: https://doi.org/10.32604/cmc.2023.046346, 1st author.
-
-<h2>Embedding Enhancement method for LightGCN in Recommendation Information Systems</h2>
-* <strong>SCIE(Q2)</strong>-Multidisciplinary Digital Publishing Institute(MDPI) in Electronics, vol. 13 no. 12, 11 June 2024. 
-* Citation 4회, DOI: https://doi.org/10.3390/electronics13122282, 1st author`,
-            'research international-conference': `<h1>International conference (국제 학회)</h1>
-
-<h2>Egress Initialization for Graph Convolution Network in Recommendation Systems</h2>
-* The 15th International Conference on Internet (ICONI 2023), 1st author.
-
-<h2>Thin Graph Convolution Network in Recommendation Systems</h2>
-* The 15th International Conference on Internet (ICONI 2023), 1st author.
-
-<h2>Over-smoothing in LightGCN doesn't happen much</h2>
-* The 15th International Conference on Internet (ICONI 2023), 1st author.
-
-<h2>Leverage time-based data to improve recommendation system accuracy</h2>
-* The 18th Asia Pacific International Conference on Information Science and Technology(APIC-IST), 1st author
-
-<h2>Using Deep Learning for Medical Automation in Diagnosis of Degenerative Arthritis</h2>
-* The 8th international Conference for Small and Medium Business 2023(ICSMB), 1st author
-
-<h2>Classification of degenerative arthritis using Xception model in radiographic images</h2>
-* The 17th Asia Pacific International Conference on Information Science and Technology(APIC-IST), 1st author
-* This paper was selected as one of the best papers of APIC-IST 2022 and recommended for publication in CMC-Computers, Materials & Continua (CMC).`,
-            'research domestic-journal': `<h1>Domestic journal (국내 논문)</h1>
-
-<h2>Graph Neural Network 기반 추천시스템 성능 향상을 위한 유저 행동 시간 기반 데이터 사용 방안 분석</h2>
-* <strong>KCI</strong>-The Journal of Korean Institute of Information Technology(JKIIT), 
-* vol. 21, No. 5, pp. 21-28, 2023, ISSN: 1598-8619 (Print) 2093-7571 (Online),
-* DOI : https://doi.org/10.14801/jkiit.2023.21.5.21, 1st author
-
-<h2>의료 영상 시스템에서 다중 연쇄 U-Net 모델을 이용한 개선된 췌장 영역 분할 탐지</h2>
-* <strong>KCI</strong>-The Journal of Korean Institute of Information Technology(JKIIT), 
-* vol. 20, No. 5, pp. 81-87, 2022, ISSN: 1598-8619 (Print), 2093-7571 (Online),
-* DOI: https://doi.org/10.14801/jkiit.2022.20.5.81, 1st author`,
-            'research domestic-conference': `<h1>Domestic conference (국내 학회)</h1>
-
-<h2>이상 점수 임계값 선택 기준에 따른 비지도 이상치 탐지 방법의 성능 분석</h2>
-* KSII Summer Conference, 2023, 2st author
-
-<h2>GNN 기반 딥러닝 모델에서 시간-공간 Attention 모듈 구조에 따른 교통 흐름 예측 성능 분석</h2>
-* KSII SPRING Conference, 2023, 2st author
-
-<h2>추천 시스템 성능 개선을 위한 시간 기반 데이터 분석</h2>
-* KSII SPRING Conference, 2023, 1st author
-
-<h2>SDN 환경에서 오토 인코더 모델을 활용한 플로우 분류 기법</h2>
-* KICS Winter Conference, vol.80, 2023, ISSN 2383-8302, 2023, 3st author
-
-<h2>추천 시스템을 활용한 캐싱 서버 최적화</h2>
-* SEBS Fall Conference, 2022, 1st author
-
-<h2>RFID 태그를 통한 출결 확인 시스템 구현</h2>
-* KSII SPRING Conference, 2022, 3st author
-
-<h2>겹친 문자 이미지 분류를 위한 합성곱 신경망 모델의 정확도 분석</h2>
-* KSII Fall Conference, 2021, 1st author
-
-<h2>PoseNet을 활용한 헬스 트레이너 웹 서비스</h2>
-* KIIT Conference, pp. 729 - 733. 2021.06, 1st author
-* Citation 1회, <strong>KIIT Best Paper Award</strong>`,
-            'research all': `<h1>연구 출판물 전체 목록 (2021-2024): 총 16편</h1>
-
-<h2>Master's thesis (학위 논문)</h2>
-<strong>추천 시스템에서 그래프 컨볼루션 네트워크 최적화 방법</strong> : Optimization methods of Graph Convolution Networks for Recommendation Systems
-* Master's thesis, UCI: I804:41002-000000057783, 22 February 2024.
-* dCollection: http://www.dcollection.net/handler/kyonggi/000000057783, 1st author.
-
-<h2>International journal (국제 논문): 3편</h2>
-
-<h3>Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis</h3>
-* <strong>SCIE(Q2)</strong>-Computers Materials & Continua (CMC), vol. 75, no. 1, pp. 1981-1994, 06 February 2023. 
-* Citation 7회, DOI: https://doi.org/10.32604/cmc.2023.035245, 1st author.
-
-<h3>Weighted Forwarding in Graph Convolution Networks for Recommendation Information System</h3>
-* <strong>SCIE(Q2)</strong>-Computers Materials & Continua (CMC), vol. 78, no.2, pp. 1897–1914, 31 January 2024. 
-* DOI: https://doi.org/10.32604/cmc.2023.046346, 1st author.
-
-<h3>Embedding Enhancement method for LightGCN in Recommendation Information Systems</h3>
-* <strong>SCIE(Q2)</strong>-Multidisciplinary Digital Publishing Institute(MDPI) in Electronics, vol. 13 no. 12, 11 June 2024. 
-* Citation 4회, DOI: https://doi.org/10.3390/electronics13122282, 1st author
-
-<h2>International conference (국제 학회): 6편</h2>
-
-<h3>Egress Initialization for Graph Convolution Network in Recommendation Systems</h3>
-* The 15th International Conference on Internet (ICONI 2023), 1st author.
-
-<h3>Thin Graph Convolution Network in Recommendation Systems</h3>
-* The 15th International Conference on Internet (ICONI 2023), 1st author.
-
-<h3>Over-smoothing in LightGCN doesn't happen much</h3>
-* The 15th International Conference on Internet (ICONI 2023), 1st author.
-
-<h3>Leverage time-based data to improve recommendation system accuracy</h3>
-* The 18th Asia Pacific International Conference on Information Science and Technology(APIC-IST), 1st author
-
-<h3>Using Deep Learning for Medical Automation in Diagnosis of Degenerative Arthritis</h3>
-* The 8th international Conference for Small and Medium Business 2023(ICSMB), 1st author
-
-<h3>Classification of degenerative arthritis using Xception model in radiographic images</h3>
-* The 17th Asia Pacific International Conference on Information Science and Technology(APIC-IST), 1st author
-* This paper was selected as one of the best papers of APIC-IST 2022 and recommended for publication in CMC-Computers, Materials & Continua (CMC).
-
-<h2>Domestic journal (국내 논문): 2편</h2>
-
-<h3>Graph Neural Network 기반 추천시스템 성능 향상을 위한 유저 행동 시간 기반 데이터 사용 방안 분석</h3>
-* <strong>KCI</strong>-The Journal of Korean Institute of Information Technology(JKIIT), 
-* vol. 21, No. 5, pp. 21-28, 2023, ISSN: 1598-8619 (Print) 2093-7571 (Online),
-* DOI : https://doi.org/10.14801/jkiit.2023.21.5.21, 1st author
-
-<h3>의료 영상 시스템에서 다중 연쇄 U-Net 모델을 이용한 개선된 췌장 영역 분할 탐지</h3>
-* <strong>KCI</strong>-The Journal of Korean Institute of Information Technology(JKIIT), 
-* vol. 20, No. 5, pp. 81-87, 2022, ISSN: 1598-8619 (Print), 2093-7571 (Online),
-* DOI: https://doi.org/10.14801/jkiit.2022.20.5.81, 1st author
-
-<h2>Domestic conference (국내 학회): 4편+</h2>
-
-<h3>이상 점수 임계값 선택 기준에 따른 비지도 이상치 탐지 방법의 성능 분석</h3>
-* KSII Summer Conference, 2023, 2st author
-
-<h3>GNN 기반 딥러닝 모델에서 시간-공간 Attention 모듈 구조에 따른 교통 흐름 예측 성능 분석</h3>
-* KSII SPRING Conference, 2023, 2st author
-
-<h3>추천 시스템 성능 개선을 위한 시간 기반 데이터 분석</h3>
-* KSII SPRING Conference, 2023, 1st author
-
-<h3>SDN 환경에서 오토 인코더 모델을 활용한 플로우 분류 기법</h3>
-* KICS Winter Conference, vol.80, 2023, ISSN 2383-8302, 2023, 3st author`,
-            whoami: `당신은 제 이력을 탐색하는 호기심 많은 방문자입니다. 환영합니다!`,
-            clear: 'clear'
-        };
-        
-        // 자동완성 기능 구현
-        function showAutocomplete(inputValue) {
-            // 입력값이 없으면 자동완성 숨기기
-            if (!inputValue) {
-                autocompleteContainer.style.display = 'none';
-                return;
-            }
-            
-            // 명령어 및 서브 명령어 처리
-            const parts = inputValue.toLowerCase().trim().split(' ');
-            const mainCommand = parts[0];
-            const subCommand = parts.length > 1 ? parts.slice(1).join(' ') : '';
-            
-            let matchingCommands = [];
-            
-            // research 명령어와 서브 명령어 처리
-            if (mainCommand === 'research' && subCommand) {
-                matchingCommands = researchSubcommands.filter(cmd => 
-                    cmd.startsWith(subCommand)
-                ).map(cmd => `research ${cmd}`);
-            } else {
-                // 일반 명령어 처리
-                matchingCommands = availableCommands.filter(cmd => 
-                    cmd.startsWith(mainCommand)
-                );
-            }
-            
-            // 일치하는 명령어가 없으면 자동완성 숨기기
-            if (matchingCommands.length === 0) {
-                autocompleteContainer.style.display = 'none';
-                return;
-            }
-            
-            // 자동완성 목록 생성
-            autocompleteContainer.innerHTML = '';
-            matchingCommands.forEach((cmd, index) => {
-                const item = document.createElement('div');
-                item.className = 'autocomplete-item';
-                item.textContent = cmd;
-                item.dataset.index = index;
-                
-                item.addEventListener('click', () => {
-                    input.value = cmd;
-                    autocompleteContainer.style.display = 'none';
-                    input.focus();
-                });
-                
-                autocompleteContainer.appendChild(item);
-            });
-            
-            // 자동완성 표시
-            autocompleteContainer.style.display = 'block';
-            selectedAutocompleteIndex = -1;
-        }
-        
-        // 명령어 실행 함수
-        function executeCommand(command) {
-            // 명령어가 비어있으면 아무것도 하지 않음
-            if (command.trim() === '') return;
-            
-            // 히스토리에 명령어 추가
-            history.push(command);
-            historyIndex = history.length;
-            
-            // 명령어 출력
-            const cmdLine = document.createElement('div');
-            cmdLine.className = 'command-line';
-            
-            const promptSpan = document.createElement('span');
-            promptSpan.className = 'prompt';
-            promptSpan.textContent = prompt;
-            
-            const commandSpan = document.createElement('span');
-            commandSpan.textContent = command;
-            
-            cmdLine.appendChild(promptSpan);
-            cmdLine.appendChild(commandSpan);
-            commandHistory.appendChild(cmdLine);
-            
-            // 결과 출력
-            const output = document.createElement('div');
-            output.className = 'output';
-            
-            const commandLower = command.toLowerCase().trim();
-            
-            if (commandLower === 'clear') {
-                // 화면 지우기
-                commandHistory.innerHTML = '';
-            } else if (commands[commandLower]) {
-                // 명령어 실행
-                output.innerHTML = commands[commandLower];
-                commandHistory.appendChild(output);
-            } else {
-                // 알 수 없는 명령어
-                output.innerHTML = `'${command}': 명령어를 찾을 수 없습니다. 사용 가능한 명령어 목록을 보려면 'help'를 입력하세요!`;
-                output.style.color = '#ff0000';
-                commandHistory.appendChild(output);
-            }
-            
-            // 입력 필드 비우기
-            input.value = '';
-            
-            // 스크롤 맨 아래로
-            setTimeout(() => {
-                terminal.scrollTop = terminal.scrollHeight;
-            }, 0);
-            
-            // 자동완성 숨기기
-            autocompleteContainer.style.display = 'none';
-        }
-        
-        // 키보드 이벤트 처리
-        input.addEventListener('keydown', function(e) {
-            // 탭 키 - 자동완성
-            if (e.key === 'Tab') {
-                e.preventDefault();
-                
-                if (autocompleteContainer.style.display === 'block') {
-                    const items = autocompleteContainer.querySelectorAll('.autocomplete-item');
-                    if (items.length > 0) {
-                        const selectedIndex = selectedAutocompleteIndex >= 0 ? selectedAutocompleteIndex : 0;
-                        input.value = items[selectedIndex].textContent;
-                        autocompleteContainer.style.display = 'none';
-                    }
-                } else if (input.value) {
-                    const parts = input.value.toLowerCase().trim().split(' ');
-                    const mainCommand = parts[0];
-                    const subCommand = parts.length > 1 ? parts.slice(1).join(' ') : '';
-                    
-                    let matchingCommands = [];
-                    
-                    if (mainCommand === 'research' && subCommand) {
-                        matchingCommands = researchSubcommands.filter(cmd => 
-                            cmd.startsWith(subCommand)
-                        ).map(cmd => `research ${cmd}`);
-                        
-                        if (matchingCommands.length === 1) {
-                            input.value = matchingCommands[0];
-                        } else if (matchingCommands.length > 1) {
-                            showAutocomplete(input.value);
-                        }
-                    } else {
-                        matchingCommands = availableCommands.filter(cmd => 
-                            cmd.startsWith(mainCommand)
-                        );
-                        
-                        if (matchingCommands.length === 1) {
-                            input.value = matchingCommands[0];
-                        } else if (matchingCommands.length > 1) {
-                            showAutocomplete(input.value);
-                        }
-                    }
-                }
-                return;
-            }
-            
-            // 엔터 키 - 명령어 실행
-            if (e.key === 'Enter') {
-                const command = input.value.trim();
-                executeCommand(command);
-                return;
-            }
-            
-            // 위쪽 화살표 - 히스토리 이전 명령어
-            if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                
-                if (autocompleteContainer.style.display === 'block') {
-                    const items = autocompleteContainer.querySelectorAll('.autocomplete-item');
-                    if (items.length > 0) {
-                        // 선택 항목 이동
-                        if (selectedAutocompleteIndex > 0) {
-                            selectedAutocompleteIndex--;
-                        } else {
-                            selectedAutocompleteIndex = items.length - 1;
-                        }
-                        
-                        // 선택 항목 강조
-                        items.forEach((item, index) => {
-                            if (index === selectedAutocompleteIndex) {
-                                item.classList.add('selected');
-                            } else {
-                                item.classList.remove('selected');
-                            }
-                        });
-                    }
-                } else if (history.length > 0 && historyIndex > 0) {
-                    historyIndex--;
-                    input.value = history[historyIndex];
-                }
-                return;
-            }
-            
-            // 아래쪽 화살표 - 히스토리 다음 명령어
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                
-                if (autocompleteContainer.style.display === 'block') {
-                    const items = autocompleteContainer.querySelectorAll('.autocomplete-item');
-                    if (items.length > 0) {
-                        // 선택 항목 이동
-                        if (selectedAutocompleteIndex < items.length - 1) {
-                            selectedAutocompleteIndex++;
-                        } else {
-                            selectedAutocompleteIndex = 0;
-                        }
-                        
-                        // 선택 항목 강조
-                        items.forEach((item, index) => {
-                            if (index === selectedAutocompleteIndex) {
-                                item.classList.add('selected');
-                            } else {
-                                item.classList.remove('selected');
-                            }
-                        });
-                    }
-                } else if (historyIndex < history.length - 1) {
-                    historyIndex++;
-                    input.value = history[historyIndex];
-                } else if (historyIndex === history.length - 1) {
-                    historyIndex = history.length;
-                    input.value = '';
-                }
-                return;
-            }
-            
-            // Esc 키 - 자동완성 닫기
-            if (e.key === 'Escape') {
-                autocompleteContainer.style.display = 'none';
-                return;
-            }
-        });
-        
-        // 입력 필드 값 변경 시 자동완성 갱신
-        input.addEventListener('input', function() {
-            showAutocomplete(input.value);
-        });
-        
-        // 포커스가 다른 곳으로 이동하면 자동완성 숨기기
-        input.addEventListener('blur', function() {
-            // 약간의 지연을 두어 클릭 이벤트가 먼저 발생하도록 함
-            setTimeout(() => {
-                autocompleteContainer.style.display = 'none';
-            }, 150);
-        });
-        
-        // 항상 입력 필드에 포커스
-        document.addEventListener('click', function() {
-            input.focus();
-        });
-        
-        // 페이지 로드 시 입력 필드에 포커스
-        window.addEventListener('load', function() {
-            input.focus();
-        });
-    </script>
+    <footer class="shell footer">
+      <span>mean@log</span>
+      <span style="margin-left: 14px;">research depth -> product value -> public notes</span>
+    </footer>
+  </div>
 </body>
 </html>
