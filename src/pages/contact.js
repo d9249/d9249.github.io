@@ -8,8 +8,8 @@ const ContactPage = () => (
     <section className="shell section">
       <SectionHeading
         kicker="Contact"
-        title="연구와 제품 사이의 긴 글을 남기는 사람"
-        description="RAG, 멀티 에이전트, 문서 OCR, 운영형 AI 시스템, 연구 벤치마크를 제품 언어로 번역하는 일을 합니다."
+        title="연구와 제품 사이의 의미를 남기는 사람"
+        description="인공지능과 이를 활용한 제품 및 서비스를 연구 합니다."
       />
       <div className="career-layout">
         <aside className="profile-panel">

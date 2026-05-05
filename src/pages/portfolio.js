@@ -161,20 +161,17 @@ const PortfolioPage = () => {
         <div className="shell portfolio-hero">
           <div>
             <p className="eyebrow">Portfolio Deck</p>
-            <h1>이상민 포트폴리오</h1>
+            <h3>이상민 포트폴리오</h3>
             <p className="portfolio-copy">
-              AI 연구, 제품 개발, 추천 시스템, Document AI 프로젝트를 발표용
-              슬라이드로 정리했습니다. 전체화면에서 순서대로 넘기며 볼 수
-              있습니다.
+              AI 연구, 제품 개발 프로젝트들을 발표용 슬라이드로 정리했습니다. 전체화면에서 순서대로 넘기며 볼 수 있습니다.
             </p>
           </div>
         </div>
 
         <section className="presentation-shell" aria-label="Portfolio slides">
           <div
-            className={`deck-stage ${
-              isFullscreen && controlsVisible ? "is-controls-visible" : ""
-            }`}
+            className={`deck-stage ${isFullscreen && controlsVisible ? "is-controls-visible" : ""
+              }`}
             ref={stageRef}
           >
             <div className="deck-frame">
@@ -234,9 +231,8 @@ const PortfolioPage = () => {
           <div className="slide-strip" aria-label="Slide thumbnails">
             {slides.map((slide, index) => (
               <button
-                className={`slide-thumb ${
-                  index === activeIndex ? "is-active" : ""
-                }`}
+                className={`slide-thumb ${index === activeIndex ? "is-active" : ""
+                  }`}
                 key={slide.src}
                 type="button"
                 ref={index === activeIndex ? activeThumbRef : null}

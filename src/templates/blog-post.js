@@ -43,7 +43,7 @@ const removeSourceParagraph = (html) =>
 
 const wrapArticleTables = (html) =>
   html
-    .replace(/<table>/g, '<div class="article-table-wrap"><table>')
+    .replace(/<table(\s[^>]*)?>/g, '<div class="article-table-wrap"><table$1>')
     .replace(/<\/table>/g, "</table></div>");
 
 const BlogPostTemplate = ({ data, pageContext }) => {

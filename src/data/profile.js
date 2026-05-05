@@ -483,8 +483,8 @@ export const paperItems = [
 
 export const awardItems = [
   {
-    title: "Plan2Do 안전산업진흥유공 표창",
-    result: "행정안전부 장관상",
+    title: "Plan2Do 수상",
+    result: "안전산업진흥 유공 행정안전부 장관상, 한국건설기술연구원 원장상",
     period: "2025.12",
     description:
       "Plan2Do에 탑재되는 AI 안전도우미와 위험성평가 지원 시스템을 고도화해 AI 산업안전보건 플랫폼의 수상 성과에 기여했습니다.",
@@ -569,15 +569,6 @@ export const awardItems = [
 
 export const competitionItems = [
   {
-    title: "HD현대 AI Challenge",
-    result: "4위",
-    period: "2023",
-    description:
-      "건설기계 센서데이터를 활용한 작업 중량 예측 모델을 개발하고, 시계열 Transformer와 맞춤형 손실 함수로 성능을 끌어올렸습니다.",
-    facts: ["4th Place", "Public Score 98.21432", "Time Series Transformer"],
-    href: "https://github.com/d9249/HDAIChallenge",
-  },
-  {
     title: "LG Aimers 4기",
     result: "팀리더",
     period: "2024.01 - 2024.02",
@@ -585,6 +576,15 @@ export const competitionItems = [
       "MQL 데이터 기반 B2B 영업 기회 창출 예측 모델을 개발했습니다. 데이터 정규화, 비즈니스 영역 매핑, XGBoost 모델, 임계값 최적화를 통해 F1-score를 개선했습니다.",
     facts: ["MQL Prediction", "F1-score 0.75154", "Team Leader"],
     href: "https://github.com/d9249/LG_Aimers",
+  },
+  {
+    title: "HD현대 AI Challenge",
+    result: "4위",
+    period: "2023",
+    description:
+      "건설기계 센서데이터를 활용한 작업 중량 예측 모델을 개발하고, 시계열 Transformer와 맞춤형 손실 함수로 성능을 끌어올렸습니다.",
+    facts: ["4th Place", "Public Score 98.21432", "Time Series Transformer"],
+    href: "https://github.com/d9249/HDAIChallenge",
   },
   {
     title: "DACON 경진대회",
