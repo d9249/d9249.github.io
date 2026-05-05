@@ -1,0 +1,22 @@
+[
+  {
+    "slug": "ai-systems",
+    "label": "AI Systems",
+    "description": "RAG, 멀티 에이전트, 지식 그래프를 제품 운영 관점에서 정리합니다."
+  },
+  {
+    "slug": "document-ai",
+    "label": "Document AI",
+    "description": "문서 OCR, 테이블 구조 복원, 벤치마크와 배포 경험을 다룹니다."
+  },
+  {
+    "slug": "mlops",
+    "label": "MLOps",
+    "description": "관찰성, 보안 배포, 모델 운영과 품질 추적 메모입니다."
+  },
+  {
+    "slug": "career",
+    "label": "Career",
+    "description": "연구 경험과 제품 엔지니어링을 연결하는 커리어 기록입니다."
+  }
+]
