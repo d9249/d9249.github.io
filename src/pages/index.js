@@ -5,11 +5,13 @@ import PostCard from "../components/PostCard";
 import ProjectGrid from "../components/ProjectGrid";
 import SectionHeading from "../components/SectionHeading";
 import {
+  awardItems,
+  competitionItems,
   evidenceItems,
   heroLinks,
+  paperItems,
   profileTags,
   projectItems,
-  researchItems,
   skillGroups,
   timelineItems,
 } from "../data/profile";
@@ -84,10 +86,7 @@ const IndexPage = ({ data }) => {
       </section>
 
       <section className="shell section" aria-labelledby="proof-title">
-        <SectionHeading
-          kicker="Highlights"
-          title="주요 성과"
-        />
+        <SectionHeading kicker="Highlights" title="주요 성과" />
         <div className="evidence-grid">
           {evidenceItems.map((item) => (
             <article className="evidence-card" key={item.label}>
@@ -104,10 +103,7 @@ const IndexPage = ({ data }) => {
         id="career"
         aria-labelledby="career-title"
       >
-        <SectionHeading
-          kicker="Experience"
-          title="실무 및 연구 경력"
-        />
+        <SectionHeading kicker="Experience" title="실무 및 연구 경력" />
         <div className="career-layout">
           <aside className="profile-panel">
             <div className="avatar-large">SM</div>
@@ -185,13 +181,50 @@ const IndexPage = ({ data }) => {
       >
         <SectionHeading
           kicker="Research"
-          title="학위논문, 저널, 학회, 수상 기록"
+          title="논문 리스트"
+          action={<Link to="/research/">전체 논문 보기 →</Link>}
         />
-        <div className="research-grid">
-          {researchItems.map((item) => (
-            <article className="research-card" key={item.title}>
-              <div className="meta">{item.category}</div>
+        <div className="paper-grid">
+          {paperItems.map((item) => (
+            <article className="paper-card" key={item.title}>
+              <div className="paper-card-top">
+                <div className="meta">{item.type}</div>
+                <span>{item.year}</span>
+              </div>
               <h3>{item.title}</h3>
+              <div className="paper-venue">{item.venue}</div>
+              <p>{item.description}</p>
+              <div className="research-facts">
+                {item.facts.map((fact) => (
+                  <span key={fact}>{fact}</span>
+                ))}
+              </div>
+              {item.href ? (
+                <a className="paper-link" href={item.href}>
+                  {item.linkLabel || "논문 보기"} →
+                </a>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section
+        className="shell section"
+        id="awards"
+        aria-labelledby="awards-title"
+      >
+        <SectionHeading
+          kicker="Awards"
+          title="수상 기록"
+          action={<Link to="/awards/">전체 수상 보기 →</Link>}
+        />
+        <div className="recognition-grid">
+          {awardItems.slice(0, 4).map((item) => (
+            <article className="recognition-card" key={item.title}>
+              <div className="meta">{item.period}</div>
+              <h3>{item.title}</h3>
+              <strong>{item.result}</strong>
               <p>{item.description}</p>
               <div className="research-facts">
                 {item.facts.map((fact) => (
@@ -201,11 +234,11 @@ const IndexPage = ({ data }) => {
               {item.links?.length ? (
                 <div
                   className="research-links"
-                  aria-label={`${item.title} 논문 링크`}
+                  aria-label={`${item.title} 증빙 링크`}
                 >
                   {item.links.map((link) => (
                     <a key={link.href} href={link.href}>
-                      {link.label}
+                      {link.label} →
                     </a>
                   ))}
                 </div>
@@ -217,13 +250,42 @@ const IndexPage = ({ data }) => {
 
       <section
         className="shell section"
+        id="competitions"
+        aria-labelledby="competitions-title"
+      >
+        <SectionHeading
+          kicker="Competitions"
+          title="대회 및 외부 활동"
+          action={<Link to="/competitions/">전체 대회 보기 →</Link>}
+        />
+        <div className="recognition-grid">
+          {competitionItems.map((item) => (
+            <article className="recognition-card" key={item.title}>
+              <div className="meta">{item.period}</div>
+              <h3>{item.title}</h3>
+              <strong>{item.result}</strong>
+              <p>{item.description}</p>
+              <div className="research-facts">
+                {item.facts.map((fact) => (
+                  <span key={fact}>{fact}</span>
+                ))}
+              </div>
+              {item.href ? (
+                <a className="paper-link" href={item.href}>
+                  활동 보기 →
+                </a>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section
+        className="shell section"
         id="skills"
         aria-labelledby="skills-title"
       >
-        <SectionHeading
-          kicker="Skills"
-          title="기술 스택"
-        />
+        <SectionHeading kicker="Skills" title="기술 스택" />
         <div className="skill-grid">
           {skillGroups.map((group) => (
             <article className="skill-card" key={group.title}>

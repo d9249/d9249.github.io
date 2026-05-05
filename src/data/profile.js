@@ -274,64 +274,366 @@ export const projectItems = [
   },
 ];
 
-export const researchItems = [
+export const paperItems = [
   {
-    category: "Thesis",
+    type: "Master's Thesis",
     title: "추천 시스템에서 그래프 컨볼루션 네트워크 최적화 방법",
+    venue: "Kyonggi University dCollection",
+    year: "2024",
     description:
-      "그래프 기반 추천에서 LightGCN 계열 모델의 임베딩 전파, 가중 전달, 성능 비교를 다룬 석사 학위논문입니다.",
-    facts: ["M.S. Thesis", "Kyonggi University", "2024.02"],
+      "Optimization methods of Graph Convolution Networks for Recommendation Systems.",
+    facts: ["M.S. Thesis", "UCI I804:41002-000000057783", "1st author"],
+    href: "http://www.dcollection.net/handler/kyonggi/000000057783",
+    linkLabel: "dCollection",
+  },
+  {
+    type: "SCIE Journal",
+    title:
+      "Embedding Enhancement method for LightGCN in Recommendation Information Systems",
+    venue: "Electronics, vol. 13, no. 12",
+    year: "2024",
+    description:
+      "LightGCN 기반 추천 시스템에서 embedding 표현을 강화하는 방법을 제안했습니다.",
+    facts: ["SCIE(Q2)", "MDPI Electronics", "1st author"],
+    href: "https://doi.org/10.3390/electronics13122282",
+    linkLabel: "DOI",
+  },
+  {
+    type: "SCIE Journal",
+    title:
+      "Weighted Forwarding in Graph Convolution Networks for Recommendation Information System",
+    venue: "Computers, Materials & Continua, vol. 78, no. 2",
+    year: "2024",
+    description:
+      "그래프 컨볼루션 네트워크의 가중 전달 전략으로 추천 품질을 개선한 연구입니다.",
+    facts: ["SCIE(Q2)", "CMC", "1st author"],
+    href: "https://doi.org/10.32604/cmc.2023.046346",
+    linkLabel: "DOI",
+  },
+  {
+    type: "SCIE Journal",
+    title:
+      "Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis",
+    venue: "Computers, Materials & Continua, vol. 75, no. 1",
+    year: "2023",
+    description:
+      "퇴행성 관절염 분류 정확도를 높이기 위한 딥러닝 모델 앙상블 연구입니다.",
+    facts: ["SCIE(Q2)", "CMC", "1st author"],
+    href: "https://doi.org/10.32604/cmc.2023.035245",
+    linkLabel: "DOI",
+  },
+  {
+    type: "KCI Journal",
+    title:
+      "Graph Neural Network 기반 추천시스템 성능 향상을 위한 유저 행동 시간 기반 데이터 사용 방안 분석",
+    venue: "The Journal of Korean Institute of Information Technology",
+    year: "2023",
+    description:
+      "추천 시스템 성능 향상을 위해 사용자 행동 시간 기반 데이터를 분석한 연구입니다.",
+    facts: ["KCI", "JKIIT 21(5)", "1st author"],
+    href: "https://doi.org/10.14801/jkiit.2023.21.5.21",
+    linkLabel: "DOI",
+  },
+  {
+    type: "KCI Journal",
+    title:
+      "의료 영상 시스템에서 다중 연쇄 U-Net 모델을 이용한 개선된 췌장 영역 분할 탐지",
+    venue: "The Journal of Korean Institute of Information Technology",
+    year: "2022",
+    description:
+      "다중 연쇄 U-Net 모델로 의료 영상의 췌장 영역 분할 탐지 성능을 개선한 연구입니다.",
+    facts: ["KCI", "JKIIT 20(5)", "1st author"],
+    href: "https://doi.org/10.14801/jkiit.2022.20.5.81",
+    linkLabel: "DOI",
+  },
+  {
+    type: "International Conference",
+    title:
+      "Egress Initialization for Graph Convolution Network in Recommendation Systems",
+    venue: "The 15th International Conference on Internet (ICONI 2023)",
+    year: "2023",
+    description:
+      "추천 시스템에서 그래프 컨볼루션 네트워크의 egress initialization을 다룬 국제학회 논문입니다.",
+    facts: ["ICONI 2023", "Recommendation", "1st author"],
+  },
+  {
+    type: "International Conference",
+    title: "Thin Graph Convolution Network in Recommendation Systems",
+    venue: "The 15th International Conference on Internet (ICONI 2023)",
+    year: "2023",
+    description:
+      "추천 시스템을 위한 경량 그래프 컨볼루션 네트워크 구조를 다룬 국제학회 논문입니다.",
+    facts: ["ICONI 2023", "GNN", "1st author"],
+  },
+  {
+    type: "International Conference",
+    title: "Over-smoothing in LightGCN doesn't happen much",
+    venue: "The 15th International Conference on Internet (ICONI 2023)",
+    year: "2023",
+    description:
+      "LightGCN에서 over-smoothing 현상을 분석한 추천 시스템 국제학회 논문입니다.",
+    facts: ["ICONI 2023", "LightGCN", "1st author"],
+  },
+  {
+    type: "International Conference",
+    title: "Leverage time-based data to improve recommendation system accuracy",
+    venue:
+      "The 18th Asia Pacific International Conference on Information Science and Technology",
+    year: "2023",
+    description:
+      "시간 기반 데이터를 활용해 추천 시스템 정확도를 개선하는 방법을 발표했습니다.",
+    facts: ["APIC-IST", "Recommendation", "1st author"],
+  },
+  {
+    type: "International Conference",
+    title:
+      "Using Deep Learning for Medical Automation in Diagnosis of Degenerative Arthritis",
+    venue:
+      "The 8th international Conference for Small and Medium Business 2023",
+    year: "2023",
+    description:
+      "퇴행성 관절염 진단 자동화를 위한 딥러닝 기반 의료영상 연구입니다.",
+    facts: ["ICSMB 2023", "Medical Imaging", "1st author"],
+  },
+  {
+    type: "International Conference",
+    title:
+      "Classification of degenerative arthritis using Xception model in radiographic images",
+    venue:
+      "The 17th Asia Pacific International Conference on Information Science and Technology",
+    year: "2022",
+    description:
+      "Xception 기반 방사선 이미지 퇴행성 관절염 분류 연구로 APIC-IST Best Paper에 선정되었습니다.",
+    facts: ["APIC-IST", "Best Paper", "1st author"],
+  },
+  {
+    type: "Domestic Conference",
+    title:
+      "이상 점수 임계값 선택 기준에 따른 비지도 이상치 탐지 방법의 성능 분석",
+    venue: "KSII Summer Conference",
+    year: "2023",
+    description:
+      "비지도 이상치 탐지에서 이상 점수 임계값 선택 기준에 따른 성능 변화를 분석했습니다.",
+    facts: ["KSII", "Anomaly Detection", "2nd author"],
+  },
+  {
+    type: "Domestic Conference",
+    title:
+      "GNN 기반 딥러닝 모델에서 시간-공간 Attention 모듈 구조에 따른 교통 흐름 예측 성능 분석",
+    venue: "KSII Spring Conference",
+    year: "2023",
+    description:
+      "시간-공간 Attention 구조가 교통 흐름 예측 성능에 미치는 영향을 분석했습니다.",
+    facts: ["KSII", "Traffic Forecasting", "2nd author"],
+  },
+  {
+    type: "Domestic Conference",
+    title: "추천 시스템 성능 개선을 위한 시간 기반 데이터 분석",
+    venue: "KSII Spring Conference",
+    year: "2023",
+    description:
+      "추천 시스템의 시간 기반 사용자 행동 데이터를 분석한 국내학회 논문입니다.",
+    facts: ["KSII", "Recommendation", "1st author"],
+  },
+  {
+    type: "Domestic Conference",
+    title: "SDN 환경에서 오토 인코더 모델을 활용한 플로우 분류 기법",
+    venue: "KICS Winter Conference, vol. 80",
+    year: "2023",
+    description:
+      "SDN 환경에서 오토 인코더 기반 플로우 분류 기법을 제안했습니다.",
+    facts: ["KICS", "Autoencoder", "3rd author"],
+  },
+  {
+    type: "Domestic Conference",
+    title: "추천 시스템을 활용한 캐싱 서버 최적화",
+    venue: "SEBS Fall Conference",
+    year: "2022",
+    description:
+      "추천 시스템을 활용해 정보 중심 네트워크의 캐싱 서버 최적화를 다룬 논문입니다.",
+    facts: ["SEBS", "Recommendation", "1st author"],
+  },
+  {
+    type: "Domestic Conference",
+    title: "RFID 태그를 통한 출결 확인 시스템 구현",
+    venue: "KSII Spring Conference",
+    year: "2022",
+    description: "RFID 태그 기반 출결 확인 시스템 구현 내용을 발표했습니다.",
+    facts: ["KSII", "RFID", "3rd author"],
+  },
+  {
+    type: "Domestic Conference",
+    title: "겹친 문자 이미지 분류를 위한 합성곱 신경망 모델의 정확도 분석",
+    venue: "KSII Fall Conference",
+    year: "2021",
+    description:
+      "겹친 문자 이미지 분류를 위한 CNN 모델의 정확도를 분석했습니다.",
+    facts: ["KSII", "CNN", "1st author"],
+  },
+  {
+    type: "Domestic Conference",
+    title: "PoseNet을 활용한 헬스 트레이너 웹 서비스",
+    venue: "KIIT Conference, pp. 729-733",
+    year: "2021",
+    description:
+      "PoseNet 기반 헬스 트레이너 웹 서비스 논문으로 KIIT Best Paper Award를 수상했습니다.",
+    facts: ["KIIT", "Best Paper", "1st author"],
+  },
+];
+
+export const awardItems = [
+  {
+    title: "CES 2025 AI Innovation Awards",
+    result: "booxTory Best of Innovation / arti Honoree",
+    period: "2025",
+    description:
+      "AI 콘텐츠 제품의 AI 엔진 개발과 기술 리더십으로 CES 2025 혁신상 성과에 기여했습니다.",
+    facts: ["AI Products", "booxTory", "arti"],
     links: [
       {
-        label: "DBpia",
-        href: "https://www.dbpia.co.kr/journal/detail?nodeId=T16946511",
+        label: "booxTory CES",
+        href: "https://www.ces.tech/ces-innovation-awards/2025/booxtory/",
+      },
+      {
+        label: "arti CES",
+        href: "https://www.ces.tech/ces-innovation-awards/2025/arti/",
       },
     ],
   },
   {
-    category: "SCIE Journals",
-    title: "LightGCN, WF-GCN, Medical Imaging Ensemble",
+    title: "WIS 2025 혁신상",
+    result: "과학기술정보통신부 장관상",
+    period: "2025",
     description:
-      "MDPI Electronics 2024, CMC 2024, CMC 2023에 추천 시스템과 의료영상 딥러닝 연구 3편을 발표했습니다.",
-    facts: ["SCIE 3", "LightGCN", "WF-GCN", "CMC"],
+      "AI 제품화 성과와 기술 경쟁력을 인정받아 월드IT쇼 혁신상 장관상을 수상했습니다.",
+    facts: ["Minister Award", "WIS 2025", "Product AI"],
     links: [
       {
-        label: "LightGCN",
-        href: "https://www.mdpi.com/2079-9292/13/12/2282",
-      },
-      {
-        label: "WF-GCN",
-        href: "https://www.techscience.com/cmc/v78n2/55545/html",
-      },
-      {
-        label: "Arthritis Ensemble",
-        href: "https://www.techscience.com/cmc/v75n1/51491",
+        label: "WIS 2025 결과보고서",
+        href: "/evidence/wis-2025-result-report.pdf",
       },
     ],
   },
   {
-    category: "KCI Journals",
-    title: "사용자 행동 시간 분석과 MCU-Net 의료영상 연구",
+    title: "APIC-IST 2022 Best Paper Award",
+    result: "Best Paper Award",
+    period: "2022",
     description:
-      "Graph Neural Network 기반 추천시스템 개선 연구와 다중 연쇄 U-Net 기반 췌장 영역 분할 연구를 KCI 논문으로 발표했습니다.",
-    facts: ["KCI 2", "JKIIT", "Recommendation", "Segmentation"],
-    links: [
-      {
-        label: "User Behavior Time",
-        href: "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002962666",
-      },
-      {
-        label: "MCU-Net",
-        href: "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002844500",
-      },
-    ],
+      "Xception 기반 퇴행성 관절염 분류 연구가 APIC-IST Best Paper에 선정되었습니다.",
+    facts: ["Medical Imaging", "Xception", "1st author"],
   },
   {
-    category: "Conferences & Awards",
-    title: "APIC-IST Best Paper, KIIT Best Paper",
+    title: "KIIT Best Paper Award",
+    result: "Best Paper Award",
+    period: "2021",
     description:
-      "국제학회 6편, 국내학회 4편의 발표 경험과 APIC-IST 2022 Best Paper Award, KIIT Best Paper Award 수상 기록이 있습니다.",
-    facts: ["International 6", "Domestic 4", "Best Paper"],
+      "PoseNet을 활용한 헬스 트레이너 웹 서비스 논문으로 한국정보기술학회 우수 논문 성과를 기록했습니다.",
+    facts: ["PoseNet", "KIIT", "1st author"],
+  },
+  {
+    title: "한국정보기술학회 대학생논문경진대회",
+    result: "우수논문상 동상",
+    period: "2021",
+    description:
+      "PoseNet을 활용한 헬스 트레이너 웹 서비스 논문으로 대학생논문경진대회 우수논문상을 수상했습니다.",
+    facts: ["No. 21-222", "Bronze", "Paper Contest"],
+    href: "https://drive.google.com/file/d/1NvvLVTjTTT6Acwp4czgx7laKNU4t-VCY",
+  },
+  {
+    title: "경기대학교 AI컴퓨터공학부 캡스톤디자인전시회",
+    result: "장려상",
+    period: "2021",
+    description: "핏-시방 프로젝트로 캡스톤디자인전시회 장려상을 수상했습니다.",
+    facts: ["No. 2021-0005", "Capstone", "Team Project"],
+    href: "https://drive.google.com/file/d/1MivqEeTIQ2nKBn3zSvbrzofHuiUbT1yL",
+  },
+];
+
+export const competitionItems = [
+  {
+    title: "HD현대 AI Challenge",
+    result: "4위",
+    period: "2025",
+    description:
+      "건설기계 센서데이터를 활용한 작업 중량 예측 모델을 개발하고, 시계열 Transformer와 맞춤형 손실 함수로 성능을 끌어올렸습니다.",
+    facts: ["4th Place", "Public Score 98.21432", "Time Series Transformer"],
+    href: "https://github.com/d9249/HDAIChallenge",
+  },
+  {
+    title: "LG Aimers 4기",
+    result: "팀리더",
+    period: "2024.01 - 2024.02",
+    description:
+      "MQL 데이터 기반 B2B 영업 기회 창출 예측 모델을 개발했습니다. 데이터 정규화, 비즈니스 영역 매핑, XGBoost 모델, 임계값 최적화를 통해 F1-score를 개선했습니다.",
+    facts: ["MQL Prediction", "F1-score 0.75154", "Team Leader"],
+    href: "https://github.com/d9249/LG_Aimers",
+  },
+  {
+    title: "DACON 경진대회 포트폴리오",
+    result: "39개 대회 참여",
+    period: "2021 - 2024",
+    description:
+      "컴퓨터 비전, 정형 데이터 분류, 시계열, 추천 시스템 등 다양한 AI 경진대회에 참여하며 데이터 분석과 모델링 경험을 축적했습니다.",
+    facts: ["Top 1% 7", "Top 5% 10", "Top 10% 15"],
+    href: "https://dacon.io/myprofile/423689",
+  },
+  {
+    title: "DACON 컴퓨터 비전 학습 경진대회",
+    result: "Public SOTA",
+    period: "2021.05",
+    description:
+      "겹친 문자 이미지 분류를 위한 CNN 모델을 개발하고, 하이퍼파라미터 튜닝과 데이터 전처리 실험을 통해 Public SOTA를 달성했습니다.",
+    facts: ["Computer Vision", "CNN", "Public SOTA"],
+  },
+  {
+    title: "DACON Basic 서울 랜드마크 이미지 분류",
+    result: "3위",
+    period: "DACON",
+    description:
+      "랜드마크 이미지 분류 문제에서 데이터 전처리와 모델 앙상블 전략을 적용해 420팀 중 3위를 기록했습니다.",
+    facts: ["3 / 420", "Image Classification", "Top 1%"],
+  },
+  {
+    title: "2021 Ego-Vision 손동작 인식 AI 경진대회",
+    result: "5위",
+    period: "2021.09",
+    description:
+      "Ego-Vision 기반 손동작 인식 문제에서 팀장의 데이터 crop 전처리 전략과 다양한 모델 아키텍처 실험을 통해 최종 5위를 달성했습니다.",
+    facts: ["5 / 290", "Ego-Vision", "Gesture Recognition"],
+  },
+  {
+    title: "DACON Basic 전화 해지 여부 분류",
+    result: "5위",
+    period: "DACON",
+    description:
+      "전화 해지 여부를 예측하는 정형 데이터 분류 문제에서 피처 분석과 모델링을 수행해 771팀 중 5위를 기록했습니다.",
+    facts: ["5 / 771", "Tabular Data", "Classification"],
+  },
+  {
+    title: "DACON 작물 병해 분류 & 교통 수신호 인식",
+    result: "참가",
+    period: "2021.11",
+    description:
+      "작물 병해 분류와 교통 수신호 동작 인식 대회에 참여하며 제한된 시간 안에서 데이터 분석, 모델 구현, 실험 계획을 수행했습니다.",
+    facts: ["Computer Vision", "Classification", "Modeling"],
+  },
+  {
+    title: "가짜연구소 6기",
+    result: "그래프로 설득하기 팀원",
+    period: "2022.09 - 2022.11",
+    description:
+      "Graph Neural Network를 주제로 한 비영리 AI 연구 활동에 참여했습니다. GraphGym 기반 실험 환경을 구축하고 GCN, GIN, Virtual Node, Aggregation 방식별 성능을 비교했습니다.",
+    facts: ["GNN", "GraphGym", "Team 8"],
+    href: "https://www.notion.so/chanrankim/ac12010e21af4431a5f3e8ae2bdc4ee3?pvs=4",
+  },
+  {
+    title: "DIYA",
+    result: "AI 연구 및 대회 참여 커뮤니티",
+    period: "2021.03 - 2023.02",
+    description:
+      "Computer Vision Team과 ML/GNN Team에서 논문 리뷰, PyTorch 기반 모델 구현, DACON 대회 참여, 학술발표대회 논문 발표를 수행했습니다.",
+    facts: ["Computer Vision", "GNN", "Paper Review"],
+    href: "https://doityourselfai.github.io/",
   },
 ];
 

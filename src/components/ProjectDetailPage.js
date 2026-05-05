@@ -101,7 +101,7 @@ const ProjectDetailPage = ({ slug }) => {
           <div className="project-detail-panel">
             <h2>Explore</h2>
             <Link to="/portfolio/">발표용 포트폴리오 보기 →</Link>
-            <Link to="/#research">연구 성과로 이동 →</Link>
+            <Link to="/research/">연구 성과로 이동 →</Link>
             <Link to="/contact/">연락처 보기 →</Link>
           </div>
         </aside>
@@ -111,10 +111,7 @@ const ProjectDetailPage = ({ slug }) => {
         className="shell section"
         aria-labelledby="related-projects-title"
       >
-        <SectionHeading
-          kicker="Related"
-          title="다른 프로젝트도 이어서 보기"
-        />
+        <SectionHeading kicker="Related" title="다른 프로젝트도 이어서 보기" />
         <div className="related-grid">
           {relatedProjects.map((item) => (
             <Link

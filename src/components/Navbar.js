@@ -2,10 +2,13 @@ import * as React from "react";
 import { Link } from "gatsby";
 
 const navItems = [
-  { label: "portfolio", to: "/portfolio/" },
-  { label: "projects", to: "/projects/" },
-  { label: "research", to: "/#research" },
+  { label: "home", to: "/" },
   { label: "career", to: "/#career" },
+  { label: "projects", to: "/projects/" },
+  { label: "research", to: "/research/" },
+  { label: "awards", to: "/awards/" },
+  { label: "competitions", to: "/competitions/" },
+  { label: "portfolio", to: "/portfolio/" },
   { label: "blog", to: "/blog/" },
   { label: "contact", to: "/contact/" },
 ];
@@ -64,17 +67,6 @@ const Navbar = () => {
           <span className="prompt-dot" />
           <span>mean@log:~/research-to-product</span>
         </Link>
-        <button
-          className="menu-button"
-          type="button"
-          aria-expanded={open}
-          aria-label="메뉴 열기"
-          onClick={() => setOpen((current) => !current)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
         <nav
           className={`nav ${open ? "is-open" : ""}`}
           aria-label="Primary navigation"
@@ -84,6 +76,8 @@ const Navbar = () => {
               {item.label}
             </Link>
           ))}
+        </nav>
+        <div className="header-actions">
           <button
             className="theme-toggle"
             type="button"
@@ -110,7 +104,31 @@ const Navbar = () => {
               <path d="M20.2 14.2A8.4 8.4 0 0 1 9.8 3.8 8.6 8.6 0 1 0 20.2 14.2Z" />
             </svg>
           </button>
-        </nav>
+          <button
+            className="menu-button"
+            type="button"
+            aria-expanded={open}
+            aria-label={open ? "메뉴 닫기" : "메뉴 열기"}
+            title={open ? "Close menu" : "Open menu"}
+            data-menu-state={open ? "open" : "closed"}
+            onClick={() => setOpen((current) => !current)}
+          >
+            <svg
+              className="menu-icon menu-icon-lines"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path d="M5 7h14M5 12h14M5 17h14" />
+            </svg>
+            <svg
+              className="menu-icon menu-icon-close"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path d="M7 7l10 10M17 7 7 17" />
+            </svg>
+          </button>
+        </div>
       </div>
     </header>
   );
