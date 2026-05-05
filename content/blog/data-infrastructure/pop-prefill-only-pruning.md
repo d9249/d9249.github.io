@@ -10,7 +10,7 @@ tags:
   - KV Cache
   - LLM Serving
   - VLM
- draft: false
+draft: false
 ---
 
 대형 언어모델 서빙에서 비용을 키우는 병목은 단순히 파라미터 수가 많다는 사실만이 아니다. 실제 운영에서는 사용자의 긴 입력을 한꺼번에 읽어 KV cache를 쌓는 prefill 단계와, 그 뒤 토큰을 한 개씩 생성하는 decode 단계가 서로 전혀 다른 성격의 비용 구조를 만든다. 그런데 지금까지 많은 structured pruning 방법은 이 둘을 같은 문제로 취급해, 한 번 줄인 모델 구조를 prefill과 decode 전체에 똑같이 적용해 왔다.
