@@ -27,6 +27,7 @@ const manifestPath = path.join(
   "portfolioSlides.json",
 );
 const quality = Number(process.env.PORTFOLIO_IMAGE_QUALITY || "0.92");
+const slideLimit = Number(process.env.PORTFOLIO_SLIDE_LIMIT || "36");
 
 const escapeAppleScriptString = (value) =>
   value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
@@ -140,7 +141,8 @@ if (result.status !== 0) {
 const exportedImages = fs
   .readdirSync(tmpImagesDir)
   .filter((fileName) => /\.jpe?g$/i.test(fileName))
-  .sort((a, b) => slideNumberFromName(a) - slideNumberFromName(b));
+  .sort((a, b) => slideNumberFromName(a) - slideNumberFromName(b))
+  .slice(0, slideLimit);
 
 if (exportedImages.length === 0) {
   fs.rmSync(tmpDir, { recursive: true, force: true });
@@ -181,6 +183,7 @@ const manifest = {
   source: {
     keynoteFile: path.basename(keynotePath),
     slideCount: slides.length,
+    slideLimit,
     imageFormat: "jpeg",
     imageQuality: quality,
   },

@@ -2,10 +2,10 @@ import * as React from "react";
 import { Link } from "gatsby";
 
 const navItems = [
-  { label: "portfolio", to: "/portfolio/", featured: true },
-  { label: "career", to: "/#career" },
-  { label: "projects", to: "/#projects" },
+  { label: "portfolio", to: "/portfolio/" },
+  { label: "projects", to: "/projects/" },
   { label: "research", to: "/#research" },
+  { label: "career", to: "/#career" },
   { label: "blog", to: "/blog/" },
   { label: "contact", to: "/contact/" },
 ];
@@ -80,12 +80,7 @@ const Navbar = () => {
           aria-label="Primary navigation"
         >
           {navItems.map((item) => (
-            <Link
-              className={item.featured ? "nav-featured" : undefined}
-              key={item.to}
-              to={item.to}
-              onClick={() => setOpen(false)}
-            >
+            <Link key={item.to} to={item.to} onClick={() => setOpen(false)}>
               {item.label}
             </Link>
           ))}

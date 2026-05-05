@@ -1,4 +1,5 @@
 const path = require("path");
+const fs = require("fs");
 const categories = require("./src/data/categories.json");
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
@@ -94,4 +95,42 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     });
   });
+};
+
+const removeNullBytesFromHtml = (directory, sanitizedFiles) => {
+  if (!fs.existsSync(directory)) {
+    return;
+  }
+
+  fs.readdirSync(directory, { withFileTypes: true }).forEach((entry) => {
+    const entryPath = path.join(directory, entry.name);
+
+    if (entry.isDirectory()) {
+      removeNullBytesFromHtml(entryPath, sanitizedFiles);
+      return;
+    }
+
+    if (!entry.isFile() || !entry.name.endsWith(".html")) {
+      return;
+    }
+
+    const html = fs.readFileSync(entryPath, "utf8");
+    if (!html.includes("\u0000")) {
+      return;
+    }
+
+    fs.writeFileSync(entryPath, html.replace(/\u0000/g, ""), "utf8");
+    sanitizedFiles.push(entryPath);
+  });
+};
+
+exports.onPostBuild = ({ reporter }) => {
+  const sanitizedFiles = [];
+  removeNullBytesFromHtml(path.resolve("./public"), sanitizedFiles);
+
+  if (sanitizedFiles.length > 0) {
+    reporter.info(
+      `Removed null bytes from ${sanitizedFiles.length} generated HTML files.`,
+    );
+  }
 };

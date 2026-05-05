@@ -2,6 +2,7 @@ import * as React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
 import PostCard from "../components/PostCard";
+import ProjectGrid from "../components/ProjectGrid";
 import SectionHeading from "../components/SectionHeading";
 import {
   evidenceItems,
@@ -20,15 +21,14 @@ const IndexPage = ({ data }) => {
     <Layout>
       <section className="shell hero">
         <div>
-          <p className="eyebrow">AI Engineer &amp; Researcher</p>
-          <h1>AI 연구를 제품 가치와 운영 가능한 시스템으로 연결합니다.</h1>
+          <p className="eyebrow">Sangmin Lee</p>
+          <h1>이상향을 추구하는 엔지니어</h1>
           <p className="hero-copy">
-            Building Bridge between AI Research and Real-World Value. RAG, 멀티
-            에이전트, 문서 OCR, 추천 시스템, 의료영상 연구를 실제 제품과 운영
-            지표로 번역하는 이상민의 포트폴리오입니다.
+            RAG, Document AI, 멀티 에이전트, 추천 시스템을 제품으로 연결하는 AI
+            엔지니어입니다.
           </p>
           <div className="hero-actions">
-            <Link className="button-primary" to="/#projects">
+            <Link className="button-primary" to="/projects/">
               프로젝트 보기
             </Link>
             <Link className="button-secondary" to="/blog/">
@@ -86,8 +86,7 @@ const IndexPage = ({ data }) => {
       <section className="shell section" aria-labelledby="proof-title">
         <SectionHeading
           kicker="Highlights"
-          title="수상, 논문, 벤치마크를 먼저 보여주는 포트폴리오"
-          description="기존 포트폴리오의 프로젝트 흐름과 최신 README, 이력서의 정량 성과를 합쳐 방문자가 한 번에 스캔할 수 있는 증거 블록으로 정리했습니다."
+          title="주요 성과"
         />
         <div className="evidence-grid">
           {evidenceItems.map((item) => (
@@ -107,8 +106,7 @@ const IndexPage = ({ data }) => {
       >
         <SectionHeading
           kicker="Experience"
-          title="연구자와 제품 엔지니어 사이의 궤적"
-          description="회사명보다 먼저 문제의 성격, AI 아키텍처, 운영 증거가 보이도록 경력 서사를 재구성했습니다."
+          title="실무 및 연구 경력"
         />
         <div className="career-layout">
           <aside className="profile-panel">
@@ -174,42 +172,10 @@ const IndexPage = ({ data }) => {
       >
         <SectionHeading
           kicker="Projects"
-          title="제품, 플랫폼, 연구 프로젝트를 하나의 흐름으로 정리"
-          description="엔터프라이즈 RAG, 문서 OCR, 시장조사 에이전트, CES 수상 제품, 추천 시스템, 의료영상 연구를 실제 자료 기준으로 묶었습니다."
+          title="프로젝트"
+          action={<Link to="/projects/">전체 프로젝트 보기 →</Link>}
         />
-        <div className="project-grid">
-          {projectItems.map((project) => (
-            <article className="project-card" key={project.title}>
-              <div className="project-card-header">
-                <div>
-                  <div className="meta">{project.period}</div>
-                  <h3>{project.title}</h3>
-                </div>
-                <div className="project-metrics">
-                  {project.metrics.map((metric) => (
-                    <span className="metric-chip" key={metric}>
-                      {metric}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <p>{project.summary}</p>
-              <ul className="project-details">
-                {project.details.map((detail) => (
-                  <li key={detail}>{detail}</li>
-                ))}
-              </ul>
-              <div
-                className="project-stack"
-                aria-label={`${project.title} stack`}
-              >
-                {project.stack.map((tool) => (
-                  <span key={tool}>{tool}</span>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
+        <ProjectGrid projects={projectItems} />
       </section>
 
       <section
@@ -220,7 +186,6 @@ const IndexPage = ({ data }) => {
         <SectionHeading
           kicker="Research"
           title="학위논문, 저널, 학회, 수상 기록"
-          description="추천 시스템과 의료영상 연구를 중심으로 논문 성과를 제품 포트폴리오와 분리해 읽을 수 있게 정리했습니다."
         />
         <div className="research-grid">
           {researchItems.map((item) => (
@@ -233,6 +198,18 @@ const IndexPage = ({ data }) => {
                   <span key={fact}>{fact}</span>
                 ))}
               </div>
+              {item.links?.length ? (
+                <div
+                  className="research-links"
+                  aria-label={`${item.title} 논문 링크`}
+                >
+                  {item.links.map((link) => (
+                    <a key={link.href} href={link.href}>
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              ) : null}
             </article>
           ))}
         </div>
@@ -245,8 +222,7 @@ const IndexPage = ({ data }) => {
       >
         <SectionHeading
           kicker="Skills"
-          title="AI 시스템을 끝까지 밀어붙이는 기술 스택"
-          description="자료에 흩어져 있던 기술을 AI/ML, RAG/Agent, Backend, Data/DB, MLOps/Infra 관점으로 다시 분류했습니다."
+          title="기술 스택"
         />
         <div className="skill-grid">
           {skillGroups.map((group) => (
@@ -270,8 +246,7 @@ const IndexPage = ({ data }) => {
         <SectionHeading
           kicker="Blog"
           title="최근 글"
-          description="블로그는 포트폴리오 하단의 기술 노트로 유지합니다. RAG, 에이전트, OCR, 운영형 AI 시스템을 제품으로 옮기며 남긴 판단을 기록합니다."
-          action={<Link to="/blog/">전체 글 보기 -&gt;</Link>}
+          action={<Link to="/blog/">전체 글 보기 →</Link>}
         />
         <div className="post-grid compact-posts">
           {posts.map((post) => (

@@ -2,6 +2,8 @@ import * as React from "react";
 import Layout from "../components/Layout";
 import deck from "../data/portfolioSlides.json";
 
+const MAX_PORTFOLIO_SLIDES = 36;
+
 const clampSlideIndex = (index, length) => {
   if (length === 0) {
     return 0;
@@ -11,11 +13,13 @@ const clampSlideIndex = (index, length) => {
 };
 
 const PortfolioPage = () => {
-  const slides = deck.slides || [];
+  const slides = (deck.slides || []).slice(0, MAX_PORTFOLIO_SLIDES);
   const [activeIndex, setActiveIndex] = React.useState(0);
   const [isFullscreen, setIsFullscreen] = React.useState(false);
+  const [controlsVisible, setControlsVisible] = React.useState(true);
   const stageRef = React.useRef(null);
   const activeThumbRef = React.useRef(null);
+  const hideControlsTimerRef = React.useRef(null);
   const activeSlide = slides[activeIndex];
 
   const goToSlide = React.useCallback(
@@ -46,6 +50,18 @@ const PortfolioPage = () => {
     await stageRef.current.requestFullscreen?.();
   }, []);
 
+  const showFullscreenControls = React.useCallback(() => {
+    if (!isFullscreen) {
+      return;
+    }
+
+    window.clearTimeout(hideControlsTimerRef.current);
+    setControlsVisible(true);
+    hideControlsTimerRef.current = window.setTimeout(() => {
+      setControlsVisible(false);
+    }, 1600);
+  }, [isFullscreen]);
+
   React.useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(Boolean(document.fullscreenElement));
@@ -58,10 +74,30 @@ const PortfolioPage = () => {
   }, []);
 
   React.useEffect(() => {
+    if (!isFullscreen) {
+      window.clearTimeout(hideControlsTimerRef.current);
+      setControlsVisible(true);
+      return undefined;
+    }
+
+    showFullscreenControls();
+    document.addEventListener("mousemove", showFullscreenControls);
+    document.addEventListener("touchstart", showFullscreenControls);
+
+    return () => {
+      window.clearTimeout(hideControlsTimerRef.current);
+      document.removeEventListener("mousemove", showFullscreenControls);
+      document.removeEventListener("touchstart", showFullscreenControls);
+    };
+  }, [isFullscreen, showFullscreenControls]);
+
+  React.useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.metaKey || event.ctrlKey || event.altKey) {
         return;
       }
+
+      showFullscreenControls();
 
       if (event.key === "ArrowRight" || event.key === "PageDown") {
         event.preventDefault();
@@ -93,7 +129,18 @@ const PortfolioPage = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [goNext, goPrevious, goToSlide, slides.length, toggleFullscreen]);
+  }, [
+    goNext,
+    goPrevious,
+    goToSlide,
+    showFullscreenControls,
+    slides.length,
+    toggleFullscreen,
+  ]);
+
+  React.useEffect(() => {
+    setActiveIndex((current) => clampSlideIndex(current, slides.length));
+  }, [slides.length]);
 
   React.useEffect(() => {
     activeThumbRef.current?.scrollIntoView({
@@ -108,22 +155,22 @@ const PortfolioPage = () => {
         <div className="shell portfolio-hero">
           <div>
             <p className="eyebrow">Portfolio Deck</p>
-            <h1>Keynote 원본을 웹 발표 화면으로 최신화합니다.</h1>
+            <h1>이상민 포트폴리오</h1>
             <p className="portfolio-copy">
-              원본 Keynote에서 export한 {deck.source.slideCount}장의 슬라이드를
-              정적 웹 자산으로 관리합니다. 배포된 페이지에서도 전체화면 발표와
-              슬라이드 이동이 가능합니다.
+              AI 연구, 제품 개발, 추천 시스템, Document AI 프로젝트를 발표용
+              슬라이드로 정리했습니다. 전체화면에서 순서대로 넘기며 볼 수
+              있습니다.
             </p>
-          </div>
-          <div className="portfolio-meta-card">
-            <div className="meta">deck source</div>
-            <strong>{deck.source.keynoteFile}</strong>
-            <span>{deck.generatedAt.slice(0, 10)} export</span>
           </div>
         </div>
 
         <section className="presentation-shell" aria-label="Portfolio slides">
-          <div className="deck-stage" ref={stageRef}>
+          <div
+            className={`deck-stage ${
+              isFullscreen && controlsVisible ? "is-controls-visible" : ""
+            }`}
+            ref={stageRef}
+          >
             <div className="deck-frame">
               {activeSlide ? (
                 <img
@@ -200,7 +247,7 @@ export const Head = () => (
     <title>Portfolio Deck - 이상민</title>
     <meta
       name="description"
-      content="이상민의 Keynote 기반 포트폴리오 슬라이드를 웹에서 전체화면으로 발표할 수 있는 페이지입니다."
+      content="이상민의 AI 연구와 제품 개발 경험을 발표용 슬라이드로 정리한 포트폴리오 페이지입니다."
     />
   </>
 );
