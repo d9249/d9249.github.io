@@ -18,27 +18,24 @@ const DEFAULT_KEYNOTE_PATH = path.join(
 const keynotePath = path.resolve(
   process.env.PORTFOLIO_KEYNOTE_PATH || DEFAULT_KEYNOTE_PATH,
 );
-const contentRoot = path.join(REPO_ROOT, "content", "portfolio");
-const slidesRoot = path.join(contentRoot, "slides");
-const deckPath = path.join(contentRoot, "deck.json");
+const staticPortfolioDir = path.join(REPO_ROOT, "static", "portfolio");
+const slidesDir = path.join(staticPortfolioDir, "slides");
+const manifestPath = path.join(
+  REPO_ROOT,
+  "src",
+  "data",
+  "portfolioSlides.json",
+);
 const quality = Number(process.env.PORTFOLIO_IMAGE_QUALITY || "0.92");
 
 const escapeAppleScriptString = (value) =>
   value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 
-const runText = (command, args, options = {}) =>
+const run = (command, args, options = {}) =>
   childProcess.execFileSync(command, args, {
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
     maxBuffer: 1024 * 1024 * 128,
-    ...options,
-  });
-
-const runBuffer = (command, args, options = {}) =>
-  childProcess.execFileSync(command, args, {
-    encoding: null,
-    stdio: ["ignore", "pipe", "pipe"],
-    maxBuffer: 1024 * 1024 * 256,
     ...options,
   });
 
@@ -54,7 +51,12 @@ const ensureCleanDir = (dir) => {
   fs.mkdirSync(dir, { recursive: true });
 };
 
-const decodeXml = (value = "") =>
+const slideNumberFromName = (fileName) => {
+  const match = fileName.match(/\.(\d+)\.jpe?g$/i);
+  return match ? Number(match[1]) : Number.MAX_SAFE_INTEGER;
+};
+
+const decodeXml = (value) =>
   value
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
@@ -62,202 +64,9 @@ const decodeXml = (value = "") =>
     .replace(/&apos;/g, "'")
     .replace(/&amp;/g, "&");
 
-const getAttr = (value, name) => {
-  const match = value.match(new RegExp(`(?:^|\\s)${name}="([^"]*)"`));
-  return match ? decodeXml(match[1]) : "";
-};
-
-const sanitizeText = (value = "") =>
-  value
-    .replace(/\u2028/g, "\n")
-    .replace(/[ \t]+\n/g, "\n")
-    .replace(/\n{3,}/g, "\n\n")
-    .trim();
-
-const slideNumberFromName = (fileName) => {
-  const match = fileName.match(/\.(\d+)\.jpe?g$/i);
-  return match ? Number(match[1]) : Number.MAX_SAFE_INTEGER;
-};
-
-const formatSlideSlug = (index) => `slide-${String(index).padStart(3, "0")}`;
-
-const parseSlideSize = (pptxPath) => {
-  const xml = runText("unzip", ["-p", pptxPath, "ppt/presentation.xml"]);
-  const sizeTag = xml.match(/<p:sldSz\b[^>]*>/)?.[0] || "";
-  return {
-    widthEmu: Number(getAttr(sizeTag, "cx") || 12192000),
-    heightEmu: Number(getAttr(sizeTag, "cy") || 6858000),
-  };
-};
-
-const getImageSize = (imagePath) => {
-  const output = runText("sips", [
-    "-g",
-    "pixelWidth",
-    "-g",
-    "pixelHeight",
-    imagePath,
-  ]);
-
-  return {
-    width: Number(output.match(/pixelWidth:\s*(\d+)/)?.[1] || 1920),
-    height: Number(output.match(/pixelHeight:\s*(\d+)/)?.[1] || 1080),
-  };
-};
-
-const emuRectToCanvasRect = (rect, canvas, slideSize) => ({
-  x: Math.round((rect.x / slideSize.widthEmu) * canvas.width * 1000) / 1000,
-  y: Math.round((rect.y / slideSize.heightEmu) * canvas.height * 1000) / 1000,
-  width:
-    Math.round((rect.width / slideSize.widthEmu) * canvas.width * 1000) / 1000,
-  height:
-    Math.round((rect.height / slideSize.heightEmu) * canvas.height * 1000) /
-    1000,
-});
-
-const parseTransform = (xml) => {
-  const xfrm = xml.match(/<a:xfrm\b[\s\S]*?<\/a:xfrm>/)?.[0] || "";
-  const off = xfrm.match(/<a:off\b[^>]*>/)?.[0] || "";
-  const ext = xfrm.match(/<a:ext\b[^>]*>/)?.[0] || "";
-  const rot = Number(getAttr(xfrm.match(/<a:xfrm\b[^>]*>/)?.[0] || "", "rot"));
-
-  return {
-    x: Number(getAttr(off, "x") || 0),
-    y: Number(getAttr(off, "y") || 0),
-    width: Number(getAttr(ext, "cx") || 0),
-    height: Number(getAttr(ext, "cy") || 0),
-    rotation: Number.isFinite(rot)
-      ? Math.round((rot / 60000) * 1000) / 1000
-      : 0,
-  };
-};
-
-const parseColor = (xml, fallback = "") => {
-  const srgb = xml.match(/<a:srgbClr\b[^>]*val="([^"]+)"/)?.[1];
-  if (srgb) {
-    return `#${srgb}`;
-  }
-
-  const scheme = xml.match(/<a:schemeClr\b[^>]*val="([^"]+)"/)?.[1];
-  if (!scheme) {
-    return fallback;
-  }
-
-  const colors = {
-    accent1: "#4F81BD",
-    accent2: "#C0504D",
-    accent3: "#9BBB59",
-    accent4: "#8064A2",
-    accent5: "#4BACC6",
-    accent6: "#F79646",
-    bg1: "#FFFFFF",
-    bg2: "#000000",
-    dk1: "#000000",
-    dk2: "#1F1F1F",
-    lt1: "#FFFFFF",
-    lt2: "#F2F2F2",
-    tx1: "#000000",
-    tx2: "#FFFFFF",
-  };
-
-  return colors[scheme] || fallback;
-};
-
-const parseFill = (xml) => {
-  if (/<a:noFill\b/.test(xml)) {
-    return "transparent";
-  }
-
-  const solidFill = xml.match(/<a:solidFill\b[\s\S]*?<\/a:solidFill>/)?.[0];
-  return solidFill ? parseColor(solidFill, "transparent") : "transparent";
-};
-
-const parseStroke = (xml) => {
-  const ln = xml.match(/<a:ln\b[\s\S]*?<\/a:ln>/)?.[0];
-  return ln ? parseColor(ln, "transparent") : "transparent";
-};
-
-const parseOpacity = (xml) => {
-  const alpha = Number(xml.match(/<a:alpha\b[^>]*val="([^"]+)"/)?.[1]);
-  return Number.isFinite(alpha)
-    ? Math.round((alpha / 100000) * 1000) / 1000
-    : 1;
-};
-
-const parseText = (xml) => {
-  const paragraphs = [...xml.matchAll(/<a:p\b[\s\S]*?<\/a:p>/g)]
-    .map((paragraph) =>
-      [...paragraph[0].matchAll(/<a:t>([\s\S]*?)<\/a:t>/g)]
-        .map((match) => decodeXml(match[1]))
-        .join(""),
-    )
-    .map(sanitizeText)
-    .filter(Boolean);
-
-  return paragraphs.join("\n");
-};
-
-const parseTextStyle = (shapeXml) => {
-  const txBody = shapeXml.match(/<p:txBody\b[\s\S]*?<\/p:txBody>/)?.[0] || "";
-  const spPr = shapeXml.match(/<p:spPr\b[\s\S]*?<\/p:spPr>/)?.[0] || "";
-  const size = Number(txBody.match(/\bsz="(\d+)"/)?.[1]);
-  const align = txBody.match(/\balgn="([^"]+)"/)?.[1] || "l";
-  const fontFace = txBody.match(/\btypeface="([^"]+)"/)?.[1] || "";
-
-  const alignMap = {
-    ctr: "center",
-    r: "right",
-    just: "justify",
-    l: "left",
-  };
-
-  return {
-    fontFamily: fontFace || "-apple-system, BlinkMacSystemFont, sans-serif",
-    fontSize: Number.isFinite(size) ? Math.round((size / 100) * 1.333) : 24,
-    fontWeight: /\bb="1"/.test(txBody) ? 700 : 400,
-    fontStyle: /\bi="1"/.test(txBody) ? "italic" : "normal",
-    color: parseColor(txBody, "#111111"),
-    textAlign: alignMap[align] || "left",
-    lineHeight: 1.18,
-    backgroundColor: parseFill(spPr),
-  };
-};
-
-const parseRelationships = (pptxPath, slideName) => {
-  const relName = slideName.replace(
-    /^ppt\/slides\/(slide\d+\.xml)$/,
-    "ppt/slides/_rels/$1.rels",
-  );
-
-  let xml = "";
-  try {
-    xml = runText("unzip", ["-p", pptxPath, relName]);
-  } catch (error) {
-    return new Map();
-  }
-
-  const relationships = new Map();
-  for (const match of xml.matchAll(/<Relationship\b([^>]+?)\/>/g)) {
-    const attrs = match[1];
-    const id = getAttr(attrs, "Id");
-    const target = getAttr(attrs, "Target");
-    if (!id || !target) {
-      continue;
-    }
-
-    relationships.set(
-      id,
-      path.posix.normalize(
-        path.posix.join(path.posix.dirname(slideName), target),
-      ),
-    );
-  }
-
-  return relationships;
-};
-
-const listPptxSlides = (pptxPath) =>
-  runText("unzip", ["-Z1", pptxPath])
+const extractSlideTexts = (pptxPath) => {
+  const list = run("unzip", ["-Z1", pptxPath]);
+  const slideNames = list
     .split(/\r?\n/)
     .filter((name) => /^ppt\/slides\/slide\d+\.xml$/.test(name))
     .sort((a, b) => {
@@ -266,127 +75,38 @@ const listPptxSlides = (pptxPath) =>
       return aIndex - bIndex;
     });
 
-const copyPptxAsset = (pptxPath, mediaPath, destination) => {
-  const content = runBuffer("unzip", ["-p", pptxPath, mediaPath]);
-  fs.writeFileSync(destination, content);
-};
+  return slideNames.map((slideName) => {
+    const xml = run("unzip", ["-p", pptxPath, slideName]);
+    const textParts = [...xml.matchAll(/<a:t>([\s\S]*?)<\/a:t>/g)]
+      .map((match) => decodeXml(match[1]).trim())
+      .filter(Boolean);
+    const text = textParts.join(" ").replace(/\s+/g, " ").trim();
+    const title =
+      textParts.find((part) => part.length > 2 && !/^\d+$/.test(part)) || "";
 
-const writeWebAsset = (pptxPath, mediaPath, slideDir, assetBaseName) => {
-  const ext = (path.posix.extname(mediaPath) || ".png").toLowerCase();
-
-  if (ext === ".tif" || ext === ".tiff") {
-    const tmpSource = path.join(os.tmpdir(), `${assetBaseName}${ext}`);
-    const assetFile = `assets/${assetBaseName}.png`;
-    const destination = path.join(slideDir, assetFile);
-    copyPptxAsset(pptxPath, mediaPath, tmpSource);
-    runText("sips", ["-s", "format", "png", tmpSource, "--out", destination]);
-    fs.rmSync(tmpSource, { force: true });
-    return assetFile;
-  }
-
-  const assetFile = `assets/${assetBaseName}${ext}`;
-  copyPptxAsset(pptxPath, mediaPath, path.join(slideDir, assetFile));
-  return assetFile;
-};
-
-const parseSlideObjects = (
-  pptxPath,
-  slideName,
-  canvas,
-  slideSize,
-  slideDir,
-) => {
-  const xml = runText("unzip", ["-p", pptxPath, slideName]);
-  const relationships = parseRelationships(pptxPath, slideName);
-  const objects = [];
-  const copiedAssets = new Map();
-  let assetIndex = 0;
-
-  const convertRect = (fragment) => {
-    const transform = parseTransform(fragment);
     return {
-      ...emuRectToCanvasRect(transform, canvas, slideSize),
-      rotation: transform.rotation,
+      title,
+      text,
     };
-  };
+  });
+};
 
-  for (const match of xml.matchAll(/<p:sp\b[\s\S]*?<\/p:sp>/g)) {
-    const shapeXml = match[0];
-    const rect = convertRect(shapeXml);
-    if (rect.width <= 0 || rect.height <= 0) {
-      continue;
-    }
-
-    const text = parseText(shapeXml);
-    const spPr = shapeXml.match(/<p:spPr\b[\s\S]*?<\/p:spPr>/)?.[0] || "";
-    const fill = parseFill(spPr);
-    const stroke = parseStroke(spPr);
-    const shapeKind =
-      spPr.match(/<a:prstGeom\b[^>]*prst="([^"]+)"/)?.[1] || "rect";
-
-    if (text) {
-      objects.push({
-        type: "text",
-        id: `text-${String(objects.length + 1).padStart(3, "0")}`,
-        text,
-        style: {
-          ...rect,
-          ...parseTextStyle(shapeXml),
-        },
-      });
-      continue;
-    }
-
-    if (fill !== "transparent" || stroke !== "transparent") {
-      objects.push({
-        type: "shape",
-        id: `shape-${String(objects.length + 1).padStart(3, "0")}`,
-        shape: shapeKind,
-        style: {
-          ...rect,
-          fill,
-          stroke,
-          opacity: parseOpacity(spPr),
-        },
-      });
-    }
-  }
-
-  for (const match of xml.matchAll(/<p:pic\b[\s\S]*?<\/p:pic>/g)) {
-    const picXml = match[0];
-    const rect = convertRect(picXml);
-    const relId = picXml.match(/r:embed="([^"]+)"/)?.[1];
-    const mediaPath = relId ? relationships.get(relId) : "";
-    if (!mediaPath || rect.width <= 0 || rect.height <= 0) {
-      continue;
-    }
-
-    let assetFile = copiedAssets.get(mediaPath);
-    if (!assetFile) {
-      assetIndex += 1;
-      fs.mkdirSync(path.join(slideDir, "assets"), { recursive: true });
-      assetFile = writeWebAsset(
-        pptxPath,
-        mediaPath,
-        slideDir,
-        `image-${String(assetIndex).padStart(3, "0")}`,
-      );
-      copiedAssets.set(mediaPath, assetFile);
-    }
-
-    objects.push({
-      type: "image",
-      id: `image-${String(objects.length + 1).padStart(3, "0")}`,
-      src: assetFile,
-      style: rect,
-    });
-  }
-
+const getImageSize = (imagePath) => {
+  const output = run("sips", [
+    "-g",
+    "pixelWidth",
+    "-g",
+    "pixelHeight",
+    imagePath,
+  ]);
   return {
-    background: parseFill(xml.match(/<p:bg\b[\s\S]*?<\/p:bg>/)?.[0] || ""),
-    objects,
+    width: Number(output.match(/pixelWidth:\s*(\d+)/)?.[1] || 0),
+    height: Number(output.match(/pixelHeight:\s*(\d+)/)?.[1] || 0),
   };
 };
+
+const formatSlideName = (index) =>
+  `slide-${String(index).padStart(3, "0")}.jpeg`;
 
 if (!fs.existsSync(keynotePath)) {
   console.error(`Keynote file not found: ${keynotePath}`);
@@ -417,97 +137,60 @@ if (result.status !== 0) {
   process.exit(result.status || 1);
 }
 
-const exportedPreviews = fs
+const exportedImages = fs
   .readdirSync(tmpImagesDir)
   .filter((fileName) => /\.jpe?g$/i.test(fileName))
   .sort((a, b) => slideNumberFromName(a) - slideNumberFromName(b));
-const pptxSlides = listPptxSlides(tmpPptxPath);
 
-if (exportedPreviews.length === 0 || pptxSlides.length === 0) {
+if (exportedImages.length === 0) {
   fs.rmSync(tmpDir, { recursive: true, force: true });
-  console.error("No portfolio slides were exported.");
+  console.error("No slide images were exported.");
   process.exit(1);
 }
 
-fs.mkdirSync(contentRoot, { recursive: true });
-ensureCleanDir(slidesRoot);
+ensureCleanDir(slidesDir);
 
-const slideSize = parseSlideSize(tmpPptxPath);
-const slideEntries = exportedPreviews.map((previewName, index) => {
+const slideTexts = fs.existsSync(tmpPptxPath)
+  ? extractSlideTexts(tmpPptxPath)
+  : [];
+const slides = exportedImages.map((fileName, index) => {
   const slideIndex = index + 1;
-  const slug = formatSlideSlug(slideIndex);
-  const slideDir = path.join(slidesRoot, slug);
-  const previewSource = path.join(tmpImagesDir, previewName);
-  const previewTarget = path.join(slideDir, "preview.jpeg");
-  fs.mkdirSync(slideDir, { recursive: true });
-  fs.copyFileSync(previewSource, previewTarget);
+  const outputName = formatSlideName(slideIndex);
+  const sourceImage = path.join(tmpImagesDir, fileName);
+  const targetImage = path.join(slidesDir, outputName);
+  fs.copyFileSync(sourceImage, targetImage);
 
-  const canvas = getImageSize(previewTarget);
-  const parsed = parseSlideObjects(
-    tmpPptxPath,
-    pptxSlides[index],
-    canvas,
-    slideSize,
-    slideDir,
-  );
-
-  const titleObject = parsed.objects.find(
-    (object) => object.type === "text" && object.text.trim().length > 2,
-  );
-  const slideData = {
-    index: slideIndex,
-    slug,
-    title: titleObject
-      ? titleObject.text.split(/\n/)[0]
-      : `Slide ${slideIndex}`,
-    canvas: {
-      width: canvas.width,
-      height: canvas.height,
-      background:
-        parsed.background && parsed.background !== "transparent"
-          ? parsed.background
-          : "#ffffff",
-    },
-    preview: "preview.jpeg",
-    objects: parsed.objects,
-    rawText: parsed.objects
-      .filter((object) => object.type === "text")
-      .map((object) => object.text)
-      .join("\n\n"),
-  };
-
-  fs.writeFileSync(
-    path.join(slideDir, "slide.json"),
-    `${JSON.stringify(slideData, null, 2)}\n`,
-  );
+  const textInfo = slideTexts[index] || {};
+  const { width, height } = getImageSize(targetImage);
 
   return {
     index: slideIndex,
-    slug,
-    title: slideData.title,
-    path: `slides/${slug}/slide.json`,
+    src: `/portfolio/slides/${outputName}`,
+    title: textInfo.title || `Slide ${slideIndex}`,
+    alt: textInfo.title
+      ? `Portfolio slide ${slideIndex}: ${textInfo.title}`
+      : `Portfolio slide ${slideIndex}`,
+    width,
+    height,
+    text: textInfo.text || "",
   };
 });
 
-const deck = {
+const manifest = {
   generatedAt: new Date().toISOString(),
   source: {
     keynoteFile: path.basename(keynotePath),
-    slideCount: slideEntries.length,
+    slideCount: slides.length,
     imageFormat: "jpeg",
     imageQuality: quality,
   },
-  canvas: {
-    width: slideSize.widthEmu,
-    height: slideSize.heightEmu,
-    unit: "emu",
-  },
-  slides: slideEntries,
+  slides,
 };
 
-fs.writeFileSync(deckPath, `${JSON.stringify(deck, null, 2)}\n`);
+fs.mkdirSync(path.dirname(manifestPath), { recursive: true });
+fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
 fs.rmSync(tmpDir, { recursive: true, force: true });
 
-console.log(`Generated ${slideEntries.length} slide content bundles`);
-console.log(`Deck: ${path.relative(REPO_ROOT, deckPath)}`);
-console.log(`Slides: ${path.relative(REPO_ROOT, slidesRoot)}`);
+console.log(`Generated ${slides.length} slides`);
+console.log(`Slides: ${path.relative(REPO_ROOT, slidesDir)}`);
+console.log(`Manifest: ${path.relative(REPO_ROOT, manifestPath)}`);

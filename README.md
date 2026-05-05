@@ -7,8 +7,8 @@ product engineering notes, and career evidence.
 
 ```text
 content/blog/<category>/<post>.md   Markdown posts
-content/portfolio/deck.json         Portfolio deck manifest
-content/portfolio/slides/<slide>/   Per-slide content, style, and assets
+static/portfolio/slides/            Exported portfolio slide images
+src/data/portfolioSlides.json       Portfolio presentation manifest
 scripts/portfolio/export-keynote.js Local Keynote-to-web export script
 src/pages/                          Gatsby pages
 src/templates/                      Blog post/category templates
@@ -31,11 +31,10 @@ generated blog pages.
 
 ## Portfolio Deck
 
-`npm run portfolio:export` reads the local Keynote file and refreshes
-`content/portfolio`. Each slide has its own folder with `slide.json`,
-`preview.jpeg`, and an optional `assets/` directory. Gatsby renders the
-portfolio deck from these code-managed slide bundles, so GitHub Pages can deploy
-the latest deck without needing Keynote in GitHub Actions.
+`npm run portfolio:export` reads the local Keynote file, exports every slide as
+static JPEG assets, and refreshes `src/data/portfolioSlides.json`. Commit the
+generated files with code changes so GitHub Pages can deploy the latest deck
+without needing Keynote in GitHub Actions.
 
 Use `PORTFOLIO_KEYNOTE_PATH=/path/to/file.key npm run portfolio:export` when the
 Keynote source moves.
