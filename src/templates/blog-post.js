@@ -7,10 +7,45 @@ const labelByCategory = new Map(
   categories.map((category) => [category.slug, category.label]),
 );
 
+const sourceLinePattern = /(?:^|\n)Sources:\s*(.+?)\s*$/i;
+
+const getSourceLabel = (href) => {
+  try {
+    const url = new URL(href);
+    return url.hostname.replace(/^www\./, "");
+  } catch (error) {
+    return href;
+  }
+};
+
+const getPostSources = (rawMarkdownBody) => {
+  const match = rawMarkdownBody?.match(sourceLinePattern);
+  if (!match) {
+    return [];
+  }
+
+  return match[1]
+    .split(/\s*,\s*/)
+    .map((source) => source.trim())
+    .filter(Boolean)
+    .map((source) => {
+      const markdownLink = source.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      const href = markdownLink ? markdownLink[2] : source;
+      const label = markdownLink ? markdownLink[1] : getSourceLabel(href);
+
+      return { href, label };
+    });
+};
+
+const removeSourceParagraph = (html) =>
+  html.replace(/\s*<p>Sources:\s*[\s\S]*?<\/p>\s*$/i, "");
+
 const BlogPostTemplate = ({ data, pageContext }) => {
   const post = data.post;
   const categoryLabel =
     labelByCategory.get(post.fields.category) || post.frontmatter.category;
+  const postSources = getPostSources(post.rawMarkdownBody);
+  const postHtml = removeSourceParagraph(post.html);
 
   return (
     <Layout>
@@ -25,21 +60,13 @@ const BlogPostTemplate = ({ data, pageContext }) => {
             </Link>
             <h1>{post.frontmatter.title}</h1>
             <p className="deck">{post.frontmatter.description}</p>
-            <div className="byline">
-              <span>{post.frontmatter.author}</span>
-              <span>{post.frontmatter.date}</span>
-              <span>{post.timeToRead} min read</span>
-              {post.frontmatter.tags?.map((tag) => (
-                <span key={tag}>#{tag}</span>
-              ))}
-            </div>
             <figure>
               <div className="hero-image" />
               <figcaption>{post.frontmatter.description}</figcaption>
             </figure>
             <div
               className="article-body"
-              dangerouslySetInnerHTML={{ __html: post.html }}
+              dangerouslySetInnerHTML={{ __html: postHtml }}
             />
             <nav className="related-grid" aria-label="Adjacent posts">
               {pageContext.previous ? (
@@ -74,10 +101,44 @@ const BlogPostTemplate = ({ data, pageContext }) => {
               <Link to={`/blog/${post.fields.category}/`}>{categoryLabel}</Link>
               <Link to="/#career">career proof</Link>
             </div>
-            <div className="source-card">
-              <div className="meta">Source MD</div>
-              <code>{`content${post.fields.slug.slice(0, -1)}.md`}</code>
+            <div className="source-card post-info-card">
+              <div className="meta">Post Info</div>
+              <dl className="post-info-list">
+                <div>
+                  <dt>author</dt>
+                  <dd>{post.frontmatter.author}</dd>
+                </div>
+                <div>
+                  <dt>date</dt>
+                  <dd>{post.frontmatter.date}</dd>
+                </div>
+                <div>
+                  <dt>read</dt>
+                  <dd>{post.timeToRead} min read</dd>
+                </div>
+              </dl>
+              {post.frontmatter.tags?.length ? (
+                <div className="post-info-tags" aria-label="Post tags">
+                  {post.frontmatter.tags.map((tag) => (
+                    <span key={tag}>#{tag}</span>
+                  ))}
+                </div>
+              ) : null}
             </div>
+            {postSources.length ? (
+              <div className="source-card post-sources-card">
+                <div className="meta">Sources</div>
+                <div className="post-source-list">
+                  {postSources.map((source, index) => (
+                    <a key={source.href} href={source.href}>
+                      <span>{String(index + 1).padStart(2, "0")}</span>
+                      <strong>{source.label}</strong>
+                      <code>{source.href}</code>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </aside>
         </div>
       </section>
@@ -99,6 +160,7 @@ export const query = graphql`
     post: markdownRemark(id: { eq: $id }) {
       id
       html
+      rawMarkdownBody
       timeToRead
       fields {
         slug

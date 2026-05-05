@@ -42,6 +42,8 @@ const PortfolioPage = () => {
       return;
     }
 
+    document.activeElement?.blur?.();
+
     if (document.fullscreenElement) {
       await document.exitFullscreen?.();
       return;

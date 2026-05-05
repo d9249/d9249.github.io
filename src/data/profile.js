@@ -569,53 +569,13 @@ export const competitionItems = [
     href: "https://github.com/d9249/LG_Aimers",
   },
   {
-    title: "DACON 경진대회 포트폴리오",
+    title: "DACON 경진대회",
     result: "39개 대회 참여",
     period: "2021 - 2024",
     description:
       "컴퓨터 비전, 정형 데이터 분류, 시계열, 추천 시스템 등 다양한 AI 경진대회에 참여하며 데이터 분석과 모델링 경험을 축적했습니다.",
     facts: ["Top 1% 7", "Top 5% 10", "Top 10% 15"],
-    href: "https://dacon.io/myprofile/423689",
-  },
-  {
-    title: "DACON 컴퓨터 비전 학습 경진대회",
-    result: "Public SOTA",
-    period: "2021.05",
-    description:
-      "겹친 문자 이미지 분류를 위한 CNN 모델을 개발하고, 하이퍼파라미터 튜닝과 데이터 전처리 실험을 통해 Public SOTA를 달성했습니다.",
-    facts: ["Computer Vision", "CNN", "Public SOTA"],
-  },
-  {
-    title: "DACON Basic 서울 랜드마크 이미지 분류",
-    result: "3위",
-    period: "DACON",
-    description:
-      "랜드마크 이미지 분류 문제에서 데이터 전처리와 모델 앙상블 전략을 적용해 420팀 중 3위를 기록했습니다.",
-    facts: ["3 / 420", "Image Classification", "Top 1%"],
-  },
-  {
-    title: "2021 Ego-Vision 손동작 인식 AI 경진대회",
-    result: "5위",
-    period: "2021.09",
-    description:
-      "Ego-Vision 기반 손동작 인식 문제에서 팀장의 데이터 crop 전처리 전략과 다양한 모델 아키텍처 실험을 통해 최종 5위를 달성했습니다.",
-    facts: ["5 / 290", "Ego-Vision", "Gesture Recognition"],
-  },
-  {
-    title: "DACON Basic 전화 해지 여부 분류",
-    result: "5위",
-    period: "DACON",
-    description:
-      "전화 해지 여부를 예측하는 정형 데이터 분류 문제에서 피처 분석과 모델링을 수행해 771팀 중 5위를 기록했습니다.",
-    facts: ["5 / 771", "Tabular Data", "Classification"],
-  },
-  {
-    title: "DACON 작물 병해 분류 & 교통 수신호 인식",
-    result: "참가",
-    period: "2021.11",
-    description:
-      "작물 병해 분류와 교통 수신호 동작 인식 대회에 참여하며 제한된 시간 안에서 데이터 분석, 모델 구현, 실험 계획을 수행했습니다.",
-    facts: ["Computer Vision", "Classification", "Modeling"],
+    href: "/competitions/dacon/",
   },
   {
     title: "가짜연구소 6기",
@@ -634,6 +594,398 @@ export const competitionItems = [
       "Computer Vision Team과 ML/GNN Team에서 논문 리뷰, PyTorch 기반 모델 구현, DACON 대회 참여, 학술발표대회 논문 발표를 수행했습니다.",
     facts: ["Computer Vision", "GNN", "Paper Review"],
     href: "https://doityourselfai.github.io/",
+  },
+];
+
+export const daconStats = [
+  { label: "총 참가 대회", value: "39" },
+  { label: "현재 / 최고 랭킹", value: "26 / 10" },
+  { label: "전체 인원", value: "128,371명" },
+  { label: "상위 1% 성과", value: "7" },
+  { label: "상위 5% 성과", value: "10" },
+  { label: "상위 10% 성과", value: "15" },
+];
+
+export const daconDomainSummary = [
+  {
+    title: "컴퓨터 비전",
+    count: "15개 대회",
+    description:
+      "이미지 분류, 객체 탐지, 이상치 탐지, 손동작 인식까지 다양한 비전 문제를 다뤘습니다.",
+  },
+  {
+    title: "정형 데이터 분류",
+    count: "8개 대회",
+    description:
+      "전화 해지, 항공편 지연, 법원 판결 예측처럼 피처 해석과 분류 성능이 중요한 문제를 풀었습니다.",
+  },
+  {
+    title: "정형 데이터 회귀",
+    count: "6개 대회",
+    description:
+      "전력 사용량, 제주 특산물 가격, 조선해양 작업 중량처럼 수치 예측 과제를 수행했습니다.",
+  },
+  {
+    title: "자연어 처리",
+    count: "4개 대회",
+    description:
+      "뉴스 기사, 법원 판결, 생성형 AI 활용 과제에서 텍스트 이해와 프롬프트 전략을 실험했습니다.",
+  },
+  {
+    title: "시계열 분석",
+    count: "4개 대회",
+    description:
+      "시간 흐름이 있는 데이터에서 패턴 추출, 검증 전략, 모델 안정성을 함께 다뤘습니다.",
+  },
+  {
+    title: "추천 시스템",
+    count: "2개 대회",
+    description:
+      "웹 기사와 도서 추천 과제에서 사용자-아이템 관계와 랭킹 품질을 모델링했습니다.",
+  },
+];
+
+export const daconCompetitionItems = [
+  {
+    title:
+      "HAI(하이)! - Hecto AI Challenge : 2025 상반기 헥토 채용 AI 경진대회",
+    result: "101 / 748",
+    period: "2025",
+    description: "비전 기반 분류 문제를 다룬 채용형 AI 경진대회입니다.",
+    facts: ["채용", "비전", "분류"],
+    href: "https://dacon.io/competitions/official/236493/overview/",
+  },
+  {
+    title: "웹 기사 추천 AI 경진대회",
+    result: "62 / 186",
+    period: "2024",
+    description:
+      "웹 로그와 기사 데이터를 활용해 사용자에게 적합한 기사를 추천하는 문제를 풀었습니다.",
+    facts: ["정형", "언어", "추천시스템"],
+    href: "https://dacon.io/competitions/official/236290/overview/",
+  },
+  {
+    title: "저해상도 조류 이미지 분류 AI 경진대회",
+    result: "170 / 385",
+    period: "2024",
+    description:
+      "저해상도 이미지 환경에서 조류 클래스를 분류하는 비전 모델링을 수행했습니다.",
+    facts: ["Vision", "분류", "Macro F1"],
+    href: "https://dacon.io/competitions/official/236251/overview/",
+  },
+  {
+    title: "모델 튜닝 챌린지 : 월간 데이콘 파일럿",
+    result: "175 / 332",
+    period: "2024",
+    description:
+      "노코딩 모델 튜닝 환경에서 하이퍼파라미터 탐색과 AUC 최적화를 경험했습니다.",
+    facts: ["정형", "하이퍼파라미터", "AUC"],
+    href: "https://dacon.io/competitions/official/236229/overview/",
+  },
+  {
+    title: "반도체 소자 이상 탐지 AI 경진대회",
+    result: "75 / 385",
+    period: "2024",
+    description:
+      "반도체 이미지 기반 비지도 이상 탐지 과제에서 결함 패턴을 모델링했습니다.",
+    facts: ["비전", "비지도학습", "이상 탐지"],
+    href: "https://dacon.io/competitions/official/236224/overview/",
+  },
+  {
+    title: "도배 하자 질의 응답 처리 : 한솔데코 시즌2 생성 AI 경진대회",
+    result: "100 / 557",
+    period: "2024",
+    description:
+      "도배 하자 도메인의 질의응답 데이터를 활용해 생성형 AI 응답 품질을 개선했습니다.",
+    facts: ["LLM", "QA", "MLOps"],
+    href: "https://dacon.io/competitions/official/236216/overview/",
+  },
+  {
+    title: "대학 대항전 : 퍼즐 이미지 AI 경진대회",
+    result: "126 / 369",
+    period: "2024",
+    description:
+      "퍼즐 이미지 분류 문제에서 자기지도학습과 비전 모델링을 실험했습니다.",
+    facts: ["비전", "자기지도학습", "분류"],
+    href: "https://dacon.io/competitions/official/236207/overview/",
+  },
+  {
+    title: "대구 교통사고 피해 예측 AI 경진대회",
+    result: "80 / 942",
+    period: "2023",
+    description:
+      "교통사고 피해 규모를 예측하는 정형 회귀 문제에서 지역·시간 피처를 다뤘습니다.",
+    facts: ["정형", "회귀", "교통"],
+    href: "https://dacon.io/competitions/official/236193/overview/",
+  },
+  {
+    title: "제주 특산물 가격 예측 AI 경진대회",
+    result: "213 / 1093",
+    period: "2023",
+    description: "농산물 가격 변동을 예측하는 시계열 회귀 문제를 수행했습니다.",
+    facts: ["정형", "시계열", "농업"],
+    href: "https://dacon.io/competitions/official/236176/overview/",
+  },
+  {
+    title: "HD현대 AI Challenge",
+    result: "4 / 330",
+    period: "2023",
+    description:
+      "건설기계 센서 데이터를 활용해 작업 중량을 예측하고 예선 4위를 기록했습니다.",
+    facts: ["조선해양", "회귀", "MAE"],
+    href: "https://dacon.io/competitions/official/236158/overview/",
+  },
+  {
+    title: "월간 데이콘 쇼츠 - 뉴스 기사 레이블 복구 해커톤",
+    result: "52 / 129",
+    period: "2023",
+    description:
+      "뉴스 기사 레이블 복구 문제에서 텍스트 분류와 클러스터링 관점을 결합했습니다.",
+    facts: ["언어", "분류", "클러스터링"],
+    href: "https://dacon.io/competitions/official/236159/overview/",
+  },
+  {
+    title: "제1회 신약개발 AI 경진대회",
+    result: "124 / 764",
+    period: "2023",
+    description:
+      "분자 구조 데이터를 활용해 신약 개발 관련 회귀 문제를 수행했습니다.",
+    facts: ["분자 구조", "정형", "바이오"],
+    href: "https://dacon.io/competitions/official/236127/overview/",
+  },
+  {
+    title: "2023 전력사용량 예측 AI 경진대회",
+    result: "306 / 1233",
+    period: "2023",
+    description: "전력 사용량 변화를 예측하는 에너지 시계열 문제를 다뤘습니다.",
+    facts: ["정형", "시계열", "에너지"],
+    href: "https://dacon.io/competitions/official/236125/overview/",
+  },
+  {
+    title: "월간 데이콘 법원 판결 예측 AI 경진대회",
+    result: "46 / 506",
+    period: "2023",
+    description:
+      "법원 판결 텍스트를 기반으로 결과를 예측하는 자연어 분류 문제를 수행했습니다.",
+    facts: ["언어", "분류", "Accuracy"],
+    href: "https://dacon.io/competitions/official/236112/overview/",
+  },
+  {
+    title: "합성데이터 기반 객체 탐지 AI 경진대회",
+    result: "95 / 855",
+    period: "2023",
+    description:
+      "합성 이미지 데이터에서 객체 탐지 모델의 일반화 성능을 실험했습니다.",
+    facts: ["비전", "객체 탐지", "mAP"],
+    href: "https://dacon.io/competitions/official/236107/overview/",
+  },
+  {
+    title: "음성 감정 인식 AI 경진대회 월간 데이콘",
+    result: "73 / 431",
+    period: "2023",
+    description:
+      "음성 데이터에서 감정 클래스를 분류하는 음향 모델링 과제를 수행했습니다.",
+    facts: ["음향", "감정인식", "분류"],
+    href: "https://dacon.io/competitions/official/236105/overview/",
+  },
+  {
+    title: "제2회 코스포 x 데이콘 도서 추천 알고리즘 AI경진대회 채용",
+    result: "61 / 679",
+    period: "2023",
+    description:
+      "도서 추천 문제에서 사용자-아이템 관계와 평점 예측을 모델링했습니다.",
+    facts: ["추천시스템", "정형", "RMSE"],
+    href: "https://dacon.io/competitions/official/236093/overview/",
+  },
+  {
+    title: "도배 하자 유형 분류 AI 경진대회",
+    result: "37 / 1025",
+    period: "2023",
+    description:
+      "도배 이미지에서 하자 유형을 분류하며 데이터 품질과 MLOps 제출 흐름을 다뤘습니다.",
+    facts: ["비전", "분류", "MLOps"],
+    href: "https://dacon.io/competitions/official/236082/overview/",
+  },
+  {
+    title: "월간 데이콘 항공편 지연 예측 AI 경진대회",
+    result: "16 / 499",
+    period: "2023",
+    description:
+      "항공편 지연 여부를 예측하는 정형 분류 문제에서 상위권 성과를 기록했습니다.",
+    facts: ["정형", "항공", "LogLoss"],
+    href: "https://dacon.io/competitions/official/236094/overview/",
+  },
+  {
+    title: "생성 AI ChatGPT 활용 AI 경진대회 월간 데이콘",
+    result: "20 / 556",
+    period: "2023",
+    description:
+      "ChatGPT 기반 프롬프트 엔지니어링으로 생성형 AI 활용 문제를 풀었습니다.",
+    facts: ["ChatGPT", "언어", "분류"],
+    href: "https://dacon.io/competitions/official/236071/overview/",
+  },
+  {
+    title: "코스포 x 데이콘 자동차 충돌 분석 AI경진대회 채용",
+    result: "83 / 449",
+    period: "2023",
+    description:
+      "동영상 기반 자동차 충돌 분석 문제에서 시각 정보를 분류했습니다.",
+    facts: ["동영상", "비전", "분류"],
+    href: "https://dacon.io/competitions/official/236064/overview/",
+  },
+  {
+    title: "포디블록 구조 추출 AI 경진대회",
+    result: "27 / 461",
+    period: "2023",
+    description:
+      "포디블록 구조를 이미지에서 추출하는 비전 분류 문제를 수행했습니다.",
+    facts: ["비전", "분류", "Accuracy"],
+    href: "https://dacon.io/competitions/official/236046/overview/",
+  },
+  {
+    title: "유전체 정보 품종 분류 AI 경진대회",
+    result: "223 / 716",
+    period: "2023",
+    description:
+      "유전체 정보를 활용해 품종 클래스를 예측하는 분류 문제를 수행했습니다.",
+    facts: ["유전체", "분류", "Macro F1"],
+    href: "https://dacon.io/competitions/official/236035/overview/",
+  },
+  {
+    title: "월간 데이콘 기계 고장 진단 AI 경진대회",
+    result: "61 / 291",
+    period: "2023",
+    description:
+      "음향 데이터를 바탕으로 기계 고장 여부를 탐지하는 문제를 다뤘습니다.",
+    facts: ["음향", "이상치 탐지", "Macro F1"],
+    href: "https://dacon.io/competitions/official/236036/overview/",
+  },
+  {
+    title: "2022 Samsung AI Challenge (3D Metrology)",
+    result: "55 / 139",
+    period: "2022",
+    description:
+      "SEM 기반 3D metrology 데이터를 활용한 회귀 문제를 수행했습니다.",
+    facts: ["CV", "회귀", "SEM"],
+    href: "https://dacon.io/competitions/official/235954/overview/",
+  },
+  {
+    title: "월간 데이콘 숫자 3D 이미지 분류 AI 경진대회",
+    result: "59 / 165",
+    period: "2022",
+    description:
+      "3D 숫자 이미지 데이터를 분류하며 입체 데이터 표현을 실험했습니다.",
+    facts: ["CV", "3D", "Accuracy"],
+    href: "https://dacon.io/competitions/official/235951/overview/",
+  },
+  {
+    title: "월간 데이콘 Computer Vision 이상치 탐지 알고리즘 경진대회",
+    result: "28 / 481",
+    period: "2022",
+    description:
+      "이미지 기반 이상치 탐지 문제에서 분류 모델의 오류 탐지 성능을 다뤘습니다.",
+    facts: ["CV", "이상탐지", "Macro F1"],
+    href: "https://dacon.io/competitions/official/235894/overview/",
+  },
+  {
+    title: "작물 병해 분류 AI 경진대회",
+    result: "37 / 170",
+    period: "2021",
+    description: "작물 이미지에서 병해 유형을 분류하는 농산물 비전 과제입니다.",
+    facts: ["CV", "객체탐지", "농산물"],
+    href: "https://dacon.io/competitions/official/235842/overview/",
+  },
+  {
+    title: "2021 교통 수(手)신호 동작 인식 AI 경진대회",
+    result: "147 / 227",
+    period: "2021",
+    description:
+      "교통 수신호 동작을 인식하는 제어·비전 기반 분류 문제를 수행했습니다.",
+    facts: ["CV", "객체탐지", "제어"],
+    href: "https://dacon.io/competitions/official/235806/overview/",
+  },
+  {
+    title: "2021 Ego-Vision 손동작 인식 AI 경진대회",
+    result: "5 / 290",
+    period: "2021",
+    description:
+      "Ego-Vision 기반 손동작 인식 문제에서 crop 전처리와 모델 아키텍처 실험으로 5위를 기록했습니다.",
+    facts: ["CV", "분류", "제어"],
+    href: "https://dacon.io/competitions/official/235805/overview/",
+  },
+  {
+    title: "월간 데이콘 컴퓨터 비전 학습 경진대회",
+    result: "1 / 1327",
+    period: "2020",
+    description: "컴퓨터 비전 학습 경진대회에서 1위를 기록한 대표 성과입니다.",
+    facts: ["CV", "분류", "Top 1%"],
+    href: "https://dacon.io/competitions/official/235626/overview/",
+  },
+  {
+    title: "서울 랜드마크 이미지 분류 AI 해커톤",
+    result: "3 / 420",
+    period: "2022",
+    description:
+      "랜드마크 이미지 분류 문제에서 데이터 전처리와 앙상블 전략으로 3위를 기록했습니다.",
+    facts: ["CV", "랜드마크", "Top 1%"],
+    href: "https://dacon.io/competitions/official/235957/overview/",
+  },
+  {
+    title: "전화 해지 여부 분류 AI 해커톤",
+    result: "5 / 771",
+    period: "2023",
+    description:
+      "전화 해지 여부를 예측하는 정형 분류 문제에서 피처 분석과 AutoML 실험으로 5위를 기록했습니다.",
+    facts: ["정형", "분류", "Top 1%"],
+    href: "https://dacon.io/competitions/official/236075/overview/",
+  },
+  {
+    title: "구형 DACON 참가 기록 - 컴퓨터 비전 분류",
+    result: "참가",
+    period: "구형 기록",
+    description:
+      "이미지 분류 계열 과제에서 데이터 증강, CNN 계열 모델 비교, 검증 전략을 실험한 기록입니다.",
+    facts: ["CV", "분류", "집계"],
+  },
+  {
+    title: "구형 DACON 참가 기록 - 컴퓨터 비전 탐지",
+    result: "참가",
+    period: "구형 기록",
+    description:
+      "객체 탐지와 이상 탐지 문제에서 전처리, 후처리, 평가 지표 최적화를 다룬 기록입니다.",
+    facts: ["CV", "Detection", "집계"],
+  },
+  {
+    title: "구형 DACON 참가 기록 - 정형 데이터 분류",
+    result: "참가",
+    period: "구형 기록",
+    description:
+      "정형 분류 과제에서 피처 엔지니어링, 모델 앙상블, 임계값 조정을 수행한 기록입니다.",
+    facts: ["Tabular", "Classification", "집계"],
+  },
+  {
+    title: "구형 DACON 참가 기록 - 정형 데이터 회귀",
+    result: "참가",
+    period: "구형 기록",
+    description:
+      "수치 예측 과제에서 이상치 처리, 검증 분할, 회귀 모델 비교를 수행한 기록입니다.",
+    facts: ["Tabular", "Regression", "집계"],
+  },
+  {
+    title: "구형 DACON 참가 기록 - 자연어 처리",
+    result: "참가",
+    period: "구형 기록",
+    description:
+      "텍스트 분류와 라벨 복구 과제에서 임베딩, 토큰화, 모델 선택을 실험한 기록입니다.",
+    facts: ["NLP", "Text", "집계"],
+  },
+  {
+    title: "구형 DACON 참가 기록 - 시계열 분석",
+    result: "참가",
+    period: "구형 기록",
+    description:
+      "시간 흐름이 있는 데이터에서 lag feature, rolling statistic, 검증 구간 설계를 다룬 기록입니다.",
+    facts: ["Time Series", "Forecasting", "집계"],
   },
 ];
 

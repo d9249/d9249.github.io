@@ -65,7 +65,7 @@ const Navbar = () => {
       <div className="shell masthead-inner">
         <Link className="wordmark" to="/" aria-label="Mean Log home">
           <span className="prompt-dot" />
-          <span>mean@log:~/research-to-product</span>
+          <span>mean@log:~ideal</span>
         </Link>
         <nav
           className={`nav ${open ? "is-open" : ""}`}
