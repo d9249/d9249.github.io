@@ -161,9 +161,9 @@ const PortfolioPage = () => {
         <div className="shell portfolio-hero">
           <div>
             <p className="eyebrow">Portfolio Deck</p>
-            <h3>이상민 포트폴리오</h3>
+            <h2>이상민 포트폴리오</h2>
             <p className="portfolio-copy">
-              AI 연구, 제품 개발 프로젝트들을 발표용 슬라이드로 정리했습니다. 전체화면에서 순서대로 넘기며 볼 수 있습니다.
+              AI 연구, 제품 개발 프로젝트들을 발표용 슬라이드로 정리했습니다.
             </p>
           </div>
         </div>
