@@ -1,18 +1,7 @@
 import * as React from "react";
 import { Link } from "gatsby";
+import { navItems } from "../data/navigation";
 import BlogSearch from "./BlogSearch";
-
-const navItems = [
-  { label: "home", to: "/" },
-  { label: "career", to: "/#career" },
-  { label: "projects", to: "/projects/" },
-  { label: "research", to: "/research/" },
-  { label: "awards", to: "/awards/" },
-  { label: "competitions", to: "/competitions/" },
-  { label: "portfolio", to: "/portfolio/" },
-  { label: "blog", to: "/blog/" },
-  { label: "contact", to: "/contact/" },
-];
 
 const getPreferredTheme = () => {
   if (typeof window === "undefined") {

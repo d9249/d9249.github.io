@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import PostCard from "../components/PostCard";
 import ProjectGrid from "../components/ProjectGrid";
 import SectionHeading from "../components/SectionHeading";
+import { navItems } from "../data/navigation";
 import {
   awardItems,
   competitionItems,
@@ -16,8 +17,67 @@ import {
   timelineItems,
 } from "../data/profile";
 
+const CARD_DECK_SIZE = 4;
+const POST_DECK_SIZE = 3;
+
+const getCardDecks = (items, deckSize = CARD_DECK_SIZE) =>
+  Array.from({ length: Math.ceil(items.length / deckSize) }, (_, index) =>
+    items.slice(index * deckSize, (index + 1) * deckSize),
+  );
+
+const getDeckLabel = (index, total) =>
+  `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+
 const IndexPage = ({ data }) => {
   const posts = data.posts.nodes;
+  const totalBlogPostCount = data.blogPosts.totalCount;
+  const heroNavItems = navItems.filter((item) => item.showInHero);
+  const paperDecks = getCardDecks(paperItems);
+  const awardDecks = getCardDecks(awardItems);
+  const postDecks = getCardDecks(posts, POST_DECK_SIZE);
+  const [paperDeckIndex, setPaperDeckIndex] = React.useState(0);
+  const [awardDeckIndex, setAwardDeckIndex] = React.useState(0);
+  const [postDeckIndex, setPostDeckIndex] = React.useState(0);
+  const activePaperDeck = paperDecks[paperDeckIndex] || [];
+  const activeAwardDeck = awardDecks[awardDeckIndex] || [];
+  const activePostDeck = postDecks[postDeckIndex] || [];
+  const hasMultiplePaperDecks = paperDecks.length > 1;
+  const hasMultipleAwardDecks = awardDecks.length > 1;
+  const hasMultiplePostDecks = postDecks.length > 1;
+  const paperDeckLabel = getDeckLabel(paperDeckIndex, paperDecks.length);
+  const awardDeckLabel = getDeckLabel(awardDeckIndex, awardDecks.length);
+  const postDeckLabel = getDeckLabel(postDeckIndex, postDecks.length);
+  const postDeckStatus = `${postDeckLabel} · 블로그 전체 글 ${totalBlogPostCount}개`;
+  const goToPreviousPaperDeck = () => {
+    setPaperDeckIndex((currentIndex) =>
+      currentIndex === 0 ? paperDecks.length - 1 : currentIndex - 1,
+    );
+  };
+  const goToNextPaperDeck = () => {
+    setPaperDeckIndex((currentIndex) =>
+      currentIndex === paperDecks.length - 1 ? 0 : currentIndex + 1,
+    );
+  };
+  const goToPreviousAwardDeck = () => {
+    setAwardDeckIndex((currentIndex) =>
+      currentIndex === 0 ? awardDecks.length - 1 : currentIndex - 1,
+    );
+  };
+  const goToNextAwardDeck = () => {
+    setAwardDeckIndex((currentIndex) =>
+      currentIndex === awardDecks.length - 1 ? 0 : currentIndex + 1,
+    );
+  };
+  const goToPreviousPostDeck = () => {
+    setPostDeckIndex((currentIndex) =>
+      currentIndex === 0 ? postDecks.length - 1 : currentIndex - 1,
+    );
+  };
+  const goToNextPostDeck = () => {
+    setPostDeckIndex((currentIndex) =>
+      currentIndex === postDecks.length - 1 ? 0 : currentIndex + 1,
+    );
+  };
 
   return (
     <Layout>
@@ -28,14 +88,24 @@ const IndexPage = ({ data }) => {
           <p className="hero-copy">
             인공지능 연구 결과와 기술을 제품으로 연결하는 AI 연구원입니다.
           </p>
-          <div className="hero-actions">
-            <Link className="button-primary" to="/projects/">
-              프로젝트 보기
-            </Link>
-            <Link className="button-secondary" to="/blog/">
-              블로그 글 읽기
-            </Link>
-          </div>
+          <nav
+            className="hero-actions hero-button-actions"
+            aria-label="Shortcut navigation"
+          >
+            {heroNavItems.map((item) => (
+              <Link
+                className={
+                  item.heroVariant === "primary"
+                    ? "button-primary"
+                    : "button-secondary"
+                }
+                key={item.to}
+                to={item.to}
+              >
+                {item.heroLabel}
+              </Link>
+            ))}
+          </nav>
           <div className="link-row" aria-label="Profile links">
             {heroLinks.map((link) => (
               <a key={link.href} href={link.href}>
@@ -180,31 +250,58 @@ const IndexPage = ({ data }) => {
       >
         <SectionHeading
           kicker="Research"
-          title="논문 리스트"
-          action={<Link to="/research/">전체 논문 보기 →</Link>}
+          title="연구 목록"
+          action={<Link to="/research/">전체 연구 보기 →</Link>}
         />
-        <div className="paper-grid">
-          {paperItems.map((item) => (
-            <article className="paper-card" key={item.title}>
-              <div className="paper-card-top">
-                <div className="meta">{item.type}</div>
-                <span>{item.year}</span>
-              </div>
-              <h3>{item.title}</h3>
-              <div className="paper-venue">{item.venue}</div>
-              <p>{item.description}</p>
-              <div className="research-facts">
-                {item.facts.map((fact) => (
-                  <span key={fact}>{fact}</span>
-                ))}
-              </div>
-              {item.href ? (
-                <a className="paper-link" href={item.href}>
-                  {item.linkLabel || "논문 보기"} →
-                </a>
-              ) : null}
-            </article>
-          ))}
+        <div className="card-deck">
+          <div className="card-deck-toolbar" aria-live="polite">
+            <span className="card-deck-status">Deck {paperDeckLabel}</span>
+            <div className="card-deck-controls">
+              <button
+                type="button"
+                aria-label="이전 연구 덱 보기"
+                disabled={!hasMultiplePaperDecks}
+                onClick={goToPreviousPaperDeck}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                aria-label="다음 연구 덱 보기"
+                disabled={!hasMultiplePaperDecks}
+                onClick={goToNextPaperDeck}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m9 6 6 6-6 6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div className="paper-grid card-deck-grid" key={paperDeckIndex}>
+            {activePaperDeck.map((item) => (
+              <article className="paper-card" key={item.title}>
+                <div className="paper-card-top">
+                  <div className="meta">{item.type}</div>
+                  <span>{item.year}</span>
+                </div>
+                <h3>{item.title}</h3>
+                <div className="paper-venue">{item.venue}</div>
+                <p>{item.description}</p>
+                <div className="research-facts">
+                  {item.facts.map((fact) => (
+                    <span key={fact}>{fact}</span>
+                  ))}
+                </div>
+                {item.href ? (
+                  <a className="paper-link" href={item.href}>
+                    {item.linkLabel || "논문 보기"} →
+                  </a>
+                ) : null}
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -218,32 +315,64 @@ const IndexPage = ({ data }) => {
           title="수상 기록"
           action={<Link to="/awards/">전체 수상 보기 →</Link>}
         />
-        <div className="recognition-grid">
-          {awardItems.slice(0, 4).map((item) => (
-            <article className="recognition-card" key={item.title}>
-              <div className="meta">{item.period}</div>
-              <h3>{item.title}</h3>
-              <strong>{item.result}</strong>
-              <p>{item.description}</p>
-              <div className="research-facts">
-                {item.facts.map((fact) => (
-                  <span key={fact}>{fact}</span>
-                ))}
-              </div>
-              {item.links?.length ? (
-                <div
-                  className="research-links"
-                  aria-label={`${item.title} 증빙 링크`}
-                >
-                  {item.links.map((link) => (
-                    <a key={link.href} href={link.href}>
-                      {link.label} →
-                    </a>
+        <div className="card-deck">
+          <div className="card-deck-toolbar" aria-live="polite">
+            <span className="card-deck-status">Deck {awardDeckLabel}</span>
+            <div className="card-deck-controls">
+              <button
+                type="button"
+                aria-label="이전 수상 덱 보기"
+                disabled={!hasMultipleAwardDecks}
+                onClick={goToPreviousAwardDeck}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                aria-label="다음 수상 덱 보기"
+                disabled={!hasMultipleAwardDecks}
+                onClick={goToNextAwardDeck}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m9 6 6 6-6 6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div className="recognition-grid card-deck-grid" key={awardDeckIndex}>
+            {activeAwardDeck.map((item) => (
+              <article className="recognition-card" key={item.title}>
+                <div className="meta">{item.period}</div>
+                <h3>{item.title}</h3>
+                <strong>{item.result}</strong>
+                <p>{item.description}</p>
+                <div className="research-facts">
+                  {item.facts.map((fact) => (
+                    <span key={fact}>{fact}</span>
                   ))}
                 </div>
-              ) : null}
-            </article>
-          ))}
+                {item.links?.length ? (
+                  <div
+                    className="research-links"
+                    aria-label={`${item.title} 증빙 링크`}
+                  >
+                    {item.links.map((link) => (
+                      <a key={link.href} href={link.href}>
+                        {link.label} →
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
+                {item.href ? (
+                  <a className="paper-link" href={item.href}>
+                    증빙 보기 →
+                  </a>
+                ) : null}
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -314,13 +443,43 @@ const IndexPage = ({ data }) => {
       >
         <SectionHeading
           kicker="Blog"
-          title="최근 글"
-          action={<Link to="/blog/">전체 글 보기 →</Link>}
+          title="최근 지식"
+          action={<Link to="/blog/">전체 지식 보기 →</Link>}
         />
-        <div className="post-grid compact-posts">
-          {posts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
+        <div className="card-deck">
+          <div className="card-deck-toolbar" aria-live="polite">
+            <span className="card-deck-status">Deck {postDeckStatus}</span>
+            <div className="card-deck-controls">
+              <button
+                type="button"
+                aria-label="이전 최근 지식 덱 보기"
+                disabled={!hasMultiplePostDecks}
+                onClick={goToPreviousPostDeck}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                aria-label="다음 최근 지식 덱 보기"
+                disabled={!hasMultiplePostDecks}
+                onClick={goToNextPostDeck}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m9 6 6 6-6 6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            className="post-grid compact-posts card-deck-grid"
+            key={postDeckIndex}
+          >
+            {activePostDeck.map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
+          </div>
         </div>
       </section>
     </Layout>
@@ -341,6 +500,14 @@ export const Head = () => (
 
 export const query = graphql`
   query HomePage {
+    blogPosts: allMarkdownRemark(
+      filter: {
+        fields: { contentType: { eq: "blog-post" } }
+        frontmatter: { draft: { ne: true } }
+      }
+    ) {
+      totalCount
+    }
     posts: allMarkdownRemark(
       filter: {
         fields: { contentType: { eq: "blog-post" } }

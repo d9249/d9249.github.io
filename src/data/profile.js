@@ -19,40 +19,40 @@ export const heroLinks = [
 
 export const evidenceItems = [
   {
-    label: "awards",
+    label: "enterprise ai",
+    value: "Hybrid RAG",
+    description:
+      "Knowledge Graph와 Vector retrieval, plugin chunking, XML parsing, LLM observability를 결합해 사내 지식 관리 시스템을 제품화했습니다.",
+  },
+  {
+    label: "document ai",
+    value: "TEDS 0.9188",
+    description:
+      "OCR bbox, line segment, parser-driven reconstruction, benchmark router를 묶어 테이블 구조 복원 품질과 운영 검증 체계를 만들었습니다.",
+  },
+  {
+    label: "minister awards",
+    value: "장관상 2회",
+    description:
+      "WIS 2025 혁신상과 Plan2Do 산업안전 플랫폼 성과에서 장관상급 수상으로 AI 제품화와 현장 적용성을 인정받았습니다.",
+  },
+  {
+    label: "product ai",
     value: "CES 2025",
     description:
-      "booxTory Best of Innovation, arti Honoree로 AI 제품 개발과 기술 리더십을 입증했습니다.",
-  },
-  {
-    label: "minister award",
-    value: "장관상",
-    description:
-      "WIS 2025 혁신상에서 과학기술정보통신부 장관상을 수상하며 제품화 성과를 인정받았습니다.",
-  },
-  {
-    label: "challenge",
-    value: "HD현대 4위",
-    description:
-      "HD현대 AI Challenge 4위로 산업 AI 문제 해결과 실전형 모델링 역량을 검증했습니다.",
+      "booxTory Best of Innovation, arti Honoree에 기여하며 생성, 편집, 추천 AI를 실제 제품 경험으로 연결했습니다.",
   },
   {
     label: "research",
-    value: "SCIE 3",
+    value: "SCIE 3 / KCI 2",
     description:
-      "LightGCN, WF-GCN, 의료영상 앙상블을 중심으로 SCIE 3편과 KCI 2편의 연구 실적을 보유했습니다.",
+      "LightGCN, WF-GCN, 의료영상 딥러닝을 중심으로 추천 시스템과 의료 AI 연구 성과를 논문으로 축적했습니다.",
   },
   {
-    label: "table OCR",
-    value: "TEDS 0.9188",
+    label: "modeling",
+    value: "Top 1% 7회",
     description:
-      "hf_finance_legal_mrc 480 샘플 기준 TEDS-S 0.9506, Cell F1 0.9702까지 구조 복원 품질을 끌어올렸습니다.",
-  },
-  {
-    label: "systems",
-    value: "25 agents",
-    description:
-      "Market Intelligence 시스템에서 4-Layer 기반 25개 전문 에이전트 협업 구조를 설계했습니다.",
+      "DACON 39개 대회, 상위 1% 7회, HD현대 AI Challenge 4위로 실전 문제 정의와 모델링 역량을 검증했습니다.",
   },
 ];
 
