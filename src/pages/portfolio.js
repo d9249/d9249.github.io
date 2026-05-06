@@ -74,24 +74,28 @@ const exitNativeFullscreen = () => {
 };
 
 const lockLandscapeOrientation = async () => {
-  if (typeof screen === "undefined" || !screen.orientation?.lock) {
+  const orientation = window.screen?.orientation;
+
+  if (!orientation?.lock) {
     return;
   }
 
   try {
-    await screen.orientation.lock("landscape");
+    await orientation.lock("landscape");
   } catch {
     // Some mobile browsers only allow orientation locking in native fullscreen.
   }
 };
 
 const unlockOrientation = () => {
-  if (typeof screen === "undefined" || !screen.orientation?.unlock) {
+  const orientation = window.screen?.orientation;
+
+  if (!orientation?.unlock) {
     return;
   }
 
   try {
-    screen.orientation.unlock();
+    orientation.unlock();
   } catch {
     // Unsupported browsers simply keep the CSS landscape fallback.
   }

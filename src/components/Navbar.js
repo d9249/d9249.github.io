@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "gatsby";
+import BlogSearch from "./BlogSearch";
 
 const navItems = [
   { label: "home", to: "/" },
@@ -78,6 +79,7 @@ const Navbar = () => {
           ))}
         </nav>
         <div className="header-actions">
+          <BlogSearch />
           <button
             className="theme-toggle"
             type="button"
