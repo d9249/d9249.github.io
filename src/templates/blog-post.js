@@ -1,6 +1,7 @@
 import * as React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
+import { PageViewCounter } from "../components/ViewCounter";
 import categories from "../data/categories.json";
 import { getTagPath } from "../utils/tags";
 
@@ -122,6 +123,12 @@ const BlogPostTemplate = ({ data, pageContext }) => {
                 <div>
                   <dt>read</dt>
                   <dd>{post.timeToRead} min read</dd>
+                </div>
+                <div>
+                  <dt>views</dt>
+                  <dd>
+                    <PageViewCounter />
+                  </dd>
                 </div>
               </dl>
               {post.frontmatter.tags?.length ? (

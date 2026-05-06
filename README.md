@@ -21,6 +21,7 @@
 - Gatsby 5
 - React 18
 - MarkdownRemark 기반 블로그
+- Busuanzi 호환 카운터 API 기반 방문자/글 조회수 표시
 - GitHub Pages 배포
 - Prettier formatting
 
@@ -64,6 +65,24 @@ npm run serve            # Serve the built Gatsby site locally
 npm run clean            # Clear Gatsby cache and generated artifacts
 npm run format           # Format JS, JSON, Markdown, CSS, and YAML files
 npm run portfolio:export # Export local Keynote portfolio slides
+```
+
+## View Counter
+
+사이트 하단에는 전체 방문자 수와 전체 페이지뷰가 표시되고, 각 블로그 글의
+`Post Info`에는 해당 글의 조회수가 표시됩니다.
+
+정적 GitHub Pages는 런타임에 자체적으로 카운트를 저장할 수 없으므로
+Busuanzi 호환 API를 사용합니다. 기본 엔드포인트는
+`https://bsz.saop.cc/api`이며, 프로덕션 도메인(`d9249.github.io`)에서만
+실제 카운트가 증가합니다. 로컬 개발 서버에서는 기존 값을 읽기만 해서 테스트
+중 조회수가 오염되지 않습니다.
+
+필요하면 빌드 환경 변수로 교체할 수 있습니다.
+
+```bash
+GATSBY_VIEW_COUNTER_ENDPOINT=https://your-counter.example/api npm run build
+GATSBY_COUNTER_SITE_URL=https://your-domain.example npm run build
 ```
 
 ## Content Editing

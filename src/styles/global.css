@@ -1680,6 +1680,7 @@ h3 {
 }
 
 .tag-nav {
+  position: relative;
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
   column-gap: 12px;
@@ -1715,7 +1716,12 @@ h3 {
   min-width: 0;
 }
 
-.tag-nav a {
+.tag-nav-row {
+  display: contents;
+}
+
+.tag-nav a,
+.tag-nav-measure-chip {
   display: inline-flex;
   flex-shrink: 0;
   gap: 7px;
@@ -1731,12 +1737,14 @@ h3 {
   line-height: 1.2;
 }
 
-.tag-nav a span {
+.tag-nav a span,
+.tag-nav-measure-chip span {
   min-width: 0;
   overflow-wrap: anywhere;
 }
 
-.tag-nav a strong {
+.tag-nav a strong,
+.tag-nav-measure-chip strong {
   display: grid;
   min-width: 18px;
   height: 18px;
@@ -1746,6 +1754,16 @@ h3 {
   color: var(--fg);
   font-size: 10px;
   font-weight: 800;
+}
+
+.tag-nav-measurer {
+  position: absolute;
+  inset: auto auto 0 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  white-space: nowrap;
 }
 
 .tag-nav a:hover,
@@ -2378,6 +2396,7 @@ figcaption,
 .footer {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 14px;
   padding: 36px 0 56px;
   color: var(--muted);
@@ -2387,6 +2406,25 @@ figcaption,
 
 .footer a:hover {
   color: var(--fg);
+}
+
+.site-view-counter {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-view-counter span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.site-view-counter strong,
+.page-view-counter {
+  color: var(--fg);
+  font-weight: 800;
 }
 
 @media (max-width: 980px) {
@@ -2724,13 +2762,21 @@ figcaption,
   .tag-nav-list {
     align-self: stretch;
     display: grid;
+    gap: 7px;
     grid-template-columns: 1fr;
   }
 
-  .tag-nav a {
-    justify-content: flex-start;
-    justify-self: start;
-    width: fit-content;
+  .tag-nav-row {
+    display: flex;
+    width: 100%;
+    gap: 7px;
+  }
+
+  .tag-nav-link {
+    flex: 0 0 var(--tag-item-basis);
+    justify-content: space-between;
+    width: var(--tag-item-basis);
+    max-width: 100%;
   }
 
   .presentation-shell {
