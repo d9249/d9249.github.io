@@ -271,6 +271,18 @@ html[data-theme="dark"] .theme-toggle .theme-icon-moon {
   display: none;
 }
 
+body.search-is-open .page > main,
+body.search-is-open .page > .footer,
+body.search-is-open .masthead-inner > .wordmark,
+body.search-is-open .masthead-inner > .nav,
+body.search-is-open .header-actions > :not(.search-layer) {
+  filter: blur(8px);
+  opacity: 0.52;
+  transition:
+    filter 180ms ease,
+    opacity 180ms ease;
+}
+
 .search-layer {
   position: fixed;
   inset: 0;
@@ -283,8 +295,8 @@ html[data-theme="dark"] .theme-toggle .theme-icon-moon {
 .search-backdrop {
   position: absolute;
   inset: 0;
-  background: color-mix(in oklch, var(--bg) 62%, transparent);
-  backdrop-filter: blur(14px);
+  background: color-mix(in oklch, var(--bg) 72%, transparent);
+  backdrop-filter: blur(18px);
 }
 
 .search-dialog {

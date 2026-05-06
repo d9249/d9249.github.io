@@ -105,6 +105,7 @@ const BlogSearch = () => {
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    document.body.classList.add("search-is-open");
     window.setTimeout(() => inputRef.current?.focus(), 0);
 
     const handleKeyDown = (event) => {
@@ -117,6 +118,7 @@ const BlogSearch = () => {
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      document.body.classList.remove("search-is-open");
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [open]);
