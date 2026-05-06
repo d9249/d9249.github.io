@@ -26,8 +26,7 @@ const IndexPage = ({ data }) => {
           <p className="eyebrow">Sangmin Lee</p>
           <h1>이상향을 추구하는 엔지니어</h1>
           <p className="hero-copy">
-            RAG, Document AI, 멀티 에이전트, 추천 시스템을 제품으로 연결하는 AI
-            엔지니어입니다.
+            인공지능 연구 결과와 기술을 제품으로 연결하는 AI 연구원입니다.
           </p>
           <div className="hero-actions">
             <Link className="button-primary" to="/projects/">
@@ -332,7 +331,7 @@ export default IndexPage;
 
 export const Head = () => (
   <>
-    <title>이상민 - AI Engineer & Researcher Portfolio</title>
+    <title>이상민</title>
     <meta
       name="description"
       content="이상민의 AI 연구, 엔터프라이즈 RAG, 문서 OCR, 추천 시스템, 의료영상 연구, CES 수상 제품 개발 경험을 정리한 포트폴리오입니다."

@@ -12,15 +12,103 @@ const clampSlideIndex = (index, length) => {
   return Math.min(Math.max(index, 0), length - 1);
 };
 
+const fullscreenEvents = [
+  "fullscreenchange",
+  "webkitfullscreenchange",
+  "mozfullscreenchange",
+  "MSFullscreenChange",
+];
+
+const getFullscreenElement = () => {
+  if (typeof document === "undefined") {
+    return null;
+  }
+
+  return (
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.mozFullScreenElement ||
+    document.msFullscreenElement ||
+    null
+  );
+};
+
+const requestNativeFullscreen = (element) => {
+  if (element.requestFullscreen) {
+    return element.requestFullscreen({ navigationUI: "hide" });
+  }
+
+  if (element.webkitRequestFullscreen) {
+    return element.webkitRequestFullscreen();
+  }
+
+  if (element.mozRequestFullScreen) {
+    return element.mozRequestFullScreen();
+  }
+
+  if (element.msRequestFullscreen) {
+    return element.msRequestFullscreen();
+  }
+
+  return Promise.reject(new Error("Fullscreen API is unavailable"));
+};
+
+const exitNativeFullscreen = () => {
+  if (document.exitFullscreen) {
+    return document.exitFullscreen();
+  }
+
+  if (document.webkitExitFullscreen) {
+    return document.webkitExitFullscreen();
+  }
+
+  if (document.mozCancelFullScreen) {
+    return document.mozCancelFullScreen();
+  }
+
+  if (document.msExitFullscreen) {
+    return document.msExitFullscreen();
+  }
+
+  return Promise.resolve();
+};
+
+const lockLandscapeOrientation = async () => {
+  if (typeof screen === "undefined" || !screen.orientation?.lock) {
+    return;
+  }
+
+  try {
+    await screen.orientation.lock("landscape");
+  } catch {
+    // Some mobile browsers only allow orientation locking in native fullscreen.
+  }
+};
+
+const unlockOrientation = () => {
+  if (typeof screen === "undefined" || !screen.orientation?.unlock) {
+    return;
+  }
+
+  try {
+    screen.orientation.unlock();
+  } catch {
+    // Unsupported browsers simply keep the CSS landscape fallback.
+  }
+};
+
 const PortfolioPage = () => {
   const slides = (deck.slides || []).slice(0, MAX_PORTFOLIO_SLIDES);
   const [activeIndex, setActiveIndex] = React.useState(0);
-  const [isFullscreen, setIsFullscreen] = React.useState(false);
+  const [isNativeFullscreen, setIsNativeFullscreen] = React.useState(false);
+  const [isFallbackFullscreen, setIsFallbackFullscreen] = React.useState(false);
+  const [isLandscapeMode, setIsLandscapeMode] = React.useState(false);
   const [controlsVisible, setControlsVisible] = React.useState(true);
   const stageRef = React.useRef(null);
   const activeThumbRef = React.useRef(null);
   const hideControlsTimerRef = React.useRef(null);
   const activeSlide = slides[activeIndex];
+  const isPresentationMode = isNativeFullscreen || isFallbackFullscreen;
 
   const goToSlide = React.useCallback(
     (nextIndex) => {
@@ -41,23 +129,74 @@ const PortfolioPage = () => {
     setActiveIndex((current) => clampSlideIndex(current - 1, slides.length));
   }, [slides.length]);
 
-  const toggleFullscreen = React.useCallback(async () => {
+  const enterPresentationMode = React.useCallback(async (landscape = false) => {
     if (typeof document === "undefined" || !stageRef.current) {
       return;
     }
 
     document.activeElement?.blur?.();
+    setControlsVisible(true);
+    setIsLandscapeMode(landscape);
 
-    if (document.fullscreenElement) {
-      await document.exitFullscreen?.();
+    try {
+      await requestNativeFullscreen(stageRef.current);
+      setIsFallbackFullscreen(false);
+      setIsNativeFullscreen(true);
+
+      if (landscape) {
+        await lockLandscapeOrientation();
+      }
+
+      return;
+    } catch {
+      setIsFallbackFullscreen(true);
+      setIsNativeFullscreen(false);
+    }
+  }, []);
+
+  const leavePresentationMode = React.useCallback(async () => {
+    unlockOrientation();
+    setIsLandscapeMode(false);
+    setIsFallbackFullscreen(false);
+
+    if (getFullscreenElement()) {
+      try {
+        await exitNativeFullscreen();
+      } catch {
+        // Browser-level fullscreen exit can reject if the state changed first.
+      }
+    }
+
+    setIsNativeFullscreen(false);
+  }, []);
+
+  const toggleFullscreen = React.useCallback(async () => {
+    if (isPresentationMode) {
+      await leavePresentationMode();
       return;
     }
 
-    await stageRef.current.requestFullscreen?.();
-  }, []);
+    await enterPresentationMode(false);
+  }, [enterPresentationMode, isPresentationMode, leavePresentationMode]);
+
+  const toggleLandscapeMode = React.useCallback(async () => {
+    if (isLandscapeMode) {
+      unlockOrientation();
+      setIsLandscapeMode(false);
+      return;
+    }
+
+    if (!isPresentationMode) {
+      await enterPresentationMode(true);
+      return;
+    }
+
+    setIsLandscapeMode(true);
+    await lockLandscapeOrientation();
+  }, [enterPresentationMode, isLandscapeMode, isPresentationMode]);
 
   const showFullscreenControls = React.useCallback(() => {
-    if (!isFullscreen) {
+    if (!isPresentationMode) {
       return;
     }
 
@@ -66,21 +205,31 @@ const PortfolioPage = () => {
     hideControlsTimerRef.current = window.setTimeout(() => {
       setControlsVisible(false);
     }, 1600);
-  }, [isFullscreen]);
+  }, [isPresentationMode]);
 
   React.useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(Boolean(document.fullscreenElement));
+      const isStageFullscreen = getFullscreenElement() === stageRef.current;
+      setIsNativeFullscreen(isStageFullscreen);
+
+      if (!isStageFullscreen) {
+        unlockOrientation();
+        setIsLandscapeMode(false);
+      }
     };
 
-    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    fullscreenEvents.forEach((eventName) => {
+      document.addEventListener(eventName, handleFullscreenChange);
+    });
     return () => {
-      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      fullscreenEvents.forEach((eventName) => {
+        document.removeEventListener(eventName, handleFullscreenChange);
+      });
     };
   }, []);
 
   React.useEffect(() => {
-    if (!isFullscreen) {
+    if (!isPresentationMode) {
       window.clearTimeout(hideControlsTimerRef.current);
       setControlsVisible(true);
       return undefined;
@@ -95,7 +244,23 @@ const PortfolioPage = () => {
       document.removeEventListener("mousemove", showFullscreenControls);
       document.removeEventListener("touchstart", showFullscreenControls);
     };
-  }, [isFullscreen, showFullscreenControls]);
+  }, [isPresentationMode, showFullscreenControls]);
+
+  React.useEffect(() => {
+    if (!isFallbackFullscreen) {
+      return undefined;
+    }
+
+    const bodyOverflow = document.body.style.overflow;
+    const rootOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = bodyOverflow;
+      document.documentElement.style.overflow = rootOverflow;
+    };
+  }, [isFallbackFullscreen]);
 
   React.useEffect(() => {
     const handleKeyDown = (event) => {
@@ -129,6 +294,16 @@ const PortfolioPage = () => {
         event.preventDefault();
         toggleFullscreen();
       }
+
+      if (event.key.toLowerCase() === "r") {
+        event.preventDefault();
+        toggleLandscapeMode();
+      }
+
+      if (event.key === "Escape" && isFallbackFullscreen) {
+        event.preventDefault();
+        leavePresentationMode();
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -140,8 +315,11 @@ const PortfolioPage = () => {
     goPrevious,
     goToSlide,
     showFullscreenControls,
+    isFallbackFullscreen,
+    leavePresentationMode,
     slides.length,
     toggleFullscreen,
+    toggleLandscapeMode,
   ]);
 
   React.useEffect(() => {
@@ -170,8 +348,11 @@ const PortfolioPage = () => {
 
         <section className="presentation-shell" aria-label="Portfolio slides">
           <div
-            className={`deck-stage ${isFullscreen && controlsVisible ? "is-controls-visible" : ""
-              }`}
+            className={`deck-stage ${
+              isPresentationMode && controlsVisible ? "is-controls-visible" : ""
+            } ${isFallbackFullscreen ? "is-fallback-fullscreen" : ""} ${
+              isLandscapeMode ? "is-landscape-mode" : ""
+            }`}
             ref={stageRef}
           >
             <div className="deck-frame">
@@ -219,11 +400,19 @@ const PortfolioPage = () => {
                 다음
               </button>
               <button
+                className="deck-button"
+                type="button"
+                onClick={toggleLandscapeMode}
+                aria-pressed={isLandscapeMode}
+              >
+                {isLandscapeMode ? "세로보기" : "가로보기"}
+              </button>
+              <button
                 className="deck-button deck-button-strong"
                 type="button"
                 onClick={toggleFullscreen}
               >
-                {isFullscreen ? "나가기" : "전체화면"}
+                {isPresentationMode ? "나가기" : "전체화면"}
               </button>
             </div>
           </div>
@@ -231,8 +420,9 @@ const PortfolioPage = () => {
           <div className="slide-strip" aria-label="Slide thumbnails">
             {slides.map((slide, index) => (
               <button
-                className={`slide-thumb ${index === activeIndex ? "is-active" : ""
-                  }`}
+                className={`slide-thumb ${
+                  index === activeIndex ? "is-active" : ""
+                }`}
                 key={slide.src}
                 type="button"
                 ref={index === activeIndex ? activeThumbRef : null}
@@ -254,7 +444,7 @@ export default PortfolioPage;
 
 export const Head = () => (
   <>
-    <title>Portfolio Deck - 이상민</title>
+    <title>Portfolio Deck</title>
     <meta
       name="description"
       content="이상민의 AI 연구와 제품 개발 경험을 발표용 슬라이드로 정리한 포트폴리오 페이지입니다."
