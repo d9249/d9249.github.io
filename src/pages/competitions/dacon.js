@@ -84,7 +84,7 @@ export default DaconCompetitionsPage;
 
 export const Head = () => (
   <>
-    <title>DACON Competitions | Mean Log</title>
+    <title>DACON Competitions</title>
     <meta
       name="description"
       content="이상민의 DACON 경진대회 39개 참가 이력과 주요 성과입니다."

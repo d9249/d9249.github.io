@@ -103,7 +103,7 @@ export default ResearchPage;
 
 export const Head = () => (
   <>
-    <title>Research | Mean Log</title>
+    <title>Research</title>
     <meta
       name="description"
       content="이상민의 학위논문, SCIE, KCI, 국제/국내 학회 논문과 연구 성과 목록입니다."

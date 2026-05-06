@@ -37,7 +37,7 @@ export default BlogCategoryTemplate;
 
 export const Head = ({ pageContext }) => (
   <>
-    <title>{pageContext.label} | Mean Log</title>
+    <title>{pageContext.label}</title>
     <meta name="description" content={pageContext.description} />
   </>
 );

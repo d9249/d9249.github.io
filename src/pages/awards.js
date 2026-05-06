@@ -47,7 +47,7 @@ export default AwardsPage;
 
 export const Head = () => (
   <>
-    <title>Awards | Mean Log</title>
+    <title>Awards</title>
     <meta
       name="description"
       content="이상민의 CES, 장관상, 학회 Best Paper, 논문경진대회 수상 기록입니다."

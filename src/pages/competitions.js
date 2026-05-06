@@ -35,7 +35,7 @@ export default CompetitionsPage;
 
 export const Head = () => (
   <>
-    <title>Competitions | Mean Log</title>
+    <title>Competitions</title>
     <meta
       name="description"
       content="이상민의 HD현대 AI Challenge, LG Aimers, DACON, 가짜연구소, DIYA 등 대회와 외부 활동 기록입니다."

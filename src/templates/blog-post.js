@@ -159,7 +159,7 @@ export default BlogPostTemplate;
 
 export const Head = ({ data }) => (
   <>
-    <title>{data.post.frontmatter.title} | Mean Log</title>
+    <title>{data.post.frontmatter.title}</title>
     <meta name="description" content={data.post.frontmatter.description} />
   </>
 );

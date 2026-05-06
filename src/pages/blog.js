@@ -31,10 +31,10 @@ export default BlogPage;
 
 export const Head = () => (
   <>
-    <title>Blog | Mean Log</title>
+    <title>Blog</title>
     <meta
       name="description"
-      content="Mean Log의 전체 기술 블로그 글 목록입니다."
+      content="전체 기술 블로그 글 목록입니다."
     />
   </>
 );

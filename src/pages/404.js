@@ -21,4 +21,4 @@ const NotFoundPage = () => (
 
 export default NotFoundPage;
 
-export const Head = () => <title>404 | Mean Log</title>;
+export const Head = () => <title>404</title>;

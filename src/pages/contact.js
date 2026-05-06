@@ -9,7 +9,7 @@ const ContactPage = () => (
       <SectionHeading
         kicker="Contact"
         title="연구와 제품 사이의 의미를 남기는 사람"
-        description="인공지능과 이를 활용한 제품 및 서비스를 연구 합니다."
+        description="인공지능 연구와 이를 활용한 제품 및 서비스를 연구 합니다."
       />
       <div className="career-layout">
         <aside className="profile-panel">
@@ -59,10 +59,10 @@ export default ContactPage;
 
 export const Head = () => (
   <>
-    <title>Contact | Mean Log</title>
+    <title>Contact</title>
     <meta
       name="description"
-      content="Mean Log 작성자 Sangmin Lee 연락 및 소개 페이지입니다."
+      content="Sangmin Lee 연락 및 소개 페이지입니다."
     />
   </>
 );

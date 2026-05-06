@@ -2,7 +2,7 @@
   "name": "d9249-github-io",
   "version": "0.1.0",
   "private": true,
-  "description": "Mean Log personal Gatsby blog.",
+  "description": "이상민의 연구 개발 기록을 모으는 개인 기술 블로그입니다.",
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",

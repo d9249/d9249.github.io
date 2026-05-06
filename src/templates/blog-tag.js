@@ -39,10 +39,10 @@ export default BlogTagTemplate;
 
 export const Head = ({ pageContext }) => (
   <>
-    <title>#{pageContext.tag} | Mean Log</title>
+    <title>#{pageContext.tag}</title>
     <meta
       name="description"
-      content={`${pageContext.tag} 태그가 붙은 Mean Log 글 목록입니다.`}
+      content={`${pageContext.tag} 태그가 붙은 블로그 글 목록입니다.`}
     />
   </>
 );

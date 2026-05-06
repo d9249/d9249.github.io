@@ -63,7 +63,7 @@ const Navbar = () => {
   return (
     <header className="masthead">
       <div className="shell masthead-inner">
-        <Link className="wordmark" to="/" aria-label="Mean Log home">
+        <Link className="wordmark" to="/" aria-label="home">
           <span className="prompt-dot" />
           <span>mean@log:~ideal</span>
         </Link>
