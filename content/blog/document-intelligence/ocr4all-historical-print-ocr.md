@@ -1,6 +1,6 @@
 ---
 title: "OCR4all은 역사 인쇄물 OCR을 사람-개입형 워크플로우로 푼다"
-date: "2026-05-06"
+date: "2026-05-06T04:08:24"
 description: "OCR4all은 초기 근대 인쇄물처럼 표준 OCR이 자주 무너지는 문서를 대상으로, 전처리·레이아웃 분할·라인 분할·인식·교정·도메인별 모델 학습을 하나의 웹 UI에 묶어 비전문가도 고품질 OCR 파이프라인을 운영할 수 있게 하려는 오픈소스 프로젝트다."
 author: "Sangmin Lee"
 category: "document-intelligence"

@@ -1,6 +1,6 @@
 ---
 title: "Hugging Face Skills는 에이전트용 AI 워크플로우를 패키지화한다"
-date: "2026-05-06"
+date: "2026-05-06T02:51:41"
 description: "Hugging Face Skills는 모델 학습, 데이터셋 탐색, 평가, 로컬 추론 같은 AI 작업 지식을 SKILL.md 기반 패키지로 묶어 Claude Code, Codex, Gemini CLI, Cursor 사이에서 재사용 가능하게 만든다."
 author: "Sangmin Lee"
 category: "agent-systems"

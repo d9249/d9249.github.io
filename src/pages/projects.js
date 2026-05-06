@@ -20,7 +20,7 @@ export default ProjectsPage;
 
 export const Head = () => (
   <>
-    <title>Projects | Mean Log</title>
+    <title>Projects</title>
     <meta
       name="description"
       content="이상민의 엔터프라이즈 RAG, Document AI, 멀티 에이전트, 추천 시스템, 의료영상 연구 프로젝트 목록입니다."

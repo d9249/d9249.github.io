@@ -1,6 +1,6 @@
 ---
 title: "SkillsMP는 흩어진 SKILL.md 생태계를 검색 가능한 마켓플레이스로 바꾼다"
-date: "2026-05-06"
+date: "2026-05-06T07:58:51"
 description: "SkillsMP는 GitHub 전역에 흩어진 SKILL.md 기반 에이전트 스킬을 수집해 의미 검색, 직군 분류, 카테고리 탐색, API 접근, 설치 가이드까지 한 화면으로 묶어 Claude Code·Codex·ChatGPT 시대의 스킬 발견 레이어를 만들고 있다."
 author: "Sangmin Lee"
 category: "agent-systems"

@@ -1,6 +1,6 @@
 ---
 title: "dFactory는 Diffusion LLM 파인튜닝을 실험이 아니라 공정으로 만든다"
-date: "2026-05-06"
+date: "2026-05-06T02:48:28"
 description: "dFactory는 확산 언어 모델의 미세 조정을 위해 block diffusion, MoE 가중치 병합, 분산 학습, 병렬 디코딩 경로를 하나의 실행 가능한 프레임워크로 묶는다."
 author: "Sangmin Lee"
 category: "model-training"

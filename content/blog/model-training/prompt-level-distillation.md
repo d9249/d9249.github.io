@@ -1,6 +1,6 @@
 ---
 title: "Prompt-Level Distillation은 추론을 가중치가 아니라 프롬프트로 증류한다"
-date: "2026-05-06"
+date: "2026-05-06T03:11:02"
 description: "Prompt-Level Distillation은 교사 모델의 추론 규칙을 학생 모델의 시스템 프롬프트로 옮겨, 파인튜닝 없이도 작은 모델이 복잡한 분류 추론을 더 빠르고 투명하게 수행하도록 만든다."
 author: "Sangmin Lee"
 category: "model-training"

@@ -1,6 +1,6 @@
 ---
 title: "Qwen3-VL은 319장·1달러 파인튜닝으로 Gemini 3 Flash를 앞질렀다"
-date: "2026-05-06"
+date: "2026-05-06T04:02:23"
 description: "Oxen.ai의 실험은 Qwen3-VL-8B를 자동차 손상 분류에 맞춰 319장 이미지로 LoRA 파인튜닝하면, 약 1달러 학습비로 Gemini 3 Flash보다 더 높은 정확도와 더 짧은 추론 시간을 동시에 얻을 수 있음을 보여준다."
 author: "Sangmin Lee"
 category: "model-training"

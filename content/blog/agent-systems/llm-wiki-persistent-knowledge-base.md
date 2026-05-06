@@ -1,6 +1,6 @@
 ---
 title: "LLM Wiki는 RAG를 축적형 지식 운영체제로 바꾸려 한다"
-date: "2026-05-06"
+date: "2026-05-06T05:37:55"
 description: "unclejobs-ai가 포크한 LLM Wiki gist는 파일 업로드형 RAG 대신, LLM이 원문 소스를 읽고 지속적으로 갱신하는 마크다운 위키를 중간 계층으로 두어 개인·연구·팀 지식을 축적형 자산으로 운영하자는 패턴을 제안한다."
 author: "Sangmin Lee"
 category: "agent-systems"

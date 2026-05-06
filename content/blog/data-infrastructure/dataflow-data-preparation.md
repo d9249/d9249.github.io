@@ -1,6 +1,6 @@
 ---
 title: "DataFlow는 LLM 데이터 준비를 스크립트에서 시스템으로 끌어올린다"
-date: "2026-05-06"
+date: "2026-05-06T02:27:00"
 description: "데이터 중심 AI 시대에는 좋은 모델보다 좋은 데이터 파이프라인이 더 큰 차이를 만든다. DataFlow는 생성, 평가, 필터링, 정제를 하나의 실행 가능한 시스템으로 묶는다."
 author: "Sangmin Lee"
 category: "data-infrastructure"

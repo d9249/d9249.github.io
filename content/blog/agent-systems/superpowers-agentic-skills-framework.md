@@ -1,6 +1,6 @@
 ---
 title: "Superpowers는 코딩 에이전트에 방법론을 주입한다"
-date: "2026-05-06"
+date: "2026-05-06T04:05:27"
 description: "obra/superpowers는 Claude Code, Codex, Gemini CLI, Cursor 같은 코딩 에이전트에 스킬 라이브러리와 강제 워크플로우를 주입해, 즉흥적인 프롬프트 코딩을 설계-계획-TDD-리뷰-마무리까지 이어지는 반복 가능한 개발 방법론으로 바꾸려는 프로젝트다."
 author: "Sangmin Lee"
 category: "agent-systems"

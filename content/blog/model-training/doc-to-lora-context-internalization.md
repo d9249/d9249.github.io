@@ -1,6 +1,6 @@
 ---
 title: "Doc-to-LoRA는 문서를 LoRA 어댑터로 즉시 내재화한다"
-date: "2026-05-06"
+date: "2026-05-06T03:41:07"
 description: "Doc-to-LoRA는 긴 문맥을 매번 다시 읽지 않고도 답할 수 있도록, 문서에서 LoRA 어댑터를 한 번의 forward pass로 생성하는 hypernetwork를 메타학습해 context distillation의 지연과 메모리 비용을 크게 줄이려는 접근이다."
 author: "Sangmin Lee"
 category: "model-training"

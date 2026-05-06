@@ -1,6 +1,6 @@
 ---
 title: "paper2code는 논문 구현의 애매함을 코드 옆에 드러낸다"
-date: "2026-05-06"
+date: "2026-05-06T04:33:15"
 description: "paper2code는 arXiv 논문을 구현할 때 LLM이 빈칸을 자신 있게 메워버리는 문제를 막기 위해, 구현 결과를 citation-anchored code·ambiguity audit·walkthrough notebook 형태로 출력하고 각 선택을 SPECIFIED, PARTIALLY_SPECIFIED, UNSPECIFIED로 분류하는 에이전트 스킬 프로젝트다."
 author: "Sangmin Lee"
 category: "agent-systems"

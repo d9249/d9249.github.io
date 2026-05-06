@@ -1,6 +1,6 @@
 ---
 title: "Agent Lightning은 에이전트 실행과 학습을 분리해 RL을 붙인다"
-date: "2026-05-06"
+date: "2026-05-06T03:26:34"
 description: "Agent Lightning은 기존 LangChain·OpenAI Agents SDK·AutoGen 기반 에이전트를 거의 수정하지 않고도 강화학습으로 최적화할 수 있게 하며, 이를 위해 실행 궤적을 통합 인터페이스로 수집하고 Training-Agent Disaggregation 구조로 학습 루프를 분리한다."
 author: "Sangmin Lee"
 category: "agent-systems"

@@ -1,6 +1,6 @@
 ---
 title: "Rowboat은 개인 업무 맥락을 로컬 지식 그래프로 축적한다"
-date: "2026-05-06"
+date: "2026-05-06T05:54:13"
 description: "rowboatlabs/rowboat는 이메일·캘린더·미팅노트·웹 검색 결과를 로컬 마크다운 볼트와 지식 그래프로 축적한 뒤, 그 위에서 회의 준비, 이메일 초안, 문서 작성, PDF 덱 생성, 라이브 노트 업데이트를 수행하는 로컬 퍼스트 AI 동료(co-worker)를 지향한다."
 author: "Sangmin Lee"
 category: "agent-systems"

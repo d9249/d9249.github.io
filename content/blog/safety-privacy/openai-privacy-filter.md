@@ -1,6 +1,6 @@
 ---
 title: "OpenAI Privacy Filter는 개인정보 마스킹을 로컬 실행 가능한 인프라로 만든다"
-date: "2026-05-06"
+date: "2026-05-06T03:00:19"
 description: "OpenAI Privacy Filter는 PII 탐지와 마스킹을 위한 1.5B 오픈 웨이트 모델로, 긴 비정형 텍스트를 로컬 환경에서 빠르게 처리하면서 개인정보 보호를 제품 내부 워크플로우로 끌어들인다."
 author: "Sangmin Lee"
 category: "safety-privacy"

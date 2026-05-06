@@ -1,6 +1,6 @@
 ---
 title: "OpenCompass는 LLM 평가를 실행 엔진·벤치마크 카탈로그·리더보드로 묶는다"
-date: "2026-05-06"
+date: "2026-05-06T06:36:13"
 description: "open-compass/opencompass는 모델 하나의 점수를 계산하는 스크립트를 넘어서, 방대한 데이터셋 카탈로그·분산 실행·가속 추론·LLM-as-a-judge·공개 리더보드를 한 스택으로 엮어 LLM 평가를 반복 가능한 운영 파이프라인으로 바꾸려는 오픈소스 플랫폼이다."
 author: "Sangmin Lee"
 category: "evaluation-benchmarks"

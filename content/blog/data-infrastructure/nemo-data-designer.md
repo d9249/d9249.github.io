@@ -1,6 +1,6 @@
 ---
 title: "NeMo Data Designer는 합성 데이터를 프롬프트가 아니라 파이프라인으로 만든다"
-date: "2026-05-06"
+date: "2026-05-06T02:15:16"
 description: "합성 데이터의 품질은 더 좋은 프롬프트 한 줄보다 컬럼 간 상관관계, 검증, 반복 가능한 생성 파이프라인에서 결정된다."
 author: "Sangmin Lee"
 category: "data-infrastructure"

@@ -1,6 +1,6 @@
 ---
 title: "oh-my-codex는 Codex CLI 위에 멀티에이전트 운영 레이어를 얹는다"
-date: "2026-05-06"
+date: "2026-05-06T06:51:44"
 description: "oh-my-codex는 OpenAI Codex CLI를 대체하지 않고 그 위에 팀 실행, worktree 격리, 역할 프롬프트, 워크플로우 스킬, MCP 서버, HUD와 상태 관리까지 얹어 단일 코딩 에이전트를 운영 가능한 멀티에이전트 런타임으로 바꾸려는 오픈소스 프로젝트다."
 author: "Sangmin Lee"
 category: "agent-systems"

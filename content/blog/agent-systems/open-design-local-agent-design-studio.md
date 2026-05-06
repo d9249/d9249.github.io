@@ -1,6 +1,6 @@
 ---
 title: "Open Design은 Claude Design을 로컬 에이전트 스튜디오로 다시 만든다"
-date: "2026-05-06"
+date: "2026-05-06T04:53:39"
 description: "nexu-io/open-design은 Claude Design의 artifact-first 디자인 경험을 오픈소스로 재구성하면서, 여러 코딩 에이전트 CLI와 로컬 데몬, 디자인 시스템, 스킬 카탈로그, 샌드박스 프리뷰, HTML·PDF·PPTX·MP4 내보내기를 하나의 로컬 퍼스트 디자인 스튜디오로 묶으려는 프로젝트다."
 author: "Sangmin Lee"
 category: "agent-systems"

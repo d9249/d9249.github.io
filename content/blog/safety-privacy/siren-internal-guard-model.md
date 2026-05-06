@@ -1,6 +1,6 @@
 ---
 title: "SIREN은 LLM 내부 표현으로 더 가벼운 세이프티 가드를 만든다"
-date: "2026-05-06"
+date: "2026-05-06T03:22:13"
 description: "SIREN은 마지막 레이어 출력만 쓰는 기존 guard model 대신 LLM 내부 레이어의 safety neuron을 모아 harmfulness detector를 구성함으로써, 훨씬 적은 학습 파라미터로 더 강한 일반화와 스트리밍 감지를 노린다."
 author: "Sangmin Lee"
 category: "safety-privacy"

@@ -1,6 +1,6 @@
 ---
 title: "Lazyweb은 디자인 영감을 에이전트용 검색 컨텍스트로 바꾼다"
-date: "2026-05-06"
+date: "2026-05-06T06:28:54"
 description: "Lazyweb은 방대한 앱 스크린샷 라이브러리와 비교 페이지, 인스퍼레이션 카탈로그, 무료 MCP 엔드포인트, 에이전트용 스킬 배포 경로를 결합해 Claude Code·Codex·Cursor 같은 코딩 에이전트가 실제 UI 레퍼런스를 근거로 디자인 조사와 개선 제안을 하도록 만드는 디자인 컨텍스트 플랫폼이다."
 author: "Sangmin Lee"
 category: "agent-systems"

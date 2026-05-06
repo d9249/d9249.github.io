@@ -1,6 +1,6 @@
 ---
 title: "이 리포트는 LLM 핵심 설계를 Architecture·RoPE·Attention 축으로 다시 묶어준다"
-date: "2026-05-06"
+date: "2026-05-06T07:09:46"
 description: "Jin’s Doodle의 Large-scale Model 핵심 기술 리포트는 decoder-only 아키텍처, RMSNorm·SwiGLU·Pre-Norm, RoPE·mRoPE, FlashAttention·GQA를 하나의 설계 지도처럼 엮어 최신 LLM과 VLM의 기본 선택지를 빠르게 복기하게 만든다."
 author: "Sangmin Lee"
 category: "model-training"

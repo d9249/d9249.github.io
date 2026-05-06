@@ -1,6 +1,6 @@
 ---
 title: "AutoKernel은 GPU 커널 최적화를 에이전트 실험 루프로 바꾼다"
-date: "2026-05-06"
+date: "2026-05-06T04:22:43"
 description: "AutoKernel은 PyTorch 모델을 프로파일링해 병목 GPU 커널을 추출한 뒤, Triton 또는 CUDA C++ 커널을 에이전트가 반복적으로 수정·벤치마크·유지/되돌리기 하도록 설계해 하룻밤 단위의 자동 커널 최적화를 가능하게 하려는 오픈소스 프레임워크다."
 author: "Sangmin Lee"
 category: "data-infrastructure"

@@ -1,6 +1,6 @@
 ---
 title: "Nemotron-Orchestrator-8B는 작은 8B 모델로 더 큰 에이전트 시스템을 지휘한다"
-date: "2026-05-06"
+date: "2026-05-06T07:45:35"
 description: "NVIDIA의 Nemotron-Orchestrator-8B는 Qwen3-8B 기반의 경량 orchestrator를 RL로 학습시켜, 검색·코드 실행·전문 모델·거대 범용 모델을 상황별로 배치하며 GPT-5보다 더 높은 HLE 점수와 더 나은 비용 효율을 동시에 노린다."
 author: "Sangmin Lee"
 category: "agent-systems"

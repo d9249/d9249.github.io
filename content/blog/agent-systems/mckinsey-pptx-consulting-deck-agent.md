@@ -1,6 +1,6 @@
 ---
 title: "mckinsey-pptx는 컨설팅 덱 작성을 Claude Code 에이전트 작업으로 바꾼다"
-date: "2026-05-06"
+date: "2026-05-06T05:07:08"
 description: "seulee26/mckinsey-pptx는 맥킨지 스타일 슬라이드 40종을 Python PPTX 엔진으로 구현하고, 그 위에 Claude Code 플러그인·서브에이전트·슬래시 커맨드를 얹어 사용자의 짧은 브리프를 실제 .pptx 파일로 변환하는 로컬 실행형 프레젠테이션 에이전트 프로젝트다."
 author: "Sangmin Lee"
 category: "agent-systems"

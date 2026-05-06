@@ -1,6 +1,6 @@
 ---
 title: "Ruflo는 Claude Code를 다중 에이전트 운영 플랫폼으로 확장한다"
-date: "2026-05-06"
+date: "2026-05-06T06:09:23"
 description: "ruvnet/ruflo는 Claude Code 위에 swarm coordination, persistent memory, self-learning loop, federation, 32개 플러그인, 300개 수준의 MCP 도구를 얹어 단일 코딩 도우미를 장기 기억과 협업 능력을 가진 에이전트 운영 플랫폼으로 바꾸려는 대형 오픈소스 프로젝트다."
 author: "Sangmin Lee"
 category: "agent-systems"
