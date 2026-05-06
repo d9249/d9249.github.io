@@ -1,40 +1,173 @@
-# Mean Log
+# ideal
 
-`d9249.github.io` is now a Gatsby-based personal technical blog for AI research,
-product engineering notes, and career evidence.
+`d9249.github.io`는 이상민의 AI 연구, 제품 개발 경험, 프로젝트 증거를
+정리하는 Gatsby 기반 개인 기술 블로그이자 포트폴리오 사이트입니다.
 
-## Structure
+배포 주소: https://d9249.github.io
+
+## What This Site Contains
+
+- AI Engineer & Researcher 프로필 홈
+- RAG, Document AI, multi-agent, 추천 시스템 중심 프로젝트 아카이브
+- 논문, 수상, 대회, 기술 스택, 경력 타임라인
+- Markdown 기반 기술 블로그
+- Keynote에서 export한 발표용 포트폴리오 슬라이드 뷰어
+
+주요 화면은 `src/pages/` 아래에 있으며 홈, 프로젝트, 연구, 수상, 대회,
+포트폴리오, 블로그, 연락처 페이지로 구성됩니다.
+
+## Tech Stack
+
+- Gatsby 5
+- React 18
+- MarkdownRemark 기반 블로그
+- GitHub Pages 배포
+- Prettier formatting
+
+## Project Structure
 
 ```text
-content/blog/<category>/<post>.md   Markdown posts
-static/portfolio/slides/            Exported portfolio slide images
-src/data/portfolioSlides.json       Portfolio presentation manifest
-scripts/portfolio/export-keynote.js Local Keynote-to-web export script
-src/pages/                          Gatsby pages
-src/templates/                      Blog post/category templates
-src/components/                     Shared UI components
-src/styles/global.css               Site-wide visual system
+content/blog/<category>/<post>.md        Markdown blog posts
+src/components/                          Shared React components
+src/data/profile.js                      Profile, projects, awards, papers, competitions data
+src/data/categories.json                 Blog category navigation and generated category pages
+src/data/portfolioSlides.json            Generated portfolio slide manifest
+src/pages/                               Gatsby page routes
+src/pages/projects/                      Project detail pages
+src/templates/                           Blog post, category, tag templates
+src/styles/global.css                    Site-wide design system
+src/utils/tags.js                        Blog tag slug helpers
+static/portfolio/slides/                 Exported portfolio slide images
+static/evidence/                         Public evidence files
+scripts/portfolio/export-keynote.js      Local Keynote-to-web export script
+.github/workflows/github-pages.yml       GitHub Pages deployment workflow
 ```
+
+## Setup
+
+Node.js 20 is used in the GitHub Actions build.
+
+```bash
+npm ci
+npm run develop
+```
+
+Local development runs on Gatsby's default development server, usually
+`http://localhost:8000`.
 
 ## Commands
 
 ```bash
-npm install
-npm run develop
-npm run build
+npm run develop          # Start local Gatsby development server
+npm run build            # Build static site into public/
+npm run serve            # Serve the built Gatsby site locally
+npm run clean            # Clear Gatsby cache and generated artifacts
+npm run format           # Format JS, JSON, Markdown, CSS, and YAML files
+npm run portfolio:export # Export local Keynote portfolio slides
+```
+
+## Content Editing
+
+Most profile-style content lives in `src/data/profile.js`.
+
+Update this file when changing:
+
+- hero links and profile highlights
+- career timeline
+- project cards and project metadata
+- papers and research records
+- awards and competitions
+- skill groups
+
+Project summary cards are generated from `projectItems`. Detailed project pages
+live separately under `src/pages/projects/`, so add or update the matching page
+when a project needs a dedicated case study route.
+
+## Blog Posts
+
+Blog posts are Markdown files under `content/blog/<category>/`.
+
+The route is derived from the directory and filename:
+
+```text
+content/blog/agent-systems/example-post.md
+-> /blog/agent-systems/example-post/
+```
+
+Use this frontmatter shape:
+
+```md
+---
+title: "Post title"
+date: "2026-03-30"
+description: "Short summary for cards and metadata."
+author: "Sangmin Lee"
+category: "agent-systems"
+tags:
+  - RAG
+  - Agents
+draft: false
+---
+```
+
+Set `draft: true` to keep a post out of generated blog pages. When adding a new
+top-level blog category that should appear in navigation and receive a category
+page, also add it to `src/data/categories.json`.
+
+## Portfolio Slides
+
+`src/pages/portfolio.js` reads `src/data/portfolioSlides.json` and renders the
+slide images in `static/portfolio/slides/`.
+
+To regenerate the portfolio deck on macOS:
+
+```bash
 npm run portfolio:export
 ```
 
-Posts use frontmatter fields such as `title`, `date`, `description`, `author`,
-`category`, `tags`, and `draft`. Set `draft: true` to keep a post out of
-generated blog pages.
+The export script opens the local Keynote file, exports slide images as JPEG,
+extracts slide text through a temporary PPTX, and refreshes the manifest.
 
-## Portfolio Deck
+Supported environment variables:
 
-`npm run portfolio:export` reads the local Keynote file, exports every slide as
-static JPEG assets, and refreshes `src/data/portfolioSlides.json`. Commit the
-generated files with code changes so GitHub Pages can deploy the latest deck
-without needing Keynote in GitHub Actions.
+```bash
+PORTFOLIO_KEYNOTE_PATH=/path/to/Portfolio.key npm run portfolio:export
+PORTFOLIO_IMAGE_QUALITY=0.92 npm run portfolio:export
+PORTFOLIO_SLIDE_LIMIT=36 npm run portfolio:export
+```
 
-Use `PORTFOLIO_KEYNOTE_PATH=/path/to/file.key npm run portfolio:export` when the
-Keynote source moves.
+Commit both `static/portfolio/slides/` and `src/data/portfolioSlides.json` after
+exporting. GitHub Actions does not run Keynote, so the generated assets must be
+present in the repository before deployment.
+
+## Deployment
+
+Pushes to `main` trigger `.github/workflows/github-pages.yml`.
+
+The workflow:
+
+1. installs dependencies with `npm ci`
+2. builds Gatsby with `npm run build`
+3. creates `public/.nojekyll`
+4. uploads `public/` as a GitHub Pages artifact
+5. deploys to GitHub Pages
+
+Manual deployment is also available through the workflow dispatch button in
+GitHub Actions.
+
+## Verification
+
+Before merging content or UI changes, run:
+
+```bash
+npm run build
+```
+
+For formatting-only checks or broad content edits, run:
+
+```bash
+npm run format
+```
+
+There is no separate test suite in this repository yet; the production build is
+the main verification gate.

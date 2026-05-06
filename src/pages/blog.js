@@ -13,7 +13,7 @@ const BlogPage = ({ data }) => {
   return (
     <Layout>
       <section className="shell section">
-        <SectionHeading kicker="Blog" title="Log" />
+        <SectionHeading kicker="Blog" title="Knowledge WIKI" />
         <CategoryNav />
         <TagNav posts={posts} />
         {featured && <PostCard post={featured} featured />}
@@ -32,10 +32,7 @@ export default BlogPage;
 export const Head = () => (
   <>
     <title>Blog</title>
-    <meta
-      name="description"
-      content="전체 기술 블로그 글 목록입니다."
-    />
+    <meta name="description" content="전체 기술 블로그 글 목록입니다." />
   </>
 );
 
