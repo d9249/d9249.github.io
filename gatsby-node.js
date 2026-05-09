@@ -4,6 +4,8 @@ const categories = require("./src/data/categories.json");
 const legacyRedirects = require("./src/data/legacy-redirects.json");
 const { getTagSummaries } = require("./src/utils/tags");
 
+const POSTS_PER_BLOG_PAGE = 12;
+
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
 
@@ -69,6 +71,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     return;
   }
 
+  const blogIndexTemplate = path.resolve("./src/templates/blog-index.js");
   const postTemplate = path.resolve("./src/templates/blog-post.js");
   const categoryTemplate = path.resolve("./src/templates/blog-category.js");
   const redirectTemplate = path.resolve("./src/templates/redirect.js");
@@ -77,6 +80,27 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     (post) => !post.frontmatter.draft,
   );
   const tagSummaries = getTagSummaries(posts);
+  const blogPageCount = Math.max(
+    1,
+    Math.ceil(posts.length / POSTS_PER_BLOG_PAGE),
+  );
+
+  Array.from({ length: blogPageCount }).forEach((_, index) => {
+    const currentPage = index + 1;
+
+    createPage({
+      path: currentPage === 1 ? "/blog/" : `/blog/page/${currentPage}/`,
+      component: blogIndexTemplate,
+      context: {
+        currentPage,
+        limit: POSTS_PER_BLOG_PAGE,
+        pageCount: blogPageCount,
+        skip: index * POSTS_PER_BLOG_PAGE,
+        tagSummaries,
+        totalPosts: posts.length,
+      },
+    });
+  });
 
   posts.forEach((post, index) => {
     createPage({
