@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -31,8 +31,28 @@ jobs:
           node-version: 20
           cache: npm
 
+      - name: Restore node_modules
+        id: node-modules-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node20-node-modules-${{ hashFiles('package-lock.json') }}
+
       - name: Install dependencies
-        run: npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: npm ci --prefer-offline --no-audit --no-fund
+
+      - name: Restore Gatsby cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .cache
+            public
+            node_modules/.cache
+          key: ${{ runner.os }}-node20-gatsby-${{ hashFiles('package-lock.json', 'gatsby-config.js', 'gatsby-node.js', 'gatsby-browser.js', 'gatsby-ssr.js') }}-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-node20-gatsby-${{ hashFiles('package-lock.json', 'gatsby-config.js', 'gatsby-node.js', 'gatsby-browser.js', 'gatsby-ssr.js') }}-
+            ${{ runner.os }}-node20-gatsby-
 
       - name: Build Gatsby
         run: npm run build

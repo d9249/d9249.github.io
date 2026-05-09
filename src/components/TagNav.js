@@ -79,8 +79,11 @@ const getTetrisRows = (tags, listWidth, measuredWidths) => {
     .map((row) => row.items);
 };
 
-const TagNav = ({ posts, activeTag }) => {
-  const tags = React.useMemo(() => getTagSummaries(posts), [posts]);
+const TagNav = ({ posts, tagSummaries, activeTag }) => {
+  const tags = React.useMemo(
+    () => tagSummaries || getTagSummaries(posts),
+    [posts, tagSummaries],
+  );
   const listId = React.useId();
   const listRef = React.useRef(null);
   const measureRef = React.useRef(null);

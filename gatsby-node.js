@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const categories = require("./src/data/categories.json");
-const { slugifyTag } = require("./src/utils/tags");
+const { getTagSummaries } = require("./src/utils/tags");
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
@@ -74,7 +74,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const posts = result.data.posts.nodes.filter(
     (post) => !post.frontmatter.draft,
   );
-  const tagsBySlug = new Map();
+  const tagSummaries = getTagSummaries(posts);
 
   posts.forEach((post, index) => {
     createPage({
@@ -96,26 +96,18 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         category: category.slug,
         label: category.label,
         description: category.description,
+        tagSummaries,
       },
     });
   });
 
-  posts.forEach((post) => {
-    (post.frontmatter.tags || []).forEach((tag) => {
-      const slug = slugifyTag(tag);
-
-      if (!tagsBySlug.has(slug)) {
-        tagsBySlug.set(slug, tag);
-      }
-    });
-  });
-
-  tagsBySlug.forEach((tag, slug) => {
+  tagSummaries.forEach((tag) => {
     createPage({
-      path: `/blog/tags/${slug}/`,
+      path: `/blog/tags/${tag.slug}/`,
       component: tagTemplate,
       context: {
-        tag,
+        tag: tag.label,
+        tagSummaries,
       },
     });
   });

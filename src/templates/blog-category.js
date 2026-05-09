@@ -18,7 +18,7 @@ const BlogCategoryTemplate = ({ data, pageContext }) => {
           description={pageContext.description}
         />
         <CategoryNav />
-        <TagNav posts={data.allPosts.nodes} />
+        <TagNav tagSummaries={pageContext.tagSummaries} />
         {posts.length > 0 ? (
           <div className="post-grid">
             {posts.map((post) => (
@@ -44,19 +44,6 @@ export const Head = ({ pageContext }) => (
 
 export const query = graphql`
   query BlogCategoryPage($category: String!) {
-    allPosts: allMarkdownRemark(
-      filter: {
-        fields: { contentType: { eq: "blog-post" } }
-        frontmatter: { draft: { ne: true } }
-      }
-      sort: { frontmatter: { date: DESC } }
-    ) {
-      nodes {
-        frontmatter {
-          tags
-        }
-      }
-    }
     posts: allMarkdownRemark(
       filter: {
         fields: {

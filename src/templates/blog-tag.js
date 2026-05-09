@@ -7,9 +7,7 @@ import SectionHeading from "../components/SectionHeading";
 import TagNav from "../components/TagNav";
 
 const BlogTagTemplate = ({ data, pageContext }) => {
-  const posts = data.posts.nodes.filter((post) =>
-    (post.frontmatter.tags || []).includes(pageContext.tag),
-  );
+  const posts = data.posts.nodes;
 
   return (
     <Layout>
@@ -20,7 +18,10 @@ const BlogTagTemplate = ({ data, pageContext }) => {
           description={`${pageContext.tag} 태그가 붙은 글입니다.`}
         />
         <CategoryNav />
-        <TagNav posts={data.posts.nodes} activeTag={pageContext.tag} />
+        <TagNav
+          tagSummaries={pageContext.tagSummaries}
+          activeTag={pageContext.tag}
+        />
         {posts.length > 0 ? (
           <div className="post-grid">
             {posts.map((post) => (
@@ -48,11 +49,11 @@ export const Head = ({ pageContext }) => (
 );
 
 export const query = graphql`
-  query BlogTagPage {
+  query BlogTagPage($tag: String!) {
     posts: allMarkdownRemark(
       filter: {
         fields: { contentType: { eq: "blog-post" } }
-        frontmatter: { draft: { ne: true } }
+        frontmatter: { draft: { ne: true }, tags: { in: [$tag] } }
       }
       sort: { frontmatter: { date: DESC } }
     ) {
