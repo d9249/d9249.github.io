@@ -102,18 +102,33 @@ draft: false
 
 영상 설명란에 연결된 GitHub 저장소 `angelos-p/llm-from-scratch`는 이 워크숍을 꽤 잘 뒷받침한다. 공개 저장소 메타데이터 기준 이 repo는 2026-04-04 생성, 조회 시점 기준 약 **2.2k stars**, **153 forks**, **11 commits**를 보인다. README는 이 프로젝트를 “few hundred lines” 수준의 교육용 GPT pipeline으로 소개하며, 기본 목표를 **MacBook에서 1시간 이내에 훈련 가능한 ~10M parameter 모델**로 잡고 있다.
 
+초반부 실제 화면에서도 이 교육적 framing이 그대로 드러난다. 워크숍은 곧바로 repo/문서 진입점으로 넘어가고, 참가자에게 결국 중요한 것은 추상적인 개념 설명보다 **직접 만져볼 수 있는 문서와 코드 구조**라는 점을 보여 준다.
+
+<figure style="margin: 1.8rem 0;">
+  <img
+    src="/images/blog/llm-from-scratch-shot-03-20.jpg"
+    alt="Workshop materials and repo landing view around 03:20"
+    style="width: 100%; max-width: 100%; height: auto; display: block;"
+  />
+  <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
+    03:20 전후 장면. 발표는 nanoGPT를 blueprint로 언급한 직후, 참가자가 따라갈 실제 워크숍 문서와 repo 진입점을 화면에 띄우며 “작동하는 최소 단위”를 직접 따라가게 만든다.
+  </figcaption>
+</figure>
+
 README가 특히 좋은 부분은 workshop outline이 코드 구조와 직접 연결된다는 점이다. `Part 1: Tokenization`, `Part 2: The Transformer`, `Part 3: The Training Loop`, `Part 4: Text Generation`, `Part 5: Putting It All Together`, `Part 6: Competition`으로 쪼개져 있고, 각각이 실제로 `model.py`, `train.py`, `generate.py` 같은 결과물로 수렴한다. 즉 이 프로젝트는 발표 슬라이드용 artifact가 아니라, **실습을 염두에 둔 교육용 repo**다.
 
 또 하나 중요한 점은 README가 character-level tokenization과 BPE를 정면 비교한다는 것이다. 작은 Shakespeare 데이터셋에서는 `vocab_size=65`, `block_size=256` 같은 설정이 합리적이며, 더 큰 tokenizer는 더 많은 데이터 없이는 제대로 수렴하지 않기 어렵다고 설명한다. 이 부분은 영상에서 나온 주장과 repo 문서가 잘 맞물리는 지점이다.
 
+후반부 training loop 설명 장면은 이 워크숍이 단지 개념 소개가 아니라 **실제 코드와 실험 루프를 읽는 연습**이라는 점을 더 직접적으로 보여준다.
+
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/llm-from-scratch-github-repo.png"
-    alt="angelos-p/llm-from-scratch GitHub 저장소"
+    src="/images/blog/llm-from-scratch-shot-47-12.jpg"
+    alt="Training loop walkthrough frame around 47:12"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
   <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
-    이 워크숍의 companion repo는 tokenizer, transformer, training loop, generation을 문서와 코드 구조로 직접 대응시키며 교육용 artifact로 잘 정리돼 있다.
+    47:12 전후 장면. training loop를 설명하는 코드 화면으로 넘어가며, loss·optimizer·iteration 같은 실제 학습 파이프라인을 어떻게 읽어야 하는지를 보여 준다.
   </figcaption>
 </figure>
 

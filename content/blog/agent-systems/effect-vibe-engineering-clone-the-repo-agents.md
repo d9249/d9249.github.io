@@ -23,12 +23,12 @@ draft: false
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/effect-solutions-homepage.png"
-    alt="Effect Solutions 홈페이지"
+    src="/images/blog/vibe-engineering-effect-apps-shot-13-08.jpg"
+    alt="Vibe Engineering Effect Apps talk frame around 13:08"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
   <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
-    발표에서 직접 언급되는 <code>effect.solutions</code>는 Effect 프로젝트를 위한 prescriptive guide이자 agent-guided setup 진입점으로 소개된다.
+    13:08 전후 장면. Michael Arnaldi가 “just clone the repo”라는 테제를 반복한 직후, 실제 라이브 코딩 세션 맥락 안에서 저장소를 컨텍스트로 넣는 접근을 시연하는 구간이다.
   </figcaption>
 </figure>
 
@@ -119,12 +119,12 @@ draft: false
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/effect-ts-github-repo.png"
-    alt="Effect-TS effect GitHub 저장소"
+    src="/images/blog/vibe-engineering-effect-apps-shot-45-42.jpg"
+    alt="Live coding frame around 45:42 showing Effect-focused implementation work"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
   <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
-    발표의 실질적 전제는 문서 설명보다 실제 monorepo 패턴을 에이전트 컨텍스트에 넣는 것이 더 강력하다는 점이다.
+    45:42 전후 장면. 세션이 shared HTTP API와 구현 패턴을 구체화하는 단계로 넘어가며, 발표의 요지가 단순한 구호가 아니라 실제 코드 작업 흐름이라는 점을 보여 준다.
   </figcaption>
 </figure>
 
