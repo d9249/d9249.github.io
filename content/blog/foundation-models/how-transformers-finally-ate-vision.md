@@ -5,11 +5,11 @@ description: "Isaac Robinson의 짧은 발표는 CNN에서 ViT, Swin, ConvNeXt, 
 author: "Sangmin Lee"
 category: "foundation-models"
 tags:
+  - YouTube
   - Vision Transformer
-  - Computer Vision
-  - DINOv2
-  - SAM
+  - Roboflow
   - RF-DETR
+  - SAM
 draft: false
 ---
 
@@ -19,19 +19,33 @@ AI Engineer Europe에서 Roboflow의 Isaac Robinson이 발표한 *How Transforme
 
 ## 무엇을 다루는 영상인가
 
-이 영상은 Roboflow의 Research Lead인 Isaac Robinson이 AI Engineer Europe 무대에서 진행한 공개 발표다. 길이는 약 17분으로 짧지만, 내용은 의외로 넓다. CNN과 Vision Transformer의 구조 차이에서 출발해, Swin과 ConvNeXt 같은 중간 단계의 반격, Hiera의 정리된 설계, MAE·DINO 계열 pretraining의 역할, 그리고 마지막으로 SAM3와 RF-DETR 같은 실제 제품형/배포형 시스템까지 한 번에 연결한다.
+이 영상은 AI Engineer 채널에 공개된 AI Engineer Europe 발표 녹화본으로, Roboflow의 Research Lead인 Isaac Robinson이 약 17분 동안 비전 백본의 계보를 빠르게 훑는다. 형식은 제품 데모보다 **짧은 역사 정리 + 현재 실무 해석 + Roboflow식 해법 제안**에 가깝다. 즉 순수 논문 리뷰라기보다, 왜 비전에서도 결국 Transformer가 foundation backbone이 되었는지에 대한 관점을 압축적으로 제시하는 발표다.
 
-발표를 관통하는 질문은 명확하다. **왜 이미지처럼 강한 도메인 prior가 필요한 영역에서, 오히려 그 prior가 약한 Transformer가 최종 승자가 되었는가?** 그리고 그 승리가 연구 벤치마크 차원에 머무르지 않고 실제 deployment stack까지 밀고 내려왔을 때, 실무자는 무엇을 읽어야 하는가를 묻는다. 그래서 이 발표는 순수한 backbone 역사 요약이면서도 동시에 foundation model 운영 전략에 대한 짧은 메모이기도 하다.
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 1.5rem 0;">
+  <iframe
+    src="https://www.youtube.com/embed/VhfAVA3BG2I"
+    title="Video: How Transformers Finally Ate Vision – Isaac Robinson, Roboflow"
+    loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen
+    style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;"
+  ></iframe>
+</div>
+
+질문 자체는 단순하다. **왜 이미지처럼 강한 도메인 prior가 필요한 영역에서, 오히려 그 prior가 약한 Transformer가 최종 승자가 되었는가?** 하지만 Robinson이 던지는 답은 구조 하나의 승리가 아니다. 대규모 self-supervised pretraining이 비전 inductive bias를 다시 학습했고, LLM 붐이 만든 attention 최적화와 accelerator-friendly infra가 그 구조를 실용적으로 만들었으며, 마지막으로 RF100-VL과 RF-DETR처럼 그 backbone을 현실적인 deployment envelope에 맞춰 다시 조정하는 기술이 붙으면서 판이 완전히 바뀌었다는 것이다.
+
+![Talk opening title slide (00:20)](/images/blog/how-transformers-finally-ate-vision-shot-00-20.jpg)
 
 ## 핵심 아이디어 / 구조 / 시연 흐름
 
-발표의 첫 축은 **CNN의 강한 inductive bias 대 ViT의 약한 inductive bias**라는 고전 구도다. CNN은 locality와 translation invariance를 구조적으로 갖고 시작한다. 반면 ViT는 이미지를 patch token으로 쪼갠 뒤 attention에 넣는 비교적 "무심한" 구조다. 발표에서는 이 점을 강조하며, 비전 쪽 Transformer가 본질적으로 더 우아해서 이긴 것이 아니라 처음에는 오히려 더 불리해 보였다고 짚는다. 특히 해상도 증가에 따라 토큰 수가 빠르게 늘어나는 구조 때문에, naïve한 ViT는 비전에서 비용이 커 보일 수밖에 없었다.
+발표의 첫 축은 **CNN의 강한 inductive bias 대 ViT의 약한 inductive bias**라는 고전 구도다. CNN은 locality와 translation invariance를 구조적으로 갖고 시작한다. 반면 ViT는 이미지를 patch token으로 쪼갠 뒤 attention에 넣는 비교적 단순한 구조다. 발표는 이 단순함이 처음에는 장점이 아니라 약점처럼 보였다고 짚는다. 특히 해상도가 올라갈수록 토큰 수가 빠르게 늘어나는 구조 때문에, naïve한 ViT는 비전에서 비용이 너무 큰 선택처럼 보이기 쉬웠다.
 
-그 다음 축은 **"Transformer를 비전에 맞게 고쳐보려는 시도"의 역사**다. Swin은 윈도우 단위 attention과 shifted window로 locality를 다시 주입했다. ConvNeXt는 아예 "Transformer에서 배운 좋은 습관을 convolution 쪽으로 역수입하면 어떨까"라는 접근으로 읽힌다. 즉 한동안의 경쟁은 Transformer가 CNN을 밀어낸다기보다, 양쪽이 서로의 장점을 흡수하며 중간지대를 넓혀 가는 과정에 가까웠다.
+그다음은 **"Transformer를 비전에 맞게 손보는" 단계**다. Swin은 윈도우 단위 attention과 shifted window를 통해 locality와 계산 효율을 되찾으려 했다. ConvNeXt는 더 흥미롭다. 아예 convolution 쪽으로 되돌아가되, Transformer 시대에 효과적이었던 학습 관례와 블록 설계를 역수입한다. 여기까지는 비전 커뮤니티가 단순히 Transformer에 항복한 것이 아니라, 양쪽 진영이 서로의 장점을 흡수하며 중간지대를 넓혀 가던 시기로 읽힌다.
 
-하지만 발표가 진짜로 힘을 주는 지점은 그 다음이다. Robinson은 Hiera와 MAE, 그리고 DINOv2/DINOv3 계열을 거치며 판이 바뀌었다고 본다. 요약하면 이렇다. 과거에는 구조 내부에 직접 넣어야 했던 비전 inductive bias를, 이제는 **대규모 self-supervised pretraining이 다시 학습해 준다**. MAE는 빠진 patch를 복원하게 만들면서 구조에 없던 bias를 데이터에서 되찾아 오고, DINO 계열은 단순 분류 성능을 넘어 feature map 자체를 매우 풍부하게 만든다. 발표 속 표현을 빌리면, 이제 ViT는 "bias가 없는 구조"라기보다 **pretraining으로 bias를 다시 획득한 범용 backbone**이 된다.
+하지만 발표가 진짜로 힘을 주는 대목은 그다음이다. Robinson은 Hiera와 MAE, 그리고 DINOv2/DINOv3 계열을 거치며 판이 바뀌었다고 본다. 과거에는 구조 안에 직접 넣어야 했던 비전 inductive bias를, 이제는 **대규모 self-supervised pretraining이 다시 학습해 준다**. MAE는 빠진 patch를 복원하게 만들면서 구조에 없던 bias를 데이터에서 회수하고, DINO 계열은 단순 분류 성능을 넘어 feature map 자체를 풍부하게 만든다. 즉 ViT는 더 이상 "bias가 없는 구조"가 아니라, **pretraining으로 bias를 다시 획득한 범용 backbone**으로 바뀐다.
 
-여기에 LLM 붐이 만든 systems layer가 얹힌다. FlashAttention 같은 attention 최적화, 더 성숙한 accelerator support, Transformer-friendly inference stack이 비전에도 그대로 흘러들어오면서, 한때는 구조적 약점처럼 보였던 비효율이 점점 덜 치명적이 됐다. 즉 비전용 Transformer의 승리는 architecture 단독 승리가 아니라, **pretraining + infra + ecosystem의 결합 승리**라는 것이 발표의 핵심 메시지다.
+여기에 systems layer가 얹힌다. FlashAttention 같은 attention 최적화, 더 성숙한 accelerator support, Transformer-friendly inference stack이 비전에도 그대로 흘러들어오면서, 한때는 구조적 약점처럼 보였던 계산비용이 점점 덜 치명적이 된다. 그래서 이 발표가 제시하는 결론은 분명하다. **비전용 Transformer의 승리는 architecture 단독 승리가 아니라, pretraining + infra + deployment adaptation의 결합 승리**라는 것이다.
 
 | 단계 | 대표 계열 | 무엇을 보완하려 했나 | 이 발표가 읽는 의미 |
 |---|---|---|---|
@@ -42,7 +56,23 @@ AI Engineer Europe에서 Roboflow의 Isaac Robinson이 발표한 *How Transforme
 | 단순화된 재정렬 | Hiera | 불필요한 장식을 빼고 pretraining으로 bias 복구 | 구조보다 pretraining 전략이 더 중요해지기 시작한 지점 |
 | 기반모델 시대 | DINOv2/DINOv3, SAM3, RF-DETR | 풍부한 feature, 더 넓은 transfer, 실제 배포 성능 | ViT가 연구 구조를 넘어 foundation backbone으로 굳어진 단계 |
 
-발표 후반부는 이 흐름을 **실제 모델 계보와 deployment 문제**로 연결한다. SAM 계열에서는 SAM → MobileSAM → SAM2 → SAM3로 갈수록 backbone 실험이 이어지지만, 결국 massively pretrained ViT 계열로 다시 수렴하는 패턴이 관찰된다고 설명한다. 동시에 문제는 하나 더 남는다. 그렇게 강력한 backbone은 대개 비싸고 무겁다. 그래서 최종 승부는 단순 정확도가 아니라 **그 backbone을 얼마나 다양한 하드웨어와 데이터 조건에 맞게 재조정할 수 있느냐**로 넘어간다.
+![Pretraining + FlashAttention slide (08:45)](/images/blog/how-transformers-finally-ate-vision-shot-08-45.jpg)
+
+## 타임라인으로 보는 핵심 구간
+
+이 영상에는 공식 chapter가 없지만, transcript와 슬라이드 전개를 기준으로 하면 핵심 흐름은 비교적 명확하게 나뉜다.
+
+| 시간 | 구간 | 화면에서 주로 보이는 것 | 발표의 핵심 주장 |
+|---|---|---|---|
+| 00:14–03:22 | CNN vs ViT 문제 설정 | 타이틀 슬라이드와 CNN/ViT 비교 설명 | ViT가 처음엔 더 비싸고 비전 친화적이지 않아 보였다는 문제를 제기 |
+| 03:22–05:11 | Swin의 locality 복원 | 윈도우 기반 attention 설명 슬라이드 | Transformer도 locality를 구조적으로 다시 주입하려는 시도가 있었다 |
+| 05:13–07:14 | ConvNeXt와 Hiera 전환 | conv 재설계와 bias 제거/복구 논리 | 중요한 것은 구조 장식보다 어떤 bias를 어디서 회수하느냐라는 점 |
+| 07:27–10:24 | MAE·DINOv3·FlashAttention | feature map 예시와 pretraining/infra 논의 | ViT-specific pretraining과 LLM 인프라가 Transformer의 약점을 약화시켰다 |
+| 10:42–12:36 | SAM 계보와 비용 문제 | SAM 계열과 백본 계보 설명 | massively pretrained ViT가 강력하지만, 그대로는 너무 무겁고 비싸다 |
+| 12:38–15:11 | RF100-VL·RF-DETR 해법 | benchmark, latency/accuracy, tunable knobs | foundation backbone을 현실 하드웨어에 맞게 번역하는 능력이 더 중요해졌다 |
+| 15:22–16:44 | Q&A | 영상·JEPA 관련 질의응답 | 다음 경쟁은 멀티모달·비디오 pretraining으로 확장될 수 있다 |
+
+이 타임라인이 중요한 이유는, 발표가 단순한 backbone 역사 요약이 아니라 **연구 구조 → pretraining → infra → deployment**라는 네 개 층을 차례대로 밟아 내려간다는 점을 잘 보여주기 때문이다. 즉 "왜 Transformer가 이겼는가"라는 질문에 대해, 구조적 미학이 아니라 **학습 규모와 시스템 최적화가 그 구조를 실무적으로 밀어줬다**는 쪽으로 논리를 조립한다.
 
 ## 영상과 연결 자료에서 확인되는 점
 
@@ -56,6 +86,10 @@ RF-DETR 공개 저장소도 같은 방향을 보여준다. GitHub README 기준 
 
 ![RF-DETR latency-accuracy tradeoff](https://storage.googleapis.com/com-roboflow-marketing/rf-detr/rf_detr_1-4_latency_accuracy_object_detection.png)
 
+영상 후반의 Roboflow 파트는 이 공식 자료와도 잘 연결된다. 12분대 후반 이후의 슬라이드에서는 RF100-VL과 RF-DETR을 단순 모델 소개가 아니라 **foundation backbone을 target hardware와 target data에 맞게 변형하는 패키징 전략**으로 설명한다. 즉 RF-DETR은 "Transformer가 비전에서 이겼다"는 결론의 종착점이 아니라, 그 승리를 edge/real-time/production 쪽으로 다시 번역하는 한 가지 구현으로 읽는 편이 맞다.
+
+![Flexible inference slide (14:18)](/images/blog/how-transformers-finally-ate-vision-shot-14-18.jpg)
+
 라이선스 구조도 흥미롭다. RF-DETR 저장소와 오픈소스 `rfdetr` 패키지는 Apache 2.0으로 공개되지만, README는 일부 Plus 컴포넌트가 별도 PML 1.0 라이선스를 따른다고 분리해 적는다. 이건 "Transformer backbone이 강해졌다"는 이야기와 별개로, 실제 비전 기반모델 시대에는 **오픈소스 모델, 상용 확장, 배포 스택**이 함께 얽힌다는 사실을 보여준다. 다시 말해 비전 Transformer의 승리는 논문 승리가 아니라, 이미 제품 패키징과 사업 모델까지 닿아 있는 승리다.
 
 ## 실무 관점에서의 해석
@@ -64,7 +98,9 @@ RF-DETR 공개 저장소도 같은 방향을 보여준다. GitHub README 기준 
 
 특히 비전에서 foundation model이 진짜로 자리 잡으려면 두 가지가 동시에 필요하다. 하나는 DINOv2/DINOv3, MAE처럼 **generic representation을 크게 끌어올리는 pretraining**이고, 다른 하나는 RF100-VL이나 RF-DETR처럼 **그 representation을 특정 deployment envelope에 맞게 다시 압축하고 최적화하는 방법**이다. 발표는 바로 이 두 층을 이어 붙인다. 그래서 이 영상은 "ViT가 이겼다"는 선언보다, **이제 비전의 핵심 경쟁력이 backbone 발명보다 backbone 활용과 재배치에 있다**는 점을 더 설득력 있게 보여준다.
 
-물론 한계도 있다. 이 발표는 17분짜리 요약이기 때문에, Swin·ConvNeXt·Hiera·DINOv3 각각의 수치와 반례를 세세하게 따지지는 않는다. 또 SAM3의 parameter/latency나 Roboflow의 speedup 수치는 영상 속 주장으로 제시되므로, 제품 의사결정에 그대로 옮길 때는 원 논문·벤치마크 문서·재현 환경을 다시 확인하는 편이 안전하다. 그럼에도 방향성만큼은 분명하다. **비전에서 Transformer의 승리는 늦었지만, 한 번 전환점이 만들어진 뒤에는 backbone 구조 하나가 아니라 pretraining, infra, deployment stack 전체를 끌고 들어온 승리였다.**
+또 하나 눈에 띄는 점은, 이 발표가 foundation model의 승리를 곧바로 "모든 문제가 끝났다"로 해석하지 않는다는 것이다. 12분 이후부터는 오히려 **승리한 backbone이 너무 무거워졌기 때문에, 이제는 flexibility가 새로운 병목**이라고 말한다. SAM3의 800M 파라미터와 T4 기준 300ms 언급, RF100-VL의 전이 평가, RF-DETR의 speed/accuracy family 구성은 모두 같은 방향을 가리킨다. 즉 다음 경쟁은 더 강한 backbone 하나를 발명하는 것이 아니라, 이미 강해진 backbone을 얼마나 다양한 전력·메모리·지연 시간 제약으로 번역하느냐에 있다.
+
+물론 한계도 있다. 이 발표는 17분짜리 요약이기 때문에 Swin·ConvNeXt·Hiera·DINOv3 각각의 수치와 반례를 세세하게 따지지는 않는다. 또 SAM3의 parameter/latency나 Roboflow의 speedup 수치는 영상 속 주장과 동반 공개자료를 함께 읽어야 하므로, 제품 의사결정에 그대로 옮길 때는 원 논문·벤치마크 문서·재현 환경을 다시 확인하는 편이 안전하다. 그럼에도 방향성만큼은 분명하다. **비전에서 Transformer의 승리는 늦었지만, 한 번 전환점이 만들어진 뒤에는 backbone 구조 하나가 아니라 pretraining, infra, deployment stack 전체를 끌고 들어온 승리였다.**
 
 이 지점에서 남는 질문도 자연스럽다. 다음 경쟁은 "Transformer냐 아니냐"가 아니라, 그렇게 만들어진 거대한 시각 backbone을 얼마나 싸고 빠르고 유연하게 task-specific product로 바꿀 수 있느냐일 가능성이 크다. 그리고 바로 그 지점에서 Roboflow가 RF100-VL과 RF-DETR로 던지는 메시지는 꽤 선명하다. **비전의 미래는 더 강한 backbone 하나보다, foundation backbone을 다양한 현실 세계 제약으로 번역하는 능력에 달려 있다.**
 
