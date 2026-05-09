@@ -35,7 +35,10 @@ AI Engineer Europe에서 Roboflow의 Isaac Robinson이 발표한 *How Transforme
 
 질문 자체는 단순하다. **왜 이미지처럼 강한 도메인 prior가 필요한 영역에서, 오히려 그 prior가 약한 Transformer가 최종 승자가 되었는가?** 하지만 Robinson이 던지는 답은 구조 하나의 승리가 아니다. 대규모 self-supervised pretraining이 비전 inductive bias를 다시 학습했고, LLM 붐이 만든 attention 최적화와 accelerator-friendly infra가 그 구조를 실용적으로 만들었으며, 마지막으로 RF100-VL과 RF-DETR처럼 그 backbone을 현실적인 deployment envelope에 맞춰 다시 조정하는 기술이 붙으면서 판이 완전히 바뀌었다는 것이다.
 
-![Talk opening title slide (00:20)](/images/blog/how-transformers-finally-ate-vision-shot-00-20.jpg)
+<figure style="margin: 1.8rem 0;">
+  <img src="/images/blog/how-transformers-finally-ate-vision-shot-00-20.jpg" alt="Talk opening title slide (00:20)" style="width: 100%; max-width: 100%; height: auto; display: block;" />
+  <figcaption>Talk opening title slide (00:20)</figcaption>
+</figure>
 
 ## 핵심 아이디어 / 구조 / 시연 흐름
 
@@ -56,7 +59,10 @@ AI Engineer Europe에서 Roboflow의 Isaac Robinson이 발표한 *How Transforme
 | 단순화된 재정렬 | Hiera | 불필요한 장식을 빼고 pretraining으로 bias 복구 | 구조보다 pretraining 전략이 더 중요해지기 시작한 지점 |
 | 기반모델 시대 | DINOv2/DINOv3, SAM3, RF-DETR | 풍부한 feature, 더 넓은 transfer, 실제 배포 성능 | ViT가 연구 구조를 넘어 foundation backbone으로 굳어진 단계 |
 
-![Pretraining + FlashAttention slide (08:45)](/images/blog/how-transformers-finally-ate-vision-shot-08-45.jpg)
+<figure style="margin: 1.8rem 0;">
+  <img src="/images/blog/how-transformers-finally-ate-vision-shot-08-45.jpg" alt="Pretraining + FlashAttention slide (08:45)" style="width: 100%; max-width: 100%; height: auto; display: block;" />
+  <figcaption>Pretraining + FlashAttention slide (08:45)</figcaption>
+</figure>
 
 ## 타임라인으로 보는 핵심 구간
 
@@ -88,7 +94,10 @@ RF-DETR 공개 저장소도 같은 방향을 보여준다. GitHub README 기준 
 
 영상 후반의 Roboflow 파트는 이 공식 자료와도 잘 연결된다. 12분대 후반 이후의 슬라이드에서는 RF100-VL과 RF-DETR을 단순 모델 소개가 아니라 **foundation backbone을 target hardware와 target data에 맞게 변형하는 패키징 전략**으로 설명한다. 즉 RF-DETR은 "Transformer가 비전에서 이겼다"는 결론의 종착점이 아니라, 그 승리를 edge/real-time/production 쪽으로 다시 번역하는 한 가지 구현으로 읽는 편이 맞다.
 
-![Flexible inference slide (14:18)](/images/blog/how-transformers-finally-ate-vision-shot-14-18.jpg)
+<figure style="margin: 1.8rem 0;">
+  <img src="/images/blog/how-transformers-finally-ate-vision-shot-14-18.jpg" alt="Flexible inference slide (14:18)" style="width: 100%; max-width: 100%; height: auto; display: block;" />
+  <figcaption>Flexible inference slide (14:18)</figcaption>
+</figure>
 
 라이선스 구조도 흥미롭다. RF-DETR 저장소와 오픈소스 `rfdetr` 패키지는 Apache 2.0으로 공개되지만, README는 일부 Plus 컴포넌트가 별도 PML 1.0 라이선스를 따른다고 분리해 적는다. 이건 "Transformer backbone이 강해졌다"는 이야기와 별개로, 실제 비전 기반모델 시대에는 **오픈소스 모델, 상용 확장, 배포 스택**이 함께 얽힌다는 사실을 보여준다. 다시 말해 비전 Transformer의 승리는 논문 승리가 아니라, 이미 제품 패키징과 사업 모델까지 닿아 있는 승리다.
 
