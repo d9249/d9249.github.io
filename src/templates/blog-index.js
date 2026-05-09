@@ -26,23 +26,26 @@ const BlogIndexTemplate = ({ data, pageContext }) => {
         <CategoryNav />
         <TagNav tagSummaries={tagSummaries} />
         <div className="blog-list-summary" aria-live="polite">
-          <span>
+          <span className="blog-list-count">
             {totalPosts} posts
             {totalPosts > 0
               ? `, ${firstPostNumber}-${lastPostNumber} showing`
               : ""}
           </span>
-          <strong>
-            {currentPage} / {pageCount}
-          </strong>
+          <div className="blog-list-meta">
+            <strong>
+              {currentPage} / {pageCount}
+            </strong>
+            <Pagination
+              className="blog-top-pagination"
+              compact
+              currentPage={currentPage}
+              getPagePath={getBlogPagePath}
+              iconOnly
+              pageCount={pageCount}
+            />
+          </div>
         </div>
-        <Pagination
-          className="blog-top-pagination"
-          compact
-          currentPage={currentPage}
-          getPagePath={getBlogPagePath}
-          pageCount={pageCount}
-        />
         {featured && <PostCard post={featured} featured />}
         {listedPosts.length > 0 ? (
           <div className="post-grid">

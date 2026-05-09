@@ -2154,6 +2154,17 @@ h3 {
   white-space: nowrap;
 }
 
+.blog-list-count {
+  min-width: 0;
+}
+
+.blog-list-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
 .post-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2282,6 +2293,16 @@ h3 {
   padding: 0 14px;
 }
 
+.pagination-icon {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.2;
+}
+
 .pagination a:hover,
 .pagination-page.is-active {
   border-color: color-mix(in oklch, var(--accent) 72%, var(--border));
@@ -2301,9 +2322,9 @@ h3 {
 }
 
 .pagination.is-compact {
-  justify-content: space-between;
-  margin-top: -4px;
-  margin-bottom: 18px;
+  gap: 6px;
+  justify-content: flex-end;
+  margin: 0;
 }
 
 .blog-top-pagination {
@@ -3269,10 +3290,18 @@ figcaption,
   }
 
   .blog-list-summary {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
     margin-top: -2px;
+  }
+
+  .blog-list-count {
+    overflow-wrap: anywhere;
+  }
+
+  .blog-list-meta {
+    gap: 8px;
   }
 
   .blog-top-pagination {
@@ -3309,6 +3338,13 @@ figcaption,
 
   .pagination-step {
     flex: 1 1 calc(50% - 4px);
+  }
+
+  .pagination.is-compact .pagination-step {
+    flex: 0 0 34px;
+    min-width: 34px;
+    min-height: 34px;
+    padding: 0;
   }
 
   .pagination-page,

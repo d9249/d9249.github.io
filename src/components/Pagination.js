@@ -34,20 +34,39 @@ const getPaginationItems = (currentPage, pageCount) => {
   return items;
 };
 
-const PaginationStep = ({ disabled, label, page, getPagePath }) => {
+const PaginationIcon = ({ direction }) => (
+  <svg
+    className="pagination-icon"
+    aria-hidden="true"
+    viewBox="0 0 20 20"
+    focusable="false"
+  >
+    <path d={direction === "previous" ? "M12 5 7 10l5 5" : "m8 5 5 5-5 5"} />
+  </svg>
+);
+
+const PaginationStep = ({
+  direction,
+  disabled,
+  iconOnly = false,
+  label,
+  page,
+  getPagePath,
+}) => {
   const className = `pagination-step${disabled ? " is-disabled" : ""}`;
+  const content = iconOnly ? <PaginationIcon direction={direction} /> : label;
 
   if (disabled) {
     return (
-      <span className={className} aria-disabled="true">
-        {label}
+      <span className={className} aria-disabled="true" aria-label={label}>
+        {content}
       </span>
     );
   }
 
   return (
-    <Link className={className} to={getPagePath(page)}>
-      {label}
+    <Link className={className} to={getPagePath(page)} aria-label={label}>
+      {content}
     </Link>
   );
 };
@@ -57,6 +76,7 @@ const Pagination = ({
   currentPage,
   pageCount,
   compact = false,
+  iconOnly = false,
   getPagePath,
 }) => {
   if (pageCount <= 1) {
@@ -77,8 +97,10 @@ const Pagination = ({
   return (
     <nav className={paginationClassName} aria-label="Blog pages">
       <PaginationStep
+        direction="previous"
         disabled={!previousPage}
         getPagePath={getPagePath}
+        iconOnly={iconOnly}
         label="이전"
         page={previousPage}
       />
@@ -110,8 +132,10 @@ const Pagination = ({
         </div>
       )}
       <PaginationStep
+        direction="next"
         disabled={!nextPage}
         getPagePath={getPagePath}
+        iconOnly={iconOnly}
         label="다음"
         page={nextPage}
       />
