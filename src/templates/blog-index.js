@@ -36,6 +36,13 @@ const BlogIndexTemplate = ({ data, pageContext }) => {
             {currentPage} / {pageCount}
           </strong>
         </div>
+        <Pagination
+          className="blog-top-pagination"
+          compact
+          currentPage={currentPage}
+          getPagePath={getBlogPagePath}
+          pageCount={pageCount}
+        />
         {featured && <PostCard post={featured} featured />}
         {listedPosts.length > 0 ? (
           <div className="post-grid">

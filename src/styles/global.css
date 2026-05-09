@@ -2300,6 +2300,16 @@ h3 {
   background: transparent;
 }
 
+.pagination.is-compact {
+  justify-content: space-between;
+  margin-top: -4px;
+  margin-bottom: 18px;
+}
+
+.blog-top-pagination {
+  display: none;
+}
+
 .article-shell {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 260px;
@@ -3218,25 +3228,15 @@ figcaption,
   }
 
   .category-nav {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 6px;
-    margin-right: -14px;
-    margin-left: -14px;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    padding: 8px 14px;
-    scroll-padding-inline: 14px;
-    scrollbar-width: none;
-  }
-
-  .category-nav::-webkit-scrollbar {
-    display: none;
+    padding: 8px;
   }
 
   .category-nav a {
-    flex: 0 0 auto;
-    scroll-snap-align: start;
-    white-space: nowrap;
+    flex: 0 1 auto;
+    overflow-wrap: anywhere;
+    white-space: normal;
   }
 
   .tag-nav {
@@ -3275,6 +3275,10 @@ figcaption,
     margin-top: -2px;
   }
 
+  .blog-top-pagination {
+    display: flex;
+  }
+
   .post-thumb {
     min-height: 128px;
   }
@@ -3292,7 +3296,7 @@ figcaption,
 
   .pagination-pages {
     flex: 1 0 100%;
-    justify-content: flex-start;
+    justify-content: center;
     order: -1;
     overflow-x: auto;
     padding-bottom: 2px;

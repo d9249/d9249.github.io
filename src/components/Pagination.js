@@ -52,7 +52,13 @@ const PaginationStep = ({ disabled, label, page, getPagePath }) => {
   );
 };
 
-const Pagination = ({ currentPage, pageCount, getPagePath }) => {
+const Pagination = ({
+  className = "",
+  currentPage,
+  pageCount,
+  compact = false,
+  getPagePath,
+}) => {
   if (pageCount <= 1) {
     return null;
   }
@@ -60,36 +66,49 @@ const Pagination = ({ currentPage, pageCount, getPagePath }) => {
   const previousPage = currentPage > 1 ? currentPage - 1 : null;
   const nextPage = currentPage < pageCount ? currentPage + 1 : null;
   const paginationItems = getPaginationItems(currentPage, pageCount);
+  const paginationClassName = [
+    "pagination",
+    compact ? "is-compact" : "",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <nav className="pagination" aria-label="Blog pages">
+    <nav className={paginationClassName} aria-label="Blog pages">
       <PaginationStep
         disabled={!previousPage}
         getPagePath={getPagePath}
         label="이전"
         page={previousPage}
       />
-      <div className="pagination-pages" aria-label="Page list">
-        {paginationItems.map((item) =>
-          typeof item === "string" ? (
-            <span className="pagination-gap" key={item} aria-hidden="true">
-              ...
-            </span>
-          ) : item === currentPage ? (
-            <span
-              className="pagination-page is-active"
-              key={item}
-              aria-current="page"
-            >
-              {item}
-            </span>
-          ) : (
-            <Link className="pagination-page" key={item} to={getPagePath(item)}>
-              {item}
-            </Link>
-          ),
-        )}
-      </div>
+      {compact ? null : (
+        <div className="pagination-pages" aria-label="Page list">
+          {paginationItems.map((item) =>
+            typeof item === "string" ? (
+              <span className="pagination-gap" key={item} aria-hidden="true">
+                ...
+              </span>
+            ) : item === currentPage ? (
+              <span
+                className="pagination-page is-active"
+                key={item}
+                aria-current="page"
+              >
+                {item}
+              </span>
+            ) : (
+              <Link
+                className="pagination-page"
+                key={item}
+                to={getPagePath(item)}
+              >
+                {item}
+              </Link>
+            ),
+          )}
+        </div>
+      )}
       <PaginationStep
         disabled={!nextPage}
         getPagePath={getPagePath}
