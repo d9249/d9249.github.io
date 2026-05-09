@@ -1,0 +1,38 @@
+[
+  {
+    "from": "/blog/model-training/deepseek-v4-pro-million-token-moe/",
+    "to": "/blog/foundation-models/deepseek-v4-pro-million-token-moe/"
+  },
+  {
+    "from": "/blog/model-training/dynin-omni-masked-diffusion-omnimodal-model/",
+    "to": "/blog/foundation-models/dynin-omni-masked-diffusion-omnimodal-model/"
+  },
+  {
+    "from": "/blog/model-training/mimo-v2-5-omnimodal-agent-model/",
+    "to": "/blog/foundation-models/mimo-v2-5-omnimodal-agent-model/"
+  },
+  {
+    "from": "/blog/model-training/onevl-latent-world-model-autonomous-driving/",
+    "to": "/blog/foundation-models/onevl-latent-world-model-autonomous-driving/"
+  },
+  {
+    "from": "/blog/model-training/tuna-2-pixel-embeddings-encoder-free-unified-multimodal-model/",
+    "to": "/blog/foundation-models/tuna-2-pixel-embeddings-encoder-free-unified-multimodal-model/"
+  },
+  {
+    "from": "/blog/data-infrastructure/autokernel-gpu-kernel-autoresearch/",
+    "to": "/blog/inference-systems/autokernel-gpu-kernel-autoresearch/"
+  },
+  {
+    "from": "/blog/data-infrastructure/gemma-4-mtp-speculative-decoding-drafters/",
+    "to": "/blog/inference-systems/gemma-4-mtp-speculative-decoding-drafters/"
+  },
+  {
+    "from": "/blog/data-infrastructure/pop-prefill-only-pruning/",
+    "to": "/blog/inference-systems/pop-prefill-only-pruning/"
+  },
+  {
+    "from": "/blog/model-training/supergemma4-26b-uncensored-fast-mlx/",
+    "to": "/blog/inference-systems/supergemma4-26b-uncensored-fast-mlx/"
+  }
+]

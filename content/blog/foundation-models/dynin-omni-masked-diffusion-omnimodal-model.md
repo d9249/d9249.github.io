@@ -3,7 +3,7 @@ title: "Dynin-Omni는 오토리그레시브 대신 마스크드 디퓨전으로 
 date: "2026-05-06T14:48:58"
 description: "Dynin-Omni는 텍스트·이미지·음성 이해와 생성, 그리고 비디오 이해를 하나의 8B 마스크드 디퓨전 백본으로 통합해, 옴니모달 모델링을 외부 생성기 조립이 아니라 shared discrete token space 위의 iterative denoising 문제로 다시 정의한다."
 author: "Sangmin Lee"
-category: "model-training"
+category: "foundation-models"
 tags:
   - Dynin-Omni
   - Omnimodal

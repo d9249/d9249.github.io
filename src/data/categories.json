@@ -5,14 +5,29 @@
     "description": "RAG, 에이전트 실행, 워크플로우 자동화를 제품 운영 관점에서 정리합니다."
   },
   {
+    "slug": "foundation-models",
+    "label": "Foundation Models",
+    "description": "새로운 기반모델, 멀티모달 모델, MoE, 비전 백본처럼 모델 자체의 설계와 포지셔닝을 정리합니다."
+  },
+  {
     "slug": "model-training",
     "label": "Model Training",
-    "description": "파인튜닝, 증류, RL, PEFT처럼 모델을 학습하고 압축하는 방법을 다룹니다."
+    "description": "파인튜닝, 증류, RL, PEFT, 학습 루프처럼 모델을 만들고 적응시키는 방법을 다룹니다."
+  },
+  {
+    "slug": "inference-systems",
+    "label": "Inference Systems",
+    "description": "서빙, speculative decoding, pruning, GPU 커널, 로컬 런타임처럼 모델을 빠르게 실행하는 시스템을 다룹니다."
   },
   {
     "slug": "data-infrastructure",
     "label": "Data Infrastructure",
     "description": "합성 데이터, 데이터 준비, 검증 파이프라인을 시스템 관점에서 기록합니다."
+  },
+  {
+    "slug": "evaluation-benchmarks",
+    "label": "Evaluation & Benchmarks",
+    "description": "LLM·VLM 평가 프레임워크, 벤치마크, 리더보드, 측정 기준을 정리합니다."
   },
   {
     "slug": "safety-privacy",
@@ -23,6 +38,11 @@
     "slug": "document-intelligence",
     "label": "Document Intelligence",
     "description": "문서 OCR, 테이블 구조 복원, 벤치마크와 품질 지표를 다룹니다."
+  },
+  {
+    "slug": "video-generation",
+    "label": "Video Generation",
+    "description": "비디오 생성, 편집, 인페인팅, 영상 기반 모델링 흐름을 정리합니다."
   },
   {
     "slug": "career-notes",

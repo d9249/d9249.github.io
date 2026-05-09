@@ -3,7 +3,7 @@ title: "Gemma 4 MTP는 speculative decoding을 제품형 추론 가속 계층으
 date: "2026-05-06T12:30:48"
 description: "Google의 Gemma 4 Multi-Token Prediction drafters는 작은 draft model이 여러 토큰을 미리 제안하고 target model이 이를 병렬 검증하는 구조를 통해, 출력 품질을 바꾸지 않으면서 최대 3배까지 추론 속도를 끌어올리려는 inference acceleration layer다."
 author: "Sangmin Lee"
-category: "data-infrastructure"
+category: "inference-systems"
 tags:
   - Gemma
   - Inference Optimization

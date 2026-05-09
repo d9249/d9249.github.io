@@ -3,7 +3,7 @@ title: "POP은 prefill만 가지치기해 LLM 추론을 가속한다"
 date: "2026-05-06T03:50:56"
 description: "POP은 LLM 추론의 prefill과 decode가 서로 다른 역할을 가진다는 점을 이용해, 문맥 인코딩 단계에서만 깊은 층을 생략하고 decode는 풀모델로 유지함으로써 정확도 손실을 크게 늘리지 않고 prefill 지연을 줄이려는 stage-aware pruning 접근이다."
 author: "Sangmin Lee"
-category: "data-infrastructure"
+category: "inference-systems"
 tags:
   - Inference Optimization
   - Model Pruning

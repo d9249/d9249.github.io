@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const categories = require("./src/data/categories.json");
+const legacyRedirects = require("./src/data/legacy-redirects.json");
 const { getTagSummaries } = require("./src/utils/tags");
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
@@ -70,6 +71,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const postTemplate = path.resolve("./src/templates/blog-post.js");
   const categoryTemplate = path.resolve("./src/templates/blog-category.js");
+  const redirectTemplate = path.resolve("./src/templates/redirect.js");
   const tagTemplate = path.resolve("./src/templates/blog-tag.js");
   const posts = result.data.posts.nodes.filter(
     (post) => !post.frontmatter.draft,
@@ -97,6 +99,16 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         label: category.label,
         description: category.description,
         tagSummaries,
+      },
+    });
+  });
+
+  legacyRedirects.forEach((redirect) => {
+    createPage({
+      path: redirect.from,
+      component: redirectTemplate,
+      context: {
+        to: redirect.to,
       },
     });
   });
