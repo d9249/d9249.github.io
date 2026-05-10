@@ -19,6 +19,36 @@ import {
 
 const CARD_DECK_SIZE = 4;
 const POST_DECK_SIZE = 3;
+const SKILL_MARKS = new Map([
+  ["Linux (Ubuntu)", "LX"],
+  ["Windows", "WIN"],
+  ["UNIX", "UX"],
+  ["JavaScript", "JS"],
+  ["React.js", "R"],
+  ["Vue.js", "V"],
+  ["Django", "DJ"],
+  ["Nest.js", "N"],
+  ["MyBatis", "MB"],
+  ["Langsmith", "LS"],
+  ["Langchain", "LC"],
+  ["Langgraph", "LG"],
+  ["PyTorch", "PT"],
+  ["NumPy", "NP"],
+  ["Pandas", "PD"],
+  ["OpenCV", "CV"],
+  ["Scikit-learn", "SK"],
+  ["TensorFlow", "TF"],
+  ["FastAPI", "FA"],
+  ["PostgreSQL", "PG"],
+  ["MongoDB", "MDB"],
+  ["Qdrant", "QD"],
+  ["AWS SageMaker", "AWS"],
+  ["AWS CLI", "CLI"],
+  ["Docker-Compose", "DC"],
+  ["Kubernetes", "K8S"],
+  ["Elasticsearch", "ES"],
+  ["Github Actions", "GHA"],
+]);
 
 const getCardDecks = (items, deckSize = CARD_DECK_SIZE) =>
   Array.from({ length: Math.ceil(items.length / deckSize) }, (_, index) =>
@@ -27,6 +57,34 @@ const getCardDecks = (items, deckSize = CARD_DECK_SIZE) =>
 
 const getDeckLabel = (index, total) =>
   `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+
+const getSkillMark = (skill) => {
+  const knownMark = SKILL_MARKS.get(skill);
+
+  if (knownMark) {
+    return knownMark;
+  }
+
+  const words = skill
+    .replace(/\([^)]*\)/g, "")
+    .replace(/[./_-]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean);
+
+  if (!words.length) {
+    return skill.slice(0, 2).toUpperCase();
+  }
+
+  if (words.length === 1) {
+    return words[0].slice(0, 3).toUpperCase();
+  }
+
+  return words
+    .slice(0, 3)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+};
 
 const IndexPage = ({ data }) => {
   const posts = data.posts.nodes;
@@ -419,12 +477,20 @@ const IndexPage = ({ data }) => {
         <SectionHeading kicker="Skills" title="기술 스택" />
         <div className="skill-grid">
           {skillGroups.map((group) => (
-            <article className="skill-card" key={group.title}>
+            <article
+              className="skill-card"
+              key={group.title}
+              aria-label={`${group.title}: ${group.summary}`}
+            >
               <h3>{group.title}</h3>
-              <p>{group.summary}</p>
               <ul className="skill-list">
                 {group.skills.map((skill) => (
-                  <li key={skill}>{skill}</li>
+                  <li key={skill}>
+                    <span className="skill-logo-mark" aria-hidden="true">
+                      {getSkillMark(skill)}
+                    </span>
+                    <span className="skill-logo-name">{skill}</span>
+                  </li>
                 ))}
               </ul>
               {group.contexts?.length ? (
