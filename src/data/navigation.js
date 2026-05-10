@@ -23,5 +23,6 @@ export const navItems = [
     to: "/portfolio/",
   },
   { label: "blog", heroLabel: "블로그", showInHero: true, to: "/blog/" },
+  { label: "tips", heroLabel: "팁", showInHero: true, to: "/tips/" },
   { label: "contact", heroLabel: "연락", to: "/contact/" },
 ];
