@@ -2393,12 +2393,18 @@ h3 {
 .tip-tags {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
   gap: 8px;
 }
 
 .tip-platforms a,
 .tip-post-platforms a,
 .tip-tags span {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
   padding: 7px 9px;
   border: 1px solid var(--border);
   border-radius: 6px;
