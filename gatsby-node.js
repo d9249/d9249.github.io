@@ -7,6 +7,13 @@ const { getTagSummaries } = require("./src/utils/tags");
 
 const POSTS_PER_BLOG_PAGE = 12;
 const POSTS_ON_FIRST_BLOG_PAGE = 13;
+const TIPS_PER_PAGE = 4;
+
+const getTipsIndexPath = (categorySlug, page) => {
+  const basePath = categorySlug ? `/tips/${categorySlug}/` : "/tips/";
+
+  return page <= 1 ? basePath : `${basePath}page/${page}/`;
+};
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
@@ -199,26 +206,55 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     });
   });
 
-  createPage({
-    path: "/tips/",
-    component: tipsIndexTemplate,
-    context: {
-      activeCategory: null,
-      description:
-        "새로 등장하는 응용프로그램과 로컬 도구를 플랫폼별로 빠르게 훑어볼 수 있게 정리합니다.",
-      label: "Application Tips",
-    },
+  const createTipIndexPages = ({
+    activeCategory,
+    description,
+    label,
+    tipsForIndex,
+  }) => {
+    const pageCount = Math.max(
+      1,
+      Math.ceil(tipsForIndex.length / TIPS_PER_PAGE),
+    );
+
+    Array.from({ length: pageCount }).forEach((_, index) => {
+      const currentPage = index + 1;
+      const skip = index * TIPS_PER_PAGE;
+      const pageTips = tipsForIndex.slice(skip, skip + TIPS_PER_PAGE);
+
+      createPage({
+        path: getTipsIndexPath(activeCategory, currentPage),
+        component: tipsIndexTemplate,
+        context: {
+          activeCategory,
+          currentPage,
+          description,
+          label,
+          pageCount,
+          skip,
+          tipIds: pageTips.map((tip) => tip.id),
+          totalTips: tipsForIndex.length,
+        },
+      });
+    });
+  };
+
+  createTipIndexPages({
+    activeCategory: null,
+    description:
+      "새로 등장하는 응용프로그램과 로컬 도구를 플랫폼별로 빠르게 훑어볼 수 있게 정리합니다.",
+    label: "Application Tips",
+    tipsForIndex: tips,
   });
 
   tipCategories.forEach((category) => {
-    createPage({
-      path: `/tips/${category.slug}/`,
-      component: tipsIndexTemplate,
-      context: {
-        activeCategory: category.slug,
-        description: category.description,
-        label: category.label,
-      },
+    createTipIndexPages({
+      activeCategory: category.slug,
+      description: category.description,
+      label: category.label,
+      tipsForIndex: tips.filter((tip) =>
+        tip.frontmatter.platforms?.includes(category.slug),
+      ),
     });
   });
 

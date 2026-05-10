@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "gatsby";
 import Layout from "./Layout";
+import Pagination from "./Pagination";
 import SectionHeading from "./SectionHeading";
 import tipCategories from "../data/tipCategories.json";
 
@@ -12,12 +13,13 @@ const getTipCategoryPath = (slug) => (slug ? `/tips/${slug}/` : "/tips/");
 
 const getTipCategoryLabel = (slug) => categoryBySlug.get(slug)?.label || slug;
 
-const getVisibleTips = (tips, activeCategory) =>
-  activeCategory
-    ? tips.filter((tip) => tip.frontmatter.platforms?.includes(activeCategory))
-    : tips;
-
 const getFrontmatterList = (value) => value || [];
+
+const getTipsPagePath = (category, page) => {
+  const basePath = category ? `/tips/${category}/` : "/tips/";
+
+  return page <= 1 ? basePath : `${basePath}page/${page}/`;
+};
 
 const TipCategoryNav = ({ activeCategory }) => (
   <nav className="category-nav" aria-label="Tip platforms">
@@ -81,9 +83,21 @@ const TipCard = ({ tip }) => (
   </article>
 );
 
-const TipsIndex = ({ activeCategory, description, label, tips }) => {
+const TipsIndex = ({
+  activeCategory,
+  currentPage = 1,
+  description,
+  label,
+  pageCount = 1,
+  skip = 0,
+  tips,
+  totalTips,
+}) => {
   const activeCategoryData = categoryBySlug.get(activeCategory);
-  const visibleTips = getVisibleTips(tips, activeCategory);
+  const visibleTips = tips;
+  const totalVisibleTips = totalTips ?? visibleTips.length;
+  const firstTipNumber = totalVisibleTips === 0 ? 0 : skip + 1;
+  const lastTipNumber = Math.min(totalVisibleTips, skip + visibleTips.length);
   const pageTitle = label || activeCategoryData?.label || "Application Tips";
   const pageDescription =
     description ||
@@ -99,11 +113,28 @@ const TipsIndex = ({ activeCategory, description, label, tips }) => {
           description={pageDescription}
         />
         <TipCategoryNav activeCategory={activeCategory} />
-        <div className="tips-summary">
-          <span>
-            {visibleTips.length} tips
+        <div className="tips-summary blog-list-summary" aria-live="polite">
+          <span className="blog-list-count">
+            {totalVisibleTips} tips
             {activeCategoryData ? ` for ${activeCategoryData.label}` : ""}
+            {totalVisibleTips > 0
+              ? `, ${firstTipNumber}-${lastTipNumber} showing`
+              : ""}
           </span>
+          <div className="blog-list-meta">
+            <strong>
+              {currentPage} / {pageCount}
+            </strong>
+            <Pagination
+              ariaLabel="Tip pages"
+              className="blog-top-pagination"
+              compact
+              currentPage={currentPage}
+              getPagePath={(page) => getTipsPagePath(activeCategory, page)}
+              iconOnly
+              pageCount={pageCount}
+            />
+          </div>
         </div>
         {visibleTips.length > 0 ? (
           <div className="tip-grid">
@@ -114,6 +145,12 @@ const TipsIndex = ({ activeCategory, description, label, tips }) => {
         ) : (
           <div className="empty-state">아직 정리된 앱이 없습니다.</div>
         )}
+        <Pagination
+          ariaLabel="Tip pages"
+          currentPage={currentPage}
+          getPagePath={(page) => getTipsPagePath(activeCategory, page)}
+          pageCount={pageCount}
+        />
       </section>
     </Layout>
   );

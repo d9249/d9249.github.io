@@ -72,6 +72,7 @@ const PaginationStep = ({
 };
 
 const Pagination = ({
+  ariaLabel = "Blog pages",
   className = "",
   currentPage,
   pageCount,
@@ -95,7 +96,7 @@ const Pagination = ({
     .join(" ");
 
   return (
-    <nav className={paginationClassName} aria-label="Blog pages">
+    <nav className={paginationClassName} aria-label={ariaLabel}>
       <PaginationStep
         direction="previous"
         disabled={!previousPage}
