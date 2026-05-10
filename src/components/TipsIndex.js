@@ -6,6 +6,7 @@ import SectionHeading from "./SectionHeading";
 import TagNav from "./TagNav";
 import tipCategories from "../data/tipCategories.json";
 import { getTipTagPath } from "../utils/tags";
+import { truncateText } from "../utils/text";
 
 const categoryBySlug = new Map(
   tipCategories.map((category) => [category.slug, category]),
@@ -49,47 +50,65 @@ const TipCategoryNav = ({ activeCategory }) => (
   </nav>
 );
 
-const TipCard = ({ tip }) => (
-  <article className="tip-card">
-    <div className="tip-card-head">
-      <div className="meta">{tip.frontmatter.status}</div>
-      <span>{tip.frontmatter.license}</span>
-    </div>
-    <h3>
-      <Link to={tip.fields.slug}>{tip.frontmatter.title}</Link>
-    </h3>
-    <p>{tip.frontmatter.description || tip.excerpt}</p>
-    <div className="tip-platforms" aria-label="Supported platforms">
-      {getFrontmatterList(tip.frontmatter.platforms).map((platform) => (
-        <a key={platform} href={getTipCategoryPath(platform)}>
-          {getTipCategoryLabel(platform)}
-        </a>
-      ))}
-    </div>
-    {tip.frontmatter.highlights?.length ? (
-      <ul className="tip-notes">
-        {tip.frontmatter.highlights.map((note) => (
-          <li key={note}>{note}</li>
-        ))}
-      </ul>
-    ) : null}
-    {tip.frontmatter.tags?.length ? (
-      <div className="tip-tags">
-        {tip.frontmatter.tags.map((tag) => (
-          <Link key={tag} to={getTipTagPath(tag)}>
-            {tag}
-          </Link>
+const TipCard = ({ tip }) => {
+  const description = tip.frontmatter.description || tip.excerpt;
+
+  return (
+    <article className="tip-card">
+      <div className="tip-card-head">
+        <div className="meta">{tip.frontmatter.status}</div>
+        <span title={tip.frontmatter.license}>{tip.frontmatter.license}</span>
+      </div>
+      <h3>
+        <Link
+          to={tip.fields.slug}
+          aria-label={tip.frontmatter.title}
+          title={tip.frontmatter.title}
+        >
+          {truncateText(tip.frontmatter.title, 48)}
+        </Link>
+      </h3>
+      <p title={description}>{truncateText(description, 124)}</p>
+      <div className="tip-platforms" aria-label="Supported platforms">
+        {getFrontmatterList(tip.frontmatter.platforms).map((platform) => (
+          <a
+            key={platform}
+            href={getTipCategoryPath(platform)}
+            title={getTipCategoryLabel(platform)}
+          >
+            {getTipCategoryLabel(platform)}
+          </a>
         ))}
       </div>
-    ) : null}
-    <div className="tip-card-foot">
-      <span>{tip.frontmatter.repository}</span>
-      <a href={tip.frontmatter.sourceUrl} target="_blank" rel="noreferrer">
-        Source
-      </a>
-    </div>
-  </article>
-);
+      {tip.frontmatter.highlights?.length ? (
+        <ul className="tip-notes">
+          {tip.frontmatter.highlights.map((note) => (
+            <li key={note} title={note}>
+              {truncateText(note, 92)}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      {tip.frontmatter.tags?.length ? (
+        <div className="tip-tags">
+          {tip.frontmatter.tags.map((tag) => (
+            <Link key={tag} to={getTipTagPath(tag)} title={tag}>
+              {tag}
+            </Link>
+          ))}
+        </div>
+      ) : null}
+      <div className="tip-card-foot">
+        <span title={tip.frontmatter.repository}>
+          {tip.frontmatter.repository}
+        </span>
+        <a href={tip.frontmatter.sourceUrl} target="_blank" rel="noreferrer">
+          Source
+        </a>
+      </div>
+    </article>
+  );
+};
 
 const TipsIndex = ({
   activeCategory,

@@ -1655,6 +1655,7 @@ h3 {
 .skill-card {
   display: grid;
   grid-column: span 4;
+  align-content: start;
   gap: 14px;
   min-width: 0;
   min-height: 0;
@@ -1681,7 +1682,10 @@ h3 {
 .skill-card h3 {
   margin: 0;
   max-width: 100%;
+  overflow: hidden;
   overflow-wrap: anywhere;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .skill-card p {
@@ -1689,7 +1693,12 @@ h3 {
   color: var(--muted);
   font-size: 14px;
   line-height: 1.65;
+  display: -webkit-box;
+  overflow: hidden;
   overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
   word-break: keep-all;
 }
 
@@ -1714,12 +1723,13 @@ h3 {
   font-family: var(--font-mono);
   font-size: 12px;
   line-height: 1.2;
-  overflow-wrap: anywhere;
-  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .skill-card:last-child .skill-list li {
-  flex: 1 1 260px;
+  flex: 1 1 180px;
 }
 
 .skill-context-list {
@@ -2268,7 +2278,9 @@ h3 {
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 12px;
-  overflow-wrap: anywhere;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .post-card-body {
@@ -2281,17 +2293,16 @@ h3 {
   font-size: clamp(21px, 2.2vw, 30px);
   line-height: 1.12;
   max-width: 100%;
-  overflow-wrap: anywhere;
-  text-wrap: wrap;
-  word-break: normal;
 }
 
 .post-card h3 a {
-  display: block;
+  display: -webkit-box;
   max-width: 100%;
+  overflow: hidden;
   overflow-wrap: anywhere;
-  hyphens: auto;
-  white-space: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
   word-break: break-word;
 }
 
@@ -2303,7 +2314,12 @@ h3 {
   margin: 12px 0 0;
   color: var(--muted);
   font-size: 14px;
+  display: -webkit-box;
+  overflow: hidden;
   overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  text-overflow: ellipsis;
   word-break: keep-all;
 }
 
@@ -2316,7 +2332,14 @@ h3 {
   font-family: var(--font-mono);
   font-size: 12px;
   min-width: 0;
-  overflow-wrap: anywhere;
+}
+
+.post-card-meta span,
+.post-card-meta time {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .pagination {
@@ -2434,7 +2457,14 @@ h3 {
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 12px;
-  overflow-wrap: anywhere;
+}
+
+.tip-card-head span,
+.tip-card-foot span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tip-card h3 {
@@ -2442,17 +2472,16 @@ h3 {
   font-size: 31px;
   line-height: 1.06;
   max-width: 100%;
-  overflow-wrap: anywhere;
-  text-wrap: wrap;
-  word-break: normal;
 }
 
 .tip-card h3 a {
-  display: block;
+  display: -webkit-box;
   max-width: 100%;
+  overflow: hidden;
   overflow-wrap: anywhere;
-  hyphens: auto;
-  white-space: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
   word-break: break-word;
 }
 
@@ -2470,8 +2499,12 @@ h3 {
   color: var(--muted);
   font-size: 15px;
   line-height: 1.7;
+  display: -webkit-box;
+  overflow: hidden;
   overflow-wrap: anywhere;
-  text-wrap: pretty;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
   word-break: keep-all;
 }
 
@@ -2500,7 +2533,9 @@ h3 {
   font-family: var(--font-mono);
   font-size: 12px;
   line-height: 1.2;
-  overflow-wrap: anywhere;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tip-platforms a {
@@ -2538,7 +2573,12 @@ h3 {
 
 .tip-notes li {
   min-width: 0;
+  display: -webkit-box;
+  overflow: hidden;
   overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
   word-break: keep-all;
 }
 
