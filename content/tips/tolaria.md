@@ -1,7 +1,7 @@
 ---
-title: "Tolaria는 Markdown vault를 Git과 AI 에이전트 작업대로 바꾼다"
+title: "Tolaria는 Markdown 지식 베이스를 Git-first AI 작업대로 관리한다"
 date: "2026-05-10"
-description: "Tolaria는 Markdown 파일, YAML frontmatter, Git 이력, 로컬/클라우드 AI 모델, CLI 에이전트를 한 vault 위에 묶어 개인 지식베이스와 AI 작업 맥락을 운영하게 해 주는 로컬 퍼스트 데스크톱 앱입니다."
+description: "Tolaria는 Markdown 지식 베이스를 macOS, Linux, Windows에서 관리하는 데스크톱 앱으로, files-first와 Git-first 구조 위에 AI 에이전트용 문맥 관리까지 얹은 로컬 퍼스트 오픈소스 도구입니다."
 author: "Sangmin Lee"
 repository: "refactoringhq/tolaria"
 sourceUrl: "https://github.com/refactoringhq/tolaria"
@@ -18,33 +18,63 @@ tags:
   - "AI Agents"
   - "MCP"
 highlights:
-  - "macOS, Windows, Linux용 데스크톱 앱이며 macOS는 Homebrew cask로 설치할 수 있습니다."
-  - "노트, 타입, 저장된 뷰, 첨부파일을 일반 파일로 다루고 Git으로 이력과 동기화를 관리합니다."
-  - "Claude Code, Codex, Gemini CLI 같은 로컬 에이전트와 Ollama, LM Studio, OpenAI 호환 모델을 vault 문맥 위에서 연결합니다."
+  - "Markdown 지식 베이스를 macOS, Linux, Windows에서 관리하는 데스크톱 앱입니다."
+  - "Files-first와 Git-first 구조로 노트를 일반 Markdown 파일과 Git 저장소로 다룹니다."
+  - "Offline-first, zero lock-in을 내세워 계정, 구독, 클라우드 의존성 없이 동작합니다."
+  - "Types as lenses, not schemas 원칙으로 타입을 강제 스키마가 아니라 탐색 보조 수단으로 사용합니다."
+  - "Tauri, React, TypeScript 기반의 오픈소스 앱이며 AI-first but not AI-only 방향을 취합니다."
 draft: false
 ---
 
-AI 도구를 많이 쓰기 시작하면 가장 먼저 무너지는 것은 답변 품질이 아니라 **작업 맥락의 보존 방식**이다. 채팅창마다 좋은 답은 나오지만, 그 답이 다음 작업의 문서, 절차, 결정 기록, 코드 에이전트 지시문으로 자연스럽게 이어지지 않으면 결국 사람은 같은 설명을 계속 반복하게 된다. 개인 노트, 프로젝트 메모, 회의 결정, AI 에이전트용 절차가 서로 다른 앱과 폴더에 흩어져 있으면 "내 지식베이스"가 아니라 "매번 다시 찾아야 하는 자료 더미"가 된다.
+Markdown 지식 베이스를 Mac과 Linux에서 관리하는 데 초점을 둔 데스크톱 앱이며, 개인용 second brain부터 회사 문서를 AI 컨텍스트로 정리하는 작업까지 겨냥한다.
 
-`refactoringhq/tolaria`는 이 문제를 Markdown, Git, 로컬 데스크톱 앱, AI 에이전트 연결로 풀어보려는 프로젝트다. 공식 README는 Tolaria를 macOS, Windows, Linux에서 동작하는 Markdown knowledge base 관리 앱으로 소개한다. 사용처도 꽤 분명하다. 개인 second brain, 회사 문서를 AI의 context로 정리하는 용도, OpenClaw나 assistants의 memory/procedure 저장소가 대표 예시로 제시된다.
+Files-first와 Git-first 구조를 채택해 노트를 일반 Markdown 파일과 Git 저장소로 다루며, export 없이도 데이터 이식성과 전체 버전 히스토리를 유지한다.
 
-내가 보기엔 Tolaria를 단순 "예쁜 Markdown 노트 앱"으로 보면 핵심을 놓치기 쉽다. 더 정확히는 **Markdown vault를 사람이 읽는 지식베이스이자 AI 에이전트가 수정할 수 있는 작업 공간으로 만드는 데스크톱 클라이언트**에 가깝다. Obsidian류의 파일 기반 노트 앱, Git 클라이언트, AI 패널, MCP 설정 도구, 로컬/호스티드 모델 연결이 한 제품 안에서 만나는 구조다.
+Offline-first, zero lock-in을 전면에 두고 계정, 구독, 클라우드 의존성 없이 완전한 오프라인 동작과 사용자 중심 데이터 소유권을 유지한다.
+
+Types as lenses, not schemas 원칙으로 필수 필드나 강제 검증 없이 탐색 보조 수단으로 타입을 쓰고, AI-first but not AI-only 방향으로 Claude Code와 Codex CLI를 포함한 로컬 CLI 에이전트를 지원한다.
+
+10,000+ 노트 워크스페이스를 실제 운영하며 부딪힌 문제를 바탕으로 기능이 추가됐고, Tauri, React, TypeScript 기반의 오픈소스 앱으로 실사용 중심 설계가 드러난다.
 
 ![Tolaria repository](https://opengraph.githubassets.com/tolaria-tip/refactoringhq/tolaria)
 
-## 무엇을 해결하려는가
+## Tolaria 개요
 
-Tolaria가 겨냥하는 첫 번째 문제는 **지식베이스의 소유권과 이식성**이다. 많은 노트 앱은 앱 안에서는 편하지만, 데이터가 서비스 전용 DB나 동기화 계층에 갇히기 쉽다. Tolaria는 이와 반대로 vault 폴더의 파일 시스템을 source of truth로 둔다. 노트는 Markdown 파일이고, 구조화된 정보는 YAML frontmatter로 들어가며, 첨부파일도 vault 안의 일반 파일로 남는다. 앱 상태와 캐시는 파일에서 파생되는 보조 계층일 뿐, 최종 권위는 디스크 위의 파일에 있다.
+Tolaria는 Markdown 지식 베이스를 macOS, Linux, Windows에서 관리하는 데 초점을 둔 데스크톱 앱이다. 개인용 second brain, 회사 문서를 AI용 컨텍스트로 정리하는 용도, OpenClaw와 assistants의 메모리 및 절차 저장에 맞춰 설계됐다.
 
-두 번째 문제는 **AI 시대의 문서 맥락 관리**다. Codex, Claude Code, Gemini CLI 같은 에이전트는 파일을 읽고 고칠 수 있을 때 훨씬 유용해진다. 그런데 프로젝트 설명, 개인 원칙, 반복 작업 절차, 의사결정 기록이 SaaS 노트 앱 안에만 있으면 에이전트가 자연스럽게 접근하기 어렵다. Tolaria의 vault는 Markdown과 Git을 중심에 두기 때문에, 사람이 편집하고 에이전트가 읽고, 변경사항은 Git diff로 검토하는 흐름이 자연스럽다.
+대규모 10,000+ 노트 워크스페이스를 실제로 운영하는 과정에서 만들어졌고, 모든 기능도 실사용 중 부딪힌 문제를 해결하는 방향으로 추가됐다. 그래서 제품의 방향도 "노트 앱"보다 "파일 기반 지식 작업대"에 가깝다.
 
-세 번째 문제는 **노트 정리와 실제 운영의 간극**이다. 단순 메모 앱은 생각을 적는 데는 좋지만, 장기적으로 프로젝트, 사람, 자료, 절차, 결정, 회고를 연결하는 운영 도구가 되기는 어렵다. Tolaria는 타입, 관계, wikilink, saved view, Git history, AI panel을 제공해 노트를 "문서 조각"이 아니라 "작업 그래프의 노드"로 다루려 한다. 다만 타입은 강제 schema가 아니라 navigation aid에 가깝다. 즉 완벽한 DB 설계를 먼저 요구하지 않고, 사용자가 점진적으로 구조를 붙일 수 있게 한다.
+짧은 사용 흐름 자료도 함께 제공된다.
 
-## 핵심 구조와 동작 방식
+- How I Organize My Own Tolaria Workspace
+- My Inbox Workflow
+- How I Save Web Resources to Tolaria
 
-Tolaria의 가장 중요한 설계는 **files-first**다. vault는 그냥 폴더다. 그 안에 Markdown 노트, YAML frontmatter, 첨부파일, saved view, type definition이 들어간다. 공식 문서는 Tolaria가 폴더 구조에 강하게 의존하지 않는다고 설명한다. 새 노트는 기본적으로 루트에 만들어질 수 있고, 실제 분류는 폴더보다 frontmatter의 `type`, 관계 필드, wikilink, saved view가 담당한다.
+## 핵심 원칙
 
-노트 하나는 다음처럼 이해하면 쉽다.
+Files-first 원칙을 따르며, 노트는 일반 Markdown 파일로 저장된다. 데이터 이식이 가능하고 어떤 편집기와도 함께 쓸 수 있다. 별도 export 단계가 필요 없고, 데이터 소유권도 앱이 아니라 사용자에게 남는다.
+
+Git-first 구조를 채택해 각 vault를 Git 저장소로 다룬다. 전체 버전 히스토리를 유지할 수 있고, 어떤 Git remote도 사용할 수 있으며, Tolaria 서버에도 의존하지 않는다.
+
+Offline-first, zero lock-in을 전면에 둔다. 계정, 구독, 클라우드 의존성이 없고, vault가 완전히 오프라인으로 동작한다. 사용을 중단해도 데이터 손실이 없도록 Markdown 파일과 Git 이력을 사용자가 그대로 보유한다.
+
+오픈소스로 공개되어 있으며 무료로 제공된다. 다만 라이선스는 AGPL-3.0-or-later이므로 상업적 재배포나 수정본 운영을 고려한다면 별도 검토가 필요하다.
+
+Standards-based 설계를 적용해 노트 형식을 Markdown과 YAML frontmatter로 유지한다. 독점 포맷을 쓰지 않기 때문에 Tolaria를 떠나더라도 표준 도구와 함께 계속 활용할 수 있다.
+
+Types as lenses, not schemas 원칙을 두고, 타입을 강제 스키마가 아니라 탐색 보조 수단으로 사용한다. 필수 필드가 없고 검증을 강제하지 않으며, 노트를 더 쉽게 찾기 위한 범주 역할에 머문다.
+
+AI-first but not AI-only 방향을 취한다. 파일 기반 vault가 AI 에이전트와 잘 맞도록 설계됐지만, 특정 AI 제품에 종속되지는 않는다. Claude Code와 Codex CLI를 포함한 로컬 CLI 에이전트 흐름을 지원하고, 다른 AI 도구도 vault의 파일을 직접 읽고 수정할 수 있다.
+
+Keyboard-first 사용성을 강조한다. 키보드 중심 작업을 원하는 power-user를 겨냥하며, Editor와 Command Palette 설계에도 이 원칙이 반영되어 있다.
+
+## 구조와 구현
+
+Tolaria는 Tauri, React, TypeScript로 구현된다. 데스크톱 셸은 Tauri v2를 사용하고, 프론트엔드는 React와 TypeScript를 중심으로 구성된다. 저장소에는 앱 코드뿐 아니라 `src-tauri`, `mcp-server`, `site`, `docs`, `demo-vault-v2` 같은 디렉터리가 함께 존재한다.
+
+vault는 Tolaria가 읽고 쓰는 폴더이며, 파일 시스템이 source of truth다. 앱 상태와 캐시는 파일에서 파생되는 보조 계층이고, 충돌이나 불일치가 생기면 디스크 위의 Markdown 파일이 기준이 된다.
+
+노트는 Markdown 파일이고, 구조화된 정보는 YAML frontmatter로 표현된다. 예를 들어 `type`, `status`, `url`, `date`, `belongs_to`, `related_to`, `has` 같은 필드가 관례적으로 쓰인다.
 
 ```md
 ---
@@ -60,46 +90,48 @@ url: "https://example.com"
 문서화할 내용과 다음 액션을 적는다.
 ```
 
-첫 번째 H1은 앱 안에서 보이는 주 제목이 되고, frontmatter는 type, status, date, url, belongs_to, related_to 같은 구조 필드를 담는다. 본문에서는 `[[wikilinks]]`로 노트를 연결한다. 중요한 점은 이 모든 것이 Tolaria만 이해하는 폐쇄 포맷이 아니라, 일반 Markdown과 YAML이라는 점이다. 앱을 그만 써도 파일은 남고, VS Code, Obsidian, CLI 검색, GitHub, static site generator 같은 다른 도구로 계속 읽을 수 있다.
+기술 문서 묶음도 함께 제공된다.
 
-두 번째 축은 **Git-first**다. Tolaria는 vault가 Git 저장소일 때 변경 파일, 전체 vault diff, 개별 노트 history, commit, pull, push, conflict handling, remote 연결을 앱 안에서 다루는 lightweight Git client 역할을 한다. Git remote는 GitHub, GitLab, Gitea 등 사용자의 기존 인증 설정을 활용할 수 있다. 아직 remote가 없어도 로컬 commit만으로 복원 지점을 만들 수 있고, 필요하면 나중에 remote를 연결하면 된다.
-
-세 번째 축은 **AI 연결**이다. Tolaria의 AI는 크게 두 경로로 나뉜다. 하나는 Claude Code, Codex, OpenCode, Pi, Gemini CLI 같은 coding agent를 로컬에서 실행해 vault를 읽고 수정하게 하는 방식이다. 다른 하나는 Ollama, LM Studio, OpenAI, Anthropic, Gemini, OpenRouter, OpenAI-compatible endpoint 같은 model provider를 연결해 note context 기반 채팅을 하는 방식이다. 전자는 도구 기반 편집에 가깝고, 후자는 vault 문맥을 참조하는 chat mode에 가깝다.
-
-권한 모델도 실무적으로 나뉜다. coding agent는 Vault Safe mode에서 파일, 검색, 편집 위주로 제한할 수 있고, Power User mode에서는 에이전트가 지원하는 경우 vault 범위의 shell command까지 허용할 수 있다. 반면 direct model target은 note context와 대화 기록은 받지만 vault-write tool이나 shell access는 받지 않는다. AI가 만든 변경사항은 결국 파일 변경이므로, Tolaria의 diff와 Git history로 검토한 뒤 commit하는 흐름이 핵심이다.
-
-기술적으로는 Tauri v2, React, TypeScript, Rust, BlockNote, CodeMirror, tldraw, Mermaid, Tailwind, Radix/shadcn, Vite, MCP SDK 등을 사용하는 데스크톱 앱이다. 저장소 구조도 `src`, `src-tauri`, `mcp-server`, `site`, `docs`, `demo-vault-v2`처럼 실제 제품, 네이티브 백엔드, 문서, MCP 연동, 샘플 vault가 함께 들어 있는 형태다.
+- `ARCHITECTURE.md`: 시스템 설계, 기술 스택, 데이터 흐름
+- `ABSTRACTIONS.md`: 핵심 추상화와 모델
+- `GETTING-STARTED.md`: 코드베이스 탐색 방법
+- `ADRs`: 아키텍처 결정 기록
 
 ## 설치와 첫 사용법
 
-macOS에서는 Homebrew cask가 가장 간단하다.
+최신 배포본은 latest release에서 내려받을 수 있다. macOS에서는 Homebrew cask가 가장 간단하다.
 
 ```bash
 brew install --cask tolaria
 ```
 
-Windows와 Linux는 공식 다운로드 페이지에서 최신 stable build를 받는 방식이 기본이다. 공식 문서 기준 macOS는 주 개발 타깃이고, Windows와 Linux도 release pipeline을 통해 지원된다. Windows는 NSIS installer와 signed updater bundle, Linux는 AppImage와 deb artifact가 제공되는 흐름으로 설명된다. Linux는 배포판별 WebKitGTK, 입력기, 데스크톱 통합 상태에 따라 차이가 날 수 있다는 점은 감안해야 한다.
+Windows와 Linux는 공식 다운로드 페이지에서 최신 stable build를 받는 방식이 기본이다. macOS는 주 개발 타깃이고, Windows와 Linux도 release pipeline을 통해 지원된다. Linux는 배포판별 WebKitGTK, 입력기, 데스크톱 통합 상태에 따라 차이가 날 수 있다.
 
-처음 열었을 때는 두 가지 선택지가 있다. 하나는 Getting Started vault를 받아 앱 전체 흐름을 따라가 보는 것이다. 다른 하나는 이미 갖고 있는 Markdown 폴더를 vault로 여는 것이다. 개인적으로는 바로 기존 노트 폴더를 넣기보다, 먼저 별도의 작은 테스트 vault를 만드는 편이 좋다. Git과 AI를 붙이는 앱이므로, 초반에는 실험 범위를 명확히 잡는 것이 안전하다.
+첫 실행 시 getting started vault를 clone할 기회가 주어지며, 이를 통해 앱 전체 흐름을 둘러볼 수 있다. 기존 Markdown 폴더가 있다면 해당 폴더를 vault로 열 수도 있다.
 
-추천 초기 세팅은 다음 순서다.
+추천 사용 흐름은 다음과 같다.
 
 1. `~/Documents/TolariaVault`처럼 독립된 폴더를 만든다.
-2. Getting Started vault를 열어 UI와 command palette를 익힌다.
-3. 새 vault를 만들고 `Project`, `Source`, `Person`, `Procedure`, `Decision` 같은 기본 타입을 몇 개 정한다.
-4. `Cmd+N` 또는 `Ctrl+N`으로 빠르게 캡처하고, 제목은 H1로 명확히 쓴다.
-5. 정리가 필요한 노트에는 `type`, `status`, `url`, `belongs_to`, `related_to`를 frontmatter에 붙인다.
-6. 관련 노트는 본문에서 `[[wikilinks]]`로 연결한다.
-7. Git surface에서 변경사항을 확인하고 첫 commit을 만든다.
-8. 여러 기기에서 쓰려면 GitHub 같은 remote를 연결해 push/pull 흐름을 만든다.
+2. Getting Started vault로 기본 UI와 Command Palette를 익힌다.
+3. 새 vault를 만들고 `Project`, `Source`, `Person`, `Procedure`, `Decision` 같은 기본 타입을 정한다.
+4. `Cmd+N` 또는 `Ctrl+N`으로 빠르게 노트를 캡처한다.
+5. 제목은 첫 번째 H1로 명확히 쓴다.
+6. 정리가 필요한 노트에는 `type`, `status`, `url`, `belongs_to`, `related_to`를 frontmatter에 붙인다.
+7. 관련 노트는 본문에서 `[[wikilinks]]`로 연결한다.
+8. Git surface에서 변경사항을 확인하고 첫 commit을 만든다.
+9. 여러 기기에서 쓰려면 GitHub 같은 remote를 연결해 push/pull 흐름을 만든다.
 
 Command Palette는 `Cmd+K` 또는 `Ctrl+K`로 여는 것이 기본이다. Tolaria는 keyboard-first 제품을 지향하므로, 새 노트 생성, 검색, vault reload, Git 관련 작업, AI 호출 같은 주요 동작은 command palette 중심으로 익히는 편이 좋다.
 
-## 활용법 1: 개인 second brain
+## 활용법
 
-Tolaria는 개인 지식베이스를 "노트 앱 안의 페이지"가 아니라 "Git으로 versioning되는 Markdown repository"로 운영하고 싶은 사람에게 잘 맞는다. 예를 들어 매일 떠오르는 아이디어는 inbox성 노트로 빠르게 캡처하고, 주간 리뷰 때 `Project`, `Area`, `Source`, `Decision` 같은 타입을 붙여 정리할 수 있다.
+개인용 second brain으로 사용할 수 있다. 매일 떠오르는 아이디어, 읽은 글, 프로젝트 메모, 회고, 결정 기록을 Markdown 노트로 남기고, `type`, `status`, `related_to` 같은 frontmatter로 점진적으로 정리한다.
 
-이때 폴더를 과하게 설계할 필요는 없다. 공식 문서도 flat vault가 잘 동작한다고 설명한다. 자료가 많아질수록 폴더보다 frontmatter, wikilink, saved view가 더 유연하다. 예를 들어 `status: Active`인 프로젝트만 모아보거나, 특정 사람과 연결된 회의/결정 노트를 따라가거나, 한 소스 자료에서 파생된 아이디어를 연결하는 식이다.
+회사 문서를 AI 컨텍스트로 정리하는 용도로도 쓸 수 있다. 제품 결정 기록, 운영 절차, 고객별 메모, 온보딩 문서, 반복 대응 절차를 Markdown vault에 두면 AI 에이전트가 읽고 수정하기 쉬운 파일 기반 컨텍스트가 된다.
+
+AI 에이전트용 작업 메모리로도 적합하다. Codex나 Claude Code를 자주 쓰는 사람이라면 프로젝트 배경, 선호하는 코드 스타일, 배포 체크리스트, 리뷰 기준, 반복 작업 절차를 vault 안에 `Procedure`, `Project`, `Decision`, `Checklist` 노트로 둘 수 있다.
+
+GitHub 라이브러리 분석 노트로도 잘 맞는다. 저장소 하나를 `Source` 타입 노트로 만들고, URL, status, related topic을 frontmatter에 넣으면 OSS 조사 기록이 시간이 지나도 재사용 가능한 데이터베이스가 된다.
 
 좋은 기본 패턴은 다음과 같다.
 
@@ -114,11 +146,7 @@ related_to:
 
 이런 식으로 정리하면 Tolaria는 일반 메모 앱보다 "나중에 다시 찾아 쓸 수 있는 작업 그래프"에 가까워진다.
 
-## 활용법 2: AI 에이전트용 작업 메모리
-
-Tolaria의 진짜 재미는 AI 에이전트와 붙일 때 나온다. Codex나 Claude Code를 자주 쓰는 사람이라면, 에이전트에게 매번 프로젝트 배경, 선호하는 코드 스타일, 반복 작업 절차, 배포 체크리스트를 설명하는 일이 많다. Tolaria vault에 이런 정보를 `Procedure`, `Project`, `Decision`, `Checklist` 타입으로 정리해 두면, 사람이 읽는 문서와 에이전트가 참고할 컨텍스트를 같은 파일 세트로 유지할 수 있다.
-
-예를 들어 다음 같은 노트를 만들 수 있다.
+예를 들어 AI 작업용 vault에는 다음 같은 노트를 둘 수 있다.
 
 - `AGENTS.md 작성 규칙`
 - `블로그 글 발행 체크리스트`
@@ -126,57 +154,44 @@ Tolaria의 진짜 재미는 AI 에이전트와 붙일 때 나온다. Codex나 Cl
 - `AI 논문 리뷰 글 구조`
 - `프로젝트별 금지사항과 선호사항`
 
-이런 노트는 단순 기록이 아니다. 에이전트에게 "이 vault에서 관련 절차를 찾아서 현재 작업에 맞게 적용해줘"라고 요청할 수 있는 실행 맥락이 된다. Tolaria가 Git과 diff를 강조하는 이유도 여기 있다. AI가 vault를 고쳤다면 사람이 변경사항을 보고, 작은 commit으로 남기고, 문제가 있으면 되돌릴 수 있어야 한다.
+이런 노트는 단순 기록이 아니다. 에이전트에게 "이 vault에서 관련 절차를 찾아서 현재 작업에 맞게 적용해줘"라고 요청할 수 있는 실행 맥락이 된다. AI가 vault를 고쳤다면 사람이 변경사항을 보고, 작은 commit으로 남기고, 문제가 있으면 되돌릴 수 있다.
 
-권한은 처음부터 보수적으로 잡는 것이 좋다. vault 문서 정리나 검색 중심 작업은 Vault Safe mode로 시작하고, shell command가 필요한 워크플로우만 Power User mode로 올리는 편이 안전하다. direct model provider는 vault를 직접 수정하지 않는 chat mode로 쓰면 된다.
+## 개발 환경 관련 사항
 
-## 활용법 3: 회사 문서와 팀 컨텍스트
+로컬 개발 전제 조건으로 Node.js 20+, pnpm 8+, Rust stable, macOS 또는 Linux 개발 환경이 요구된다.
 
-Tolaria는 실시간 협업 문서 도구를 대체하는 제품은 아니다. 하지만 팀이 Git에 익숙하고, 문서를 코드처럼 관리하는 문화가 있다면 꽤 유용한 선택지가 될 수 있다. 예를 들어 사내 운영 문서, 제품 결정 기록, 고객별 메모, 반복 대응 절차, 개발 온보딩 문서를 Markdown vault로 두고 Git remote에 연결하면 된다.
+Linux에서는 Tauri 2 실행을 위해 WebKit2GTK 4.1과 GTK 3가 필요하다. 공식 README에는 Arch / Manjaro, Debian / Ubuntu 22.04+, Fedora 38+용 시스템 의존성 설치 예시가 포함되어 있다.
 
-이 방식의 장점은 세 가지다.
+번들된 MCP server는 Linux 런타임에서 시스템 `node` 바이너리를 실행하므로, 외부 AI 도구 흐름을 쓰려면 배포판 패키지 관리자로 Node를 설치해야 한다.
 
-첫째, 변경 이력이 명확하다. 어떤 결정 문서가 언제 바뀌었는지 Git history로 확인할 수 있다.
+빠른 시작 명령도 포함되어 있다.
 
-둘째, 도구 독립성이 높다. Tolaria를 쓰는 사람은 앱에서 편집하고, 다른 사람은 VS Code나 GitHub 웹에서 읽어도 된다.
-
-셋째, AI 도입이 자연스럽다. 문서가 Markdown과 Git 안에 있으면 AI 에이전트가 읽고 수정하기 쉽고, 변경사항도 pull request나 commit diff로 검토할 수 있다.
-
-다만 강한 권한 관리, 댓글 기반 실시간 협업, 승인 워크플로우, 문서별 접근제어가 필요한 조직이라면 Notion, Confluence, Google Docs 같은 도구와 역할이 다르다. Tolaria는 "문서 운영을 로컬 파일과 Git 중심으로 가져오고 싶은 팀"에 더 적합하다.
-
-## 활용법 4: 연구 자료와 라이브러리 분석 노트
-
-GitHub 라이브러리, 논문, 모델 카드, 도구 비교를 자주 하는 사람에게도 Tolaria는 잘 맞는다. `Source` 타입을 만들고, 각 저장소나 논문을 하나의 노트로 둔다. `url`, `status`, `tags`, `related_to`, `belongs_to`를 붙이면 나중에 특정 주제의 자료만 다시 묶어볼 수 있다.
-
-예를 들어 이런 식이다.
-
-```yaml
-type: Source
-status: Reviewed
-url: "https://github.com/refactoringhq/tolaria"
-related_to:
-  - "[[local-first-apps]]"
-  - "[[ai-knowledge-base]]"
-  - "[[markdown-vault]]"
+```bash
+pnpm install
+pnpm dev
 ```
 
-본문에는 "무엇을 해결하는가", "핵심 구조", "사용법", "도입 리스크", "비슷한 도구와의 차이"를 고정 섹션으로 둔다. 이렇게 하면 자료 하나를 읽고 끝내는 것이 아니라, 시간이 지날수록 개인적인 OSS 분석 데이터베이스가 된다. Git으로 관리되므로 특정 분석이 언제 바뀌었는지도 추적할 수 있다.
+브라우저 기반 mock mode는 `http://localhost:5173`에서 열리고, 네이티브 데스크톱 앱은 다음 명령으로 실행할 수 있다.
 
-## 도입할 때 볼 장점과 한계
+```bash
+pnpm tauri dev
+```
 
-Tolaria의 장점은 선명하다. 데이터가 Markdown 파일로 남고, Git으로 이력을 관리하고, 오프라인에서도 동작하며, AI 에이전트가 이해하기 쉬운 형태로 지식베이스를 운영할 수 있다. 특히 개발자, 연구자, 기술 블로거, AI 에이전트를 자주 쓰는 사람에게는 "노트 앱"보다 "개인 운영 지식 저장소"로 가치가 크다.
+## 보안과 라이선스
 
-반대로 모두에게 쉬운 도구는 아니다. Git, Markdown, frontmatter, wikilink, vault라는 개념이 낯선 사용자에게는 Notion이나 Apple Notes보다 진입장벽이 높다. 실시간 공동 편집, 모바일 중심 캡처, 복잡한 권한 관리, spreadsheet-like database view를 기대한다면 맞지 않을 수 있다. Windows와 Linux는 지원되지만, 공식 문서상 macOS가 주 개발 타깃이므로 플랫폼별 자잘한 이슈도 감안해야 한다.
+라이선스는 AGPL-3.0-or-later를 따른다.
 
-라이선스도 확인해야 한다. Tolaria는 AGPL-3.0-or-later로 공개되어 있고, 이름과 로고는 trademark policy의 영향을 받는다. 개인 사용이나 일반적인 오픈소스 사용에는 매력적이지만, 제품에 포함하거나 회사 내부 배포/수정본 운영을 고려한다면 AGPL 의무와 상표 정책을 별도로 검토하는 편이 안전하다.
+Tolaria 이름과 로고는 프로젝트의 trademark policy 적용을 받는다.
+
+보안 이슈는 공개 이슈가 아니라 프로젝트의 security policy에 따라 비공개로 제보하도록 안내되어 있다.
 
 ## 내 판단
 
-Tolaria는 "문서를 예쁘게 쓰는 앱"보다 **AI 시대의 로컬 지식 작업대**에 가깝다. Markdown으로 남기고, Git으로 추적하고, AI 에이전트가 읽고 고칠 수 있게 하며, 사람이 diff로 검토하는 흐름이 핵심이다. 이 조합은 요즘처럼 Codex, Claude Code, Gemini CLI 같은 도구를 여러 프로젝트에 쓰는 사람에게 특히 잘 맞는다.
+Tolaria는 "문서를 예쁘게 쓰는 앱"보다 AI 시대의 로컬 지식 작업대에 가깝다. Markdown으로 남기고, Git으로 추적하고, AI 에이전트가 읽고 고칠 수 있게 하며, 사람이 diff로 검토하는 흐름이 핵심이다.
 
 추천하는 사용자는 명확하다. 개인 지식베이스를 장기 자산으로 관리하고 싶은 사람, Git 기반 문서 운영에 거부감이 없는 사람, AI 에이전트에게 줄 절차와 맥락을 로컬 파일로 정리하고 싶은 사람, OSS/논문/도구 분석 노트를 계속 축적하는 사람에게 적합하다.
 
-반대로 "가입하면 바로 동기화되고, 팀원이 동시에 편집하고, 모바일에서 빠르게 메모하는" SaaS형 경험을 원한다면 Tolaria는 다소 공학적인 도구처럼 느껴질 수 있다. 하지만 데이터 소유권, 이식성, Git history, AI agent compatibility를 중요하게 본다면 충분히 살펴볼 만한 프로젝트다. 내 기준으로는 지금의 Tolaria는 Obsidian 대체재라기보다, **AI 에이전트 시대에 맞춘 Git-first Markdown workspace**라는 표현이 더 정확하다.
+반대로 가입하면 바로 동기화되고, 팀원이 동시에 편집하고, 모바일에서 빠르게 메모하는 SaaS형 경험을 원한다면 Tolaria는 다소 공학적인 도구처럼 느껴질 수 있다. 하지만 데이터 소유권, 이식성, Git history, AI agent compatibility를 중요하게 본다면 충분히 살펴볼 만한 프로젝트다.
 
 ## 참고한 공개 자료
 
