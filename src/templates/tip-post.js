@@ -34,9 +34,9 @@ const TipPostTemplate = ({ data, pageContext }) => {
               aria-label="Supported platforms"
             >
               {platforms.map((platform) => (
-                <Link key={platform} to={getTipCategoryPath(platform)}>
+                <a key={platform} href={getTipCategoryPath(platform)}>
                   {labelByPlatform.get(platform) || platform}
-                </Link>
+                </a>
               ))}
             </div>
             <div
@@ -73,11 +73,11 @@ const TipPostTemplate = ({ data, pageContext }) => {
           <aside className="aside">
             <div className="toc">
               <div className="meta">Tips</div>
-              <Link to="/tips/">all tips</Link>
+              <a href="/tips/">all tips</a>
               {platforms.map((platform) => (
-                <Link key={platform} to={getTipCategoryPath(platform)}>
+                <a key={platform} href={getTipCategoryPath(platform)}>
                   {labelByPlatform.get(platform) || platform}
-                </Link>
+                </a>
               ))}
             </div>
             <div className="source-card post-info-card">

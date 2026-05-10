@@ -92,19 +92,22 @@ const IndexPage = ({ data }) => {
             className="hero-actions hero-button-actions"
             aria-label="Shortcut navigation"
           >
-            {heroNavItems.map((item) => (
-              <Link
-                className={
-                  item.heroVariant === "primary"
-                    ? "button-primary"
-                    : "button-secondary"
-                }
-                key={item.to}
-                to={item.to}
-              >
-                {item.heroLabel}
-              </Link>
-            ))}
+            {heroNavItems.map((item) => {
+              const className =
+                item.heroVariant === "primary"
+                  ? "button-primary"
+                  : "button-secondary";
+
+              return item.reloadDocument ? (
+                <a className={className} key={item.to} href={item.to}>
+                  {item.heroLabel}
+                </a>
+              ) : (
+                <Link className={className} key={item.to} to={item.to}>
+                  {item.heroLabel}
+                </Link>
+              );
+            })}
           </nav>
           <div className="link-row" aria-label="Profile links">
             {heroLinks.map((link) => (

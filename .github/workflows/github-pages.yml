@@ -50,7 +50,6 @@ jobs:
         with:
           path: |
             .cache
-            public
             node_modules/.cache
           key: ${{ runner.os }}-node20-gatsby-${{ hashFiles('package-lock.json', 'gatsby-config.js', 'gatsby-node.js', 'gatsby-browser.js', 'gatsby-ssr.js') }}-${{ github.run_id }}
           restore-keys: |
@@ -58,7 +57,9 @@ jobs:
             ${{ runner.os }}-node20-gatsby-
 
       - name: Build Gatsby
-        run: npm run build
+        run: |
+          rm -rf public
+          npm run build
 
       - name: Prune deployment debug files
         run: |

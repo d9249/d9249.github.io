@@ -61,11 +61,17 @@ const Navbar = () => {
           className={`nav ${open ? "is-open" : ""}`}
           aria-label="Primary navigation"
         >
-          {navItems.map((item) => (
-            <Link key={item.to} to={item.to} onClick={() => setOpen(false)}>
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) =>
+            item.reloadDocument ? (
+              <a key={item.to} href={item.to} onClick={() => setOpen(false)}>
+                {item.label}
+              </a>
+            ) : (
+              <Link key={item.to} to={item.to} onClick={() => setOpen(false)}>
+                {item.label}
+              </Link>
+            ),
+          )}
         </nav>
         <div className="header-actions">
           <BlogSearch />

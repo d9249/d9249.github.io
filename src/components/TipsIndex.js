@@ -21,22 +21,22 @@ const getFrontmatterList = (value) => value || [];
 
 const TipCategoryNav = ({ activeCategory }) => (
   <nav className="category-nav" aria-label="Tip platforms">
-    <Link
-      to="/tips/"
+    <a
+      href="/tips/"
       className={!activeCategory ? "is-active" : ""}
       aria-current={!activeCategory ? "page" : undefined}
     >
       All
-    </Link>
+    </a>
     {tipCategories.map((category) => (
-      <Link
+      <a
         key={category.slug}
-        to={getTipCategoryPath(category.slug)}
+        href={getTipCategoryPath(category.slug)}
         className={category.slug === activeCategory ? "is-active" : ""}
         aria-current={category.slug === activeCategory ? "page" : undefined}
       >
         {category.label}
-      </Link>
+      </a>
     ))}
   </nav>
 );
@@ -53,9 +53,9 @@ const TipCard = ({ tip }) => (
     <p>{tip.frontmatter.description || tip.excerpt}</p>
     <div className="tip-platforms" aria-label="Supported platforms">
       {getFrontmatterList(tip.frontmatter.platforms).map((platform) => (
-        <Link key={platform} to={getTipCategoryPath(platform)}>
+        <a key={platform} href={getTipCategoryPath(platform)}>
           {getTipCategoryLabel(platform)}
-        </Link>
+        </a>
       ))}
     </div>
     {tip.frontmatter.highlights?.length ? (
