@@ -1,12 +1,17 @@
 import * as React from "react";
 import { graphql, Link, useStaticQuery } from "gatsby";
 import categories from "../data/categories.json";
+import tipCategories from "../data/tipCategories.json";
 
 const MAX_RESULTS = 12;
-const RECENT_POST_LIMIT = 8;
+const RECENT_ITEM_LIMIT = 8;
 
 const labelByCategory = new Map(
   categories.map((category) => [category.slug, category.label]),
+);
+
+const labelByTipPlatform = new Map(
+  tipCategories.map((category) => [category.slug, category.label]),
 );
 
 const normalizeText = (value) =>
@@ -24,6 +29,7 @@ const getPostSearchText = (post) =>
   normalizeText(
     [
       post.frontmatter.title,
+      "blog",
       post.frontmatter.description,
       post.frontmatter.author,
       post.frontmatter.category,
@@ -32,6 +38,26 @@ const getPostSearchText = (post) =>
       ...(post.frontmatter.tags || []),
       post.excerpt,
       post.rawMarkdownBody,
+    ].join(" "),
+  );
+
+const getTipSearchText = (tip) =>
+  normalizeText(
+    [
+      tip.frontmatter.title,
+      "tips",
+      tip.frontmatter.description,
+      tip.frontmatter.repository,
+      tip.frontmatter.status,
+      tip.frontmatter.license,
+      ...(tip.frontmatter.platforms || []),
+      ...(tip.frontmatter.platforms || []).map((platform) =>
+        labelByTipPlatform.get(platform),
+      ),
+      ...(tip.frontmatter.tags || []),
+      ...(tip.frontmatter.highlights || []),
+      tip.excerpt,
+      tip.rawMarkdownBody,
     ].join(" "),
   );
 
@@ -56,6 +82,7 @@ const BlogSearch = () => {
           frontmatter {
             title
             date(formatString: "YYYY.MM.DD")
+            sortDate: date(formatString: "YYYY-MM-DDTHH:mm:ss")
             description
             author
             category
@@ -63,39 +90,95 @@ const BlogSearch = () => {
           }
         }
       }
+      tips: allMarkdownRemark(
+        filter: {
+          fields: { contentType: { eq: "tip" } }
+          frontmatter: { draft: { ne: true } }
+        }
+        sort: { frontmatter: { date: DESC } }
+      ) {
+        nodes {
+          id
+          excerpt(pruneLength: 180)
+          rawMarkdownBody
+          fields {
+            slug
+          }
+          frontmatter {
+            title
+            date(formatString: "YYYY.MM.DD")
+            sortDate: date(formatString: "YYYY-MM-DDTHH:mm:ss")
+            description
+            repository
+            status
+            license
+            platforms
+            tags
+            highlights
+          }
+        }
+      }
     }
   `);
   const posts = data.posts.nodes;
+  const tips = data.tips.nodes;
   const titleId = React.useId();
   const inputId = React.useId();
   const inputRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
 
-  const indexedPosts = React.useMemo(
-    () =>
-      posts.map((post) => ({
-        ...post,
-        categoryLabel:
-          labelByCategory.get(post.fields.category) ||
-          post.frontmatter.category,
-        searchText: getPostSearchText(post),
-      })),
-    [posts],
-  );
+  const indexedItems = React.useMemo(() => {
+    const blogItems = posts.map((post) => ({
+      ...post,
+      sectionLabel: "Blog",
+      categoryLabel:
+        labelByCategory.get(post.fields.category) || post.frontmatter.category,
+      searchText: getPostSearchText(post),
+    }));
+
+    const tipItems = tips.map((tip) => {
+      const platformLabels = (tip.frontmatter.platforms || [])
+        .map((platform) => labelByTipPlatform.get(platform) || platform)
+        .filter(Boolean);
+
+      return {
+        ...tip,
+        sectionLabel: "Tips",
+        categoryLabel: platformLabels.join(", "),
+        searchText: getTipSearchText(tip),
+      };
+    });
+
+    return [...blogItems, ...tipItems].sort((left, right) => {
+      const leftDate = Date.parse(left.frontmatter.sortDate || "");
+      const rightDate = Date.parse(right.frontmatter.sortDate || "");
+
+      if (Number.isFinite(leftDate) && Number.isFinite(rightDate)) {
+        return rightDate - leftDate;
+      }
+
+      if (Number.isFinite(rightDate)) return 1;
+      if (Number.isFinite(leftDate)) return -1;
+
+      return (left.frontmatter.title || "").localeCompare(
+        right.frontmatter.title || "",
+      );
+    });
+  }, [posts, tips]);
 
   const tokens = React.useMemo(() => getSearchTokens(query), [query]);
   const results = React.useMemo(() => {
     if (!tokens.length) {
-      return indexedPosts.slice(0, RECENT_POST_LIMIT);
+      return indexedItems.slice(0, RECENT_ITEM_LIMIT);
     }
 
-    return indexedPosts
+    return indexedItems
       .filter((post) =>
         tokens.every((token) => post.searchText.includes(token)),
       )
       .slice(0, MAX_RESULTS);
-  }, [indexedPosts, tokens]);
+  }, [indexedItems, tokens]);
   const isSearching = tokens.length > 0;
 
   React.useEffect(() => {
@@ -128,8 +211,8 @@ const BlogSearch = () => {
       <button
         className="search-toggle"
         type="button"
-        aria-label="블로그 검색 열기"
-        title="Search posts"
+        aria-label="검색 열기"
+        title="Search"
         onClick={() => setOpen(true)}
       >
         <svg className="search-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -152,7 +235,7 @@ const BlogSearch = () => {
           >
             <div className="search-dialog-head">
               <div>
-                <h2 id={titleId}>Blog Search</h2>
+                <h2 id={titleId}>Site Search</h2>
                 <div className="search-input-shell">
                   <svg
                     className="search-input-icon"
@@ -203,7 +286,7 @@ const BlogSearch = () => {
               </button>
             </div>
             <div className="search-meta">
-              {isSearching ? `${results.length} results` : "Recent posts"}
+              {isSearching ? `${results.length} results` : "Recent entries"}
             </div>
             {results.length ? (
               <div className="search-results">
@@ -215,7 +298,13 @@ const BlogSearch = () => {
                     onClick={() => setOpen(false)}
                   >
                     <span className="search-result-meta">
-                      {post.categoryLabel} / {post.frontmatter.date}
+                      {[
+                        post.sectionLabel,
+                        post.categoryLabel,
+                        post.frontmatter.date,
+                      ]
+                        .filter(Boolean)
+                        .join(" / ")}
                     </span>
                     <strong>{post.frontmatter.title}</strong>
                     <span>{post.frontmatter.description || post.excerpt}</span>
