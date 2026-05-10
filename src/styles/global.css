@@ -2351,7 +2351,13 @@ h3 {
 .tip-card {
   display: grid;
   gap: 16px;
+  min-width: 0;
+  overflow: hidden;
   padding: 22px;
+}
+
+.tip-card > * {
+  min-width: 0;
 }
 
 .tip-card-head,
@@ -2360,6 +2366,7 @@ h3 {
   align-items: center;
   justify-content: space-between;
   gap: 14px;
+  min-width: 0;
 }
 
 .tip-card-head span,
@@ -2367,13 +2374,26 @@ h3 {
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 12px;
+  overflow-wrap: anywhere;
 }
 
 .tip-card h3 {
   margin: 0;
-  font-size: clamp(25px, 3vw, 38px);
-  line-height: 1.04;
-  text-wrap: balance;
+  font-size: 34px;
+  line-height: 1.06;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-wrap: wrap;
+  word-break: normal;
+}
+
+.tip-card h3 a {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .tip-card h3 a:hover,
@@ -2390,7 +2410,9 @@ h3 {
   color: var(--muted);
   font-size: 15px;
   line-height: 1.7;
+  overflow-wrap: anywhere;
   text-wrap: pretty;
+  word-break: keep-all;
 }
 
 .tip-platforms,
@@ -2418,6 +2440,7 @@ h3 {
   font-family: var(--font-mono);
   font-size: 12px;
   line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 .tip-platforms a {
@@ -2451,6 +2474,12 @@ h3 {
   color: var(--muted);
   font-size: 14px;
   line-height: 1.55;
+}
+
+.tip-notes li {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
 }
 
 .tip-notes li::marker {
@@ -3078,6 +3107,10 @@ figcaption,
     border-right: 0;
     border-bottom: 1px solid var(--border);
   }
+
+  .tip-card h3 {
+    font-size: 31px;
+  }
 }
 
 @media (max-width: 680px) {
@@ -3347,6 +3380,15 @@ figcaption,
   .dacon-stat-grid,
   .dacon-domain-grid {
     grid-template-columns: 1fr;
+  }
+
+  .tip-card {
+    padding: 18px;
+  }
+
+  .tip-card h3 {
+    font-size: 28px;
+    line-height: 1.08;
   }
 
   .dacon-page {
