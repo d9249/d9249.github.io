@@ -6,6 +6,7 @@ const tipCategories = require("./src/data/tipCategories.json");
 const { getTagSummaries } = require("./src/utils/tags");
 
 const POSTS_PER_BLOG_PAGE = 12;
+const POSTS_ON_FIRST_BLOG_PAGE = 13;
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
@@ -122,22 +123,30 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   );
   const tips = result.data.tips.nodes.filter((tip) => !tip.frontmatter.draft);
   const tagSummaries = getTagSummaries(posts);
-  const blogPageCount = Math.max(
-    1,
-    Math.ceil(posts.length / POSTS_PER_BLOG_PAGE),
-  );
+  const blogPageCount =
+    posts.length <= POSTS_ON_FIRST_BLOG_PAGE
+      ? 1
+      : 1 +
+        Math.ceil(
+          (posts.length - POSTS_ON_FIRST_BLOG_PAGE) / POSTS_PER_BLOG_PAGE,
+        );
 
   Array.from({ length: blogPageCount }).forEach((_, index) => {
     const currentPage = index + 1;
+    const isFirstPage = currentPage === 1;
+    const limit = isFirstPage ? POSTS_ON_FIRST_BLOG_PAGE : POSTS_PER_BLOG_PAGE;
+    const skip = isFirstPage
+      ? 0
+      : POSTS_ON_FIRST_BLOG_PAGE + (currentPage - 2) * POSTS_PER_BLOG_PAGE;
 
     createPage({
       path: currentPage === 1 ? "/blog/" : `/blog/page/${currentPage}/`,
       component: blogIndexTemplate,
       context: {
         currentPage,
-        limit: POSTS_PER_BLOG_PAGE,
+        limit,
         pageCount: blogPageCount,
-        skip: index * POSTS_PER_BLOG_PAGE,
+        skip,
         tagSummaries,
         totalPosts: posts.length,
       },
