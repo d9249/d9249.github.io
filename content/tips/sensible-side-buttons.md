@@ -1,6 +1,6 @@
 ---
 title: "SensibleSideButtons는 Mac 마우스 사이드 버튼을 진짜 뒤로/앞으로 버튼처럼 바꾼다"
-date: "2026-05-10"
+date: "2026-05-10T21:01:32"
 description: "SensibleSideButtons는 macOS에서 일반 마우스의 M4/M5 사이드 버튼을 앱별 키보드 단축키가 아니라 네이티브 페이지 이동 제스처처럼 동작하게 만드는 오픈소스 메뉴바 유틸리티입니다."
 author: "Sangmin Lee"
 repository: "archagon/sensible-side-buttons"

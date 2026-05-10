@@ -1,6 +1,6 @@
 ---
 title: "Hot은 Mac 발열과 스로틀링을 메뉴바에서 바로 보여준다"
-date: "2026-05-10"
+date: "2026-05-10T20:27:06"
 description: "Hot은 macOS 메뉴바에서 CPU 온도, Intel Mac의 CPU speed limit, Apple Silicon의 thermal pressure, 센서 그래프를 확인할 수 있는 오픈소스 유틸리티입니다."
 author: "Sangmin Lee"
 repository: "macmade/Hot"

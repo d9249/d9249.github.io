@@ -1,6 +1,6 @@
 ---
 title: "Glances는 터미널·웹·API로 시스템 상태를 한눈에 보여준다"
-date: "2026-05-10"
+date: "2026-05-10T19:52:46"
 description: "Glances는 CPU, 메모리, 디스크, 네트워크, 센서, 컨테이너, 프로세스 상태를 TUI, Web UI, REST API, stdout/CSV/JSON, MCP 서버로 보여주는 cross-platform 오픈소스 시스템 모니터링 도구입니다."
 author: "Sangmin Lee"
 repository: "nicolargo/glances"

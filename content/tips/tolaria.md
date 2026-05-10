@@ -1,6 +1,6 @@
 ---
 title: "Tolaria는 Markdown 지식 베이스를 Git-first AI 작업대로 관리한다"
-date: "2026-05-10"
+date: "2026-05-10T16:30:57"
 description: "Tolaria는 Markdown 지식 베이스를 macOS, Linux, Windows에서 관리하는 데스크톱 앱으로, files-first와 Git-first 구조 위에 AI 에이전트용 문맥 관리까지 얹은 로컬 퍼스트 오픈소스 도구입니다."
 author: "Sangmin Lee"
 repository: "refactoringhq/tolaria"

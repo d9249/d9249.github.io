@@ -1,6 +1,6 @@
 ---
 title: "RepoBar는 GitHub 저장소 상태를 macOS 메뉴바에 올려둔다"
-date: "2026-05-10"
+date: "2026-05-10T17:42:31"
 description: "RepoBar는 여러 GitHub 저장소의 이슈, PR, CI, 릴리스, 로컬 Git 상태, API rate limit을 macOS 메뉴바에서 확인하고 빠르게 이동할 수 있게 해주는 오픈소스 개발자 도구입니다."
 author: "Sangmin Lee"
 repository: "steipete/RepoBar"

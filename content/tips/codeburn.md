@@ -1,6 +1,6 @@
 ---
 title: "CodeBurn은 AI 코딩 토큰 비용을 로컬 대시보드로 보여준다"
-date: "2026-05-10"
+date: "2026-05-10T17:54:57"
 description: "CodeBurn은 Claude Code, Codex, Cursor 등 AI 코딩 도구의 로컬 세션 로그를 읽어 토큰 사용량, 비용, 모델, 프로젝트, 작업 유형을 TUI와 메뉴바에서 보여주는 오픈소스 비용 관측 도구입니다."
 author: "Sangmin Lee"
 repository: "getagentseal/codeburn"

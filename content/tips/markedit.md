@@ -1,6 +1,6 @@
 ---
 title: "MarkEdit은 TextEdit처럼 가볍게 쓰는 macOS Markdown 편집기다"
-date: "2026-05-10"
+date: "2026-05-10T19:40:16"
 description: "MarkEdit은 TextEdit의 단순함을 Markdown에 맞춘 macOS 전용 오픈소스 편집기입니다. 4MB급 경량 앱, GFM 준수, CodeMirror 6 기반 편집, 목차·통계·멀티 커서·Writing Tools·Shortcuts/AppleScript 연동을 제공합니다."
 author: "Sangmin Lee"
 repository: "MarkEdit-app/MarkEdit"

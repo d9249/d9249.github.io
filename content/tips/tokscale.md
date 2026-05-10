@@ -1,6 +1,6 @@
 ---
 title: "Tokscale은 AI 코딩 도구의 토큰 사용량을 한곳에서 보여준다"
-date: "2026-05-10"
+date: "2026-05-10T19:26:19"
 description: "Tokscale은 Claude Code, Codex, Cursor, Gemini, OpenCode, Hermes Agent 등 여러 AI 코딩 도구의 로컬 세션 로그를 읽어 토큰 사용량, 비용, 모델별 비중, 기여 그래프를 TUI와 웹 대시보드로 보여주는 오픈소스 CLI입니다."
 author: "Sangmin Lee"
 repository: "junhoyeo/tokscale"

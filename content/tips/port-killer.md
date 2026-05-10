@@ -1,6 +1,6 @@
 ---
 title: "PortKiller는 개발 중 점유된 포트를 메뉴바와 트레이에서 정리한다"
-date: "2026-05-10"
+date: "2026-05-10T19:17:35"
 description: "PortKiller는 macOS 메뉴바와 Windows 시스템 트레이에서 로컬 TCP 포트, 프로세스, Kubernetes port-forward, Cloudflare Tunnel을 확인하고 문제 프로세스를 빠르게 종료할 수 있게 해주는 오픈소스 개발자 도구입니다."
 author: "Sangmin Lee"
 repository: "productdevbook/port-killer"

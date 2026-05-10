@@ -1,6 +1,6 @@
 ---
 title: "Maccy는 Mac 클립보드 히스토리를 빠르게 검색하는 가벼운 메뉴바 앱이다"
-date: "2026-05-10"
+date: "2026-05-10T20:50:44"
 description: "Maccy는 macOS 메뉴바에서 클립보드 히스토리를 저장하고, 단축키로 열어 검색·복사·붙여넣기·핀 고정까지 빠르게 처리하는 오픈소스 클립보드 매니저입니다."
 author: "Sangmin Lee"
 repository: "p0deje/Maccy"
