@@ -184,6 +184,29 @@ const getSkillMark = (skill) => {
     .toUpperCase();
 };
 
+const SkillChip = ({ skill }) => {
+  const skillLogo = SKILL_LOGOS.get(skill);
+
+  return (
+    <li className={skillLogo ? "has-skill-logo" : undefined}>
+      <span
+        className="skill-logo-mark"
+        style={skillLogo ? getSkillLogoStyle(skillLogo) : undefined}
+        aria-hidden="true"
+      >
+        {skillLogo ? (
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d={skillLogo.path} />
+          </svg>
+        ) : (
+          getSkillMark(skill)
+        )}
+      </span>
+      <span className="skill-logo-name">{skill}</span>
+    </li>
+  );
+};
+
 const IndexPage = ({ data }) => {
   const posts = data.posts.nodes;
   const totalBlogPostCount = data.blogPosts.totalCount;
@@ -581,35 +604,26 @@ const IndexPage = ({ data }) => {
               aria-label={`${group.title}: ${group.summary}`}
             >
               <h3>{group.title}</h3>
-              <ul className="skill-list">
-                {group.skills.map((skill) => {
-                  const skillLogo = SKILL_LOGOS.get(skill);
-
-                  return (
-                    <li
-                      className={skillLogo ? "has-skill-logo" : undefined}
-                      key={skill}
-                    >
-                      <span
-                        className="skill-logo-mark"
-                        style={
-                          skillLogo ? getSkillLogoStyle(skillLogo) : undefined
-                        }
-                        aria-hidden="true"
-                      >
-                        {skillLogo ? (
-                          <svg viewBox="0 0 24 24" focusable="false">
-                            <path d={skillLogo.path} />
-                          </svg>
-                        ) : (
-                          getSkillMark(skill)
-                        )}
-                      </span>
-                      <span className="skill-logo-name">{skill}</span>
-                    </li>
-                  );
-                })}
-              </ul>
+              {group.skillClusters?.length ? (
+                <div className="skill-cluster-list">
+                  {group.skillClusters.map((cluster) => (
+                    <section className="skill-cluster" key={cluster.title}>
+                      <h4>{cluster.title}</h4>
+                      <ul className="skill-list">
+                        {cluster.skills.map((skill) => (
+                          <SkillChip key={skill} skill={skill} />
+                        ))}
+                      </ul>
+                    </section>
+                  ))}
+                </div>
+              ) : (
+                <ul className="skill-list">
+                  {group.skills.map((skill) => (
+                    <SkillChip key={skill} skill={skill} />
+                  ))}
+                </ul>
+              )}
               {group.contexts?.length ? (
                 <ul className="skill-context-list">
                   {group.contexts.map((context) => (

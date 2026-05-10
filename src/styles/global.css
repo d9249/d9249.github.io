@@ -1682,6 +1682,7 @@ h3 {
 
 .skill-card:last-child {
   grid-column: 1 / -1;
+  gap: 18px;
 }
 
 .skill-card h3 {
@@ -1791,6 +1792,42 @@ h3 {
 
 .skill-card:last-child .skill-list {
   grid-template-columns: repeat(auto-fit, minmax(min(188px, 100%), 1fr));
+}
+
+.skill-cluster-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px 24px;
+  min-width: 0;
+}
+
+.skill-cluster {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-width: 0;
+  padding-top: 12px;
+  border-top: 1px solid color-mix(in oklch, var(--border) 78%, transparent);
+}
+
+.skill-cluster h4 {
+  justify-self: start;
+  margin: 0;
+  padding: 2px 7px;
+  border: 1px solid color-mix(in oklch, var(--accent) 45%, var(--border));
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--surface) 70%, transparent);
+  color: color-mix(in oklch, var(--accent) 74%, var(--fg));
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.skill-cluster .skill-list {
+  grid-template-columns: repeat(auto-fit, minmax(min(148px, 100%), 1fr));
 }
 
 .skill-card:last-child .skill-list li {
@@ -3276,6 +3313,10 @@ figcaption,
     grid-column: 1 / -1;
   }
 
+  .skill-cluster-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .paper-grid,
   .recognition-grid,
   .dacon-domain-grid {
@@ -3551,6 +3592,11 @@ figcaption,
     top: -15px;
     left: 14px;
     max-width: calc(100% - 28px);
+  }
+
+  .skill-cluster-list {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .skill-list {
