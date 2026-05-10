@@ -2375,7 +2375,8 @@ h3 {
 
 .tip-card h3 a:hover,
 .tip-card-foot a:hover,
-.tip-platforms a:hover {
+.tip-platforms a:hover,
+.tip-post-platforms a:hover {
   color: color-mix(in oklch, var(--accent) 82%, var(--fg));
 }
 
@@ -2388,6 +2389,7 @@ h3 {
 }
 
 .tip-platforms,
+.tip-post-platforms,
 .tip-tags {
   display: flex;
   flex-wrap: wrap;
@@ -2395,6 +2397,7 @@ h3 {
 }
 
 .tip-platforms a,
+.tip-post-platforms a,
 .tip-tags span {
   padding: 7px 9px;
   border: 1px solid var(--border);
@@ -2407,6 +2410,16 @@ h3 {
 }
 
 .tip-platforms a {
+  background: color-mix(in oklch, var(--accent) 10%, var(--surface));
+  color: var(--fg);
+  font-weight: 800;
+}
+
+.tip-post-platforms {
+  margin: 24px 0 0;
+}
+
+.tip-post-platforms a {
   background: color-mix(in oklch, var(--accent) 10%, var(--surface));
   color: var(--fg);
   font-weight: 800;
@@ -2808,7 +2821,8 @@ figcaption,
   margin-top: 14px;
 }
 
-.post-info-tags a {
+.post-info-tags a,
+.post-info-tags span {
   max-width: 100%;
   padding: 5px 7px;
   border: 1px solid var(--border);

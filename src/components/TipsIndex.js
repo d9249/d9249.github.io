@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "gatsby";
 import Layout from "./Layout";
 import SectionHeading from "./SectionHeading";
-import { tipCategories, tips } from "../data/tips";
+import tipCategories from "../data/tipCategories.json";
 
 const categoryBySlug = new Map(
   tipCategories.map((category) => [category.slug, category]),
@@ -12,10 +12,12 @@ const getTipCategoryPath = (slug) => (slug ? `/tips/${slug}/` : "/tips/");
 
 const getTipCategoryLabel = (slug) => categoryBySlug.get(slug)?.label || slug;
 
-const getVisibleTips = (activeCategory) =>
+const getVisibleTips = (tips, activeCategory) =>
   activeCategory
-    ? tips.filter((tip) => tip.platforms.includes(activeCategory))
+    ? tips.filter((tip) => tip.frontmatter.platforms?.includes(activeCategory))
     : tips;
+
+const getFrontmatterList = (value) => value || [];
 
 const TipCategoryNav = ({ activeCategory }) => (
   <nav className="category-nav" aria-label="Tip platforms">
@@ -42,46 +44,49 @@ const TipCategoryNav = ({ activeCategory }) => (
 const TipCard = ({ tip }) => (
   <article className="tip-card">
     <div className="tip-card-head">
-      <div className="meta">{tip.status}</div>
-      <span>{tip.license}</span>
+      <div className="meta">{tip.frontmatter.status}</div>
+      <span>{tip.frontmatter.license}</span>
     </div>
     <h3>
-      <a href={tip.sourceUrl} target="_blank" rel="noreferrer">
-        {tip.title}
-      </a>
+      <Link to={tip.fields.slug}>{tip.frontmatter.title}</Link>
     </h3>
-    <p>{tip.summary}</p>
+    <p>{tip.frontmatter.description || tip.excerpt}</p>
     <div className="tip-platforms" aria-label="Supported platforms">
-      {tip.platforms.map((platform) => (
+      {getFrontmatterList(tip.frontmatter.platforms).map((platform) => (
         <Link key={platform} to={getTipCategoryPath(platform)}>
           {getTipCategoryLabel(platform)}
         </Link>
       ))}
     </div>
-    <ul className="tip-notes">
-      {tip.notes.map((note) => (
-        <li key={note}>{note}</li>
-      ))}
-    </ul>
-    <div className="tip-tags">
-      {tip.tags.map((tag) => (
-        <span key={tag}>{tag}</span>
-      ))}
-    </div>
+    {tip.frontmatter.highlights?.length ? (
+      <ul className="tip-notes">
+        {tip.frontmatter.highlights.map((note) => (
+          <li key={note}>{note}</li>
+        ))}
+      </ul>
+    ) : null}
+    {tip.frontmatter.tags?.length ? (
+      <div className="tip-tags">
+        {tip.frontmatter.tags.map((tag) => (
+          <span key={tag}>{tag}</span>
+        ))}
+      </div>
+    ) : null}
     <div className="tip-card-foot">
-      <span>{tip.repository}</span>
-      <a href={tip.sourceUrl} target="_blank" rel="noreferrer">
+      <span>{tip.frontmatter.repository}</span>
+      <a href={tip.frontmatter.sourceUrl} target="_blank" rel="noreferrer">
         Source
       </a>
     </div>
   </article>
 );
 
-const TipsIndex = ({ activeCategory }) => {
+const TipsIndex = ({ activeCategory, description, label, tips }) => {
   const activeCategoryData = categoryBySlug.get(activeCategory);
-  const visibleTips = getVisibleTips(activeCategory);
-  const pageTitle = activeCategoryData?.label || "Application Tips";
-  const description =
+  const visibleTips = getVisibleTips(tips, activeCategory);
+  const pageTitle = label || activeCategoryData?.label || "Application Tips";
+  const pageDescription =
+    description ||
     activeCategoryData?.description ||
     "새로 등장하는 응용프로그램과 로컬 도구를 플랫폼별로 빠르게 훑어볼 수 있게 정리합니다.";
 
@@ -91,7 +96,7 @@ const TipsIndex = ({ activeCategory }) => {
         <SectionHeading
           kicker="Tips"
           title={pageTitle}
-          description={description}
+          description={pageDescription}
         />
         <TipCategoryNav activeCategory={activeCategory} />
         <div className="tips-summary">
@@ -103,7 +108,7 @@ const TipsIndex = ({ activeCategory }) => {
         {visibleTips.length > 0 ? (
           <div className="tip-grid">
             {visibleTips.map((tip) => (
-              <TipCard key={tip.slug} tip={tip} />
+              <TipCard key={tip.fields.slug} tip={tip} />
             ))}
           </div>
         ) : (

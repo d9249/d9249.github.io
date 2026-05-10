@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const categories = require("./src/data/categories.json");
 const legacyRedirects = require("./src/data/legacy-redirects.json");
+const tipCategories = require("./src/data/tipCategories.json");
 const { getTagSummaries } = require("./src/utils/tags");
 
 const POSTS_PER_BLOG_PAGE = 12;
@@ -14,30 +15,51 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 
   const fileNode = getNode(node.parent);
-  if (!fileNode || fileNode.sourceInstanceName !== "blog") {
+  if (!fileNode) {
     return;
   }
 
   const pathParts = fileNode.relativeDirectory.split(path.sep).filter(Boolean);
-  const category = pathParts[0] || "notes";
   const slugParts = [...pathParts, fileNode.name].filter(Boolean);
+
+  if (fileNode.sourceInstanceName === "blog") {
+    const category = pathParts[0] || "notes";
+
+    createNodeField({
+      name: "contentType",
+      node,
+      value: "blog-post",
+    });
+
+    createNodeField({
+      name: "category",
+      node,
+      value: category,
+    });
+
+    createNodeField({
+      name: "slug",
+      node,
+      value: `/blog/${slugParts.join("/")}/`,
+    });
+
+    return;
+  }
+
+  if (fileNode.sourceInstanceName !== "tips") {
+    return;
+  }
 
   createNodeField({
     name: "contentType",
     node,
-    value: "blog-post",
-  });
-
-  createNodeField({
-    name: "category",
-    node,
-    value: category,
+    value: "tip",
   });
 
   createNodeField({
     name: "slug",
     node,
-    value: `/blog/${slugParts.join("/")}/`,
+    value: `/tips/${slugParts.join("/")}/`,
   });
 };
 
@@ -63,6 +85,23 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
       }
+      tips: allMarkdownRemark(
+        filter: { fields: { contentType: { eq: "tip" } } }
+        sort: { frontmatter: { date: DESC } }
+      ) {
+        nodes {
+          id
+          fields {
+            slug
+          }
+          frontmatter {
+            title
+            draft
+            date(formatString: "YYYY.MM.DD")
+            platforms
+          }
+        }
+      }
     }
   `);
 
@@ -76,9 +115,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const categoryTemplate = path.resolve("./src/templates/blog-category.js");
   const redirectTemplate = path.resolve("./src/templates/redirect.js");
   const tagTemplate = path.resolve("./src/templates/blog-tag.js");
+  const tipsIndexTemplate = path.resolve("./src/templates/tips-index.js");
+  const tipTemplate = path.resolve("./src/templates/tip-post.js");
   const posts = result.data.posts.nodes.filter(
     (post) => !post.frontmatter.draft,
   );
+  const tips = result.data.tips.nodes.filter((tip) => !tip.frontmatter.draft);
   const tagSummaries = getTagSummaries(posts);
   const blogPageCount = Math.max(
     1,
@@ -144,6 +186,41 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       context: {
         tag: tag.label,
         tagSummaries,
+      },
+    });
+  });
+
+  createPage({
+    path: "/tips/",
+    component: tipsIndexTemplate,
+    context: {
+      activeCategory: null,
+      description:
+        "새로 등장하는 응용프로그램과 로컬 도구를 플랫폼별로 빠르게 훑어볼 수 있게 정리합니다.",
+      label: "Application Tips",
+    },
+  });
+
+  tipCategories.forEach((category) => {
+    createPage({
+      path: `/tips/${category.slug}/`,
+      component: tipsIndexTemplate,
+      context: {
+        activeCategory: category.slug,
+        description: category.description,
+        label: category.label,
+      },
+    });
+  });
+
+  tips.forEach((tip, index) => {
+    createPage({
+      path: tip.fields.slug,
+      component: tipTemplate,
+      context: {
+        id: tip.id,
+        previous: index === tips.length - 1 ? null : tips[index + 1],
+        next: index === 0 ? null : tips[index - 1],
       },
     });
   });

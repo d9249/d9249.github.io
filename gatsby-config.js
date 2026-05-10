@@ -1,8 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: "ideal",
-    description:
-      "이상민의 연구 개발 기록을 모으는 개인 기술 블로그입니다.",
+    description: "이상민의 연구 개발 기록을 모으는 개인 기술 블로그입니다.",
     siteUrl: "https://d9249.github.io",
     author: "Sangmin Lee",
   },
@@ -12,6 +11,13 @@ module.exports = {
       options: {
         name: "blog",
         path: `${__dirname}/content/blog`,
+      },
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "tips",
+        path: `${__dirname}/content/tips`,
       },
     },
     {

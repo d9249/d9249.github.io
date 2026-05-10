@@ -1,0 +1,12 @@
+[
+  {
+    "slug": "macos-linux",
+    "label": "macOS / Linux",
+    "description": "macOS와 Linux에서 바로 써볼 만한 로컬 앱, 개발 도구, 생산성 유틸리티를 정리합니다."
+  },
+  {
+    "slug": "winos",
+    "label": "WinOS",
+    "description": "Windows 환경에서 활용할 수 있는 데스크톱 앱과 워크플로 도구를 정리합니다."
+  }
+]
