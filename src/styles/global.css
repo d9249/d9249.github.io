@@ -1681,11 +1681,13 @@ h3 {
 .skill-card:nth-child(3) {
   grid-column: 4 / span 6;
   grid-row: 1 / span 2;
+  align-self: stretch;
 }
 
 .skill-card:nth-child(4) {
   grid-column: 10 / span 3;
   grid-row: 1 / span 2;
+  align-self: stretch;
 }
 
 .skill-card:nth-child(5) {

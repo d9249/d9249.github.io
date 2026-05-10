@@ -1053,7 +1053,6 @@ export const skillGroups = [
       "AWS SageMaker",
       "AWS CLI",
       "NCP",
-      "S3",
       "Redis",
       "Kafka",
       "Docker",
