@@ -48,9 +48,9 @@ Tolaria는 Markdown 지식 베이스를 macOS, Linux, Windows에서 관리하는
 
 짧은 사용 흐름 자료도 함께 제공된다.
 
-- How I Organize My Own Tolaria Workspace
-- My Inbox Workflow
-- How I Save Web Resources to Tolaria
+- [How I Organize My Own Tolaria Workspace](https://www.loom.com/share/bb3aaffa238b4be0bd62e4464bca2528)
+- [My Inbox Workflow](https://www.loom.com/share/dffda263317b4fa8b47b59cdf9330571)
+- [How I Save Web Resources to Tolaria](https://www.loom.com/share/8a3c1776f801402ebbf4d7b0f31e9882)
 
 ## 핵심 원칙
 
