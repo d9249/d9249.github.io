@@ -3,6 +3,7 @@ import { Link } from "gatsby";
 import Layout from "./Layout";
 import Pagination from "./Pagination";
 import SectionHeading from "./SectionHeading";
+import TagNav from "./TagNav";
 import tipCategories from "../data/tipCategories.json";
 
 const categoryBySlug = new Map(
@@ -90,6 +91,7 @@ const TipsIndex = ({
   label,
   pageCount = 1,
   skip = 0,
+  tagSummaries,
   tips,
   totalTips,
 }) => {
@@ -113,6 +115,11 @@ const TipsIndex = ({
           description={pageDescription}
         />
         <TipCategoryNav activeCategory={activeCategory} />
+        <TagNav
+          ariaLabel="Tip tags"
+          linkedTags={false}
+          tagSummaries={tagSummaries}
+        />
         <div className="tips-summary blog-list-summary" aria-live="polite">
           <span className="blog-list-count">
             {totalVisibleTips} tips

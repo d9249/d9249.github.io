@@ -79,7 +79,46 @@ const getTetrisRows = (tags, listWidth, measuredWidths) => {
     .map((row) => row.items);
 };
 
-const TagNav = ({ posts, tagSummaries, activeTag }) => {
+const TagChip = ({ activeTag, getTagPathForTag, linkedTags, tag, width }) => {
+  const className = `tag-nav-link${tag.label === activeTag ? " is-active" : ""}`;
+  const style = {
+    "--tag-item-basis": `${width}px`,
+  };
+  const content = (
+    <>
+      <span>#{tag.label}</span>
+      <strong>{tag.count}</strong>
+    </>
+  );
+
+  if (!linkedTags) {
+    return (
+      <span className={`${className} tag-nav-chip`} style={style}>
+        {content}
+      </span>
+    );
+  }
+
+  return (
+    <Link
+      key={tag.slug}
+      to={getTagPathForTag(tag.label)}
+      className={className}
+      style={style}
+    >
+      {content}
+    </Link>
+  );
+};
+
+const TagNav = ({
+  activeTag,
+  ariaLabel = "Blog tags",
+  getTagPathForTag = getTagPath,
+  linkedTags = true,
+  posts,
+  tagSummaries,
+}) => {
   const tags = React.useMemo(
     () => tagSummaries || getTagSummaries(posts),
     [posts, tagSummaries],
@@ -152,7 +191,7 @@ const TagNav = ({ posts, tagSummaries, activeTag }) => {
   }
 
   return (
-    <nav className="tag-nav" aria-label="Blog tags">
+    <nav className="tag-nav" aria-label={ariaLabel}>
       <div className="tag-nav-header">
         <span className="tag-nav-label">Tags</span>
         {shouldCollapse ? (
@@ -174,19 +213,14 @@ const TagNav = ({ posts, tagSummaries, activeTag }) => {
         {tetrisRows.map((row, rowIndex) => (
           <div className="tag-nav-row" key={`tag-row-${rowIndex}`}>
             {row.map(({ tag, width }) => (
-              <Link
+              <TagChip
+                activeTag={activeTag}
+                getTagPathForTag={getTagPathForTag}
                 key={tag.slug}
-                to={getTagPath(tag.label)}
-                className={`tag-nav-link${
-                  tag.label === activeTag ? " is-active" : ""
-                }`}
-                style={{
-                  "--tag-item-basis": `${width}px`,
-                }}
-              >
-                <span>#{tag.label}</span>
-                <strong>{tag.count}</strong>
-              </Link>
+                linkedTags={linkedTags}
+                tag={tag}
+                width={width}
+              />
             ))}
           </div>
         ))}

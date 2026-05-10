@@ -16,6 +16,7 @@ const TipsIndexTemplate = ({ data, pageContext }) => (
     label={pageContext.label}
     pageCount={pageContext.pageCount}
     skip={pageContext.skip}
+    tagSummaries={pageContext.tagSummaries}
     tips={data.tips.nodes}
     totalTips={pageContext.totalTips}
   />

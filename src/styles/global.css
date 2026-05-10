@@ -2062,6 +2062,7 @@ h3 {
 }
 
 .tag-nav a,
+.tag-nav-chip,
 .tag-nav-measure-chip {
   display: inline-flex;
   flex-shrink: 0;
@@ -2079,12 +2080,14 @@ h3 {
 }
 
 .tag-nav a span,
+.tag-nav-chip span,
 .tag-nav-measure-chip span {
   min-width: 0;
   overflow-wrap: anywhere;
 }
 
 .tag-nav a strong,
+.tag-nav-chip strong,
 .tag-nav-measure-chip strong {
   display: grid;
   min-width: 18px;

@@ -107,6 +107,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             draft
             date(formatString: "YYYY.MM.DD")
             platforms
+            tags
           }
         }
       }
@@ -232,6 +233,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           label,
           pageCount,
           skip,
+          tagSummaries: getTagSummaries(tipsForIndex),
           tipIds: pageTips.map((tip) => tip.id),
           totalTips: tipsForIndex.length,
         },
