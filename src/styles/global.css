@@ -2379,7 +2379,7 @@ h3 {
 
 .tip-card h3 {
   margin: 0;
-  font-size: 34px;
+  font-size: 31px;
   line-height: 1.06;
   max-width: 100%;
   overflow-wrap: anywhere;
@@ -3109,7 +3109,7 @@ figcaption,
   }
 
   .tip-card h3 {
-    font-size: 31px;
+    font-size: 29px;
   }
 }
 
@@ -3387,7 +3387,7 @@ figcaption,
   }
 
   .tip-card h3 {
-    font-size: 28px;
+    font-size: 26px;
     line-height: 1.08;
   }
 
