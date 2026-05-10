@@ -2571,7 +2571,25 @@ figcaption,
 }
 
 .article-body a {
+  color: color-mix(in oklch, var(--accent) 78%, var(--fg));
+  font-weight: 650;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in oklch, var(--accent) 40%, transparent);
+  text-underline-offset: 0.18em;
   overflow-wrap: anywhere;
+  transition:
+    color 160ms ease,
+    background 160ms ease,
+    text-decoration-color 160ms ease;
+}
+
+.article-body a:hover,
+.article-body a:focus-visible {
+  color: color-mix(in oklch, var(--accent) 92%, var(--fg));
+  background: color-mix(in oklch, var(--accent) 10%, transparent);
+  text-decoration-color: currentColor;
+  outline: none;
 }
 
 .article-body figure,
