@@ -1044,15 +1044,7 @@ export const skillGroups = [
   {
     title: "DBMS",
     summary: "관계형, 문서형, 벡터 데이터베이스",
-    skills: [
-      "MySQL",
-      "PostgreSQL",
-      "Oracle",
-      "MS-SQL",
-      "MongoDB",
-      "Qdrant",
-      "Milvus",
-    ],
+    skills: ["MySQL", "PostgreSQL", "Oracle", "MongoDB", "Qdrant", "Milvus"],
   },
   {
     title: "클라우드 및 미들웨어",

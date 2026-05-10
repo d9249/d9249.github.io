@@ -1648,8 +1648,8 @@ h3 {
 
 .skill-grid {
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  align-items: stretch;
-  gap: 28px 18px;
+  align-items: start;
+  gap: 24px 18px;
   padding-top: 14px;
 }
 
@@ -1668,20 +1668,39 @@ h3 {
   background: color-mix(in oklch, var(--surface) 72%, transparent);
 }
 
-.skill-card:nth-child(1),
-.skill-card:nth-child(2),
-.skill-card:nth-child(4),
-.skill-card:nth-child(6) {
-  grid-column: span 3;
+.skill-card:nth-child(1) {
+  grid-column: 1 / span 3;
+  grid-row: 1;
 }
 
-.skill-card:nth-child(3),
+.skill-card:nth-child(2) {
+  grid-column: 1 / span 3;
+  grid-row: 2;
+}
+
+.skill-card:nth-child(3) {
+  grid-column: 4 / span 6;
+  grid-row: 1 / span 2;
+}
+
+.skill-card:nth-child(4) {
+  grid-column: 10 / span 3;
+  grid-row: 1 / span 2;
+}
+
 .skill-card:nth-child(5) {
-  grid-column: span 6;
+  grid-column: 1 / span 7;
+  grid-row: 3;
+}
+
+.skill-card:nth-child(6) {
+  grid-column: 8 / span 5;
+  grid-row: 3;
 }
 
 .skill-card:last-child {
   grid-column: 1 / -1;
+  grid-row: 4;
   gap: 18px;
 }
 
@@ -1780,14 +1799,17 @@ h3 {
 
 .skill-card:nth-child(1) .skill-list,
 .skill-card:nth-child(2) .skill-list,
-.skill-card:nth-child(4) .skill-list,
-.skill-card:nth-child(6) .skill-list {
+.skill-card:nth-child(4) .skill-list {
   grid-template-columns: 1fr;
 }
 
 .skill-card:nth-child(3) .skill-list,
 .skill-card:nth-child(5) .skill-list {
   grid-template-columns: repeat(auto-fit, minmax(min(168px, 100%), 1fr));
+}
+
+.skill-card:nth-child(6) .skill-list {
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
 }
 
 .skill-card:last-child .skill-list {
@@ -1819,7 +1841,7 @@ h3 {
   background: color-mix(in oklch, var(--surface) 70%, transparent);
   color: color-mix(in oklch, var(--accent) 74%, var(--fg));
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: 0;
   line-height: 1.2;
@@ -1828,25 +1850,6 @@ h3 {
 
 .skill-cluster .skill-list {
   grid-template-columns: repeat(auto-fit, minmax(min(148px, 100%), 1fr));
-}
-
-.skill-card:last-child .skill-list li {
-  min-height: 40px;
-  padding: 6px 8px;
-  font-size: 11px;
-  line-height: 1.25;
-}
-
-.skill-card:last-child .skill-logo-mark {
-  width: 24px;
-  height: 24px;
-  border-radius: 7px;
-  font-size: 8px;
-}
-
-.skill-card:last-child .skill-logo-mark svg {
-  width: 15px;
-  height: 15px;
 }
 
 .skill-context-list {
@@ -3307,10 +3310,12 @@ figcaption,
   .skill-card:nth-child(5),
   .skill-card:nth-child(6) {
     grid-column: span 1;
+    grid-row: auto;
   }
 
   .skill-card:last-child {
     grid-column: 1 / -1;
+    grid-row: auto;
   }
 
   .skill-cluster-list {
