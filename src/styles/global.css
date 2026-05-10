@@ -2379,7 +2379,9 @@ h3 {
 .tip-card h3 a:hover,
 .tip-card-foot a:hover,
 .tip-platforms a:hover,
-.tip-post-platforms a:hover {
+.tip-post-platforms a:hover,
+.tip-tags a:hover,
+.tip-tags a:focus-visible {
   color: color-mix(in oklch, var(--accent) 82%, var(--fg));
 }
 
@@ -2403,7 +2405,7 @@ h3 {
 
 .tip-platforms a,
 .tip-post-platforms a,
-.tip-tags span {
+.tip-tags a {
   display: inline-flex;
   align-items: center;
   width: fit-content;
@@ -2422,6 +2424,13 @@ h3 {
   background: color-mix(in oklch, var(--accent) 10%, var(--surface));
   color: var(--fg);
   font-weight: 800;
+}
+
+.tip-tags a:hover,
+.tip-tags a:focus-visible {
+  border-color: color-mix(in oklch, var(--accent) 70%, var(--border));
+  background: color-mix(in oklch, var(--accent) 10%, var(--surface));
+  outline: none;
 }
 
 .tip-post-platforms {

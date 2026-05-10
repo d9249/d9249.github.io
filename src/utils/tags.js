@@ -6,7 +6,11 @@ const slugifyTag = (tag = "") =>
     .replace(/[^a-z0-9가-힣]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
-const getTagPath = (tag) => `/blog/tags/${slugifyTag(tag)}/`;
+const getBlogTagPath = (tag) => `/blog/tags/${slugifyTag(tag)}/`;
+
+const getTipTagPath = (tag) => `/tips/tags/${slugifyTag(tag)}/`;
+
+const getTagPath = getBlogTagPath;
 
 const getTagSummaries = (posts = []) => {
   const tagMap = new Map();
@@ -45,5 +49,7 @@ const getTagSummaries = (posts = []) => {
 };
 
 exports.getTagPath = getTagPath;
+exports.getBlogTagPath = getBlogTagPath;
 exports.getTagSummaries = getTagSummaries;
+exports.getTipTagPath = getTipTagPath;
 exports.slugifyTag = slugifyTag;

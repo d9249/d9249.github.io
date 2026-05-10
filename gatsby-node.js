@@ -3,7 +3,11 @@ const fs = require("fs");
 const categories = require("./src/data/categories.json");
 const legacyRedirects = require("./src/data/legacy-redirects.json");
 const tipCategories = require("./src/data/tipCategories.json");
-const { getTagSummaries } = require("./src/utils/tags");
+const {
+  getTagSummaries,
+  getTipTagPath,
+  slugifyTag,
+} = require("./src/utils/tags");
 
 const POSTS_PER_BLOG_PAGE = 12;
 const POSTS_ON_FIRST_BLOG_PAGE = 13;
@@ -11,6 +15,12 @@ const TIPS_PER_PAGE = 4;
 
 const getTipsIndexPath = (categorySlug, page) => {
   const basePath = categorySlug ? `/tips/${categorySlug}/` : "/tips/";
+
+  return page <= 1 ? basePath : `${basePath}page/${page}/`;
+};
+
+const getTipsTagIndexPath = (tag, page) => {
+  const basePath = getTipTagPath(tag);
 
   return page <= 1 ? basePath : `${basePath}page/${page}/`;
 };
@@ -131,6 +141,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   );
   const tips = result.data.tips.nodes.filter((tip) => !tip.frontmatter.draft);
   const tagSummaries = getTagSummaries(posts);
+  const tipTagSummaries = getTagSummaries(tips);
   const blogPageCount =
     posts.length <= POSTS_ON_FIRST_BLOG_PAGE
       ? 1
@@ -209,8 +220,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const createTipIndexPages = ({
     activeCategory,
+    activeTag,
     description,
+    getPagePath,
     label,
+    tagSummaries: tipPageTagSummaries,
     tipsForIndex,
   }) => {
     const pageCount = Math.max(
@@ -224,16 +238,19 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       const pageTips = tipsForIndex.slice(skip, skip + TIPS_PER_PAGE);
 
       createPage({
-        path: getTipsIndexPath(activeCategory, currentPage),
+        path: getPagePath
+          ? getPagePath(currentPage)
+          : getTipsIndexPath(activeCategory, currentPage),
         component: tipsIndexTemplate,
         context: {
           activeCategory,
+          activeTag,
           currentPage,
           description,
           label,
           pageCount,
           skip,
-          tagSummaries: getTagSummaries(tipsForIndex),
+          tagSummaries: tipPageTagSummaries || getTagSummaries(tipsForIndex),
           tipIds: pageTips.map((tip) => tip.id),
           totalTips: tipsForIndex.length,
         },
@@ -256,6 +273,20 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       label: category.label,
       tipsForIndex: tips.filter((tip) =>
         tip.frontmatter.platforms?.includes(category.slug),
+      ),
+    });
+  });
+
+  tipTagSummaries.forEach((tag) => {
+    createTipIndexPages({
+      activeCategory: null,
+      activeTag: tag.label,
+      description: `${tag.label} 태그가 붙은 응용프로그램 팁입니다.`,
+      getPagePath: (page) => getTipsTagIndexPath(tag.label, page),
+      label: `#${tag.label}`,
+      tagSummaries: tipTagSummaries,
+      tipsForIndex: tips.filter((tip) =>
+        tip.frontmatter.tags?.some((tipTag) => slugifyTag(tipTag) === tag.slug),
       ),
     });
   });

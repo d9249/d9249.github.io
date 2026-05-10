@@ -5,6 +5,7 @@ import Pagination from "./Pagination";
 import SectionHeading from "./SectionHeading";
 import TagNav from "./TagNav";
 import tipCategories from "../data/tipCategories.json";
+import { getTipTagPath } from "../utils/tags";
 
 const categoryBySlug = new Map(
   tipCategories.map((category) => [category.slug, category]),
@@ -16,8 +17,12 @@ const getTipCategoryLabel = (slug) => categoryBySlug.get(slug)?.label || slug;
 
 const getFrontmatterList = (value) => value || [];
 
-const getTipsPagePath = (category, page) => {
-  const basePath = category ? `/tips/${category}/` : "/tips/";
+const getTipsPagePath = ({ category, page, tag }) => {
+  const basePath = tag
+    ? getTipTagPath(tag)
+    : category
+      ? `/tips/${category}/`
+      : "/tips/";
 
   return page <= 1 ? basePath : `${basePath}page/${page}/`;
 };
@@ -71,7 +76,9 @@ const TipCard = ({ tip }) => (
     {tip.frontmatter.tags?.length ? (
       <div className="tip-tags">
         {tip.frontmatter.tags.map((tag) => (
-          <span key={tag}>{tag}</span>
+          <Link key={tag} to={getTipTagPath(tag)}>
+            {tag}
+          </Link>
         ))}
       </div>
     ) : null}
@@ -86,6 +93,7 @@ const TipCard = ({ tip }) => (
 
 const TipsIndex = ({
   activeCategory,
+  activeTag,
   currentPage = 1,
   description,
   label,
@@ -117,13 +125,18 @@ const TipsIndex = ({
         <TipCategoryNav activeCategory={activeCategory} />
         <TagNav
           ariaLabel="Tip tags"
-          linkedTags={false}
+          activeTag={activeTag}
+          getTagPathForTag={getTipTagPath}
           tagSummaries={tagSummaries}
         />
         <div className="tips-summary blog-list-summary" aria-live="polite">
           <span className="blog-list-count">
             {totalVisibleTips} tips
-            {activeCategoryData ? ` for ${activeCategoryData.label}` : ""}
+            {activeTag
+              ? ` tagged #${activeTag}`
+              : activeCategoryData
+                ? ` for ${activeCategoryData.label}`
+                : ""}
             {totalVisibleTips > 0
               ? `, ${firstTipNumber}-${lastTipNumber} showing`
               : ""}
@@ -137,7 +150,13 @@ const TipsIndex = ({
               className="blog-top-pagination"
               compact
               currentPage={currentPage}
-              getPagePath={(page) => getTipsPagePath(activeCategory, page)}
+              getPagePath={(page) =>
+                getTipsPagePath({
+                  category: activeCategory,
+                  page,
+                  tag: activeTag,
+                })
+              }
               iconOnly
               pageCount={pageCount}
             />
@@ -155,7 +174,13 @@ const TipsIndex = ({
         <Pagination
           ariaLabel="Tip pages"
           currentPage={currentPage}
-          getPagePath={(page) => getTipsPagePath(activeCategory, page)}
+          getPagePath={(page) =>
+            getTipsPagePath({
+              category: activeCategory,
+              page,
+              tag: activeTag,
+            })
+          }
           pageCount={pageCount}
         />
       </section>

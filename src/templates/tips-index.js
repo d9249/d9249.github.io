@@ -1,9 +1,14 @@
 import * as React from "react";
 import { graphql } from "gatsby";
 import TipsIndex from "../components/TipsIndex";
+import { getTipTagPath } from "../utils/tags";
 
-const getTipsPagePath = (category, page) => {
-  const basePath = category ? `/tips/${category}/` : "/tips/";
+const getTipsPagePath = ({ category, page, tag }) => {
+  const basePath = tag
+    ? getTipTagPath(tag)
+    : category
+      ? `/tips/${category}/`
+      : "/tips/";
 
   return page <= 1 ? basePath : `${basePath}page/${page}/`;
 };
@@ -11,6 +16,7 @@ const getTipsPagePath = (category, page) => {
 const TipsIndexTemplate = ({ data, pageContext }) => (
   <TipsIndex
     activeCategory={pageContext.activeCategory}
+    activeTag={pageContext.activeTag}
     currentPage={pageContext.currentPage}
     description={pageContext.description}
     label={pageContext.label}
@@ -27,7 +33,11 @@ export default TipsIndexTemplate;
 export const Head = ({ pageContext }) => {
   const currentPage = pageContext.currentPage || 1;
   const pageCount = pageContext.pageCount || 1;
-  const baseTitle = pageContext.label ? `${pageContext.label} Tips` : "Tips";
+  const baseTitle = pageContext.activeTag
+    ? `#${pageContext.activeTag} Tips`
+    : pageContext.label
+      ? `${pageContext.label} Tips`
+      : "Tips";
   const title =
     currentPage > 1 ? `${baseTitle} Page ${currentPage}` : baseTitle;
   const description =
@@ -41,13 +51,21 @@ export const Head = ({ pageContext }) => {
       {currentPage > 1 ? (
         <link
           rel="prev"
-          href={getTipsPagePath(pageContext.activeCategory, currentPage - 1)}
+          href={getTipsPagePath({
+            category: pageContext.activeCategory,
+            page: currentPage - 1,
+            tag: pageContext.activeTag,
+          })}
         />
       ) : null}
       {currentPage < pageCount ? (
         <link
           rel="next"
-          href={getTipsPagePath(pageContext.activeCategory, currentPage + 1)}
+          href={getTipsPagePath({
+            category: pageContext.activeCategory,
+            page: currentPage + 1,
+            tag: pageContext.activeTag,
+          })}
         />
       ) : null}
     </>
