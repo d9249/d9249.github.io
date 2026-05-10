@@ -1,6 +1,6 @@
 ---
 title: "Tuna-2는 비전 인코더를 버리고 픽셀 임베딩으로 통합 멀티모달을 다시 설계한다"
-date: "2026-05-06T18:22:50"
+date: "2026-05-11T01:26:44"
 description: "Tuna-2는 사전학습 비전 인코더와 VAE를 제거하고 raw pixel patch embedding만으로 이해와 생성을 함께 처리해, native unified multimodal model의 복잡도를 낮추면서도 세밀한 시각 이해 성능을 끌어올리려는 시도다."
 author: "Sangmin Lee"
 category: "foundation-models"
@@ -57,7 +57,7 @@ Tuna-2의 구조는 크게 세 가지 축으로 요약할 수 있다.
 
 반면 생성은 조금 더 미묘하다. Table 2 기준 Tuna-2의 GenEval 세부 항목은 일부에서 Tuna-R와 비슷하거나 약간 낮고, DPG-Bench는 열별로 우열이 엇갈린다. 논문 초록과 본문이 강조하듯, encoder-based Tuna-R가 초반 pretraining 수렴은 더 빠르지만 충분한 시각 pretraining 이후에는 Tuna-2가 생성에서도 경쟁 가능해지고 이해에서는 더 강해진다는 것이 저자들의 핵심 해석이다. 즉 Tuna-2는 "생성까지 포함한 완전한 승리"보다는 **이해 성능을 해치지 않으면서 encoder-free 구조가 실전 가능함을 보인 사례**에 가깝다.
 
-프로젝트 페이지와 GitHub README에서 확인되는 공개 범위도 중요하다. 저장소는 2026-04-22에 생성됐고 GitHub API 기준 stars 576, forks 23, license는 Apache-2.0, default branch는 `main`이다. 하지만 `/releases/latest`는 404이고 tags도 비어 있다. 더 중요한 점은 README의 모델 릴리스 노트다. 저자들은 조직 정책상 full production-trained model weight는 공개하지 못하며, 일부 레이어가 제거된 foundation checkpoint를 우선 공개할 계획이라고 적었다. 즉 코드와 구조, 학습 경로는 공개됐지만, 완전한 복원 없이 바로 논문 성능을 재현할 수 있는 패키지라고 보기는 어렵다.
+프로젝트 페이지와 GitHub README에서 확인되는 공개 범위도 중요하다. 저장소는 2026-04-22에 생성됐고 작성 시점 GitHub API 기준 stars 611, forks 25, open issues 5, license는 Apache-2.0, default branch는 `main`이다. 하지만 `/releases/latest`는 404이고 tags도 비어 있다. 더 중요한 점은 README의 모델 릴리스 노트다. 저자들은 조직 정책상 full production-trained model weight는 공개하지 못하며, 일부 레이어가 제거된 foundation checkpoint를 우선 공개할 계획이라고 적었다. 즉 코드와 구조, 학습 경로는 공개됐지만, 완전한 복원 없이 바로 논문 성능을 재현할 수 있는 패키지라고 보기는 어렵다.
 
 또 하나의 운영 신호는 video 쪽 공개 범위다. README는 video training/inference code는 제공하지만, video generation model 자체는 정책상 미공개라고 명시한다. 따라서 Tuna-2를 지금 당장 "텍스트-이미지-비디오를 다루는 완전 배포형 멀티모달 생성 시스템"으로 읽는 것은 과장이다. 현재 공개물은 강한 연구용 코드베이스와 부분적 모델 공개 계획에 더 가깝다.
 
@@ -65,7 +65,7 @@ Tuna-2의 구조는 크게 세 가지 축으로 요약할 수 있다.
 |---|---|---|
 | 이해 벤치마크 | Tuna-2가 MMVet, OCRBench, CountBench, VisuLogic 등에서 Tuna-R 대비 우세 | encoder-free 설계가 fine-grained perception에서 강점을 보일 가능성 |
 | 생성 벤치마크 | GenEval/DPG-Bench에서 Tuna-R와 근접하거나 일부 열세 | 생성만 놓고 보면 encoder-free 전환의 비용이 완전히 사라진 것은 아님 |
-| 공개 저장소 상태 | stars 576, forks 23, Apache-2.0, release/tag 부재 | 활발한 관심은 있으나 안정 버저닝 체계는 아직 약함 |
+| 공개 저장소 상태 | stars 611, forks 25, open issues 5, Apache-2.0, release/tag 부재 | 활발한 관심은 있으나 안정 버저닝 체계는 아직 약함 |
 | 가중치 공개 상태 | full production weights 미공개, 일부 레이어 제거 foundation checkpoint 계획 | 재현성과 즉시 사용성에는 제약이 있음 |
 | 비디오 공개 범위 | 코드 공개, video generation weights 미공개 | capability 서사와 실제 배포 가능 범위는 구분해서 봐야 함 |
 
