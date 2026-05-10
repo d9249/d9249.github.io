@@ -1,6 +1,7 @@
 export const navItems = [
   { label: "home", heroLabel: "홈", to: "/" },
   { label: "career", heroLabel: "경력", to: "/#career" },
+  { label: "tech stack", heroLabel: "기술스택", to: "/#skills" },
   {
     label: "projects",
     heroLabel: "프로젝트",
