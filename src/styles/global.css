@@ -1702,61 +1702,67 @@ h3 {
 
 .skill-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
-  gap: 16px 18px;
-  align-content: center;
-  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(min(164px, 100%), 1fr));
+  gap: 10px;
+  align-content: start;
+  align-items: stretch;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .skill-list li {
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
   align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
+  gap: 9px;
   max-width: 100%;
   min-width: 0;
-  min-height: 54px;
-  padding: 4px 2px;
-  border: 0;
-  background: transparent;
+  min-height: 44px;
+  padding: 6px 9px;
+  border: 1px solid color-mix(in oklch, var(--border) 84%, var(--fg));
+  border-radius: 8px;
+  background: color-mix(in oklch, var(--bg) 38%, transparent);
   color: var(--fg);
-  font-family: var(--font-display);
-  font-size: clamp(17px, 1.34vw, 24px);
-  font-weight: 820;
-  line-height: 1.05;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.18;
   text-align: left;
-  overflow: visible;
-  overflow-wrap: break-word;
+  overflow: hidden;
+  overflow-wrap: anywhere;
   white-space: normal;
 }
 
 .skill-logo-mark {
   display: grid;
   flex: 0 0 auto;
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   place-items: center;
-  border-radius: 12px;
+  border-radius: 9px;
   background: var(--skill-logo-color, var(--accent));
   color: var(--skill-logo-contrast, var(--bg));
-  font-size: 12px;
+  font-size: 9px;
   font-weight: 900;
   letter-spacing: 0;
   box-shadow: inset 0 0 0 1px color-mix(in oklch, white 42%, transparent);
 }
 
 .skill-logo-mark svg {
-  width: 25px;
-  height: 25px;
+  width: 19px;
+  height: 19px;
   fill: currentColor;
 }
 
 .skill-logo-name {
+  display: -webkit-box;
   min-width: 0;
-  overflow-wrap: break-word;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  word-break: keep-all;
 }
 
 .skill-list li:not(.has-skill-logo):nth-child(4n + 2) .skill-logo-mark {
@@ -1772,43 +1778,38 @@ h3 {
 }
 
 .skill-card:nth-child(1) .skill-list,
-.skill-card:nth-child(2) .skill-list {
+.skill-card:nth-child(2) .skill-list,
+.skill-card:nth-child(4) .skill-list,
+.skill-card:nth-child(6) .skill-list {
   grid-template-columns: 1fr;
 }
 
-.skill-card:nth-child(4) .skill-list,
-.skill-card:nth-child(6) .skill-list {
-  grid-template-columns: repeat(auto-fit, minmax(min(118px, 100%), 1fr));
+.skill-card:nth-child(3) .skill-list,
+.skill-card:nth-child(5) .skill-list {
+  grid-template-columns: repeat(auto-fit, minmax(min(168px, 100%), 1fr));
 }
 
 .skill-card:last-child .skill-list {
-  grid-template-columns: repeat(auto-fit, minmax(min(204px, 100%), 1fr));
-  gap: 12px 14px;
+  grid-template-columns: repeat(auto-fit, minmax(min(188px, 100%), 1fr));
 }
 
 .skill-card:last-child .skill-list li {
-  justify-content: flex-start;
-  min-height: 44px;
-  padding: 7px 10px 7px 8px;
-  border: 1px solid color-mix(in oklch, var(--border) 84%, var(--fg));
-  border-radius: 8px;
-  background: color-mix(in oklch, var(--bg) 42%, transparent);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 800;
+  min-height: 40px;
+  padding: 6px 8px;
+  font-size: 11px;
   line-height: 1.25;
 }
 
 .skill-card:last-child .skill-logo-mark {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  font-size: 9px;
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  font-size: 8px;
 }
 
 .skill-card:last-child .skill-logo-mark svg {
-  width: 17px;
-  height: 17px;
+  width: 15px;
+  height: 15px;
 }
 
 .skill-context-list {
@@ -3561,15 +3562,16 @@ figcaption,
   }
 
   .skill-list li {
-    min-height: 48px;
-    font-size: 18px;
+    grid-template-columns: 30px minmax(0, 1fr);
+    min-height: 42px;
+    font-size: 12px;
   }
 
   .skill-logo-mark {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    font-size: 11px;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    font-size: 9px;
   }
 
   .project-card h3,
