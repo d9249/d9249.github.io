@@ -1,5 +1,46 @@
 import * as React from "react";
 import { graphql, Link } from "gatsby";
+import {
+  siAiohttp,
+  siApachekafka,
+  siConfluence,
+  siDjango,
+  siDocker,
+  siElasticsearch,
+  siFastapi,
+  siGit,
+  siGithubactions,
+  siJira,
+  siJavascript,
+  siKibana,
+  siKubernetes,
+  siLangchain,
+  siLanggraph,
+  siLinux,
+  siLogstash,
+  siMilvus,
+  siMongodb,
+  siMysql,
+  siNestjs,
+  siNotion,
+  siNumpy,
+  siOpencv,
+  siPandas,
+  siPostgresql,
+  siPostman,
+  siPytorch,
+  siPytest,
+  siPython,
+  siQdrant,
+  siReact,
+  siRedis,
+  siScikitlearn,
+  siStreamlit,
+  siTensorflow,
+  siUbuntu,
+  siVuedotjs,
+  siWeightsandbiases,
+} from "simple-icons";
 import Layout from "../components/Layout";
 import PostCard from "../components/PostCard";
 import ProjectGrid from "../components/ProjectGrid";
@@ -19,6 +60,48 @@ import {
 
 const CARD_DECK_SIZE = 4;
 const POST_DECK_SIZE = 3;
+const SKILL_LOGOS = new Map([
+  ["Linux (Ubuntu)", siUbuntu],
+  ["Linux", siLinux],
+  ["Python", siPython],
+  ["JavaScript", siJavascript],
+  ["React.js", siReact],
+  ["Vue.js", siVuedotjs],
+  ["Django", siDjango],
+  ["Nest.js", siNestjs],
+  ["Langchain", siLangchain],
+  ["Langgraph", siLanggraph],
+  ["PyTorch", siPytorch],
+  ["NumPy", siNumpy],
+  ["Pandas", siPandas],
+  ["OpenCV", siOpencv],
+  ["Scikit-learn", siScikitlearn],
+  ["TensorFlow", siTensorflow],
+  ["FastAPI", siFastapi],
+  ["aiohttp", siAiohttp],
+  ["Streamlit", siStreamlit],
+  ["MySQL", siMysql],
+  ["PostgreSQL", siPostgresql],
+  ["MongoDB", siMongodb],
+  ["Qdrant", siQdrant],
+  ["Milvus", siMilvus],
+  ["Redis", siRedis],
+  ["Kafka", siApachekafka],
+  ["Docker", siDocker],
+  ["Docker-Compose", siDocker],
+  ["Kubernetes", siKubernetes],
+  ["Elasticsearch", siElasticsearch],
+  ["Logstash", siLogstash],
+  ["Kibana", siKibana],
+  ["wandb", siWeightsandbiases],
+  ["Git", siGit],
+  ["Jira", siJira],
+  ["Confluence", siConfluence],
+  ["Postman", siPostman],
+  ["Notion", siNotion],
+  ["pytest", siPytest],
+  ["Github Actions", siGithubactions],
+]);
 const SKILL_MARKS = new Map([
   ["Linux (Ubuntu)", "LX"],
   ["Windows", "WIN"],
@@ -57,6 +140,21 @@ const getCardDecks = (items, deckSize = CARD_DECK_SIZE) =>
 
 const getDeckLabel = (index, total) =>
   `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+
+const getReadableLogoColor = (hex) => {
+  const normalizedHex = hex.padEnd(6, "0").slice(0, 6);
+  const red = Number.parseInt(normalizedHex.slice(0, 2), 16);
+  const green = Number.parseInt(normalizedHex.slice(2, 4), 16);
+  const blue = Number.parseInt(normalizedHex.slice(4, 6), 16);
+  const brightness = (red * 299 + green * 587 + blue * 114) / 1000;
+
+  return brightness > 150 ? "#101820" : "#ffffff";
+};
+
+const getSkillLogoStyle = (icon) => ({
+  "--skill-logo-color": `#${icon.hex}`,
+  "--skill-logo-contrast": getReadableLogoColor(icon.hex),
+});
 
 const getSkillMark = (skill) => {
   const knownMark = SKILL_MARKS.get(skill);
@@ -484,14 +582,33 @@ const IndexPage = ({ data }) => {
             >
               <h3>{group.title}</h3>
               <ul className="skill-list">
-                {group.skills.map((skill) => (
-                  <li key={skill}>
-                    <span className="skill-logo-mark" aria-hidden="true">
-                      {getSkillMark(skill)}
-                    </span>
-                    <span className="skill-logo-name">{skill}</span>
-                  </li>
-                ))}
+                {group.skills.map((skill) => {
+                  const skillLogo = SKILL_LOGOS.get(skill);
+
+                  return (
+                    <li
+                      className={skillLogo ? "has-skill-logo" : undefined}
+                      key={skill}
+                    >
+                      <span
+                        className="skill-logo-mark"
+                        style={
+                          skillLogo ? getSkillLogoStyle(skillLogo) : undefined
+                        }
+                        aria-hidden="true"
+                      >
+                        {skillLogo ? (
+                          <svg viewBox="0 0 24 24" focusable="false">
+                            <path d={skillLogo.path} />
+                          </svg>
+                        ) : (
+                          getSkillMark(skill)
+                        )}
+                      </span>
+                      <span className="skill-logo-name">{skill}</span>
+                    </li>
+                  );
+                })}
               </ul>
               {group.contexts?.length ? (
                 <ul className="skill-context-list">
