@@ -38,6 +38,8 @@ Types as lenses, not schemas 원칙으로 필수 필드나 강제 검증 없이 
 
 ![Tolaria repository](https://opengraph.githubassets.com/tolaria-tip/refactoringhq/tolaria)
 
+![Tolaria desktop interface](/images/tips/tolaria-interface.png)
+
 ## Tolaria 개요
 
 Tolaria는 Markdown 지식 베이스를 macOS, Linux, Windows에서 관리하는 데 초점을 둔 데스크톱 앱이다. 개인용 second brain, 회사 문서를 AI용 컨텍스트로 정리하는 용도, OpenClaw와 assistants의 메모리 및 절차 저장에 맞춰 설계됐다.
