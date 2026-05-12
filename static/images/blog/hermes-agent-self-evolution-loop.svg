@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Hermes Agent Self-Evolution loop</title>
+  <desc id="desc">A workflow diagram showing skill or prompt inputs, evaluation dataset generation, DSPy and GEPA optimization, evaluation traces, constraint gates, and human-reviewed output.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#08111f"/>
+      <stop offset="55%" stop-color="#0e1630"/>
+      <stop offset="100%" stop-color="#191131"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#17223a"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7dd3fc"/>
+      <stop offset="50%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#f0abfc"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#93c5fd"/>
+    </marker>
+    <style>
+      .label{font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill:#e5e7eb; font-weight:700; letter-spacing:-0.02em}
+      .small{font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill:#a5b4fc; font-weight:600; font-size:25px; letter-spacing:0.02em}
+      .body{font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill:#cbd5e1; font-size:27px; font-weight:500}
+      .mono{font-family: "SFMono-Regular", Consolas, Menlo, monospace; fill:#bae6fd; font-size:24px; font-weight:700}
+      .badge{font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill:#020617; font-size:22px; font-weight:800; letter-spacing:0.04em}
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" rx="0" fill="url(#bg)"/>
+  <circle cx="1280" cy="130" r="260" fill="#312e81" opacity="0.22"/>
+  <circle cx="250" cy="770" r="260" fill="#075985" opacity="0.18"/>
+  <path d="M110 160 C400 80 520 260 790 170 C1070 80 1190 230 1490 140" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.18"/>
+  <path d="M130 740 C410 640 540 800 780 700 C1050 590 1210 720 1480 610" fill="none" stroke="#c084fc" stroke-width="2" opacity="0.18"/>
+
+  <text x="100" y="108" class="small">HERMES AGENT SELF-EVOLUTION</text>
+  <text x="100" y="165" class="label" font-size="55">Instruction Layer as an Optimizable System</text>
+  <text x="100" y="210" class="body">Skills, tool descriptions, and prompts become measurable variants — not static documentation.</text>
+
+  <g filter="url(#shadow)">
+    <rect x="100" y="300" width="250" height="150" rx="28" fill="url(#card)" stroke="#334155" stroke-width="2"/>
+    <text x="130" y="350" class="label" font-size="32">1. Target</text>
+    <text x="130" y="392" class="mono">SKILL.md</text>
+    <text x="130" y="424" class="body" font-size="23">tool schema · prompt</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="440" y="300" width="270" height="150" rx="28" fill="url(#card)" stroke="#334155" stroke-width="2"/>
+    <text x="470" y="350" class="label" font-size="32">2. Eval Data</text>
+    <text x="470" y="392" class="body" font-size="24">synthetic · session DB</text>
+    <text x="470" y="424" class="body" font-size="23">golden rubrics</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="800" y="270" width="330" height="210" rx="34" fill="#111827" stroke="url(#accent)" stroke-width="4"/>
+    <text x="840" y="330" class="label" font-size="36">3. Optimizer</text>
+    <text x="840" y="378" class="label" font-size="34" fill="#e9d5ff">DSPy + GEPA</text>
+    <text x="840" y="420" class="body" font-size="24">trace-aware reflective</text>
+    <text x="840" y="452" class="body" font-size="24">prompt evolution</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1225" y="300" width="275" height="150" rx="28" fill="url(#card)" stroke="#334155" stroke-width="2"/>
+    <text x="1255" y="350" class="label" font-size="32">4. Evaluate</text>
+    <text x="1255" y="392" class="body" font-size="24">score · latency · cost</text>
+    <text x="1255" y="424" class="body" font-size="23">execution traces</text>
+  </g>
+
+  <path d="M352 375 L430 375" stroke="#93c5fd" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M712 375 L790 375" stroke="#93c5fd" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M1135 375 L1215 375" stroke="#93c5fd" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M1360 455 C1335 620 1035 640 990 488" stroke="#a78bfa" stroke-width="4" fill="none" stroke-dasharray="12 12" marker-end="url(#arrow)" opacity="0.9"/>
+  <text x="1090" y="615" class="body" font-size="24" fill="#d8b4fe">feedback traces loop back into mutation</text>
+
+  <g filter="url(#shadow)">
+    <rect x="285" y="620" width="460" height="145" rx="30" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+    <text x="325" y="675" class="label" font-size="33">Constraint Gates</text>
+    <text x="325" y="718" class="body" font-size="24">tests · size limits · growth limit · structure</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="850" y="620" width="465" height="145" rx="30" fill="#0f172a" stroke="#c084fc" stroke-width="2"/>
+    <text x="890" y="675" class="label" font-size="33">Reviewed Output</text>
+    <text x="890" y="718" class="body" font-size="24">baseline/evolved diff · metrics · PR review</text>
+  </g>
+
+  <path d="M965 485 C940 570 730 640 750 690 L835 690" stroke="#93c5fd" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M748 692 L835 692" stroke="#93c5fd" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
+
+  <g transform="translate(102, 805)">
+    <rect x="0" y="0" width="180" height="42" rx="21" fill="url(#accent)"/>
+    <text x="28" y="28" class="badge">NO GPU TRAINING</text>
+  </g>
+  <g transform="translate(306, 805)">
+    <rect x="0" y="0" width="174" height="42" rx="21" fill="#fde68a"/>
+    <text x="27" y="28" class="badge">API-ONLY LOOP</text>
+  </g>
+  <g transform="translate(505, 805)">
+    <rect x="0" y="0" width="205" height="42" rx="21" fill="#bbf7d0"/>
+    <text x="28" y="28" class="badge">HUMAN REVIEWED</text>
+  </g>
+</svg>
