@@ -117,9 +117,11 @@ SRA-Bench 자체는 여섯 종류의 capability-intensive 태스크에서 만들
 
 이 결과는 SRA의 병목이 단순 검색 문제가 아니라는 강한 증거다. 좋은 retriever를 붙여도 에이전트가 “지금 외부 능력이 필요한가”, “이 후보는 진짜 관련 있는가”, “로드 비용을 감수할 가치가 있는가”를 판단하지 못하면 skill augmentation은 안정적인 시스템이 되기 어렵다.
 
-릴리스 표면도 확인할 만하다. 논문은 GitHub `oneal2000/SR-Agents`와 Hugging Face `WeihangSu/SRA-Bench`를 연결한다. GitHub 저장소는 MIT 라이선스, Python 중심 코드베이스이며, 조회 시점 기준 51 stars, 4 forks, latest release 404, tags 없음 상태다. README는 SRA-Bench와 SR-Agents baseline을 제공한다고 설명하고, BM25·TF-IDF·BGE·Contriever·Hybrid·BM25+LLM rerank 재현 파이프라인을 안내한다.
+릴리스 표면도 확인할 만하다. 논문은 GitHub `oneal2000/SR-Agents`와 Hugging Face `WeihangSu/SRA-Bench`를 연결한다. GitHub 저장소는 MIT 라이선스, Python 중심 코드베이스이며, 조회 시점 기준 55 stars, 5 forks, open issues 0으로 보인다. README는 SRA-Bench와 SR-Agents baseline을 제공한다고 설명하고, BM25·TF-IDF·BGE·Contriever·Hybrid·BM25+LLM rerank 재현 파이프라인을 안내한다.
 
-Hugging Face 데이터셋은 non-gated 공개 상태이며, card metadata 기준 MIT 라이선스, `instances`와 `corpus` 두 config를 제공한다. 파일은 `corpus/corpus.json`과 여섯 개 `instances/{dataset}.json`으로 구성되어 있고, API 기준 현재 downloads 234, likes 2로 보인다. 즉 이 작업은 단순 논문 아이디어가 아니라 **benchmark dataset + baseline toolkit**까지 공개한 연구 아티팩트다. 다만 releases와 tags가 아직 없다는 점에서, 성숙한 패키지라기보다 빠르게 공개된 연구 코드로 해석하는 편이 안전하다.
+이전에는 release와 tag가 비어 있었지만, 현재는 `v1.0.0` 태그와 GitHub release가 올라와 있다. release note는 “Initial release of SRA-Bench and SR-Agents”로, 5,400개 테스트 인스턴스, 636개 gold skill, 26,262개 스킬 코퍼스, SR-Agent baseline 구현, retrieval/incorporation/end-task 평가 스크립트, 주요 실험 재현 안내를 포함한다고 명시한다. 즉 공개 표면은 단순 코드 덤프보다 한 단계 정리된 연구 아티팩트에 가까워졌다.
+
+Hugging Face 데이터셋은 non-gated 공개 상태이며, card metadata 기준 MIT 라이선스, `instances`와 `corpus` 두 config를 제공한다. 파일은 `corpus/corpus.json`과 여섯 개 `instances/{dataset}.json`으로 구성되어 있고, API 기준 현재 downloads 302, likes 2로 보인다. 따라서 이 작업은 단순 논문 아이디어가 아니라 **benchmark dataset + baseline toolkit + v1.0 release**까지 갖춘 공개 연구 번들로 보는 편이 정확하다. 다만 여전히 초기 공개 직후의 연구 코드이므로, 장기 유지보수나 패키지 안정성을 성숙한 제품 수준으로 가정해서는 안 된다.
 
 ## 실무 관점에서의 해석
 
@@ -145,4 +147,4 @@ Hugging Face 데이터셋은 non-gated 공개 상태이며, card metadata 기준
 
 그럼에도 이 작업의 가치는 크다. 지금까지 agent skills 논의가 포맷과 생태계의 성장에 집중했다면, SRA-Bench는 그 다음 단계인 **대규모 스킬 검색과 로딩 판단을 어떻게 측정할 것인가**를 구체적인 벤치마크로 만든다. 스킬이 많아질수록 경쟁력은 더 긴 컨텍스트가 아니라, 더 좋은 검색·로딩·검증 루프에서 나온다는 점을 잘 보여주는 논문이다.
 
-Sources: https://arxiv.org/abs/2604.24594, https://arxiv.org/html/2604.24594, https://github.com/oneal2000/SR-Agents, https://api.github.com/repos/oneal2000/SR-Agents, https://raw.githubusercontent.com/oneal2000/SR-Agents/main/README.md, https://huggingface.co/datasets/WeihangSu/SRA-Bench, https://huggingface.co/api/datasets/WeihangSu/SRA-Bench, https://huggingface.co/datasets/WeihangSu/SRA-Bench/raw/main/README.md
+Sources: https://arxiv.org/abs/2604.24594, https://arxiv.org/html/2604.24594, https://github.com/oneal2000/SR-Agents, https://api.github.com/repos/oneal2000/SR-Agents, https://github.com/oneal2000/SR-Agents/releases/tag/v1.0.0, https://raw.githubusercontent.com/oneal2000/SR-Agents/main/README.md, https://huggingface.co/datasets/WeihangSu/SRA-Bench, https://huggingface.co/api/datasets/WeihangSu/SRA-Bench, https://huggingface.co/datasets/WeihangSu/SRA-Bench/raw/main/README.md
