@@ -106,38 +106,38 @@ export const timelineItems = [
 export const projectItems = [
   {
     slug: "harmony-multitenant-ai",
-    title: "Harmony — Multi-Tenant AI Knowledge Safety",
+    title: "Harmony — 안전한 사내 AI 지식 시스템",
     period: "AsianaIDT / 2026.05.11 - 2026.05.22",
     summary:
-      "사내 지식이 들어오고, 검색되고, 답변으로 나가는 전 과정에서 권한과 사용자 맥락을 지키도록 설계한 멀티테넌트 AI 지식 안전 프로젝트입니다.",
-    metrics: ["Human Gate", "Scoped Retrieval", "Persona Overlay"],
+      "자동으로 문서를 넣고 답하는 RAG를, 승인·권한·페르소나가 끝까지 추적되는 멀티테넌트 AI 지식 시스템으로 재설계했습니다.",
+    metrics: ["승인 전 비노출", "Every-hop 권한 필터", "4+N+M Persona"],
     stack: [
-      "접근 제어 설계",
-      "Human Review",
-      "Agentic Retrieval",
-      "Evaluation",
+      "AI Safety Design",
+      "Access Control",
+      "Human-in-the-loop",
+      "Evaluation Design",
     ],
     details: [
-      "자료가 위키에 출판되기 전 AI가 분류와 권한 태그를 제안하고, 사람이 승인해야만 검색 가능한 지식으로 전환되는 리뷰 큐 흐름을 담당했습니다.",
-      "AI가 여러 번 검색하는 agentic retrieval 과정에서도 질문자의 권한 범위가 끝까지 유지되도록 세션 스코프 기반 검색 흐름을 정리했습니다.",
-      "직급, 팀, 직무, 연차 오버레이를 조합해 같은 정보도 이해관계자에 맞게 깊이와 형식이 달라지는지 평가하는 기준을 설계했습니다.",
+      "자동 등록형 RAG에 사람이 최종 승인하는 review queue를 넣어, AI는 제안하고 사람은 책임지는 지식 편입 흐름을 만들었습니다.",
+      "에이전트가 여러 번 사내 자료를 다시 검색해도 최초 질문자의 권한 범위가 모든 검색 단계에 유지되도록 retrieval boundary를 정리했습니다.",
+      "16개 고정 페르소나를 직접 관리하지 않고 직급 base, 팀 overlay, 직무 overlay, 연차 보정으로 조립하는 평가 구조를 설계했습니다.",
     ],
     sections: [
       {
-        title: "Problem",
-        body: "사내 문서를 AI 지식 시스템에 넣을 때 가장 큰 위험은 답변 품질보다 권한과 책임의 경계가 흐려지는 것입니다. 외부 자료나 내부 회의록이 자동으로 검색 대상이 되면 공개 범위가 잘못 지정될 수 있고, 새 문서가 기존 지식과 충돌할 때 AI가 임의로 합의해 버리면 잘못된 내용이 공식 지식처럼 남을 수 있습니다.",
+        title: "Before → After",
+        body: "기존 RAG는 문서가 들어오면 곧바로 검색 대상이 되는 구조에 가깝습니다. Harmony에서는 이 흐름을 승인 전에는 보이지 않는 구조로 바꿨습니다. AI가 권한, 분류, 만료일을 추천하더라도 최종 출판은 사람이 승인해야만 일어나도록 설계해 권한 누수와 잘못된 자동 합의를 동시에 막는 방향으로 전환했습니다.",
       },
       {
-        title: "Approach",
-        body: "Harmony는 들어올 때, 흐를 때, 나갈 때를 분리해 안전 장치를 배치했습니다. 자료 수집 단계에서는 AI가 권한·분류·만료 정보를 추천만 하고 사람이 승인해야 출판되도록 했고, 검색 단계에서는 질문자의 권한 범위가 모든 검색 단계에 자동으로 따라가도록 만들었습니다. 답변 단계에서는 하나의 거대한 페르소나 대신 직급, 팀, 직무, 연차 오버레이를 합성해 사용자에게 맞는 설명 깊이와 포맷을 만들도록 설계했습니다.",
+        title: "My Role",
+        body: "저는 프로젝트에서 세 가지 핵심 축을 맡았습니다. 첫째, 자료가 위키에 들어가기 전 review queue를 거치도록 하는 human-gated compiler 흐름을 정리했습니다. 둘째, 에이전트가 multi-hop으로 검색해도 사용자 권한이 검색 체인 끝까지 따라가는 permission-propagating retrieval 구조를 구체화했습니다. 셋째, 팀·직급·연차에 따라 답변의 깊이와 강조점이 달라지는지 검증하는 persona overlay 평가 축을 설계했습니다.",
       },
       {
-        title: "My Contribution",
-        body: "저는 human-gated compiler 관점에서 리뷰 큐와 승인 전 비노출 원칙을 정리했고, multi-hop 검색에서도 사용자 권한이 누락되지 않는 permission-propagating retrieval 흐름을 구현 관점까지 구체화했습니다. 또한 stakeholder별 응답 차별화가 실제로 일어나는지 확인하기 위해 길이, 전문용어 밀도, 강조 토픽, 출처 사용 방식 같은 평가 축을 정의했습니다.",
+        title: "Design Decisions",
+        body: "핵심 결정은 'AI가 결정하지 않고 제안하게 한다'는 원칙이었습니다. 문서 편입 단계에서는 AI의 분류 결과를 곧바로 공식 지식으로 만들지 않았고, 검색 단계에서는 모든 hop에서 같은 사용자 권한 기준을 적용하도록 했습니다. 답변 단계에서는 페르소나를 16개씩 복제하지 않고 작은 overlay 조각을 합성해 확장 가능한 방식으로 만들었습니다.",
       },
       {
-        title: "Impact",
-        body: "이 프로젝트는 단순히 사내 문서를 검색하는 RAG가 아니라, 자료가 지식으로 편입되는 시점부터 답변으로 전달되는 시점까지 멀티테넌트 안전성을 유지하는 구조를 제안했습니다. 포트폴리오 관점에서는 보안과 사용자 경험을 동시에 고려해 AI 지식 시스템의 수집, 검색, 응답 계층을 하나의 책임 있는 흐름으로 설계한 경험입니다.",
+        title: "Portfolio Impact",
+        body: "Harmony는 단순 검색 정확도 프로젝트가 아니라, 사내 AI가 실제 업무 지식과 만날 때 필요한 책임 경계를 설계한 프로젝트입니다. 공개 가능한 수준에서 보자면 저는 '들어올 때는 승인으로 막고, 흐를 때는 권한으로 제한하고, 나갈 때는 사용자 맥락에 맞춘다'는 end-to-end safety architecture를 포트폴리오에 남길 수 있는 형태로 만들었습니다.",
       },
     ],
   },
