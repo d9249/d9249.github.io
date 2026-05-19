@@ -105,6 +105,43 @@ export const timelineItems = [
 
 export const projectItems = [
   {
+    slug: "harmony-multitenant-ai",
+    title: "Harmony — Multi-Tenant AI Knowledge Safety",
+    period: "AsianaIDT / 2026.05.11 - 2026.05.22",
+    summary:
+      "사내 지식이 들어오고, 검색되고, 답변으로 나가는 전 과정에서 권한과 사용자 맥락을 지키도록 설계한 멀티테넌트 AI 지식 안전 프로젝트입니다.",
+    metrics: ["Human Gate", "Scoped Retrieval", "Persona Overlay"],
+    stack: [
+      "접근 제어 설계",
+      "Human Review",
+      "Agentic Retrieval",
+      "Evaluation",
+    ],
+    details: [
+      "자료가 위키에 출판되기 전 AI가 분류와 권한 태그를 제안하고, 사람이 승인해야만 검색 가능한 지식으로 전환되는 리뷰 큐 흐름을 담당했습니다.",
+      "AI가 여러 번 검색하는 agentic retrieval 과정에서도 질문자의 권한 범위가 끝까지 유지되도록 세션 스코프 기반 검색 흐름을 정리했습니다.",
+      "직급, 팀, 직무, 연차 오버레이를 조합해 같은 정보도 이해관계자에 맞게 깊이와 형식이 달라지는지 평가하는 기준을 설계했습니다.",
+    ],
+    sections: [
+      {
+        title: "Problem",
+        body: "사내 문서를 AI 지식 시스템에 넣을 때 가장 큰 위험은 답변 품질보다 권한과 책임의 경계가 흐려지는 것입니다. 외부 자료나 내부 회의록이 자동으로 검색 대상이 되면 공개 범위가 잘못 지정될 수 있고, 새 문서가 기존 지식과 충돌할 때 AI가 임의로 합의해 버리면 잘못된 내용이 공식 지식처럼 남을 수 있습니다.",
+      },
+      {
+        title: "Approach",
+        body: "Harmony는 들어올 때, 흐를 때, 나갈 때를 분리해 안전 장치를 배치했습니다. 자료 수집 단계에서는 AI가 권한·분류·만료 정보를 추천만 하고 사람이 승인해야 출판되도록 했고, 검색 단계에서는 질문자의 권한 범위가 모든 검색 단계에 자동으로 따라가도록 만들었습니다. 답변 단계에서는 하나의 거대한 페르소나 대신 직급, 팀, 직무, 연차 오버레이를 합성해 사용자에게 맞는 설명 깊이와 포맷을 만들도록 설계했습니다.",
+      },
+      {
+        title: "My Contribution",
+        body: "저는 human-gated compiler 관점에서 리뷰 큐와 승인 전 비노출 원칙을 정리했고, multi-hop 검색에서도 사용자 권한이 누락되지 않는 permission-propagating retrieval 흐름을 구현 관점까지 구체화했습니다. 또한 stakeholder별 응답 차별화가 실제로 일어나는지 확인하기 위해 길이, 전문용어 밀도, 강조 토픽, 출처 사용 방식 같은 평가 축을 정의했습니다.",
+      },
+      {
+        title: "Impact",
+        body: "이 프로젝트는 단순히 사내 문서를 검색하는 RAG가 아니라, 자료가 지식으로 편입되는 시점부터 답변으로 전달되는 시점까지 멀티테넌트 안전성을 유지하는 구조를 제안했습니다. 포트폴리오 관점에서는 보안과 사용자 경험을 동시에 고려해 AI 지식 시스템의 수집, 검색, 응답 계층을 하나의 책임 있는 흐름으로 설계한 경험입니다.",
+      },
+    ],
+  },
+  {
     slug: "enterprise-ai-knowledge",
     title: "Enterprise AI 지식 관리 시스템",
     period: "AsianaIDT / 2025.09 - 2026.01",
