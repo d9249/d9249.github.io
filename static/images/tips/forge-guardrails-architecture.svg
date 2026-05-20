@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+  <title id="title">Forge guardrails architecture for self-hosted LLM tool calling</title>
+  <desc id="desc">Forge connects WorkflowRunner, proxy, and middleware entry points to guardrails, context management, and local or API LLM backends.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0a1020"/>
+      <stop offset="52%" stop-color="#101a33"/>
+      <stop offset="100%" stop-color="#14243f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" x2="1">
+      <stop offset="0%" stop-color="#9ee7ff"/>
+      <stop offset="100%" stop-color="#bca8ff"/>
+    </linearGradient>
+    <linearGradient id="warm" x1="0" x2="1">
+      <stop offset="0%" stop-color="#fff2bd"/>
+      <stop offset="100%" stop-color="#ffbf7a"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity="0.30"/>
+    </filter>
+    <style>
+      .bg { fill: url(#bg); }
+      .panel { fill: rgba(15,27,52,.86); stroke: rgba(158,231,255,.46); stroke-width: 2; rx: 26; filter: url(#shadow); }
+      .core { fill: rgba(158,231,255,.10); stroke: url(#accent); stroke-width: 3; rx: 32; filter: url(#shadow); }
+      .guard { fill: rgba(255,242,189,.10); stroke: url(#warm); stroke-width: 2.5; rx: 24; }
+      .backend { fill: rgba(188,168,255,.12); stroke: rgba(188,168,255,.48); stroke-width: 2; rx: 24; }
+      .chipbox { fill: rgba(255,242,189,.95); rx: 15; }
+      .line { stroke: rgba(158,231,255,.45); stroke-width: 3; fill: none; stroke-linecap: round; }
+      .line2 { stroke: rgba(255,242,189,.50); stroke-width: 3; fill: none; stroke-linecap: round; }
+      .arrow { fill: rgba(158,231,255,.70); }
+      .arrow2 { fill: rgba(255,242,189,.76); }
+      .title { font: 800 46px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #eef8ff; letter-spacing: 1px; }
+      .subtitle { font: 500 22px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #b8c9e8; }
+      .h { font: 750 24px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #eef8ff; }
+      .t { font: 500 18px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #d4e0f7; }
+      .small { font: 500 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #aebbd7; }
+      .mono { font: 800 16px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #111a2f; }
+    </style>
+  </defs>
+  <rect class="bg" width="1400" height="820"/>
+  <circle cx="1130" cy="120" r="260" fill="rgba(158,231,255,.05)"/>
+  <circle cx="170" cy="710" r="260" fill="rgba(188,168,255,.06)"/>
+
+  <text x="70" y="84" class="title">FORGE</text>
+  <text x="72" y="122" class="subtitle">self-hosted LLM tool-calling을 위한 guardrails · context · proxy layer</text>
+
+  <rect x="80" y="190" width="350" height="185" class="panel"/>
+  <text x="255" y="244" text-anchor="middle" class="h">Entry points</text>
+  <text x="255" y="286" text-anchor="middle" class="t">WorkflowRunner</text>
+  <text x="255" y="318" text-anchor="middle" class="t">OpenAI-compatible Proxy</text>
+  <text x="255" y="350" text-anchor="middle" class="t">Guardrails Middleware</text>
+
+  <rect x="525" y="174" width="350" height="230" class="core"/>
+  <text x="700" y="230" text-anchor="middle" class="h">Forge Guardrails</text>
+  <rect x="570" y="260" width="260" height="44" class="guard"/>
+  <text x="700" y="289" text-anchor="middle" class="t">rescue parsing + retry nudges</text>
+  <rect x="570" y="320" width="260" height="44" class="guard"/>
+  <text x="700" y="349" text-anchor="middle" class="t">step / prerequisite enforcement</text>
+  <rect x="570" y="380" width="260" height="44" class="guard"/>
+  <text x="700" y="409" text-anchor="middle" class="t">synthetic respond tool</text>
+
+  <rect x="970" y="190" width="350" height="185" class="panel"/>
+  <text x="1145" y="244" text-anchor="middle" class="h">LLM backends</text>
+  <text x="1145" y="286" text-anchor="middle" class="t">llama-server · Ollama</text>
+  <text x="1145" y="318" text-anchor="middle" class="t">Llamafile</text>
+  <text x="1145" y="350" text-anchor="middle" class="t">Anthropic API baseline</text>
+
+  <rect x="230" y="505" width="385" height="175" class="panel"/>
+  <text x="422" y="557" text-anchor="middle" class="h">Context management</text>
+  <text x="422" y="598" text-anchor="middle" class="t">VRAM-aware budget</text>
+  <text x="422" y="630" text-anchor="middle" class="t">tiered compaction</text>
+  <text x="422" y="662" text-anchor="middle" class="t">sampling defaults opt-in</text>
+
+  <rect x="785" y="505" width="385" height="175" class="panel"/>
+  <text x="978" y="557" text-anchor="middle" class="h">Consumer boundary</text>
+  <text x="978" y="598" text-anchor="middle" class="t">you own tools, auth, sandbox</text>
+  <text x="978" y="630" text-anchor="middle" class="t">long-running history hygiene</text>
+  <text x="978" y="662" text-anchor="middle" class="t">model weights / API costs</text>
+
+  <path class="line" d="M430 282 C480 282 488 282 525 282"/>
+  <polygon class="arrow" points="518,274 538,282 518,290"/>
+  <path class="line" d="M875 282 C920 282 930 282 970 282"/>
+  <polygon class="arrow" points="963,274 983,282 963,290"/>
+  <path class="line2" d="M620 404 C530 460 485 482 422 505"/>
+  <polygon class="arrow2" points="428,492 410,510 436,507"/>
+  <path class="line2" d="M780 404 C870 460 918 482 978 505"/>
+  <polygon class="arrow2" points="970,492 990,510 964,507"/>
+
+  <rect x="424" y="728" width="552" height="56" class="chipbox"/>
+  <text x="700" y="764" text-anchor="middle" class="mono">small local models need structure, not just bigger prompts</text>
+</svg>
