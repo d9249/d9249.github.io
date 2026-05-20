@@ -50,9 +50,11 @@ MiniCPM-V 4.6은 이 지점을 모델 설계와 릴리스 패키징 양쪽에서
 
 ## 공개된 근거에서 확인되는 점
 
-먼저 Hugging Face 배포 상태를 보면, MiniCPM-V 4.6은 단일 모델 카드 이상의 패키지로 공개되어 있다. 메인 모델 repo는 `image-text-to-text` pipeline과 Apache-2.0 라이선스를 갖고 있으며, `model.safetensors`, `config.json`, `tokenizer.json`, `preprocessor_config.json`, `chat_template.jinja`를 포함한다. API 기준 생성일은 2026-04-13, 마지막 수정은 2026-05-11T15:50:40Z로 표시된다. gated 모델이 아니며, config와 chat template도 함께 공개되어 있어 표준 Transformers 경로에서 바로 불러오는 형태를 목표로 한다.
+먼저 Hugging Face 배포 상태를 보면, MiniCPM-V 4.6은 단일 모델 카드 이상의 패키지로 공개되어 있다. 메인 모델 repo는 `image-text-to-text` pipeline과 Apache-2.0 라이선스를 갖고 있으며, `model.safetensors`, `config.json`, `tokenizer.json`, `preprocessor_config.json`, `chat_template.jinja`를 포함한다. API 기준 생성일은 2026-04-13, 마지막 수정은 2026-05-19T14:01:40Z로 표시된다. 현재 Hub API 카운터는 downloads 144,826, likes 809이며, gated 모델이 아니고 config와 chat template도 함께 공개되어 있어 표준 Transformers 경로에서 바로 불러오는 형태를 목표로 한다.
 
-동시에 OpenBMB는 MiniCPM-V 4.6-Thinking, MiniCPM-V 4.6-gguf, MiniCPM-V 4.6-BNB, MiniCPM-V 4.6-AWQ, MiniCPM-V 4.6-GPTQ 및 Thinking 버전의 대응 양자화 repo를 함께 제공한다. GGUF repo에는 F16, Q4_0, Q4_1, Q4_K_M, Q5, Q6_K, Q8_0 같은 파일과 `mmproj-model-f16.gguf`가 포함된다. 즉 “가중치가 있다”에서 끝나는 릴리스가 아니라, 로컬 추론과 모바일 앱에 필요한 포맷까지 분리해 둔 구조다.
+동시에 OpenBMB는 MiniCPM-V 4.6-Thinking, MiniCPM-V 4.6-gguf, MiniCPM-V 4.6-BNB, MiniCPM-V 4.6-AWQ, MiniCPM-V 4.6-GPTQ 및 Thinking 버전의 대응 양자화 repo를 함께 제공한다. GGUF repo에는 F16, Q4_0, Q4_1, Q4_K_M, Q4_K_S, Q5_0, Q5_1, Q5_K_M, Q5_K_S, Q6_K, Q8_0 같은 파일과 `mmproj-model-f16.gguf`가 포함된다. 즉 “가중치가 있다”에서 끝나는 릴리스가 아니라, 로컬 추론과 모바일 앱에 필요한 포맷까지 분리해 둔 구조다.
+
+또 하나 달라진 점은 hosted trial surface다. 2026-05-17 공지된 공식 API 문서는 `https://api.modelbest.cn/v1` 기반 Chat Completions 인터페이스를 공개하고, `MiniCPM-V-4.6-Instruct`와 `MiniCPM-V-4.6-Thinking` 모델 ID를 텍스트 및 vision-language 요청에 쓸 수 있다고 설명한다. 공개 문서에는 테스트용 public key가 언급되지만, 운영 관점에서는 키 문자열 자체보다 “온디바이스·로컬 추론에 더해 호스티드 API 경로도 생겼다”는 배포 표면 확장이 더 중요하다.
 
 성능표에서 MiniCPM-V 4.6의 가장 강한 메시지는 작은 체급 대비 폭넓은 멀티모달 성능이다. 공식 Instruct 표는 MiniCPM-V 4.6을 Qwen3.5-0.8B, Gemma4-E2B-it, LFM2.5-VL-1.6B와 비교한다. 예를 들어 4x mode 기준 MMBench EN v1.1은 82.2, MMBench CN v1.1은 80.2, AI2D는 85.1, MathVista는 75.5, OCRBench는 838, OmniDocBench_v1.5는 84.6, RefCOCO는 86.7, Video-MME는 59.7로 제시된다. 같은 표에서 Qwen3.5-0.8B는 MMBench EN 68.0, AI2D 68.7, OCRBench 791, OmniDocBench 70.6, Video-MME 48.9로 표시된다. 이 비교만 보면 MiniCPM-V 4.6은 단순히 “0.8B LLM에 비전을 붙인 모델”보다 훨씬 강한 시각 이해 경로를 갖도록 조정된 모델로 읽힌다.
 
@@ -68,7 +70,7 @@ TTFT 그래프는 고해상도로 갈수록 차이가 더 선명해진다. Qwen3
 
 ![MiniCPM-V 4.6 TTFT comparison](/images/blog/minicpm-v-4-6-ttft.webp)
 
-모바일 배포 자료도 별도로 확인된다. OpenBMB의 MiniCPM-V 앱 repo는 iOS, Android, HarmonyOS NEXT 데모를 모두 `llama.cpp` 기반 온디바이스 추론으로 제공한다고 설명한다. 다운로드 안내에는 iOS TestFlight, Android v1.7 APK, HarmonyOS v1.2 HAP가 정리되어 있고, 세 플랫폼 모두 64-bit ARM을 전제로 한다. 특히 V 4.6 GGUF 기준 권장 구성은 Q4_K_M LLM 파일 약 0.5GB, f16 mmproj 약 1.1GB, 총 다운로드 약 1.6GB, 권장 RAM 6GB 이상으로 제시된다. 이것은 8B급 VLM이 아니라 실제 휴대폰 앱에 들어갈 수 있는 체급을 목표로 했다는 강한 신호다.
+모바일 배포 자료도 별도로 확인된다. OpenBMB의 MiniCPM-V 앱 repo는 iOS, Android, HarmonyOS NEXT 데모를 모두 `llama.cpp` 기반 온디바이스 추론으로 제공한다고 설명한다. 다운로드 안내에는 iOS TestFlight, Android v2.0 APK, HarmonyOS v2.0 HAP가 정리되어 있고, 세 플랫폼 모두 64-bit ARM과 권장 RAM 6GB 이상을 전제로 한다. 특히 V 4.6 GGUF 기준 권장 구성은 Q4_K_M LLM 파일 약 0.5GB, f16 mmproj 약 1.1GB, 총 다운로드 약 1.6GB다. 이것은 8B급 VLM이 아니라 실제 휴대폰 앱에 들어갈 수 있는 체급을 목표로 했다는 강한 신호다.
 
 ![MiniCPM-V 4.6 mobile demo snapshots](/images/blog/minicpm-v-4-6-mobile-demos.webp)
 
@@ -78,8 +80,8 @@ TTFT 그래프는 고해상도로 갈수록 차이가 더 선명해진다. Qwen3
 
 특히 개인정보나 오프라인성이 중요한 작업에서는 이 방향이 설득력 있다. 영수증·문서 OCR, 화면 이해, 모바일 UI grounding, 현장 사진 질의응답, 짧은 비디오 요약 같은 작업은 굳이 모든 입력을 서버로 보내고 싶지 않은 경우가 많다. MiniCPM-V 4.6은 이런 작업을 frontier급 폐쇄 모델과 같은 품질로 대체한다기보다, “충분히 작은 모델로 어디까지 로컬 멀티모달 경험을 만들 수 있는가”의 기준선을 올린다.
 
-물론 한계도 분명하다. 공식 표는 OpenBMB의 공개 report와 local evaluation을 섞은 결과이며, 독립 재현이 더 쌓여야 한다. 일부 벤치마크에서는 Gemma4-E2B-it이나 다른 비교 모델이 앞서는 영역도 있고, 복잡한 과학 추론이나 고난도 문서 reasoning에서는 더 큰 VLM이 여전히 유리할 가능성이 높다. 또한 Transformers 사용 경로는 `transformers[torch]>=5.7.0`과 `torchcodec`을 요구하며, CUDA 버전 이슈가 있을 때는 PyAV로 바꾸거나 PyTorch CUDA wheel을 맞춰야 한다는 주의사항도 모델 카드에 적혀 있다. 모바일 앱 역시 첫 실행 시 수 GB급 모델 파일 다운로드와 6GB 이상 RAM 전제가 있다.
+물론 한계도 분명하다. 공식 표는 OpenBMB의 공개 report와 local evaluation을 섞은 결과이며, 독립 재현이 더 쌓여야 한다. 일부 벤치마크에서는 Gemma4-E2B-it이나 다른 비교 모델이 앞서는 영역도 있고, 복잡한 과학 추론이나 고난도 문서 reasoning에서는 더 큰 VLM이 여전히 유리할 가능성이 높다. 또한 Transformers 사용 경로는 `transformers[torch]>=5.7.0`과 `torchcodec`을 요구하며, CUDA 버전 이슈가 있을 때는 PyAV로 바꾸거나 PyTorch CUDA wheel을 맞춰야 한다는 주의사항도 모델 카드에 적혀 있다. hosted API는 빠른 시험에는 편하지만 운영 SLA나 장기 무료 제공 조건을 모델 카드만으로 판단하기 어렵고, 모바일 앱 역시 첫 실행 시 수 GB급 모델 파일 다운로드와 6GB 이상 RAM 전제가 있다.
 
 그럼에도 MiniCPM-V 4.6은 오픈 VLM의 방향성을 잘 보여준다. 오픈 모델 경쟁은 더 이상 대형 GPU 서버에서 점수표를 찍는 것만으로 끝나지 않는다. 앞으로 중요한 축 중 하나는 “시각 토큰을 얼마나 효율적으로 줄이고, 그 결과를 실제 앱과 로컬 런타임에 얼마나 빨리 연결하는가”가 될 것이다. 그런 관점에서 MiniCPM-V 4.6은 모델 크기보다 배포 가능성을 먼저 읽어야 하는 릴리스다. 1.3B라는 숫자는 작지만, 이 모델이 던지는 질문은 꽤 크다. 멀티모달 AI를 서버 API가 아니라 사용자의 손 안에서 얼마나 자연스럽게 돌릴 수 있을 것인가.
 
-Sources: https://huggingface.co/openbmb/MiniCPM-V-4.6, https://huggingface.co/api/models/openbmb/MiniCPM-V-4.6, https://huggingface.co/openbmb/MiniCPM-V-4.6/raw/main/README.md, https://github.com/OpenBMB/MiniCPM-V, https://github.com/OpenSQZ/MiniCPM-V-CookBook, https://github.com/OpenBMB/MiniCPM-V-Apps, https://huggingface.co/openbmb/MiniCPM-V-4.6-gguf, https://huggingface.co/openbmb/MiniCPM-V-4.6-Thinking
+Sources: https://huggingface.co/openbmb/MiniCPM-V-4.6, https://huggingface.co/api/models/openbmb/MiniCPM-V-4.6, https://huggingface.co/openbmb/MiniCPM-V-4.6/raw/main/README.md, https://github.com/OpenBMB/MiniCPM-V, https://github.com/OpenBMB/MiniCPM-V/blob/main/docs/api.md, https://github.com/OpenSQZ/MiniCPM-V-CookBook, https://github.com/OpenBMB/MiniCPM-V-Apps, https://github.com/OpenBMB/MiniCPM-V-Apps/blob/main/DOWNLOAD.md, https://huggingface.co/openbmb/MiniCPM-V-4.6-gguf, https://huggingface.co/openbmb/MiniCPM-V-4.6-Thinking
