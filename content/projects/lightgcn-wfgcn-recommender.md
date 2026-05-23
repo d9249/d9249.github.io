@@ -3,6 +3,7 @@ title: "LightGCN / WF-GCN / OptGCN 추천 시스템 연구"
 projectName: "LightGCN / WF-GCN / OptGCN"
 tagline: "추천 시스템 연구"
 period: "Kyonggi University / M.S. Research"
+periodOrder: 20240600
 description: "사용자-아이템 그래프에서 임베딩 전파와 가중 전달을 개선해 추천 정확도를 높인 그래프 추천 시스템 연구입니다."
 metrics:
   - "LightGCN"

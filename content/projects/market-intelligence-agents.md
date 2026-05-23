@@ -3,6 +3,7 @@ title: "Jeani Market Intelligence Multi-Agent System"
 projectName: "Jeani"
 tagline: "RFP 기반 시장 인텔리전스 에이전트"
 period: "AsianaIDT / 2025.09 - 2025.12"
+periodOrder: 20251200
 description: "Jeani는 RFP 문서를 읽어 조사 계획을 만들고, 시장/경쟁사/기술 동향을 병렬 수집한 뒤 Bedrock Knowledge Base로 동기화하는 시장 인텔리전스 멀티에이전트 시스템입니다."
 metrics:
   - "5 KB Intelligence Agents"

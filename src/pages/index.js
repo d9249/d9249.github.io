@@ -739,7 +739,7 @@ export const query = graphql`
         fields: { contentType: { eq: "project" } }
         frontmatter: { draft: { ne: true } }
       }
-      sort: { frontmatter: { order: ASC } }
+      sort: { frontmatter: { periodOrder: DESC } }
     ) {
       nodes {
         id

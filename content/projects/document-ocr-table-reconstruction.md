@@ -3,6 +3,7 @@ title: "InVision OCR Suite — 문서 OCR 및 표 구조 복원 스택"
 projectName: "InVision OCR Suite"
 tagline: "문서 OCR 및 표 구조 복원 스택"
 period: "AsianaIDT / 2026.02 - 2026.05"
+periodOrder: 20260500
 description: "자체 구축 InVision OCR Engine, 레이아웃 분석, PDF 문서 복원, 표 구조 추출, 배치 처리, 운영 UI, 연구 벤치마크, 보안 납품 프로필을 하나로 묶은 문서 OCR 제품 스택입니다."
 metrics:
   - "InVision OCR Engine"

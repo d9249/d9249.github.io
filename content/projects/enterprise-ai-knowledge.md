@@ -3,6 +3,7 @@ title: "AIO - Enterprise AI 지식 관리 시스템"
 projectName: "AIO"
 tagline: "Enterprise AI 지식 관리 시스템"
 period: "AsianaIDT / 2025.09 - 2026.01"
+periodOrder: 20260100
 description: "문서 업로드, 지식 저장소, Graph + Vector RAG, ACL 권한, LangGraph 기반 Agent Builder를 하나의 운영 콘솔로 묶은 엔터프라이즈 AI 지식 플랫폼입니다."
 metrics:
   - "FastAPI 15+ router"

@@ -3,6 +3,7 @@ title: "Plan2Do - AI 산업안전 위험성평가 플랫폼"
 projectName: "Plan2Do"
 tagline: "AI 산업안전 위험성평가 플랫폼"
 period: "AsianaIDT / 2025.07.24 - 2025.12.15"
+periodOrder: 20251215
 description: "이미지와 문서를 산업안전 맥락으로 해석하고, 법령 벡터 검색과 LangGraph 워크플로우로 위험요인, 감소대책, 근거 테이블을 생성하는 RAG 기반 안전 분석 API입니다."
 metrics:
   - "AI 안전도우미"

@@ -3,6 +3,7 @@ title: "booxTory / arti AI Products"
 projectName: "booxTory / arti"
 tagline: "AI Products"
 period: "ArtygenSpace / 2024.07 - 2025.07"
+periodOrder: 20250700
 description: "AI 콘텐츠 생성과 편집, 사용자 경험을 제품 기능으로 연결한 CES 2025 수상 제품군입니다."
 metrics:
   - "CES 2025"

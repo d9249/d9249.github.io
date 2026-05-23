@@ -204,7 +204,7 @@ export const query = graphql`
     }
     relatedProjects: allMarkdownRemark(
       filter: { id: { in: $relatedProjectIds } }
-      sort: { frontmatter: { order: ASC } }
+      sort: { frontmatter: { periodOrder: DESC } }
     ) {
       nodes {
         id

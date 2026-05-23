@@ -3,6 +3,7 @@ title: "MCU-Net / 의료 영상 딥러닝"
 projectName: "MCU-Net"
 tagline: "의료 영상 딥러닝"
 period: "Kyonggi University / Research Projects"
+periodOrder: 20230400
 description: "췌장 CT segmentation과 퇴행성 관절염 분류를 다룬 의료영상 딥러닝 연구입니다."
 metrics:
   - "MCU-Net"

@@ -139,7 +139,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       }
       projects: allMarkdownRemark(
         filter: { fields: { contentType: { eq: "project" } } }
-        sort: { frontmatter: { order: ASC } }
+        sort: { frontmatter: { periodOrder: DESC } }
       ) {
         nodes {
           id
@@ -150,6 +150,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             title
             draft
             order
+            periodOrder
           }
         }
       }
