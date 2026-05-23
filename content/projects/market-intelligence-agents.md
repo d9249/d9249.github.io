@@ -20,9 +20,9 @@ stack:
   - "Next.js"
   - "TypeScript"
 details:
-  - "중복 소스 후보를 비교해 backend는 Jeani-back-main의 kb_intelligence 구현과 Terraform 운영 계약을 기준으로 삼았습니다."
-  - "Planner가 RFP에서 경쟁사, 검색 키워드, 기술 주제를 추출하고 researcher, competitor, tech_analyst가 병렬로 조사합니다."
-  - "Synthesizer가 최종 리포트를 만들면 daily_updates에 저장하고, KB Sync가 Jeani의 Market Intelligence Knowledge Base 인제스천을 트리거합니다."
+  - "Planner가 S3 RFP 문서를 파싱해 project context, competitors, search keywords, tech topics, market topics, execution priority를 생성합니다."
+  - "Researcher, Competitor, Tech Analyst는 같은 plan을 공유하되 서로 다른 검색면과 품질 평가 기준으로 병렬 실행됩니다."
+  - "Synthesizer가 최종 보고서를 만들면 Orchestrator가 source_data, duplicate URL filtering metadata와 함께 daily_updates에 저장하고 KB Sync를 트리거합니다."
 order: 40
 draft: false
 ---
@@ -33,30 +33,30 @@ draft: false
   <p>단일 챗봇에 시장 조사를 맡기면 검색어 선정, 경쟁사 범위, 기술 트렌드, 출처 중복, 최종 보고서 저장 경로가 흐려집니다. Jeani는 RFP 문서를 기준으로 조사 계획을 만들고, 시장 리서치, 경쟁사 분석, 기술 분석, 종합 보고, Knowledge Base 동기화를 분리된 Lambda agent와 S3 lifecycle로 다룹니다.</p>
 </section>
 
-## 최종판을 먼저 판별하기
+## RFP가 검색 계획으로 바뀌는 방식
 
-`/Users/mean/Downloads/Jeani`에는 같은 계열의 backend와 frontend 후보가 두 벌씩 들어 있었습니다. backend의 `EST-Agent-main/src`와 `Jeani-back-main/src`는 동일했지만, `Jeani-back-main`에는 CDK 문서, KMS fix summary, pipeline/validation 문서, `.kiro` steering 문서가 더 들어 있었습니다. 따라서 시장 인텔리전스의 실제 기능은 공통 `src/kb_intelligence`를 기준으로 읽되, 운영판 판단은 `Jeani-back-main`으로 잡았습니다.
+Jeani는 시장 조사를 고정 키워드 목록으로 시작하지 않습니다. `PlannerAgent`가 S3의 `00_input_data/` 문서를 먼저 읽고, 그 문서에서 프로젝트 요약, 고객사, 산업 도메인, 범위, 경쟁사, 검색 키워드, 기술 주제, 시장 주제, 실행 우선순위를 뽑습니다. `.docx`는 내부 XML에서 텍스트를 꺼내고, `.pdf`, `.txt`, `.json`도 같은 `DocumentParser` 경계로 정규화합니다. RFP 본문은 최대 8,000자까지 prompt에 넣고, 기본 경쟁사/키워드/기술 컨텍스트는 fallback 정보로 붙습니다.
 
-frontend도 `Jeani-front-main`이 후속판입니다. 특히 `/documents` 화면과 `/api/documents` route는 `06_market_intelligence/` 아래의 `daily_updates`, `plans`, `workflows` 폴더를 읽고, planner/researcher/competitor/tech_analyst/synthesizer 결과를 문서관리 UI에서 보여주는 경로를 포함합니다. 이 때문에 기존 페이지의 "25 agents"나 추상적인 4-Layer 표현보다, Jeani 소스에 있는 5개 KB Intelligence agent와 S3/Bedrock KB 동기화 흐름을 중심으로 설명하는 편이 정확합니다.
+Planner의 결과는 단순 요약문이 아니라 다음 agent들이 바로 실행할 수 있는 plan schema입니다. 경쟁사는 `name`, `priority`, `reason`을 갖고, 검색 키워드는 `keyword`, `category`, `purpose`를 갖습니다. 기술/시장 주제에는 실제 검색에 사용할 `search_query`가 들어갑니다. 이 계획은 `06_market_intelligence/plans/{project_id}/search_plan.json`에 저장되어, 이후 workflow가 어떤 질문을 기준으로 움직였는지 되짚을 수 있게 합니다.
 
 <div class="market-fact-grid">
   <div class="market-fact">
-    <strong>최종 backend</strong>
-    <p><code>Jeani-back-main</code>의 <code>src/kb_intelligence</code>와 Terraform 정의를 기준으로 분석했습니다.</p>
+    <strong>Plan Schema</strong>
+    <p>RFP에서 경쟁사, 검색 키워드, 기술/시장 주제, 실행 우선순위를 추출해 후속 agent의 입력 계약으로 사용합니다.</p>
   </div>
   <div class="market-fact">
-    <strong>최종 frontend</strong>
-    <p><code>Jeani-front-main</code>의 문서관리 화면이 Jeani의 market intelligence folders와 workflow 결과를 노출합니다.</p>
+    <strong>Traceable Plans</strong>
+    <p>생성된 검색 계획은 <code>plans/{project_id}/search_plan.json</code>에 남겨 조사 방향을 나중에 확인할 수 있습니다.</p>
   </div>
   <div class="market-fact">
-    <strong>검증 범위</strong>
-    <p>코드와 배포 계약으로 확인되는 구조를 설명하고, 실제 AWS 실행 성공은 새로 주장하지 않습니다.</p>
+    <strong>Quality Gate</strong>
+    <p>Planner는 경쟁사, 키워드, 기술 주제, 시장 주제, 실행 우선순위가 충분한지 점수화하고 부족하면 재분석합니다.</p>
   </div>
 </div>
 
 ## 시스템을 다시 정의하면
 
-Jeani의 핵심은 시장 조사 결과를 한 번 생성하는 것이 아닙니다. RFP마다 조사 대상이 달라진다는 점을 시스템 경계로 끌어올린 것이 핵심입니다. `PlannerAgent`는 `00_input_data/`의 RFP 문서를 읽고 프로젝트 요약, 고객사, 산업, 경쟁사, 검색 키워드, 기술 주제, 시장 주제, 실행 우선순위를 만듭니다. 이후 `ResearcherAgent`, `CompetitorAgent`, `TechAnalystAgent`가 같은 plan을 받아 병렬로 외부 검색과 분석을 수행합니다.
+Jeani의 핵심은 시장 조사 결과를 한 번 생성하는 것이 아닙니다. RFP마다 조사 대상이 달라진다는 점을 시스템 경계로 끌어올린 것이 핵심입니다. `PlannerAgent`가 만든 plan을 `ResearcherAgent`, `CompetitorAgent`, `TechAnalystAgent`가 공유하고, 각 agent는 같은 프로젝트를 서로 다른 관점에서 조사합니다.
 
 마지막 `SynthesizerAgent`는 각 agent 결과를 종합해 executive summary, market trends, competitive insights, tech recommendations, strategic recommendations, action items, risks, next steps를 만듭니다. Orchestrator는 이 결과를 `06_market_intelligence/workflows/{project_id}/`에 agent별 원본으로 저장하고, 최종 보고서는 `06_market_intelligence/daily_updates/{document_name}/{timestamp}.json`으로 저장합니다. 저장 시 기존 URL을 다시 수집하지 않도록 문서별 기존 source URL을 읽어 중복을 필터링하는 로직도 들어 있습니다.
 
@@ -104,7 +104,9 @@ Jeani의 핵심은 시장 조사 결과를 한 번 생성하는 것이 아닙니
 
 runtime의 supervisor는 `KBIntelligenceOrchestrator`입니다. 입력으로 특정 `rfp_document_key`가 오면 해당 문서를 파싱하고, 없으면 `00_input_data/`에서 최신 RFP 문서를 찾습니다. scheduled run에서는 `00_input_data/`의 모든 문서를 순회하며 문서별 workflow를 실행합니다.
 
-실행 단계는 세 개입니다. Phase 1은 planner입니다. planner는 RFP를 읽고 검색 계획을 만듭니다. Phase 2는 researcher, competitor, tech analyst의 병렬 실행입니다. researcher는 검색 키워드와 시장 주제를 사용하고, competitor는 경쟁사별 검색과 뉴스 검색을 수행하며, tech analyst는 기술 주제별 트렌드와 활용 사례를 찾습니다. Phase 3은 synthesizer입니다. synthesizer는 이전 결과를 보고서 형식으로 통합합니다. 마지막으로 trigger option이 켜져 있으면 KB sync Lambda를 비동기로 호출합니다.
+실행 단계는 세 개입니다. Phase 1은 planner입니다. planner는 RFP를 읽고 검색 계획을 만듭니다. Phase 2는 researcher, competitor, tech analyst의 병렬 실행입니다. Orchestrator는 `ThreadPoolExecutor(max_workers=3)`로 세 agent를 동시에 호출하고, 성공 또는 partial 결과만 `context.agent_results`에 넣어 synthesizer가 사용할 수 있게 합니다. Phase 3은 synthesizer입니다. synthesizer는 이전 결과를 보고서 형식으로 통합합니다. 마지막으로 trigger option이 켜져 있으면 KB sync Lambda를 비동기로 호출합니다.
+
+진행 상태도 별도 데이터로 남습니다. agent 실행 결과는 `workflows/{project_id}/{agent_name}/result.json`에 저장되고, DynamoDB에는 `kb-{project_id}` 파티션 아래 agent별 결과와 `KB_WORKFLOW_STATUS`가 기록됩니다. UI나 운영 스크립트는 이 상태를 통해 현재 agent, progress, 완료/오류 상태를 확인할 수 있습니다.
 
 <div class="market-flow">
   <span>01 RFP parse</span>
@@ -113,6 +115,16 @@ runtime의 supervisor는 `KBIntelligenceOrchestrator`입니다. 입력으로 특
   <span>04 synthesize report</span>
   <span>05 sync to KB</span>
 </div>
+
+## 검색 수집 계층
+
+Jeani의 세 조사 agent는 모두 Brave Search를 사용하지만 같은 검색을 반복하지 않습니다. `ResearcherAgent`는 plan의 `search_keywords` 최대 5개와 `market_topics` 최대 3개를 읽고, 각 쿼리마다 웹 검색 결과를 수집합니다. 수집된 result에는 검색어와 category를 다시 붙여서 후속 LLM 분석에서 어떤 키워드가 어떤 결과를 만들었는지 잃지 않게 합니다.
+
+`CompetitorAgent`는 plan의 경쟁사 목록을 기준으로 회사별 검색을 수행합니다. 각 경쟁사에 대해 "AI 서비스", "디지털 전환", "신규 사업" 주제를 붙인 웹 검색과 최신 뉴스 검색을 분리해 가져오고, LLM 분석 단계에서 threat level, strengths, key activity, market leaders, opportunities로 압축합니다. 경쟁사 이름이 plan에 없으면 기본 산업 컨텍스트의 경쟁사 목록을 fallback으로 사용합니다.
+
+`TechAnalystAgent`는 기술 주제별로 trend 검색과 use case 검색을 나눕니다. 예를 들어 특정 기술에 대해 `트렌드` 쿼리와 `활용 사례` 쿼리를 따로 만들고, 산업 도메인이 있으면 쿼리에 같이 넣습니다. 분석 결과는 maturity, recommendation, must-have tech, nice-to-have tech, trends, risks로 정리되어 제안서 전략에 바로 연결될 수 있는 기술 판단 자료가 됩니다.
+
+검색 helper에는 무료 플랜 rate limit을 고려한 요청 간 지연이 들어 있고, API key는 환경변수 우선으로 읽습니다. 공개 문서에는 키 값을 쓰지 않고 Brave Search integration이라는 역할만 남기는 것이 맞습니다.
 
 <div class="article-table-wrap market-table-wrap">
   <table>
@@ -128,6 +140,21 @@ runtime의 supervisor는 `KBIntelligenceOrchestrator`입니다. 입력으로 특
         <td><code>src/kb_intelligence/orchestrator</code></td>
         <td>문서 선택, agent phase 실행, 중복 URL 필터링, report 저장, KB sync trigger</td>
         <td>시장 인텔리전스 workflow의 supervisor</td>
+      </tr>
+      <tr>
+        <td><code>src/shared/document_parser.py</code></td>
+        <td>S3 문서를 읽고 docx, pdf, txt, json 입력을 텍스트로 정규화</td>
+        <td>RFP 파일 형식 차이를 planner 이전 단계에서 흡수</td>
+      </tr>
+      <tr>
+        <td><code>src/shared/kb_agent_base.py</code></td>
+        <td>collect, analyze, evaluate, feedback loop 공통 실행 계약</td>
+        <td>agent별 출력 품질을 점수화하고 재분석하는 기반</td>
+      </tr>
+      <tr>
+        <td><code>src/shared/web_search.py</code></td>
+        <td>Brave web/news 검색, 경쟁사/기술 주제별 query helper, 요청 지연</td>
+        <td>외부 시장 근거 수집을 agent 내부 구현에서 분리</td>
       </tr>
       <tr>
         <td><code>planner/handler.py</code></td>
@@ -161,8 +188,13 @@ runtime의 supervisor는 `KBIntelligenceOrchestrator`입니다. 입력으로 특
       </tr>
       <tr>
         <td><code>app/documents</code>, <code>app/api/documents</code></td>
-        <td>S3 폴더와 workflow 결과 조회</td>
+        <td>S3 폴더, 프로젝트별 daily updates, workflow 결과 조회</td>
         <td>운영자가 daily updates와 agent별 산출물을 확인하는 UI</td>
+      </tr>
+      <tr>
+        <td><code>app/api/bedrock/sync</code></td>
+        <td>Knowledge Base, data source, ingestion job 조회와 수동 sync 시작</td>
+        <td>문서관리 화면에서 KB 동기화 상태를 확인하고 재실행</td>
       </tr>
     </tbody>
   </table>
@@ -177,13 +209,17 @@ runtime의 supervisor는 `KBIntelligenceOrchestrator`입니다. 입력으로 특
 
 `KBAgentBase`는 KB Intelligence agent들의 공통 실행 계약입니다. 각 agent는 `collect`, `analyze`, `evaluate` 단계를 따릅니다. collect는 Brave Search나 RFP parser처럼 외부 데이터를 가져오는 단계이고, analyze는 Bedrock 모델을 호출해 agent별 JSON schema를 채우는 단계입니다. evaluate는 결과 품질을 점수화하고, 부족하면 개선 피드백을 만들어 다음 분석 prompt에 다시 넣습니다.
 
-이 구조 덕분에 agent별 품질 기준을 다르게 둘 수 있습니다. planner는 경쟁사, 키워드, 기술 주제, 시장 주제, 실행 우선순위가 충분한지 봅니다. researcher는 findings, trends, recommendations를 봅니다. competitor는 competitor 분석, insights, opportunities를 봅니다. tech analyst는 technologies, must-have/nice-to-have tech, trends, risks를 봅니다. synthesizer는 executive summary, strategic recommendations, action items, trend/tech recommendations를 봅니다.
+이 구조 덕분에 agent별 품질 기준을 다르게 둘 수 있습니다. planner는 경쟁사, 키워드, 기술 주제, 시장 주제, 실행 우선순위가 충분한지 봅니다. researcher는 findings, trends, recommendations를 봅니다. competitor는 analysis summary, competitors, insights, opportunities를 봅니다. tech analyst는 technologies, must-have/nice-to-have tech, trends, risks를 봅니다. synthesizer는 executive summary, strategic recommendations, action items, trend/tech recommendations를 봅니다.
 
-## S3와 Knowledge Base 경계
+중요한 점은 평가가 단순 boolean이 아니라 다음 시도에 들어가는 feedback이라는 점입니다. 각 agent는 품질 기준을 넘지 못하면 평가 feedback을 다음 prompt에 붙여 다시 분석합니다. planner, researcher, competitor, tech analyst는 최대 2회, synthesizer는 최대 3회까지 반복하도록 설정되어 있습니다. 그래서 이 시스템은 "검색 결과를 LLM에 한 번 넣고 끝"나는 구조가 아니라, 수집 결과를 agent별 schema와 품질 기준에 맞춰 다시 다듬는 구조입니다.
+
+## 저장, 중복 제거, Knowledge Base 경계
 
 S3 폴더 구조는 Jeani에서 중요한 설계입니다. `06_market_intelligence/plans`는 검색 계획, `06_market_intelligence/workflows`는 agent별 실행 결과와 workflow metadata, `06_market_intelligence/daily_updates`는 최종 market intelligence report를 담습니다. KB sync는 daily updates만 Jeani의 Market Intelligence Knowledge Base 대상으로 삼고, plans/workflows는 KB에서 제외합니다. 이렇게 해야 내부 실행 흔적과 최종 검색 대상이 섞이지 않습니다.
 
 또 하나의 세부 설계는 중복 URL 필터링입니다. Orchestrator는 문서별 daily_updates 폴더에서 기존 source URL을 모은 뒤, 새 researcher/competitor/tech analyst 결과의 source를 필터링합니다. 반복 실행될수록 같은 URL이 계속 보고서에 쌓이는 문제를 줄이기 위한 장치입니다.
+
+최종 보고서에는 synthesizer 결과만 들어가지 않습니다. Orchestrator는 `source_data`에 agent별 원본 결과를 붙이고, metadata에는 report id, generated time, project id, RFP document key, agents used, filtered URL count, new source count를 기록합니다. 이 metadata 덕분에 portfolio 관점에서도 Jeani의 시장 조사 루프가 단발성 생성물이 아니라 반복 실행과 누적 지식을 전제로 설계됐다는 점이 드러납니다.
 
 ## API와 화면별 기능 매트릭스
 
@@ -249,10 +285,10 @@ S3 폴더 구조는 Jeani에서 중요한 설계입니다. `06_market_intelligen
   <figcaption>Operations topology. Terraform은 KB Intelligence Lambda와 EventBridge/S3 trigger를 정의하고, frontend 문서관리 화면은 S3의 market intelligence 산출물을 읽습니다.</figcaption>
 </figure>
 
-## 운영 경계와 한계
+## 문서관리 UI와 운영 루프
 
-Jeani는 backend 기능과 운영 계약이 꽤 분명합니다. Terraform에는 KB Intelligence Lambda group, EventBridge daily schedule, S3 object-created notification, KB sync Lambda가 정의되어 있습니다. frontend에는 market intelligence folders와 workflow를 읽는 문서관리 API와 UI가 있습니다. 다만 CDK 쪽은 RFP core Lambda/API/pipeline을 중심으로 정리되어 있고, market intelligence 자동 실행 경계는 Terraform 쪽이 더 직접적입니다.
+Jeani의 문서관리 화면은 market intelligence 산출물을 단순 파일 목록이 아니라 운영 상태로 보여줍니다. `/api/documents?marketIntelligence=true`는 `06_market_intelligence/` 아래의 `daily_updates`, `plans`, `workflows` 폴더를 읽어 파일 수와 마지막 수정 시각을 반환합니다. `/api/documents?marketIntelligence=projects`는 daily update의 문서별 프로젝트와 workflow 목록을 함께 구성해, 사용자가 어떤 RFP에 대해 어떤 보고서와 agent 결과가 생겼는지 확인하게 합니다.
 
-현재 글은 소스 분석 기반입니다. 실제 AWS 계정에서 EventBridge가 마지막으로 언제 실행됐는지, Bedrock ingestion job이 성공했는지는 이 문서 작성 과정에서 새로 확인하지 않았습니다. 그래서 "배포되어 정상 운영 중"이라고 쓰지 않고, 코드와 IaC가 어떤 실행 경계를 정의하는지만 설명했습니다.
+frontend는 이 데이터를 Market Intelligence tab의 통계, 프로젝트 카드, 업데이트 파일, workflow card, agent badge로 풀어냅니다. agent별 `result.json`은 download action으로 이어지고, Bedrock tab에서는 Knowledge Base와 data source, ingestion job status를 조회하거나 manual sync를 실행할 수 있습니다. 즉 Jeani의 시장 조사 루프는 backend batch 작업에서 끝나지 않고, 운영자가 산출물과 동기화 상태를 확인하는 화면까지 연결됩니다.
 
-포트폴리오 관점의 기여는 Jeani에서 시장 조사 업무를 하나의 prompt가 아니라 data lifecycle로 나눈 데 있습니다. RFP에서 질문을 뽑고, 외부 검색을 agent별로 분리하고, 결과를 평가하며, 최종 보고서만 Knowledge Base에 넣는 구조는 제안 업무에서 반복 가능한 시장 인텔리전스 루프를 만들기 위한 설계입니다.
+포트폴리오 관점의 구현 포인트는 시장 조사 업무를 하나의 prompt가 아니라 data lifecycle로 나눈 데 있습니다. RFP에서 질문을 뽑고, 외부 검색을 agent별로 분리하고, 결과를 평가하며, 최종 보고서만 Knowledge Base에 넣습니다. 여기에 문서관리 UI가 plans, workflows, daily updates, KB sync를 한 화면 흐름으로 묶으면서 제안 업무에서 반복 가능한 시장 인텔리전스 운영 루프를 만듭니다.
