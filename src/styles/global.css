@@ -2963,7 +2963,8 @@ figcaption,
 
 .project-markdown-body .harmony-lead-panel,
 .project-markdown-body .market-lead-panel,
-.project-markdown-body .aio-lead-panel {
+.project-markdown-body .aio-lead-panel,
+.project-markdown-body .project-lead-panel {
   margin: 34px 0 42px;
   padding: 24px;
   border: 1px solid var(--border);
@@ -2979,19 +2980,22 @@ figcaption,
 
 .project-markdown-body .harmony-lead-panel:first-child,
 .project-markdown-body .market-lead-panel:first-child,
-.project-markdown-body .aio-lead-panel:first-child {
+.project-markdown-body .aio-lead-panel:first-child,
+.project-markdown-body .project-lead-panel:first-child {
   margin-top: 0;
 }
 
 .project-markdown-body .harmony-lead-panel p,
 .project-markdown-body .market-lead-panel p,
-.project-markdown-body .aio-lead-panel p {
+.project-markdown-body .aio-lead-panel p,
+.project-markdown-body .project-lead-panel p {
   margin: 12px 0 0;
 }
 
 .project-markdown-body .harmony-kicker,
 .project-markdown-body .market-kicker,
-.project-markdown-body .aio-kicker {
+.project-markdown-body .aio-kicker,
+.project-markdown-body .project-kicker {
   display: block;
   margin-bottom: 8px;
   color: var(--accent);
@@ -3007,7 +3011,9 @@ figcaption,
 .project-markdown-body .market-feature-grid,
 .project-markdown-body .market-fact-grid,
 .project-markdown-body .aio-feature-grid,
-.project-markdown-body .aio-fact-grid {
+.project-markdown-body .aio-fact-grid,
+.project-markdown-body .project-feature-grid,
+.project-markdown-body .project-fact-grid {
   display: grid;
   gap: 14px;
   margin: 28px 0;
@@ -3015,13 +3021,15 @@ figcaption,
 
 .project-markdown-body .harmony-feature-grid,
 .project-markdown-body .market-feature-grid,
-.project-markdown-body .aio-feature-grid {
+.project-markdown-body .aio-feature-grid,
+.project-markdown-body .project-feature-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .project-markdown-body .harmony-fact-grid,
 .project-markdown-body .market-fact-grid,
-.project-markdown-body .aio-fact-grid {
+.project-markdown-body .aio-fact-grid,
+.project-markdown-body .project-fact-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
@@ -3030,7 +3038,9 @@ figcaption,
 .project-markdown-body .market-feature-card,
 .project-markdown-body .market-fact,
 .project-markdown-body .aio-feature-card,
-.project-markdown-body .aio-fact {
+.project-markdown-body .aio-fact,
+.project-markdown-body .project-feature-card,
+.project-markdown-body .project-fact {
   min-width: 0;
   padding: 18px;
   border: 1px solid var(--border);
@@ -3043,7 +3053,9 @@ figcaption,
 .project-markdown-body .market-feature-card h3,
 .project-markdown-body .market-fact strong,
 .project-markdown-body .aio-feature-card h3,
-.project-markdown-body .aio-fact strong {
+.project-markdown-body .aio-fact strong,
+.project-markdown-body .project-feature-card h3,
+.project-markdown-body .project-fact strong {
   display: block;
   margin: 0 0 8px;
   color: var(--fg);
@@ -3056,7 +3068,9 @@ figcaption,
 .project-markdown-body .market-feature-card p,
 .project-markdown-body .market-fact p,
 .project-markdown-body .aio-feature-card p,
-.project-markdown-body .aio-fact p {
+.project-markdown-body .aio-fact p,
+.project-markdown-body .project-feature-card p,
+.project-markdown-body .project-fact p {
   margin: 0;
   color: var(--muted);
   font-size: 15px;
@@ -3065,7 +3079,8 @@ figcaption,
 
 .project-markdown-body .harmony-diagram,
 .project-markdown-body .market-diagram,
-.project-markdown-body .aio-diagram {
+.project-markdown-body .aio-diagram,
+.project-markdown-body .project-diagram {
   margin: 36px 0 42px;
   padding: 14px;
   border: 1px solid var(--border);
@@ -3075,7 +3090,8 @@ figcaption,
 
 .project-markdown-body .harmony-diagram img,
 .project-markdown-body .market-diagram img,
-.project-markdown-body .aio-diagram img {
+.project-markdown-body .aio-diagram img,
+.project-markdown-body .project-diagram img {
   width: 100%;
   border-radius: 6px;
   background: var(--surface);
@@ -3124,13 +3140,15 @@ figcaption,
 }
 
 .project-markdown-body .harmony-diagram figcaption,
-.project-markdown-body .market-diagram figcaption {
+.project-markdown-body .market-diagram figcaption,
+.project-markdown-body .project-diagram figcaption {
   margin: 12px 2px 0;
   line-height: 1.55;
 }
 
 .project-markdown-body .harmony-flow,
-.project-markdown-body .market-flow {
+.project-markdown-body .market-flow,
+.project-markdown-body .project-flow {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 10px;
@@ -3138,7 +3156,8 @@ figcaption,
 }
 
 .project-markdown-body .harmony-flow span,
-.project-markdown-body .market-flow span {
+.project-markdown-body .market-flow span,
+.project-markdown-body .project-flow span {
   min-width: 0;
   padding: 12px;
   border: 1px solid var(--border);
@@ -3566,7 +3585,9 @@ figcaption,
   .project-markdown-body .harmony-fact-grid,
   .project-markdown-body .harmony-flow,
   .project-markdown-body .market-fact-grid,
-  .project-markdown-body .market-flow {
+  .project-markdown-body .market-flow,
+  .project-markdown-body .project-fact-grid,
+  .project-markdown-body .project-flow {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -3996,7 +4017,10 @@ figcaption,
   .project-markdown-body .market-fact,
   .project-markdown-body .aio-lead-panel,
   .project-markdown-body .aio-feature-card,
-  .project-markdown-body .aio-fact {
+  .project-markdown-body .aio-fact,
+  .project-markdown-body .project-lead-panel,
+  .project-markdown-body .project-feature-card,
+  .project-markdown-body .project-fact {
     padding: 16px;
   }
 
@@ -4008,13 +4032,17 @@ figcaption,
   .project-markdown-body .market-flow,
   .project-markdown-body .aio-feature-grid,
   .project-markdown-body .aio-fact-grid,
-  .project-markdown-body .aio-flow {
+  .project-markdown-body .aio-flow,
+  .project-markdown-body .project-feature-grid,
+  .project-markdown-body .project-fact-grid,
+  .project-markdown-body .project-flow {
     grid-template-columns: 1fr;
   }
 
   .project-markdown-body .harmony-diagram,
   .project-markdown-body .market-diagram,
-  .project-markdown-body .aio-diagram {
+  .project-markdown-body .aio-diagram,
+  .project-markdown-body .project-diagram {
     padding: 10px;
   }
 

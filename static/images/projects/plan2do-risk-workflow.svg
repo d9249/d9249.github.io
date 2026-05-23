@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="640" viewBox="0 0 1120 640" role="img" aria-labelledby="title desc">
+  <title id="title">Plan2Do risk analysis workflow</title>
+  <desc id="desc">The workflow converts inputs into risk factors, retrieves legal references, runs risk and mitigation steps, validates legal evidence, and emits an HTML table over SSE.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2c5f73"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .frame { fill: #ffffff; stroke: #d7dee8; stroke-width: 2; }
+      .node rect { fill: #ffffff; stroke: #9bb6c7; stroke-width: 2; rx: 10; }
+      .node .title { fill: #15293a; font: 700 20px Inter, Arial, sans-serif; }
+      .node .line { fill: #42576a; font: 500 15px Inter, Arial, sans-serif; }
+      .note rect { fill: #f5f8fb; stroke: #c8d5df; stroke-width: 2; rx: 10; }
+      .flow { fill: none; stroke: #2c5f73; stroke-width: 3; marker-end: url(#arrow); }
+      .muted { stroke: #8aa0af; stroke-dasharray: 7 7; }
+      .label { fill: #617089; font: 600 13px Inter, Arial, sans-serif; }
+    </style>
+  </defs>
+  <rect class="bg" width="1120" height="640"/>
+  <rect class="frame" x="26" y="28" width="1068" height="560" rx="18"/>
+  <text class="label" x="50" y="58">LangGraph workflow: source-code execution order in workflow_service.py</text>
+  <g class="node">
+    <rect x="48" y="86" width="220" height="104"/>
+    <text x="74" y="124">
+      <tspan class="title" x="74" dy="0">Input Intake</tspan>
+      <tspan class="line" x="74" dy="28">image, PDF, query</tspan>
+      <tspan class="line" x="74" dy="23">industrial filter</tspan>
+    </text>
+  </g>
+  <g class="node">
+    <rect x="330" y="86" width="220" height="104"/>
+    <text x="356" y="124">
+      <tspan class="title" x="356" dy="0">Risk Factors</tspan>
+      <tspan class="line" x="356" dy="28">JSON extraction</tspan>
+      <tspan class="line" x="356" dy="23">uuid mapping</tspan>
+    </text>
+  </g>
+  <g class="node">
+    <rect x="612" y="86" width="240" height="104"/>
+    <text x="638" y="124">
+      <tspan class="title" x="638" dy="0">Legal Search</tspan>
+      <tspan class="line" x="638" dy="28">keywords plus vectors</tspan>
+      <tspan class="line" x="638" dy="23">rank and diversify</tspan>
+    </text>
+  </g>
+  <g class="node">
+    <rect x="250" y="284" width="240" height="116"/>
+    <text x="278" y="322">
+      <tspan class="title" x="278" dy="0">Analyze Risks</tspan>
+      <tspan class="line" x="278" dy="28">risk level, category</tspan>
+      <tspan class="line" x="278" dy="23">case examples</tspan>
+      <tspan class="line" x="278" dy="23">async gather</tspan>
+    </text>
+  </g>
+  <g class="node">
+    <rect x="632" y="284" width="240" height="116"/>
+    <text x="660" y="322">
+      <tspan class="title" x="660" dy="0">Mitigations</tspan>
+      <tspan class="line" x="660" dy="28">law-grounded actions</tspan>
+      <tspan class="line" x="660" dy="23">priority, timeframe</tspan>
+      <tspan class="line" x="660" dy="23">fixed action count</tspan>
+    </text>
+  </g>
+  <g class="node">
+    <rect x="420" y="470" width="270" height="108"/>
+    <text x="448" y="508">
+      <tspan class="title" x="448" dy="0">Legal Validation</tspan>
+      <tspan class="line" x="448" dy="28">keep or remove laws</tspan>
+      <tspan class="line" x="448" dy="23">quality summary</tspan>
+    </text>
+  </g>
+  <g class="node">
+    <rect x="814" y="470" width="240" height="108"/>
+    <text x="842" y="508">
+      <tspan class="title" x="842" dy="0">HTML Table</tspan>
+      <tspan class="line" x="842" dy="28">checkbox columns</tspan>
+      <tspan class="line" x="842" dy="23">SSE progress events</tspan>
+    </text>
+  </g>
+  <g class="node note">
+    <rect x="58" y="470" width="248" height="108"/>
+    <text x="84" y="508">
+      <tspan class="title" x="84" dy="0">Fallback Path</tspan>
+      <tspan class="line" x="84" dy="28">partial success allowed</tspan>
+      <tspan class="line" x="84" dy="23">default safety actions</tspan>
+    </text>
+  </g>
+  <path class="flow" d="M 268 138 H 330"/>
+  <path class="flow" d="M 550 138 H 612"/>
+  <path class="flow" d="M 732 190 V 238 H 370 V 284"/>
+  <path class="flow" d="M 732 238 V 284"/>
+  <path class="flow" d="M 370 400 V 438 H 555 V 470"/>
+  <path class="flow" d="M 752 400 V 438 H 555"/>
+  <path class="flow" d="M 690 524 H 814"/>
+  <path class="flow muted" d="M 250 360 H 182 V 470"/>
+  <path class="flow muted" d="M 632 360 H 182"/>
+  <text class="label" x="50" y="616">Output carries processed risks, references, mitigation plans, validations, html_table, and summary fields.</text>
+</svg>
