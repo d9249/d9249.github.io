@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">NVIDIA AI-Q agent skill delegation flow</title>
+  <desc id="desc">A dark architecture diagram showing Claude Code, Codex, and OpenCode delegating research through an AI-Q skill bundle to a local or hosted AI-Q server, which routes work through intent classification, clarification, shallow research, deep research, MCP data sources, and a cited report.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="55%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.7" opacity="0.65"/>
+    </pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#34d399"/>
+    </marker>
+    <marker id="arrowRose" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#fb7185"/>
+    </marker>
+    <style>
+      .title { font: 700 38px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #e2e8f0; }
+      .subtitle { font: 500 17px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #94a3b8; }
+      .label { font: 700 21px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #f8fafc; }
+      .small { font: 500 15px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #cbd5e1; }
+      .tiny { font: 500 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #94a3b8; }
+      .pill { font: 700 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #dbeafe; }
+      .groupTitle { font: 700 16px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #fbbf24; letter-spacing: 0.04em; }
+      .line { fill: none; stroke: #94a3b8; stroke-width: 3; marker-end: url(#arrow); }
+      .lineGreen { fill: none; stroke: #34d399; stroke-width: 3; marker-end: url(#arrowGreen); }
+      .lineRose { fill: none; stroke: #fb7185; stroke-width: 3; stroke-dasharray: 10 8; marker-end: url(#arrowRose); }
+      .boxBg { fill: #0f172a; rx: 18; }
+      .boxExternal { fill: rgba(30,41,59,0.72); stroke: #94a3b8; stroke-width: 2; rx: 18; }
+      .boxSkill { fill: rgba(8,51,68,0.45); stroke: #22d3ee; stroke-width: 2.5; rx: 18; }
+      .boxServer { fill: rgba(6,78,59,0.48); stroke: #34d399; stroke-width: 2.5; rx: 18; }
+      .boxResearch { fill: rgba(76,29,149,0.48); stroke: #a78bfa; stroke-width: 2.5; rx: 16; }
+      .boxData { fill: rgba(120,53,15,0.42); stroke: #fbbf24; stroke-width: 2.5; rx: 16; }
+      .boxSecurity { fill: rgba(136,19,55,0.38); stroke: #fb7185; stroke-width: 2.5; rx: 16; }
+      .boundary { fill: rgba(15,23,42,0.35); stroke: #475569; stroke-width: 2; stroke-dasharray: 8 8; rx: 26; }
+      .badge { fill: rgba(30,64,175,0.45); stroke: #60a5fa; stroke-width: 1.4; rx: 13; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#grid)" opacity="0.85"/>
+
+  <text x="80" y="78" class="title">NVIDIA AI-Q as a Specialized Deep Research Skill</text>
+  <text x="80" y="112" class="subtitle">Agent harnesses keep orchestration; AI-Q owns retrieval, planning, synthesis, citations, and enterprise data boundaries.</text>
+
+  <rect x="72" y="158" width="300" height="560" class="boundary"/>
+  <text x="100" y="190" class="groupTitle">AGENT HARNESS</text>
+  <rect x="110" y="230" width="224" height="74" class="boxBg" filter="url(#shadow)"/>
+  <rect x="110" y="230" width="224" height="74" class="boxExternal"/>
+  <text x="138" y="262" class="label">Claude Code</text>
+  <text x="138" y="286" class="tiny">repo/user skill load</text>
+  <rect x="110" y="344" width="224" height="74" class="boxBg" filter="url(#shadow)"/>
+  <rect x="110" y="344" width="224" height="74" class="boxExternal"/>
+  <text x="138" y="376" class="label">Codex</text>
+  <text x="138" y="400" class="tiny">configured skills dir</text>
+  <rect x="110" y="458" width="224" height="74" class="boxBg" filter="url(#shadow)"/>
+  <rect x="110" y="458" width="224" height="74" class="boxExternal"/>
+  <text x="138" y="490" class="label">OpenCode</text>
+  <text x="138" y="514" class="tiny">~/.config/opencode</text>
+  <rect x="110" y="612" width="224" height="56" class="badge"/>
+  <text x="136" y="647" class="pill">User asks for research memo</text>
+
+  <path d="M372 440 C420 440 418 440 470 440" class="line"/>
+
+  <rect x="470" y="248" width="315" height="384" class="boxBg" filter="url(#shadow)"/>
+  <rect x="470" y="248" width="315" height="384" class="boxSkill"/>
+  <text x="504" y="292" class="label">AI-Q Agent Skill</text>
+  <text x="504" y="322" class="small">.agents/skills/aiq-research/</text>
+  <line x1="504" y1="350" x2="750" y2="350" stroke="#22d3ee" stroke-width="1.4" opacity="0.55"/>
+  <text x="504" y="390" class="small">• SKILL.md: when and how to call AI-Q</text>
+  <text x="504" y="426" class="small">• scripts/aiq.py: /chat + async jobs</text>
+  <text x="504" y="462" class="small">• Polls /v1/jobs/async/job/:id</text>
+  <text x="504" y="498" class="small">• Returns final cited report JSON</text>
+  <rect x="504" y="546" width="245" height="52" class="badge"/>
+  <text x="528" y="579" class="pill">Default AIQ_SERVER_URL: localhost:8000</text>
+
+  <path d="M785 440 C844 440 842 440 905 440" class="lineGreen"/>
+
+  <rect x="905" y="184" width="300" height="512" class="boxBg" filter="url(#shadow)"/>
+  <rect x="905" y="184" width="300" height="512" class="boxServer"/>
+  <text x="940" y="228" class="label">AI-Q Server</text>
+  <text x="940" y="258" class="small">local, hosted, or on-prem</text>
+  <line x1="940" y1="286" x2="1168" y2="286" stroke="#34d399" stroke-width="1.4" opacity="0.55"/>
+  <text x="940" y="326" class="small">/chat routed request</text>
+  <text x="940" y="362" class="small">/v1/jobs/async submit</text>
+  <text x="940" y="398" class="small">SSE stream + replay</text>
+  <text x="940" y="434" class="small">Job store + event artifacts</text>
+  <text x="940" y="470" class="small">Dask workers for long runs</text>
+  <rect x="940" y="544" width="222" height="70" class="boxSecurity"/>
+  <text x="962" y="575" class="small">Auth boundary</text>
+  <text x="962" y="598" class="tiny">OAuth/OIDC + token validators</text>
+
+  <path d="M1205 440 C1246 440 1248 440 1290 440" class="lineGreen"/>
+
+  <rect x="1290" y="146" width="230" height="588" class="boundary"/>
+  <text x="1320" y="178" class="groupTitle">RESEARCH PIPELINE</text>
+
+  <rect x="1320" y="214" width="170" height="70" class="boxResearch"/>
+  <text x="1340" y="246" class="small">Intent Classifier</text>
+  <text x="1340" y="268" class="tiny">meta / shallow / deep</text>
+  <path d="M1405 284 L1405 320" class="line"/>
+
+  <rect x="1320" y="326" width="170" height="70" class="boxResearch"/>
+  <text x="1340" y="358" class="small">Clarifier</text>
+  <text x="1340" y="380" class="tiny">HITL plan approval</text>
+  <path d="M1405 396 L1405 432" class="line"/>
+
+  <rect x="1320" y="438" width="170" height="70" class="boxResearch"/>
+  <text x="1340" y="470" class="small">Shallow Research</text>
+  <text x="1340" y="492" class="tiny">bounded, cited answer</text>
+  <path d="M1405 508 L1405 544" class="line"/>
+
+  <rect x="1320" y="550" width="170" height="70" class="boxResearch"/>
+  <text x="1340" y="582" class="small">Deep Research</text>
+  <text x="1340" y="604" class="tiny">planner + researcher</text>
+  <path d="M1320 585 C1268 585 1258 644 1205 644" class="lineRose"/>
+
+  <rect x="916" y="744" width="568" height="86" class="boxBg" filter="url(#shadow)"/>
+  <rect x="916" y="744" width="568" height="86" class="boxData"/>
+  <text x="946" y="780" class="label">Enterprise Data Sources via MCP / Knowledge Layer</text>
+  <text x="946" y="808" class="small">streamable-http, service-account auth, user-token pass-through tools</text>
+  <path d="M1200 744 C1195 704 1215 678 1205 644" class="lineRose"/>
+
+  <path d="M1290 665 C1140 710 910 710 760 612" class="lineGreen"/>
+  <rect x="472" y="728" width="316" height="84" class="boxBg" filter="url(#shadow)"/>
+  <rect x="472" y="728" width="316" height="84" class="boxServer"/>
+  <text x="504" y="764" class="label">Cited Structured Report</text>
+  <text x="504" y="792" class="small">Harness receives answer, not raw data access</text>
+
+  <text x="82" y="842" class="tiny">Sources: NVIDIA Technical Blog, NVIDIA-AI-Blueprints/aiq v2.1.0, AI-Q Agent Skill package, AI-Q MCP/auth docs.</text>
+</svg>
