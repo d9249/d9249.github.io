@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
-  <title id="title">InVision OCR Suite runtime architecture</title>
-  <desc id="desc">Runtime architecture showing Next.js web, FastAPI feature registry, OCR engines, document parser, storage, monitoring, and delivery profiles.</desc>
+  <title id="title">InVision OCR runtime architecture</title>
+  <desc id="desc">Runtime architecture showing the product screen, request layer, feature profile, OCR engines, document recovery, storage, monitoring, and delivery profiles.</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto">
       <path d="M 1 1 L 11 6 L 1 11 Z" fill="#334155" />
@@ -18,23 +18,23 @@
   </defs>
   <rect class="bg" x="0" y="0" width="1280" height="720" rx="28" />
   <rect class="lane" x="36" y="34" width="1208" height="116" rx="22" opacity="0.7" />
-  <text x="60" y="76" class="label">API / Web Boundary</text>
+  <text x="60" y="76" class="label">Product Runtime Boundary</text>
 
   <g class="node" transform="translate(60 86)">
     <rect width="210" height="106" fill="#e0f2fe" stroke="#38bdf8" />
-    <text x="24" y="34"><tspan x="24" dy="0">Next.js Web</tspan><tspan class="sub" x="24" dy="26">main / parser</tspan><tspan class="sub" x="24" dy="22">benchmark / admin</tspan></text>
+    <text x="24" y="34"><tspan x="24" dy="0">Product UI</tspan><tspan class="sub" x="24" dy="26">upload / review</tspan><tspan class="sub" x="24" dy="22">research / admin</tspan></text>
   </g>
   <g class="node" transform="translate(374 86)">
     <rect width="220" height="106" fill="#dcfce7" stroke="#22c55e" />
-    <text x="24" y="34"><tspan x="24" dy="0">FastAPI Ingress</tspan><tspan class="sub" x="24" dy="26">auth / history</tspan><tspan class="sub" x="24" dy="22">request envelope</tspan></text>
+    <text x="24" y="34"><tspan x="24" dy="0">Request Layer</tspan><tspan class="sub" x="24" dy="26">auth / history</tspan><tspan class="sub" x="24" dy="22">validated input</tspan></text>
   </g>
   <g class="node" transform="translate(698 86)">
     <rect width="232" height="106" fill="#fef3c7" stroke="#f59e0b" />
-    <text x="24" y="34"><tspan x="24" dy="0">Feature Registry</tspan><tspan class="sub" x="24" dy="26">router selection</tspan><tspan class="sub" x="24" dy="22">capability payload</tspan></text>
+    <text x="24" y="34"><tspan x="24" dy="0">Feature Profile</tspan><tspan class="sub" x="24" dy="26">mode selection</tspan><tspan class="sub" x="24" dy="22">enabled features</tspan></text>
   </g>
   <g class="node" transform="translate(1038 86)">
     <rect width="182" height="106" fill="#fae8ff" stroke="#d946ef" />
-    <text x="22" y="34"><tspan x="22" dy="0">Auth / DB</tspan><tspan class="sub" x="22" dy="26">JWT / roles</tspan><tspan class="sub" x="22" dy="22">SQLite history</tspan></text>
+    <text x="22" y="34"><tspan x="22" dy="0">Auth / History</tspan><tspan class="sub" x="22" dy="26">roles</tspan><tspan class="sub" x="22" dy="22">saved results</tspan></text>
   </g>
 
   <path class="edge" d="M270 139 H374" />
@@ -43,19 +43,19 @@
 
   <g class="node" transform="translate(70 294)">
     <rect width="224" height="118" fill="#eff6ff" stroke="#3b82f6" />
-    <text x="24" y="38"><tspan x="24" dy="0">OCR Engine</tspan><tspan class="sub" x="24" dy="27">InVision OCR</tspan><tspan class="sub" x="24" dy="22">private serving</tspan></text>
+    <text x="24" y="38"><tspan x="24" dy="0">OCR Engine</tspan><tspan class="sub" x="24" dy="27">InVision OCR</tspan><tspan class="sub" x="24" dy="22">custom serving</tspan></text>
   </g>
   <g class="node" transform="translate(372 294)">
     <rect width="224" height="118" fill="#ecfdf5" stroke="#10b981" />
-    <text x="24" y="38"><tspan x="24" dy="0">Layout Engine</tspan><tspan class="sub" x="24" dy="27">private layout</tspan><tspan class="sub" x="24" dy="22">region parser</tspan></text>
+    <text x="24" y="38"><tspan x="24" dy="0">Layout Analysis</tspan><tspan class="sub" x="24" dy="27">document areas</tspan><tspan class="sub" x="24" dy="22">reading order</tspan></text>
   </g>
   <g class="node" transform="translate(674 294)">
     <rect width="224" height="118" fill="#fff7ed" stroke="#fb923c" />
-    <text x="24" y="38"><tspan x="24" dy="0">Document Parser</tspan><tspan class="sub" x="24" dy="27">PDF render</tspan><tspan class="sub" x="24" dy="22">digital text</tspan></text>
+    <text x="24" y="38"><tspan x="24" dy="0">Document Recovery</tspan><tspan class="sub" x="24" dy="27">PDF pages</tspan><tspan class="sub" x="24" dy="22">digital text</tspan></text>
   </g>
   <g class="node" transform="translate(976 294)">
     <rect width="224" height="118" fill="#fdf2f8" stroke="#ec4899" />
-    <text x="24" y="38"><tspan x="24" dy="0">Table Pipeline</tspan><tspan class="sub" x="24" dy="27">structure engine</tspan><tspan class="sub" x="24" dy="22">fusion / headers</tspan></text>
+    <text x="24" y="38"><tspan x="24" dy="0">Table Recovery</tspan><tspan class="sub" x="24" dy="27">structure candidates</tspan><tspan class="sub" x="24" dy="22">text / headers</tspan></text>
   </g>
 
   <path class="edge" d="M484 192 V248 H182 V294" />
@@ -68,11 +68,11 @@
 
   <g class="node" transform="translate(130 536)">
     <rect width="220" height="108" fill="#f1f5f9" stroke="#64748b" />
-    <text x="24" y="36"><tspan x="24" dy="0">Private Assets</tspan><tspan class="sub" x="24" dy="26">engine bundle</tspan><tspan class="sub" x="24" dy="22">secure payload</tspan></text>
+    <text x="24" y="36"><tspan x="24" dy="0">Model Assets</tspan><tspan class="sub" x="24" dy="26">engine bundle</tspan><tspan class="sub" x="24" dy="22">secure package</tspan></text>
   </g>
   <g class="node" transform="translate(410 536)">
     <rect width="220" height="108" fill="#f1f5f9" stroke="#64748b" />
-    <text x="24" y="36"><tspan x="24" dy="0">Result Storage</tspan><tspan class="sub" x="24" dy="26">history DB</tspan><tspan class="sub" x="24" dy="22">tasks / JSON</tspan></text>
+    <text x="24" y="36"><tspan x="24" dy="0">Result Storage</tspan><tspan class="sub" x="24" dy="26">history</tspan><tspan class="sub" x="24" dy="22">long jobs</tspan></text>
   </g>
   <g class="node" transform="translate(690 536)">
     <rect width="220" height="108" fill="#f1f5f9" stroke="#64748b" />

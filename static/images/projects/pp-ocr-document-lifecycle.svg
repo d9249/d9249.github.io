@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
   <title id="title">InVision OCR document lifecycle</title>
-  <desc id="desc">Document lifecycle from upload and validation through OCR, layout, parser, history, review, reprocess, benchmark, and delivery.</desc>
+  <desc id="desc">Document lifecycle from upload and validation through OCR, layout analysis, document recovery, history, review, reprocess, benchmark, and delivery.</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto">
       <path d="M 1 1 L 11 6 L 1 11 Z" fill="#334155" />
@@ -22,11 +22,11 @@
 
   <g class="node" transform="translate(62 104)">
     <rect width="220" height="104" fill="#e0f2fe" stroke="#38bdf8" />
-    <text x="24" y="35"><tspan x="24" dy="0">Upload</tspan><tspan class="sub" x="24" dy="26">image / PDF / ZIP</tspan><tspan class="sub" x="24" dy="21">browser workspace</tspan></text>
+    <text x="24" y="35"><tspan x="24" dy="0">Upload</tspan><tspan class="sub" x="24" dy="26">image / PDF / ZIP</tspan><tspan class="sub" x="24" dy="21">review workspace</tspan></text>
   </g>
   <g class="node" transform="translate(62 302)">
     <rect width="220" height="104" fill="#e0f2fe" stroke="#38bdf8" />
-    <text x="24" y="35"><tspan x="24" dy="0">Validate</tspan><tspan class="sub" x="24" dy="26">auth / file size</tspan><tspan class="sub" x="24" dy="21">content checks</tspan></text>
+    <text x="24" y="35"><tspan x="24" dy="0">Validate</tspan><tspan class="sub" x="24" dy="26">access / file size</tspan><tspan class="sub" x="24" dy="21">content checks</tspan></text>
   </g>
   <g class="node" transform="translate(62 500)">
     <rect width="220" height="104" fill="#e0f2fe" stroke="#38bdf8" />
@@ -35,15 +35,15 @@
 
   <g class="node" transform="translate(428 104)">
     <rect width="230" height="104" fill="#dcfce7" stroke="#22c55e" />
-    <text x="24" y="35"><tspan x="24" dy="0">OCR Pipeline</tspan><tspan class="sub" x="24" dy="26">InVision OCR</tspan><tspan class="sub" x="24" dy="21">private serving</tspan></text>
+    <text x="24" y="35"><tspan x="24" dy="0">OCR Processing</tspan><tspan class="sub" x="24" dy="26">InVision OCR</tspan><tspan class="sub" x="24" dy="21">custom serving</tspan></text>
   </g>
   <g class="node" transform="translate(428 302)">
     <rect width="230" height="104" fill="#fef3c7" stroke="#f59e0b" />
-    <text x="24" y="35"><tspan x="24" dy="0">Layout Parser</tspan><tspan class="sub" x="24" dy="26">regions / reading order</tspan><tspan class="sub" x="24" dy="21">page previews</tspan></text>
+    <text x="24" y="35"><tspan x="24" dy="0">Layout Analysis</tspan><tspan class="sub" x="24" dy="26">regions / reading order</tspan><tspan class="sub" x="24" dy="21">page previews</tspan></text>
   </g>
   <g class="node" transform="translate(428 500)">
     <rect width="230" height="104" fill="#ffedd5" stroke="#fb923c" />
-    <text x="24" y="35"><tspan x="24" dy="0">Document Parser</tspan><tspan class="sub" x="24" dy="26">digital text hybrid</tspan><tspan class="sub" x="24" dy="21">assembled blocks</tspan></text>
+    <text x="24" y="35"><tspan x="24" dy="0">Document Recovery</tspan><tspan class="sub" x="24" dy="26">digital text mix</tspan><tspan class="sub" x="24" dy="21">assembled blocks</tspan></text>
   </g>
 
   <g class="node" transform="translate(792 104)">
@@ -52,11 +52,11 @@
   </g>
   <g class="node" transform="translate(792 302)">
     <rect width="230" height="104" fill="#ede9fe" stroke="#8b5cf6" />
-    <text x="24" y="35"><tspan x="24" dy="0">History Store</tspan><tspan class="sub" x="24" dy="26">result JSON</tspan><tspan class="sub" x="24" dy="21">tasks / reprocess</tspan></text>
+    <text x="24" y="35"><tspan x="24" dy="0">History Store</tspan><tspan class="sub" x="24" dy="26">saved results</tspan><tspan class="sub" x="24" dy="21">jobs / reprocess</tspan></text>
   </g>
   <g class="node" transform="translate(792 500)">
     <rect width="230" height="104" fill="#ecfeff" stroke="#06b6d4" />
-    <text x="24" y="35"><tspan x="24" dy="0">UI Review</tspan><tspan class="sub" x="24" dy="26">viewer / tables</tspan><tspan class="sub" x="24" dy="21">template report</tspan></text>
+    <text x="24" y="35"><tspan x="24" dy="0">Review Screen</tspan><tspan class="sub" x="24" dy="26">viewer / tables</tspan><tspan class="sub" x="24" dy="21">template report</tspan></text>
   </g>
 
   <g class="node" transform="translate(1074 203)">
@@ -65,7 +65,7 @@
   </g>
   <g class="node" transform="translate(1074 401)">
     <rect width="160" height="104" fill="#f1f5f9" stroke="#64748b" />
-    <text x="20" y="35"><tspan x="20" dy="0">Delivery</tspan><tspan class="sub" x="20" dy="26">unified image</tspan><tspan class="sub" x="20" dy="21">license lock</tspan></text>
+    <text x="20" y="35"><tspan x="20" dy="0">Delivery</tspan><tspan class="sub" x="20" dy="26">unified image</tspan><tspan class="sub" x="20" dy="21">license guard</tspan></text>
   </g>
 
   <path class="edge" d="M282 156 H428" />
