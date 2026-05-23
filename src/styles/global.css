@@ -1227,6 +1227,10 @@ h3 {
   gap: 28px;
 }
 
+.project-detail-main > .project-markdown-body {
+  margin-top: 0;
+}
+
 .project-detail-section {
   padding-bottom: 28px;
   border-bottom: 1px solid var(--border);
@@ -2937,6 +2941,10 @@ figcaption,
       transparent 54%
     ),
     color-mix(in oklch, var(--surface) 94%, var(--bg));
+}
+
+.project-markdown-body .harmony-lead-panel:first-child {
+  margin-top: 0;
 }
 
 .project-markdown-body .harmony-lead-panel p {
