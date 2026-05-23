@@ -23,13 +23,16 @@ const ProjectGrid = ({ projects }) => (
       const project = normalizeProject(rawProject);
 
       return (
-        <article className="project-card" key={project.key}>
+        <Link
+          className="project-card"
+          key={project.key}
+          to={project.slug}
+          aria-label={`${project.title} 상세 내용 보기`}
+        >
           <div className="project-card-header">
             <div>
               <div className="meta">{project.period}</div>
-              <h3>
-                <Link to={project.slug}>{project.title}</Link>
-              </h3>
+              <h3>{project.title}</h3>
             </div>
             <div className="project-metrics">
               {project.metrics.map((metric) => (
@@ -51,9 +54,9 @@ const ProjectGrid = ({ projects }) => (
             ))}
           </div>
           <div className="project-card-actions">
-            <Link to={project.slug}>상세 내용 보기 →</Link>
+            <span>상세 내용 보기 →</span>
           </div>
-        </article>
+        </Link>
       );
     })}
   </div>
