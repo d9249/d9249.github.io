@@ -2925,6 +2925,116 @@ figcaption,
   margin: 10px 0;
 }
 
+.project-markdown-body .harmony-lead-panel {
+  margin: 34px 0 42px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in oklch, var(--accent) 13%, transparent),
+      transparent 54%
+    ),
+    color-mix(in oklch, var(--surface) 94%, var(--bg));
+}
+
+.project-markdown-body .harmony-lead-panel p {
+  margin: 12px 0 0;
+}
+
+.project-markdown-body .harmony-kicker {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.project-markdown-body .harmony-feature-grid,
+.project-markdown-body .harmony-fact-grid {
+  display: grid;
+  gap: 14px;
+  margin: 28px 0;
+}
+
+.project-markdown-body .harmony-feature-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.project-markdown-body .harmony-fact-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.project-markdown-body .harmony-feature-card,
+.project-markdown-body .harmony-fact {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in oklch, var(--surface) 96%, var(--bg));
+}
+
+.project-markdown-body .harmony-feature-card h3,
+.project-markdown-body .harmony-fact strong {
+  display: block;
+  margin: 0 0 8px;
+  color: var(--fg);
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.project-markdown-body .harmony-feature-card p,
+.project-markdown-body .harmony-fact p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.project-markdown-body .harmony-diagram {
+  margin: 36px 0 42px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in oklch, var(--surface) 97%, var(--bg));
+}
+
+.project-markdown-body .harmony-diagram img {
+  width: 100%;
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.project-markdown-body .harmony-diagram figcaption {
+  margin: 12px 2px 0;
+  line-height: 1.55;
+}
+
+.project-markdown-body .harmony-flow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin: 28px 0;
+}
+
+.project-markdown-body .harmony-flow span {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in oklch, var(--accent) 8%, var(--surface));
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.45;
+  text-align: center;
+}
+
 .article-table-wrap {
   width: 100%;
   max-width: 100%;
@@ -3307,6 +3417,11 @@ figcaption,
 
   .project-grid {
     grid-template-columns: 1fr;
+  }
+
+  .project-markdown-body .harmony-fact-grid,
+  .project-markdown-body .harmony-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .evidence-grid,
@@ -3725,6 +3840,22 @@ figcaption,
 
   .article-body {
     font-size: 17px;
+  }
+
+  .project-markdown-body .harmony-lead-panel,
+  .project-markdown-body .harmony-feature-card,
+  .project-markdown-body .harmony-fact {
+    padding: 16px;
+  }
+
+  .project-markdown-body .harmony-feature-grid,
+  .project-markdown-body .harmony-fact-grid,
+  .project-markdown-body .harmony-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .project-markdown-body .harmony-diagram {
+    padding: 10px;
   }
 
   .article-body blockquote {

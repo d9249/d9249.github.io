@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Harmony Space and session scoped retrieval map</title>
+  <desc id="desc">Personal chat, Space chat, and voice meeting sessions each compose a different retrieval scope from shared corpus, personal documents, meeting artifacts, and user preferences.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="50%" stop-color="#f7fff9"/>
+      <stop offset="100%" stop-color="#fff9ef"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#1e2d35" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#435e70"/>
+    </marker>
+    <style>
+      .title { font: 800 35px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #101820; }
+      .sub { font: 500 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #536572; }
+      .eyebrow { font: 800 13px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0; text-transform: uppercase; fill: #068469; }
+      .box-title { font: 800 22px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #121a22; }
+      .box-text { font: 500 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5d68; }
+      .small { font: 800 13px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #596875; }
+      .panel { fill: #ffffff; stroke: #d9e3ea; stroke-width: 2; rx: 18; filter: url(#shadow); }
+      .soft { fill: #f8fbfd; stroke: #d9e3ea; stroke-width: 2; rx: 16; }
+      .green { fill: #eaf8ef; stroke: #9bd9b8; stroke-width: 2; rx: 16; }
+      .blue { fill: #edf6ff; stroke: #a5c9ed; stroke-width: 2; rx: 16; }
+      .amber { fill: #fff7e8; stroke: #e8c276; stroke-width: 2; rx: 16; }
+      .red { fill: #fff0ee; stroke: #e8aaa0; stroke-width: 2; rx: 16; }
+      .line { fill: none; stroke: #435e70; stroke-width: 3; marker-end: url(#arrow); }
+      .thin { fill: none; stroke: #92a3ae; stroke-width: 2; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <path d="M0 180 H1600 M0 360 H1600 M0 540 H1600 M0 720 H1600 M200 0 V900 M400 0 V900 M600 0 V900 M800 0 V900 M1000 0 V900 M1200 0 V900 M1400 0 V900" stroke="#dfe8ee" stroke-opacity="0.52" stroke-width="1"/>
+
+  <text x="70" y="76" class="eyebrow">Session Scope Map</text>
+  <text x="70" y="124" class="title">같은 질문도 개인 채팅, Space, 회의 세션에 따라 검색 범위가 다르게 합성된다</text>
+  <text x="70" y="158" class="sub">Session.channel과 Space policy가 personal 자료, 공유 corpus, 회의 산출물의 결합 방식을 결정한다</text>
+
+  <rect x="70" y="245" width="360" height="155" class="panel"/>
+  <text x="105" y="292" class="eyebrow">Personal Chat</text>
+  <text x="105" y="332" class="box-title">개인 업무 맥락</text>
+  <text x="105" y="368" class="box-text">현재 사용자 권한으로 볼 수 있는 공유 자료와</text>
+  <text x="105" y="392" class="box-text">owner-only 개인 업로드를 함께 검색한다.</text>
+
+  <rect x="70" y="465" width="360" height="155" class="panel"/>
+  <text x="105" y="512" class="eyebrow">Space Chat</text>
+  <text x="105" y="552" class="box-title">팀 협업 경계</text>
+  <text x="105" y="588" class="box-text">Space member가 접근 가능한 shared corpus와</text>
+  <text x="105" y="612" class="box-text">명시적으로 공유된 personal source만 합친다.</text>
+
+  <rect x="70" y="685" width="360" height="155" class="panel"/>
+  <text x="105" y="732" class="eyebrow">Voice Meeting</text>
+  <text x="105" y="772" class="box-title">회의 산출물 경계</text>
+  <text x="105" y="808" class="box-text">transcript와 post-meeting artifacts를 Space에</text>
+  <text x="105" y="832" class="box-text">연결해 이후 검색 근거로 편입한다.</text>
+
+  <rect x="560" y="285" width="440" height="450" class="panel"/>
+  <text x="600" y="335" class="eyebrow">Scope Composer</text>
+  <text x="600" y="378" class="box-title">SessionScopedRetrievalEngine</text>
+  <text x="600" y="416" class="box-text">요청마다 현재 user, session, Space role,</text>
+  <text x="600" y="440" class="box-text">knowledge mode를 읽어 검색 후보를 다시 만든다.</text>
+
+  <rect x="610" y="485" width="340" height="58" class="green"/>
+  <text x="638" y="520" class="small">shared corpus: team / tag / expiry / ACL</text>
+  <rect x="610" y="565" width="340" height="58" class="blue"/>
+  <text x="638" y="600" class="small">personal docs: owner-only 또는 Space 공유</text>
+  <rect x="610" y="645" width="340" height="58" class="amber"/>
+  <text x="638" y="680" class="small">meeting artifacts: linked meeting / participants</text>
+
+  <rect x="1130" y="245" width="395" height="115" class="green"/>
+  <text x="1165" y="288" class="box-title">Permission-aware PageIndex</text>
+  <text x="1165" y="322" class="box-text">허용 문서 후보를 먼저 계산하고 검색한다.</text>
+
+  <rect x="1130" y="410" width="395" height="115" class="blue"/>
+  <text x="1165" y="453" class="box-title">Citations and Tool Trace</text>
+  <text x="1165" y="487" class="box-text">어떤 근거와 도구로 답했는지 UI와 audit에 남긴다.</text>
+
+  <rect x="1130" y="575" width="395" height="115" class="amber"/>
+  <text x="1165" y="618" class="box-title">Shared Session Memory</text>
+  <text x="1165" y="652" class="box-text">Space 세션과 회의 링크를 다음 turn의 맥락으로 쓴다.</text>
+
+  <rect x="1130" y="740" width="395" height="80" class="red"/>
+  <text x="1165" y="785" class="box-title">Fail Closed Boundary</text>
+  <text x="1165" y="812" class="box-text">Space 로드 실패나 권한 없음은 검색 제외로 처리한다.</text>
+
+  <path class="line" d="M430 323 C485 323 500 390 560 410"/>
+  <path class="line" d="M430 543 C485 543 500 510 560 510"/>
+  <path class="line" d="M430 763 C485 763 500 640 560 640"/>
+  <path class="line" d="M1000 510 C1050 470 1078 302 1130 302"/>
+  <path class="line" d="M1000 552 C1050 540 1080 468 1130 468"/>
+  <path class="line" d="M1000 624 C1050 632 1080 632 1130 632"/>
+  <path class="line" d="M1000 690 C1050 725 1080 780 1130 780"/>
+
+  <path class="thin" d="M1328 690 C1215 735 1055 748 950 690"/>
+  <text x="1015" y="805" class="small">Space와 회의 산출물은 자동 공개가 아니라 policy와 role을 통과해야 한다</text>
+</svg>
