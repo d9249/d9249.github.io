@@ -24,7 +24,7 @@ details:
   - "페이지별 음성 나레이션, 이미지 저장, PDF 생성, SQLite 기반 갤러리/좋아요/조회수/다운로드 흐름을 하나의 앱으로 묶었습니다."
   - "첫 이미지의 seed와 스타일 가이드를 기준으로 나머지 페이지 이미지를 이어 생성하는 흐름을 구성했습니다."
 order: 52
-draft: false
+draft: true
 ---
 
 <section class="project-lead-panel">

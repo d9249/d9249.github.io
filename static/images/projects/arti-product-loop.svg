@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">arti AI storytelling product loop</title>
+  <desc id="desc">arti product flow from creative brief to story, scene prompt, image and voice generation, PDF, gallery, and shared AI services.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .line { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
+      .soft { fill: none; stroke: #94a3b8; stroke-width: 2.5; marker-end: url(#arrow); }
+      .node rect { fill: #fff7ed; stroke: #c2410c; stroke-width: 2.5; rx: 8; }
+      .model rect { fill: #eff6ff; stroke: #2563eb; }
+      .asset rect { fill: #f1f5f9; stroke: #334155; }
+      .service rect { fill: #faf5ff; stroke: #7c3aed; }
+      text { font-family: Inter, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; fill: #0f172a; }
+      .title { font-size: 28px; font-weight: 800; }
+      .label { font-size: 18px; font-weight: 800; }
+      .sub { font-size: 14px; font-weight: 600; fill: #475569; }
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="680"/>
+  <text class="title" x="60" y="58">arti AI Storytelling Product Loop</text>
+  <text class="sub" x="60" y="86">사용자 설정이 이야기, 이미지, 음성, PDF, 갤러리로 이어지는 흐름</text>
+
+  <g class="node" transform="translate(70 145)">
+    <rect width="210" height="116"/>
+    <text class="label" x="105" y="38" text-anchor="middle">
+      <tspan x="105" dy="0">Creative</tspan>
+      <tspan x="105" dy="26">Brief</tspan>
+    </text>
+    <text class="sub" x="105" y="88" text-anchor="middle">character / mood</text>
+  </g>
+
+  <g class="node model" transform="translate(350 145)">
+    <rect width="210" height="116"/>
+    <text class="label" x="105" y="38" text-anchor="middle">
+      <tspan x="105" dy="0">Story</tspan>
+      <tspan x="105" dy="26">Generation</tspan>
+    </text>
+    <text class="sub" x="105" y="88" text-anchor="middle">page narrative</text>
+  </g>
+
+  <g class="node model" transform="translate(630 145)">
+    <rect width="210" height="116"/>
+    <text class="label" x="105" y="38" text-anchor="middle">
+      <tspan x="105" dy="0">Scene</tspan>
+      <tspan x="105" dy="26">Prompt</tspan>
+    </text>
+    <text class="sub" x="105" y="88" text-anchor="middle">style continuity</text>
+  </g>
+
+  <g class="node model" transform="translate(910 145)">
+    <rect width="210" height="116"/>
+    <text class="label" x="105" y="38" text-anchor="middle">
+      <tspan x="105" dy="0">Image</tspan>
+      <tspan x="105" dy="26">and Voice</tspan>
+    </text>
+    <text class="sub" x="105" y="88" text-anchor="middle">illustration / TTS</text>
+  </g>
+
+  <g class="node asset" transform="translate(210 405)">
+    <rect width="220" height="116"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Book</tspan>
+      <tspan x="110" dy="26">Assets</tspan>
+    </text>
+    <text class="sub" x="110" y="88" text-anchor="middle">image / audio</text>
+  </g>
+
+  <g class="node asset" transform="translate(490 405)">
+    <rect width="220" height="116"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">PDF</tspan>
+      <tspan x="110" dy="26">Book</tspan>
+    </text>
+    <text class="sub" x="110" y="88" text-anchor="middle">download artifact</text>
+  </g>
+
+  <g class="node asset" transform="translate(770 405)">
+    <rect width="220" height="116"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Gallery</tspan>
+      <tspan x="110" dy="26">Experience</tspan>
+    </text>
+    <text class="sub" x="110" y="88" text-anchor="middle">read / like / view</text>
+  </g>
+
+  <g class="node service" transform="translate(480 565)">
+    <rect width="240" height="82"/>
+    <text class="label" x="120" y="34" text-anchor="middle">
+      <tspan x="120" dy="0">Shared AI Service</tspan>
+    </text>
+    <text class="sub" x="120" y="61" text-anchor="middle">API / workflow / queue</text>
+  </g>
+
+  <path class="line" d="M280 203 H350"/>
+  <path class="line" d="M560 203 H630"/>
+  <path class="line" d="M840 203 H910"/>
+  <path class="line" d="M1015 261 V326 H320 V405"/>
+  <path class="line" d="M430 463 H490"/>
+  <path class="line" d="M710 463 H770"/>
+  <path class="soft" d="M880 521 V606 H720"/>
+  <path class="soft" d="M480 606 H320 V521"/>
+  <path class="soft" d="M600 565 V521"/>
+
+  <text class="sub" x="60" y="666">창작 결과가 파일과 metadata로 남기 때문에 사용자는 생성 후에도 책을 다시 읽고 다운로드할 수 있습니다.</text>
+</svg>

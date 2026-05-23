@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">booxTory AI reading product loop</title>
+  <desc id="desc">booxTory product flow from book page input to OCR, personal store, hybrid retrieval, LLM answer, and learning outputs.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .line { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
+      .soft { fill: none; stroke: #94a3b8; stroke-width: 2.5; marker-end: url(#arrow); }
+      .node rect { fill: #ffffff; stroke: #2563eb; stroke-width: 2.5; rx: 8; }
+      .store rect { stroke: #0f766e; fill: #ecfdf5; }
+      .model rect { stroke: #7c3aed; fill: #faf5ff; }
+      .output rect { stroke: #c2410c; fill: #fff7ed; }
+      text { font-family: Inter, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; fill: #0f172a; }
+      .title { font-size: 28px; font-weight: 800; }
+      .label { font-size: 18px; font-weight: 800; }
+      .sub { font-size: 14px; font-weight: 600; fill: #475569; }
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="680"/>
+  <text class="title" x="60" y="58">booxTory AI Reading Product Loop</text>
+  <text class="sub" x="60" y="86">책 페이지가 독서 질문, 음성, 퀴즈, 추천으로 이어지는 흐름</text>
+
+  <g class="node" transform="translate(60 148)">
+    <rect width="210" height="116"/>
+    <text class="label" x="105" y="38" text-anchor="middle">
+      <tspan x="105" dy="0">Book Page</tspan>
+      <tspan x="105" dy="26">Input</tspan>
+    </text>
+    <text class="sub" x="105" y="88" text-anchor="middle">image / PDF</text>
+  </g>
+
+  <g class="node" transform="translate(330 148)">
+    <rect width="210" height="116"/>
+    <text class="label" x="105" y="38" text-anchor="middle">
+      <tspan x="105" dy="0">OCR / Layout</tspan>
+      <tspan x="105" dy="26">Analysis</tspan>
+    </text>
+    <text class="sub" x="105" y="88" text-anchor="middle">text, box, order</text>
+  </g>
+
+  <g class="node store" transform="translate(600 148)">
+    <rect width="220" height="116"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Personal</tspan>
+      <tspan x="110" dy="26">Book Store</tspan>
+    </text>
+    <text class="sub" x="110" y="88" text-anchor="middle">user / book / page</text>
+  </g>
+
+  <g class="node model" transform="translate(890 148)">
+    <rect width="230" height="116"/>
+    <text class="label" x="115" y="38" text-anchor="middle">
+      <tspan x="115" dy="0">Hybrid</tspan>
+      <tspan x="115" dy="26">Retrieval</tspan>
+    </text>
+    <text class="sub" x="115" y="88" text-anchor="middle">vector + keyword</text>
+  </g>
+
+  <g class="node model" transform="translate(890 390)">
+    <rect width="230" height="116"/>
+    <text class="label" x="115" y="38" text-anchor="middle">
+      <tspan x="115" dy="0">Reading</tspan>
+      <tspan x="115" dy="26">Answer</tspan>
+    </text>
+    <text class="sub" x="115" y="88" text-anchor="middle">LLM response</text>
+  </g>
+
+  <g class="node store" transform="translate(600 390)">
+    <rect width="220" height="116"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Chat</tspan>
+      <tspan x="110" dy="26">Memory</tspan>
+    </text>
+    <text class="sub" x="110" y="88" text-anchor="middle">question history</text>
+  </g>
+
+  <g class="node output" transform="translate(178 390)">
+    <rect width="270" height="116"/>
+    <text class="label" x="135" y="38" text-anchor="middle">
+      <tspan x="135" dy="0">Learning</tspan>
+      <tspan x="135" dy="26">Outputs</tspan>
+    </text>
+    <text class="sub" x="135" y="88" text-anchor="middle">TTS / quiz / summary</text>
+  </g>
+
+  <path class="line" d="M270 206 H330"/>
+  <path class="line" d="M540 206 H600"/>
+  <path class="line" d="M820 206 H890"/>
+  <path class="line" d="M1005 264 V390"/>
+  <path class="soft" d="M890 448 H820"/>
+  <path class="soft" d="M710 390 V264"/>
+  <path class="line" d="M890 448 H448"/>
+  <path class="soft" d="M313 390 V326 H600"/>
+
+  <text class="sub" x="60" y="606">사용자는 질문하고 답을 듣지만, 내부 흐름은 책 페이지 인식, 사용자별 저장, 검색, 답변, 학습 콘텐츠 생성으로 나뉩니다.</text>
+</svg>

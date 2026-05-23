@@ -24,7 +24,7 @@ details:
   - "Kafka utility는 service registry와 factory를 통해 서비스별 consumer/producer 중복을 줄이고 새 기능 등록을 단순화합니다."
   - "books, pages, contents schema는 OCR text, background, sound, content URL 같은 AI 처리 결과를 제품 데이터로 저장하는 형태입니다."
 order: 55
-draft: false
+draft: true
 ---
 
 <section class="project-lead-panel">

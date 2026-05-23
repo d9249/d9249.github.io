@@ -24,7 +24,7 @@ details:
   - "상황, 환경, 감정, 행동 조합을 생성하고 BGE-M3 embedding으로 Qdrant 컬렉션을 구성해 효과음 검색 후보를 만들었습니다."
   - "배경음악 데이터셋은 분위기와 상황 요소 조합으로 파일명, 설명, 생성형 AI 프롬프트를 만드는 방식으로 확장했습니다."
 order: 54
-draft: false
+draft: true
 ---
 
 <section class="project-lead-panel">

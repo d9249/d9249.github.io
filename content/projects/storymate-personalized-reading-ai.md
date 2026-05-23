@@ -24,7 +24,7 @@ details:
   - "채팅 전용 메모리 컬렉션을 별도로 두어 이전 대화를 벡터 기반 맥락으로 검색하도록 설계했습니다."
   - "TTS, 맞춤법, 사운드, 퀴즈, 가사, 번역, 요약, 추천 질문, 이미지 기반 문제 풀이 API를 독서 경험 엔진으로 확장했습니다."
 order: 51
-draft: false
+draft: true
 ---
 
 <section class="project-lead-panel">

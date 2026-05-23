@@ -24,7 +24,7 @@ details:
   - "GroundingDINO 모델은 endpoint inference, box filtering/merging, annotated image, YOLO JSON 생성, endpoint test script로 배포 실험이 진행되었습니다."
   - "모델 실험을 API, endpoint, annotation artifact, 배포 스크립트까지 이어지는 제품형 pipeline으로 정리했습니다."
 order: 53
-draft: false
+draft: true
 ---
 
 <section class="project-lead-panel">
