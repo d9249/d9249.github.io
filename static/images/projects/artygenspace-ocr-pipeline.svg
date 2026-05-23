@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">ArtygenSpace OCR and layout analysis pipeline</title>
+  <desc id="desc">OCR pipeline with image/PDF input, detection, crop preprocessing, OCR, layout JSON, and downstream AI workflow.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .line { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
+      .soft { fill: none; stroke: #94a3b8; stroke-width: 2.5; marker-end: url(#arrow); }
+      .node rect { fill: #ffffff; stroke: #7c3aed; stroke-width: 2.5; rx: 8; }
+      .input rect { fill: #f1f5f9; stroke: #334155; }
+      .out rect { fill: #ecfdf5; stroke: #0f766e; }
+      .title { font: 800 28px Inter, "Apple SD Gothic Neo", sans-serif; fill: #0f172a; }
+      .label { font: 800 18px Inter, "Apple SD Gothic Neo", sans-serif; fill: #0f172a; }
+      .sub { font: 600 14px Inter, "Apple SD Gothic Neo", sans-serif; fill: #475569; }
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="680"/>
+  <text class="title" x="60" y="58">Document OCR and Layout Analysis Pipeline</text>
+  <text class="sub" x="60" y="86">이미지와 PDF를 텍스트, 영역, 좌표, 검수 artifact로 변환</text>
+
+  <g class="node input" transform="translate(60 150)">
+    <rect width="205" height="112"/>
+    <text class="label" x="102" y="38" text-anchor="middle">
+      <tspan x="102" dy="0">Image / PDF</tspan>
+      <tspan x="102" dy="26">page input</tspan>
+    </text>
+    <text class="sub" x="102" y="86" text-anchor="middle">업로드와 렌더링</text>
+  </g>
+  <g class="node" transform="translate(325 150)">
+    <rect width="205" height="112"/>
+    <text class="label" x="102" y="38" text-anchor="middle">
+      <tspan x="102" dy="0">Detection</tspan>
+      <tspan x="102" dy="26">text region</tspan>
+    </text>
+    <text class="sub" x="102" y="86" text-anchor="middle">GroundingDINO</text>
+  </g>
+  <g class="node" transform="translate(590 150)">
+    <rect width="205" height="112"/>
+    <text class="label" x="102" y="38" text-anchor="middle">
+      <tspan x="102" dy="0">Crop Clean</tspan>
+      <tspan x="102" dy="26">preprocess</tspan>
+    </text>
+    <text class="sub" x="102" y="86" text-anchor="middle">CLAHE, denoise</text>
+  </g>
+  <g class="node" transform="translate(855 150)">
+    <rect width="205" height="112"/>
+    <text class="label" x="102" y="38" text-anchor="middle">
+      <tspan x="102" dy="0">OCR / Layout</tspan>
+      <tspan x="102" dy="26">recognition</tspan>
+    </text>
+    <text class="sub" x="102" y="86" text-anchor="middle">Vision / Surya</text>
+  </g>
+
+  <g class="node out" transform="translate(214 410)">
+    <rect width="220" height="118"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Text Lines</tspan>
+      <tspan x="110" dy="26">bbox / confidence</tspan>
+    </text>
+    <text class="sub" x="110" y="90" text-anchor="middle">인식 결과</text>
+  </g>
+  <g class="node out" transform="translate(490 410)">
+    <rect width="220" height="118"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Layout JSON</tspan>
+      <tspan x="110" dy="26">title/table/figure</tspan>
+    </text>
+    <text class="sub" x="110" y="90" text-anchor="middle">문서 구조</text>
+  </g>
+  <g class="node out" transform="translate(766 410)">
+    <rect width="220" height="118"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Artifacts</tspan>
+      <tspan x="110" dy="26">annotated/crop</tspan>
+    </text>
+    <text class="sub" x="110" y="90" text-anchor="middle">검수와 저장</text>
+  </g>
+
+  <path class="line" d="M265 206 H325"/>
+  <path class="line" d="M530 206 H590"/>
+  <path class="line" d="M795 206 H855"/>
+  <path class="line" d="M958 262 V332 H324 V410"/>
+  <path class="line" d="M958 332 H600 V410"/>
+  <path class="line" d="M958 332 H876 V410"/>
+  <path class="soft" d="M600 528 V584 H1060"/>
+  <text class="sub" x="832" y="590">후속 단계: 교정, 번역, 퀴즈, TTS, 사운드 추천</text>
+</svg>

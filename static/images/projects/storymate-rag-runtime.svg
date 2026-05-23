@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">StoryMate personalized reading AI runtime</title>
+  <desc id="desc">StoryMate runtime showing page upload, user document collection, hybrid retrieval, LLM response, and vector memory.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .line { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
+      .soft { fill: none; stroke: #94a3b8; stroke-width: 2.5; marker-end: url(#arrow); }
+      .node rect { fill: #ffffff; stroke: #2563eb; stroke-width: 2.5; rx: 8; }
+      .store rect { stroke: #0f766e; fill: #ecfdf5; }
+      .model rect { stroke: #7c3aed; fill: #faf5ff; }
+      .title { font: 800 28px Inter, "Apple SD Gothic Neo", sans-serif; fill: #0f172a; }
+      .label { font: 800 18px Inter, "Apple SD Gothic Neo", sans-serif; fill: #0f172a; }
+      .sub { font: 600 14px Inter, "Apple SD Gothic Neo", sans-serif; fill: #475569; }
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="680"/>
+  <text class="title" x="60" y="58">StoryMate Personalized Reading AI Runtime</text>
+  <text class="sub" x="60" y="86">사용자별 문서 컬렉션과 채팅 메모리를 분리한 RAG 실행 흐름</text>
+
+  <g class="node" transform="translate(60 145)">
+    <rect width="210" height="112"/>
+    <text class="label" x="105" y="38" text-anchor="middle">
+      <tspan x="105" dy="0">Page Upload</tspan>
+      <tspan x="105" dy="26">book/page</tspan>
+    </text>
+    <text class="sub" x="105" y="86" text-anchor="middle">user_id 기반 입력</text>
+  </g>
+  <g class="node" transform="translate(332 145)">
+    <rect width="210" height="112"/>
+    <text class="label" x="105" y="38" text-anchor="middle">
+      <tspan x="105" dy="0">Chunk Builder</tspan>
+      <tspan x="105" dy="26">metadata</tspan>
+    </text>
+    <text class="sub" x="105" y="86" text-anchor="middle">page order 보존</text>
+  </g>
+  <g class="node store" transform="translate(604 145)">
+    <rect width="230" height="112"/>
+    <text class="label" x="115" y="38" text-anchor="middle">
+      <tspan x="115" dy="0">User Document</tspan>
+      <tspan x="115" dy="26">Collection</tspan>
+    </text>
+    <text class="sub" x="115" y="86" text-anchor="middle">Qdrant 격리 저장</text>
+  </g>
+  <g class="node store" transform="translate(604 395)">
+    <rect width="230" height="112"/>
+    <text class="label" x="115" y="38" text-anchor="middle">
+      <tspan x="115" dy="0">Chat Memory</tspan>
+      <tspan x="115" dy="26">Collection</tspan>
+    </text>
+    <text class="sub" x="115" y="86" text-anchor="middle">이전 대화 검색</text>
+  </g>
+  <g class="node" transform="translate(900 145)">
+    <rect width="230" height="112"/>
+    <text class="label" x="115" y="38" text-anchor="middle">
+      <tspan x="115" dy="0">Hybrid Search</tspan>
+      <tspan x="115" dy="26">Vector + BM25</tspan>
+    </text>
+    <text class="sub" x="115" y="86" text-anchor="middle">Ensemble retriever</text>
+  </g>
+  <g class="node model" transform="translate(900 395)">
+    <rect width="230" height="112"/>
+    <text class="label" x="115" y="38" text-anchor="middle">
+      <tspan x="115" dy="0">LLM Answer</tspan>
+      <tspan x="115" dy="26">OpenAI/Gemini</tspan>
+    </text>
+    <text class="sub" x="115" y="86" text-anchor="middle">답변과 메모리 저장</text>
+  </g>
+
+  <path class="line" d="M270 201 H332"/>
+  <path class="line" d="M542 201 H604"/>
+  <path class="line" d="M834 201 H900"/>
+  <path class="line" d="M1015 257 V395"/>
+  <path class="soft" d="M900 451 H834"/>
+  <path class="soft" d="M719 395 V257"/>
+  <path class="soft" d="M834 451 C875 451 875 201 900 201"/>
+  <text class="sub" x="128" y="330">문서와 채팅은 서로 다른 컬렉션으로 저장되지만, 답변 생성 시 현재 사용자 맥락에서 함께 활용됩니다.</text>
+</svg>

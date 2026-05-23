@@ -1040,12 +1040,18 @@ h3 {
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr) auto auto auto;
   gap: 18px;
+  min-width: 0;
   padding: 24px;
+  box-sizing: border-box;
   color: inherit;
   text-decoration: none;
   transition:
     border-color 160ms ease,
     transform 160ms ease;
+}
+
+.project-card > * {
+  min-width: 0;
 }
 
 .project-card:hover,
@@ -1063,6 +1069,7 @@ h3 {
   font-size: clamp(23px, 2.5vw, 34px);
   line-height: 1.08;
   text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .project-title {
@@ -1073,6 +1080,8 @@ h3 {
 .project-title-name,
 .project-title-tagline {
   display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .project-title-tagline {
@@ -1098,6 +1107,7 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  min-width: 0;
 }
 
 .metric-chip,
@@ -1115,6 +1125,7 @@ h3 {
   font-size: 11px;
   line-height: 1.2;
   white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .metric-chip {
@@ -1127,10 +1138,19 @@ h3 {
   display: grid;
   align-content: start;
   gap: 9px;
+  min-width: 0;
+  max-width: 100%;
   margin: 0;
   padding-left: 18px;
   color: var(--muted);
   font-size: 14px;
+}
+
+.project-details li {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .project-details li::marker {
@@ -1181,6 +1201,10 @@ h3 {
   align-items: end;
 }
 
+.project-detail-hero-grid > * {
+  min-width: 0;
+}
+
 .project-detail-hero h1 {
   max-width: 920px;
   font-size: clamp(44px, 6vw, 82px);
@@ -1191,11 +1215,14 @@ h3 {
 .project-detail-title {
   display: grid;
   gap: 12px;
+  min-width: 0;
 }
 
 .project-detail-title-name,
 .project-detail-title-tagline {
   display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .project-detail-title-tagline {
@@ -1207,17 +1234,21 @@ h3 {
 }
 
 .project-detail-copy {
-  max-width: 760px;
+  width: 100%;
+  max-width: min(760px, 100%);
   margin: 22px 0;
   color: var(--muted);
   font-size: clamp(18px, 2vw, 22px);
   line-height: 1.55;
   text-wrap: pretty;
+  overflow-wrap: anywhere;
 }
 
 .project-detail-facts {
   display: grid;
   gap: 1px;
+  min-width: 0;
+  max-width: 100%;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -1227,6 +1258,7 @@ h3 {
 .project-detail-facts div {
   display: grid;
   gap: 8px;
+  min-width: 0;
   padding: 18px;
   background: color-mix(in oklch, var(--surface) 92%, var(--bg));
 }
@@ -1243,6 +1275,8 @@ h3 {
   color: var(--fg);
   font-size: 15px;
   line-height: 1.35;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .project-detail-body {

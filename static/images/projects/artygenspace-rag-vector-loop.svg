@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">ArtygenSpace RAG and vector intelligence loop</title>
+  <desc id="desc">RAG and vector search flow from source documents and multimedia assets to embeddings, vector stores, search, and generated answers.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .line { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
+      .soft { fill: none; stroke: #94a3b8; stroke-width: 2.5; marker-end: url(#arrow); }
+      .node rect { fill: #ffffff; stroke: #0f766e; stroke-width: 2.5; rx: 8; }
+      .doc rect { fill: #eff6ff; stroke: #2563eb; }
+      .media rect { fill: #fff7ed; stroke: #c2410c; }
+      .out rect { fill: #f1f5f9; stroke: #334155; }
+      .title { font: 800 28px Inter, "Apple SD Gothic Neo", sans-serif; fill: #0f172a; }
+      .label { font: 800 18px Inter, "Apple SD Gothic Neo", sans-serif; fill: #0f172a; }
+      .sub { font: 600 14px Inter, "Apple SD Gothic Neo", sans-serif; fill: #475569; }
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="680"/>
+  <text class="title" x="60" y="58">RAG and Vector Intelligence Loop</text>
+  <text class="sub" x="60" y="86">문서 답변과 멀티미디어 추천을 같은 검색 설계로 다루기</text>
+
+  <g class="node doc" transform="translate(80 135)">
+    <rect width="220" height="112"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Report PDF</tspan>
+      <tspan x="110" dy="26">콘텐츠 백서</tspan>
+    </text>
+    <text class="sub" x="110" y="86" text-anchor="middle">문서 RAG 입력</text>
+  </g>
+  <g class="node media" transform="translate(80 405)">
+    <rect width="220" height="112"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Sound Assets</tspan>
+      <tspan x="110" dy="26">효과음/BGM</tspan>
+    </text>
+    <text class="sub" x="110" y="86" text-anchor="middle">추천 검색 입력</text>
+  </g>
+  <g class="node" transform="translate(382 135)">
+    <rect width="220" height="112"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Chunk / Prompt</tspan>
+      <tspan x="110" dy="26">근거 문서</tspan>
+    </text>
+    <text class="sub" x="110" y="86" text-anchor="middle">FAISS RAG</text>
+  </g>
+  <g class="node" transform="translate(382 405)">
+    <rect width="220" height="112"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Metadata</tspan>
+      <tspan x="110" dy="26">상황/감정</tspan>
+    </text>
+    <text class="sub" x="110" y="86" text-anchor="middle">payload 생성</text>
+  </g>
+  <g class="node" transform="translate(690 270)">
+    <rect width="230" height="120"/>
+    <text class="label" x="115" y="40" text-anchor="middle">
+      <tspan x="115" dy="0">Embedding</tspan>
+      <tspan x="115" dy="28">Vector Store</tspan>
+    </text>
+    <text class="sub" x="115" y="92" text-anchor="middle">FAISS / Qdrant</text>
+  </g>
+  <g class="node out" transform="translate(990 135)">
+    <rect width="160" height="112"/>
+    <text class="label" x="80" y="38" text-anchor="middle">
+      <tspan x="80" dy="0">Answer</tspan>
+      <tspan x="80" dy="26">with source</tspan>
+    </text>
+    <text class="sub" x="80" y="86" text-anchor="middle">보고서 응답</text>
+  </g>
+  <g class="node out" transform="translate(990 405)">
+    <rect width="160" height="112"/>
+    <text class="label" x="80" y="38" text-anchor="middle">
+      <tspan x="80" dy="0">Search</tspan>
+      <tspan x="80" dy="26">candidates</tspan>
+    </text>
+    <text class="sub" x="80" y="86" text-anchor="middle">추천 후보</text>
+  </g>
+
+  <path class="line" d="M300 191 H382"/>
+  <path class="line" d="M300 461 H382"/>
+  <path class="line" d="M602 191 H650 V300 H690"/>
+  <path class="line" d="M602 461 H650 V360 H690"/>
+  <path class="line" d="M920 300 H960 V191 H990"/>
+  <path class="line" d="M920 360 H960 V461 H990"/>
+  <path class="soft" d="M190 517 V590 H1070 V517"/>
+  <text class="sub" x="423" y="620">검색 결과는 다시 prompt, metadata, asset catalog를 개선하는 피드백이 됩니다.</text>
+</svg>

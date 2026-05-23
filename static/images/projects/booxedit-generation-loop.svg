@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">Booxedit storybook generation loop</title>
+  <desc id="desc">Booxedit workflow from user story brief to generated story, image, narration, PDF, and gallery.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .line { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
+      .soft { fill: none; stroke: #94a3b8; stroke-width: 2.5; marker-end: url(#arrow); }
+      .node rect { fill: #fff7ed; stroke: #c2410c; stroke-width: 2.5; rx: 8; }
+      .asset rect { fill: #f1f5f9; stroke: #334155; }
+      .model rect { fill: #eff6ff; stroke: #2563eb; }
+      .title { font: 800 28px Inter, "Apple SD Gothic Neo", sans-serif; fill: #0f172a; }
+      .label { font: 800 18px Inter, "Apple SD Gothic Neo", sans-serif; fill: #0f172a; }
+      .sub { font: 600 14px Inter, "Apple SD Gothic Neo", sans-serif; fill: #475569; }
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="680"/>
+  <text class="title" x="60" y="58">Booxedit Storybook Generation Loop</text>
+  <text class="sub" x="60" y="86">글, 이미지, 음성, PDF, 갤러리까지 이어지는 창작 workflow</text>
+
+  <g class="node" transform="translate(70 150)">
+    <rect width="210" height="116"/>
+    <text class="label" x="105" y="38" text-anchor="middle">
+      <tspan x="105" dy="0">Story Brief</tspan>
+      <tspan x="105" dy="26">사용자 입력</tspan>
+    </text>
+    <text class="sub" x="105" y="88" text-anchor="middle">주인공, 분위기, 배경</text>
+  </g>
+  <g class="node model" transform="translate(350 150)">
+    <rect width="210" height="116"/>
+    <text class="label" x="105" y="38" text-anchor="middle">
+      <tspan x="105" dy="0">Page Story</tspan>
+      <tspan x="105" dy="26">GPT 작성</tspan>
+    </text>
+    <text class="sub" x="105" y="88" text-anchor="middle">페이지 수 보정</text>
+  </g>
+  <g class="node model" transform="translate(630 150)">
+    <rect width="210" height="116"/>
+    <text class="label" x="105" y="38" text-anchor="middle">
+      <tspan x="105" dy="0">Scene Prompt</tspan>
+      <tspan x="105" dy="26">스타일 가이드</tspan>
+    </text>
+    <text class="sub" x="105" y="88" text-anchor="middle">seed와 캐릭터 유지</text>
+  </g>
+  <g class="node model" transform="translate(910 150)">
+    <rect width="210" height="116"/>
+    <text class="label" x="105" y="38" text-anchor="middle">
+      <tspan x="105" dy="0">Image / TTS</tspan>
+      <tspan x="105" dy="26">페이지 생성</tspan>
+    </text>
+    <text class="sub" x="105" y="88" text-anchor="middle">일러스트와 음성</text>
+  </g>
+
+  <g class="node asset" transform="translate(230 415)">
+    <rect width="220" height="112"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Local Assets</tspan>
+      <tspan x="110" dy="26">images/audio</tspan>
+    </text>
+    <text class="sub" x="110" y="86" text-anchor="middle">파일로 저장</text>
+  </g>
+  <g class="node asset" transform="translate(490 415)">
+    <rect width="220" height="112"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">PDF Book</tspan>
+      <tspan x="110" dy="26">다운로드</tspan>
+    </text>
+    <text class="sub" x="110" y="86" text-anchor="middle">텍스트와 이미지 조판</text>
+  </g>
+  <g class="node asset" transform="translate(750 415)">
+    <rect width="220" height="112"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Gallery</tspan>
+      <tspan x="110" dy="26">SQLite 기록</tspan>
+    </text>
+    <text class="sub" x="110" y="86" text-anchor="middle">좋아요, 조회, 읽기</text>
+  </g>
+
+  <path class="line" d="M280 208 H350"/>
+  <path class="line" d="M560 208 H630"/>
+  <path class="line" d="M840 208 H910"/>
+  <path class="line" d="M1015 266 V330 H340 V415"/>
+  <path class="line" d="M450 471 H490"/>
+  <path class="line" d="M710 471 H750"/>
+  <path class="soft" d="M860 527 V575 H175 V266"/>
+  <text class="sub" x="222" y="606">갤러리에서 다시 읽는 행동은 다음 책 생성과 편집 판단으로 되돌아갑니다.</text>
+</svg>

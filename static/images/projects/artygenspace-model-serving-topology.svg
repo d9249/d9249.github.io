@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">ArtygenSpace model serving platform topology</title>
+  <desc id="desc">Model serving topology with product client, API routers, workflow and queue layer, model services, and product database.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .line { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
+      .soft { fill: none; stroke: #94a3b8; stroke-width: 2.5; marker-end: url(#arrow); }
+      .node rect { fill: #ffffff; stroke: #be123c; stroke-width: 2.5; rx: 8; }
+      .api rect { fill: #eff6ff; stroke: #2563eb; }
+      .queue rect { fill: #fff7ed; stroke: #c2410c; }
+      .data rect { fill: #ecfdf5; stroke: #0f766e; }
+      .title { font: 800 28px Inter, "Apple SD Gothic Neo", sans-serif; fill: #0f172a; }
+      .label { font: 800 18px Inter, "Apple SD Gothic Neo", sans-serif; fill: #0f172a; }
+      .sub { font: 600 14px Inter, "Apple SD Gothic Neo", sans-serif; fill: #475569; }
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="680"/>
+  <text class="title" x="60" y="58">Model Serving Platform Topology</text>
+  <text class="sub" x="60" y="86">AI 기능을 API, workflow, queue, schema로 묶은 운영 경계</text>
+
+  <g class="node" transform="translate(70 290)">
+    <rect width="190" height="112"/>
+    <text class="label" x="95" y="38" text-anchor="middle">
+      <tspan x="95" dy="0">Product</tspan>
+      <tspan x="95" dy="26">Client</tspan>
+    </text>
+    <text class="sub" x="95" y="86" text-anchor="middle">책/페이지 요청</text>
+  </g>
+
+  <g class="node api" transform="translate(340 120)">
+    <rect width="220" height="104"/>
+    <text class="label" x="110" y="36" text-anchor="middle">
+      <tspan x="110" dy="0">Agent API</tspan>
+      <tspan x="110" dy="25">workflow</tspan>
+    </text>
+    <text class="sub" x="110" y="82" text-anchor="middle">OCR, Sound, Quiz</text>
+  </g>
+  <g class="node api" transform="translate(340 290)">
+    <rect width="220" height="104"/>
+    <text class="label" x="110" y="36" text-anchor="middle">
+      <tspan x="110" dy="0">Language API</tspan>
+      <tspan x="110" dy="25">single task</tspan>
+    </text>
+    <text class="sub" x="110" y="82" text-anchor="middle">OCR, Cover, Effect</text>
+  </g>
+  <g class="node api" transform="translate(340 460)">
+    <rect width="220" height="104"/>
+    <text class="label" x="110" y="36" text-anchor="middle">
+      <tspan x="110" dy="0">Voice API</tspan>
+      <tspan x="110" dy="25">audio task</tspan>
+    </text>
+    <text class="sub" x="110" y="82" text-anchor="middle">TTS, BGM, Song</text>
+  </g>
+
+  <g class="node queue" transform="translate(650 220)">
+    <rect width="220" height="112"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Workflow</tspan>
+      <tspan x="110" dy="26">LangGraph</tspan>
+    </text>
+    <text class="sub" x="110" y="86" text-anchor="middle">순차/병렬 조합</text>
+  </g>
+  <g class="node queue" transform="translate(650 385)">
+    <rect width="220" height="112"/>
+    <text class="label" x="110" y="38" text-anchor="middle">
+      <tspan x="110" dy="0">Kafka</tspan>
+      <tspan x="110" dy="26">Registry</tspan>
+    </text>
+    <text class="sub" x="110" y="86" text-anchor="middle">service 등록</text>
+  </g>
+
+  <g class="node" transform="translate(960 120)">
+    <rect width="180" height="104"/>
+    <text class="label" x="90" y="36" text-anchor="middle">
+      <tspan x="90" dy="0">Model</tspan>
+      <tspan x="90" dy="25">Services</tspan>
+    </text>
+    <text class="sub" x="90" y="82" text-anchor="middle">LLM/OCR/TTS</text>
+  </g>
+  <g class="node data" transform="translate(960 460)">
+    <rect width="180" height="104"/>
+    <text class="label" x="90" y="36" text-anchor="middle">
+      <tspan x="90" dy="0">Product DB</tspan>
+      <tspan x="90" dy="25">book/page</tspan>
+    </text>
+    <text class="sub" x="90" y="82" text-anchor="middle">contents 결과</text>
+  </g>
+
+  <path class="line" d="M260 346 H340"/>
+  <path class="soft" d="M300 346 V172 H340"/>
+  <path class="soft" d="M300 346 V512 H340"/>
+  <path class="line" d="M560 172 H610 V276 H650"/>
+  <path class="line" d="M560 342 H650"/>
+  <path class="line" d="M560 512 H610 V441 H650"/>
+  <path class="line" d="M870 276 H920 V172 H960"/>
+  <path class="line" d="M870 441 H920 V512 H960"/>
+  <path class="soft" d="M1050 224 V460"/>
+  <text class="sub" x="64" y="620">운영 포인트: API prefix, request model, workflow, queue, schema가 함께 맞아야 AI 기능이 제품에서 안정적으로 호출됩니다.</text>
+</svg>

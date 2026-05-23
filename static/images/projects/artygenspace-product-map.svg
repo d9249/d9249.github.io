@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">ArtygenSpace AI product research portfolio map</title>
+  <desc id="desc">Portfolio map connecting booxTory and arti outcomes to five AI product research tracks.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .bus { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
+      .line { fill: none; stroke: #64748b; stroke-width: 2.5; marker-end: url(#arrow); }
+      .node rect { fill: #ffffff; stroke-width: 2.5; rx: 8; }
+      .hub rect { stroke: #0f766e; fill: #ecfdf5; }
+      .story rect { stroke: #2563eb; }
+      .book rect { stroke: #c2410c; }
+      .ocr rect { stroke: #7c3aed; }
+      .rag rect { stroke: #0f766e; }
+      .ops rect { stroke: #be123c; }
+      .out rect { stroke: #334155; fill: #f1f5f9; }
+      text { font-family: Inter, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; fill: #0f172a; }
+      .title { font-size: 28px; font-weight: 800; }
+      .label { font-size: 18px; font-weight: 800; }
+      .sub { font-size: 14px; font-weight: 600; fill: #475569; }
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1200" height="680"/>
+  <text class="title" x="60" y="58">ArtygenSpace AI Product Research Portfolio</text>
+  <text class="sub" x="60" y="86">제품 성과를 만든 다섯 가지 연구와 엔지니어링 축</text>
+
+  <g class="node hub" transform="translate(455 80)">
+    <rect width="290" height="116"/>
+    <text class="label" x="145" y="36" text-anchor="middle">
+      <tspan x="145" dy="0">booxTory / arti</tspan>
+      <tspan x="145" dy="28">제품 성과</tspan>
+    </text>
+    <text class="sub" x="145" y="92" text-anchor="middle">CES 2025 기반 허브</text>
+  </g>
+
+  <path class="bus" d="M600 196 V260"/>
+  <path class="line" d="M600 260 H178 V308"/>
+  <path class="line" d="M600 260 H389 V308"/>
+  <path class="line" d="M600 260 V308"/>
+  <path class="line" d="M600 260 H811 V308"/>
+  <path class="line" d="M600 260 H1022 V308"/>
+
+  <g class="node story" transform="translate(70 308)">
+    <rect width="216" height="132"/>
+    <text class="label" x="108" y="38" text-anchor="middle">
+      <tspan x="108" dy="0">StoryMate</tspan>
+      <tspan x="108" dy="28">독서 AI</tspan>
+    </text>
+    <text class="sub" x="108" y="92" text-anchor="middle">
+      <tspan x="108" dy="0">개인 문서 RAG</tspan>
+      <tspan x="108" dy="22">TTS / Quiz</tspan>
+    </text>
+  </g>
+
+  <g class="node book" transform="translate(281 308)">
+    <rect width="216" height="132"/>
+    <text class="label" x="108" y="38" text-anchor="middle">
+      <tspan x="108" dy="0">Booxedit</tspan>
+      <tspan x="108" dy="28">동화책 생성</tspan>
+    </text>
+    <text class="sub" x="108" y="92" text-anchor="middle">
+      <tspan x="108" dy="0">스토리 / 이미지</tspan>
+      <tspan x="108" dy="22">음성 / PDF</tspan>
+    </text>
+  </g>
+
+  <g class="node ocr" transform="translate(492 308)">
+    <rect width="216" height="132"/>
+    <text class="label" x="108" y="38" text-anchor="middle">
+      <tspan x="108" dy="0">OCR Engine</tspan>
+      <tspan x="108" dy="28">문서 인식</tspan>
+    </text>
+    <text class="sub" x="108" y="92" text-anchor="middle">
+      <tspan x="108" dy="0">Detection</tspan>
+      <tspan x="108" dy="22">Layout / Crop</tspan>
+    </text>
+  </g>
+
+  <g class="node rag" transform="translate(703 308)">
+    <rect width="216" height="132"/>
+    <text class="label" x="108" y="38" text-anchor="middle">
+      <tspan x="108" dy="0">RAG / Vector</tspan>
+      <tspan x="108" dy="28">검색 연구</tspan>
+    </text>
+    <text class="sub" x="108" y="92" text-anchor="middle">
+      <tspan x="108" dy="0">문서 답변</tspan>
+      <tspan x="108" dy="22">추천 후보</tspan>
+    </text>
+  </g>
+
+  <g class="node ops" transform="translate(914 308)">
+    <rect width="216" height="132"/>
+    <text class="label" x="108" y="38" text-anchor="middle">
+      <tspan x="108" dy="0">Model Serving</tspan>
+      <tspan x="108" dy="28">운영 API</tspan>
+    </text>
+    <text class="sub" x="108" y="92" text-anchor="middle">
+      <tspan x="108" dy="0">Kafka / Docker</tspan>
+      <tspan x="108" dy="22">DB Schema</tspan>
+    </text>
+  </g>
+
+  <path class="line" d="M178 440 V510 H600"/>
+  <path class="line" d="M389 440 V510 H600"/>
+  <path class="line" d="M600 440 V510"/>
+  <path class="line" d="M811 440 V510 H600"/>
+  <path class="line" d="M1022 440 V510 H600"/>
+  <path class="bus" d="M600 510 V548"/>
+
+  <g class="node out" transform="translate(455 548)">
+    <rect width="290" height="90"/>
+    <text class="label" x="145" y="34" text-anchor="middle">
+      <tspan x="145" dy="0">제품형 AI 경험</tspan>
+    </text>
+    <text class="sub" x="145" y="64" text-anchor="middle">생성, 편집, 추천, 독서 보조</text>
+  </g>
+</svg>
