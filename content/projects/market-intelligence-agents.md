@@ -2,7 +2,7 @@
 title: "Jeani Market Intelligence Multi-Agent System"
 projectName: "Jeani"
 tagline: "RFP 기반 시장 인텔리전스 에이전트"
-period: "AsianaIDT / 2025.07 - 2025.11"
+period: "AsianaIDT / 2025.09 - 2025.12"
 description: "Jeani는 RFP 문서를 읽어 조사 계획을 만들고, 시장/경쟁사/기술 동향을 병렬 수집한 뒤 Bedrock Knowledge Base로 동기화하는 시장 인텔리전스 멀티에이전트 시스템입니다."
 metrics:
   - "5 KB Intelligence Agents"
@@ -23,6 +23,7 @@ details:
   - "Planner가 S3 RFP 문서를 파싱해 project context, competitors, search keywords, tech topics, market topics, execution priority를 생성합니다."
   - "Researcher, Competitor, Tech Analyst는 같은 plan을 공유하되 서로 다른 검색면과 품질 평가 기준으로 병렬 실행됩니다."
   - "Synthesizer가 최종 보고서를 만들면 Orchestrator가 source_data, duplicate URL filtering metadata와 함께 daily_updates에 저장하고 KB Sync를 트리거합니다."
+  - "AWS EST Gen AI 실무 역량 강화 과정에서 팀 프로젝트로 Jeani를 개발하고 과정을 이수했습니다."
 order: 40
 draft: false
 ---
@@ -32,6 +33,12 @@ draft: false
   <p><strong>Jeani는 RFP를 읽고 "무엇을 조사해야 하는가"부터 다시 계획하는 시장 조사 에이전트 파이프라인입니다.</strong></p>
   <p>단일 챗봇에 시장 조사를 맡기면 검색어 선정, 경쟁사 범위, 기술 트렌드, 출처 중복, 최종 보고서 저장 경로가 흐려집니다. Jeani는 RFP 문서를 기준으로 조사 계획을 만들고, 시장 리서치, 경쟁사 분석, 기술 분석, 종합 보고, Knowledge Base 동기화를 분리된 Lambda agent와 S3 lifecycle로 다룹니다.</p>
 </section>
+
+## AWS EST 교육 기반 팀 프로젝트
+
+Jeani는 `AWS EST Gen AI 실무 역량 강화 과정` 안에서 수행한 팀 프로젝트입니다. 이 과정은 전사 클라우드 및 생성형 AI 기술 내재화를 목표로 한 Enterprise Skills Transformation 프로그램으로, 2025년 9월 8일부터 2025년 12월 5일까지 총 13주 동안 진행됐습니다.
+
+교육은 AWS 본사 정규 직원 강의, 오프라인 실습, 온라인 자율 학습, 팀 프로젝트 기반 개발로 구성됐습니다. 이 기간 동안 Generative AI Essentials on AWS, Developing Generative AI Applications on AWS, Agentic AI Foundations, Advanced RAG, MCP, SageMaker, MLOps 관련 과정을 이수했고, 학습 내용을 Jeani의 RFP 분석, agent workflow, S3/Bedrock Knowledge Base 연동 구조에 적용했습니다.
 
 ## RFP가 검색 계획으로 바뀌는 방식
 
