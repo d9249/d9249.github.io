@@ -2,6 +2,7 @@ import * as React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
 import SectionHeading from "../components/SectionHeading";
+import { formatReadableArticleHtml } from "../utils/articleHtml";
 
 const useIsomorphicLayoutEffect =
   typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
@@ -102,7 +103,9 @@ const ProjectPostTemplate = ({ data }) => {
         <article className="project-detail-main">
           <div
             className="article-body project-markdown-body"
-            dangerouslySetInnerHTML={{ __html: project.html }}
+            dangerouslySetInnerHTML={{
+              __html: formatReadableArticleHtml(project.html),
+            }}
           />
 
           {details.length ? (

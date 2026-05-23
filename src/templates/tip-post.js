@@ -3,6 +3,7 @@ import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
 import { PageViewCounter } from "../components/ViewCounter";
 import tipCategories from "../data/tipCategories.json";
+import { formatReadableArticleHtml } from "../utils/articleHtml";
 
 const labelByPlatform = new Map(
   tipCategories.map((category) => [category.slug, category.label]),
@@ -17,7 +18,7 @@ const removeSourceParagraph = (html) => html.replace(sourceLinePattern, "");
 const TipPostTemplate = ({ data, pageContext }) => {
   const tip = data.tip;
   const platforms = tip.frontmatter.platforms || [];
-  const tipHtml = removeSourceParagraph(tip.html);
+  const tipHtml = formatReadableArticleHtml(removeSourceParagraph(tip.html));
 
   return (
     <Layout>

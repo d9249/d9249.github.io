@@ -3,6 +3,7 @@ import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
 import { PageViewCounter } from "../components/ViewCounter";
 import categories from "../data/categories.json";
+import { formatReadableArticleHtml } from "../utils/articleHtml";
 import { getTagPath } from "../utils/tags";
 
 const labelByCategory = new Map(
@@ -52,7 +53,9 @@ const BlogPostTemplate = ({ data, pageContext }) => {
   const categoryLabel =
     labelByCategory.get(post.fields.category) || post.frontmatter.category;
   const postSources = getPostSources(post.rawMarkdownBody);
-  const postHtml = wrapArticleTables(removeSourceParagraph(post.html));
+  const postHtml = formatReadableArticleHtml(
+    wrapArticleTables(removeSourceParagraph(post.html)),
+  );
 
   return (
     <Layout>
