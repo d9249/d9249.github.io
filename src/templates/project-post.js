@@ -3,12 +3,38 @@ import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
 import SectionHeading from "../components/SectionHeading";
 
+const useIsomorphicLayoutEffect =
+  typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
+
 const ProjectPostTemplate = ({ data }) => {
   const project = data.project;
   const relatedProjects = data.relatedProjects.nodes;
   const details = project.frontmatter.details || [];
   const metrics = project.frontmatter.metrics || [];
   const stack = project.frontmatter.stack || [];
+
+  useIsomorphicLayoutEffect(() => {
+    if (typeof window === "undefined" || window.location.hash) {
+      return undefined;
+    }
+
+    const scrollToTop = () => {
+      window.scrollTo({
+        behavior: "auto",
+        left: 0,
+        top: 0,
+      });
+    };
+    const frameId = window.requestAnimationFrame(scrollToTop);
+    const timeoutId = window.setTimeout(scrollToTop, 120);
+
+    scrollToTop();
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.clearTimeout(timeoutId);
+    };
+  }, [project.fields.slug]);
 
   return (
     <Layout>
