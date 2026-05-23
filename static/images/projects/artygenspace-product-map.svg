@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
-  <title id="title">booxTory and arti product portfolio map</title>
-  <desc id="desc">Product-centered map showing booxTory and arti as the two public project names, with reading AI, storytelling, and common AI service capabilities underneath.</desc>
+  <title id="title">ArtygenSpace booxTory and arti project map</title>
+  <desc id="desc">Product map showing two ArtygenSpace projects: booxTory and arti. arti includes CATS, MERGE, CLEAR, and NEXIS.</desc>
   <defs>
     <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
       <path d="M2 2 L10 6 L2 10 Z" fill="#334155"/>
@@ -12,97 +12,91 @@
       .node rect { fill: #ffffff; stroke-width: 2.5; rx: 8; }
       .hub rect { stroke: #0f766e; fill: #ecfdf5; }
       .boox rect { stroke: #2563eb; fill: #eff6ff; }
-      .arti rect { stroke: #c2410c; fill: #fff7ed; }
-      .common rect { stroke: #7c3aed; fill: #faf5ff; }
-      .out rect { stroke: #334155; fill: #f1f5f9; }
+      .arti rect { stroke: #be123c; fill: #fff1f2; }
+      .solution rect { stroke: #64748b; fill: #ffffff; }
       text { font-family: Inter, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; fill: #0f172a; }
       .title { font-size: 28px; font-weight: 800; }
       .label { font-size: 18px; font-weight: 800; }
-      .sub { font-size: 14px; font-weight: 600; fill: #475569; }
+      .sub { font-size: 14px; font-weight: 650; fill: #475569; }
     </style>
   </defs>
   <rect class="bg" width="1200" height="680"/>
-  <text class="title" x="60" y="58">ArtygenSpace Product Portfolio</text>
-  <text class="sub" x="60" y="86">공개 시리즈는 booxTory와 arti를 중심으로 정리합니다.</text>
+  <text class="title" x="60" y="58">ArtygenSpace Project Portfolio</text>
+  <text class="sub" x="60" y="86">진행 프로젝트는 booxTory와 arti 두 축으로 정리합니다.</text>
 
-  <g class="node hub" transform="translate(455 92)">
-    <rect width="290" height="112"/>
+  <g class="node hub" transform="translate(455 110)">
+    <rect width="290" height="102"/>
     <text class="label" x="145" y="38" text-anchor="middle">
       <tspan x="145" dy="0">ArtygenSpace</tspan>
-      <tspan x="145" dy="28">AI 제품 개발</tspan>
+      <tspan x="145" dy="27">AI 제품 개발</tspan>
     </text>
-    <text class="sub" x="145" y="88" text-anchor="middle">2024.07 - 2025.07</text>
+    <text class="sub" x="145" y="83" text-anchor="middle">2024.07 - 2025.07</text>
   </g>
 
-  <path class="line" d="M600 204 V248"/>
-  <path class="soft" d="M600 248 H302 V295"/>
-  <path class="soft" d="M600 248 H898 V295"/>
+  <path class="line" d="M600 212 V262"/>
+  <path class="soft" d="M600 262 H300 V314"/>
+  <path class="soft" d="M600 262 H900 V314"/>
 
-  <g class="node boox" transform="translate(160 295)">
-    <rect width="284" height="122"/>
-    <text class="label" x="142" y="40" text-anchor="middle">
-      <tspan x="142" dy="0">booxTory</tspan>
-      <tspan x="142" dy="28">AI 독서 경험</tspan>
+  <g class="node boox" transform="translate(140 314)">
+    <rect width="320" height="124"/>
+    <text class="label" x="160" y="38" text-anchor="middle">
+      <tspan x="160" dy="0">booxTory</tspan>
+      <tspan x="160" dy="28">AI 독서 경험</tspan>
     </text>
-    <text class="sub" x="142" y="94" text-anchor="middle">CES Best of Innovation</text>
-  </g>
-
-  <g class="node arti" transform="translate(756 295)">
-    <rect width="284" height="122"/>
-    <text class="label" x="142" y="40" text-anchor="middle">
-      <tspan x="142" dy="0">arti</tspan>
-      <tspan x="142" dy="28">생성형 스토리텔링</tspan>
+    <text class="sub" x="160" y="94" text-anchor="middle">
+      <tspan x="160" dy="0">책 페이지 이해</tspan>
+      <tspan x="160" dy="21">개인화 RAG / TTS / Quiz</tspan>
     </text>
-    <text class="sub" x="142" y="94" text-anchor="middle">CES Honoree</text>
   </g>
 
-  <path class="soft" d="M302 417 V468"/>
-  <path class="soft" d="M898 417 V468"/>
-
-  <g class="node common" transform="translate(70 468)">
-    <rect width="216" height="116"/>
-    <text class="label" x="108" y="36" text-anchor="middle">
-      <tspan x="108" dy="0">책 페이지</tspan>
-      <tspan x="108" dy="26">이해</tspan>
+  <g class="node arti" transform="translate(740 314)">
+    <rect width="320" height="124"/>
+    <text class="label" x="160" y="38" text-anchor="middle">
+      <tspan x="160" dy="0">arti</tspan>
+      <tspan x="160" dy="28">핵심 AI 솔루션</tspan>
     </text>
-    <text class="sub" x="108" y="86" text-anchor="middle">OCR / Layout</text>
-  </g>
-  <g class="node common" transform="translate(306 468)">
-    <rect width="216" height="116"/>
-    <text class="label" x="108" y="36" text-anchor="middle">
-      <tspan x="108" dy="0">개인화</tspan>
-      <tspan x="108" dy="26">독서 AI</tspan>
+    <text class="sub" x="160" y="94" text-anchor="middle">
+      <tspan x="160" dy="0">CATS / MERGE</tspan>
+      <tspan x="160" dy="21">CLEAR / NEXIS</tspan>
     </text>
-    <text class="sub" x="108" y="86" text-anchor="middle">RAG / TTS / Quiz</text>
-  </g>
-  <g class="node common" transform="translate(542 468)">
-    <rect width="216" height="116"/>
-    <text class="label" x="108" y="36" text-anchor="middle">
-      <tspan x="108" dy="0">공통 AI</tspan>
-      <tspan x="108" dy="26">서비스</tspan>
-    </text>
-    <text class="sub" x="108" y="86" text-anchor="middle">API / Queue / Store</text>
-  </g>
-  <g class="node common" transform="translate(778 468)">
-    <rect width="216" height="116"/>
-    <text class="label" x="108" y="36" text-anchor="middle">
-      <tspan x="108" dy="0">이야기와</tspan>
-      <tspan x="108" dy="26">이미지</tspan>
-    </text>
-    <text class="sub" x="108" y="86" text-anchor="middle">Story / Image / Voice</text>
-  </g>
-  <g class="node common" transform="translate(1014 468)">
-    <rect width="116" height="116"/>
-    <text class="label" x="58" y="36" text-anchor="middle">
-      <tspan x="58" dy="0">PDF</tspan>
-      <tspan x="58" dy="26">Gallery</tspan>
-    </text>
-    <text class="sub" x="58" y="86" text-anchor="middle">저장</text>
   </g>
 
-  <path class="soft" d="M302 417 V442 H178 V468"/>
-  <path class="soft" d="M302 417 V442 H414 V468"/>
-  <path class="soft" d="M898 417 V442 H886 V468"/>
-  <path class="soft" d="M898 417 V442 H1072 V468"/>
-  <path class="line" d="M600 248 V468"/>
+  <path class="soft" d="M900 438 V482"/>
+  <path class="soft" d="M900 482 H555 V520"/>
+  <path class="soft" d="M900 482 H735 V520"/>
+  <path class="soft" d="M900 482 H915 V520"/>
+  <path class="soft" d="M900 482 H1095 V520"/>
+
+  <g class="node solution" transform="translate(480 520)">
+    <rect width="150" height="94"/>
+    <text class="label" x="75" y="34" text-anchor="middle">CATS</text>
+    <text class="sub" x="75" y="62" text-anchor="middle">
+      <tspan x="75" dy="0">다중 에이전트</tspan>
+      <tspan x="75" dy="19">콘텐츠 생성</tspan>
+    </text>
+  </g>
+  <g class="node solution" transform="translate(660 520)">
+    <rect width="150" height="94"/>
+    <text class="label" x="75" y="34" text-anchor="middle">MERGE</text>
+    <text class="sub" x="75" y="62" text-anchor="middle">
+      <tspan x="75" dy="0">프롬프트 기반</tspan>
+      <tspan x="75" dy="19">객체 탐지</tspan>
+    </text>
+  </g>
+  <g class="node solution" transform="translate(840 520)">
+    <rect width="150" height="94"/>
+    <text class="label" x="75" y="34" text-anchor="middle">CLEAR</text>
+    <text class="sub" x="75" y="62" text-anchor="middle">
+      <tspan x="75" dy="0">다국어 문서</tspan>
+      <tspan x="75" dy="19">인식 및 교정</tspan>
+    </text>
+  </g>
+  <g class="node solution" transform="translate(1020 520)">
+    <rect width="150" height="94"/>
+    <text class="label" x="75" y="34" text-anchor="middle">NEXIS</text>
+    <text class="sub" x="75" y="62" text-anchor="middle">
+      <tspan x="75" dy="0">문서 대화</tspan>
+      <tspan x="75" dy="19">및 매칭</tspan>
+    </text>
+  </g>
 </svg>
