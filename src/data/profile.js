@@ -19,40 +19,40 @@ export const heroLinks = [
 
 export const evidenceItems = [
   {
-    label: "agent runtime",
-    value: "Harmony",
+    label: "product ai",
+    value: "CES 2025",
     description:
-      "UserContext, Session, 권한형 RAG, Space/meeting, human review queue를 하나의 사내 AI agent lifecycle로 묶었습니다.",
+      "booxTory Best of Innovation과 arti Honoree 제품에서 AI 엔진, 추천, 생성, 편집 자동화 기능을 실제 제품 경험으로 연결했습니다.",
   },
   {
-    label: "document ai",
-    value: "InVision OCR",
+    label: "enterprise ai",
+    value: "AsianaIDT",
     description:
-      "PDF/이미지 업로드, OCR/레이아웃 분석, 표 구조 복원, 결과 검수, 배치 처리, 납품 프로필까지 제품 흐름으로 구현했습니다.",
+      "사내 지식 관리, 권한형 에이전트, 산업안전 RAG, 시장 인텔리전스, 문서 OCR을 운영 가능한 업무 시스템으로 구현했습니다.",
   },
   {
-    label: "knowledge ai",
-    value: "AIO",
+    label: "minister awards",
+    value: "장관상 2회",
     description:
-      "문서 업로드, dataset ingestion, Graph + Vector RAG, ACL, Agent Builder를 하나의 엔터프라이즈 지식 운영 콘솔로 연결했습니다.",
+      "WIS 2025 혁신상과 Plan2Do 산업안전 플랫폼 성과에서 장관상급 수상으로 AI 제품화와 현장 적용성을 인정받았습니다.",
   },
   {
-    label: "safety rag",
-    value: "Plan2Do",
+    label: "research",
+    value: "SCIE 3 / KCI 2",
     description:
-      "현장 이미지와 문서를 산업안전 맥락으로 해석하고, 법령 RAG와 LangGraph workflow로 위험성평가 표를 생성했습니다.",
+      "LightGCN, WF-GCN, 의료영상 딥러닝을 중심으로 추천 시스템과 의료 AI 연구 성과를 1저자 논문으로 축적했습니다.",
   },
   {
-    label: "market intel",
-    value: "Jeani",
+    label: "modeling",
+    value: "Top 1% 7회",
     description:
-      "RFP 문서에서 조사 계획을 만들고, 시장/경쟁사/기술 agent 결과를 S3 lifecycle과 Bedrock Knowledge Base로 동기화했습니다.",
+      "DACON 39개 대회, HD현대 AI Challenge 4위, 상위 1% 7회로 데이터 분석과 실전 모델링 역량을 검증했습니다.",
   },
   {
-    label: "product proof",
-    value: "CES + SCIE",
+    label: "academic awards",
+    value: "Best Paper 2회",
     description:
-      "booxTory/arti CES 2025 제품 경험과 LightGCN, WF-GCN, 의료영상 연구 성과로 제품화와 연구 검증을 함께 보여줍니다.",
+      "APIC-IST 2022와 KIIT 논문 성과로 추천 시스템, 의료영상, PoseNet 기반 응용 연구의 학술 성과를 남겼습니다.",
   },
 ];
 
