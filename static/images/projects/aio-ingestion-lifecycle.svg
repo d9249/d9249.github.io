@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">AIO document ingestion lifecycle</title>
+  <desc id="desc">Document upload and ingestion lifecycle in AIO.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .node rect { stroke-width: 2; rx: 12; }
+      .ui rect { fill: #e0f2fe; stroke: #0284c7; }
+      .api rect { fill: #ecfdf5; stroke: #059669; }
+      .job rect { fill: #fef3c7; stroke: #d97706; }
+      .store rect { fill: #fce7f3; stroke: #db2777; }
+      .graph rect { fill: #ede9fe; stroke: #7c3aed; }
+      .node text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .title { font-size: 19px; font-weight: 800; }
+      .body { font-size: 15px; font-weight: 600; fill: #334155; }
+      .caption { font-size: 17px; font-weight: 800; fill: #475569; }
+      .arrow { fill: none; stroke: #334155; stroke-width: 2.5; marker-end: url(#arrow); }
+      .dash { fill: none; stroke: #64748b; stroke-width: 2.2; stroke-dasharray: 8 8; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1200" height="760"/>
+  <text x="60" y="48" class="caption">Upload Session</text>
+  <text x="60" y="398" class="caption">Dataset Ingestion</text>
+
+  <g class="node ui">
+    <rect x="56" y="84" width="188" height="110"/>
+    <text x="80" y="121" class="title">Document UI</text>
+    <text x="80" y="152" class="body">
+      <tspan x="80" dy="0">Public/private</tspan>
+      <tspan x="80" dy="22">folder tree</tspan>
+    </text>
+  </g>
+
+  <g class="node api">
+    <rect x="300" y="84" width="196" height="110"/>
+    <text x="324" y="121" class="title">Upload Begin</text>
+    <text x="324" y="152" class="body">
+      <tspan x="324" dy="0">/doc/upload/begin</tspan>
+      <tspan x="324" dy="22">session metadata</tspan>
+    </text>
+  </g>
+
+  <g class="node ui">
+    <rect x="552" y="84" width="202" height="110"/>
+    <text x="576" y="121" class="title">Chunk Queue</text>
+    <text x="576" y="152" class="body">
+      <tspan x="576" dy="0">IndexedDB</tspan>
+      <tspan x="576" dy="22">heartbeat cleanup</tspan>
+    </text>
+  </g>
+
+  <g class="node job">
+    <rect x="812" y="84" width="220" height="110"/>
+    <text x="836" y="121" class="title">Finalize Task</text>
+    <text x="836" y="152" class="body">
+      <tspan x="836" dy="0">verify chunks</tspan>
+      <tspan x="836" dy="22">merge and save file</tspan>
+    </text>
+  </g>
+
+  <g class="node store">
+    <rect x="812" y="244" width="220" height="106"/>
+    <text x="836" y="281" class="title">Document Record</text>
+    <text x="836" y="312" class="body">
+      <tspan x="836" dy="0">tb_doc, tb_doc_file</tspan>
+      <tspan x="836" dy="22">upload status</tspan>
+    </text>
+  </g>
+
+  <g class="node ui">
+    <rect x="56" y="434" width="188" height="112"/>
+    <text x="80" y="471" class="title">Dataset UI</text>
+    <text x="80" y="502" class="body">
+      <tspan x="80" dy="0">Select docs</tspan>
+      <tspan x="80" dy="22">Make knowledge</tspan>
+    </text>
+  </g>
+
+  <g class="node api">
+    <rect x="300" y="434" width="196" height="112"/>
+    <text x="324" y="471" class="title">Ingestion API</text>
+    <text x="324" y="502" class="body">
+      <tspan x="324" dy="0">/dataset/ingestion</tspan>
+      <tspan x="324" dy="22">session provider</tspan>
+    </text>
+  </g>
+
+  <g class="node job">
+    <rect x="552" y="434" width="202" height="112"/>
+    <text x="576" y="471" class="title">LangGraph Task</text>
+    <text x="576" y="502" class="body">
+      <tspan x="576" dy="0">parsing, chunking</tspan>
+      <tspan x="576" dy="22">indexing nodes</tspan>
+    </text>
+  </g>
+
+  <g class="node graph">
+    <rect x="812" y="414" width="220" height="146"/>
+    <text x="836" y="451" class="title">Knowledge Index</text>
+    <text x="836" y="482" class="body">
+      <tspan x="836" dy="0">Milvus chunks</tspan>
+      <tspan x="836" dy="22">Milvus entities/rels</tspan>
+      <tspan x="836" dy="22">Neo4j workspace</tspan>
+      <tspan x="836" dy="22">RDB chunk bounds</tspan>
+    </text>
+  </g>
+
+  <g class="node store">
+    <rect x="812" y="612" width="220" height="96"/>
+    <text x="836" y="649" class="title">SSE and Status</text>
+    <text x="836" y="680" class="body">Redis task progress</text>
+  </g>
+
+  <path class="arrow" d="M244 139 H300"/>
+  <path class="arrow" d="M496 139 H552"/>
+  <path class="arrow" d="M754 139 H812"/>
+  <path class="arrow" d="M922 194 V244"/>
+  <path class="arrow" d="M244 490 H300"/>
+  <path class="arrow" d="M496 490 H552"/>
+  <path class="arrow" d="M754 490 H812"/>
+  <path class="arrow" d="M922 560 V612"/>
+  <path class="dash" d="M812 660 H150 V546"/>
+  <path class="dash" d="M812 660 H150 V194"/>
+  <text x="60" y="728" class="body">SSE events keep both upload progress and ingestion progress visible while Celery workers process long-running jobs.</text>
+</svg>

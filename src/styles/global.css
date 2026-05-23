@@ -2962,7 +2962,8 @@ figcaption,
 }
 
 .project-markdown-body .harmony-lead-panel,
-.project-markdown-body .market-lead-panel {
+.project-markdown-body .market-lead-panel,
+.project-markdown-body .aio-lead-panel {
   margin: 34px 0 42px;
   padding: 24px;
   border: 1px solid var(--border);
@@ -2977,17 +2978,20 @@ figcaption,
 }
 
 .project-markdown-body .harmony-lead-panel:first-child,
-.project-markdown-body .market-lead-panel:first-child {
+.project-markdown-body .market-lead-panel:first-child,
+.project-markdown-body .aio-lead-panel:first-child {
   margin-top: 0;
 }
 
 .project-markdown-body .harmony-lead-panel p,
-.project-markdown-body .market-lead-panel p {
+.project-markdown-body .market-lead-panel p,
+.project-markdown-body .aio-lead-panel p {
   margin: 12px 0 0;
 }
 
 .project-markdown-body .harmony-kicker,
-.project-markdown-body .market-kicker {
+.project-markdown-body .market-kicker,
+.project-markdown-body .aio-kicker {
   display: block;
   margin-bottom: 8px;
   color: var(--accent);
@@ -3001,26 +3005,32 @@ figcaption,
 .project-markdown-body .harmony-feature-grid,
 .project-markdown-body .harmony-fact-grid,
 .project-markdown-body .market-feature-grid,
-.project-markdown-body .market-fact-grid {
+.project-markdown-body .market-fact-grid,
+.project-markdown-body .aio-feature-grid,
+.project-markdown-body .aio-fact-grid {
   display: grid;
   gap: 14px;
   margin: 28px 0;
 }
 
 .project-markdown-body .harmony-feature-grid,
-.project-markdown-body .market-feature-grid {
+.project-markdown-body .market-feature-grid,
+.project-markdown-body .aio-feature-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .project-markdown-body .harmony-fact-grid,
-.project-markdown-body .market-fact-grid {
+.project-markdown-body .market-fact-grid,
+.project-markdown-body .aio-fact-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .project-markdown-body .harmony-feature-card,
 .project-markdown-body .harmony-fact,
 .project-markdown-body .market-feature-card,
-.project-markdown-body .market-fact {
+.project-markdown-body .market-fact,
+.project-markdown-body .aio-feature-card,
+.project-markdown-body .aio-fact {
   min-width: 0;
   padding: 18px;
   border: 1px solid var(--border);
@@ -3031,7 +3041,9 @@ figcaption,
 .project-markdown-body .harmony-feature-card h3,
 .project-markdown-body .harmony-fact strong,
 .project-markdown-body .market-feature-card h3,
-.project-markdown-body .market-fact strong {
+.project-markdown-body .market-fact strong,
+.project-markdown-body .aio-feature-card h3,
+.project-markdown-body .aio-fact strong {
   display: block;
   margin: 0 0 8px;
   color: var(--fg);
@@ -3042,7 +3054,9 @@ figcaption,
 .project-markdown-body .harmony-feature-card p,
 .project-markdown-body .harmony-fact p,
 .project-markdown-body .market-feature-card p,
-.project-markdown-body .market-fact p {
+.project-markdown-body .market-fact p,
+.project-markdown-body .aio-feature-card p,
+.project-markdown-body .aio-fact p {
   margin: 0;
   color: var(--muted);
   font-size: 15px;
@@ -3050,7 +3064,8 @@ figcaption,
 }
 
 .project-markdown-body .harmony-diagram,
-.project-markdown-body .market-diagram {
+.project-markdown-body .market-diagram,
+.project-markdown-body .aio-diagram {
   margin: 36px 0 42px;
   padding: 14px;
   border: 1px solid var(--border);
@@ -3059,10 +3074,53 @@ figcaption,
 }
 
 .project-markdown-body .harmony-diagram img,
-.project-markdown-body .market-diagram img {
+.project-markdown-body .market-diagram img,
+.project-markdown-body .aio-diagram img {
   width: 100%;
   border-radius: 6px;
   background: var(--surface);
+}
+
+.project-markdown-body .aio-flow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin: 28px 0 36px;
+}
+
+.project-markdown-body .aio-flow > div {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in oklch, var(--surface) 96%, var(--bg));
+}
+
+.project-markdown-body .aio-flow strong,
+.project-markdown-body .aio-flow span {
+  display: block;
+}
+
+.project-markdown-body .aio-flow strong {
+  margin-bottom: 8px;
+  color: var(--fg);
+  font-size: 15px;
+}
+
+.project-markdown-body .aio-flow span {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.project-markdown-body .aio-lead-panel ~ table {
+  table-layout: fixed;
+}
+
+.project-markdown-body .aio-lead-panel ~ table th,
+.project-markdown-body .aio-lead-panel ~ table td {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .project-markdown-body .harmony-diagram figcaption,
@@ -3935,7 +3993,10 @@ figcaption,
   .project-markdown-body .harmony-fact,
   .project-markdown-body .market-lead-panel,
   .project-markdown-body .market-feature-card,
-  .project-markdown-body .market-fact {
+  .project-markdown-body .market-fact,
+  .project-markdown-body .aio-lead-panel,
+  .project-markdown-body .aio-feature-card,
+  .project-markdown-body .aio-fact {
     padding: 16px;
   }
 
@@ -3944,12 +4005,16 @@ figcaption,
   .project-markdown-body .harmony-flow,
   .project-markdown-body .market-feature-grid,
   .project-markdown-body .market-fact-grid,
-  .project-markdown-body .market-flow {
+  .project-markdown-body .market-flow,
+  .project-markdown-body .aio-feature-grid,
+  .project-markdown-body .aio-fact-grid,
+  .project-markdown-body .aio-flow {
     grid-template-columns: 1fr;
   }
 
   .project-markdown-body .harmony-diagram,
-  .project-markdown-body .market-diagram {
+  .project-markdown-body .market-diagram,
+  .project-markdown-body .aio-diagram {
     padding: 10px;
   }
 
