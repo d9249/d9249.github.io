@@ -52,12 +52,13 @@ import {
   evidenceItems,
   heroLinks,
   paperItems,
-  profileTags,
   skillGroups,
   timelineItems,
 } from "../data/profile";
+import { getProjectProfileTags } from "../utils/projectProfileTags";
 
 const CARD_DECK_SIZE = 4;
+const PROJECT_DECK_SIZE = 2;
 const POST_DECK_SIZE = 3;
 const SKILL_LOGOS = new Map([
   ["Linux (Ubuntu)", siUbuntu],
@@ -209,23 +210,30 @@ const SkillChip = ({ skill }) => {
 const IndexPage = ({ data }) => {
   const posts = data.posts.nodes;
   const projects = data.projects.nodes;
+  const profileTags = getProjectProfileTags(projects);
   const totalBlogPostCount = data.blogPosts.totalCount;
   const heroNavItems = navItems.filter((item) => item.showInHero);
   const paperDecks = getCardDecks(paperItems);
   const awardDecks = getCardDecks(awardItems);
+  const projectDecks = getCardDecks(projects, PROJECT_DECK_SIZE);
   const postDecks = getCardDecks(posts, POST_DECK_SIZE);
   const [paperDeckIndex, setPaperDeckIndex] = React.useState(0);
   const [awardDeckIndex, setAwardDeckIndex] = React.useState(0);
+  const [projectDeckIndex, setProjectDeckIndex] = React.useState(0);
   const [postDeckIndex, setPostDeckIndex] = React.useState(0);
   const activePaperDeck = paperDecks[paperDeckIndex] || [];
   const activeAwardDeck = awardDecks[awardDeckIndex] || [];
+  const activeProjectDeck = projectDecks[projectDeckIndex] || [];
   const activePostDeck = postDecks[postDeckIndex] || [];
   const hasMultiplePaperDecks = paperDecks.length > 1;
   const hasMultipleAwardDecks = awardDecks.length > 1;
+  const hasMultipleProjectDecks = projectDecks.length > 1;
   const hasMultiplePostDecks = postDecks.length > 1;
   const paperDeckLabel = getDeckLabel(paperDeckIndex, paperDecks.length);
   const awardDeckLabel = getDeckLabel(awardDeckIndex, awardDecks.length);
+  const projectDeckLabel = getDeckLabel(projectDeckIndex, projectDecks.length);
   const postDeckLabel = getDeckLabel(postDeckIndex, postDecks.length);
+  const projectDeckStatus = `Deck ${projectDeckLabel} · 2개씩 보기`;
   const postDeckStatus = `${postDeckLabel} · 블로그 전체 글 ${totalBlogPostCount}개`;
   const goToPreviousPaperDeck = () => {
     setPaperDeckIndex((currentIndex) =>
@@ -245,6 +253,16 @@ const IndexPage = ({ data }) => {
   const goToNextAwardDeck = () => {
     setAwardDeckIndex((currentIndex) =>
       currentIndex === awardDecks.length - 1 ? 0 : currentIndex + 1,
+    );
+  };
+  const goToPreviousProjectDeck = () => {
+    setProjectDeckIndex((currentIndex) =>
+      currentIndex === 0 ? projectDecks.length - 1 : currentIndex - 1,
+    );
+  };
+  const goToNextProjectDeck = () => {
+    setProjectDeckIndex((currentIndex) =>
+      currentIndex === projectDecks.length - 1 ? 0 : currentIndex + 1,
     );
   };
   const goToPreviousPostDeck = () => {
@@ -321,7 +339,7 @@ const IndexPage = ({ data }) => {
               </div>
               <div className="terminal-row">
                 <span>focus</span>
-                <strong>RAG / Agents / OCR / Recommender</strong>
+                <strong>RAG / Agents / OCR / Market Intel</strong>
               </div>
               <div className="terminal-row">
                 <span>recognition</span>
@@ -379,7 +397,7 @@ const IndexPage = ({ data }) => {
               </div>
               <div>
                 <dt>domain</dt>
-                <dd>Enterprise AI / Document AI / Recommender</dd>
+                <dd>Knowledge AI / Safety RAG / OCR / Market Intel</dd>
               </div>
             </dl>
             <div className="tag-cloud">
@@ -422,7 +440,38 @@ const IndexPage = ({ data }) => {
           title="프로젝트"
           action={<Link to="/projects/">전체 프로젝트 보기 →</Link>}
         />
-        <ProjectGrid projects={projects} />
+        <div className="card-deck project-card-deck">
+          <div className="card-deck-toolbar" aria-live="polite">
+            <span className="card-deck-status">{projectDeckStatus}</span>
+            <div className="card-deck-controls">
+              <button
+                type="button"
+                aria-label="이전 프로젝트 덱 보기"
+                disabled={!hasMultipleProjectDecks}
+                onClick={goToPreviousProjectDeck}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                aria-label="다음 프로젝트 덱 보기"
+                disabled={!hasMultipleProjectDecks}
+                onClick={goToNextProjectDeck}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m9 6 6 6-6 6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <ProjectGrid
+            className="card-deck-grid"
+            key={projectDeckIndex}
+            projects={activeProjectDeck}
+          />
+        </div>
       </section>
 
       <section

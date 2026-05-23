@@ -19,52 +19,41 @@ export const heroLinks = [
 
 export const evidenceItems = [
   {
-    label: "enterprise ai",
-    value: "Hybrid RAG",
+    label: "agent runtime",
+    value: "Harmony",
     description:
-      "Knowledge Graph와 Vector retrieval, plugin chunking, XML parsing, LLM observability를 결합해 사내 지식 관리 시스템을 제품화했습니다.",
+      "UserContext, Session, 권한형 RAG, Space/meeting, human review queue를 하나의 사내 AI agent lifecycle로 묶었습니다.",
   },
   {
     label: "document ai",
-    value: "TEDS 0.9188",
+    value: "InVision OCR",
     description:
-      "OCR bbox, line segment, parser-driven reconstruction, benchmark router를 묶어 테이블 구조 복원 품질과 운영 검증 체계를 만들었습니다.",
+      "PDF/이미지 업로드, OCR/레이아웃 분석, 표 구조 복원, 결과 검수, 배치 처리, 납품 프로필까지 제품 흐름으로 구현했습니다.",
   },
   {
-    label: "minister awards",
-    value: "장관상 2회",
+    label: "knowledge ai",
+    value: "AIO",
     description:
-      "WIS 2025 혁신상과 Plan2Do 산업안전 플랫폼 성과에서 장관상급 수상으로 AI 제품화와 현장 적용성을 인정받았습니다.",
+      "문서 업로드, dataset ingestion, Graph + Vector RAG, ACL, Agent Builder를 하나의 엔터프라이즈 지식 운영 콘솔로 연결했습니다.",
   },
   {
-    label: "product ai",
-    value: "CES 2025",
+    label: "safety rag",
+    value: "Plan2Do",
     description:
-      "booxTory Best of Innovation, arti Honoree에 기여하며 생성, 편집, 추천 AI를 실제 제품 경험으로 연결했습니다.",
+      "현장 이미지와 문서를 산업안전 맥락으로 해석하고, 법령 RAG와 LangGraph workflow로 위험성평가 표를 생성했습니다.",
   },
   {
-    label: "research",
-    value: "SCIE 3 / KCI 2",
+    label: "market intel",
+    value: "Jeani",
     description:
-      "LightGCN, WF-GCN, 의료영상 딥러닝을 중심으로 추천 시스템과 의료 AI 연구 성과를 논문으로 축적했습니다.",
+      "RFP 문서에서 조사 계획을 만들고, 시장/경쟁사/기술 agent 결과를 S3 lifecycle과 Bedrock Knowledge Base로 동기화했습니다.",
   },
   {
-    label: "modeling",
-    value: "Top 1% 7회",
+    label: "product proof",
+    value: "CES + SCIE",
     description:
-      "DACON 39개 대회, 상위 1% 7회, HD현대 AI Challenge 4위로 실전 문제 정의와 모델링 역량을 검증했습니다.",
+      "booxTory/arti CES 2025 제품 경험과 LightGCN, WF-GCN, 의료영상 연구 성과로 제품화와 연구 검증을 함께 보여줍니다.",
   },
-];
-
-export const profileTags = [
-  "Advanced RAG",
-  "Knowledge Graph",
-  "Multi-Agent Orchestration",
-  "Document OCR",
-  "Table Reconstruction",
-  "Recommendation Systems",
-  "Medical Imaging",
-  "LLM Observability",
 ];
 
 export const timelineItems = [
@@ -72,11 +61,12 @@ export const timelineItems = [
     date: "2025.07 - now",
     title: "AsianaIDT, AI/ML Engineer & Researcher",
     description:
-      "엔터프라이즈 규정, 법령, 문서 도메인을 대상으로 RAG, 에이전트, OCR 플랫폼을 제품 수준으로 설계하고 운영합니다.",
+      "사내 지식 관리, 산업안전 RAG, 시장 인텔리전스, 문서 OCR, 권한형 에이전트 런타임을 제품과 운영 단위로 설계하고 구현합니다.",
     bullets: [
-      "Enterprise AI 지식 관리 시스템에서 Knowledge Graph와 Vector를 결합한 hybrid RAG, plugin chunking, XML parsing, LLM observability를 구축했습니다.",
-      "문서 OCR 및 테이블 복원 플랫폼에서 parser-driven reconstruction, benchmark router, Next.js console, secure build 흐름을 고도화했습니다.",
-      "Market Intelligence 시스템에서 4-Layer architecture와 25-agent orchestration으로 시장 조사 자동화 파이프라인을 설계했습니다.",
+      "AIO와 Harmony에서 문서 저장소, ingestion, Graph + Vector RAG, ACL, permission-aware retrieval, persona/session/tool trace, human review queue를 연결했습니다.",
+      "Plan2Do에서 현장 이미지와 문서 입력, 산업안전 법령 XML corpus, Qdrant 검색, LangGraph workflow, 검토용 위험성평가 HTML 표를 API 제품으로 묶었습니다.",
+      "Jeani에서 RFP 기반 planner, 병렬 market/competitor/tech agent, synthesizer, S3 산출물 lifecycle, Bedrock Knowledge Base sync로 시장 조사 운영 루프를 만들었습니다.",
+      "InVision OCR에서 PDF/이미지 업로드, OCR/레이아웃 분석, 표 구조 복원, 결과 검수, 배치 처리, 고객 납품 프로필까지 문서 처리 흐름을 구현했습니다.",
     ],
   },
   {

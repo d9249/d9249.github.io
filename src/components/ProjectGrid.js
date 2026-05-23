@@ -23,8 +23,8 @@ const normalizeProject = (project) => {
   };
 };
 
-const ProjectGrid = ({ projects }) => (
-  <div className="project-grid">
+const ProjectGrid = ({ className, projects }) => (
+  <div className={["project-grid", className].filter(Boolean).join(" ")}>
     {projects.map((rawProject) => {
       const project = normalizeProject(rawProject);
 
