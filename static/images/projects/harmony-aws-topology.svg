@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Harmony AWS deployment topology</title>
+  <desc id="desc">CloudFront, WAF, API Gateway, Cognito, internal ALB, ECS Fargate Agent, compiler Step Functions, Aurora PostgreSQL, EFS PageIndex, S3 corpus and audit buckets, Bedrock Runtime, Transcribe and Polly.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="50%" stop-color="#f7fff9"/>
+      <stop offset="100%" stop-color="#fff7eb"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#1b2d36" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#435f70"/>
+    </marker>
+    <style>
+      .title { font: 800 35px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #101820; }
+      .sub { font: 500 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #536573; }
+      .eyebrow { font: 800 13px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0; text-transform: uppercase; fill: #068469; }
+      .box-title { font: 800 21px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111a22; }
+      .box-text { font: 500 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4c5d68; }
+      .small { font: 800 13px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #596977; }
+      .panel { fill: #ffffff; stroke: #d9e3ea; stroke-width: 2; rx: 18; filter: url(#shadow); }
+      .edge { fill: #eef6ff; stroke: #a7caed; stroke-width: 2; rx: 16; }
+      .compute { fill: #eaf8ef; stroke: #9bd8ba; stroke-width: 2; rx: 16; }
+      .data { fill: #fff7e8; stroke: #e8c276; stroke-width: 2; rx: 16; }
+      .guard { fill: #fff0ee; stroke: #e8aaa0; stroke-width: 2; rx: 16; }
+      .line { fill: none; stroke: #435f70; stroke-width: 3; marker-end: url(#arrow); }
+      .thin { fill: none; stroke: #91a3af; stroke-width: 2; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <path d="M0 180 H1600 M0 360 H1600 M0 540 H1600 M0 720 H1600 M200 0 V900 M400 0 V900 M600 0 V900 M800 0 V900 M1000 0 V900 M1200 0 V900 M1400 0 V900" stroke="#dfe8ee" stroke-opacity="0.52" stroke-width="1"/>
+
+  <text x="70" y="76" class="eyebrow">AWS Deployment Contract</text>
+  <text x="70" y="124" class="title">Harmony는 Agent runtime을 앱이 소유하고, AWS는 인증·네트워크·컴퓨트·저장소·모델 호출을 담당한다</text>
+  <text x="70" y="158" class="sub">agent_core는 Terraform 모듈 이름이며, 실제 배포 단위는 ECS Fargate의 FastAPI Agent container다</text>
+
+  <rect x="70" y="245" width="255" height="110" class="edge"/>
+  <text x="100" y="286" class="box-title">CloudFront Web</text>
+  <text x="100" y="318" class="box-text">Next.js static export</text>
+  <text x="100" y="342" class="box-text">S3 origin + OAC</text>
+
+  <rect x="70" y="410" width="255" height="110" class="guard"/>
+  <text x="100" y="451" class="box-title">WAF + API Gateway</text>
+  <text x="100" y="483" class="box-text">HTTP / WebSocket edge</text>
+  <text x="100" y="507" class="box-text">rate limit, authorizer</text>
+
+  <rect x="70" y="575" width="255" height="110" class="edge"/>
+  <text x="100" y="616" class="box-title">Cognito</text>
+  <text x="100" y="648" class="box-text">login, JWT, 4D claims</text>
+  <text x="100" y="672" class="box-text">team/rank/role/tenure</text>
+
+  <rect x="420" y="210" width="775" height="520" class="panel"/>
+  <text x="455" y="255" class="eyebrow">Private VPC Runtime</text>
+  <text x="455" y="296" class="box-title">FastAPI Agent service + Compiler workers</text>
+
+  <rect x="465" y="345" width="250" height="92" class="edge"/>
+  <text x="495" y="383" class="box-title">Internal ALB</text>
+  <text x="495" y="413" class="box-text">private L7 routing</text>
+
+  <rect x="805" y="330" width="300" height="120" class="compute"/>
+  <text x="835" y="372" class="box-title">ECS Fargate Agent</text>
+  <text x="835" y="404" class="box-text">FastAPI, SQLAlchemy, PageIndex</text>
+  <text x="835" y="428" class="box-text">chat, spaces, voice, approvals</text>
+
+  <rect x="465" y="525" width="250" height="92" class="compute"/>
+  <text x="495" y="563" class="box-title">Step Functions</text>
+  <text x="495" y="593" class="box-text">ingest, sanitize, retag</text>
+
+  <rect x="805" y="520" width="300" height="110" class="compute"/>
+  <text x="835" y="560" class="box-title">ECS Builder + Lambdas</text>
+  <text x="835" y="592" class="box-text">processed corpus를 PageIndex로 빌드</text>
+  <text x="835" y="616" class="box-text">EFS에 manifest 발행</text>
+
+  <rect x="1270" y="210" width="260" height="86" class="data"/>
+  <text x="1300" y="246" class="box-title">Aurora PostgreSQL</text>
+  <text x="1300" y="274" class="box-text">users, sessions, audit index</text>
+
+  <rect x="1270" y="330" width="260" height="86" class="data"/>
+  <text x="1300" y="366" class="box-title">EFS PageIndex</text>
+  <text x="1300" y="394" class="box-text">/mnt/pageindex shared files</text>
+
+  <rect x="1270" y="450" width="260" height="86" class="data"/>
+  <text x="1300" y="486" class="box-title">S3 Corpus / Audit</text>
+  <text x="1300" y="514" class="box-text">raw, processed, WORM audit</text>
+
+  <rect x="1270" y="570" width="260" height="86" class="edge"/>
+  <text x="1300" y="606" class="box-title">Bedrock Runtime</text>
+  <text x="1300" y="634" class="box-text">model call via IAM</text>
+
+  <rect x="1270" y="690" width="260" height="86" class="edge"/>
+  <text x="1300" y="726" class="box-title">Transcribe / Polly</text>
+  <text x="1300" y="754" class="box-text">voice STT and TTS path</text>
+
+  <path class="line" d="M325 300 C370 300 380 390 465 390"/>
+  <path class="line" d="M325 465 C370 465 382 390 465 390"/>
+  <path class="thin" d="M325 630 C370 590 390 390 465 390"/>
+  <path class="line" d="M715 390 C750 390 770 390 805 390"/>
+  <path class="line" d="M715 570 C750 570 770 575 805 575"/>
+  <path class="line" d="M1105 390 C1160 350 1215 253 1270 253"/>
+  <path class="line" d="M1105 414 C1160 400 1215 373 1270 373"/>
+  <path class="line" d="M1105 575 C1160 540 1215 493 1270 493"/>
+  <path class="line" d="M1105 365 C1180 410 1210 613 1270 613"/>
+  <path class="thin" d="M1105 430 C1180 500 1210 733 1270 733"/>
+  <path class="thin" d="M965 520 C995 475 995 450 965 450"/>
+</svg>

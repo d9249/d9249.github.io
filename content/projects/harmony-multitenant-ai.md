@@ -123,6 +123,155 @@ API는 인증 헤더나 local auth에서 사용자 정보를 읽어 `UserContext
   </div>
 </div>
 
+## 코드 기준 기술 소스맵
+
+이번 글은 화면에서 보이는 기능만 보고 다시 쓴 것이 아니라, Harmony 저장소의 실제 모듈 경계를 기준으로 다시 구성했습니다. 핵심은 "어떤 디렉터리가 어떤 제품 기능을 책임지는가"입니다. 아래 표는 프로젝트 설명을 작성할 때 기준으로 삼은 코드 구조입니다.
+
+<div class="article-table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>코드 영역</th>
+        <th>분석한 책임</th>
+        <th>페이지에서 설명한 제품 의미</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>core/</code></td>
+        <td><code>IAIAgent</code>, turn event, provider adapter, tool context, knowledge tool, skill tool</td>
+        <td>Harmony Agent가 답변 텍스트뿐 아니라 tool trace, citation, approval, usage, latency를 남기는 실행 경계</td>
+      </tr>
+      <tr>
+        <td><code>identity/</code>, <code>personas/</code></td>
+        <td><code>UserContext</code>, team/rank/role/tenure, persona composer, runtime memory</td>
+        <td>사용자의 업무 역할과 연차에 따라 답변 깊이와 검색 권한이 달라지는 4D persona 구조</td>
+      </tr>
+      <tr>
+        <td><code>rag/</code>, <code>api/session_scoped_retrieval.py</code></td>
+        <td>PageIndex retrieval, document permissions, personal corpus, Space-scoped retrieval</td>
+        <td>검색 전에 권한 후보를 먼저 계산하고, 개인/Space/회의 세션별로 다른 corpus를 합성하는 권한형 RAG</td>
+      </tr>
+      <tr>
+        <td><code>compiler/</code></td>
+        <td>raw source, sanitize finding, tag proposal, proposed article, review queue lifecycle</td>
+        <td>AI가 지식 후보를 만들고 사람이 승인해야 공식 corpus가 되는 human-gated knowledge loop</td>
+      </tr>
+      <tr>
+        <td><code>api/routers/</code></td>
+        <td>auth, chat, sessions, spaces, me, tools, usage, admin knowledge, approvals, voice</td>
+        <td>채팅, 지식, Space, approval, voice, 운영 화면이 모두 같은 FastAPI boundary로 들어오는 API 표면</td>
+      </tr>
+      <tr>
+        <td><code>meetings/</code>, <code>voice/</code></td>
+        <td>meeting pipeline, skill discovery, voice session state, research orchestrator, STT/TTS provider</td>
+        <td>회의 중 자료 조사와 회의 후 summary/task/minutes artifact를 Space 지식 흐름으로 연결하는 회의 Agent</td>
+      </tr>
+      <tr>
+        <td><code>web/</code></td>
+        <td>Next.js app routes, chat thread, knowledge tabs, spaces page, voice panel, admin tools/approvals</td>
+        <td>사용자가 scope, citation, progress, approval, 지식 상태를 직접 확인하는 제품 UI</td>
+      </tr>
+      <tr>
+        <td><code>deploy/</code></td>
+        <td>networking, audit, ecr, database, storage_efs, identity, agent_core, compiler, channels, frontend</td>
+        <td>local proof에서 AWS 운영 구조로 이어지는 배포 계약과 비용/운영 경계</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## API와 화면별 기능 매트릭스
+
+구성된 기능을 빠짐없이 설명하기 위해 FastAPI router, Next.js route, 사용자가 실제로 얻는 기능을 함께 대조했습니다. 이 표가 이 프로젝트의 기능 목록입니다.
+
+<div class="article-table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>기능</th>
+        <th>Backend</th>
+        <th>Frontend</th>
+        <th>사용자 관점</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>인증과 사용자 문맥</td>
+        <td><code>auth.py</code>, Cognito/local auth adapter</td>
+        <td><code>/login</code>, <code>/auth/callback</code></td>
+        <td>로그인 뒤 team, rank, role, tenure, permission tag가 agent 요청에 붙습니다.</td>
+      </tr>
+      <tr>
+        <td>채팅과 세션</td>
+        <td><code>chat.py</code>, <code>sessions.py</code></td>
+        <td><code>/chat</code>, <code>/chat/[sessionId]</code></td>
+        <td>새 세션을 만들고, streaming token, tool progress, citation, approval 상태를 한 화면에서 봅니다.</td>
+      </tr>
+      <tr>
+        <td>Persona Matrix</td>
+        <td><code>personas.py</code>, <code>personas/composer.py</code></td>
+        <td><code>/personas</code></td>
+        <td>사용자의 팀/직급/직무/연차 조합으로 답변 스타일과 판단 기준을 합성합니다.</td>
+      </tr>
+      <tr>
+        <td>개인 지식</td>
+        <td><code>me.py</code>, <code>rag/personal_corpus.py</code></td>
+        <td><code>/knowledge?section=personal</code></td>
+        <td>내 문서를 owner-only로 올리고, agent가 개인 채팅에서만 검색하게 합니다.</td>
+      </tr>
+      <tr>
+        <td>사내 지식 제출</td>
+        <td><code>me.py</code>, <code>admin_knowledge.py</code>, <code>compiler/</code></td>
+        <td><code>/knowledge?section=submit</code>, admin queue</td>
+        <td>문서를 공식 지식 후보로 제출하고, 관리자가 승인한 뒤에만 shared corpus로 발행합니다.</td>
+      </tr>
+      <tr>
+        <td>접근 가능 자료</td>
+        <td><code>me.py</code>, <code>rag/permissions.py</code></td>
+        <td><code>/knowledge?section=shared</code></td>
+        <td>현재 persona와 권한으로 볼 수 있는 공유 자료를 확인하고 개인별 활성화 상태를 조정합니다.</td>
+      </tr>
+      <tr>
+        <td>Space 협업</td>
+        <td><code>spaces.py</code>, Space store, policy helpers</td>
+        <td><code>/spaces</code>, <code>/spaces/new</code>, <code>/spaces/stage</code></td>
+        <td>owner/member/guest 권한으로 멤버, 공유 채팅, 지식 정책, 회의 결과를 관리합니다.</td>
+      </tr>
+      <tr>
+        <td>회의와 음성</td>
+        <td><code>voice.py</code>, <code>voice/session.py</code>, <code>meetings/pipeline.py</code></td>
+        <td><code>/voice</code>, <code>/voice/brief</code></td>
+        <td>회의 transcript, 실시간 진행상황, 자료조사, 회의 후 summary/task/minutes를 이어서 봅니다.</td>
+      </tr>
+      <tr>
+        <td>Skills와 MCP</td>
+        <td><code>me.py</code>, <code>core/skill_tool.py</code></td>
+        <td><code>/knowledge?section=skills</code>, <code>/knowledge?section=mcp</code></td>
+        <td>사용자/팀/공유 skill과 MCP 서버를 등록해 agent가 사용할 수 있는 실행 능력을 확장합니다.</td>
+      </tr>
+      <tr>
+        <td>도구와 승인</td>
+        <td><code>tools.py</code>, <code>approvals.py</code></td>
+        <td><code>/admin/tools</code>, <code>/admin/approvals</code></td>
+        <td>도구 registry와 고위험 action approval queue를 운영 화면에서 확인하고 결정합니다.</td>
+      </tr>
+      <tr>
+        <td>사용량과 감사</td>
+        <td><code>usage.py</code>, <code>audit/</code></td>
+        <td><code>/admin</code></td>
+        <td>agent turn, tool call, approval, 검색 근거가 운영 지표와 감사 이벤트로 남습니다.</td>
+      </tr>
+      <tr>
+        <td>데모와 다중 모드</td>
+        <td><code>admin_demo.py</code>, Space fanout helpers</td>
+        <td><code>/admin/demo</code>, <code>/admin/demo/stage</code>, <code>/demo</code></td>
+        <td>여러 persona나 Space member에게 같은 맥락을 fanout해 비교하고 발표용 흐름을 만들 수 있습니다.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 ## 지식은 어떻게 들어오고 검증되는가
 
 Harmony에서 가장 조심스럽게 다룬 부분은 지식 편입 과정입니다. 사용자가 문서를 업로드했다고 해서 그 문서가 곧바로 사내 공식 지식이 되면 안 됩니다. 사내 문서에는 민감정보, 임시 초안, 라이선스가 애매한 외부 자료, 부서 한정 자료, 만료된 정책이 섞일 수 있습니다. 그래서 Harmony는 "업로드"와 "검색 가능한 공식 지식" 사이에 compiler와 review queue를 둡니다.
@@ -166,6 +315,11 @@ Next.js frontend는 단순 데모 페이지가 아니라 운영자가 실제 흐
 ## AWS 배포 설계
 
 Harmony의 AWS 배포 설계는 FastAPI agent container를 ECS Fargate에 올리고, 모델 호출은 Bedrock Runtime으로 보내는 구조입니다. 여기서 `agent_core`는 Terraform/OpenTofu 모듈 이름이며, Amazon Bedrock AgentCore Runtime에 agent를 배포한다는 뜻이 아닙니다. 중요한 점은 "agent runtime contract는 애플리케이션이 소유하고, AWS는 인증, 네트워크, 컴퓨트, 저장소, 모델 호출, 운영 관측을 제공한다"는 경계입니다.
+
+<figure class="harmony-diagram">
+  <img src="/images/projects/harmony-aws-topology.svg" alt="Harmony AWS deployment topology diagram">
+  <figcaption>AWS deployment topology. CloudFront, WAF, API Gateway, Cognito가 edge/auth 경계를 만들고, private VPC의 ECS Fargate Agent와 compiler workers가 Aurora PostgreSQL, EFS PageIndex, S3 corpus/audit, Bedrock Runtime을 사용합니다.</figcaption>
+</figure>
 
 표준 배포 그래프는 CloudFront 정적 frontend, WAF, API Gateway, Cognito, internal ALB, ECS Fargate Agent, ECS Builder, Lambda compiler stages, Step Functions, Aurora PostgreSQL, EFS PageIndex storage, S3 corpus/audit bucket, Secrets Manager, Bedrock Runtime, Transcribe/Polly, CloudWatch로 구성됩니다. local 개발에서는 SQLite와 파일 기반 corpus를 쓰고, AWS에서는 Aurora PostgreSQL, S3, EFS, Bedrock Runtime을 사용합니다. 이때 PageIndex는 EFS에 저장되어 Agent task는 읽고 Builder task는 새 index를 발행하는 구조입니다.
 
