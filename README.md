@@ -10,7 +10,7 @@
 - AI Engineer & Researcher 프로필 홈
 - RAG, Document AI, multi-agent, 추천 시스템 중심 프로젝트 아카이브
 - 논문, 수상, 대회, 기술 스택, 경력 타임라인
-- Markdown 기반 기술 블로그
+- Markdown 기반 기술 블로그와 프로젝트 사례
 - Keynote에서 export한 발표용 포트폴리오 슬라이드 뷰어
 
 주요 화면은 `src/pages/` 아래에 있으며 홈, 프로젝트, 연구, 수상, 대회,
@@ -20,7 +20,7 @@
 
 - Gatsby 5
 - React 18
-- MarkdownRemark 기반 블로그
+- MarkdownRemark 기반 블로그/프로젝트 사례
 - Busuanzi 호환 카운터 API 기반 방문자/글 조회수 표시
 - GitHub Pages 배포
 - Prettier formatting
@@ -29,13 +29,13 @@
 
 ```text
 content/blog/<category>/<post>.md        Markdown blog posts
+content/projects/<project>.md            Markdown project case studies
 src/components/                          Shared React components
-src/data/profile.js                      Profile, projects, awards, papers, competitions data
+src/data/profile.js                      Profile, awards, papers, competitions data
 src/data/categories.json                 Blog category navigation and generated category pages
 src/data/portfolioSlides.json            Generated portfolio slide manifest
 src/pages/                               Gatsby page routes
-src/pages/projects/                      Project detail pages
-src/templates/                           Blog post, category, tag templates
+src/templates/                           Blog and project templates
 src/styles/global.css                    Site-wide design system
 src/utils/tags.js                        Blog tag slug helpers
 static/portfolio/slides/                 Exported portfolio slide images
@@ -93,14 +93,12 @@ Update this file when changing:
 
 - hero links and profile highlights
 - career timeline
-- project cards and project metadata
 - papers and research records
 - awards and competitions
 - skill groups
 
-Project summary cards are generated from `projectItems`. Detailed project pages
-live separately under `src/pages/projects/`, so add or update the matching page
-when a project needs a dedicated case study route.
+Project summary cards and detailed project pages are generated from Markdown
+files in `content/projects/`.
 
 ## Blog Posts
 
@@ -132,6 +130,38 @@ draft: false
 Set `draft: true` to keep a post out of generated blog pages. When adding a new
 top-level blog category that should appear in navigation and receive a category
 page, also add it to `src/data/categories.json`.
+
+## Project Case Studies
+
+Project pages are Markdown files under `content/projects/`.
+
+The route is derived from the filename:
+
+```text
+content/projects/harmony-multitenant-ai.md
+-> /projects/harmony-multitenant-ai/
+```
+
+Use this frontmatter shape:
+
+```md
+---
+title: "Project title"
+period: "Organization / 2026.01 - 2026.03"
+description: "Short summary for cards and metadata."
+metrics:
+  - "Metric"
+stack:
+  - "Python"
+details:
+  - "Execution note for cards and the detail page."
+order: 10
+draft: false
+---
+```
+
+Set `draft: true` to keep a project out of generated project pages. Lower
+`order` values appear earlier in the project list.
 
 ## Portfolio Slides
 

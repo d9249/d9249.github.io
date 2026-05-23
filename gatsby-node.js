@@ -64,6 +64,22 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     return;
   }
 
+  if (fileNode.sourceInstanceName === "projects") {
+    createNodeField({
+      name: "contentType",
+      node,
+      value: "project",
+    });
+
+    createNodeField({
+      name: "slug",
+      node,
+      value: `/projects/${slugParts.join("/")}/`,
+    });
+
+    return;
+  }
+
   if (fileNode.sourceInstanceName !== "tips") {
     return;
   }
@@ -121,6 +137,22 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
       }
+      projects: allMarkdownRemark(
+        filter: { fields: { contentType: { eq: "project" } } }
+        sort: { frontmatter: { order: ASC } }
+      ) {
+        nodes {
+          id
+          fields {
+            slug
+          }
+          frontmatter {
+            title
+            draft
+            order
+          }
+        }
+      }
     }
   `);
 
@@ -132,6 +164,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const blogIndexTemplate = path.resolve("./src/templates/blog-index.js");
   const postTemplate = path.resolve("./src/templates/blog-post.js");
   const categoryTemplate = path.resolve("./src/templates/blog-category.js");
+  const projectTemplate = path.resolve("./src/templates/project-post.js");
   const redirectTemplate = path.resolve("./src/templates/redirect.js");
   const tagTemplate = path.resolve("./src/templates/blog-tag.js");
   const tipsIndexTemplate = path.resolve("./src/templates/tips-index.js");
@@ -140,6 +173,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     (post) => !post.frontmatter.draft,
   );
   const tips = result.data.tips.nodes.filter((tip) => !tip.frontmatter.draft);
+  const projects = result.data.projects.nodes.filter(
+    (project) => !project.frontmatter.draft,
+  );
   const tagSummaries = getTagSummaries(posts);
   const tipTagSummaries = getTagSummaries(tips);
   const blogPageCount =
@@ -203,6 +239,20 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       component: redirectTemplate,
       context: {
         to: redirect.to,
+      },
+    });
+  });
+
+  projects.forEach((project) => {
+    createPage({
+      path: project.fields.slug,
+      component: projectTemplate,
+      context: {
+        id: project.id,
+        relatedProjectIds: projects
+          .filter((item) => item.id !== project.id)
+          .slice(0, 3)
+          .map((item) => item.id),
       },
     });
   });

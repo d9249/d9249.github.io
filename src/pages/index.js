@@ -53,7 +53,6 @@ import {
   heroLinks,
   paperItems,
   profileTags,
-  projectItems,
   skillGroups,
   timelineItems,
 } from "../data/profile";
@@ -209,6 +208,7 @@ const SkillChip = ({ skill }) => {
 
 const IndexPage = ({ data }) => {
   const posts = data.posts.nodes;
+  const projects = data.projects.nodes;
   const totalBlogPostCount = data.blogPosts.totalCount;
   const heroNavItems = navItems.filter((item) => item.showInHero);
   const paperDecks = getCardDecks(paperItems);
@@ -422,7 +422,7 @@ const IndexPage = ({ data }) => {
           title="프로젝트"
           action={<Link to="/projects/">전체 프로젝트 보기 →</Link>}
         />
-        <ProjectGrid projects={projectItems} />
+        <ProjectGrid projects={projects} />
       </section>
 
       <section
@@ -731,6 +731,28 @@ export const query = graphql`
           author
           category
           tags
+        }
+      }
+    }
+    projects: allMarkdownRemark(
+      filter: {
+        fields: { contentType: { eq: "project" } }
+        frontmatter: { draft: { ne: true } }
+      }
+      sort: { frontmatter: { order: ASC } }
+    ) {
+      nodes {
+        id
+        fields {
+          slug
+        }
+        frontmatter {
+          title
+          period
+          description
+          metrics
+          stack
+          details
         }
       }
     }
