@@ -38,6 +38,8 @@ export const query = graphql`
         }
         frontmatter {
           title
+          projectName
+          tagline
           period
           description
           metrics

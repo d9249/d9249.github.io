@@ -1,5 +1,7 @@
 ---
 title: "Market Intelligence Multi-Agent System"
+projectName: "Market Intelligence"
+tagline: "Multi-Agent System"
 period: "AsianaIDT / 2025.07 - 2025.11"
 description: "시장 조사, 내부 자산 검색, 외부 검색, 검증을 분리한 4-Layer 기반 엔터프라이즈 GenAI orchestrator입니다."
 metrics:

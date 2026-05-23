@@ -6,12 +6,24 @@ import SectionHeading from "../components/SectionHeading";
 const useIsomorphicLayoutEffect =
   typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
 
+const getProjectTitleParts = (frontmatter) => {
+  const name = frontmatter.projectName || frontmatter.title;
+  const tagline = frontmatter.tagline;
+
+  return {
+    displayTitle: [name, tagline].filter(Boolean).join(" - "),
+    name,
+    tagline,
+  };
+};
+
 const ProjectPostTemplate = ({ data }) => {
   const project = data.project;
   const relatedProjects = data.relatedProjects.nodes;
   const details = project.frontmatter.details || [];
   const metrics = project.frontmatter.metrics || [];
   const stack = project.frontmatter.stack || [];
+  const titleParts = getProjectTitleParts(project.frontmatter);
 
   useIsomorphicLayoutEffect(() => {
     if (typeof window === "undefined" || window.location.hash) {
@@ -45,13 +57,22 @@ const ProjectPostTemplate = ({ data }) => {
         <div className="project-detail-hero-grid">
           <div>
             <p className="eyebrow">Project Detail</p>
-            <h1>{project.frontmatter.title}</h1>
+            <h1 className="project-detail-title">
+              <span className="project-detail-title-name">
+                {titleParts.name}
+              </span>
+              {titleParts.tagline && (
+                <span className="project-detail-title-tagline">
+                  {titleParts.tagline}
+                </span>
+              )}
+            </h1>
             <p className="project-detail-copy">
               {project.frontmatter.description}
             </p>
             <div
               className="project-metrics"
-              aria-label={`${project.frontmatter.title} metrics`}
+              aria-label={`${titleParts.displayTitle} metrics`}
             >
               {metrics.map((metric) => (
                 <span className="metric-chip" key={metric}>
@@ -101,7 +122,7 @@ const ProjectPostTemplate = ({ data }) => {
             <h2>Stack</h2>
             <div
               className="project-stack"
-              aria-label={`${project.frontmatter.title} stack`}
+              aria-label={`${titleParts.displayTitle} stack`}
             >
               {stack.map((tool) => (
                 <span key={tool}>{tool}</span>
@@ -123,13 +144,30 @@ const ProjectPostTemplate = ({ data }) => {
       >
         <SectionHeading kicker="Related" title="다른 프로젝트도 이어서 보기" />
         <div className="related-grid">
-          {relatedProjects.map((item) => (
-            <Link className="related-card" key={item.id} to={item.fields.slug}>
-              <div className="thumb" aria-hidden="true" />
-              <h3>{item.frontmatter.title}</h3>
-              <p>{item.frontmatter.description}</p>
-            </Link>
-          ))}
+          {relatedProjects.map((item) => {
+            const relatedTitle = getProjectTitleParts(item.frontmatter);
+
+            return (
+              <Link
+                className="related-card"
+                key={item.id}
+                to={item.fields.slug}
+              >
+                <div className="thumb" aria-hidden="true" />
+                <h3 className="related-project-title">
+                  <span className="related-project-title-name">
+                    {relatedTitle.name}
+                  </span>
+                  {relatedTitle.tagline && (
+                    <span className="related-project-title-tagline">
+                      {relatedTitle.tagline}
+                    </span>
+                  )}
+                </h3>
+                <p>{item.frontmatter.description}</p>
+              </Link>
+            );
+          })}
         </div>
       </section>
     </Layout>
@@ -155,6 +193,8 @@ export const query = graphql`
       }
       frontmatter {
         title
+        projectName
+        tagline
         period
         description
         metrics
@@ -173,6 +213,8 @@ export const query = graphql`
         }
         frontmatter {
           title
+          projectName
+          tagline
           description
         }
       }

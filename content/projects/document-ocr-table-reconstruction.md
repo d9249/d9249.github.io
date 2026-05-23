@@ -1,5 +1,7 @@
 ---
 title: "문서 OCR / 테이블 구조 복원 플랫폼"
+projectName: "문서 OCR"
+tagline: "테이블 구조 복원 플랫폼"
 period: "AsianaIDT / 2026.02 - now"
 description: "문서 이미지에서 OCR 결과와 선분 정보를 결합해 표 구조를 복원하고, 벤치마크와 운영 콘솔까지 연결한 Document AI 플랫폼입니다."
 metrics:

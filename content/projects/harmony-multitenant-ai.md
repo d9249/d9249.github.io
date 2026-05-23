@@ -1,5 +1,7 @@
 ---
 title: "Harmony — 안전한 사내 AI 지식 시스템"
+projectName: "Harmony"
+tagline: "안전한 사내 AI 지식 시스템"
 period: "AsianaIDT / 2026.05.11 - 2026.05.22"
 description: "Harmony Agent가 사용자 맥락, 권한, 사내 지식, 회의 흐름을 이해하고 행동하는 엔터프라이즈 AI 에이전트 시스템입니다."
 metrics:

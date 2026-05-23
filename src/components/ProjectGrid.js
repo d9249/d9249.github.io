@@ -4,15 +4,21 @@ import { Link } from "gatsby";
 const normalizeProject = (project) => {
   const frontmatter = project.frontmatter || project;
   const slug = project.fields?.slug || `/projects/${project.slug}/`;
+  const name = frontmatter.projectName || frontmatter.title;
+  const tagline = frontmatter.tagline;
+  const displayTitle = [name, tagline].filter(Boolean).join(" - ");
 
   return {
     details: frontmatter.details || [],
+    displayTitle,
     key: project.id || slug || frontmatter.title,
     metrics: frontmatter.metrics || [],
+    name,
     period: frontmatter.period,
     slug,
     stack: frontmatter.stack || [],
     summary: frontmatter.description || frontmatter.summary,
+    tagline,
     title: frontmatter.title,
   };
 };
@@ -27,19 +33,19 @@ const ProjectGrid = ({ projects }) => (
           className="project-card"
           key={project.key}
           to={project.slug}
-          aria-label={`${project.title} 상세 내용 보기`}
+          aria-label={`${project.displayTitle} 상세 내용 보기`}
         >
           <div className="project-card-header">
             <div>
               <div className="meta">{project.period}</div>
-              <h3>{project.title}</h3>
-            </div>
-            <div className="project-metrics">
-              {project.metrics.map((metric) => (
-                <span className="metric-chip" key={metric}>
-                  {metric}
-                </span>
-              ))}
+              <h3 className="project-title">
+                <span className="project-title-name">{project.name}</span>
+                {project.tagline && (
+                  <span className="project-title-tagline">
+                    {project.tagline}
+                  </span>
+                )}
+              </h3>
             </div>
           </div>
           <p>{project.summary}</p>
@@ -48,6 +54,15 @@ const ProjectGrid = ({ projects }) => (
               <li key={detail}>{detail}</li>
             ))}
           </ul>
+          {project.metrics.length > 0 && (
+            <div className="project-metrics">
+              {project.metrics.map((metric) => (
+                <span className="metric-chip" key={metric}>
+                  {metric}
+                </span>
+              ))}
+            </div>
+          )}
           <div className="project-stack" aria-label={`${project.title} stack`}>
             {project.stack.map((tool) => (
               <span key={tool}>{tool}</span>

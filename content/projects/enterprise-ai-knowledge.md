@@ -1,5 +1,7 @@
 ---
 title: "Enterprise AI 지식 관리 시스템"
+projectName: "Enterprise AI"
+tagline: "지식 관리 시스템"
 period: "AsianaIDT / 2025.09 - 2026.01"
 description: "기업 내부 지식, 규정, 문서 자료를 검색 가능한 AI 지식 체계로 전환한 hybrid RAG 플랫폼입니다."
 metrics:

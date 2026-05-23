@@ -1038,7 +1038,7 @@ h3 {
 
 .project-card {
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto auto;
   gap: 18px;
   padding: 24px;
   color: inherit;
@@ -1055,10 +1055,7 @@ h3 {
 }
 
 .project-card-header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(180px, 0.36fr);
-  gap: 18px;
-  align-items: start;
+  display: block;
 }
 
 .project-card h3 {
@@ -1066,6 +1063,23 @@ h3 {
   font-size: clamp(23px, 2.5vw, 34px);
   line-height: 1.08;
   text-wrap: balance;
+}
+
+.project-title {
+  display: grid;
+  gap: 5px;
+}
+
+.project-title-name,
+.project-title-tagline {
+  display: block;
+}
+
+.project-title-tagline {
+  color: var(--muted);
+  font-size: clamp(15px, 1.25vw, 18px);
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 .project-card:hover h3,
@@ -1172,6 +1186,24 @@ h3 {
   font-size: clamp(44px, 6vw, 82px);
   line-height: 0.98;
   text-wrap: balance;
+}
+
+.project-detail-title {
+  display: grid;
+  gap: 12px;
+}
+
+.project-detail-title-name,
+.project-detail-title-tagline {
+  display: block;
+}
+
+.project-detail-title-tagline {
+  max-width: 760px;
+  color: var(--muted);
+  font-size: clamp(24px, 3.1vw, 40px);
+  font-weight: 780;
+  line-height: 1.18;
 }
 
 .project-detail-copy {
@@ -3361,6 +3393,23 @@ figcaption,
 .related-card h3 {
   font-size: 19px;
   line-height: 1.2;
+}
+
+.related-project-title {
+  display: grid;
+  gap: 4px;
+}
+
+.related-project-title-name,
+.related-project-title-tagline {
+  display: block;
+}
+
+.related-project-title-tagline {
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.28;
 }
 
 .related-card p {
