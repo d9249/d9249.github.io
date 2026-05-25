@@ -28,7 +28,7 @@ export const evidenceItems = [
     label: "enterprise ai",
     value: "AsianaIDT",
     description:
-      "사내 지식 관리, 권한형 에이전트, 산업안전 RAG, 시장 인텔리전스, 문서 OCR을 운영 가능한 업무 시스템으로 구현했습니다.",
+      "사내 지식 관리, 산업안전 RAG, 시장 인텔리전스, 문서 OCR·표 구조 복원을 Graph/Vector RAG, 멀티 에이전트, 운영 콘솔 단위로 구현했습니다.",
   },
   {
     label: "minister awards",
@@ -66,7 +66,7 @@ export const timelineItems = [
       "AIO와 Harmony에서 문서 저장소, ingestion, Graph + Vector RAG, ACL, permission-aware retrieval, persona/session/tool trace, human review queue를 연결했습니다.",
       "Plan2Do에서 현장 이미지와 문서 입력, 산업안전 법령 XML corpus, Qdrant 검색, LangGraph workflow, 검토용 위험성평가 HTML 표를 API 제품으로 묶었습니다.",
       "Jeani에서 RFP 기반 planner, 병렬 market/competitor/tech agent, synthesizer, S3 산출물 lifecycle, Bedrock Knowledge Base sync로 시장 조사 운영 루프를 만들었습니다.",
-      "InVision OCR에서 PDF/이미지 업로드, OCR/레이아웃 분석, 표 구조 복원, 결과 검수, 배치 처리, 고객 납품 프로필까지 문서 처리 흐름을 구현했습니다.",
+      "InVision OCR에서 OCR/레이아웃 분석, 로직 기반 표 구조 복원, parser 기반 문서 재조립, 벤치마크 콘솔을 연결하고 TEDS 0.9188, TEDS-S 0.9506, Cell F1 0.9702 수준까지 고도화했습니다.",
     ],
   },
   {
