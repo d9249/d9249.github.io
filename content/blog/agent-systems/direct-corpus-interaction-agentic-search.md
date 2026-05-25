@@ -1,6 +1,6 @@
 ---
 title: "Direct Corpus Interaction은 검색 에이전트의 병목을 retriever가 아니라 interface로 본다"
-date: "2026-05-11T00:31:31"
+date: "2026-05-25T14:38:35"
 description: "DCI는 임베딩 인덱스와 top-k 검색 API를 우회하고, 에이전트가 raw corpus를 grep·bash·read로 직접 탐색하게 만드는 검색 인터페이스 제안이다."
 author: "Sangmin Lee"
 category: "agent-systems"
@@ -60,7 +60,7 @@ DCI는 retriever를 더 정교하게 만드는 대신, 에이전트에게 raw co
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="https://raw.githubusercontent.com/DCI-Agent/DCI-Agent-Lite/main/assets/imgs/context_management.png"
+    src="/images/blog/dci-direct-corpus-interaction-context-management.webp"
     alt="DCI-Agent-Lite runtime context management strategies"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -75,7 +75,7 @@ DCI는 retriever를 더 정교하게 만드는 대신, 에이전트에게 raw co
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="https://raw.githubusercontent.com/DCI-Agent/DCI-Agent-Lite/main/assets/imgs/teaser.png"
+    src="/images/blog/dci-direct-corpus-interaction-pareto.webp"
     alt="DCI-Agent cost and accuracy Pareto frontier on BrowseComp-Plus"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -97,9 +97,20 @@ multi-hop QA와 IR ranking에서도 메시지는 비슷하다.
 
 논문은 DCI-Agent-CC의 도구 사용도 분석한다. 전체 tool call에서 Bash가 62.4%, grep 계열이 33.0%를 차지한다. Bash 내부에서도 chained search, local context peeking, regex matching, file localization이 주된 행동으로 나타난다. 이는 DCI의 강점이 복잡한 custom script 작성에 있다기보다, 단순한 텍스트 검색과 주변 문맥 확인을 반복적으로 조합하는 데 있음을 보여준다.
 
-공개 아티팩트도 함께 볼 필요가 있다. 공식 GitHub 저장소 `DCI-Agent/DCI-Agent-Lite`는 MIT 라이선스, Python 패키지명 `dci`, `dci-agent-lite` CLI, `setup.sh`, benchmark/corpus 다운로드 스크립트, Pi 기반 실행 예제를 포함한다. 조회 시점 기준 GitHub API는 71 stars, 4 forks, 기본 브랜치 `main`, `/releases/latest` 404, tags 없음으로 응답했다. 따라서 현재 형태는 완성된 production retrieval framework라기보다, 논문 결과를 검토하고 일부 benchmark run을 재현하기 위한 초기 research harness에 가깝다.
+<figure style="margin: 1.8rem 0;">
+  <img
+    src="/images/blog/dci-direct-corpus-interaction-tool-behavior.webp"
+    alt="DCI-Agent tool-call and Bash intent distribution"
+    style="width: 100%; max-width: 100%; height: auto; display: block;"
+  />
+  <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
+    논문 source의 tool-behavior 그림. DCI-Agent-CC는 전체적으로 Bash와 grep 계열 호출에 집중하고, Bash 내부에서는 chained search, local context peeking, regex search, file localization 같은 좁은 텍스트 조작이 큰 비중을 차지한다.
+  </figcaption>
+</figure>
 
-Hugging Face 쪽에는 `DCI-Agent/dci-bench`, `DCI-Agent/corpus`, `DCI-Agent/eval-logs` 데이터셋과 `DCI-Agent/demo` Space가 공개되어 있다. API 조회 시점 기준 세 데이터셋은 모두 manual gated 상태였고, `corpus`는 BrowseComp-Plus, BRIGHT 4개 subset, Wikipedia dump 파일을 포함하며 약 16.2GB storage를 사용한다. `eval-logs`에는 DCI-Agent-CC BrowseComp-Plus run의 JSONL 로그들이 다수 공개되어 있어, 주장된 결과가 단순 요약표에만 머물지 않고 trajectory artifact로도 남아 있다는 점이 눈에 띈다.
+공개 아티팩트도 함께 볼 필요가 있다. 공식 GitHub 저장소 `DCI-Agent/DCI-Agent-Lite`는 MIT 라이선스, Python 패키지명 `dci`, `dci-agent-lite` CLI, `setup.sh`, benchmark/corpus 다운로드 스크립트, Pi 기반 실행 예제를 포함한다. 2026년 5월 25일 GitHub API 조회 기준으로는 270 stars, 37 forks, 3 open issues, 기본 브랜치 `main`, `/releases/latest` 404, tags 없음으로 응답했다. 따라서 관심도는 빠르게 붙고 있지만, 현재 형태는 완성된 production retrieval framework라기보다 논문 결과를 검토하고 일부 benchmark run을 재현하기 위한 초기 research harness에 가깝다.
+
+Hugging Face 쪽에는 `DCI-Agent/dci-bench`, `DCI-Agent/corpus`, `DCI-Agent/eval-logs` 데이터셋과 `DCI-Agent/demo` Space가 공개되어 있다. 2026년 5월 25일 Hub API 기준으로 세 데이터셋은 public·ungated이며, `corpus`는 BrowseComp-Plus, BRIGHT 4개 subset, Wikipedia dump 파일을 포함한다. 같은 조회에서 `dci-bench`는 238 downloads, `corpus`는 201 downloads, `eval-logs`는 3,257 downloads로 표시됐고, `DCI-Agent/demo` Space도 별도로 공개되어 있었다. 반면 `DCI-Agent` author 아래 공개 model repo는 없었다. 즉 이 릴리스의 중심은 checkpoint 배포가 아니라 code, benchmark/corpus bundle, evaluation logs, demo surface다.
 
 ## 실무 관점에서의 해석
 
