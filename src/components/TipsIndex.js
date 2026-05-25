@@ -128,10 +128,7 @@ const TipsIndex = ({
   const firstTipNumber = totalVisibleTips === 0 ? 0 : skip + 1;
   const lastTipNumber = Math.min(totalVisibleTips, skip + visibleTips.length);
   const pageTitle = label || activeCategoryData?.label || "Application Tips";
-  const pageDescription =
-    description ||
-    activeCategoryData?.description ||
-    "새로 등장하는 응용프로그램과 로컬 도구를 플랫폼별로 빠르게 훑어볼 수 있게 정리합니다.";
+  const pageDescription = description ?? activeCategoryData?.description ?? null;
 
   return (
     <Layout>

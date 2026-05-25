@@ -311,8 +311,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   createTipIndexPages({
     activeCategory: null,
-    description:
-      "새로 등장하는 응용프로그램과 로컬 도구를 플랫폼별로 빠르게 훑어볼 수 있게 정리합니다.",
     label: "Application Tips",
     tipsForIndex: tips,
   });
