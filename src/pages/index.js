@@ -280,10 +280,11 @@ const IndexPage = ({ data }) => {
     <Layout>
       <section className="shell hero">
         <div>
-          <p className="eyebrow">Sangmin Lee</p>
-          <h1>이상향을 추구하는 엔지니어</h1>
+          <p className="eyebrow">AI Engineer &amp; Researcher</p>
+          <h1>AI 연구를 제품 가치로 연결하는 엔지니어</h1>
           <p className="hero-copy">
-            인공지능 연구 결과와 기술을 제품으로 연결하는 AI 연구원입니다.
+            연구의 깊이를 RAG, 멀티 에이전트, Document AI, 운영 가능한
+            플랫폼으로 번역합니다.
           </p>
           <nav
             className="hero-actions hero-button-actions"
@@ -382,9 +383,9 @@ const IndexPage = ({ data }) => {
               AI Engineer &amp; Researcher
             </h3>
             <p>
-              AI 연구와 제품 개발의 접점을 다룹니다. 논문, 벤치마크, 모델링,
-              백엔드, 관찰성, 배포까지 이어지는 실제 시스템을 만드는 데
-              집중합니다.
+              연구의 언어를 제품·운영·비즈니스 가치의 언어로 번역합니다.
+              문제 정의, AI 아키텍처 설계, 백엔드, 관찰성, 배포, 검증까지
+              이어지는 실제 시스템을 만드는 데 집중합니다.
             </p>
             <dl className="profile-facts">
               <div>
