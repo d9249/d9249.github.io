@@ -433,7 +433,6 @@ export const awardItems = [
         href: "/evidence/awards/kiit-posenet-bronze-paper-contest-2021.pdf",
       },
     ],
-    href: "https://drive.google.com/file/d/1NvvLVTjTTT6Acwp4czgx7laKNU4t-VCY",
   },
   {
     title: "경기대학교 AI컴퓨터공학부 캡스톤디자인전시회",
@@ -447,7 +446,6 @@ export const awardItems = [
         href: "/evidence/awards/code-15-capstone-encouragement-award-2021.jpeg",
       },
     ],
-    href: "https://drive.google.com/file/d/1MivqEeTIQ2nKBn3zSvbrzofHuiUbT1yL",
   },
 ];
 

@@ -1703,6 +1703,23 @@ h3 {
   background: var(--surface);
 }
 
+.evidence-viewer-stage-image {
+  display: grid;
+  align-items: start;
+  justify-items: center;
+  padding: 14px;
+}
+
+.evidence-viewer-image {
+  display: block;
+  width: min(100%, 900px);
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: white;
+  box-shadow: 0 10px 36px color-mix(in oklch, var(--fg) 8%, transparent);
+}
+
 .paper-viewer-pages {
   display: grid;
   justify-items: center;
