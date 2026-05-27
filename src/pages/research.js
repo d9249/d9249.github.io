@@ -29,6 +29,18 @@ const getPaperLinks = (item) => [
     : []),
 ];
 
+const getPaperKey = (item) => `${item.year}-${item.title}`;
+
+const paperRows = paperItems.reduce((rows, item, index) => {
+  if (index % 2 === 0) {
+    rows.push([item]);
+  } else {
+    rows[rows.length - 1].push(item);
+  }
+
+  return rows;
+}, []);
+
 const ResearchPage = () => {
   const [activePdf, setActivePdf] = React.useState(null);
 
@@ -82,67 +94,78 @@ const ResearchPage = () => {
       <section className="shell section">
         <SectionHeading kicker="Publications" title="전체 논문 리스트" />
         <div className="paper-grid">
-          {paperItems.map((item, index) => {
-            const links = getPaperLinks(item);
-            const paperKey = `${item.year}-${item.title}`;
-            const viewerId = `paper-viewer-${index}`;
-            const isPdfOpen = activePdf === paperKey;
+          {paperRows.map((row, rowIndex) => {
+            const activeItem = row.find(
+              (item) => activePdf === getPaperKey(item),
+            );
+            const viewerId = `paper-viewer-row-${rowIndex}`;
 
             return (
-              <article
-                className={`paper-card${isPdfOpen ? " paper-card-expanded" : ""}`}
-                key={item.title}
-              >
-                <div className="paper-card-top">
-                  <div className="meta">{item.type}</div>
-                  <span>{item.year}</span>
+              <React.Fragment key={row.map((item) => item.title).join("|")}>
+                <div className="paper-row-grid">
+                  {row.map((item) => {
+                    const links = getPaperLinks(item);
+                    const paperKey = getPaperKey(item);
+                    const isPdfOpen = activePdf === paperKey;
+
+                    return (
+                      <article className="paper-card" key={item.title}>
+                        <div className="paper-card-top">
+                          <div className="meta">{item.type}</div>
+                          <span>{item.year}</span>
+                        </div>
+                        <h3>{item.title}</h3>
+                        <div className="paper-venue">{item.venue}</div>
+                        <p>{item.description}</p>
+                        {item.authors ? (
+                          <div className="paper-authors">{item.authors}</div>
+                        ) : null}
+                        <div className="research-facts">
+                          {item.facts.map((fact) => (
+                            <span key={fact}>{fact}</span>
+                          ))}
+                        </div>
+                        {item.pdfHref || links.length ? (
+                          <div
+                            className="research-links"
+                            aria-label={`${item.title} 논문 링크`}
+                          >
+                            {item.pdfHref ? (
+                              <button
+                                type="button"
+                                className="paper-viewer-toggle"
+                                aria-controls={viewerId}
+                                aria-expanded={isPdfOpen}
+                                onClick={() =>
+                                  setActivePdf(isPdfOpen ? null : paperKey)
+                                }
+                              >
+                                {isPdfOpen ? "PDF 닫기" : "PDF 미리보기"} →
+                              </button>
+                            ) : null}
+                            {links.map((link) => (
+                              <a key={link.href} href={link.href}>
+                                {link.label} →
+                              </a>
+                            ))}
+                          </div>
+                        ) : null}
+                      </article>
+                    );
+                  })}
                 </div>
-                <h3>{item.title}</h3>
-                <div className="paper-venue">{item.venue}</div>
-                <p>{item.description}</p>
-                {item.authors ? (
-                  <div className="paper-authors">{item.authors}</div>
-                ) : null}
-                <div className="research-facts">
-                  {item.facts.map((fact) => (
-                    <span key={fact}>{fact}</span>
-                  ))}
-                </div>
-                {item.pdfHref || links.length ? (
-                  <div
-                    className="research-links"
-                    aria-label={`${item.title} 논문 링크`}
-                  >
-                    {item.pdfHref ? (
-                      <button
-                        type="button"
-                        className="paper-viewer-toggle"
-                        aria-controls={viewerId}
-                        aria-expanded={isPdfOpen}
-                        onClick={() =>
-                          setActivePdf(isPdfOpen ? null : paperKey)
-                        }
-                      >
-                        {isPdfOpen ? "PDF 닫기" : "PDF 미리보기"} →
-                      </button>
-                    ) : null}
-                    {links.map((link) => (
-                      <a key={link.href} href={link.href}>
-                        {link.label} →
-                      </a>
-                    ))}
+                {activeItem?.pdfHref ? (
+                  <div className="paper-viewer-panel">
+                    <div className="paper-viewer" id={viewerId}>
+                      <iframe
+                        title={`${activeItem.title} PDF 미리보기`}
+                        src={`${activeItem.pdfHref}#toolbar=0&navpanes=0&scrollbar=1`}
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
                 ) : null}
-                {item.pdfHref && isPdfOpen ? (
-                  <div className="paper-viewer" id={viewerId}>
-                    <iframe
-                      title={`${item.title} PDF 미리보기`}
-                      src={`${item.pdfHref}#toolbar=0&navpanes=0&scrollbar=1`}
-                      loading="lazy"
-                    />
-                  </div>
-                ) : null}
-              </article>
+              </React.Fragment>
             );
           })}
         </div>
