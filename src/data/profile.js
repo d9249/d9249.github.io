@@ -101,7 +101,9 @@ export const paperItems = [
     year: "2024",
     description:
       "Optimization methods of Graph Convolution Networks for Recommendation Systems.",
+    authors: "이상민",
     facts: ["M.S. Thesis", "UCI I804:41002-000000057783", "1st author"],
+    pdfHref: "/evidence/papers/ms-thesis-gcn-recommendation-optimization.pdf",
     href: "http://www.dcollection.net/handler/kyonggi/000000057783",
     linkLabel: "dCollection",
   },
@@ -113,7 +115,10 @@ export const paperItems = [
     year: "2024",
     description:
       "LightGCN 기반 추천 시스템에서 embedding 표현을 강화하는 방법을 제안했습니다.",
+    authors: "Sangmin Lee, Junho Ahn, Namgi Kim",
     facts: ["SCIE(Q2)", "MDPI Electronics", "1st author"],
+    pdfHref:
+      "/evidence/papers/embedding-enhancement-lightgcn-electronics-2024.pdf",
     href: "https://doi.org/10.3390/electronics13122282",
     linkLabel: "DOI",
   },
@@ -125,7 +130,10 @@ export const paperItems = [
     year: "2024",
     description:
       "그래프 컨볼루션 네트워크의 가중 전달 전략으로 추천 품질을 개선한 연구입니다.",
+    authors: "Sang-min Lee, Namgi Kim",
     facts: ["SCIE(Q2)", "CMC", "1st author"],
+    pdfHref:
+      "/evidence/papers/weighted-forwarding-gcn-recommendation-cmc-2024.pdf",
     href: "https://doi.org/10.32604/cmc.2023.046346",
     linkLabel: "DOI",
   },
@@ -137,7 +145,10 @@ export const paperItems = [
     year: "2023",
     description:
       "퇴행성 관절염 분류 정확도를 높이기 위한 딥러닝 모델 앙상블 연구입니다.",
+    authors: "Sang-min Lee, Namgi Kim",
     facts: ["SCIE(Q2)", "CMC", "1st author"],
+    pdfHref:
+      "/evidence/papers/deep-learning-ensemble-degenerative-arthritis-cmc-2023.pdf",
     href: "https://doi.org/10.32604/cmc.2023.035245",
     linkLabel: "DOI",
   },
@@ -149,7 +160,10 @@ export const paperItems = [
     year: "2023",
     description:
       "추천 시스템 성능 향상을 위해 사용자 행동 시간 기반 데이터를 분석한 연구입니다.",
+    authors: "이상민, 김희찬, 김남기",
     facts: ["KCI", "JKIIT 21(5)", "1st author"],
+    pdfHref:
+      "/evidence/papers/time-based-user-behavior-gnn-recommendation-jkiit-2023.pdf",
     href: "https://doi.org/10.14801/jkiit.2023.21.5.21",
     linkLabel: "DOI",
   },
@@ -161,7 +175,9 @@ export const paperItems = [
     year: "2022",
     description:
       "다중 연쇄 U-Net 모델로 의료 영상의 췌장 영역 분할 탐지 성능을 개선한 연구입니다.",
+    authors: "이상민, 이상윤, 김남기",
     facts: ["KCI", "JKIIT 20(5)", "1st author"],
+    pdfHref: "/evidence/papers/pancreas-segmentation-mcu-net-jkiit-2022.pdf",
     href: "https://doi.org/10.14801/jkiit.2022.20.5.81",
     linkLabel: "DOI",
   },
@@ -173,7 +189,10 @@ export const paperItems = [
     year: "2023",
     description:
       "추천 시스템에서 그래프 컨볼루션 네트워크의 egress initialization을 다룬 국제학회 논문입니다.",
+    authors: "Sang-min Lee, Kim Heechan, Jeon Janggun, Namgi Kim",
     facts: ["ICONI 2023", "Recommendation", "1st author"],
+    pdfHref:
+      "/evidence/papers/egress-initialization-gcn-recommendation-iconi-2023.pdf",
   },
   {
     type: "International Conference",
@@ -182,7 +201,9 @@ export const paperItems = [
     year: "2023",
     description:
       "추천 시스템을 위한 경량 그래프 컨볼루션 네트워크 구조를 다룬 국제학회 논문입니다.",
+    authors: "Sang-min Lee, Kim Heechan, Jeon Janggun, Namgi Kim",
     facts: ["ICONI 2023", "GNN", "1st author"],
+    pdfHref: "/evidence/papers/thin-gcn-recommendation-iconi-2023.pdf",
   },
   {
     type: "International Conference",
@@ -191,7 +212,9 @@ export const paperItems = [
     year: "2023",
     description:
       "LightGCN에서 over-smoothing 현상을 분석한 추천 시스템 국제학회 논문입니다.",
+    authors: "Sangmin Lee, Heechan Kim, Janggun Jeon, Namgi Kim",
     facts: ["ICONI 2023", "LightGCN", "1st author"],
+    pdfHref: "/evidence/papers/oversmoothing-lightgcn-iconi-2023.pdf",
   },
   {
     type: "International Conference",
@@ -201,7 +224,10 @@ export const paperItems = [
     year: "2023",
     description:
       "시간 기반 데이터를 활용해 추천 시스템 정확도를 개선하는 방법을 발표했습니다.",
+    authors: "Sangmin Lee, Jeon Janggun, Lee Yejin, Namgi Kim",
     facts: ["APIC-IST", "Recommendation", "1st author"],
+    pdfHref:
+      "/evidence/papers/leverage-time-based-data-recommendation-apicist-2023.pdf",
   },
   {
     type: "International Conference",
@@ -212,7 +238,10 @@ export const paperItems = [
     year: "2023",
     description:
       "퇴행성 관절염 진단 자동화를 위한 딥러닝 기반 의료영상 연구입니다.",
+    authors: "Sangmin Lee, Namgi Kim, Dohun Kim",
     facts: ["ICSMB 2023", "Medical Imaging", "1st author"],
+    pdfHref:
+      "/evidence/papers/deep-learning-medical-automation-arthritis-icsmb-2023.pdf",
   },
   {
     type: "International Conference",
@@ -223,7 +252,10 @@ export const paperItems = [
     year: "2022",
     description:
       "Xception 기반 방사선 이미지 퇴행성 관절염 분류 연구로 APIC-IST Best Paper에 선정되었습니다.",
+    authors: "Sang-min Lee, Namgi Kim",
     facts: ["APIC-IST", "Best Paper", "1st author"],
+    pdfHref:
+      "/evidence/papers/xception-degenerative-arthritis-apicist-2022.pdf",
   },
   {
     type: "Domestic Conference",
@@ -233,7 +265,10 @@ export const paperItems = [
     year: "2023",
     description:
       "비지도 이상치 탐지에서 이상 점수 임계값 선택 기준에 따른 성능 변화를 분석했습니다.",
+    authors: "전장군, 이상민, 김남기",
     facts: ["KSII", "Anomaly Detection", "2nd author"],
+    pdfHref:
+      "/evidence/papers/anomaly-score-threshold-unsupervised-anomaly-ksii-2023.pdf",
   },
   {
     type: "Domestic Conference",
@@ -243,7 +278,10 @@ export const paperItems = [
     year: "2023",
     description:
       "시간-공간 Attention 구조가 교통 흐름 예측 성능에 미치는 영향을 분석했습니다.",
+    authors: "전장군, 이상민, 김남기",
     facts: ["KSII", "Traffic Forecasting", "2nd author"],
+    pdfHref:
+      "/evidence/papers/traffic-flow-spatiotemporal-attention-ksii-2023.pdf",
   },
   {
     type: "Domestic Conference",
@@ -252,6 +290,7 @@ export const paperItems = [
     year: "2023",
     description:
       "추천 시스템의 시간 기반 사용자 행동 데이터를 분석한 국내학회 논문입니다.",
+    authors: "이상민, 김남기",
     facts: ["KSII", "Recommendation", "1st author"],
   },
   {
@@ -261,7 +300,10 @@ export const paperItems = [
     year: "2023",
     description:
       "SDN 환경에서 오토 인코더 기반 플로우 분류 기법을 제안했습니다.",
+    authors: "전장군, 김희찬, 이상민, 김남기",
     facts: ["KICS", "Autoencoder", "3rd author"],
+    pdfHref:
+      "/evidence/papers/sdn-autoencoder-flow-classification-kics-2023.pdf",
   },
   {
     type: "Domestic Conference",
@@ -270,7 +312,10 @@ export const paperItems = [
     year: "2022",
     description:
       "추천 시스템을 활용해 정보 중심 네트워크의 캐싱 서버 최적화를 다룬 논문입니다.",
+    authors: "이상민, 김남기",
     facts: ["SEBS", "Recommendation", "1st author"],
+    pdfHref:
+      "/evidence/papers/caching-server-optimization-recommendation-sebs-2022.pdf",
   },
   {
     type: "Domestic Conference",
@@ -278,7 +323,9 @@ export const paperItems = [
     venue: "KSII Spring Conference",
     year: "2022",
     description: "RFID 태그 기반 출결 확인 시스템 구현 내용을 발표했습니다.",
+    authors: "김희찬, 안나, 이상민, 김남기",
     facts: ["KSII", "RFID", "3rd author"],
+    pdfHref: "/evidence/papers/rfid-attendance-system-ksii-2022.pdf",
   },
   {
     type: "Domestic Conference",
@@ -287,7 +334,9 @@ export const paperItems = [
     year: "2021",
     description:
       "겹친 문자 이미지 분류를 위한 CNN 모델의 정확도를 분석했습니다.",
+    authors: "이상민, 김남기",
     facts: ["KSII", "CNN", "1st author"],
+    pdfHref: "/evidence/papers/overlapped-character-cnn-kiit-2021.pdf",
   },
   {
     type: "Domestic Conference",
@@ -296,7 +345,10 @@ export const paperItems = [
     year: "2021",
     description:
       "PoseNet 기반 헬스 트레이너 웹 서비스 논문으로 KIIT Best Paper Award를 수상했습니다.",
+    authors: "이상민, 김도훈",
     facts: ["KIIT", "Best Paper", "1st author"],
+    pdfHref:
+      "/evidence/papers/posenet-health-trainer-web-service-kiit-2021.pdf",
   },
 ];
 

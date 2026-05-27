@@ -23,6 +23,13 @@ const researchStats = [
   },
 ];
 
+const getPaperLinks = (item) => [
+  ...(item.pdfHref ? [{ label: "PDF", href: item.pdfHref }] : []),
+  ...(item.href
+    ? [{ label: item.linkLabel || "논문 보기", href: item.href }]
+    : []),
+];
+
 const ResearchPage = () => (
   <Layout>
     <section className="shell project-detail-hero">
@@ -73,27 +80,41 @@ const ResearchPage = () => (
     <section className="shell section">
       <SectionHeading kicker="Publications" title="전체 논문 리스트" />
       <div className="paper-grid">
-        {paperItems.map((item) => (
-          <article className="paper-card" key={item.title}>
-            <div className="paper-card-top">
-              <div className="meta">{item.type}</div>
-              <span>{item.year}</span>
-            </div>
-            <h3>{item.title}</h3>
-            <div className="paper-venue">{item.venue}</div>
-            <p>{item.description}</p>
-            <div className="research-facts">
-              {item.facts.map((fact) => (
-                <span key={fact}>{fact}</span>
-              ))}
-            </div>
-            {item.href ? (
-              <a className="paper-link" href={item.href}>
-                {item.linkLabel || "논문 보기"} →
-              </a>
-            ) : null}
-          </article>
-        ))}
+        {paperItems.map((item) => {
+          const links = getPaperLinks(item);
+
+          return (
+            <article className="paper-card" key={item.title}>
+              <div className="paper-card-top">
+                <div className="meta">{item.type}</div>
+                <span>{item.year}</span>
+              </div>
+              <h3>{item.title}</h3>
+              <div className="paper-venue">{item.venue}</div>
+              <p>{item.description}</p>
+              {item.authors ? (
+                <div className="paper-authors">{item.authors}</div>
+              ) : null}
+              <div className="research-facts">
+                {item.facts.map((fact) => (
+                  <span key={fact}>{fact}</span>
+                ))}
+              </div>
+              {links.length ? (
+                <div
+                  className="research-links"
+                  aria-label={`${item.title} 논문 링크`}
+                >
+                  {links.map((link) => (
+                    <a key={link.href} href={link.href}>
+                      {link.label} →
+                    </a>
+                  ))}
+                </div>
+              ) : null}
+            </article>
+          );
+        })}
       </div>
     </section>
   </Layout>
