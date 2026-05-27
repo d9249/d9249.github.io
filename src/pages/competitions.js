@@ -19,6 +19,18 @@ const CompetitionsPage = () => (
                 <span key={fact}>{fact}</span>
               ))}
             </div>
+            {item.links?.length ? (
+              <div
+                className="research-links"
+                aria-label={`${item.title} 관련 링크`}
+              >
+                {item.links.map((link) => (
+                  <a key={link.href} href={link.href}>
+                    {link.label} →
+                  </a>
+                ))}
+              </div>
+            ) : null}
             {item.href ? (
               <a className="paper-link" href={item.href}>
                 활동 보기 →

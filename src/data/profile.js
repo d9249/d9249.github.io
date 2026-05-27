@@ -427,6 +427,12 @@ export const awardItems = [
     description:
       "PoseNet을 활용한 헬스 트레이너 웹 서비스 논문으로 대학생논문경진대회 우수논문상을 수상했습니다.",
     facts: ["No. 21-222", "Bronze", "Paper Contest"],
+    links: [
+      {
+        label: "상장",
+        href: "/evidence/awards/kiit-posenet-bronze-paper-contest-2021.pdf",
+      },
+    ],
     href: "https://drive.google.com/file/d/1NvvLVTjTTT6Acwp4czgx7laKNU4t-VCY",
   },
   {
@@ -435,6 +441,12 @@ export const awardItems = [
     period: "2021",
     description: "핏-시방 프로젝트로 캡스톤디자인전시회 장려상을 수상했습니다.",
     facts: ["No. 2021-0005", "Capstone", "Team Project"],
+    links: [
+      {
+        label: "상장",
+        href: "/evidence/awards/code-15-capstone-encouragement-award-2021.jpeg",
+      },
+    ],
     href: "https://drive.google.com/file/d/1MivqEeTIQ2nKBn3zSvbrzofHuiUbT1yL",
   },
 ];
@@ -447,6 +459,12 @@ export const competitionItems = [
     description:
       "MQL 데이터 기반 B2B 영업 기회 창출 예측 모델을 개발했습니다. 데이터 정규화, 비즈니스 영역 매핑, XGBoost 모델, 임계값 최적화를 통해 F1-score를 개선했습니다.",
     facts: ["MQL Prediction", "F1-score 0.75154", "Team Leader"],
+    links: [
+      {
+        label: "수료증",
+        href: "/evidence/competitions/lg-aimers-4th-certificate.pdf",
+      },
+    ],
     href: "https://github.com/d9249/LG_Aimers",
   },
   {
@@ -456,6 +474,12 @@ export const competitionItems = [
     description:
       "건설기계 센서데이터를 활용한 작업 중량 예측 모델을 개발하고, 시계열 Transformer와 맞춤형 손실 함수로 성능을 끌어올렸습니다.",
     facts: ["4th Place", "Public Score 98.21432", "Time Series Transformer"],
+    links: [
+      {
+        label: "증빙서",
+        href: "/evidence/competitions/hd-hyundai-ai-challenge-certificate.pdf",
+      },
+    ],
     href: "https://github.com/d9249/HDAIChallenge",
   },
   {
@@ -483,7 +507,27 @@ export const competitionItems = [
     description:
       "Computer Vision Team과 ML/GNN Team에서 논문 리뷰, PyTorch 기반 모델 구현, DACON 대회 참여, 학술발표대회 논문 발표를 수행했습니다.",
     facts: ["Computer Vision", "GNN", "Paper Review"],
+    links: [
+      {
+        label: "DIYA 4기 증빙",
+        href: "/evidence/competitions/diya-4th-sangmin-lee.pdf",
+      },
+    ],
     href: "https://doityourselfai.github.io/",
+  },
+  {
+    title: "산업인공지능 단기집중교육",
+    result: "교육과정 수료",
+    period: "2021.07",
+    description:
+      "한국생산성본부와 전자부품연구원의 산업인공지능 단기집중 교육과정(일반공통)을 수료했습니다.",
+    facts: ["Industrial AI", "KPC", "KETI"],
+    links: [
+      {
+        label: "수료증",
+        href: "/evidence/competitions/industrial-ai-intensive-course-certificate-2021.jpg",
+      },
+    ],
   },
 ];
 
