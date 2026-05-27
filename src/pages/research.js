@@ -37,14 +37,9 @@ const getPaperLinks = (item) => [
 
 const getPaperKey = (item) => `${item.year}-${item.title}`;
 
-const getPdfSrc = (item, zoom, fitMode) => {
+const getPdfSrc = (item) => {
   const params = ["toolbar=0", "navpanes=0", "scrollbar=1"];
-
-  if (fitMode === "fit") {
-    params.push("view=Fit");
-  } else {
-    params.push(`zoom=${zoom}`);
-  }
+  params.push("view=Fit");
 
   return `${item.pdfHref}#${params.join("&")}`;
 };
@@ -88,7 +83,14 @@ const PaperPdfViewer = ({
   <div
     className={`paper-viewer-panel${isPdfFullView ? " paper-viewer-panel-full" : ""}`}
   >
-    <div className="paper-viewer" id={viewerId}>
+    <div
+      className="paper-viewer"
+      id={viewerId}
+      style={{
+        "--paper-viewer-scale": pdfZoom / PDF_DEFAULT_ZOOM,
+        "--paper-viewer-inverse-scale": PDF_DEFAULT_ZOOM / pdfZoom,
+      }}
+    >
       <div
         className="paper-viewer-toolbar"
         role="toolbar"
@@ -142,13 +144,15 @@ const PaperPdfViewer = ({
         </div>
       </div>
       <div className="paper-viewer-stage">
-        <iframe
-          key={`${item.pdfHref}-${pdfZoom}-${pdfFitMode}`}
-          title={`${item.title} PDF 미리보기`}
-          src={getPdfSrc(item, pdfZoom, pdfFitMode)}
-          loading="lazy"
-          scrolling="yes"
-        />
+        <div className="paper-viewer-frame">
+          <iframe
+            key={item.pdfHref}
+            title={`${item.title} PDF 미리보기`}
+            src={getPdfSrc(item)}
+            loading="lazy"
+            scrolling="yes"
+          />
+        </div>
       </div>
     </div>
   </div>
