@@ -3,6 +3,11 @@ import Layout from "../components/Layout";
 import SectionHeading from "../components/SectionHeading";
 import { paperItems } from "../data/profile";
 
+const PDF_ZOOM_MIN = 60;
+const PDF_ZOOM_MAX = 180;
+const PDF_ZOOM_STEP = 20;
+const PDF_DEFAULT_ZOOM = 100;
+
 const researchStats = [
   {
     label: "SCIE",
@@ -31,6 +36,18 @@ const getPaperLinks = (item) => [
 
 const getPaperKey = (item) => `${item.year}-${item.title}`;
 
+const getPdfSrc = (item, zoom, fitMode) => {
+  const params = ["toolbar=0", "navpanes=0", "scrollbar=1"];
+
+  if (fitMode === "fit") {
+    params.push("view=FitH");
+  } else {
+    params.push(`zoom=${zoom}`);
+  }
+
+  return `${item.pdfHref}#${params.join("&")}`;
+};
+
 const paperRows = paperItems.reduce((rows, item, index) => {
   if (index % 2 === 0) {
     rows.push([item]);
@@ -43,6 +60,59 @@ const paperRows = paperItems.reduce((rows, item, index) => {
 
 const ResearchPage = () => {
   const [activePdf, setActivePdf] = React.useState(null);
+  const [pdfZoom, setPdfZoom] = React.useState(PDF_DEFAULT_ZOOM);
+  const [pdfFitMode, setPdfFitMode] = React.useState("fit");
+  const [isPdfFullView, setIsPdfFullView] = React.useState(false);
+
+  React.useEffect(() => {
+    document.body.classList.toggle(
+      "paper-viewer-fullscreen-open",
+      isPdfFullView,
+    );
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setIsPdfFullView(false);
+      }
+    };
+
+    if (isPdfFullView) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+
+    return () => {
+      document.body.classList.remove("paper-viewer-fullscreen-open");
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isPdfFullView]);
+
+  const togglePdf = (paperKey) => {
+    if (activePdf === paperKey) {
+      setActivePdf(null);
+      setIsPdfFullView(false);
+      return;
+    }
+
+    setActivePdf(paperKey);
+    setPdfZoom(PDF_DEFAULT_ZOOM);
+    setPdfFitMode("fit");
+    setIsPdfFullView(false);
+  };
+
+  const changePdfZoom = (direction) => {
+    setPdfFitMode("custom");
+    setPdfZoom((currentZoom) =>
+      Math.min(
+        PDF_ZOOM_MAX,
+        Math.max(PDF_ZOOM_MIN, currentZoom + direction * PDF_ZOOM_STEP),
+      ),
+    );
+  };
+
+  const fitPdfToView = () => {
+    setPdfZoom(PDF_DEFAULT_ZOOM);
+    setPdfFitMode("fit");
+  };
 
   return (
     <Layout>
@@ -145,9 +215,7 @@ const ResearchPage = () => {
                                 className="paper-viewer-toggle"
                                 aria-controls={viewerId}
                                 aria-expanded={isPdfOpen}
-                                onClick={() =>
-                                  setActivePdf(isPdfOpen ? null : paperKey)
-                                }
+                                onClick={() => togglePdf(paperKey)}
                               >
                                 {isPdfOpen ? "PDF 닫기" : "PDF 미리보기"} →
                               </button>
@@ -164,13 +232,80 @@ const ResearchPage = () => {
                   })}
                 </div>
                 {activeItem?.pdfHref ? (
-                  <div className="paper-viewer-panel">
+                  <div
+                    className={`paper-viewer-panel${isPdfFullView ? " paper-viewer-panel-full" : ""}`}
+                  >
                     <div className="paper-viewer" id={viewerId}>
-                      <iframe
-                        title={`${activeItem.title} PDF 미리보기`}
-                        src={`${activeItem.pdfHref}#toolbar=0&navpanes=0&scrollbar=1`}
-                        loading="lazy"
-                      />
+                      <div
+                        className="paper-viewer-toolbar"
+                        role="toolbar"
+                        aria-label={`${activeItem.title} PDF 뷰어 조작`}
+                      >
+                        <div className="paper-viewer-title">
+                          {activeItem.title}
+                        </div>
+                        <div className="paper-viewer-controls">
+                          <button
+                            type="button"
+                            className="paper-viewer-control"
+                            onClick={() => changePdfZoom(-1)}
+                            disabled={pdfZoom <= PDF_ZOOM_MIN}
+                            aria-label="PDF 축소"
+                            title="축소"
+                          >
+                            -
+                          </button>
+                          <span className="paper-viewer-zoom">
+                            {pdfFitMode === "fit" ? "맞춤" : `${pdfZoom}%`}
+                          </span>
+                          <button
+                            type="button"
+                            className="paper-viewer-control"
+                            onClick={() => changePdfZoom(1)}
+                            disabled={pdfZoom >= PDF_ZOOM_MAX}
+                            aria-label="PDF 확대"
+                            title="확대"
+                          >
+                            +
+                          </button>
+                          <button
+                            type="button"
+                            className={`paper-viewer-control paper-viewer-control-text${pdfFitMode === "fit" ? " is-active" : ""}`}
+                            onClick={fitPdfToView}
+                            aria-pressed={pdfFitMode === "fit"}
+                            aria-label="PDF 화면에 맞추기"
+                            title="화면에 맞추기"
+                          >
+                            맞춤
+                          </button>
+                          <button
+                            type="button"
+                            className="paper-viewer-control paper-viewer-control-text"
+                            onClick={() =>
+                              setIsPdfFullView((currentValue) => !currentValue)
+                            }
+                            aria-pressed={isPdfFullView}
+                            aria-label={
+                              isPdfFullView
+                                ? "PDF 전체 보기 닫기"
+                                : "PDF 전체 보기"
+                            }
+                            title={
+                              isPdfFullView ? "전체 보기 닫기" : "전체 보기"
+                            }
+                          >
+                            {isPdfFullView ? "복귀" : "전체"}
+                          </button>
+                        </div>
+                      </div>
+                      <div className="paper-viewer-stage">
+                        <iframe
+                          key={`${activeItem.pdfHref}-${pdfZoom}-${pdfFitMode}`}
+                          title={`${activeItem.title} PDF 미리보기`}
+                          src={getPdfSrc(activeItem, pdfZoom, pdfFitMode)}
+                          loading="lazy"
+                        />
+                      </div>
                     </div>
                   </div>
                 ) : null}
