@@ -1372,6 +1372,7 @@ h3 {
 
 .research-grid,
 .paper-grid,
+.recognition-list,
 .recognition-grid,
 .skill-grid {
   display: grid;
@@ -1385,6 +1386,12 @@ h3 {
 .paper-grid,
 .recognition-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.recognition-row-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
 }
 
 .paper-grid {
@@ -1704,15 +1711,20 @@ h3 {
 }
 
 .evidence-viewer-stage-image {
-  display: grid;
-  align-items: start;
-  justify-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: min(52vh, 440px);
+  min-height: 320px;
+  overflow: hidden;
   padding: 14px;
 }
 
 .evidence-viewer-image {
   display: block;
-  width: min(100%, 900px);
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
   height: auto;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -1803,6 +1815,18 @@ body.paper-viewer-fullscreen-open {
 .paper-viewer-panel-full .paper-viewer-stage {
   height: auto;
   min-height: 0;
+}
+
+.paper-viewer-panel-full .evidence-viewer-stage-image {
+  align-items: start;
+  height: auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.paper-viewer-panel-full .evidence-viewer-image {
+  width: min(100%, 1100px);
+  max-height: none;
 }
 
 .paper-link {
@@ -4396,6 +4420,12 @@ figcaption,
     max-height: calc(100dvh - 180px);
   }
 
+  .evidence-viewer-stage-image {
+    height: min(48vh, 400px);
+    height: min(48dvh, 400px);
+    min-height: 260px;
+  }
+
   .paper-viewer-panel-full {
     padding: max(8px, env(safe-area-inset-top))
       max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom))
@@ -4414,6 +4444,10 @@ figcaption,
   }
 
   .paper-row-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .recognition-row-grid {
     grid-template-columns: 1fr;
   }
 
