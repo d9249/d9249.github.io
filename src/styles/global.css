@@ -1602,6 +1602,7 @@ h3 {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   min-width: 0;
+  max-width: 100%;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -1609,6 +1610,7 @@ h3 {
 }
 
 .paper-viewer-panel {
+  width: 100%;
   min-width: 0;
 }
 
@@ -1686,6 +1688,9 @@ h3 {
   min-width: 0;
   height: min(74vh, 780px);
   min-height: 520px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   background: color-mix(in oklch, var(--fg) 8%, var(--surface));
 }
 
@@ -1707,14 +1712,24 @@ body.paper-viewer-fullscreen-open {
   inset: 0;
   z-index: 90;
   display: grid;
+  box-sizing: border-box;
+  width: 100vw;
+  width: 100dvw;
+  height: 100vh;
+  height: 100dvh;
   min-width: 0;
-  padding: 12px;
+  overflow: hidden;
+  padding: max(12px, env(safe-area-inset-top))
+    max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom))
+    max(12px, env(safe-area-inset-left));
   background: color-mix(in oklch, var(--bg) 88%, transparent);
   backdrop-filter: blur(14px);
 }
 
 .paper-viewer-panel-full .paper-viewer {
+  width: 100%;
   height: 100%;
+  max-height: 100%;
   box-shadow: 0 24px 90px color-mix(in oklch, var(--fg) 20%, transparent);
 }
 
@@ -4293,19 +4308,47 @@ figcaption,
 
   .paper-viewer-toolbar {
     grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .paper-viewer-title {
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .paper-viewer-controls {
     justify-content: flex-start;
+    width: 100%;
   }
 
   .paper-viewer-stage {
-    height: 68vh;
-    min-height: 420px;
+    height: min(62vh, 520px);
+    height: min(62dvh, 520px);
+    min-height: 360px;
+    max-height: calc(100vh - 180px);
+    max-height: calc(100dvh - 180px);
+  }
+
+  .paper-viewer-stage iframe {
+    height: 2400px;
+    min-height: 100%;
   }
 
   .paper-viewer-panel-full {
-    padding: 8px;
+    padding: max(8px, env(safe-area-inset-top))
+      max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom))
+      max(8px, env(safe-area-inset-left));
+  }
+
+  .paper-viewer-panel-full .paper-viewer-stage {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .paper-viewer-panel-full .paper-viewer-stage iframe {
+    height: 3200px;
+    min-height: 100%;
   }
 
   .paper-row-grid {
