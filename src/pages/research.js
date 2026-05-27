@@ -24,101 +24,132 @@ const researchStats = [
 ];
 
 const getPaperLinks = (item) => [
-  ...(item.pdfHref ? [{ label: "PDF", href: item.pdfHref }] : []),
   ...(item.href
     ? [{ label: item.linkLabel || "논문 보기", href: item.href }]
     : []),
 ];
 
-const ResearchPage = () => (
-  <Layout>
-    <section className="shell project-detail-hero">
-      <div className="project-detail-hero-grid">
-        <div>
-          <p className="eyebrow">Research</p>
-          <h1>논문 및 연구 성과</h1>
-          <p className="project-detail-copy">
-            그래프 추천 시스템, 의료영상 딥러닝, 이상탐지와 응용 AI를 중심으로
-            진행한 학위논문, 저널, 학회 논문 목록입니다.
-          </p>
+const ResearchPage = () => {
+  const [activePdf, setActivePdf] = React.useState(null);
+
+  return (
+    <Layout>
+      <section className="shell project-detail-hero">
+        <div className="project-detail-hero-grid">
+          <div>
+            <p className="eyebrow">Research</p>
+            <h1>논문 및 연구 성과</h1>
+            <p className="project-detail-copy">
+              그래프 추천 시스템, 의료영상 딥러닝, 이상탐지와 응용 AI를 중심으로
+              진행한 학위논문, 저널, 학회 논문 목록입니다.
+            </p>
+          </div>
+          <aside className="project-detail-facts" aria-label="Research facts">
+            <div>
+              <span>total papers</span>
+              <strong>{paperItems.length}</strong>
+            </div>
+            <div>
+              <span>journal papers</span>
+              <strong>
+                {
+                  paperItems.filter((item) => item.type.includes("Journal"))
+                    .length
+                }
+              </strong>
+            </div>
+            <div>
+              <span>primary areas</span>
+              <strong>Recommendation / Medical Imaging / GNN</strong>
+            </div>
+          </aside>
         </div>
-        <aside className="project-detail-facts" aria-label="Research facts">
-          <div>
-            <span>total papers</span>
-            <strong>{paperItems.length}</strong>
-          </div>
-          <div>
-            <span>journal papers</span>
-            <strong>
-              {
-                paperItems.filter((item) => item.type.includes("Journal"))
-                  .length
-              }
-            </strong>
-          </div>
-          <div>
-            <span>primary areas</span>
-            <strong>Recommendation / Medical Imaging / GNN</strong>
-          </div>
-        </aside>
-      </div>
-    </section>
+      </section>
 
-    <section className="shell section">
-      <SectionHeading kicker="Overview" title="연구 요약" />
-      <div className="evidence-grid">
-        {researchStats.map((item) => (
-          <article className="evidence-card" key={item.label}>
-            <div className="meta">{item.label}</div>
-            <div className="value">{item.value}</div>
-            <p>{item.description}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section className="shell section">
-      <SectionHeading kicker="Publications" title="전체 논문 리스트" />
-      <div className="paper-grid">
-        {paperItems.map((item) => {
-          const links = getPaperLinks(item);
-
-          return (
-            <article className="paper-card" key={item.title}>
-              <div className="paper-card-top">
-                <div className="meta">{item.type}</div>
-                <span>{item.year}</span>
-              </div>
-              <h3>{item.title}</h3>
-              <div className="paper-venue">{item.venue}</div>
+      <section className="shell section">
+        <SectionHeading kicker="Overview" title="연구 요약" />
+        <div className="evidence-grid">
+          {researchStats.map((item) => (
+            <article className="evidence-card" key={item.label}>
+              <div className="meta">{item.label}</div>
+              <div className="value">{item.value}</div>
               <p>{item.description}</p>
-              {item.authors ? (
-                <div className="paper-authors">{item.authors}</div>
-              ) : null}
-              <div className="research-facts">
-                {item.facts.map((fact) => (
-                  <span key={fact}>{fact}</span>
-                ))}
-              </div>
-              {links.length ? (
-                <div
-                  className="research-links"
-                  aria-label={`${item.title} 논문 링크`}
-                >
-                  {links.map((link) => (
-                    <a key={link.href} href={link.href}>
-                      {link.label} →
-                    </a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="shell section">
+        <SectionHeading kicker="Publications" title="전체 논문 리스트" />
+        <div className="paper-grid">
+          {paperItems.map((item, index) => {
+            const links = getPaperLinks(item);
+            const paperKey = `${item.year}-${item.title}`;
+            const viewerId = `paper-viewer-${index}`;
+            const isPdfOpen = activePdf === paperKey;
+
+            return (
+              <article
+                className={`paper-card${isPdfOpen ? " paper-card-expanded" : ""}`}
+                key={item.title}
+              >
+                <div className="paper-card-top">
+                  <div className="meta">{item.type}</div>
+                  <span>{item.year}</span>
+                </div>
+                <h3>{item.title}</h3>
+                <div className="paper-venue">{item.venue}</div>
+                <p>{item.description}</p>
+                {item.authors ? (
+                  <div className="paper-authors">{item.authors}</div>
+                ) : null}
+                <div className="research-facts">
+                  {item.facts.map((fact) => (
+                    <span key={fact}>{fact}</span>
                   ))}
                 </div>
-              ) : null}
-            </article>
-          );
-        })}
-      </div>
-    </section>
-  </Layout>
-);
+                {item.pdfHref || links.length ? (
+                  <div
+                    className="research-links"
+                    aria-label={`${item.title} 논문 링크`}
+                  >
+                    {item.pdfHref ? (
+                      <button
+                        type="button"
+                        className="paper-viewer-toggle"
+                        aria-controls={viewerId}
+                        aria-expanded={isPdfOpen}
+                        onClick={() =>
+                          setActivePdf(isPdfOpen ? null : paperKey)
+                        }
+                      >
+                        {isPdfOpen ? "PDF 닫기" : "PDF 미리보기"} →
+                      </button>
+                    ) : null}
+                    {links.map((link) => (
+                      <a key={link.href} href={link.href}>
+                        {link.label} →
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
+                {item.pdfHref && isPdfOpen ? (
+                  <div className="paper-viewer" id={viewerId}>
+                    <iframe
+                      title={`${item.title} PDF 미리보기`}
+                      src={`${item.pdfHref}#toolbar=0&navpanes=0&scrollbar=1`}
+                      loading="lazy"
+                    />
+                  </div>
+                ) : null}
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    </Layout>
+  );
+};
 
 export default ResearchPage;
 

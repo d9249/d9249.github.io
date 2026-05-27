@@ -1569,8 +1569,45 @@ h3 {
   white-space: nowrap;
 }
 
-.research-links a:hover {
+.paper-viewer-toggle {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.research-links a:hover,
+.paper-viewer-toggle:hover {
   color: var(--fg);
+}
+
+.paper-card-expanded {
+  grid-column: 1 / -1;
+}
+
+.paper-viewer {
+  min-width: 0;
+  margin-top: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.paper-viewer iframe {
+  display: block;
+  width: 100%;
+  height: min(74vh, 780px);
+  min-height: 520px;
+  border: 0;
+  background: var(--surface);
 }
 
 .paper-link {
@@ -4134,9 +4171,15 @@ figcaption,
 
   .metric-chip,
   .research-facts span,
-  .project-stack span {
+  .project-stack span,
+  .paper-viewer-toggle {
     white-space: normal;
     overflow-wrap: anywhere;
+  }
+
+  .paper-viewer iframe {
+    height: 68vh;
+    min-height: 420px;
   }
 
   .evidence-grid,
