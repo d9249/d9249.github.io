@@ -1694,22 +1694,54 @@ h3 {
   background: color-mix(in oklch, var(--fg) 8%, var(--surface));
 }
 
-.paper-viewer-frame {
-  width: calc(100% * var(--paper-viewer-scale, 1));
-  height: calc(100% * var(--paper-viewer-scale, 1));
-  min-width: 0;
-  min-height: 0;
+.paper-viewer-pages {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  min-width: max-content;
+  padding: 14px;
 }
 
-.paper-viewer-frame iframe {
-  display: block;
-  width: calc(100% * var(--paper-viewer-inverse-scale, 1));
-  height: calc(100% * var(--paper-viewer-inverse-scale, 1));
-  min-height: 0;
-  border: 0;
+.paper-viewer-page {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  max-width: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
   background: var(--surface);
-  transform: scale(var(--paper-viewer-scale, 1));
-  transform-origin: top left;
+  box-shadow: 0 10px 36px color-mix(in oklch, var(--fg) 8%, transparent);
+}
+
+.paper-viewer-page canvas {
+  display: block;
+  max-width: none;
+  background: white;
+}
+
+.paper-viewer-message,
+.paper-viewer-page-status {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.paper-viewer-message {
+  display: grid;
+  min-height: 180px;
+  place-items: center;
+  padding: 24px;
+}
+
+.paper-viewer-page-status {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: color-mix(in oklch, var(--surface) 86%, transparent);
 }
 
 body.paper-viewer-fullscreen-open {
@@ -4338,10 +4370,6 @@ figcaption,
     max-height: calc(100dvh - 180px);
   }
 
-  .paper-viewer-frame {
-    height: calc(2400px * var(--paper-viewer-scale, 1));
-  }
-
   .paper-viewer-panel-full {
     padding: max(8px, env(safe-area-inset-top))
       max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom))
@@ -4354,8 +4382,9 @@ figcaption,
     max-height: none;
   }
 
-  .paper-viewer-panel-full .paper-viewer-frame {
-    height: calc(3200px * var(--paper-viewer-scale, 1));
+  .paper-viewer-pages {
+    gap: 10px;
+    padding: 10px;
   }
 
   .paper-row-grid {

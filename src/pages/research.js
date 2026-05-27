@@ -8,6 +8,9 @@ const PDF_ZOOM_MAX = 180;
 const PDF_ZOOM_STEP = 20;
 const PDF_DEFAULT_ZOOM = 100;
 const MOBILE_PAPER_VIEWER_QUERY = "(max-width: 680px)";
+const PDF_WORKER_SRC = "/vendor/pdfjs/pdf.worker.min.mjs";
+
+let pdfJsPromise;
 
 const researchStats = [
   {
@@ -37,11 +40,17 @@ const getPaperLinks = (item) => [
 
 const getPaperKey = (item) => `${item.year}-${item.title}`;
 
-const getPdfSrc = (item) => {
-  const params = ["toolbar=0", "navpanes=0", "scrollbar=1"];
-  params.push("view=Fit");
+const loadPdfJs = () => {
+  if (!pdfJsPromise) {
+    pdfJsPromise = import("pdfjs-dist/legacy/build/pdf.mjs").then(
+      (pdfjsLib) => {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = PDF_WORKER_SRC;
+        return pdfjsLib;
+      },
+    );
+  }
 
-  return `${item.pdfHref}#${params.join("&")}`;
+  return pdfJsPromise;
 };
 
 const useMediaQuery = (query) => {
@@ -70,6 +79,84 @@ const useMediaQuery = (query) => {
   return matches;
 };
 
+const PdfCanvasPage = ({ containerWidth, pageNumber, pdfDocument, zoom }) => {
+  const canvasRef = React.useRef(null);
+  const [pageStatus, setPageStatus] = React.useState("loading");
+
+  React.useEffect(() => {
+    if (!containerWidth || !pdfDocument) {
+      return undefined;
+    }
+
+    let isCancelled = false;
+    let renderTask;
+    const canvas = canvasRef.current;
+
+    const renderPage = async () => {
+      setPageStatus("loading");
+
+      try {
+        const page = await pdfDocument.getPage(pageNumber);
+
+        if (isCancelled || !canvas) {
+          return;
+        }
+
+        const context = canvas.getContext("2d");
+        const baseViewport = page.getViewport({ scale: 1 });
+        const displayWidth = Math.max(1, containerWidth - 28);
+        const displayScale =
+          (displayWidth / baseViewport.width) * (zoom / PDF_DEFAULT_ZOOM);
+        const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+        const viewport = page.getViewport({
+          scale: displayScale * pixelRatio,
+        });
+
+        canvas.width = Math.floor(viewport.width);
+        canvas.height = Math.floor(viewport.height);
+        canvas.style.width = `${Math.floor(viewport.width / pixelRatio)}px`;
+        canvas.style.height = `${Math.floor(viewport.height / pixelRatio)}px`;
+
+        renderTask = page.render({
+          canvasContext: context,
+          viewport,
+        });
+
+        await renderTask.promise;
+
+        if (!isCancelled) {
+          setPageStatus("ready");
+        }
+      } catch (error) {
+        if (!isCancelled && error?.name !== "RenderingCancelledException") {
+          setPageStatus("error");
+        }
+      }
+    };
+
+    renderPage();
+
+    return () => {
+      isCancelled = true;
+      renderTask?.cancel();
+    };
+  }, [containerWidth, pageNumber, pdfDocument, zoom]);
+
+  return (
+    <div className="paper-viewer-page">
+      <canvas ref={canvasRef} aria-label={`PDF ${pageNumber}페이지`} />
+      {pageStatus === "loading" ? (
+        <div className="paper-viewer-page-status">
+          {pageNumber}페이지 렌더링 중
+        </div>
+      ) : null}
+      {pageStatus === "error" ? (
+        <div className="paper-viewer-page-status">페이지 로드 실패</div>
+      ) : null}
+    </div>
+  );
+};
+
 const PaperPdfViewer = ({
   item,
   viewerId,
@@ -79,84 +166,168 @@ const PaperPdfViewer = ({
   onChangeZoom,
   onFitToView,
   onToggleFullView,
-}) => (
-  <div
-    className={`paper-viewer-panel${isPdfFullView ? " paper-viewer-panel-full" : ""}`}
-  >
+}) => {
+  const stageRef = React.useRef(null);
+  const [stageWidth, setStageWidth] = React.useState(0);
+  const [pdfDocument, setPdfDocument] = React.useState(null);
+  const [pdfStatus, setPdfStatus] = React.useState("loading");
+
+  React.useEffect(() => {
+    const stageElement = stageRef.current;
+
+    if (!stageElement) {
+      return undefined;
+    }
+
+    const updateStageWidth = () => {
+      setStageWidth(stageElement.clientWidth);
+    };
+
+    updateStageWidth();
+
+    if (typeof ResizeObserver === "undefined") {
+      window.addEventListener("resize", updateStageWidth);
+
+      return () => {
+        window.removeEventListener("resize", updateStageWidth);
+      };
+    }
+
+    const resizeObserver = new ResizeObserver(updateStageWidth);
+    resizeObserver.observe(stageElement);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [isPdfFullView]);
+
+  React.useEffect(() => {
+    let isCancelled = false;
+    let loadingTask;
+
+    setPdfStatus("loading");
+    setPdfDocument(null);
+
+    loadPdfJs()
+      .then((pdfjsLib) => {
+        if (isCancelled) {
+          return null;
+        }
+
+        loadingTask = pdfjsLib.getDocument(item.pdfHref);
+        return loadingTask.promise;
+      })
+      .then((loadedDocument) => {
+        if (!loadedDocument || isCancelled) {
+          loadedDocument?.destroy();
+          return;
+        }
+
+        setPdfDocument(loadedDocument);
+        setPdfStatus("ready");
+      })
+      .catch(() => {
+        if (!isCancelled) {
+          setPdfStatus("error");
+        }
+      });
+
+    return () => {
+      isCancelled = true;
+      loadingTask?.destroy();
+    };
+  }, [item.pdfHref]);
+
+  const pageNumbers = pdfDocument
+    ? Array.from({ length: pdfDocument.numPages }, (_, index) => index + 1)
+    : [];
+
+  return (
     <div
-      className="paper-viewer"
-      id={viewerId}
-      style={{
-        "--paper-viewer-scale": pdfZoom / PDF_DEFAULT_ZOOM,
-        "--paper-viewer-inverse-scale": PDF_DEFAULT_ZOOM / pdfZoom,
-      }}
+      className={`paper-viewer-panel${isPdfFullView ? " paper-viewer-panel-full" : ""}`}
     >
-      <div
-        className="paper-viewer-toolbar"
-        role="toolbar"
-        aria-label={`${item.title} PDF 뷰어 조작`}
-      >
-        <div className="paper-viewer-title">{item.title}</div>
-        <div className="paper-viewer-controls">
-          <button
-            type="button"
-            className="paper-viewer-control"
-            onClick={() => onChangeZoom(-1)}
-            disabled={pdfZoom <= PDF_ZOOM_MIN}
-            aria-label="PDF 축소"
-            title="축소"
-          >
-            -
-          </button>
-          <span className="paper-viewer-zoom">
-            {pdfFitMode === "fit" ? "맞춤" : `${pdfZoom}%`}
-          </span>
-          <button
-            type="button"
-            className="paper-viewer-control"
-            onClick={() => onChangeZoom(1)}
-            disabled={pdfZoom >= PDF_ZOOM_MAX}
-            aria-label="PDF 확대"
-            title="확대"
-          >
-            +
-          </button>
-          <button
-            type="button"
-            className={`paper-viewer-control paper-viewer-control-text${pdfFitMode === "fit" ? " is-active" : ""}`}
-            onClick={onFitToView}
-            aria-pressed={pdfFitMode === "fit"}
-            aria-label="PDF 화면에 맞추기"
-            title="화면에 맞추기"
-          >
-            맞춤
-          </button>
-          <button
-            type="button"
-            className="paper-viewer-control paper-viewer-control-text"
-            onClick={onToggleFullView}
-            aria-pressed={isPdfFullView}
-            aria-label={isPdfFullView ? "PDF 전체 보기 닫기" : "PDF 전체 보기"}
-            title={isPdfFullView ? "전체 보기 닫기" : "전체 보기"}
-          >
-            {isPdfFullView ? "복귀" : "전체"}
-          </button>
+      <div className="paper-viewer" id={viewerId}>
+        <div
+          className="paper-viewer-toolbar"
+          role="toolbar"
+          aria-label={`${item.title} PDF 뷰어 조작`}
+        >
+          <div className="paper-viewer-title">{item.title}</div>
+          <div className="paper-viewer-controls">
+            <button
+              type="button"
+              className="paper-viewer-control"
+              onClick={() => onChangeZoom(-1)}
+              disabled={pdfZoom <= PDF_ZOOM_MIN}
+              aria-label="PDF 축소"
+              title="축소"
+            >
+              -
+            </button>
+            <span className="paper-viewer-zoom">
+              {pdfFitMode === "fit" ? "맞춤" : `${pdfZoom}%`}
+            </span>
+            <button
+              type="button"
+              className="paper-viewer-control"
+              onClick={() => onChangeZoom(1)}
+              disabled={pdfZoom >= PDF_ZOOM_MAX}
+              aria-label="PDF 확대"
+              title="확대"
+            >
+              +
+            </button>
+            <button
+              type="button"
+              className={`paper-viewer-control paper-viewer-control-text${pdfFitMode === "fit" ? " is-active" : ""}`}
+              onClick={onFitToView}
+              aria-pressed={pdfFitMode === "fit"}
+              aria-label="PDF 화면에 맞추기"
+              title="화면에 맞추기"
+            >
+              맞춤
+            </button>
+            <button
+              type="button"
+              className="paper-viewer-control paper-viewer-control-text"
+              onClick={onToggleFullView}
+              aria-pressed={isPdfFullView}
+              aria-label={
+                isPdfFullView ? "PDF 전체 보기 닫기" : "PDF 전체 보기"
+              }
+              title={isPdfFullView ? "전체 보기 닫기" : "전체 보기"}
+            >
+              {isPdfFullView ? "복귀" : "전체"}
+            </button>
+          </div>
         </div>
-      </div>
-      <div className="paper-viewer-stage">
-        <div className="paper-viewer-frame">
-          <iframe
-            key={item.pdfHref}
-            title={`${item.title} PDF 미리보기`}
-            src={getPdfSrc(item)}
-            loading="lazy"
-            scrolling="yes"
-          />
+        <div className="paper-viewer-stage" ref={stageRef}>
+          {pdfStatus === "loading" ? (
+            <div className="paper-viewer-message">PDF 렌더링 중</div>
+          ) : null}
+          {pdfStatus === "error" ? (
+            <div className="paper-viewer-message">
+              PDF 미리보기를 불러오지 못했습니다.
+            </div>
+          ) : null}
+          {pdfStatus === "ready" && stageWidth ? (
+            <div className="paper-viewer-pages">
+              {pageNumbers.map((pageNumber) => (
+                <PdfCanvasPage
+                  key={`${item.pdfHref}-${pageNumber}`}
+                  containerWidth={stageWidth}
+                  pageNumber={pageNumber}
+                  pdfDocument={pdfDocument}
+                  zoom={pdfZoom}
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const paperRows = paperItems.reduce((rows, item, index) => {
   if (index % 2 === 0) {
