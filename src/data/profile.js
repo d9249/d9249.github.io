@@ -292,6 +292,7 @@ export const paperItems = [
       "추천 시스템의 시간 기반 사용자 행동 데이터를 분석한 국내학회 논문입니다.",
     authors: ["Sangmin Lee", "Namgi Kim"],
     facts: ["KSII", "Recommendation", "1st author"],
+    pdfHref: "/evidence/papers/time-based-data-recommendation-ksii-2023.pdf",
   },
   {
     type: "Domestic Conference",
