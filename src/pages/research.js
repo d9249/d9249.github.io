@@ -40,6 +40,18 @@ const getPaperLinks = (item) => [
 
 const getPaperKey = (item) => `${item.year}-${item.title}`;
 
+const getPdfSrc = (item, zoom, fitMode) => {
+  const params = ["toolbar=0", "navpanes=0", "scrollbar=1"];
+
+  if (fitMode === "fit") {
+    params.push("view=Fit");
+  } else {
+    params.push(`zoom=${zoom}`);
+  }
+
+  return `${item.pdfHref}#${params.join("&")}`;
+};
+
 const loadPdfJs = () => {
   if (!pdfJsPromise) {
     pdfJsPromise = import("pdfjs-dist/legacy/build/pdf.mjs").then(
@@ -157,7 +169,106 @@ const PdfCanvasPage = ({ containerWidth, pageNumber, pdfDocument, zoom }) => {
   );
 };
 
-const PaperPdfViewer = ({
+const PaperViewerToolbar = ({
+  item,
+  pdfZoom,
+  pdfFitMode,
+  isPdfFullView,
+  onChangeZoom,
+  onFitToView,
+  onToggleFullView,
+}) => (
+  <div
+    className="paper-viewer-toolbar"
+    role="toolbar"
+    aria-label={`${item.title} PDF 뷰어 조작`}
+  >
+    <div className="paper-viewer-title">{item.title}</div>
+    <div className="paper-viewer-controls">
+      <button
+        type="button"
+        className="paper-viewer-control"
+        onClick={() => onChangeZoom(-1)}
+        disabled={pdfZoom <= PDF_ZOOM_MIN}
+        aria-label="PDF 축소"
+        title="축소"
+      >
+        -
+      </button>
+      <span className="paper-viewer-zoom">
+        {pdfFitMode === "fit" ? "맞춤" : `${pdfZoom}%`}
+      </span>
+      <button
+        type="button"
+        className="paper-viewer-control"
+        onClick={() => onChangeZoom(1)}
+        disabled={pdfZoom >= PDF_ZOOM_MAX}
+        aria-label="PDF 확대"
+        title="확대"
+      >
+        +
+      </button>
+      <button
+        type="button"
+        className={`paper-viewer-control paper-viewer-control-text${pdfFitMode === "fit" ? " is-active" : ""}`}
+        onClick={onFitToView}
+        aria-pressed={pdfFitMode === "fit"}
+        aria-label="PDF 화면에 맞추기"
+        title="화면에 맞추기"
+      >
+        맞춤
+      </button>
+      <button
+        type="button"
+        className="paper-viewer-control paper-viewer-control-text"
+        onClick={onToggleFullView}
+        aria-pressed={isPdfFullView}
+        aria-label={isPdfFullView ? "PDF 전체 보기 닫기" : "PDF 전체 보기"}
+        title={isPdfFullView ? "전체 보기 닫기" : "전체 보기"}
+      >
+        {isPdfFullView ? "복귀" : "전체"}
+      </button>
+    </div>
+  </div>
+);
+
+const PaperIframePdfViewer = ({
+  item,
+  viewerId,
+  pdfZoom,
+  pdfFitMode,
+  isPdfFullView,
+  onChangeZoom,
+  onFitToView,
+  onToggleFullView,
+}) => (
+  <div
+    className={`paper-viewer-panel${isPdfFullView ? " paper-viewer-panel-full" : ""}`}
+  >
+    <div className="paper-viewer" id={viewerId}>
+      <PaperViewerToolbar
+        item={item}
+        pdfZoom={pdfZoom}
+        pdfFitMode={pdfFitMode}
+        isPdfFullView={isPdfFullView}
+        onChangeZoom={onChangeZoom}
+        onFitToView={onFitToView}
+        onToggleFullView={onToggleFullView}
+      />
+      <div className="paper-viewer-stage">
+        <iframe
+          key={`${item.pdfHref}-${pdfZoom}-${pdfFitMode}`}
+          title={`${item.title} PDF 미리보기`}
+          src={getPdfSrc(item, pdfZoom, pdfFitMode)}
+          loading="lazy"
+          scrolling="yes"
+        />
+      </div>
+    </div>
+  </div>
+);
+
+const PaperCanvasPdfViewer = ({
   item,
   viewerId,
   pdfZoom,
@@ -247,60 +358,15 @@ const PaperPdfViewer = ({
       className={`paper-viewer-panel${isPdfFullView ? " paper-viewer-panel-full" : ""}`}
     >
       <div className="paper-viewer" id={viewerId}>
-        <div
-          className="paper-viewer-toolbar"
-          role="toolbar"
-          aria-label={`${item.title} PDF 뷰어 조작`}
-        >
-          <div className="paper-viewer-title">{item.title}</div>
-          <div className="paper-viewer-controls">
-            <button
-              type="button"
-              className="paper-viewer-control"
-              onClick={() => onChangeZoom(-1)}
-              disabled={pdfZoom <= PDF_ZOOM_MIN}
-              aria-label="PDF 축소"
-              title="축소"
-            >
-              -
-            </button>
-            <span className="paper-viewer-zoom">
-              {pdfFitMode === "fit" ? "맞춤" : `${pdfZoom}%`}
-            </span>
-            <button
-              type="button"
-              className="paper-viewer-control"
-              onClick={() => onChangeZoom(1)}
-              disabled={pdfZoom >= PDF_ZOOM_MAX}
-              aria-label="PDF 확대"
-              title="확대"
-            >
-              +
-            </button>
-            <button
-              type="button"
-              className={`paper-viewer-control paper-viewer-control-text${pdfFitMode === "fit" ? " is-active" : ""}`}
-              onClick={onFitToView}
-              aria-pressed={pdfFitMode === "fit"}
-              aria-label="PDF 화면에 맞추기"
-              title="화면에 맞추기"
-            >
-              맞춤
-            </button>
-            <button
-              type="button"
-              className="paper-viewer-control paper-viewer-control-text"
-              onClick={onToggleFullView}
-              aria-pressed={isPdfFullView}
-              aria-label={
-                isPdfFullView ? "PDF 전체 보기 닫기" : "PDF 전체 보기"
-              }
-              title={isPdfFullView ? "전체 보기 닫기" : "전체 보기"}
-            >
-              {isPdfFullView ? "복귀" : "전체"}
-            </button>
-          </div>
-        </div>
+        <PaperViewerToolbar
+          item={item}
+          pdfZoom={pdfZoom}
+          pdfFitMode={pdfFitMode}
+          isPdfFullView={isPdfFullView}
+          onChangeZoom={onChangeZoom}
+          onFitToView={onFitToView}
+          onToggleFullView={onToggleFullView}
+        />
         <div className="paper-viewer-stage" ref={stageRef}>
           {pdfStatus === "loading" ? (
             <div className="paper-viewer-message">PDF 렌더링 중</div>
@@ -518,7 +584,7 @@ const ResearchPage = () => {
                           </div>
                         ) : null}
                         {isMobilePaperViewer && isPdfOpen && item.pdfHref ? (
-                          <PaperPdfViewer
+                          <PaperCanvasPdfViewer
                             item={item}
                             viewerId={mobileViewerId}
                             pdfZoom={pdfZoom}
@@ -534,7 +600,7 @@ const ResearchPage = () => {
                   })}
                 </div>
                 {!isMobilePaperViewer && activeItem?.pdfHref ? (
-                  <PaperPdfViewer
+                  <PaperIframePdfViewer
                     item={activeItem}
                     viewerId={viewerId}
                     pdfZoom={pdfZoom}
