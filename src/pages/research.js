@@ -117,8 +117,17 @@ const ResearchPage = () => {
                         <h3>{item.title}</h3>
                         <div className="paper-venue">{item.venue}</div>
                         <p>{item.description}</p>
-                        {item.authors ? (
-                          <div className="paper-authors">{item.authors}</div>
+                        {item.authors?.length ? (
+                          <div
+                            className="paper-authors"
+                            aria-label={`${item.title} 저자`}
+                          >
+                            {item.authors.map((author) => (
+                              <span className="paper-author-chip" key={author}>
+                                {author}
+                              </span>
+                            ))}
+                          </div>
                         ) : null}
                         <div className="research-facts">
                           {item.facts.map((fact) => (
