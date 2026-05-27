@@ -34,5 +34,301 @@
   {
     "from": "/blog/model-training/supergemma4-26b-uncensored-fast-mlx/",
     "to": "/blog/inference-systems/supergemma4-26b-uncensored-fast-mlx/"
+  },
+  {
+    "from": "/blog/agent-systems/addy-agent-skills-engineering-workflows/",
+    "to": "/blog/agent-skills-workflows/addy-agent-skills-engineering-workflows/"
+  },
+  {
+    "from": "/blog/agent-systems/context-mode-ai-coding-agent-context-optimization/",
+    "to": "/blog/agent-skills-workflows/context-mode-ai-coding-agent-context-optimization/"
+  },
+  {
+    "from": "/blog/agent-systems/ctx2skill-context-learning-skills-self-play/",
+    "to": "/blog/agent-skills-workflows/ctx2skill-context-learning-skills-self-play/"
+  },
+  {
+    "from": "/blog/agent-systems/dont-build-agents-build-skills-instead-anthropic/",
+    "to": "/blog/agent-skills-workflows/dont-build-agents-build-skills-instead-anthropic/"
+  },
+  {
+    "from": "/blog/agent-systems/effect-vibe-engineering-clone-the-repo-agents/",
+    "to": "/blog/agent-skills-workflows/effect-vibe-engineering-clone-the-repo-agents/"
+  },
+  {
+    "from": "/blog/agent-systems/future-slide-skill-disciplined-slide-generation/",
+    "to": "/blog/agent-skills-workflows/future-slide-skill-disciplined-slide-generation/"
+  },
+  {
+    "from": "/blog/agent-systems/harness-claude-code-agent-team-factory/",
+    "to": "/blog/agent-skills-workflows/harness-claude-code-agent-team-factory/"
+  },
+  {
+    "from": "/blog/agent-systems/harness-engineering-codex-agent-first-world/",
+    "to": "/blog/agent-skills-workflows/harness-engineering-codex-agent-first-world/"
+  },
+  {
+    "from": "/blog/agent-systems/harnesses-in-ai-deep-dive-tejas-kumar/",
+    "to": "/blog/agent-skills-workflows/harnesses-in-ai-deep-dive-tejas-kumar/"
+  },
+  {
+    "from": "/blog/agent-systems/hermes-agent-self-evolution/",
+    "to": "/blog/agent-skills-workflows/hermes-agent-self-evolution/"
+  },
+  {
+    "from": "/blog/agent-systems/huggingface-agent-skills/",
+    "to": "/blog/agent-skills-workflows/huggingface-agent-skills/"
+  },
+  {
+    "from": "/blog/agent-systems/matt-pocock-ai-coding-workflow/",
+    "to": "/blog/agent-skills-workflows/matt-pocock-ai-coding-workflow/"
+  },
+  {
+    "from": "/blog/agent-systems/mckinsey-pptx-consulting-deck-agent/",
+    "to": "/blog/agent-skills-workflows/mckinsey-pptx-consulting-deck-agent/"
+  },
+  {
+    "from": "/blog/agent-systems/mmskills-multimodal-procedural-memory/",
+    "to": "/blog/agent-skills-workflows/mmskills-multimodal-procedural-memory/"
+  },
+  {
+    "from": "/blog/agent-systems/no-vibes-advanced-context-engineering-complex-codebases/",
+    "to": "/blog/agent-skills-workflows/no-vibes-advanced-context-engineering-complex-codebases/"
+  },
+  {
+    "from": "/blog/agent-systems/ouroboros-specification-first-agent-os/",
+    "to": "/blog/agent-skills-workflows/ouroboros-specification-first-agent-os/"
+  },
+  {
+    "from": "/blog/agent-systems/paper2code-citation-anchored-implementation/",
+    "to": "/blog/agent-skills-workflows/paper2code-citation-anchored-implementation/"
+  },
+  {
+    "from": "/blog/agent-systems/skill-retrieval-augmentation-agentic-ai/",
+    "to": "/blog/agent-skills-workflows/skill-retrieval-augmentation-agentic-ai/"
+  },
+  {
+    "from": "/blog/agent-systems/skillopt-self-evolving-agent-skills/",
+    "to": "/blog/agent-skills-workflows/skillopt-self-evolving-agent-skills/"
+  },
+  {
+    "from": "/blog/agent-systems/skills-coach-training-free-grpo/",
+    "to": "/blog/agent-skills-workflows/skills-coach-training-free-grpo/"
+  },
+  {
+    "from": "/blog/agent-systems/skillsmp-agent-skills-marketplace/",
+    "to": "/blog/agent-skills-workflows/skillsmp-agent-skills-marketplace/"
+  },
+  {
+    "from": "/blog/agent-systems/skillsvote-agent-skill-lifecycle-governance/",
+    "to": "/blog/agent-skills-workflows/skillsvote-agent-skill-lifecycle-governance/"
+  },
+  {
+    "from": "/blog/agent-systems/smallcode-local-agent-harness/",
+    "to": "/blog/agent-skills-workflows/smallcode-local-agent-harness/"
+  },
+  {
+    "from": "/blog/agent-systems/ssl-agent-skills-structured-representation/",
+    "to": "/blog/agent-skills-workflows/ssl-agent-skills-structured-representation/"
+  },
+  {
+    "from": "/blog/agent-systems/superpowers-agentic-skills-framework/",
+    "to": "/blog/agent-skills-workflows/superpowers-agentic-skills-framework/"
+  },
+  {
+    "from": "/blog/agent-systems/understand-anything-interactive-codebase-knowledge-graph/",
+    "to": "/blog/agent-skills-workflows/understand-anything-interactive-codebase-knowledge-graph/"
+  },
+  {
+    "from": "/blog/agent-systems/workos-skills-at-scale-portable-agent-workflows/",
+    "to": "/blog/agent-skills-workflows/workos-skills-at-scale-portable-agent-workflows/"
+  },
+  {
+    "from": "/blog/agent-systems/wozcode-claude-code-plugin/",
+    "to": "/blog/agent-skills-workflows/wozcode-claude-code-plugin/"
+  },
+  {
+    "from": "/blog/agent-systems/ai-auto-research-lifecycle-roadmap/",
+    "to": "/blog/research-agents/ai-auto-research-lifecycle-roadmap/"
+  },
+  {
+    "from": "/blog/agent-systems/ai-co-mathematician-agentic-math-workbench/",
+    "to": "/blog/research-agents/ai-co-mathematician-agentic-math-workbench/"
+  },
+  {
+    "from": "/blog/agent-systems/auto-research-specialist-agents-training-recipes/",
+    "to": "/blog/research-agents/auto-research-specialist-agents-training-recipes/"
+  },
+  {
+    "from": "/blog/agent-systems/autoresearchclaw-self-reinforcing-research-agent/",
+    "to": "/blog/research-agents/autoresearchclaw-self-reinforcing-research-agent/"
+  },
+  {
+    "from": "/blog/agent-systems/claude-autoresearch-metric-driven-agent-loop/",
+    "to": "/blog/research-agents/claude-autoresearch-metric-driven-agent-loop/"
+  },
+  {
+    "from": "/blog/agent-systems/clinseekagent-clinical-evidence-seeking/",
+    "to": "/blog/research-agents/clinseekagent-clinical-evidence-seeking/"
+  },
+  {
+    "from": "/blog/agent-systems/ml-intern-autonomous-hugging-face-ml-engineer/",
+    "to": "/blog/research-agents/ml-intern-autonomous-hugging-face-ml-engineer/"
+  },
+  {
+    "from": "/blog/agent-systems/nvidia-aiq-deep-research-agent-skill/",
+    "to": "/blog/research-agents/nvidia-aiq-deep-research-agent-skill/"
+  },
+  {
+    "from": "/blog/agent-systems/opensearch-vl-multimodal-search-agent-recipe/",
+    "to": "/blog/research-agents/opensearch-vl-multimodal-search-agent-recipe/"
+  },
+  {
+    "from": "/blog/agent-systems/self-evolved-abc-eda-tool-agents/",
+    "to": "/blog/research-agents/self-evolved-abc-eda-tool-agents/"
+  },
+  {
+    "from": "/blog/agent-systems/agentic-rag-ops/",
+    "to": "/blog/search-retrieval/agentic-rag-ops/"
+  },
+  {
+    "from": "/blog/agent-systems/demand-driven-context-agent-failure-knowledge-base/",
+    "to": "/blog/search-retrieval/demand-driven-context-agent-failure-knowledge-base/"
+  },
+  {
+    "from": "/blog/agent-systems/direct-corpus-interaction-agentic-search/",
+    "to": "/blog/search-retrieval/direct-corpus-interaction-agentic-search/"
+  },
+  {
+    "from": "/blog/agent-systems/grep-agent-harness-agentic-search/",
+    "to": "/blog/search-retrieval/grep-agent-harness-agentic-search/"
+  },
+  {
+    "from": "/blog/agent-systems/llm-wiki-persistent-knowledge-base/",
+    "to": "/blog/search-retrieval/llm-wiki-persistent-knowledge-base/"
+  },
+  {
+    "from": "/blog/agent-systems/neo4j-context-graphs-agent-memory/",
+    "to": "/blog/search-retrieval/neo4j-context-graphs-agent-memory/"
+  },
+  {
+    "from": "/blog/agent-systems/ocr-memory-long-horizon-agent-memory/",
+    "to": "/blog/search-retrieval/ocr-memory-long-horizon-agent-memory/"
+  },
+  {
+    "from": "/blog/data-infrastructure/cocoindex-fresh-context-incremental-sync-engine/",
+    "to": "/blog/search-retrieval/cocoindex-fresh-context-incremental-sync-engine/"
+  },
+  {
+    "from": "/blog/data-infrastructure/ctxl-rerank-v2-sequence-classification/",
+    "to": "/blog/search-retrieval/ctxl-rerank-v2-sequence-classification/"
+  },
+  {
+    "from": "/blog/data-infrastructure/embedding-models-procrustes-alignment/",
+    "to": "/blog/search-retrieval/embedding-models-procrustes-alignment/"
+  },
+  {
+    "from": "/blog/data-infrastructure/ettin-reranker-retrieve-then-rerank/",
+    "to": "/blog/search-retrieval/ettin-reranker-retrieve-then-rerank/"
+  },
+  {
+    "from": "/blog/data-infrastructure/fastembed-rs-local-rag-embedding-runtime/",
+    "to": "/blog/search-retrieval/fastembed-rs-local-rag-embedding-runtime/"
+  },
+  {
+    "from": "/blog/data-infrastructure/hnsw-vector-search-skip-list/",
+    "to": "/blog/search-retrieval/hnsw-vector-search-skip-list/"
+  },
+  {
+    "from": "/blog/data-infrastructure/leaf-embedding-distillation-asymmetric-retrieval/",
+    "to": "/blog/search-retrieval/leaf-embedding-distillation-asymmetric-retrieval/"
+  },
+  {
+    "from": "/blog/data-infrastructure/pageindex-vectorless-reasoning-rag/",
+    "to": "/blog/search-retrieval/pageindex-vectorless-reasoning-rag/"
+  },
+  {
+    "from": "/blog/data-infrastructure/rag-chunking-optimization/",
+    "to": "/blog/search-retrieval/rag-chunking-optimization/"
+  },
+  {
+    "from": "/blog/data-infrastructure/skill-rag-failure-state-skill-routing/",
+    "to": "/blog/search-retrieval/skill-rag-failure-state-skill-routing/"
+  },
+  {
+    "from": "/blog/data-infrastructure/zeroentropy-retrieval-model-stack/",
+    "to": "/blog/search-retrieval/zeroentropy-retrieval-model-stack/"
+  },
+  {
+    "from": "/blog/foundation-models/jina-embeddings-v5-omni-frozen-tower-embeddings/",
+    "to": "/blog/search-retrieval/jina-embeddings-v5-omni-frozen-tower-embeddings/"
+  },
+  {
+    "from": "/blog/ai-business/apple-intelligence-accessibility-layer/",
+    "to": "/blog/ai-products-strategy/apple-intelligence-accessibility-layer/"
+  },
+  {
+    "from": "/blog/ai-business/google-io-2026-agentic-gemini-era/",
+    "to": "/blog/ai-products-strategy/google-io-2026-agentic-gemini-era/"
+  },
+  {
+    "from": "/blog/ai-business/stripe-ai-pricing-hybrid-monetization/",
+    "to": "/blog/ai-products-strategy/stripe-ai-pricing-hybrid-monetization/"
+  },
+  {
+    "from": "/blog/agent-systems/copilotkit-agentic-frontend-stack/",
+    "to": "/blog/ai-products-strategy/copilotkit-agentic-frontend-stack/"
+  },
+  {
+    "from": "/blog/agent-systems/fincept-terminal-open-source-financial-intelligence-desktop/",
+    "to": "/blog/ai-products-strategy/fincept-terminal-open-source-financial-intelligence-desktop/"
+  },
+  {
+    "from": "/blog/agent-systems/getdesign-md-design-system-marketplace/",
+    "to": "/blog/ai-products-strategy/getdesign-md-design-system-marketplace/"
+  },
+  {
+    "from": "/blog/agent-systems/huggingface-open-agent-ecosystem/",
+    "to": "/blog/ai-products-strategy/huggingface-open-agent-ecosystem/"
+  },
+  {
+    "from": "/blog/agent-systems/lazyweb-design-context-for-ai-agents/",
+    "to": "/blog/ai-products-strategy/lazyweb-design-context-for-ai-agents/"
+  },
+  {
+    "from": "/blog/agent-systems/mcp-apps-ui-over-mcp-agentic-interfaces/",
+    "to": "/blog/ai-products-strategy/mcp-apps-ui-over-mcp-agentic-interfaces/"
+  },
+  {
+    "from": "/blog/agent-systems/open-design-local-agent-design-studio/",
+    "to": "/blog/ai-products-strategy/open-design-local-agent-design-studio/"
+  },
+  {
+    "from": "/blog/agent-systems/rowboat-local-knowledge-coworker/",
+    "to": "/blog/ai-products-strategy/rowboat-local-knowledge-coworker/"
+  },
+  {
+    "from": "/blog/agent-systems/wrenai-open-context-layer-governed-sql-agents/",
+    "to": "/blog/ai-products-strategy/wrenai-open-context-layer-governed-sql-agents/"
+  },
+  {
+    "from": "/blog/agent-systems/microsoft-mdash-agentic-security-harness/",
+    "to": "/blog/safety-privacy/microsoft-mdash-agentic-security-harness/"
+  },
+  {
+    "from": "/blog/foundation-models/qwen-scope-sae-development-interface/",
+    "to": "/blog/safety-privacy/qwen-scope-sae-development-interface/"
+  },
+  {
+    "from": "/blog/agent-systems/stet-gpt-5-5-vs-gpt-5-4-vs-opus-4-7-real-repo-benchmark/",
+    "to": "/blog/evaluation-benchmarks/stet-gpt-5-5-vs-gpt-5-4-vs-opus-4-7-real-repo-benchmark/"
+  },
+  {
+    "from": "/blog/model-training/large-scale-model-core-techniques-report/",
+    "to": "/blog/foundation-models/large-scale-model-core-techniques-report/"
+  },
+  {
+    "from": "/blog/model-training/llm-depth-efficiency-residual-stream/",
+    "to": "/blog/foundation-models/llm-depth-efficiency-residual-stream/"
   }
 ]

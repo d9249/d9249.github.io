@@ -2,12 +2,32 @@
   {
     "slug": "agent-systems",
     "label": "Agent Systems",
-    "description": "RAG, 에이전트 실행, 워크플로우 자동화를 제품 운영 관점에서 정리합니다."
+    "description": "에이전트 런타임, 오케스트레이션, 멀티에이전트, 도구 사용, 메모리 구조를 정리합니다."
+  },
+  {
+    "slug": "agent-skills-workflows",
+    "label": "Agent Skills & Workflows",
+    "description": "SKILL.md, 코딩·디자인·문서 생성 워크플로, 에이전트 하네스 운영 방법론을 다룹니다."
+  },
+  {
+    "slug": "research-agents",
+    "label": "Research Agents",
+    "description": "자동 연구, 임상·수학·ML 연구 보조, 과학 실험 에이전트 흐름을 정리합니다."
+  },
+  {
+    "slug": "search-retrieval",
+    "label": "Search & Retrieval",
+    "description": "RAG, agentic search, embedding, reranking, indexing, context graph를 다룹니다."
+  },
+  {
+    "slug": "ai-products-strategy",
+    "label": "AI Products & Strategy",
+    "description": "AI 제품, 플랫폼, UI 표면, 가격 모델, 사업 전략을 제품 관점에서 정리합니다."
   },
   {
     "slug": "foundation-models",
     "label": "Foundation Models",
-    "description": "새로운 기반모델, 멀티모달 모델, MoE, 비전 백본처럼 모델 자체의 설계와 포지셔닝을 정리합니다."
+    "description": "기반모델, 멀티모달 모델, MoE, 비전 백본, 모델 아키텍처 포지셔닝을 정리합니다."
   },
   {
     "slug": "model-training",
@@ -17,12 +37,12 @@
   {
     "slug": "inference-systems",
     "label": "Inference Systems",
-    "description": "서빙, speculative decoding, pruning, GPU 커널, 로컬 런타임처럼 모델을 빠르게 실행하는 시스템을 다룹니다."
+    "description": "서빙, speculative decoding, pruning, GPU 커널, 로컬 런타임처럼 모델 실행 시스템을 다룹니다."
   },
   {
     "slug": "data-infrastructure",
     "label": "Data Infrastructure",
-    "description": "합성 데이터, 데이터 준비, 검증 파이프라인을 시스템 관점에서 기록합니다."
+    "description": "합성 데이터, 데이터 준비, human feedback, 검증 파이프라인을 시스템 관점에서 기록합니다."
   },
   {
     "slug": "evaluation-benchmarks",
@@ -32,12 +52,12 @@
   {
     "slug": "safety-privacy",
     "label": "Safety & Privacy",
-    "description": "보안 배포, 개인정보 보호, 세이프티 가드 모델을 운영 환경 기준으로 정리합니다."
+    "description": "보안 배포, 개인정보 보호, 세이프티 가드, 해석 가능성과 리스크 평가를 정리합니다."
   },
   {
     "slug": "document-intelligence",
     "label": "Document Intelligence",
-    "description": "문서 OCR, 테이블 구조 복원, 벤치마크와 품질 지표를 다룹니다."
+    "description": "문서 OCR, 구조화 추출, 테이블 구조 복원, 문서 AI 품질 지표를 다룹니다."
   },
   {
     "slug": "video-generation",
