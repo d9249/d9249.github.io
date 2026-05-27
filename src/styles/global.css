@@ -1394,8 +1394,12 @@ h3 {
   gap: 18px;
 }
 
-.paper-grid {
+.paper-grid:not(.card-deck-grid) {
   grid-template-columns: minmax(0, 1fr);
+}
+
+.paper-grid.card-deck-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .paper-row-grid {
@@ -4076,6 +4080,10 @@ figcaption,
   .paper-grid,
   .recognition-grid,
   .dacon-domain-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .paper-grid.card-deck-grid {
     grid-template-columns: 1fr;
   }
 
