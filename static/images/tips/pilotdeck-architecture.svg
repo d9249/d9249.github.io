@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+  <title id="title">PilotDeck WorkSpace-first agent cockpit architecture</title>
+  <desc id="desc">A dark architecture diagram showing browser UI, UI server, gateway, isolated workspaces, memory, skills, MCP tools, providers, smart router, and always-on scheduler.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="55%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.28"/>
+      <stop offset="45%" stop-color="#8b5cf6" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#020617" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.6" opacity="0.75"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#67e8f9"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#34d399"/>
+    </marker>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <style>
+      .mono{font-family:'SFMono-Regular','Cascadia Code','JetBrains Mono','Menlo',monospace;}
+      .title{font-size:38px;font-weight:800;fill:#f8fafc;letter-spacing:-0.8px;}
+      .subtitle{font-size:16px;fill:#94a3b8;}
+      .label{font-size:18px;font-weight:800;fill:#f8fafc;}
+      .sub{font-size:12px;fill:#cbd5e1;}
+      .tiny{font-size:11px;fill:#94a3b8;}
+      .pill{font-size:12px;font-weight:700;fill:#dbeafe;}
+      .box{rx:18;filter:url(#softShadow);}
+      .front{fill:#083344;fill-opacity:.78;stroke:#22d3ee;stroke-width:2;}
+      .back{fill:#064e3b;fill-opacity:.72;stroke:#34d399;stroke-width:2;}
+      .data{fill:#4c1d95;fill-opacity:.66;stroke:#a78bfa;stroke-width:2;}
+      .cloud{fill:#78350f;fill-opacity:.58;stroke:#fbbf24;stroke-width:2;}
+      .sec{fill:#881337;fill-opacity:.60;stroke:#fb7185;stroke-width:2;}
+      .ext{fill:#1e293b;fill-opacity:.86;stroke:#94a3b8;stroke-width:2;}
+      .line{fill:none;stroke:#67e8f9;stroke-width:2.2;marker-end:url(#arrow);opacity:.9;}
+      .line2{fill:none;stroke:#34d399;stroke-width:2.2;marker-end:url(#arrowGreen);opacity:.9;}
+      .dash{fill:none;stroke:#a78bfa;stroke-width:2;stroke-dasharray:8 6;opacity:.82;}
+    </style>
+  </defs>
+
+  <rect width="1400" height="820" fill="url(#bg)"/>
+  <rect width="1400" height="820" fill="url(#grid)" opacity="0.82"/>
+  <rect width="1400" height="820" fill="url(#glow)"/>
+
+  <text x="70" y="76" class="mono title">PilotDeck: WorkSpace-first Agent Cockpit</text>
+  <text x="72" y="108" class="mono subtitle">Browser UI · Local Gateway · White-box Memory · Smart Router · Always-on Execution · MCP/Plugins</text>
+  <text x="1148" y="74" class="mono tiny">OpenBMB/PilotDeck</text>
+  <text x="1148" y="96" class="mono tiny">AGPL-3.0 · macOS/Linux</text>
+
+  <path class="line" d="M250 235 C330 235 350 235 420 235"/>
+  <path class="line" d="M640 235 C700 235 720 235 780 235"/>
+  <path class="line" d="M1000 235 C1060 235 1080 235 1140 235"/>
+  <path class="line2" d="M900 330 C900 390 900 410 900 465"/>
+  <path class="line2" d="M760 330 C670 398 604 418 510 462"/>
+  <path class="line2" d="M1040 330 C1132 395 1178 422 1230 462"/>
+  <path class="dash" d="M257 585 C430 640 590 653 750 630"/>
+  <path class="dash" d="M1142 585 C970 640 820 653 650 630"/>
+
+  <rect x="70" y="166" width="180" height="138" class="box front"/>
+  <text x="100" y="215" class="mono label">Browser UI</text>
+  <text x="100" y="242" class="mono sub">Projects · Sessions</text>
+  <text x="100" y="264" class="mono sub">Files · Skills · Memory</text>
+  <rect x="99" y="276" width="106" height="24" rx="12" fill="#0891b2" opacity="0.75"/>
+  <text x="116" y="293" class="mono pill">localhost:3001</text>
+
+  <rect x="420" y="166" width="220" height="138" class="box front"/>
+  <text x="462" y="214" class="mono label">UI Server</text>
+  <text x="462" y="242" class="mono sub">REST/WebSocket bridge</text>
+  <text x="462" y="264" class="mono sub">Built Vite SPA</text>
+  <text x="462" y="286" class="mono tiny">npm run start:built</text>
+
+  <rect x="780" y="150" width="220" height="170" class="box back"/>
+  <text x="833" y="204" class="mono label">Gateway</text>
+  <text x="823" y="232" class="mono sub">Agent runtime</text>
+  <text x="823" y="254" class="mono sub">Sessions · Tools · Models</text>
+  <text x="823" y="276" class="mono sub">Permission / channel hub</text>
+  <rect x="825" y="290" width="130" height="24" rx="12" fill="#047857" opacity="0.78"/>
+  <text x="844" y="307" class="mono pill">Gateway 18789</text>
+
+  <rect x="1140" y="166" width="190" height="138" class="box cloud"/>
+  <text x="1179" y="215" class="mono label">Providers</text>
+  <text x="1174" y="242" class="mono sub">OpenAI · Anthropic</text>
+  <text x="1174" y="264" class="mono sub">DeepSeek · Qwen</text>
+  <text x="1174" y="286" class="mono sub">Kimi · MiniMax · etc.</text>
+
+  <rect x="450" y="462" width="220" height="150" class="box data"/>
+  <text x="506" y="512" class="mono label">Memory</text>
+  <text x="488" y="540" class="mono sub">White-box entries</text>
+  <text x="488" y="562" class="mono sub">Trace · edit · delete</text>
+  <text x="488" y="584" class="mono sub">Dream Mode rollback</text>
+
+  <rect x="780" y="462" width="240" height="150" class="box sec"/>
+  <text x="828" y="512" class="mono label">Smart Router</text>
+  <text x="823" y="540" class="mono sub">TokenSaver tiers</text>
+  <text x="823" y="562" class="mono sub">Fallback · cost stats</text>
+  <text x="823" y="584" class="mono sub">Auto-orchestration gate</text>
+
+  <rect x="1135" y="462" width="210" height="150" class="box ext"/>
+  <text x="1187" y="512" class="mono label">Tools</text>
+  <text x="1170" y="540" class="mono sub">MCP servers</text>
+  <text x="1170" y="562" class="mono sub">Skills · ClawHub</text>
+  <text x="1170" y="584" class="mono sub">Lifecycle hooks</text>
+
+  <rect x="70" y="444" width="235" height="190" class="box data"/>
+  <text x="117" y="494" class="mono label">WorkSpaces</text>
+  <text x="108" y="524" class="mono sub">One deck per project</text>
+  <rect x="105" y="548" width="165" height="26" rx="13" fill="#6d28d9" opacity="0.70"/>
+  <text x="126" y="566" class="mono pill">Files / Skills</text>
+  <rect x="105" y="584" width="165" height="26" rx="13" fill="#7c3aed" opacity="0.58"/>
+  <text x="125" y="602" class="mono pill">Scoped Memory</text>
+  <rect x="105" y="620" width="165" height="26" rx="13" fill="#8b5cf6" opacity="0.45"/>
+  <text x="133" y="638" class="mono pill">Sessions</text>
+
+  <rect x="445" y="680" width="510" height="82" rx="18" fill="#0f172a" fill-opacity="0.86" stroke="#334155" stroke-width="1.5"/>
+  <text x="474" y="714" class="mono label" font-size="17">Always-on / Cron</text>
+  <text x="474" y="742" class="mono sub">Discovery, scheduled work, background runs, deliverables as local files and summaries</text>
+
+  <rect x="62" y="692" width="255" height="54" rx="14" fill="#0f172a" stroke="#334155"/>
+  <circle cx="91" cy="719" r="7" fill="#22d3ee"/>
+  <text x="108" y="724" class="mono tiny">UI / user steering surface</text>
+  <rect x="1068" y="692" width="260" height="54" rx="14" fill="#0f172a" stroke="#334155"/>
+  <circle cx="1098" cy="719" r="7" fill="#34d399"/>
+  <text x="1116" y="724" class="mono tiny">Runtime / execution boundary</text>
+</svg>
