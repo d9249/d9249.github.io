@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">사이언스 스킬 운영 스택</title>
+  <desc id="desc">논문 텍스트에서 에이전트 실행 환경, 스킬 번들, 과학 소스, 검증 산출물로 이어지는 운영 계층을 보여주는 스택형 구조도.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="0.62" stop-color="#f1f8f5"/>
+      <stop offset="1" stop-color="#eef2ff"/>
+    </linearGradient>
+    <linearGradient id="top" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="0.5" stop-color="#0f766e"/>
+      <stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+    <style>
+      text{font-family:"Apple SD Gothic Neo","Noto Sans CJK KR","Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+      .kicker{font-size:17px;font-weight:850;letter-spacing:.04em;fill:#0f766e}
+      .title{font-size:50px;font-weight:900;fill:#0f172a}
+      .subtitle{font-size:22px;font-weight:550;fill:#475569}
+      .section{font-size:18px;font-weight:850;fill:#0f766e}
+      .layer-title{font-size:29px;font-weight:900;fill:#0f172a}
+      .layer-body{font-size:20px;font-weight:600;fill:#334155}
+      .layer-title-light{font-size:29px;font-weight:900;fill:#f8fafc}
+      .layer-body-light{font-size:20px;font-weight:600;fill:#dbeafe}
+      .layer-num{font-size:22px;font-weight:900;fill:#ffffff}
+      .side-title{font-size:28px;font-weight:900;fill:#0f172a}
+      .side-body{font-size:19px;font-weight:600;fill:#334155}
+      .metric{font-size:44px;font-weight:900;fill:#0f766e}
+      .metric-label{font-size:17px;font-weight:750;fill:#64748b}
+      .note{font-size:17px;font-weight:650;fill:#64748b}
+      .frame{fill:#ffffff;stroke:#d8e3ee;stroke-width:2}
+      .soft{fill:#f8fafc;stroke:#d8e3ee;stroke-width:2}
+      .rail{stroke:#94a3b8;stroke-width:3;stroke-linecap:round}
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1600" height="18" fill="url(#top)"/>
+
+  <text x="80" y="72" class="kicker">텍스트 기반 시각화 / 운영 스택</text>
+  <text x="80" y="130" class="title">사이언스 스킬은 실행 계층을 만든다</text>
+  <text x="82" y="172" class="subtitle">글의 주장을 반복 카드가 아니라, 실제 작업이 통과하는 계층으로 재구성했습니다.</text>
+  <text x="82" y="204" class="subtitle">각 계층은 다음 계층을 장식하지 않고, 검증 가능한 작업 조건을 추가합니다.</text>
+
+  <rect x="80" y="250" width="980" height="560" rx="22" fill="#ffffff" stroke="#d8e3ee" stroke-width="2"/>
+  <text x="120" y="300" class="section">운영 스택</text>
+  <line x1="142" y1="342" x2="142" y2="742" class="rail"/>
+
+  <g>
+    <rect x="120" y="330" width="48" height="48" rx="24" fill="#0f766e"/>
+    <text x="136" y="363" class="layer-num">1</text>
+    <rect x="200" y="326" width="800" height="70" rx="14" fill="#ecfdf5" stroke="#99f6e4"/>
+    <text x="230" y="358" class="layer-title">입력: 논문과 기술 글</text>
+    <text x="230" y="384" class="layer-body">문제, 방법, 수치, 한계, 공식 소스를 분리합니다.</text>
+  </g>
+
+  <g>
+    <rect x="120" y="426" width="48" height="48" rx="24" fill="#0369a1"/>
+    <text x="136" y="459" class="layer-num">2</text>
+    <rect x="200" y="422" width="800" height="70" rx="14" fill="#eff6ff" stroke="#bfdbfe"/>
+    <text x="230" y="454" class="layer-title">작업 환경: Antigravity 워크벤치</text>
+    <text x="230" y="480" class="layer-body">플래너, 에디터, 터미널, 브라우저, 산출물 루프를 묶습니다.</text>
+  </g>
+
+  <g>
+    <rect x="120" y="522" width="48" height="48" rx="24" fill="#6d28d9"/>
+    <text x="136" y="555" class="layer-num">3</text>
+    <rect x="200" y="518" width="800" height="70" rx="14" fill="#f5f3ff" stroke="#ddd6fe"/>
+    <text x="230" y="550" class="layer-title">제어 계층: Science Skills 번들</text>
+    <text x="230" y="576" class="layer-body">37개 스킬, 63개 스크립트, 100개 이상 참조를 선택적으로 호출합니다.</text>
+  </g>
+
+  <g>
+    <rect x="120" y="618" width="48" height="48" rx="24" fill="#b45309"/>
+    <text x="136" y="651" class="layer-num">4</text>
+    <rect x="200" y="614" width="800" height="70" rx="14" fill="#fff7ed" stroke="#fed7aa"/>
+    <text x="230" y="646" class="layer-title">근거 계층: 도메인별 과학 소스</text>
+    <text x="230" y="672" class="layer-body">ClinVar, UniProt, PDB, ChEMBL, PubMed 같은 소스로 검증합니다.</text>
+  </g>
+
+  <g>
+    <rect x="120" y="714" width="48" height="48" rx="24" fill="#0f172a"/>
+    <text x="136" y="747" class="layer-num">5</text>
+    <rect x="200" y="710" width="800" height="70" rx="14" fill="#0f172a"/>
+    <text x="230" y="742" class="layer-title-light">출력: 검증 산출물</text>
+    <text x="230" y="768" class="layer-body-light">근거 요약, 인용, 데이터베이스 식별자, 좌표, 스크립트, 렌더링 그림.</text>
+  </g>
+
+  <rect x="1110" y="250" width="410" height="560" rx="22" class="frame"/>
+  <text x="1150" y="304" class="side-title">읽는 방법</text>
+  <rect x="1150" y="342" width="312" height="74" rx="14" class="soft"/>
+  <text x="1176" y="374" class="side-body">스킬은 답변 스타일이 아니라</text>
+  <text x="1176" y="400" class="side-body">작업 조건을 고정합니다.</text>
+  <rect x="1150" y="440" width="312" height="74" rx="14" class="soft"/>
+  <text x="1176" y="472" class="side-body">소스 선택과 실행 절차를</text>
+  <text x="1176" y="498" class="side-body">도메인별로 좁힙니다.</text>
+  <rect x="1150" y="538" width="312" height="74" rx="14" class="soft"/>
+  <text x="1176" y="570" class="side-body">최종 산출물은 근거와</text>
+  <text x="1176" y="596" class="side-body">재현 경로를 남깁니다.</text>
+
+  <text x="1150" y="674" class="section">글에서 추출한 수치</text>
+  <text x="1150" y="732" class="metric">67</text>
+  <text x="1228" y="724" class="metric-label">전문가 과제</text>
+  <text x="1150" y="774" class="metric">30+</text>
+  <text x="1248" y="766" class="metric-label">주요 과학 소스/도구</text>
+  <text x="80" y="856" class="note">검증 기준: 영어 일반 문구 없음, 화살표 없음, 텍스트 오버플로우 없음, 모든 수치가 글의 근거와 연결됨.</text>
+</svg>

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">사이언스 스킬 전후 비교</title>
+  <desc id="desc">사이언스 스킬 적용 전후의 성공률, 토큰 사용량, BioReason 변이 추론 성능을 전후 비교 형태로 정리한 이미지.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbfbfb"/>
+      <stop offset="0.55" stop-color="#f1f8ff"/>
+      <stop offset="1" stop-color="#f0fdf4"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0f766e"/>
+      <stop offset="1" stop-color="#22c55e"/>
+    </linearGradient>
+    <style>
+      text{font-family:"Apple SD Gothic Neo","Noto Sans CJK KR","Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+      .kicker{font-size:17px;font-weight:850;letter-spacing:.04em;fill:#0f766e}
+      .title{font-size:50px;font-weight:900;fill:#111827}
+      .subtitle{font-size:22px;font-weight:550;fill:#475569}
+      .col-title{font-size:31px;font-weight:900;fill:#0f172a}
+      .row-title{font-size:23px;font-weight:850;fill:#0f172a}
+      .label{font-size:18px;font-weight:700;fill:#64748b}
+      .value{font-size:40px;font-weight:900;fill:#0f172a}
+      .value-green{font-size:40px;font-weight:900;fill:#0f766e}
+      .delta{font-size:28px;font-weight:900;fill:#0f766e}
+      .note{font-size:17px;font-weight:650;fill:#64748b}
+      .panel{fill:#ffffff;stroke:#d8e3ee;stroke-width:2}
+      .before{fill:#f1f5f9;stroke:#cbd5e1;stroke-width:2}
+      .after{fill:#ecfdf5;stroke:#99f6e4;stroke-width:2}
+      .change{fill:#ffffff;stroke:#99f6e4;stroke-width:2}
+      .bar-bg{fill:#d1d5db}
+      .bar-green{fill:url(#green)}
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1600" height="18" fill="#0f172a"/>
+  <rect x="0" y="18" width="1600" height="8" fill="url(#green)"/>
+
+  <text x="80" y="78" class="kicker">텍스트 기반 시각화 / 전후 비교</text>
+  <text x="80" y="136" class="title">같은 모델도 스킬을 만나면 결과가 달라진다</text>
+  <text x="82" y="178" class="subtitle">벤치마크 수치를 카드 그리드가 아니라, 적용 전후 변화 중심으로 재배치했습니다.</text>
+  <text x="82" y="210" class="subtitle">성공률, 토큰 사용량, 변이 추론 성능이 각각 어떤 방향으로 움직였는지 분리해 봅니다.</text>
+
+  <rect x="80" y="260" width="1440" height="560" rx="22" class="panel"/>
+
+  <rect x="120" y="300" width="370" height="70" rx="16" class="before"/>
+  <text x="150" y="345" class="col-title">스킬 없음</text>
+  <rect x="560" y="300" width="320" height="70" rx="16" class="change"/>
+  <text x="636" y="345" class="col-title">변화</text>
+  <rect x="950" y="300" width="520" height="70" rx="16" class="after"/>
+  <text x="980" y="345" class="col-title">스킬 적용</text>
+
+  <g>
+    <text x="120" y="420" class="row-title">Gemini 3 Flash 성공률</text>
+    <rect x="120" y="446" width="310" height="34" rx="17" class="bar-bg"/>
+    <rect x="120" y="446" width="152" height="34" rx="17" fill="#94a3b8"/>
+    <text x="445" y="475" class="value">49%</text>
+    <text x="620" y="472" class="delta">+44%p</text>
+    <rect x="950" y="446" width="410" height="34" rx="17" fill="#dcfce7"/>
+    <rect x="950" y="446" width="381" height="34" rx="17" class="bar-green"/>
+    <text x="1384" y="475" class="value-green">93%</text>
+  </g>
+
+  <g>
+    <text x="120" y="536" class="row-title">Gemini 3.1 Pro 성공률</text>
+    <rect x="120" y="562" width="310" height="34" rx="17" class="bar-bg"/>
+    <rect x="120" y="562" width="208" height="34" rx="17" fill="#94a3b8"/>
+    <text x="445" y="591" class="value">67%</text>
+    <text x="620" y="588" class="delta">+24%p</text>
+    <rect x="950" y="562" width="410" height="34" rx="17" fill="#dcfce7"/>
+    <rect x="950" y="562" width="373" height="34" rx="17" class="bar-green"/>
+    <text x="1384" y="591" class="value-green">91%</text>
+  </g>
+
+  <g>
+    <text x="120" y="652" class="row-title">Flash 평균 토큰</text>
+    <rect x="120" y="678" width="310" height="34" rx="17" fill="#bfdbfe"/>
+    <text x="445" y="707" class="value">13,952</text>
+    <text x="620" y="704" class="delta">2.04배 효율</text>
+    <rect x="950" y="678" width="410" height="34" rx="17" fill="#dcfce7"/>
+    <rect x="950" y="678" width="200" height="34" rx="17" class="bar-green"/>
+    <text x="1180" y="707" class="value-green">6,827</text>
+  </g>
+
+  <g>
+    <text x="120" y="758" class="row-title">BioReason 비-SNV</text>
+    <text x="120" y="790" class="label">표본 873, Gemini 3 Flash</text>
+    <text x="445" y="790" class="value">46.6%</text>
+    <text x="620" y="790" class="delta">+35.0%p</text>
+    <text x="950" y="790" class="value-green">81.6%</text>
+  </g>
+
+  <text x="80" y="858" class="note">검증 기준: 수치는 글의 벤치마크 표 기반이며, 전후 비교에 필요한 숫자만 남겼습니다.</text>
+</svg>
