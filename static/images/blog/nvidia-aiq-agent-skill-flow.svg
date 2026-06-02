@@ -1,91 +1,71 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
-  <title id="title">NVIDIA AI-Q agent skill 책임 경계</title>
-  <desc id="desc">범용 에이전트 하네스, AI-Q 스킬 어댑터, AI-Q 서버, 데이터와 인용 리포트 경계를 네 개의 책임 영역으로 나누어 보여주는 구조도.</desc>
+  <title id="title">NVIDIA AI-Q 스킬 책임 경계</title>
+  <desc id="desc">범용 하네스, 스킬 어댑터, AI-Q 서버, 데이터 경계가 맡는 책임을 네 개의 동일한 패널로 나눈 구조도.</desc>
   <defs>
+    <marker id="arrow" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M2,2 L11,6 L2,10 Z" fill="#64748b"/>
+    </marker>
     <style>
-      .bg { fill: #f5f7fb; }
-      .panel { fill: #ffffff; stroke: #d6e0ec; stroke-width: 2; }
-      .lane { fill: #ffffff; stroke-width: 3; }
-      .ink { fill: #172033; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; }
-      .muted { fill: #64748b; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; }
-      .title { fill: #111827; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 52px; font-weight: 900; }
-      .h { fill: #172033; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 32px; font-weight: 900; }
-      .body { fill: #334155; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 23px; font-weight: 650; }
-      .small { fill: #475569; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 20px; font-weight: 650; }
-      .footerText { fill: #e5edf7; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 20px; font-weight: 650; }
-      .tag { fill: #1f2937; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 19px; font-weight: 900; }
-      .badge { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; }
-      .connector { stroke: #7f8da3; stroke-width: 4; stroke-linecap: round; fill: none; }
-      .chev { fill: #7f8da3; }
+      text{font-family:"Apple SD Gothic Neo","Noto Sans CJK KR","Pretendard",system-ui,sans-serif}
+      .bg{fill:#f7fafc}
+      .panel{fill:#fff;stroke:#d9e3ef;stroke-width:2}
+      .kicker{font-size:22px;font-weight:800;fill:#2563eb}
+      .title{font-size:50px;font-weight:900;fill:#111827}
+      .sub{font-size:25px;font-weight:600;fill:#52627a}
+      .card{fill:#fff;stroke-width:3}
+      .h{font-size:31px;font-weight:900;fill:#111827}
+      .body{font-size:23px;font-weight:650;fill:#475569}
+      .tag{font-size:21px;font-weight:850;fill:#172033}
+      .footer{font-size:22px;font-weight:750;fill:#e5edf7}
+      .line{stroke:#64748b;stroke-width:4;stroke-linecap:round;fill:none;marker-end:url(#arrow)}
     </style>
   </defs>
 
   <rect width="1600" height="900" class="bg"/>
-  <rect x="64" y="54" width="1472" height="792" rx="32" class="panel"/>
+  <rect x="64" y="52" width="1472" height="792" rx="34" class="panel"/>
 
-  <text x="104" y="118" class="muted" font-size="24" font-weight="800">NVIDIA AI-Q Agent Skill</text>
-  <text x="104" y="178" class="title">딥리서치를 하네스 밖 전문 스킬로 분리하는 경계</text>
-  <text x="104" y="226" class="muted" font-size="27" font-weight="600">하네스는 사용자 의도와 세션을 잡고, AI-Q는 리서치 파이프라인과 데이터 접근을 맡는다.</text>
+  <text x="104" y="112" class="kicker">책임 경계</text>
+  <text x="104" y="174" class="title">딥리서치를 하네스 밖 전문 스킬로 분리한다</text>
+  <text x="104" y="222" class="sub">하네스는 조율하고, AI-Q는 리서치 런타임과 데이터 접근을 맡는다.</text>
 
-  <rect x="100" y="294" width="310" height="430" rx="26" class="lane" stroke="#93c5fd"/>
-  <text x="132" y="348" class="h">범용 하네스</text>
-  <text x="132" y="393" class="body">Claude Code</text>
-  <text x="132" y="428" class="body">Codex</text>
-  <text x="132" y="463" class="body">OpenCode</text>
-  <line x1="132" y1="494" x2="376" y2="494" stroke="#d7e2ef" stroke-width="2"/>
-  <text x="132" y="536" class="small">사용자 요청과 대화 맥락</text>
-  <text x="132" y="570" class="small">작업 조율과 결과 반영</text>
-  <text x="132" y="604" class="small">원천 기업 데이터 직접 소유 안 함</text>
-  <rect x="132" y="650" width="244" height="46" rx="23" fill="#dbeafe"/>
-  <text x="168" y="680" class="tag">책임: 작업 조율 셸</text>
+  <rect x="104" y="310" width="310" height="430" rx="26" class="card" stroke="#93c5fd"/>
+  <text x="140" y="370" class="h">범용 하네스</text>
+  <text x="140" y="424" class="body">사용자 의도</text>
+  <text x="140" y="460" class="body">세션 맥락</text>
+  <text x="140" y="496" class="body">결과 반영</text>
+  <rect x="140" y="642" width="238" height="48" rx="24" fill="#dbeafe"/>
+  <text x="259" y="673" text-anchor="middle" class="tag">작업 조율</text>
 
-  <path d="M410 508 H500" class="connector"/>
-  <path d="M500 508 l-18 -12 v24 z" class="chev"/>
-  <text x="424" y="486" class="muted" font-size="21" font-weight="800">위임</text>
+  <path d="M424 525 H492" class="line"/>
 
-  <rect x="500" y="294" width="310" height="430" rx="26" class="lane" stroke="#22d3ee"/>
-  <text x="532" y="348" class="h">AI-Q 스킬</text>
-  <text x="532" y="394" class="body">SKILL.md</text>
-  <text x="532" y="429" class="body">scripts/aiq.py</text>
-  <text x="532" y="464" class="body">AIQ_SERVER_URL</text>
-  <line x1="532" y1="494" x2="776" y2="494" stroke="#d7e2ef" stroke-width="2"/>
-  <text x="532" y="536" class="small">언제 AI-Q를 호출할지 설명</text>
-  <text x="532" y="570" class="small">비동기 작업 제출과 상태 확인</text>
-  <text x="532" y="604" class="small">최종 리포트를 하네스에 반환</text>
-  <rect x="532" y="650" width="244" height="46" rx="23" fill="#cffafe"/>
-  <text x="566" y="680" class="tag">책임: API 호출 어댑터</text>
+  <rect x="512" y="310" width="310" height="430" rx="26" class="card" stroke="#22d3ee"/>
+  <text x="548" y="370" class="h">스킬 어댑터</text>
+  <text x="548" y="424" class="body">SKILL.md</text>
+  <text x="548" y="460" class="body">도움 스크립트</text>
+  <text x="548" y="496" class="body">상태 확인</text>
+  <rect x="548" y="642" width="238" height="48" rx="24" fill="#cffafe"/>
+  <text x="667" y="673" text-anchor="middle" class="tag">API 호출</text>
 
-  <path d="M810 508 H900" class="connector"/>
-  <path d="M900 508 l-18 -12 v24 z" class="chev"/>
-  <text x="830" y="486" class="muted" font-size="21" font-weight="800">API 호출</text>
+  <path d="M832 525 H900" class="line"/>
 
-  <rect x="900" y="294" width="310" height="430" rx="26" class="lane" stroke="#34d399"/>
-  <text x="932" y="348" class="h">AI-Q 서버</text>
-  <text x="932" y="394" class="body">의도 분류기</text>
-  <text x="932" y="429" class="body">확인 단계</text>
-  <text x="932" y="464" class="body">얕은/심층 리서치</text>
-  <line x1="932" y1="494" x2="1176" y2="494" stroke="#d7e2ef" stroke-width="2"/>
-  <text x="932" y="536" class="small">장기 리서치 작업 관리</text>
-  <text x="932" y="570" class="small">검색 · 계획 · 종합 수행</text>
-  <text x="932" y="604" class="small">평가와 인용 검증 파이프라인 포함</text>
-  <rect x="932" y="650" width="244" height="46" rx="23" fill="#dcfce7"/>
-  <text x="962" y="680" class="tag">책임: 리서치 런타임</text>
+  <rect x="920" y="310" width="310" height="430" rx="26" class="card" stroke="#34d399"/>
+  <text x="956" y="370" class="h">AI-Q 서버</text>
+  <text x="956" y="424" class="body">의도 분류</text>
+  <text x="956" y="460" class="body">얕은/심층 리서치</text>
+  <text x="956" y="496" class="body">인용 검증</text>
+  <rect x="956" y="642" width="238" height="48" rx="24" fill="#dcfce7"/>
+  <text x="1075" y="673" text-anchor="middle" class="tag">리서치 런타임</text>
 
-  <path d="M1210 508 H1300" class="connector"/>
-  <path d="M1300 508 l-18 -12 v24 z" class="chev"/>
-  <text x="1224" y="486" class="muted" font-size="21" font-weight="800">경계 안 처리</text>
+  <path d="M1240 525 H1288" class="line"/>
 
-  <rect x="1300" y="294" width="190" height="430" rx="26" class="lane" stroke="#f59e0b"/>
-  <text x="1332" y="348" class="h">데이터</text>
-  <text x="1332" y="386" class="h">· 리포트</text>
-  <line x1="1332" y1="420" x2="1458" y2="420" stroke="#d7e2ef" stroke-width="2"/>
-  <text x="1332" y="466" class="body">MCP</text>
-  <text x="1332" y="501" class="body">문서·웹·DB</text>
-  <text x="1332" y="536" class="body">인증 토큰</text>
-  <text x="1332" y="571" class="body">인용 리포트</text>
-  <rect x="1332" y="650" width="126" height="46" rx="23" fill="#fef3c7"/>
-  <text x="1356" y="680" class="tag">신뢰 경계</text>
+  <rect x="1308" y="310" width="216" height="430" rx="26" class="card" stroke="#f59e0b"/>
+  <text x="1340" y="370" class="h">데이터 경계</text>
+  <text x="1340" y="424" class="body">MCP</text>
+  <text x="1340" y="460" class="body">문서 · DB</text>
+  <text x="1340" y="496" class="body">인증 토큰</text>
+  <rect x="1340" y="642" width="176" height="48" rx="24" fill="#fef3c7"/>
+  <text x="1428" y="673" text-anchor="middle" class="tag">신뢰 경계</text>
 
-  <rect x="152" y="764" width="1296" height="56" rx="18" fill="#172033"/>
-  <text x="184" y="800" class="footerText">핵심 원칙: 하네스는 인용된 결과를 받고, 원천 데이터 접근과 인증 경계는 AI-Q 배포 환경 안에 둔다.</text>
+  <rect x="156" y="778" width="1288" height="58" rx="20" fill="#172033"/>
+  <text x="800" y="815" text-anchor="middle" class="footer">원천 데이터 접근은 AI-Q 배포 환경 안에 두고, 하네스는 인용된 결과만 받는다.</text>
 </svg>

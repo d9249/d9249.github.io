@@ -1,106 +1,77 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
   <title id="title">Hermes Agent Self-Evolution 스킬 진화 루프</title>
-  <desc id="desc">스킬 파일, 평가 데이터, DSPy와 GEPA 최적화, 검증, 리뷰 산출물을 하나의 측정 가능한 루프로 묶고 하단에 제약 게이트를 배치한 구조도.</desc>
+  <desc id="desc">대상 선택, 평가 데이터, 최적화, 검증, 리뷰 산출물이 순서대로 이어지고 하단의 제약 게이트를 통과하는 스킬 진화 구조도.</desc>
   <defs>
+    <marker id="arrow" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M2,2 L11,6 L2,10 Z" fill="#64748b"/>
+    </marker>
     <style>
-      .bg { fill: #f7f9fc; }
-      .ink { fill: #162033; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; }
-      .muted { fill: #5c6b82; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; }
-      .small { fill: #56657a; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 28px; font-weight: 700; }
-      .body { fill: #334155; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 27px; font-weight: 600; }
-      .body2 { fill: #475569; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 23px; font-weight: 600; }
-      .num { fill: #ffffff; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 28px; font-weight: 900; }
-      .metric { fill: #0f766e; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 44px; font-weight: 900; }
-      .label { fill: #162033; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 35px; font-weight: 900; }
-      .chipText { fill: #204052; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 22px; font-weight: 800; }
-      .line { fill: none; stroke: #9fb1c8; stroke-width: 4; stroke-linecap: round; }
-      .dash { fill: none; stroke: #c0cad8; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 8 14; }
-      .card { fill: #ffffff; stroke: #d8e1ec; stroke-width: 2; }
-      .guard { fill: #102a43; }
-      .guardText { fill: #e6eef8; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 25px; font-weight: 800; }
+      text{font-family:"Apple SD Gothic Neo","Noto Sans CJK KR","Pretendard",system-ui,sans-serif}
+      .bg{fill:#f7fafc}
+      .panel{fill:#fff;stroke:#d9e3ef;stroke-width:2}
+      .kicker{font-size:22px;font-weight:800;fill:#0f766e}
+      .title{font-size:50px;font-weight:900;fill:#111827}
+      .sub{font-size:25px;font-weight:600;fill:#52627a}
+      .card{fill:#fff;stroke:#d9e3ef;stroke-width:2}
+      .h{font-size:28px;font-weight:900;fill:#111827}
+      .body{font-size:22px;font-weight:650;fill:#52627a}
+      .num{font-size:23px;font-weight:900;fill:#fff}
+      .metric{font-size:50px;font-weight:900;fill:#0f766e}
+      .chip{font-size:21px;font-weight:850;fill:#172033}
+      .line{stroke:#64748b;stroke-width:4;stroke-linecap:round;fill:none;marker-end:url(#arrow)}
     </style>
   </defs>
 
   <rect width="1600" height="900" class="bg"/>
-  <rect x="72" y="56" width="1456" height="788" rx="34" fill="#ffffff" stroke="#dde6f0" stroke-width="2"/>
+  <rect x="64" y="52" width="1472" height="792" rx="34" class="panel"/>
 
-  <text x="112" y="118" class="muted" font-size="25" font-weight="800">Hermes Agent Self-Evolution</text>
-  <text x="112" y="176" class="ink" font-size="54" font-weight="900">스킬 문서를 측정 가능한 실험 단위로 바꾸는 루프</text>
-  <text x="112" y="222" class="muted" font-size="27" font-weight="600">모델을 다시 학습하지 않고 SKILL.md, 도구 설명, 프롬프트를 평가·변이·검증 대상으로 고정한다.</text>
+  <text x="104" y="112" class="kicker">스킬 진화 루프</text>
+  <text x="104" y="174" class="title">스킬 문서를 실험 단위로 바꾼다</text>
+  <text x="104" y="222" class="sub">문서를 고치기 전에 기준안, 진화 후보, 검증 지표를 나란히 둔다.</text>
 
-  <rect x="598" y="310" width="404" height="214" rx="26" fill="#eef7ff" stroke="#8bb7e4" stroke-width="3"/>
-  <text x="800" y="374" text-anchor="middle" class="muted" font-size="24" font-weight="800">중앙 실험 단위</text>
-  <text x="800" y="423" text-anchor="middle" class="ink" font-size="42" font-weight="900">지침 레이어</text>
-  <text x="800" y="466" text-anchor="middle" class="body2">절차 문서와 프롬프트를</text>
-  <text x="800" y="499" text-anchor="middle" class="body2">기준안 / 진화 후보로 비교</text>
+  <rect x="1208" y="92" width="284" height="128" rx="24" fill="#ecfeff" stroke="#67e8f9" stroke-width="2"/>
+  <text x="1350" y="154" text-anchor="middle" class="metric">+20.7%</text>
+  <text x="1350" y="198" text-anchor="middle" class="body">작은 1단계 검증</text>
 
-  <path d="M800 310 C800 248 940 258 1028 290" class="line"/>
-  <path d="M1002 418 C1100 422 1134 522 1088 606" class="line"/>
-  <path d="M858 524 C864 622 718 660 610 612" class="line"/>
-  <path d="M598 418 C494 420 462 326 542 288" class="line"/>
-  <path d="M610 332 C650 272 742 258 800 310" class="dash"/>
+  <g transform="translate(104 322)">
+    <rect x="0" y="0" width="240" height="210" rx="24" class="card"/>
+    <circle cx="54" cy="58" r="28" fill="#2563eb"/><text x="54" y="66" text-anchor="middle" class="num">1</text>
+    <text x="92" y="66" class="h">대상 선택</text>
+    <text x="42" y="126" class="body">SKILL.md</text>
+    <text x="42" y="160" class="body">도구 설명</text>
+  </g>
+  <path d="M364 427 H442" class="line"/>
 
-  <g>
-    <rect x="232" y="284" width="286" height="158" rx="22" class="card"/>
-    <circle cx="278" cy="332" r="25" fill="#2563eb"/>
-    <text x="278" y="342" text-anchor="middle" class="num">1</text>
-    <text x="316" y="331" class="label">대상 선택</text>
-    <text x="272" y="382" class="body2">SKILL.md</text>
-    <text x="272" y="416" class="body2">도구 설명 · 시스템 프롬프트</text>
+  <g transform="translate(462 322)">
+    <rect x="0" y="0" width="240" height="210" rx="24" class="card"/>
+    <circle cx="54" cy="58" r="28" fill="#0891b2"/><text x="54" y="66" text-anchor="middle" class="num">2</text>
+    <text x="92" y="66" class="h">평가 데이터</text>
+    <text x="42" y="126" class="body">합성 케이스</text>
+    <text x="42" y="160" class="body">정답 세트</text>
+  </g>
+  <path d="M722 427 H800" class="line"/>
+
+  <g transform="translate(820 322)">
+    <rect x="0" y="0" width="240" height="210" rx="24" fill="#f5f0ff" stroke="#c4b5fd" stroke-width="2"/>
+    <circle cx="54" cy="58" r="28" fill="#7c3aed"/><text x="54" y="66" text-anchor="middle" class="num">3</text>
+    <text x="92" y="66" class="h">최적화</text>
+    <text x="42" y="126" class="body">DSPy + GEPA</text>
+    <text x="42" y="160" class="body">표적 변이</text>
+  </g>
+  <path d="M1080 427 H1158" class="line"/>
+
+  <g transform="translate(1178 322)">
+    <rect x="0" y="0" width="240" height="210" rx="24" class="card"/>
+    <circle cx="54" cy="58" r="28" fill="#0f766e"/><text x="54" y="66" text-anchor="middle" class="num">4</text>
+    <text x="92" y="66" class="h">검증</text>
+    <text x="42" y="126" class="body">기준안 비교</text>
+    <text x="42" y="160" class="body">점수 · 비용</text>
   </g>
 
-  <g>
-    <rect x="1026" y="266" width="306" height="178" rx="22" class="card"/>
-    <circle cx="1072" cy="316" r="25" fill="#0891b2"/>
-    <text x="1072" y="326" text-anchor="middle" class="num">2</text>
-    <text x="1110" y="316" class="label">평가 데이터</text>
-    <text x="1070" y="366" class="body2">합성 케이스 · 세션 기록</text>
-    <text x="1070" y="400" class="body2">정답 세트 · 평가 기준</text>
-  </g>
+  <rect x="404" y="606" width="792" height="74" rx="22" fill="#172033"/>
+  <text x="800" y="653" text-anchor="middle" fill="#e5edf7" font-size="25" font-weight="850">제약 게이트: 크기 제한 · 성장률 20% · 테스트 · 비밀값 필터링</text>
 
-  <g>
-    <rect x="1022" y="610" width="312" height="166" rx="22" class="card"/>
-    <circle cx="1068" cy="660" r="25" fill="#7c3aed"/>
-    <text x="1068" y="670" text-anchor="middle" class="num">3</text>
-    <text x="1106" y="660" class="label">최적화</text>
-    <text x="1068" y="710" class="body2">DSPy + GEPA</text>
-    <text x="1068" y="744" class="body2">실행 흔적 기반 표적 변이</text>
-  </g>
+  <rect x="514" y="724" width="572" height="74" rx="22" fill="#fff7ed" stroke="#fed7aa" stroke-width="2"/>
+  <text x="800" y="770" text-anchor="middle" class="chip">리뷰 산출물: 차이 · 지표 · 회귀 테스트 · 사람 리뷰</text>
 
-  <g>
-    <rect x="566" y="628" width="306" height="158" rx="22" class="card"/>
-    <circle cx="612" cy="678" r="25" fill="#0f766e"/>
-    <text x="612" y="688" text-anchor="middle" class="num">4</text>
-    <text x="650" y="678" class="label">검증</text>
-    <text x="610" y="728" class="body2">기준안 대비 진화안 비교</text>
-    <text x="610" y="762" class="body2">점수 · 비용 · 지연</text>
-  </g>
-
-  <g>
-    <rect x="236" y="592" width="286" height="176" rx="22" class="card"/>
-    <circle cx="282" cy="642" r="25" fill="#ea580c"/>
-    <text x="282" y="652" text-anchor="middle" class="num">5</text>
-    <text x="320" y="642" class="label">리뷰 산출물</text>
-    <text x="282" y="692" class="body2">차이 · 지표 · 회귀 테스트</text>
-    <text x="282" y="726" class="body2">사람 리뷰 후 반영</text>
-  </g>
-
-  <rect x="112" y="792" width="1376" height="68" rx="18" class="guard"/>
-  <text x="142" y="835" class="guardText">제약 게이트</text>
-  <rect x="340" y="808" width="176" height="36" rx="18" fill="#e6f0ff"/>
-  <text x="388" y="832" class="chipText">크기 제한</text>
-  <rect x="548" y="808" width="196" height="36" rx="18" fill="#e6f0ff"/>
-  <text x="590" y="832" class="chipText">성장률 20%</text>
-  <rect x="776" y="808" width="170" height="36" rx="18" fill="#e6f0ff"/>
-  <text x="825" y="832" class="chipText">테스트</text>
-  <rect x="978" y="808" width="220" height="36" rx="18" fill="#e6f0ff"/>
-  <text x="1022" y="832" class="chipText">비밀값 필터링</text>
-  <rect x="1230" y="808" width="226" height="36" rx="18" fill="#e6f0ff"/>
-  <text x="1266" y="832" class="chipText">리뷰 전 자동 반영 금지</text>
-
-  <g>
-    <rect x="1254" y="104" width="234" height="94" rx="18" fill="#ecfeff" stroke="#a5f3fc" stroke-width="2"/>
-    <text x="1371" y="145" text-anchor="middle" class="metric">+20.7%</text>
-    <text x="1371" y="176" text-anchor="middle" class="small">작은 1단계 검증</text>
-  </g>
 </svg>

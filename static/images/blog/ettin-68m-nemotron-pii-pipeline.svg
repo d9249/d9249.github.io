@@ -1,95 +1,79 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
   <title id="title">ETTIN-68M Nemotron PII 탐지 파이프라인</title>
-  <desc id="desc">입력 로그와 문서가 ETTIN 인코더, BIO 스팬 헤드, 마스킹 또는 리뷰 라우팅 단계를 거치는 개인정보 탐지 파이프라인.</desc>
+  <desc id="desc">입력 스트림이 ETTIN 인코더, BIO 스팬 헤드, 후처리 조치로 이동하는 개인정보 탐지 파이프라인.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f8fafc"/>
-      <stop offset="0.58" stop-color="#f4fbff"/>
-      <stop offset="1" stop-color="#effdf7"/>
-    </linearGradient>
-    <linearGradient id="top" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#0f172a"/>
-      <stop offset="0.52" stop-color="#0369a1"/>
-      <stop offset="1" stop-color="#0f766e"/>
-    </linearGradient>
-    <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="14" refY="8" orient="auto">
-      <path d="M2,2 L14,8 L2,14 z" fill="#0369a1"/>
+    <marker id="arrow" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M2,2 L11,6 L2,10 Z" fill="#0369a1"/>
     </marker>
     <style>
-      text{font-family:"Apple SD Gothic Neo","Noto Sans CJK KR","Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-      .kicker{font-size:17px;font-weight:850;letter-spacing:.04em;fill:#0369a1}
-      .title{font-size:50px;font-weight:900;fill:#0f172a}
-      .subtitle{font-size:22px;font-weight:550;fill:#475569}
-      .step-title{font-size:29px;font-weight:900;fill:#0f172a}
-      .step-body{font-size:19px;font-weight:650;fill:#475569}
-      .chip{font-size:17px;font-weight:800;fill:#0f172a}
-      .metric{font-size:42px;font-weight:900;fill:#0f766e}
-      .metric-label{font-size:18px;font-weight:750;fill:#64748b}
-      .note{font-size:17px;font-weight:650;fill:#64748b}
-      .card{fill:#ffffff;stroke:#d8e3ee;stroke-width:2}
-      .soft{fill:#f8fafc;stroke:#cbd5e1;stroke-width:2}
-      .line{stroke:#0369a1;stroke-width:3.5;fill:none;marker-end:url(#arrow)}
+      text{font-family:"Apple SD Gothic Neo","Noto Sans CJK KR","Pretendard",system-ui,sans-serif}
+      .bg{fill:#f7fafc}
+      .panel{fill:#fff;stroke:#d9e3ef;stroke-width:2}
+      .kicker{font-size:22px;font-weight:800;fill:#0369a1}
+      .title{font-size:50px;font-weight:900;fill:#111827}
+      .sub{font-size:25px;font-weight:600;fill:#52627a}
+      .card{fill:#fff;stroke:#d9e3ef;stroke-width:2}
+      .cardBlue{fill:#eef8ff;stroke:#7dd3fc;stroke-width:3}
+      .cardYellow{fill:#fff9eb;stroke:#facc15;stroke-width:3}
+      .h{font-size:31px;font-weight:900;fill:#111827}
+      .body{font-size:23px;font-weight:650;fill:#475569}
+      .chip{font-size:21px;font-weight:850;fill:#0f172a}
+      .metric{font-size:48px;font-weight:900;fill:#0f766e}
+      .metricText{font-size:23px;font-weight:700;fill:#475569}
+      .line{stroke:#0369a1;stroke-width:4;stroke-linecap:round;fill:none;marker-end:url(#arrow)}
     </style>
   </defs>
 
-  <rect width="1600" height="900" fill="url(#bg)"/>
-  <rect x="0" y="0" width="1600" height="18" fill="url(#top)"/>
+  <rect width="1600" height="900" class="bg"/>
+  <rect x="64" y="52" width="1472" height="792" rx="34" class="panel"/>
 
-  <text x="80" y="72" class="kicker">텍스트 기반 시각화 / 개인정보 탐지 파이프라인</text>
-  <text x="80" y="130" class="title">개인정보 탐지를 작은 토큰 분류기로 낮춘다</text>
-  <text x="82" y="172" class="subtitle">ETTIN-68M Nemotron PII는 생성형 답변 모델이 아니라, 민감 스팬을 찾는 전처리 계층입니다.</text>
-  <text x="82" y="204" class="subtitle">로그, 상담 기록, 문서를 통과시키기 전에 탐지·마스킹·리뷰 라우팅을 분리합니다.</text>
+  <text x="104" y="112" class="kicker">개인정보 탐지 파이프라인</text>
+  <text x="104" y="174" class="title">작은 토큰 분류기로 민감 스팬을 먼저 찾는다</text>
+  <text x="104" y="222" class="sub">생성형 답변 모델이 아니라, 로그와 문서 앞단에 붙는 전처리 계층이다.</text>
 
-  <rect x="80" y="270" width="300" height="256" rx="20" class="card"/>
-  <text x="116" y="322" class="step-title">입력 스트림</text>
-  <text x="116" y="370" class="step-body">로그</text>
-  <text x="116" y="402" class="step-body">상담 티켓</text>
-  <text x="116" y="434" class="step-body">문서 조각</text>
-  <rect x="116" y="468" width="190" height="38" rx="19" fill="#eff6ff" stroke="#bfdbfe"/>
-  <text x="140" y="493" class="chip">이름 · ID · 비밀값</text>
+  <rect x="104" y="318" width="282" height="220" rx="24" class="card"/>
+  <text x="140" y="372" class="h">입력</text>
+  <text x="140" y="422" class="body">로그</text>
+  <text x="140" y="456" class="body">상담 기록</text>
+  <text x="140" y="490" class="body">문서 조각</text>
 
-  <path d="M400 398 H462" class="line"/>
+  <path d="M406 428 H480" class="line"/>
 
-  <rect x="482" y="246" width="362" height="304" rx="20" class="card"/>
-  <text x="520" y="300" class="step-title">ETTIN 인코더</text>
-  <text x="520" y="346" class="step-body">68.46M BF16 파라미터</text>
-  <text x="520" y="378" class="step-body">ModernBERT 계열 인코더</text>
-  <text x="520" y="410" class="step-body">19개 계층 · 은닉 512 · 헤드 8개</text>
-  <rect x="520" y="454" width="252" height="48" rx="16" fill="#e0f2fe" stroke="#7dd3fc"/>
-  <text x="546" y="485" class="chip">최대 약 8K 토큰 문맥</text>
+  <rect x="500" y="292" width="330" height="272" rx="24" class="cardBlue"/>
+  <text x="538" y="350" class="h">ETTIN 인코더</text>
+  <text x="538" y="404" class="body">68M 파라미터</text>
+  <text x="538" y="438" class="body">최대 약 8K 문맥</text>
+  <text x="538" y="492" class="body">토큰 표현 생성</text>
 
-  <path d="M864 398 H926" class="line"/>
+  <path d="M850 428 H924" class="line"/>
 
-  <rect x="946" y="270" width="300" height="256" rx="20" class="card"/>
-  <text x="982" y="322" class="step-title">BIO 스팬 헤드</text>
-  <text x="982" y="370" class="step-body">55개 PII/PHI 유형</text>
-  <text x="982" y="402" class="step-body">107개 라벨 ID</text>
-  <text x="982" y="434" class="step-body">토큰별 스팬 출력</text>
-  <rect x="982" y="468" width="194" height="38" rx="19" fill="#fef3c7" stroke="#facc15"/>
-  <text x="1006" y="493" class="chip">문자 위치 기반 후처리</text>
+  <rect x="944" y="292" width="330" height="272" rx="24" class="cardYellow"/>
+  <text x="982" y="350" class="h">BIO 스팬 헤드</text>
+  <text x="982" y="404" class="body">55개 PII/PHI 유형</text>
+  <text x="982" y="438" class="body">107개 라벨 ID</text>
+  <text x="982" y="492" class="body">문자 위치 출력</text>
 
-  <path d="M1266 398 H1328" class="line"/>
+  <path d="M1294 428 H1330" class="line"/>
 
-  <rect x="1348" y="270" width="172" height="256" rx="20" class="card"/>
-  <text x="1382" y="322" class="step-title">조치</text>
-  <text x="1382" y="370" class="step-body">마스킹</text>
-  <text x="1382" y="402" class="step-body">삭제</text>
-  <text x="1382" y="434" class="step-body">리뷰 라우팅</text>
+  <rect x="1348" y="318" width="160" height="220" rx="24" class="card"/>
+  <text x="1382" y="372" class="h">조치</text>
+  <text x="1382" y="422" class="body">마스킹</text>
+  <text x="1382" y="456" class="body">삭제</text>
+  <text x="1382" y="490" class="body">리뷰</text>
 
-  <rect x="80" y="610" width="440" height="154" rx="20" class="soft"/>
-  <text x="116" y="660" class="metric">100K</text>
-  <text x="244" y="652" class="metric-label">Nemotron-PII 합성 레코드</text>
-  <text x="116" y="710" class="step-body">50개 이상 산업과 55개 이상 유형을 포함한 영어 데이터셋.</text>
+  <rect x="104" y="640" width="420" height="116" rx="22" fill="#f8fbff" stroke="#d9e3ef" stroke-width="2"/>
+  <text x="138" y="712" class="metric">100K</text>
+  <text x="260" y="690" class="metricText">Nemotron-PII</text>
+  <text x="260" y="724" class="metricText">합성 레코드</text>
 
-  <rect x="580" y="610" width="440" height="154" rx="20" class="soft"/>
-  <text x="616" y="660" class="metric">96.27</text>
-  <text x="760" y="652" class="metric-label">마이크로 F1</text>
-  <text x="616" y="710" class="step-body">모델 카드 기준 Nemotron-PII 10K 테스트 사례 결과.</text>
+  <rect x="580" y="640" width="420" height="116" rx="22" fill="#f8fbff" stroke="#d9e3ef" stroke-width="2"/>
+  <text x="614" y="712" class="metric">96.27</text>
+  <text x="774" y="690" class="metricText">모델 카드 기준</text>
+  <text x="774" y="724" class="metricText">마이크로 F1</text>
 
-  <rect x="1080" y="610" width="440" height="154" rx="20" class="soft"/>
-  <text x="1116" y="660" class="metric">주의</text>
-  <text x="1224" y="652" class="metric-label">영어 중심 초기 모델</text>
-  <text x="1116" y="710" class="step-body">한국어·조직 내부 로그는 별도 샘플 평가와 후처리가 필요합니다.</text>
+  <rect x="1056" y="640" width="452" height="116" rx="22" fill="#fff7ed" stroke="#fed7aa" stroke-width="2"/>
+  <text x="1090" y="692" class="h" fill="#9a3412">주의</text>
+  <text x="1212" y="690" class="metricText">영어 중심 모델</text>
+  <text x="1212" y="724" class="metricText">한국어 로그는 별도 평가 필요</text>
 
-  <text x="80" y="846" class="note">검증 기준: 파이프라인 방향이 명확한 경우에만 화살표를 사용했고, 모든 일반 문구는 한국어로 작성했습니다.</text>
 </svg>

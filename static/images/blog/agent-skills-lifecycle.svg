@@ -1,97 +1,89 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
   <title id="title">Agent Skills 개발 생애주기</title>
-  <desc id="desc">Agent Skills가 슬래시 명령, 스킬, 페르소나, 패키징으로 코딩 에이전트의 개발 절차를 고정하는 방식을 보여주는 생애주기 맵.</desc>
+  <desc id="desc">Agent Skills가 명세, 계획, 구현, 테스트, 리뷰, 단순화, 출시를 일곱 개의 개발 게이트로 고정하는 구조도.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f8fafc"/>
-      <stop offset="0.62" stop-color="#f2fbf7"/>
-      <stop offset="1" stop-color="#eef2ff"/>
-    </linearGradient>
-    <linearGradient id="top" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#0f172a"/>
-      <stop offset="0.5" stop-color="#0f766e"/>
-      <stop offset="1" stop-color="#2563eb"/>
-    </linearGradient>
     <style>
-      text{font-family:"Apple SD Gothic Neo","Noto Sans CJK KR","Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-      .kicker{font-size:17px;font-weight:850;letter-spacing:.04em;fill:#0f766e}
-      .title{font-size:50px;font-weight:900;fill:#0f172a}
-      .subtitle{font-size:22px;font-weight:550;fill:#475569}
-      .step-title{font-size:24px;font-weight:900;fill:#0f172a}
-      .step-body{font-size:17px;font-weight:650;fill:#475569}
-      .section{font-size:18px;font-weight:850;fill:#0f766e}
-      .layer-title{font-size:25px;font-weight:900;fill:#0f172a}
-      .layer-body{font-size:18px;font-weight:650;fill:#475569}
-      .num{font-size:22px;font-weight:900;fill:#ffffff}
-      .metric{font-size:44px;font-weight:900;fill:#0f766e}
-      .note{font-size:17px;font-weight:650;fill:#64748b}
-      .frame{fill:#ffffff;stroke:#d8e3ee;stroke-width:2}
-      .soft{fill:#f8fafc;stroke:#d8e3ee;stroke-width:2}
+      text{font-family:"Apple SD Gothic Neo","Noto Sans CJK KR","Pretendard",system-ui,sans-serif}
+      .bg{fill:#f7fafc}
+      .panel{fill:#fff;stroke:#d9e3ef;stroke-width:2}
+      .kicker{font-size:22px;font-weight:800;fill:#0f766e}
+      .title{font-size:50px;font-weight:900;fill:#111827}
+      .sub{font-size:25px;font-weight:600;fill:#52627a}
+      .section{font-size:22px;font-weight:900;fill:#0f766e}
+      .step{font-size:27px;font-weight:900;fill:#111827}
+      .stepSub{font-size:19px;font-weight:700;fill:#52627a}
+      .num{font-size:25px;font-weight:900;fill:#fff}
+      .metric{font-size:50px;font-weight:900;fill:#0f766e}
+      .cardTitle{font-size:28px;font-weight:900;fill:#111827}
+      .cardBody{font-size:22px;font-weight:650;fill:#52627a}
       .rail{stroke:#cbd5e1;stroke-width:4;stroke-linecap:round}
+      .card{fill:#fff;stroke:#d9e3ef;stroke-width:2}
     </style>
   </defs>
 
-  <rect width="1600" height="900" fill="url(#bg)"/>
-  <rect x="0" y="0" width="1600" height="18" fill="url(#top)"/>
+  <rect width="1600" height="900" class="bg"/>
+  <rect x="64" y="52" width="1472" height="792" rx="34" class="panel"/>
 
-  <text x="80" y="72" class="kicker">텍스트 기반 시각화 / 개발 생애주기</text>
-  <text x="80" y="130" class="title">Agent Skills는 절차 누락을 막는 운영 패키지다</text>
-  <text x="82" y="172" class="subtitle">코딩 에이전트가 바로 구현으로 뛰어들지 않도록, 명령어와 스킬이 개발 리듬을 고정합니다.</text>
-  <text x="82" y="204" class="subtitle">핵심은 더 긴 프롬프트가 아니라, 반복 가능한 품질 게이트입니다.</text>
+  <text x="104" y="112" class="kicker">개발 생애주기</text>
+  <text x="104" y="174" class="title">Agent Skills는 개발 절차를 일곱 개 게이트로 고정한다</text>
+  <text x="104" y="222" class="sub">에이전트가 바로 구현으로 뛰어들지 않도록, 명령과 스킬이 작업 리듬을 나눈다.</text>
 
-  <rect x="80" y="252" width="1440" height="286" rx="22" class="frame"/>
-  <text x="120" y="304" class="section">사용자 진입점: 7개 생애주기 명령</text>
-  <line x1="150" y1="390" x2="1450" y2="390" class="rail"/>
+  <rect x="104" y="290" width="1388" height="250" rx="26" fill="#f8fbff" stroke="#d9e3ef" stroke-width="2"/>
+  <text x="134" y="338" class="section">7개 진입 명령</text>
+  <line x1="170" y1="405" x2="1430" y2="405" class="rail"/>
 
-  <g>
-    <rect x="124" y="352" width="76" height="76" rx="38" fill="#0f766e"/><text x="155" y="398" class="num">1</text>
-    <text x="94" y="470" class="step-title">명세</text><text x="94" y="500" class="step-body">코드 전 요구 정리</text>
+  <g transform="translate(170 0)">
+    <circle cx="0" cy="405" r="37" fill="#0f766e"/><text x="0" y="414" text-anchor="middle" class="num">1</text>
+    <text x="0" y="477" text-anchor="middle" class="step">명세</text>
+    <text x="0" y="510" text-anchor="middle" class="stepSub">요구 정리</text>
   </g>
-  <g>
-    <rect x="324" y="352" width="76" height="76" rx="38" fill="#0369a1"/><text x="355" y="398" class="num">2</text>
-    <text x="294" y="470" class="step-title">계획</text><text x="282" y="500" class="step-body">작은 작업으로 분해</text>
+  <g transform="translate(380 0)">
+    <circle cx="0" cy="405" r="37" fill="#0369a1"/><text x="0" y="414" text-anchor="middle" class="num">2</text>
+    <text x="0" y="477" text-anchor="middle" class="step">계획</text>
+    <text x="0" y="510" text-anchor="middle" class="stepSub">작업 분해</text>
   </g>
-  <g>
-    <rect x="524" y="352" width="76" height="76" rx="38" fill="#4f46e5"/><text x="555" y="398" class="num">3</text>
-    <text x="494" y="470" class="step-title">구현</text><text x="480" y="500" class="step-body">한 조각씩 변경</text>
+  <g transform="translate(590 0)">
+    <circle cx="0" cy="405" r="37" fill="#4f46e5"/><text x="0" y="414" text-anchor="middle" class="num">3</text>
+    <text x="0" y="477" text-anchor="middle" class="step">구현</text>
+    <text x="0" y="510" text-anchor="middle" class="stepSub">한 조각씩</text>
   </g>
-  <g>
-    <rect x="724" y="352" width="76" height="76" rx="38" fill="#6d28d9"/><text x="755" y="398" class="num">4</text>
-    <text x="694" y="470" class="step-title">테스트</text><text x="688" y="500" class="step-body">통과 증거 확보</text>
+  <g transform="translate(800 0)">
+    <circle cx="0" cy="405" r="37" fill="#6d28d9"/><text x="0" y="414" text-anchor="middle" class="num">4</text>
+    <text x="0" y="477" text-anchor="middle" class="step">테스트</text>
+    <text x="0" y="510" text-anchor="middle" class="stepSub">증거 확보</text>
   </g>
-  <g>
-    <rect x="924" y="352" width="76" height="76" rx="38" fill="#be185d"/><text x="955" y="398" class="num">5</text>
-    <text x="894" y="470" class="step-title">리뷰</text><text x="874" y="500" class="step-body">위험과 회귀 확인</text>
+  <g transform="translate(1010 0)">
+    <circle cx="0" cy="405" r="37" fill="#be185d"/><text x="0" y="414" text-anchor="middle" class="num">5</text>
+    <text x="0" y="477" text-anchor="middle" class="step">리뷰</text>
+    <text x="0" y="510" text-anchor="middle" class="stepSub">위험 확인</text>
   </g>
-  <g>
-    <rect x="1124" y="352" width="76" height="76" rx="38" fill="#b45309"/><text x="1155" y="398" class="num">6</text>
-    <text x="1080" y="470" class="step-title">단순화</text><text x="1078" y="500" class="step-body">불필요한 복잡도 제거</text>
+  <g transform="translate(1220 0)">
+    <circle cx="0" cy="405" r="37" fill="#b45309"/><text x="0" y="414" text-anchor="middle" class="num">6</text>
+    <text x="0" y="477" text-anchor="middle" class="step">단순화</text>
+    <text x="0" y="510" text-anchor="middle" class="stepSub">복잡도 제거</text>
   </g>
-  <g>
-    <rect x="1324" y="352" width="76" height="76" rx="38" fill="#15803d"/><text x="1355" y="398" class="num">7</text>
-    <text x="1294" y="470" class="step-title">출시</text><text x="1280" y="500" class="step-body">진행/중단 판단과 롤백</text>
+  <g transform="translate(1430 0)">
+    <circle cx="0" cy="405" r="37" fill="#15803d"/><text x="0" y="414" text-anchor="middle" class="num">7</text>
+    <text x="0" y="477" text-anchor="middle" class="step">출시</text>
+    <text x="0" y="510" text-anchor="middle" class="stepSub">판단과 롤백</text>
   </g>
 
-  <rect x="80" y="588" width="452" height="204" rx="20" class="frame"/>
-  <text x="116" y="638" class="layer-title">스킬 22개</text>
-  <text x="116" y="676" class="layer-body">어떻게 일할지 정의합니다.</text>
-  <text x="116" y="704" class="layer-body">절차, 검증 게이트, 회피 패턴을 담습니다.</text>
-  <text x="116" y="760" class="metric">22</text>
-  <text x="190" y="752" class="note">SKILL.md</text>
+  <rect x="104" y="602" width="410" height="170" rx="24" class="card"/>
+  <text x="138" y="652" class="cardTitle">스킬</text>
+  <text x="138" y="705" class="metric">22</text>
+  <text x="222" y="697" class="cardBody">절차와 검증 기준</text>
+  <text x="222" y="728" class="cardBody">회피 패턴을 문서화</text>
 
-  <rect x="574" y="588" width="452" height="204" rx="20" class="frame"/>
-  <text x="610" y="638" class="layer-title">페르소나 3개</text>
-  <text x="610" y="676" class="layer-body">누가 검토할지 분리합니다.</text>
-  <text x="610" y="704" class="layer-body">리뷰어, 보안 감사자, 테스트 엔지니어.</text>
-  <text x="610" y="760" class="metric">3</text>
-  <text x="662" y="752" class="note">전문 역할</text>
+  <rect x="595" y="602" width="410" height="170" rx="24" class="card"/>
+  <text x="629" y="652" class="cardTitle">페르소나</text>
+  <text x="629" y="705" class="metric">3</text>
+  <text x="713" y="697" class="cardBody">리뷰어 · 보안 감사자</text>
+  <text x="713" y="728" class="cardBody">테스트 엔지니어</text>
 
-  <rect x="1068" y="588" width="452" height="204" rx="20" class="frame"/>
-  <text x="1104" y="638" class="layer-title">배포 표면</text>
-  <text x="1104" y="676" class="layer-body">Claude Code, Gemini CLI, OpenCode 등</text>
-  <text x="1104" y="704" class="layer-body">여러 하네스에 같은 절차를 싣습니다.</text>
-  <text x="1104" y="760" class="metric">7</text>
-  <text x="1156" y="752" class="note">명령 진입점</text>
+  <rect x="1086" y="602" width="410" height="170" rx="24" class="card"/>
+  <text x="1120" y="652" class="cardTitle">배포 표면</text>
+  <text x="1120" y="705" class="metric">7</text>
+  <text x="1204" y="697" class="cardBody">여러 하네스에</text>
+  <text x="1204" y="728" class="cardBody">같은 절차를 적용</text>
 
-  <text x="80" y="852" class="note">검증 기준: 모든 문구는 한국어 중심이며, 화살표 없이 생애주기와 레이어의 역할을 분리했습니다.</text>
 </svg>

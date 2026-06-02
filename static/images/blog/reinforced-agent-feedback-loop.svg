@@ -1,90 +1,72 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
   <title id="title">Reinforced Agent 실행 전 리뷰 게이트</title>
-  <desc id="desc">사용자 요청에서 기본 에이전트의 임시 툴 호출, 리뷰어 검토, 승인된 호출 실행으로 이어지는 흐름과 수정 요청 루프를 보여주는 다이어그램.</desc>
+  <desc id="desc">사용자 요청, 기본 에이전트, 리뷰어 게이트, 실행 승인으로 이어지는 툴 호출 검토 흐름도.</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse">
       <path d="M2,2 L11,6 L2,10 Z" fill="#334155"/>
     </marker>
-    <marker id="arrowBlue" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M2,2 L11,6 L2,10 Z" fill="#2563eb"/>
-    </marker>
     <style>
-      .bg { fill: #f8fafc; }
-      .ink { fill: #111827; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; }
-      .muted { fill: #64748b; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; }
-      .title { fill: #111827; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 54px; font-weight: 900; }
-      .h { fill: #111827; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 33px; font-weight: 900; }
-      .body { fill: #334155; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 24px; font-weight: 650; }
-      .small { fill: #475569; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 21px; font-weight: 650; }
-      .white { fill: #ffffff; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 24px; font-weight: 900; }
-      .card { fill: #ffffff; stroke: #dbe4f0; stroke-width: 2; }
-      .flow { fill: none; stroke: #334155; stroke-width: 4; stroke-linecap: round; marker-end: url(#arrow); }
-      .return { fill: none; stroke: #2563eb; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 10 12; marker-end: url(#arrowBlue); }
-      .pillText { fill: #0f172a; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 22px; font-weight: 800; }
+      text{font-family:"Apple SD Gothic Neo","Noto Sans CJK KR","Pretendard",system-ui,sans-serif}
+      .bg{fill:#f7fafc}
+      .panel{fill:#fff;stroke:#d9e3ef;stroke-width:2}
+      .kicker{font-size:22px;font-weight:800;fill:#2563eb}
+      .title{font-size:50px;font-weight:900;fill:#111827}
+      .sub{font-size:25px;font-weight:600;fill:#52627a}
+      .card{fill:#fff;stroke:#d9e3ef;stroke-width:2}
+      .review{fill:#eef8ff;stroke:#93c5fd;stroke-width:3}
+      .h{font-size:31px;font-weight:900;fill:#111827}
+      .body{font-size:23px;font-weight:650;fill:#475569}
+      .num{font-size:23px;font-weight:900;fill:#fff}
+      .pill{font-size:22px;font-weight:850;fill:#172033}
+      .line{stroke:#334155;stroke-width:4;stroke-linecap:round;fill:none;marker-end:url(#arrow)}
     </style>
   </defs>
 
   <rect width="1600" height="900" class="bg"/>
-  <rect x="64" y="54" width="1472" height="792" rx="34" fill="#ffffff" stroke="#dfe7f0" stroke-width="2"/>
+  <rect x="64" y="52" width="1472" height="792" rx="34" class="panel"/>
 
-  <text x="104" y="118" class="muted" font-size="24" font-weight="800">Reinforced Agent</text>
-  <text x="104" y="178" class="title">툴 호출을 실행 전에 한 번 더 검토하는 게이트</text>
-  <text x="104" y="226" class="muted" font-size="27" font-weight="600">기본 에이전트의 임시 툴 호출을 바로 실행하지 않고, 별도 리뷰어가 오류와 부작용을 먼저 본다.</text>
+  <text x="104" y="112" class="kicker">실행 전 검토</text>
+  <text x="104" y="174" class="title">툴 호출은 실행 전에 리뷰어 게이트를 통과한다</text>
+  <text x="104" y="222" class="sub">외부 상태를 바꾸기 전에, 임시 호출을 별도 리뷰어가 먼저 점검한다.</text>
 
-  <g>
-    <rect x="112" y="350" width="250" height="172" rx="24" class="card"/>
-    <circle cx="172" cy="404" r="30" fill="#64748b"/>
-    <text x="172" y="413" text-anchor="middle" class="white">1</text>
-    <text x="214" y="411" class="h">사용자 요청</text>
-    <text x="158" y="468" class="body">작업 + 맥락</text>
-    <text x="158" y="504" class="small">외부 상태를 바꿀 수 있는 작업</text>
-  </g>
+  <rect x="108" y="344" width="250" height="210" rx="24" class="card"/>
+  <circle cx="158" cy="400" r="28" fill="#64748b"/><text x="158" y="408" text-anchor="middle" class="num">1</text>
+  <text x="198" y="408" class="h">요청</text>
+  <text x="146" y="468" class="body">작업 + 맥락</text>
+  <text x="146" y="502" class="body">상태 변경 가능</text>
 
-  <path d="M362 436 H458" class="flow"/>
+  <path d="M378 449 H456" class="line"/>
 
-  <g>
-    <rect x="458" y="324" width="300" height="224" rx="24" class="card"/>
-    <rect x="458" y="324" width="300" height="62" rx="24" fill="#2563eb"/>
-    <path d="M458 356 Q458 324 490 324 H726 Q758 324 758 356 V386 H458 Z" fill="#2563eb"/>
-    <text x="608" y="365" text-anchor="middle" class="white">2. 기본 에이전트</text>
-    <text x="510" y="432" class="h">임시 툴 호출</text>
-    <text x="510" y="474" class="body">도구 이름</text>
-    <text x="510" y="508" class="body">인자</text>
-    <text x="510" y="536" class="small">아직 실행하지 않음</text>
-  </g>
+  <rect x="476" y="344" width="288" height="210" rx="24" class="card"/>
+  <circle cx="526" cy="400" r="28" fill="#2563eb"/><text x="526" y="408" text-anchor="middle" class="num">2</text>
+  <text x="566" y="408" class="h">기본 에이전트</text>
+  <text x="514" y="468" class="body">임시 툴 호출</text>
+  <text x="514" y="502" class="body">아직 실행 안 함</text>
 
-  <path d="M758 436 H858" class="flow"/>
+  <path d="M784 449 H862" class="line"/>
 
-  <g>
-    <rect x="858" y="296" width="338" height="280" rx="28" fill="#f0f9ff" stroke="#93c5fd" stroke-width="3"/>
-    <text x="1027" y="356" text-anchor="middle" class="h">3. 리뷰어 게이트</text>
-    <text x="918" y="418" class="body">툴 선택이 맞는가</text>
-    <text x="918" y="454" class="body">인자가 안전한가</text>
-    <text x="918" y="490" class="body">도구가 필요 없는 요청인가</text>
-    <text x="918" y="526" class="body">정책·상태 제약을 지키는가</text>
-  </g>
+  <rect x="882" y="314" width="336" height="270" rx="28" class="review"/>
+  <circle cx="932" cy="374" r="28" fill="#0f766e"/><text x="932" y="382" text-anchor="middle" class="num">3</text>
+  <text x="972" y="382" class="h">리뷰어 게이트</text>
+  <text x="932" y="448" class="body">툴 선택</text>
+  <text x="932" y="482" class="body">인자 안전성</text>
+  <text x="932" y="516" class="body">정책 · 상태 제약</text>
 
-  <path d="M1196 436 H1294" class="flow"/>
+  <path d="M1238 449 H1280" class="line"/>
 
-  <g>
-    <rect x="1294" y="350" width="240" height="172" rx="24" class="card"/>
-    <rect x="1336" y="396" width="156" height="50" rx="25" fill="#059669"/>
-    <text x="1414" y="430" text-anchor="middle" class="white">실행 승인</text>
-    <text x="1344" y="486" class="body">승인된 호출</text>
-    <text x="1344" y="518" class="small">외부 도구 호출</text>
-  </g>
+  <rect x="1300" y="344" width="226" height="210" rx="24" class="card"/>
+  <rect x="1340" y="390" width="148" height="48" rx="24" fill="#059669"/>
+  <text x="1414" y="421" text-anchor="middle" fill="#fff" font-size="24" font-weight="900">승인</text>
+  <text x="1342" y="486" class="body">실제 도구 호출</text>
+  <text x="1342" y="520" class="body">결과 반환</text>
 
-  <path d="M1014 576 C1014 684 608 690 608 558" class="return"/>
-  <text x="782" y="718" text-anchor="middle" class="muted" font-size="25" font-weight="900" fill="#2563eb">수정 요청: 실행 전에 다시 호출을 만들게 한다</text>
+  <rect x="384" y="642" width="832" height="72" rx="24" fill="#f8fbff" stroke="#d9e3ef" stroke-width="2"/>
+  <text x="800" y="686" text-anchor="middle" class="pill">리뷰 결과: 승인 또는 수정 요청</text>
 
-  <rect x="168" y="650" width="282" height="84" rx="22" fill="#fff7ed" stroke="#fed7aa" stroke-width="2"/>
-  <text x="309" y="685" text-anchor="middle" class="pillText">왜 중요한가</text>
-  <text x="309" y="720" text-anchor="middle" class="small">잘못된 상태 변경을 사전에 차단</text>
+  <rect x="244" y="756" width="410" height="68" rx="22" fill="#fff7ed" stroke="#fed7aa" stroke-width="2"/>
+  <text x="449" y="799" text-anchor="middle" class="pill">도움성: 잘못된 호출을 고침</text>
 
-  <rect x="1128" y="650" width="326" height="84" rx="22" fill="#fef2f2" stroke="#fecaca" stroke-width="2"/>
-  <text x="1291" y="685" text-anchor="middle" class="pillText">측정해야 할 부작용</text>
-  <text x="1291" y="720" text-anchor="middle" class="small">맞는 호출을 리뷰어가 깨뜨릴 수 있음</text>
+  <rect x="946" y="756" width="410" height="68" rx="22" fill="#fef2f2" stroke="#fecaca" stroke-width="2"/>
+  <text x="1151" y="799" text-anchor="middle" class="pill">유해성: 맞는 호출을 깨뜨림</text>
 
-  <rect x="492" y="760" width="604" height="56" rx="18" fill="#ecfeff" stroke="#a5f3fc" stroke-width="2"/>
-  <text x="794" y="796" text-anchor="middle" class="pillText">평가 축: 도움성 · 유해성 · 이득/위험 비율 · 지연 비용</text>
 </svg>
