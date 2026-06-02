@@ -1,106 +1,106 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
-  <title id="title">Hermes Agent Self-Evolution loop</title>
-  <desc id="desc">A workflow diagram showing skill or prompt inputs, evaluation dataset generation, DSPy and GEPA optimization, evaluation traces, constraint gates, and human-reviewed output.</desc>
+  <title id="title">Hermes Agent Self-Evolution 스킬 진화 루프</title>
+  <desc id="desc">스킬 파일, 평가 데이터, DSPy와 GEPA 최적화, 검증, 리뷰 산출물을 하나의 측정 가능한 루프로 묶고 하단에 제약 게이트를 배치한 구조도.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#08111f"/>
-      <stop offset="55%" stop-color="#0e1630"/>
-      <stop offset="100%" stop-color="#191131"/>
-    </linearGradient>
-    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#17223a"/>
-      <stop offset="100%" stop-color="#111827"/>
-    </linearGradient>
-    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#7dd3fc"/>
-      <stop offset="50%" stop-color="#a78bfa"/>
-      <stop offset="100%" stop-color="#f0abfc"/>
-    </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#000000" flood-opacity="0.35"/>
-    </filter>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#93c5fd"/>
-    </marker>
     <style>
-      .label{font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill:#e5e7eb; font-weight:700; letter-spacing:-0.02em}
-      .small{font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill:#a5b4fc; font-weight:600; font-size:25px; letter-spacing:0.02em}
-      .body{font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill:#cbd5e1; font-size:27px; font-weight:500}
-      .mono{font-family: "SFMono-Regular", Consolas, Menlo, monospace; fill:#bae6fd; font-size:24px; font-weight:700}
-      .badge{font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill:#020617; font-size:22px; font-weight:800; letter-spacing:0.04em}
+      .bg { fill: #f7f9fc; }
+      .ink { fill: #162033; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; }
+      .muted { fill: #5c6b82; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; }
+      .small { fill: #56657a; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 28px; font-weight: 700; }
+      .body { fill: #334155; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 27px; font-weight: 600; }
+      .body2 { fill: #475569; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 23px; font-weight: 600; }
+      .num { fill: #ffffff; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 28px; font-weight: 900; }
+      .metric { fill: #0f766e; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 44px; font-weight: 900; }
+      .label { fill: #162033; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 35px; font-weight: 900; }
+      .chipText { fill: #204052; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 22px; font-weight: 800; }
+      .line { fill: none; stroke: #9fb1c8; stroke-width: 4; stroke-linecap: round; }
+      .dash { fill: none; stroke: #c0cad8; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 8 14; }
+      .card { fill: #ffffff; stroke: #d8e1ec; stroke-width: 2; }
+      .guard { fill: #102a43; }
+      .guardText { fill: #e6eef8; font-family: "Apple SD Gothic Neo", "Noto Sans CJK KR", "Pretendard", system-ui, sans-serif; font-size: 25px; font-weight: 800; }
     </style>
   </defs>
 
-  <rect width="1600" height="900" rx="0" fill="url(#bg)"/>
-  <circle cx="1280" cy="130" r="260" fill="#312e81" opacity="0.22"/>
-  <circle cx="250" cy="770" r="260" fill="#075985" opacity="0.18"/>
-  <path d="M110 160 C400 80 520 260 790 170 C1070 80 1190 230 1490 140" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.18"/>
-  <path d="M130 740 C410 640 540 800 780 700 C1050 590 1210 720 1480 610" fill="none" stroke="#c084fc" stroke-width="2" opacity="0.18"/>
+  <rect width="1600" height="900" class="bg"/>
+  <rect x="72" y="56" width="1456" height="788" rx="34" fill="#ffffff" stroke="#dde6f0" stroke-width="2"/>
 
-  <text x="100" y="108" class="small">HERMES AGENT SELF-EVOLUTION</text>
-  <text x="100" y="165" class="label" font-size="55">Instruction Layer as an Optimizable System</text>
-  <text x="100" y="210" class="body">Skills, tool descriptions, and prompts become measurable variants — not static documentation.</text>
+  <text x="112" y="118" class="muted" font-size="25" font-weight="800">Hermes Agent Self-Evolution</text>
+  <text x="112" y="176" class="ink" font-size="54" font-weight="900">스킬 문서를 측정 가능한 실험 단위로 바꾸는 루프</text>
+  <text x="112" y="222" class="muted" font-size="27" font-weight="600">모델을 다시 학습하지 않고 SKILL.md, 도구 설명, 프롬프트를 평가·변이·검증 대상으로 고정한다.</text>
 
-  <g filter="url(#shadow)">
-    <rect x="100" y="300" width="250" height="150" rx="28" fill="url(#card)" stroke="#334155" stroke-width="2"/>
-    <text x="130" y="350" class="label" font-size="32">1. Target</text>
-    <text x="130" y="392" class="mono">SKILL.md</text>
-    <text x="130" y="424" class="body" font-size="23">tool schema · prompt</text>
+  <rect x="598" y="310" width="404" height="214" rx="26" fill="#eef7ff" stroke="#8bb7e4" stroke-width="3"/>
+  <text x="800" y="374" text-anchor="middle" class="muted" font-size="24" font-weight="800">중앙 실험 단위</text>
+  <text x="800" y="423" text-anchor="middle" class="ink" font-size="42" font-weight="900">지침 레이어</text>
+  <text x="800" y="466" text-anchor="middle" class="body2">절차 문서와 프롬프트를</text>
+  <text x="800" y="499" text-anchor="middle" class="body2">기준안 / 진화 후보로 비교</text>
+
+  <path d="M800 310 C800 248 940 258 1028 290" class="line"/>
+  <path d="M1002 418 C1100 422 1134 522 1088 606" class="line"/>
+  <path d="M858 524 C864 622 718 660 610 612" class="line"/>
+  <path d="M598 418 C494 420 462 326 542 288" class="line"/>
+  <path d="M610 332 C650 272 742 258 800 310" class="dash"/>
+
+  <g>
+    <rect x="232" y="284" width="286" height="158" rx="22" class="card"/>
+    <circle cx="278" cy="332" r="25" fill="#2563eb"/>
+    <text x="278" y="342" text-anchor="middle" class="num">1</text>
+    <text x="316" y="331" class="label">대상 선택</text>
+    <text x="272" y="382" class="body2">SKILL.md</text>
+    <text x="272" y="416" class="body2">도구 설명 · 시스템 프롬프트</text>
   </g>
 
-  <g filter="url(#shadow)">
-    <rect x="440" y="300" width="270" height="150" rx="28" fill="url(#card)" stroke="#334155" stroke-width="2"/>
-    <text x="470" y="350" class="label" font-size="32">2. Eval Data</text>
-    <text x="470" y="392" class="body" font-size="24">synthetic · session DB</text>
-    <text x="470" y="424" class="body" font-size="23">golden rubrics</text>
+  <g>
+    <rect x="1026" y="266" width="306" height="178" rx="22" class="card"/>
+    <circle cx="1072" cy="316" r="25" fill="#0891b2"/>
+    <text x="1072" y="326" text-anchor="middle" class="num">2</text>
+    <text x="1110" y="316" class="label">평가 데이터</text>
+    <text x="1070" y="366" class="body2">합성 케이스 · 세션 기록</text>
+    <text x="1070" y="400" class="body2">정답 세트 · 평가 기준</text>
   </g>
 
-  <g filter="url(#shadow)">
-    <rect x="800" y="270" width="330" height="210" rx="34" fill="#111827" stroke="url(#accent)" stroke-width="4"/>
-    <text x="840" y="330" class="label" font-size="36">3. Optimizer</text>
-    <text x="840" y="378" class="label" font-size="34" fill="#e9d5ff">DSPy + GEPA</text>
-    <text x="840" y="420" class="body" font-size="24">trace-aware reflective</text>
-    <text x="840" y="452" class="body" font-size="24">prompt evolution</text>
+  <g>
+    <rect x="1022" y="610" width="312" height="166" rx="22" class="card"/>
+    <circle cx="1068" cy="660" r="25" fill="#7c3aed"/>
+    <text x="1068" y="670" text-anchor="middle" class="num">3</text>
+    <text x="1106" y="660" class="label">최적화</text>
+    <text x="1068" y="710" class="body2">DSPy + GEPA</text>
+    <text x="1068" y="744" class="body2">실행 흔적 기반 표적 변이</text>
   </g>
 
-  <g filter="url(#shadow)">
-    <rect x="1225" y="300" width="275" height="150" rx="28" fill="url(#card)" stroke="#334155" stroke-width="2"/>
-    <text x="1255" y="350" class="label" font-size="32">4. Evaluate</text>
-    <text x="1255" y="392" class="body" font-size="24">score · latency · cost</text>
-    <text x="1255" y="424" class="body" font-size="23">execution traces</text>
+  <g>
+    <rect x="566" y="628" width="306" height="158" rx="22" class="card"/>
+    <circle cx="612" cy="678" r="25" fill="#0f766e"/>
+    <text x="612" y="688" text-anchor="middle" class="num">4</text>
+    <text x="650" y="678" class="label">검증</text>
+    <text x="610" y="728" class="body2">기준안 대비 진화안 비교</text>
+    <text x="610" y="762" class="body2">점수 · 비용 · 지연</text>
   </g>
 
-  <path d="M352 375 L430 375" stroke="#93c5fd" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
-  <path d="M712 375 L790 375" stroke="#93c5fd" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
-  <path d="M1135 375 L1215 375" stroke="#93c5fd" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
-  <path d="M1360 455 C1335 620 1035 640 990 488" stroke="#a78bfa" stroke-width="4" fill="none" stroke-dasharray="12 12" marker-end="url(#arrow)" opacity="0.9"/>
-  <text x="1090" y="615" class="body" font-size="24" fill="#d8b4fe">feedback traces loop back into mutation</text>
-
-  <g filter="url(#shadow)">
-    <rect x="285" y="620" width="460" height="145" rx="30" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
-    <text x="325" y="675" class="label" font-size="33">Constraint Gates</text>
-    <text x="325" y="718" class="body" font-size="24">tests · size limits · growth limit · structure</text>
+  <g>
+    <rect x="236" y="592" width="286" height="176" rx="22" class="card"/>
+    <circle cx="282" cy="642" r="25" fill="#ea580c"/>
+    <text x="282" y="652" text-anchor="middle" class="num">5</text>
+    <text x="320" y="642" class="label">리뷰 산출물</text>
+    <text x="282" y="692" class="body2">차이 · 지표 · 회귀 테스트</text>
+    <text x="282" y="726" class="body2">사람 리뷰 후 반영</text>
   </g>
 
-  <g filter="url(#shadow)">
-    <rect x="850" y="620" width="465" height="145" rx="30" fill="#0f172a" stroke="#c084fc" stroke-width="2"/>
-    <text x="890" y="675" class="label" font-size="33">Reviewed Output</text>
-    <text x="890" y="718" class="body" font-size="24">baseline/evolved diff · metrics · PR review</text>
-  </g>
+  <rect x="112" y="792" width="1376" height="68" rx="18" class="guard"/>
+  <text x="142" y="835" class="guardText">제약 게이트</text>
+  <rect x="340" y="808" width="176" height="36" rx="18" fill="#e6f0ff"/>
+  <text x="388" y="832" class="chipText">크기 제한</text>
+  <rect x="548" y="808" width="196" height="36" rx="18" fill="#e6f0ff"/>
+  <text x="590" y="832" class="chipText">성장률 20%</text>
+  <rect x="776" y="808" width="170" height="36" rx="18" fill="#e6f0ff"/>
+  <text x="825" y="832" class="chipText">테스트</text>
+  <rect x="978" y="808" width="220" height="36" rx="18" fill="#e6f0ff"/>
+  <text x="1022" y="832" class="chipText">비밀값 필터링</text>
+  <rect x="1230" y="808" width="226" height="36" rx="18" fill="#e6f0ff"/>
+  <text x="1266" y="832" class="chipText">리뷰 전 자동 반영 금지</text>
 
-  <path d="M965 485 C940 570 730 640 750 690 L835 690" stroke="#93c5fd" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
-  <path d="M748 692 L835 692" stroke="#93c5fd" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
-
-  <g transform="translate(102, 805)">
-    <rect x="0" y="0" width="180" height="42" rx="21" fill="url(#accent)"/>
-    <text x="28" y="28" class="badge">NO GPU TRAINING</text>
-  </g>
-  <g transform="translate(306, 805)">
-    <rect x="0" y="0" width="174" height="42" rx="21" fill="#fde68a"/>
-    <text x="27" y="28" class="badge">API-ONLY LOOP</text>
-  </g>
-  <g transform="translate(505, 805)">
-    <rect x="0" y="0" width="205" height="42" rx="21" fill="#bbf7d0"/>
-    <text x="28" y="28" class="badge">HUMAN REVIEWED</text>
+  <g>
+    <rect x="1254" y="104" width="234" height="94" rx="18" fill="#ecfeff" stroke="#a5f3fc" stroke-width="2"/>
+    <text x="1371" y="145" text-anchor="middle" class="metric">+20.7%</text>
+    <text x="1371" y="176" text-anchor="middle" class="small">작은 1단계 검증</text>
   </g>
 </svg>

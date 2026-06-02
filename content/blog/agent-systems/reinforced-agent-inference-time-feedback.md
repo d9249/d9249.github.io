@@ -22,7 +22,7 @@ draft: false
 <figure style="margin: 1.8rem 0;">
   <img
     src="/images/blog/reinforced-agent-feedback-loop.svg"
-    alt="Simplified inference-time feedback loop for tool-calling agents"
+    alt="Reinforced Agent가 툴 호출을 실행 전에 리뷰어 게이트로 검토하는 흐름도"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
   <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">

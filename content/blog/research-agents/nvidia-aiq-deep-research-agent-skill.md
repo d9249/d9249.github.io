@@ -59,11 +59,11 @@ NVIDIA Technical Blog의 **“Add a Specialized Deep Research Skill to Agent Har
 <figure style="margin: 1.8rem 0;">
   <img
     src="/images/blog/nvidia-aiq-agent-skill-flow.svg"
-    alt="Diagram showing agent harnesses delegating deep research to NVIDIA AI-Q through an agent skill"
+    alt="NVIDIA AI-Q 스킬이 범용 하네스와 딥리서치 서버의 책임 경계를 나누는 구조도"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
   <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
-    AI-Q agent skill의 경계. 하네스는 사용자 요청과 세션을 관리하고, skill은 AI-Q API 호출을 담당하며, AI-Q 서버는 리서치 파이프라인과 데이터 접근을 담당한다.
+    AI-Q 스킬의 책임 경계. 하네스는 사용자 요청과 세션을 관리하고, 스킬은 AI-Q API 호출을 담당하며, AI-Q 서버는 리서치 파이프라인과 데이터 접근을 담당한다.
   </figcaption>
 </figure>
 

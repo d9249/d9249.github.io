@@ -19,7 +19,7 @@ draft: false
 
 이 프로젝트가 흥미로운 이유는 `SKILL.md`만 모아 둔 저장소에서 한 발 더 나아가기 때문이다. 현재 저장소는 22개 skill, 7개 Claude Code slash command, 7개 Gemini CLI command mirror, 3개 specialist persona, 5개 reference checklist, 그리고 Claude Code plugin manifest와 marketplace metadata를 함께 갖는다. 즉 "좋은 개발 습관"을 문서로 적는 데서 끝내지 않고, 여러 코딩 에이전트 하네스에 주입 가능한 운영 패키지로 만든다.
 
-![Agent Skills lifecycle diagram](/images/blog/agent-skills-lifecycle.svg)
+![Agent Skills가 명세부터 출시까지 개발 생애주기를 품질 게이트로 고정하는 구조도](/images/blog/agent-skills-lifecycle.svg)
 
 ## 무엇을 해결하려는가
 

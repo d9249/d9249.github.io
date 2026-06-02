@@ -1,100 +1,97 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
-  <title id="title">Agent Skills lifecycle diagram</title>
-  <desc id="desc">A reconstructed diagram of addyosmani/agent-skills: slash commands map the software lifecycle to skills, personas, references, hooks, and host integrations.</desc>
+  <title id="title">Agent Skills 개발 생애주기</title>
+  <desc id="desc">Agent Skills가 슬래시 명령, 스킬, 페르소나, 패키징으로 코딩 에이전트의 개발 절차를 고정하는 방식을 보여주는 생애주기 맵.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#07111f"/>
-      <stop offset="0.55" stop-color="#101b33"/>
-      <stop offset="1" stop-color="#182544"/>
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="0.62" stop-color="#f2fbf7"/>
+      <stop offset="1" stop-color="#eef2ff"/>
     </linearGradient>
-    <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#67e8f9"/>
-      <stop offset="1" stop-color="#60a5fa"/>
+    <linearGradient id="top" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="0.5" stop-color="#0f766e"/>
+      <stop offset="1" stop-color="#2563eb"/>
     </linearGradient>
-    <linearGradient id="violet" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#a78bfa"/>
-      <stop offset="1" stop-color="#f472b6"/>
-    </linearGradient>
-    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#86efac"/>
-      <stop offset="1" stop-color="#34d399"/>
-    </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000000" flood-opacity="0.32"/>
-    </filter>
-    <marker id="arrow" markerWidth="14" markerHeight="14" refX="10" refY="7" orient="auto" markerUnits="strokeWidth">
-      <path d="M 0 0 L 14 7 L 0 14 z" fill="#93c5fd"/>
-    </marker>
     <style>
-      .title { font: 800 54px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #f8fafc; letter-spacing: -1.2px; }
-      .subtitle { font: 500 24px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #cbd5e1; }
-      .label { font: 800 24px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #f8fafc; }
-      .small { font: 600 17px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #cbd5e1; }
-      .micro { font: 700 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #93c5fd; letter-spacing: 0.6px; }
-      .box { fill: rgba(15, 23, 42, 0.82); stroke: rgba(148, 163, 184, 0.34); stroke-width: 1.5; }
-      .thin { stroke: rgba(147, 197, 253, 0.55); stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      text{font-family:"Apple SD Gothic Neo","Noto Sans CJK KR","Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+      .kicker{font-size:17px;font-weight:850;letter-spacing:.04em;fill:#0f766e}
+      .title{font-size:50px;font-weight:900;fill:#0f172a}
+      .subtitle{font-size:22px;font-weight:550;fill:#475569}
+      .step-title{font-size:24px;font-weight:900;fill:#0f172a}
+      .step-body{font-size:17px;font-weight:650;fill:#475569}
+      .section{font-size:18px;font-weight:850;fill:#0f766e}
+      .layer-title{font-size:25px;font-weight:900;fill:#0f172a}
+      .layer-body{font-size:18px;font-weight:650;fill:#475569}
+      .num{font-size:22px;font-weight:900;fill:#ffffff}
+      .metric{font-size:44px;font-weight:900;fill:#0f766e}
+      .note{font-size:17px;font-weight:650;fill:#64748b}
+      .frame{fill:#ffffff;stroke:#d8e3ee;stroke-width:2}
+      .soft{fill:#f8fafc;stroke:#d8e3ee;stroke-width:2}
+      .rail{stroke:#cbd5e1;stroke-width:4;stroke-linecap:round}
     </style>
   </defs>
+
   <rect width="1600" height="900" fill="url(#bg)"/>
-  <circle cx="1275" cy="120" r="330" fill="#2563eb" opacity="0.12"/>
-  <circle cx="180" cy="780" r="300" fill="#a855f7" opacity="0.11"/>
-  <text x="86" y="100" class="title">Agent Skills</text>
-  <text x="88" y="138" class="subtitle">Production engineering workflows packaged for AI coding agents</text>
-  <g transform="translate(86,188)">
-    <rect width="1428" height="108" rx="26" class="box" filter="url(#shadow)"/>
-    <text x="34" y="45" class="micro">USER-FACING LIFECYCLE COMMANDS</text>
-    <g transform="translate(34,62)">
-      <g><rect width="150" height="46" rx="16" fill="#0f766e"/><text x="75" y="31" text-anchor="middle" class="small" fill="#ecfeff">/spec</text></g>
-      <g transform="translate(185,0)"><rect width="150" height="46" rx="16" fill="#2563eb"/><text x="75" y="31" text-anchor="middle" class="small" fill="#eff6ff">/plan</text></g>
-      <g transform="translate(370,0)"><rect width="150" height="46" rx="16" fill="#4f46e5"/><text x="75" y="31" text-anchor="middle" class="small" fill="#eef2ff">/build</text></g>
-      <g transform="translate(555,0)"><rect width="150" height="46" rx="16" fill="#7c3aed"/><text x="75" y="31" text-anchor="middle" class="small" fill="#f5f3ff">/test</text></g>
-      <g transform="translate(740,0)"><rect width="150" height="46" rx="16" fill="#db2777"/><text x="75" y="31" text-anchor="middle" class="small" fill="#fdf2f8">/review</text></g>
-      <g transform="translate(925,0)"><rect width="190" height="46" rx="16" fill="#f97316"/><text x="95" y="31" text-anchor="middle" class="small" fill="#fff7ed">/code-simplify</text></g>
-      <g transform="translate(1150,0)"><rect width="150" height="46" rx="16" fill="#16a34a"/><text x="75" y="31" text-anchor="middle" class="small" fill="#f0fdf4">/ship</text></g>
-    </g>
+  <rect x="0" y="0" width="1600" height="18" fill="url(#top)"/>
+
+  <text x="80" y="72" class="kicker">텍스트 기반 시각화 / 개발 생애주기</text>
+  <text x="80" y="130" class="title">Agent Skills는 절차 누락을 막는 운영 패키지다</text>
+  <text x="82" y="172" class="subtitle">코딩 에이전트가 바로 구현으로 뛰어들지 않도록, 명령어와 스킬이 개발 리듬을 고정합니다.</text>
+  <text x="82" y="204" class="subtitle">핵심은 더 긴 프롬프트가 아니라, 반복 가능한 품질 게이트입니다.</text>
+
+  <rect x="80" y="252" width="1440" height="286" rx="22" class="frame"/>
+  <text x="120" y="304" class="section">사용자 진입점: 7개 생애주기 명령</text>
+  <line x1="150" y1="390" x2="1450" y2="390" class="rail"/>
+
+  <g>
+    <rect x="124" y="352" width="76" height="76" rx="38" fill="#0f766e"/><text x="155" y="398" class="num">1</text>
+    <text x="94" y="470" class="step-title">명세</text><text x="94" y="500" class="step-body">코드 전 요구 정리</text>
   </g>
-  <path d="M800 315 V370" class="thin"/>
-  <g transform="translate(86,386)">
-    <rect width="452" height="310" rx="28" class="box" filter="url(#shadow)"/>
-    <rect x="26" y="26" width="92" height="92" rx="25" fill="url(#cyan)" opacity="0.95"/>
-    <text x="72" y="86" text-anchor="middle" font-size="42" font-weight="900" fill="#082f49">22</text>
-    <text x="140" y="58" class="label">Skills</text>
-    <text x="140" y="90" class="small">the HOW</text>
-    <text x="34" y="148" class="small">Spec, planning, incremental build,</text>
-    <text x="34" y="178" class="small">TDD, context, source-driven dev,</text>
-    <text x="34" y="208" class="small">debugging, review, security,</text>
-    <text x="34" y="238" class="small">performance, docs, CI/CD, launch</text>
-    <text x="34" y="280" class="micro">SKILL.md + process + verification gates</text>
+  <g>
+    <rect x="324" y="352" width="76" height="76" rx="38" fill="#0369a1"/><text x="355" y="398" class="num">2</text>
+    <text x="294" y="470" class="step-title">계획</text><text x="282" y="500" class="step-body">작은 작업으로 분해</text>
   </g>
-  <g transform="translate(574,386)">
-    <rect width="452" height="310" rx="28" class="box" filter="url(#shadow)"/>
-    <rect x="26" y="26" width="92" height="92" rx="25" fill="url(#violet)" opacity="0.95"/>
-    <text x="72" y="86" text-anchor="middle" font-size="42" font-weight="900" fill="#2e1065">3</text>
-    <text x="140" y="58" class="label">Personas</text>
-    <text x="140" y="90" class="small">the WHO</text>
-    <text x="34" y="148" class="small">code-reviewer</text>
-    <text x="34" y="178" class="small">security-auditor</text>
-    <text x="34" y="208" class="small">test-engineer</text>
-    <text x="34" y="250" class="small">/ship fans them out in parallel,</text>
-    <text x="34" y="280" class="micro">main agent merges go/no-go + rollback</text>
+  <g>
+    <rect x="524" y="352" width="76" height="76" rx="38" fill="#4f46e5"/><text x="555" y="398" class="num">3</text>
+    <text x="494" y="470" class="step-title">구현</text><text x="480" y="500" class="step-body">한 조각씩 변경</text>
   </g>
-  <g transform="translate(1062,386)">
-    <rect width="452" height="310" rx="28" class="box" filter="url(#shadow)"/>
-    <rect x="26" y="26" width="92" height="92" rx="25" fill="url(#green)" opacity="0.95"/>
-    <text x="72" y="86" text-anchor="middle" font-size="42" font-weight="900" fill="#052e16">7</text>
-    <text x="140" y="58" class="label">Integrations</text>
-    <text x="140" y="90" class="small">the WHERE</text>
-    <text x="34" y="148" class="small">Claude Code plugin + commands</text>
-    <text x="34" y="178" class="small">Gemini CLI command mirrors</text>
-    <text x="34" y="208" class="small">Cursor, Copilot, Windsurf docs</text>
-    <text x="34" y="238" class="small">OpenCode / Kiro guidance</text>
-    <text x="34" y="280" class="micro">manifests, hooks, CI validation</text>
+  <g>
+    <rect x="724" y="352" width="76" height="76" rx="38" fill="#6d28d9"/><text x="755" y="398" class="num">4</text>
+    <text x="694" y="470" class="step-title">테스트</text><text x="688" y="500" class="step-body">통과 증거 확보</text>
   </g>
-  <path d="M538 541 H574" class="thin"/>
-  <path d="M1026 541 H1062" class="thin"/>
-  <g transform="translate(86,744)">
-    <rect width="1428" height="86" rx="24" fill="rgba(30,41,59,0.82)" stroke="rgba(148,163,184,0.28)"/>
-    <text x="34" y="35" class="micro">CORE CLAIM</text>
-    <text x="34" y="64" class="subtitle">Turn senior-engineering habits into reusable, verifiable, host-portable agent workflows.</text>
+  <g>
+    <rect x="924" y="352" width="76" height="76" rx="38" fill="#be185d"/><text x="955" y="398" class="num">5</text>
+    <text x="894" y="470" class="step-title">리뷰</text><text x="874" y="500" class="step-body">위험과 회귀 확인</text>
   </g>
+  <g>
+    <rect x="1124" y="352" width="76" height="76" rx="38" fill="#b45309"/><text x="1155" y="398" class="num">6</text>
+    <text x="1080" y="470" class="step-title">단순화</text><text x="1078" y="500" class="step-body">불필요한 복잡도 제거</text>
+  </g>
+  <g>
+    <rect x="1324" y="352" width="76" height="76" rx="38" fill="#15803d"/><text x="1355" y="398" class="num">7</text>
+    <text x="1294" y="470" class="step-title">출시</text><text x="1280" y="500" class="step-body">진행/중단 판단과 롤백</text>
+  </g>
+
+  <rect x="80" y="588" width="452" height="204" rx="20" class="frame"/>
+  <text x="116" y="638" class="layer-title">스킬 22개</text>
+  <text x="116" y="676" class="layer-body">어떻게 일할지 정의합니다.</text>
+  <text x="116" y="704" class="layer-body">절차, 검증 게이트, 회피 패턴을 담습니다.</text>
+  <text x="116" y="760" class="metric">22</text>
+  <text x="190" y="752" class="note">SKILL.md</text>
+
+  <rect x="574" y="588" width="452" height="204" rx="20" class="frame"/>
+  <text x="610" y="638" class="layer-title">페르소나 3개</text>
+  <text x="610" y="676" class="layer-body">누가 검토할지 분리합니다.</text>
+  <text x="610" y="704" class="layer-body">리뷰어, 보안 감사자, 테스트 엔지니어.</text>
+  <text x="610" y="760" class="metric">3</text>
+  <text x="662" y="752" class="note">전문 역할</text>
+
+  <rect x="1068" y="588" width="452" height="204" rx="20" class="frame"/>
+  <text x="1104" y="638" class="layer-title">배포 표면</text>
+  <text x="1104" y="676" class="layer-body">Claude Code, Gemini CLI, OpenCode 등</text>
+  <text x="1104" y="704" class="layer-body">여러 하네스에 같은 절차를 싣습니다.</text>
+  <text x="1104" y="760" class="metric">7</text>
+  <text x="1156" y="752" class="note">명령 진입점</text>
+
+  <text x="80" y="852" class="note">검증 기준: 모든 문구는 한국어 중심이며, 화살표 없이 생애주기와 레이어의 역할을 분리했습니다.</text>
 </svg>
