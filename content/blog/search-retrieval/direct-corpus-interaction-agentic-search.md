@@ -108,9 +108,9 @@ multi-hop QA와 IR ranking에서도 메시지는 비슷하다.
   </figcaption>
 </figure>
 
-공개 아티팩트도 함께 볼 필요가 있다. 공식 GitHub 저장소 `DCI-Agent/DCI-Agent-Lite`는 MIT 라이선스, Python 패키지명 `dci`, `dci-agent-lite` CLI, `setup.sh`, benchmark/corpus 다운로드 스크립트, Pi 기반 실행 예제를 포함한다. 2026년 5월 25일 GitHub API 조회 기준으로는 270 stars, 37 forks, 3 open issues, 기본 브랜치 `main`, `/releases/latest` 404, tags 없음으로 응답했다. 따라서 관심도는 빠르게 붙고 있지만, 현재 형태는 완성된 production retrieval framework라기보다 논문 결과를 검토하고 일부 benchmark run을 재현하기 위한 초기 research harness에 가깝다.
+공개 아티팩트도 함께 볼 필요가 있다. 공식 GitHub 저장소 `DCI-Agent/DCI-Agent-Lite`는 MIT 라이선스, Python 패키지명 `dci`, `dci-agent-lite` CLI, `setup.sh`, benchmark/corpus 다운로드 스크립트, Pi 기반 실행 예제를 포함한다. 2026년 6월 4일(KST) GitHub API 조회 기준으로는 321 stars, 45 forks, 4 open issues, 기본 브랜치 `main`, `/releases/latest` 404, tags 없음으로 응답했다. 따라서 관심도는 빠르게 붙고 있지만, 현재 형태는 완성된 production retrieval framework라기보다 논문 결과를 검토하고 일부 benchmark run을 재현하기 위한 초기 research harness에 가깝다.
 
-Hugging Face 쪽에는 `DCI-Agent/dci-bench`, `DCI-Agent/corpus`, `DCI-Agent/eval-logs` 데이터셋과 `DCI-Agent/demo` Space가 공개되어 있다. 2026년 5월 25일 Hub API 기준으로 세 데이터셋은 public·ungated이며, `corpus`는 BrowseComp-Plus, BRIGHT 4개 subset, Wikipedia dump 파일을 포함한다. 같은 조회에서 `dci-bench`는 238 downloads, `corpus`는 201 downloads, `eval-logs`는 3,257 downloads로 표시됐고, `DCI-Agent/demo` Space도 별도로 공개되어 있었다. 반면 `DCI-Agent` author 아래 공개 model repo는 없었다. 즉 이 릴리스의 중심은 checkpoint 배포가 아니라 code, benchmark/corpus bundle, evaluation logs, demo surface다.
+Hugging Face 쪽에는 `DCI-Agent/dci-bench`, `DCI-Agent/corpus`, `DCI-Agent/eval-logs` 데이터셋과 `DCI-Agent/demo` Space가 공개되어 있다. 2026년 6월 4일(KST) Hub API 기준으로 세 데이터셋은 public·ungated이며, `corpus`는 BrowseComp-Plus, BRIGHT 4개 subset, Wikipedia dump 파일을 포함한다. 같은 조회에서 `dci-bench`는 494 downloads, `corpus`는 392 downloads, `eval-logs`는 4,916 downloads로 표시됐고, `DCI-Agent/demo` Space도 별도로 공개되어 있었다. 반면 `DCI-Agent` author 아래 공개 model repo는 없었다. 즉 이 릴리스의 중심은 checkpoint 배포가 아니라 code, benchmark/corpus bundle, evaluation logs, demo surface다.
 
 ## 실무 관점에서의 해석
 
