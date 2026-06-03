@@ -1,6 +1,6 @@
 ---
 title: "Hermes Agent Self-Evolution은 에이전트 스킬을 자동으로 진화시키는 첫 실험이다"
-date: "2026-05-12T19:31:00"
+date: "2026-06-04T01:57:52"
 description: "NousResearch의 별도 저장소는 DSPy+GEPA로 Hermes Agent의 SKILL.md, 도구 설명, 시스템 프롬프트를 평가 가능한 변종으로 만들고, 작은 Phase 1 검증을 통해 자동 스킬 개선 루프의 가능성과 아직 남은 제품화 간극을 보여준다."
 author: "Sangmin Lee"
 category: "agent-skills-workflows"
@@ -79,7 +79,7 @@ Phase 1 검증 보고서도 저장소에 들어 있다. PDF 자체와 함께 `ge
 
 다만 README와 PLAN이 말하는 “PR 생성”은 현재 main tree에서 완전히 제품화되어 보이지는 않는다. PLAN에는 `pr_builder.py`와 PR branch 생성을 언급하지만, 실제 클론한 파일 목록에는 해당 모듈이 보이지 않았고, `evolve_skill.py`의 현재 마지막 단계는 `output/<skill>/<timestamp>/` 아래에 `evolved_skill.md`, `baseline_skill.md`, `metrics.json`을 저장하고 diff를 보라고 안내하는 수준이다. 즉 정책적으로는 “사람 리뷰 후 PR”을 지향하지만, 저장소의 공개 구현은 아직 **검증 리포트와 로컬 산출물 생성 중심의 초기 단계**다.
 
-릴리스 표면도 같은 방향을 가리킨다. GitHub API 조회 시점 기준 `NousResearch/hermes-agent-self-evolution`은 2026년 3월 9일 생성, 2026년 3월 29일 최근 push, stars 3,067, forks 332, open issues 48로 보였다. tags는 빈 배열이고 latest release도 404였다. 라이선스는 README와 `pyproject.toml`에는 MIT로 적혀 있지만, GitHub API의 `license` 필드는 `null`이고 저장소 루트에 별도 `LICENSE` 파일은 확인되지 않았다. 따라서 “MIT 의도로 공개된 초기 연구/실험 저장소”로 보되, 배포 패키지 수준의 정리도는 아직 제한적으로 보는 것이 맞다.
+릴리스 표면도 같은 방향을 가리킨다. GitHub API 조회 시점(2026년 6월 4일 KST) 기준 `NousResearch/hermes-agent-self-evolution`은 2026년 3월 9일 생성, 2026년 3월 29일 최근 push, 2026년 6월 3일 metadata update로 보였고, stars 3,824, forks 437, open issues 72였다. tags는 빈 배열이고 latest release도 404였다. 라이선스는 README와 `pyproject.toml`에는 MIT로 적혀 있지만, GitHub API의 `license` 필드는 `null`이고 저장소 루트에 별도 `LICENSE` 파일은 확인되지 않았다. 따라서 “MIT 의도로 공개된 초기 연구/실험 저장소”로 보되, 배포 패키지 수준의 정리도는 아직 제한적으로 보는 것이 맞다.
 
 ## 실무 관점에서의 해석
 
