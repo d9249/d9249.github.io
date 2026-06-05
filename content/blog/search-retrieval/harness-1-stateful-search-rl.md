@@ -85,9 +85,9 @@ benchmark별로 보면 transfer 신호가 특히 중요하다. Harness-1의 SFT 
 
 ablation도 이 해석을 뒷받침한다. 같은 Harness-1 checkpoint에서 inference-time 하네스 기능을 하나씩 끄면, 중요도 태그를 제거했을 때 final-answer recall이 -7.9%, evidence graph를 observation에서 숨기면 -5.4%, verify tool을 unavailable로 만들면 -3.9%가 된다. 모든 하네스 mechanism을 끄면 BrowseComp+ curated recall은 0.584에서 0.513으로 내려간다. 반대로 일부 중복 제거나 review path는 수치가 단순히 한 방향으로만 움직이지 않는데, 이는 하네스 기능이 “있으면 무조건 좋다”라기보다 policy와 reward, context budget이 같이 맞물린 설계 문제임을 보여준다.
 
-공개 release surface도 확인할 만하다. GitHub 저장소 `pat-jj/harness-1`는 하네스, training, inference, datagen, evaluation script, vLLM/BrowseComp+ 실행 문서를 포함한다. 2026년 6월 4일 GitHub API 기준으로는 13 stars, 2 forks, 1 open issue, 기본 브랜치 `main`, tags 없음, `/releases/latest` 404, 별도 checked-in `LICENSE` 파일 없음으로 확인됐다. 따라서 저장소는 논문·모델 검토와 재현용 runbook을 제공하지만, 아직 versioned production package처럼 읽기는 어렵다.
+공개 release surface도 확인할 만하다. GitHub 저장소 `pat-jj/harness-1`는 하네스, training, inference, datagen, evaluation script, vLLM/BrowseComp+ 실행 문서를 포함한다. 2026년 6월 5일 GitHub API 기준으로는 30 stars, 5 forks, 1 open issue, 기본 브랜치 `main`, tags 없음, `/releases/latest` 404, 별도 checked-in `LICENSE` 파일 없음으로 확인됐다. 따라서 저장소는 논문·모델 검토와 재현용 runbook을 제공하지만, 아직 versioned production package처럼 읽기는 어렵다.
 
-Hugging Face 모델 `pat-jj/harness-1`은 public·ungated이고, `openai/gpt-oss-20b`를 base model로 둔 `transformers`/`safetensors` checkpoint다. 같은 시점 HF API 기준으로 downloads 355, likes 11, 9개 safetensors shard와 tokenizer/config 파일이 공개되어 있다. 모델 card는 vLLM, SGLang, Docker Model Runner, Transformers 로딩 예시를 제공하지만, BrowseComp+ full evaluation에는 Chroma corpus, qrel/answer 파일, OpenAI credential, 선택적 Baseten reranker credential 같은 별도 평가 환경이 필요하다.
+Hugging Face 모델 `pat-jj/harness-1`은 public·ungated이고, `openai/gpt-oss-20b`를 base model로 둔 `transformers`/`safetensors` checkpoint다. 같은 시점 HF API 기준으로 downloads 378, likes 13, BF16 약 20.9B 파라미터와 9개 safetensors shard, tokenizer/config 파일이 공개되어 있다. 모델 card는 vLLM, SGLang, Docker Model Runner, Transformers 로딩 예시를 제공하지만, BrowseComp+ full evaluation에는 Chroma corpus, qrel/answer 파일, OpenAI credential, 선택적 Baseten reranker credential 같은 별도 평가 환경이 필요하다.
 
 ## 실무 관점에서의 해석
 
