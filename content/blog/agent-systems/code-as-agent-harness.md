@@ -106,7 +106,7 @@ arXiv metadata 기준 이 논문은 2026년 5월 18일 제출된 `cs.CL`, `cs.AI
 
 공식 companion repository와 project page도 함께 공개되어 있다. 저장소 이름은 **`YennNing/Awesome-Code-as-Agent-Harness-Papers`**이고, README는 이 저장소가 논문을 보조하는 paper list라고 설명한다. 즉 이 저장소는 runnable agent framework라기보다, 논문 taxonomy에 맞춰 대표 연구들을 계속 모으는 curated reading map에 가깝다. 새로 확인되는 project page는 paper, arXiv, GitHub 링크와 함께 “3 connected layers”, “6+ application areas”, “102 PDF pages”, “450+ cited work”라는 survey scope를 전면에 둔다.
 
-2026년 5월 24일 현재 확인 가능한 공개 표면은 다음과 같다.
+2026년 6월 25일 현재 확인 가능한 공개 표면은 다음과 같다.
 
 | 항목 | 확인되는 내용 | 해석 |
 |---|---|---|
@@ -114,7 +114,7 @@ arXiv metadata 기준 이 논문은 2026년 5월 18일 제출된 `cs.CL`, `cs.AI
 | 공식 HTML | arXiv HTML에 전체 section, figure, table이 공개됨 | 글의 구조와 시각 자료를 직접 확인 가능 |
 | Project page | `code-as-harness.github.io/code-as-harness-webpage/`에서 abstract, three-layer taxonomy, application areas, open problems, citation을 제공 | 단순 PDF 링크보다 논문의 읽는 순서를 더 명확히 보여주는 공식 landing page |
 | Companion repo | `Awesome-Code-as-Agent-Harness-Papers` README와 `figs/`가 taxonomy별 paper map과 overview 이미지를 제공 | 구현체가 아니라 관련 논문을 taxonomy별로 모으는 resource |
-| Repo 상태 | GitHub API 기준 stars 214, forks 13, open issue 1, releases/tags 없음, root에는 `README.md`, `CONTRIBUTING.md`, `TODO.md`, `MISSING_URLS.md`, `LICENSE`, `figs/`가 있음 | 빠르게 관심을 받고 있지만 installable package나 실행 프레임워크라기보다 paper-facing resource bundle에 가까움 |
+| Repo 상태 | GitHub API 기준 stars 482, forks 38, open issues 5, 기본 브랜치 `main`, 2026-05-07 생성·2026-05-20 최종 push, releases/tags 없음, root에는 `README.md`, `CONTRIBUTING.md`, `TODO.md`, `MISSING_URLS.md`, `LICENSE`, `figs/`가 있음 | 빠르게 관심을 받고 있지만 installable package나 실행 프레임워크라기보다 paper-facing resource bundle에 가까움 |
 | 라이선스 | GitHub API와 checked-in `LICENSE` 기준 MIT | companion list와 figure asset의 재사용 조건은 비교적 명확함 |
 | 정리 중인 항목 | `TODO.md`에는 venue/arXiv ID 정정, bare-year row 재스캔, 누락 citation key 같은 cleanup 항목이 남아 있음 | curated map은 고정된 artifact가 아니라 계속 보정되는 survey companion으로 읽어야 함 |
 
@@ -164,4 +164,4 @@ Multi-agent 쪽에서도 비슷하다. 역할을 나누는 것 자체는 쉽다.
 
 앞으로 좋은 agent system은 더 똑똑한 모델 하나가 아니라, **실행 가능하고, 검사 가능하고, 상태를 보존하며, 거버넌스가 있는 하네스** 위에서 만들어질 가능성이 크다. 이 논문은 그 방향을 “code as agent harness”라는 이름으로 정리한 로드맵에 가깝다.
 
-Sources: https://arxiv.org/abs/2605.18747, https://arxiv.org/html/2605.18747v1, https://code-as-harness.github.io/code-as-harness-webpage/, https://github.com/YennNing/Awesome-Code-as-Agent-Harness-Papers
+Sources: https://arxiv.org/abs/2605.18747, https://arxiv.org/html/2605.18747v1, https://code-as-harness.github.io/code-as-harness-webpage/, https://github.com/YennNing/Awesome-Code-as-Agent-Harness-Papers, https://api.github.com/repos/YennNing/Awesome-Code-as-Agent-Harness-Papers, https://raw.githubusercontent.com/YennNing/Awesome-Code-as-Agent-Harness-Papers/main/README.md, https://raw.githubusercontent.com/YennNing/Awesome-Code-as-Agent-Harness-Papers/main/TODO.md
