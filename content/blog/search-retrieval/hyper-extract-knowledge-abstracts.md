@@ -126,32 +126,35 @@ Obsidian export도 같은 맥락이다. 그래프를 Markdown note와 `[[wikilin
   </figcaption>
 </figure>
 
-## LightRAG 관점에서 본 text-to-graph 비교 지표
+## LightRAG 기준으로 본 raw 문서 의미 추출 정확도
 
-이 글의 비교축에 LightRAG를 넣으면 Hyper-Extract의 위치가 더 선명해진다. LightRAG 논문에서 text-to-graph는 대략 세 단계다. 먼저 chunk별로 LLM이 entity와 relationship을 뽑고(`R(·)`), entity/relation에 검색용 key-value profile을 붙이며(`P(·)`), 마지막으로 chunk 간 중복 entity/relation을 병합한다(`D(·)`). 이후 query 단계에서는 local keyword로 구체 entity를 찾고, global keyword로 relation/theme를 찾아 low-level/high-level retrieval을 합친다.
+여기서 LightRAG와 비교할 때의 핵심은 라이브러리 기능이나 운영 workflow가 아니라, **raw 문서에서 의미를 얼마나 정확히 뽑아 구조화하느냐**다. LightRAG의 graph construction prompt는 지정된 entity type을 기준으로 문서에서 entity와 relationship을 찾고, entity description, relationship description, relationship strength, high-level keyword 같은 정보를 만들어 knowledge graph에 넣는다. 즉 비교 대상은 “검색이 빠른가”보다 “원문에 실제로 있는 의미 단위를 빠짐없이, 틀리지 않게, 근거와 함께 뽑았는가”가 되어야 한다.
 
-Hyper-Extract는 이 흐름과 겹치지만 목표가 조금 다르다. LightRAG가 retrieval 효율을 위한 graph index를 만드는 쪽이라면, Hyper-Extract는 출력 자체를 `AutoGraph`, `AutoHypergraph`, `AutoTemporalGraph` 같은 타입 있는 Knowledge Abstract로 만드는 쪽이다. 그래서 같은 text-to-graph라도 평가 지표가 “답변이 좋아졌나”에서 끝나면 부족하고, “추출 결과가 지정 타입과 schema를 얼마나 안정적으로 만족하나”까지 봐야 한다.
+이 관점에서 Hyper-Extract의 강점은 `AutoGraph`, `AutoHypergraph`, `AutoTemporalGraph`, `AutoSpatialGraph`처럼 출력 타입을 먼저 정해 놓고 추출한다는 점이다. LightRAG식 graph extraction은 retrieval용 entity/relation graph를 만드는 데 초점이 있고, Hyper-Extract는 도메인 template과 Auto-Type이 요구하는 구조를 채우는 데 초점이 있다. 따라서 두 방식을 비교하려면 같은 raw 문서, 같은 gold annotation, 같은 entity/relation schema를 놓고 “추출 정확도”를 봐야 한다.
 
-| 비교 축 | LightRAG 기준 | Hyper-Extract에 적용할 때 볼 점 |
+| 평가 대상 | 정확하다는 뜻 | 대표 실패 유형 |
 |---|---|---|
-| 그래프화 단위 | chunk → entity/relation graph → key-value profile → dedupe | chunk별 structured output → merge → Auto-Type 인스턴스 |
-| 스키마 제약 | prompt의 entity type과 relation description 중심 | Template + Pydantic/Auto-Type이 출력 구조를 더 강하게 제한 |
-| 검색 구조 | entity name, relation key, local/global keyword, graph+vector retrieval | Knowledge Abstract별 index/search/chat, method로 `light_rag`/`graph_rag` 선택 가능 |
-| 업데이트 방식 | 새 chunk에서 만든 local graph를 기존 graph에 set-merge | `feed_text()`로 기존 Knowledge Abstract에 추가 후 merge/index 재생성 |
-| 사람 검토 | 알고리즘 논문 기준으로는 retrieval 품질 중심 | `show`, graph visualization, Obsidian export, MCP 질의가 검토 표면이 됨 |
+| Entity | 원문에 있는 개체를 정확한 span/name/type으로 잡는다 | 누락, 과분할, alias 미병합, 잘못된 type |
+| Relationship | 원문이 지지하는 source-target-predicate를 뽑는다 | 방향 오류, 관계 label 오류, 원문에 없는 hallucinated edge |
+| Attribute | 수치, 날짜, 역할, 상태, 조건을 entity/relation에 올바르게 붙인다 | 단위 오류, 날짜 오독, 조건 누락, 다른 entity에 귀속 |
+| Higher-order relation | 3개 이상 entity가 함께 만드는 사건·거래·인과를 보존한다 | binary edge로 쪼개며 의미 손실, 참여자 누락 |
+| Temporal/spatial meaning | 시간 순서와 위치 제약을 구조로 남긴다 | 전후 관계 반전, 위치 scope 오류, 기간 누락 |
+| Evidence grounding | 각 claim이 원문 chunk/span으로 역추적된다 | 근거 없는 추론, citation 누락, 잘못된 chunk 연결 |
 
-정량 지표는 다음처럼 잡을 수 있다. LightRAG 논문은 답변 평가에 Comprehensiveness, Diversity, Empowerment, Overall win rate를 썼고, NaiveRAG 대비 Overall win rate가 Agriculture/CS/Legal/Mix에서 각각 67.6%/61.2%/84.8%/60.0%로 보고됐다. GraphRAG와 비교하면 Overall은 54.8%/52.0%/52.8%/49.6%였고, Diversity는 77.2%/59.2%/73.6%/64.0%였다. 즉 LightRAG식 비교를 Hyper-Extract에 적용한다면, 단순 node/edge 수보다 “그래프화한 결과가 질문 답변에서 더 포괄적이고 다양한 근거를 주는가”를 같이 봐야 한다.
+정량 지표도 answer-level win rate보다 extraction-level metric을 우선해야 한다. LightRAG 논문의 Comprehensiveness, Diversity, Empowerment, Overall은 RAG 답변 품질 지표라서 참고는 되지만, raw 문서 의미 추출기의 정확도를 직접 말해 주지는 않는다. Hyper-Extract를 평가하려면 다음 지표가 더 맞다.
 
-| 지표 | 계산 예시 | 왜 중요한가 |
+| 지표 | 계산 방식 | 해석 |
 |---|---|---|
-| 추출 수율 | entities/1K tokens, relations/1K tokens, typed records/문서 | 도구가 얼마나 많은 구조를 뽑는지 본다 |
-| 타입 안정성 | Pydantic parse 성공률, required field 누락률, schema violation 수 | Hyper-Extract의 장점인 typed output이 실제로 유지되는지 본다 |
-| 병합 품질 | raw entity 수 / merged entity 수, duplicate cluster purity | chunk 경계로 생긴 중복을 얼마나 잘 줄였는지 본다 |
-| 그래프 연결성 | giant component 비율, isolated node 비율, 평균 degree | 검색 가능한 관계망인지, 파편화된 entity 목록인지 구분한다 |
-| 답변 품질 | Comprehensiveness/Diversity/Empowerment win rate | LightRAG 논문식으로 RAG 결과의 정성 품질을 비교한다 |
-| 업데이트 비용 | 신규 문서 추가 시 LLM call 수, token 수, re-index 시간 | 계속 자라는 Knowledge Abstract 운영 비용을 본다 |
+| Entity precision/recall/F1 | gold entity와 predicted entity를 span/name/type 기준으로 alignment | 의미 단위를 얼마나 빠짐없이, 과잉 없이 잡는가 |
+| Relation precision/recall/F1 | `(source, relation, target)` strict match와 alias-normalized soft match를 함께 계산 | 원문 관계를 방향과 label까지 맞게 복원하는가 |
+| Attribute accuracy | entity/relation별 field exact match, numeric tolerance, date normalization match | 문서의 세부 의미를 구조 필드에 정확히 옮기는가 |
+| Unsupported claim rate | predicted entity/relation 중 원문 근거가 없는 비율 | hallucinated graph를 얼마나 만들지 않는가 |
+| Evidence hit rate | 각 추출 항목이 올바른 source chunk/span을 가리키는 비율 | 사람이 검증 가능한 추출 결과인가 |
+| Canonicalization accuracy | 같은 개체의 alias를 하나로 합치고 다른 개체를 분리하는 정확도 | chunk 경계와 표현 차이를 견디는가 |
+| Schema adherence | required field 누락률, enum/type violation, Pydantic parse 실패율 | typed Knowledge Abstract의 계약을 지키는가 |
+| Complex meaning coverage | event, causal relation, temporal/spatial constraint, hyperedge의 recall | 단순 entity list를 넘어 문서의 고차 의미를 살리는가 |
 
-LightRAG의 비용 분석도 기준점이 된다. 논문은 Legal dataset에서 GraphRAG retrieval이 610개 level-2 community × 평균 1,000 tokens, 즉 약 610K tokens의 community report retrieval 비용을 갖는 반면, LightRAG는 keyword generation/retrieval 단계가 100 tokens 미만과 1회 API call로 끝난다고 비교했다. incremental update에서도 GraphRAG는 1,399개 community report를 원본+신규 양쪽으로 재생성하면 약 `1,399 × 2 × 5,000` tokens가 들 수 있지만, LightRAG는 새로 추출한 entity/relation을 기존 graph에 병합하는 쪽이다. Hyper-Extract를 production 후보로 볼 때도 이 숫자 자체를 그대로 옮기기보다, `feed_text()` 이후 merge/re-index 비용을 같은 방식으로 계측하는 것이 좋다.
+실험 설계는 작게라도 gold set을 만드는 쪽이 좋다. 예를 들어 문서 20~50개를 골라 entity, relation, attribute, evidence span을 사람이 annotation하고, Hyper-Extract의 `itext2kg`/`light_rag`/`graph_rag` method와 LightRAG식 extraction을 같은 schema로 돌린다. 그다음 graph size나 답변 점수가 아니라 extraction F1, unsupported claim rate, evidence hit rate, schema adherence를 먼저 비교한다. 이렇게 해야 “문서를 GraphRAG에 쓸 수 있게 만들었다”가 아니라 “raw 문서의 의미를 실제로 얼마나 정확히 구조화했는가”를 말할 수 있다.
 
 ## 공개된 근거에서 확인되는 점
 
