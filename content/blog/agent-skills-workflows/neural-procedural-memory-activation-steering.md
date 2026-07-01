@@ -1,6 +1,6 @@
 ---
 title: "Neural Procedural Memory는 에이전트 메모리를 activation으로 저장한다"
-date: "2026-07-02T01:52:45+09:00"
+date: "2026-07-02T01:52:45"
 description: "Neural Procedural Memory는 과거 trajectory의 성공/실패 대비를 steering vector로 압축해, LLM agent의 절차 기억을 텍스트 지시문이 아니라 residual stream 개입으로 재사용하려는 training-free 프레임워크다."
 author: "Sangmin Lee"
 category: "agent-skills-workflows"
