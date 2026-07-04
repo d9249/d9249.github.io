@@ -127,7 +127,7 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
     },
     frame: {
       "--project-lightbox-frame-max-height": hasMobileRotation
-        ? "none"
+        ? `${Math.max(260, viewportSize.height - 152)}px`
         : undefined,
       "--project-lightbox-image-aspect": `${activeImage.naturalWidth / activeImage.naturalHeight}`,
       "--project-lightbox-stage-width": `${stageWidth}px`,
@@ -293,6 +293,10 @@ const ProjectImageLightbox = ({ html }) => {
     event.stopPropagation();
   }, []);
 
+  const keepLightboxTouch = React.useCallback((event) => {
+    event.stopPropagation();
+  }, []);
+
   const rotateImage = React.useCallback(() => {
     setRotation((currentRotation) => (currentRotation + 90) % 360);
   }, []);
@@ -394,18 +398,22 @@ const ProjectImageLightbox = ({ html }) => {
             className="project-lightbox-frame"
             style={fittedImageStyles.frame}
             onClick={keepLightboxOpen}
+            onTouchStart={keepLightboxTouch}
+            onTouchMove={keepLightboxTouch}
           >
-            <span
-              className="project-lightbox-image-stage"
-              style={fittedImageStyles.stage}
-            >
-              <img
-                className="project-lightbox-image"
-                src={activeImage.src}
-                alt={activeImage.alt}
-                style={fittedImageStyles.image}
-                onLoad={syncActiveImageSize}
-              />
+            <span className="project-lightbox-image-viewport">
+              <span
+                className="project-lightbox-image-stage"
+                style={fittedImageStyles.stage}
+              >
+                <img
+                  className="project-lightbox-image"
+                  src={activeImage.src}
+                  alt={activeImage.alt}
+                  style={fittedImageStyles.image}
+                  onLoad={syncActiveImageSize}
+                />
+              </span>
             </span>
             <figcaption className="project-lightbox-footer">
               <span
