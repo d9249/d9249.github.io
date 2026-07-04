@@ -6,9 +6,9 @@ period: "Kyonggi University / KCI Journal"
 periodOrder: 20220500
 description: "KCI 논문 「의료 영상 시스템에서 다중 연쇄 U-Net 모델을 이용한 개선된 췌장 영역 분할 탐지」를 바탕으로, 복부 CT에서 췌장 영역을 더 안정적으로 분할하기 위해 서로 다른 패치 크기의 U-Net 특징을 결합한 프로젝트입니다."
 metrics:
-  - "Pancreas DSC 0.916"
+  - "Pancreas DSC 0.916 (U-Net 0.896)"
   - "Pancreas-CT 82 scans"
-  - "KCI 2022"
+  - "KCI 논문 · 1저자"
 stack:
   - "Medical Image Segmentation"
   - "U-Net / MCU-Net"

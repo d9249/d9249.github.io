@@ -6,9 +6,9 @@ period: "Kyonggi University / SCIE Journal"
 periodOrder: 20230100
 description: "CMC 2023 논문 「Deep Learning Model Ensemble for the Accuracy of Classification Degenerative Arthritis」를 바탕으로, 무릎 X-ray 영상의 Kellgren–Lawrence grade 분류에서 여러 CNN·Transformer 계열 모델을 비교하고 class별 specialist ensemble로 성능을 개선한 프로젝트입니다."
 metrics:
-  - "Accuracy 77.05%"
-  - "F1 score 0.78"
-  - "KneeXray 8,260 images"
+  - "SCIE(Q2) · CMC 1저자"
+  - "Accuracy 77.05% / F1 0.78"
+  - "KneeXray 5-class · 8,260장"
 stack:
   - "Medical Image Classification"
   - "Specialist Ensemble"

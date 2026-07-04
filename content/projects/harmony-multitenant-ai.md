@@ -6,9 +6,9 @@ period: "AsianaIDT / 2026.05.11 - 2026.05.22"
 periodOrder: 20260522
 description: "에이전트 런타임을 프로토콜 계약으로 추상화하고, 검색을 에이전트 주도 멀티홉으로 전환해 검색 후보와 인용을 분리하며, AI가 만든 지식은 사람 승인을 거쳐야만 공식 corpus가 되는 human-gated 사내 AI 시스템입니다. 해커톤 2주 개발."
 metrics:
-  - "IAIAgent 3런타임 계약"
-  - "Agentic Retrieval (멀티홉 최대 6회)"
-  - "Human-gated Knowledge Loop"
+  - "해커톤 2주 · 사내 에이전트 플랫폼"
+  - "Human-gated 지식 승인 루프"
+  - "Agentic 멀티홉 검색 (최대 6회)"
 stack:
   - "Python"
   - "FastAPI"

@@ -6,9 +6,9 @@ period: "Kyonggi University / M.S. Thesis"
 periodOrder: 20240200
 description: "석사학위논문 「추천 시스템에서 그래프 콘볼루션 네트워크 최적화 방법」을 기반으로, GCN 추천 시스템의 임베딩 값 손실과 깊은 Layer 구성 한계를 분석하고 Egress 초기화와 Weighted Forwarding(WF)으로 학습 속도와 추천 정확도 개선을 검증한 연구입니다."
 metrics:
-  - "Egress Initialization"
-  - "Weighted Forwarding"
-  - "Recall@20 / NDCG@20"
+  - "SCIE(Q2) 2편 · 1저자"
+  - "석사학위논문 기반"
+  - "Egress Init · Weighted Forwarding"
 stack:
   - "Graph Convolution Network"
   - "Recommendation System"

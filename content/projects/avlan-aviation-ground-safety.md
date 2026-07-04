@@ -6,9 +6,9 @@ period: "AsianaIDT / 2026.06 - 2026.07"
 periodOrder: 20260702
 description: "항공 조업 영상을 조합형 스킬 파이프라인으로 분석하고, GoalOrchestrator가 select→compose→evaluate→refine 루프로 목표 충족을 스스로 판정하는 영상 안전 분석 에이전트입니다. 전신 버전은 'AI 항공조업 안전기술'로 기업혁신대상 대한상공회의소 회장상('25)을 수상했습니다."
 metrics:
+  - "대한상의 회장상 (전신 '25)"
   - "Goal-driven 멀티스킬 루프"
-  - "벽시계 시각↔프레임 앵커링"
-  - "항공법령 듀얼 RAG"
+  - "50배 압축영상 시각 앵커링"
 stack:
   - "Python"
   - "FastAPI"

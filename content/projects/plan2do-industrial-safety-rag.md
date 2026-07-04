@@ -6,9 +6,9 @@ period: "AsianaIDT / 2025.07 - 2025.12"
 periodOrder: 20251215
 description: "현장 이미지·문서에서 위험요인을 추출하고, 법령 벡터 검색과 LLM 재검증(removed_laws·removal_rate)으로 근거의 정확성을 보증하며, LangGraph 워크플로우로 위험성평가 표를 생성하는 AI 안전 분석 엔진입니다. 이 엔진을 탑재한 Plan2Do 플랫폼은 행정안전부 장관상·한국건설기술연구원 원장상을 수상했습니다."
 metrics:
-  - "행안부 장관상 수상 플랫폼"
-  - "법령 검증 파이프라인"
-  - "LangGraph Risk Workflow"
+  - "행안부 장관상·건기연 원장상"
+  - "AI 위험성평가 엔진 단독 개발"
+  - "법령 근거 LLM 재검증"
 stack:
   - "Python"
   - "FastAPI"

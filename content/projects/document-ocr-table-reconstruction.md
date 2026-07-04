@@ -6,9 +6,9 @@ period: "AsianaIDT / 2026.01 - 진행 중"
 periodOrder: 20260625
 description: "OCR 이후의 표 구조 복원을 후보 생성→비교→선택 프레임으로 풀고, TEDS 기반 정량 벤치마크와 보안 납품 체계까지 갖춘 Document AI 플랫폼입니다. 관련 기술 특허 출원 중, K사 솔루션 공급 계약 수주."
 metrics:
-  - "TEDS 0.9188"
-  - "TEDS-S 0.9506"
-  - "Cell F1 0.9702"
+  - "TEDS 0.9188 / Cell F1 0.9702"
+  - "K사 솔루션 공급계약 수주"
+  - "관련 기술 특허 출원"
 stack:
   - "FastAPI"
   - "Next.js"
