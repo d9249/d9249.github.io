@@ -27,10 +27,13 @@ const getLightboxFitMetrics = (viewportWidth, rotation) => {
   const hasMobileRotation = isMobile && isQuarterTurn;
 
   return {
-    captionSpace: hasMobileRotation ? 72 : isMobile ? 48 : 54,
+    captionSpace: hasMobileRotation ? 48 : isMobile ? 48 : 54,
     framePaddingTotal: isMobile ? 16 : 24,
     horizontalGutterTotal: isMobile ? 32 : 64,
-    verticalGutterTotal: hasMobileRotation ? 88 : isMobile ? 32 : 64,
+    verticalGutterTotal: hasMobileRotation ? 64 : isMobile ? 32 : 64,
+    verticalOverflowAllowance: hasMobileRotation
+      ? Math.min(112, Math.round(viewportWidth * 0.24))
+      : 0,
   };
 };
 
@@ -62,9 +65,11 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
     viewportSize.height -
       metrics.verticalGutterTotal -
       metrics.captionSpace -
-      metrics.framePaddingTotal,
+      metrics.framePaddingTotal +
+      metrics.verticalOverflowAllowance,
   );
   const isQuarterTurn = rotation % 180 !== 0;
+  const hasMobileRotation = viewportSize.width <= 680 && isQuarterTurn;
   const visibleNaturalWidth = isQuarterTurn
     ? activeImage.naturalHeight
     : activeImage.naturalWidth;
@@ -83,6 +88,9 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
 
   return {
     frame: {
+      "--project-lightbox-frame-max-height": hasMobileRotation
+        ? "none"
+        : undefined,
       "--project-lightbox-stage-width": `${stageWidth}px`,
     },
     image: {
