@@ -61,14 +61,14 @@ export const timelineItems = [
     date: "2025.07 - now",
     title: "AsianaIDT, AI/ML Engineer & Researcher",
     description:
-      "사내 지식 관리, 산업안전 RAG, 시장 인텔리전스, 문서 OCR, 영상·멀티모달 관제, 권한형 에이전트 런타임을 제품과 운영 단위로 설계하고 구현합니다.",
+      "사내 지식 관리부터 산업안전 RAG, 시장 인텔리전스, 문서 OCR, 영상·멀티모달 관제까지 — 엔터프라이즈 AI 제품을 리서치에서 운영까지 직접 설계하고 구축합니다.",
     bullets: [
-      "AIO와 Harmony에서 문서 ingestion, Graph + Vector RAG, ACL 기반 permission-aware retrieval, persona·session·tool trace, human review queue를 사내 지식 에이전트 플랫폼으로 연결했습니다.",
-      "Plan2Do에서 현장 이미지·문서 입력, 산업안전 법령 XML corpus, Qdrant 검색, LangGraph workflow, 검토용 위험성평가 HTML 표를 산업안전 RAG API로 묶었습니다.",
-      "Jeani에서 RFP 기반 planner, 병렬 market·competitor·tech agent, synthesizer, S3 산출물 lifecycle, Bedrock Knowledge Base sync로 시장 조사 운영 루프를 만들었습니다.",
-      "InVision OCR에서 OCR·레이아웃 분석, 로직 기반 표 구조 복원, parser 기반 문서 재조립, 벤치마크 콘솔을 연결해 TEDS 0.9188 / TEDS-S 0.9506 / Cell F1 0.9702까지 고도화했습니다.",
-      "A-VLAN에서 탐지 JSON Text2SQL, 매뉴얼 Chroma RAG, 항공법령 듀얼 RAG(리터럴+벡터), 영상 행동 분석을 조합형 스킬 레지스트리와 GoalOrchestrator(SELECT→COMPOSE→EVALUATE→REFINE) 루프로 묶어 항공 지상조업 관제 브리핑을 구현했습니다.",
-      "BEV에서 단안 주기장 영상을 검출 → VLM 공시제원 → 지면 호모그래피로 이어 미터 척도 3D 조감도와 작업·위험 영역을 복원하고, 소실점·화면밖·정확도(R2)까지 개선했습니다.",
+      "AIO·Harmony에서 사내 지식 에이전트 플랫폼을 설계 — Graph + Vector 하이브리드 RAG에 ACL 기반 permission-aware retrieval을 결합해 팀·직급별로 답이 달라지는 접근 제어를 구현하고, persona·session·tool trace와 human review queue로 운영 신뢰성까지 확보했습니다.",
+      "Plan2Do에서 현장 이미지·문서와 산업안전 법령 corpus를 Qdrant 검색·LangGraph workflow로 엮어 위험성평가를 자동 생성하는 산업안전 RAG API를 제품화 — 행정안전부 장관상을 받은 AI 산업안전 플랫폼의 핵심 기능으로 탑재됐습니다.",
+      "Jeani에서 RFP를 넣으면 market·competitor·tech 에이전트가 병렬로 조사하고 synthesizer가 리포트를 합성하는 멀티에이전트 시장조사 시스템을 구축 — Bedrock Knowledge Base sync와 S3 산출물 lifecycle로 반복 가능한 운영 루프까지 완성했습니다.",
+      "InVision OCR에서 표 구조 복원 정확도를 TEDS 0.9188 / TEDS-S 0.9506 / Cell F1 0.9702까지 끌어올린 문서 OCR 스택을 구축 — 레이아웃 분석, 로직 기반 표 복원, parser 기반 문서 재조립을 벤치마크 콘솔과 함께 운영형으로 통합했습니다.",
+      "A-VLAN에서 영상·탐지·매뉴얼·항공법령을 근거로 조합하는 목표기반 멀티에이전트 관제 시스템을 설계 — GoalOrchestrator의 SELECT→COMPOSE→EVALUATE→REFINE 루프로 스킬을 동적 조합하고, Text2SQL·Chroma RAG·듀얼 RAG(리터럴+벡터)를 엮어 지상조업 상황을 자동 판정·브리핑하도록 구현했습니다.",
+      "BEV에서 단일 카메라 주기장 영상만으로 미터 척도 3D 조감도를 복원하는 파이프라인을 연구·구현 — 개방어휘 검출과 VLM 공시제원으로 실척을 추정하고 지면 호모그래피로 조감도·위험영역을 생성, 소실점·화면밖 처리로 정확도(R2)를 고도화했습니다.",
     ],
   },
   {
