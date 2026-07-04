@@ -152,6 +152,7 @@ const ProjectImageLightbox = ({ html }) => {
   const articleRef = React.useRef(null);
   const closeButtonRef = React.useRef(null);
   const captionId = React.useId();
+  const imageViewportRef = React.useRef(null);
   const lightboxRef = React.useRef(null);
   const [activeImage, setActiveImage] = React.useState(null);
   const [rotation, setRotation] = React.useState(0);
@@ -299,6 +300,17 @@ const ProjectImageLightbox = ({ html }) => {
     event.stopPropagation();
   }, []);
 
+  const resetImageViewportScroll = React.useCallback(() => {
+    const imageViewport = imageViewportRef.current;
+
+    if (!imageViewport) {
+      return;
+    }
+
+    imageViewport.scrollLeft = 0;
+    imageViewport.scrollTop = 0;
+  }, []);
+
   const rotateImage = React.useCallback(() => {
     setRotation((currentRotation) => (currentRotation + 90) % 360);
   }, []);
@@ -326,6 +338,26 @@ const ProjectImageLightbox = ({ html }) => {
       };
     });
   }, []);
+
+  const handleLightboxImageLoad = React.useCallback(
+    (event) => {
+      syncActiveImageSize(event);
+      window.requestAnimationFrame(resetImageViewportScroll);
+    },
+    [resetImageViewportScroll, syncActiveImageSize],
+  );
+
+  React.useEffect(() => {
+    if (!activeImage) {
+      return undefined;
+    }
+
+    const frameId = window.requestAnimationFrame(resetImageViewportScroll);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+    };
+  }, [activeImage, resetImageViewportScroll, rotation]);
 
   const trapLightboxFocus = React.useCallback((event) => {
     if (event.key !== "Tab") {
@@ -403,7 +435,10 @@ const ProjectImageLightbox = ({ html }) => {
             onTouchStart={keepLightboxTouch}
             onTouchMove={keepLightboxTouch}
           >
-            <span className="project-lightbox-image-viewport">
+            <span
+              ref={imageViewportRef}
+              className="project-lightbox-image-viewport"
+            >
               <span
                 className="project-lightbox-image-stage"
                 style={fittedImageStyles.stage}
@@ -413,7 +448,7 @@ const ProjectImageLightbox = ({ html }) => {
                   src={activeImage.src}
                   alt={activeImage.alt}
                   style={fittedImageStyles.image}
-                  onLoad={syncActiveImageSize}
+                  onLoad={handleLightboxImageLoad}
                 />
               </span>
             </span>
