@@ -106,17 +106,7 @@ draft: false
   <span>05 HTML 표 + 검증 요약 반환</span>
 </div>
 
-<figure class="project-diagram">
-  <img src="/images/projects/plan2do-risk-workflow.svg" alt="Plan2Do risk analysis workflow diagram">
-  <figcaption>법령 검색이 먼저 수행되고, 위험 분석과 감소대책 생성이 병렬로 진행된 뒤 법령 검증과 HTML 표 생성으로 합류합니다.</figcaption>
-</figure>
-
 분석은 수십 초 단위의 긴 작업이므로 단계 완료마다 SSE 이벤트(법규 검색 완료, 감소대책 수립 완료, 결과 테이블 생성 완료 등)를 흘려보내 클라이언트가 진행 상황을 보여줄 수 있게 했습니다. 입력 채널은 세 가지입니다 — 현장 이미지(산업안전 관련성 분류 후 vision 분석, 무관 이미지는 거절), 텍스트 질의(위험성평가 키워드 감지 시 workflow 진입), PDF/이미지 문서(파일별·통합 분석). 이미지 다중 처리는 asyncio 병렬로 수행합니다.
-
-<figure class="project-diagram">
-  <img src="/images/projects/plan2do-runtime-topology.svg" alt="Plan2Do runtime topology diagram">
-  <figcaption>FastAPI 엔진이 AI provider, PostgreSQL, Qdrant 법령 검색, vector build/load 파이프라인과 연결됩니다.</figcaption>
-</figure>
 
 런타임은 FastAPI 엔진 + PostgreSQL(대화·질문·답변·참조 이력) + Qdrant를 Docker Compose로 묶고, 벡터 초기화 작업이 corpus 빌드와 적재를 담당합니다.
 
