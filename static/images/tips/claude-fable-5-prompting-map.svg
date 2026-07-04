@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Claude Fable 5 prompting migration map</title>
+  <desc id="desc">A Korean diagram summarizing how teams should migrate prompts and harnesses for Claude Fable 5: simplify prompts, choose effort, redesign long-running execution, and handle refusal/fallback.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="52%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#312e81"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.96"/>
+      <stop offset="100%" stop-color="#eef2ff" stop-opacity="0.92"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 14 7 L 0 14 z" fill="#a5b4fc"/>
+    </marker>
+    <style>
+      .title { font: 800 54px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #f8fafc; letter-spacing: -1px; }
+      .subtitle { font: 500 24px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #c7d2fe; }
+      .cardTitle { font: 800 30px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .cardText { font: 500 23px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #374151; }
+      .badge { font: 800 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #3730a3; letter-spacing: .8px; }
+      .small { font: 600 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #cbd5e1; }
+      .num { font: 900 34px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #eef2ff; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1280" cy="120" r="260" fill="#818cf8" opacity="0.16"/>
+  <circle cx="230" cy="820" r="310" fill="#22d3ee" opacity="0.10"/>
+  <path d="M135 450 C 375 270, 545 695, 800 465 S 1225 235, 1465 450" fill="none" stroke="#818cf8" stroke-width="5" opacity="0.28" stroke-dasharray="18 18"/>
+
+  <text x="92" y="100" class="title">Claude Fable 5 프롬프팅 전환 지도</text>
+  <text x="96" y="142" class="subtitle">모델만 바꾸지 말고, 프롬프트·하네스·거부 처리·장기 실행 UX를 함께 재설계한다</text>
+
+  <g transform="translate(95,220)" filter="url(#shadow)">
+    <rect width="320" height="430" rx="32" fill="url(#card)"/>
+    <circle cx="58" cy="58" r="31" fill="#4f46e5"/>
+    <text x="48" y="70" class="num">1</text>
+    <text x="38" y="126" class="badge">PROMPT</text>
+    <text x="38" y="177" class="cardTitle">장황한 규칙 줄이기</text>
+    <text x="38" y="230" class="cardText">충분히 알면 행동</text>
+    <text x="38" y="269" class="cardText">결과를 먼저 말하기</text>
+    <text x="38" y="308" class="cardText">불필요한 리팩터링 금지</text>
+    <text x="38" y="347" class="cardText">짧은 목적 지시 선호</text>
+  </g>
+
+  <g transform="translate(455,220)" filter="url(#shadow)">
+    <rect width="320" height="430" rx="32" fill="url(#card)"/>
+    <circle cx="58" cy="58" r="31" fill="#0f766e"/>
+    <text x="48" y="70" class="num">2</text>
+    <text x="38" y="126" class="badge">EFFORT</text>
+    <text x="38" y="177" class="cardTitle">작업별 깊이 조절</text>
+    <text x="38" y="230" class="cardText">high: 기본 복잡 작업</text>
+    <text x="38" y="269" class="cardText">xhigh/max: 장기·난제</text>
+    <text x="38" y="308" class="cardText">medium/low: 빠른 반복</text>
+    <text x="38" y="347" class="cardText">비용·지연시간 함께 관리</text>
+  </g>
+
+  <g transform="translate(815,220)" filter="url(#shadow)">
+    <rect width="320" height="430" rx="32" fill="url(#card)"/>
+    <circle cx="58" cy="58" r="31" fill="#b45309"/>
+    <text x="48" y="70" class="num">3</text>
+    <text x="38" y="126" class="badge">HARNESS</text>
+    <text x="38" y="177" class="cardTitle">오래 도는 실행 대비</text>
+    <text x="38" y="230" class="cardText">timeout·streaming 확장</text>
+    <text x="38" y="269" class="cardText">진행 표시와 비동기 확인</text>
+    <text x="38" y="308" class="cardText">메모리·컨텍스트 갱신</text>
+    <text x="38" y="347" class="cardText">서브에이전트 위임 설계</text>
+  </g>
+
+  <g transform="translate(1175,220)" filter="url(#shadow)">
+    <rect width="320" height="430" rx="32" fill="url(#card)"/>
+    <circle cx="58" cy="58" r="31" fill="#be123c"/>
+    <text x="48" y="70" class="num">4</text>
+    <text x="38" y="126" class="badge">SAFETY</text>
+    <text x="38" y="177" class="cardTitle">거부와 폴백 처리</text>
+    <text x="38" y="230" class="cardText">stop_reason: refusal</text>
+    <text x="38" y="269" class="cardText">HTTP 200도 실패 경로</text>
+    <text x="38" y="308" class="cardText">fallback 모델 지정</text>
+    <text x="38" y="347" class="cardText">데이터 보존 조건 확인</text>
+  </g>
+
+  <path d="M416 435 H442" stroke="#a5b4fc" stroke-width="7" marker-end="url(#arrow)"/>
+  <path d="M776 435 H802" stroke="#a5b4fc" stroke-width="7" marker-end="url(#arrow)"/>
+  <path d="M1136 435 H1162" stroke="#a5b4fc" stroke-width="7" marker-end="url(#arrow)"/>
+
+  <rect x="95" y="720" width="1400" height="84" rx="28" fill="#020617" opacity="0.46"/>
+  <text x="135" y="771" class="small">요약: Fable 5는 “더 많은 지시”보다 “좋은 실행 환경”을 요구한다. 프롬프트는 간단히, 운영 하네스는 더 견고하게.</text>
+</svg>
