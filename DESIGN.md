@@ -99,10 +99,10 @@ All spacing derives from a 4px base.
 
 ### Project Image Lightbox
 
-- **Structure**: fixed modal backdrop, icon-only close button, figure, full-size image, optional caption.
+- **Structure**: fixed modal backdrop, icon-only close button, figure, fitted image stage, caption footer, icon-only rotate control.
 - **Variants**: light and dark theme inherit the same surface, border, overlay, and shadow tokens.
 - **Spacing**: viewport gutters leave comfortable inspection space: 32px desktop, 16px mobile; image frame padding is 12px desktop and 8px mobile.
-- **States**: backdrop click, close button hover/focus, Escape, and focus containment.
+- **States**: backdrop click, close/rotate button hover/focus, Escape, 90-degree rotation steps, and focus containment.
 - **Accessibility**: `role="dialog"`, `aria-modal="true"`, labelled by image alt text when present.
 - **Motion**: opacity and transform-only entrance; disabled under reduced motion.
 

@@ -2,14 +2,91 @@ import * as React from "react";
 
 const getImagePayload = (image) => ({
   alt: image.getAttribute("alt") || "",
+  naturalHeight: image.naturalHeight || 0,
+  naturalWidth: image.naturalWidth || 0,
   src: image.currentSrc || image.getAttribute("src") || "",
 });
+
+const getLightboxFitMetrics = (viewportWidth) => {
+  const isMobile = viewportWidth <= 680;
+
+  return {
+    captionSpace: isMobile ? 48 : 54,
+    framePaddingTotal: isMobile ? 16 : 24,
+    gutterTotal: isMobile ? 32 : 64,
+  };
+};
+
+const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
+  if (
+    !activeImage?.naturalHeight ||
+    !activeImage?.naturalWidth ||
+    !viewportSize.height ||
+    !viewportSize.width
+  ) {
+    return {
+      image: {
+        transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
+      },
+      stage: undefined,
+    };
+  }
+
+  const metrics = getLightboxFitMetrics(viewportSize.width);
+  const availableWidth = Math.max(
+    1,
+    viewportSize.width - metrics.gutterTotal - metrics.framePaddingTotal,
+  );
+  const availableHeight = Math.max(
+    1,
+    viewportSize.height -
+      metrics.gutterTotal -
+      metrics.captionSpace -
+      metrics.framePaddingTotal,
+  );
+  const isQuarterTurn = rotation % 180 !== 0;
+  const visibleNaturalWidth = isQuarterTurn
+    ? activeImage.naturalHeight
+    : activeImage.naturalWidth;
+  const visibleNaturalHeight = isQuarterTurn
+    ? activeImage.naturalWidth
+    : activeImage.naturalHeight;
+  const scale = Math.min(
+    availableWidth / visibleNaturalWidth,
+    availableHeight / visibleNaturalHeight,
+    1,
+  );
+  const imageWidth = Math.round(activeImage.naturalWidth * scale);
+  const imageHeight = Math.round(activeImage.naturalHeight * scale);
+  const stageWidth = isQuarterTurn ? imageHeight : imageWidth;
+  const stageHeight = isQuarterTurn ? imageWidth : imageHeight;
+
+  return {
+    image: {
+      height: `${imageHeight}px`,
+      maxHeight: isQuarterTurn ? "none" : undefined,
+      maxWidth: isQuarterTurn ? "none" : undefined,
+      transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
+      width: `${imageWidth}px`,
+    },
+    stage: {
+      height: `${stageHeight}px`,
+      width: `${stageWidth}px`,
+    },
+  };
+};
 
 const ProjectImageLightbox = ({ html }) => {
   const articleRef = React.useRef(null);
   const closeButtonRef = React.useRef(null);
   const captionId = React.useId();
   const [activeImage, setActiveImage] = React.useState(null);
+  const [rotation, setRotation] = React.useState(0);
+  const rotateButtonRef = React.useRef(null);
+  const [viewportSize, setViewportSize] = React.useState({
+    height: 0,
+    width: 0,
+  });
 
   React.useEffect(() => {
     const article = articleRef.current;
@@ -64,10 +141,37 @@ const ProjectImageLightbox = ({ html }) => {
     };
   }, [activeImage]);
 
+  React.useEffect(() => {
+    if (!activeImage) {
+      return undefined;
+    }
+
+    const updateViewportSize = () => {
+      setViewportSize({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    };
+
+    updateViewportSize();
+    window.addEventListener("orientationchange", updateViewportSize);
+    window.addEventListener("resize", updateViewportSize);
+
+    return () => {
+      window.removeEventListener("orientationchange", updateViewportSize);
+      window.removeEventListener("resize", updateViewportSize);
+    };
+  }, [activeImage]);
+
   const openImage = React.useCallback((image) => {
     const payload = getImagePayload(image);
 
     if (payload.src) {
+      setRotation(0);
+      setViewportSize({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
       setActiveImage(payload);
     }
   }, []);
@@ -118,14 +222,38 @@ const ProjectImageLightbox = ({ html }) => {
     event.stopPropagation();
   }, []);
 
+  const rotateImage = React.useCallback(() => {
+    setRotation((currentRotation) => (currentRotation + 90) % 360);
+  }, []);
+
   const trapLightboxFocus = React.useCallback((event) => {
     if (event.key !== "Tab") {
       return;
     }
 
+    const focusTargets = [
+      closeButtonRef.current,
+      rotateButtonRef.current,
+    ].filter(Boolean);
+
+    if (!focusTargets.length) {
+      return;
+    }
+
     event.preventDefault();
-    closeButtonRef.current?.focus();
+    const activeIndex = focusTargets.indexOf(document.activeElement);
+    const currentIndex = activeIndex >= 0 ? activeIndex : 0;
+    const nextIndex = event.shiftKey
+      ? (currentIndex - 1 + focusTargets.length) % focusTargets.length
+      : (currentIndex + 1) % focusTargets.length;
+
+    focusTargets[nextIndex]?.focus();
   }, []);
+
+  const fittedImageStyles = React.useMemo(
+    () => getFittedImageStyles(activeImage, rotation, viewportSize),
+    [activeImage, rotation, viewportSize],
+  );
 
   return (
     <>
@@ -163,14 +291,39 @@ const ProjectImageLightbox = ({ html }) => {
             </svg>
           </button>
           <figure className="project-lightbox-frame" onClick={keepLightboxOpen}>
-            <img
-              className="project-lightbox-image"
-              src={activeImage.src}
-              alt={activeImage.alt}
-            />
-            {activeImage.alt ? (
-              <figcaption id={captionId}>{activeImage.alt}</figcaption>
-            ) : null}
+            <span
+              className="project-lightbox-image-stage"
+              style={fittedImageStyles.stage}
+            >
+              <img
+                className="project-lightbox-image"
+                src={activeImage.src}
+                alt={activeImage.alt}
+                style={fittedImageStyles.image}
+              />
+            </span>
+            <figcaption className="project-lightbox-footer">
+              <span
+                className="project-lightbox-caption-text"
+                id={activeImage.alt ? captionId : undefined}
+              >
+                {activeImage.alt}
+              </span>
+              <button
+                ref={rotateButtonRef}
+                className="project-lightbox-rotate"
+                type="button"
+                aria-label={`이미지 90도 회전, 현재 ${rotation}도`}
+                onClick={rotateImage}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M4 12a8 8 0 0 1 13.66-5.66L20 8.68" />
+                  <path d="M20 4v4.68h-4.68" />
+                  <path d="M20 12a8 8 0 0 1-13.66 5.66L4 15.32" />
+                  <path d="M4 20v-4.68h4.68" />
+                </svg>
+              </button>
+            </figcaption>
           </figure>
         </div>
       ) : null}
