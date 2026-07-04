@@ -3278,8 +3278,8 @@ body.project-lightbox-open {
 }
 
 .project-lightbox {
-  --project-lightbox-gutter: var(--space-12, 48px);
-  --project-lightbox-gutter-total: 96px;
+  --project-lightbox-gutter: var(--space-8, 32px);
+  --project-lightbox-gutter-total: 64px;
   --project-lightbox-caption-space: 54px;
 
   position: fixed;
@@ -4667,8 +4667,8 @@ body.project-lightbox-open {
   }
 
   .project-lightbox {
-    --project-lightbox-gutter: var(--space-5, 20px);
-    --project-lightbox-gutter-total: 40px;
+    --project-lightbox-gutter: var(--space-4, 16px);
+    --project-lightbox-gutter-total: 32px;
     --project-lightbox-caption-space: 46px;
   }
 
