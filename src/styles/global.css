@@ -4721,8 +4721,21 @@ body.project-lightbox-open {
     --project-lightbox-gutter-block-start: var(--space-18, 72px);
     --project-lightbox-gutter-block-end: var(--space-4, 16px);
     --project-lightbox-gutter-block-total: 88px;
+    --project-lightbox-caption-space: 72px;
 
     align-items: start;
+  }
+
+  .project-lightbox[data-project-lightbox-rotated="true"]
+    .project-lightbox-frame {
+    width: fit-content;
+    max-width: calc(100vw - var(--project-lightbox-gutter-inline-total));
+  }
+
+  .project-lightbox[data-project-lightbox-rotated="true"]
+    .project-lightbox-footer {
+    width: var(--project-lightbox-stage-width, auto);
+    max-width: calc(100vw - var(--project-lightbox-gutter-inline-total) - 16px);
   }
 
   .project-lightbox-frame {

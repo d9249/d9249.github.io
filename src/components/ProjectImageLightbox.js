@@ -27,7 +27,7 @@ const getLightboxFitMetrics = (viewportWidth, rotation) => {
   const hasMobileRotation = isMobile && isQuarterTurn;
 
   return {
-    captionSpace: isMobile ? 48 : 54,
+    captionSpace: hasMobileRotation ? 72 : isMobile ? 48 : 54,
     framePaddingTotal: isMobile ? 16 : 24,
     horizontalGutterTotal: isMobile ? 32 : 64,
     verticalGutterTotal: hasMobileRotation ? 88 : isMobile ? 32 : 64,
@@ -42,6 +42,7 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
     !viewportSize.width
   ) {
     return {
+      frame: undefined,
       image: {
         transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
       },
@@ -81,6 +82,9 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
   const stageHeight = isQuarterTurn ? imageWidth : imageHeight;
 
   return {
+    frame: {
+      "--project-lightbox-stage-width": `${stageWidth}px`,
+    },
     image: {
       height: `${imageHeight}px`,
       maxHeight: isQuarterTurn ? "none" : undefined,
@@ -312,7 +316,11 @@ const ProjectImageLightbox = ({ html }) => {
               <path d="M6 6l12 12M18 6L6 18" />
             </svg>
           </button>
-          <figure className="project-lightbox-frame" onClick={keepLightboxOpen}>
+          <figure
+            className="project-lightbox-frame"
+            style={fittedImageStyles.frame}
+            onClick={keepLightboxOpen}
+          >
             <span
               className="project-lightbox-image-stage"
               style={fittedImageStyles.stage}

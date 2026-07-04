@@ -101,7 +101,7 @@ All spacing derives from a 4px base.
 
 - **Structure**: fixed modal backdrop, icon-only close button, figure, fitted image stage, caption footer, icon-only rotate control.
 - **Variants**: light and dark theme inherit the same surface, border, overlay, and shadow tokens.
-- **Spacing**: viewport gutters leave comfortable inspection space: 32px desktop, 16px mobile; rotated mobile images reserve 72px top control clearance and 16px bottom gutter; image frame padding is 12px desktop and 8px mobile.
+- **Spacing**: viewport gutters leave comfortable inspection space: 32px desktop, 16px mobile; rotated mobile images reserve 72px top control clearance, 16px bottom gutter, and shrink the frame to the fitted image width; image frame padding is 12px desktop and 8px mobile.
 - **States**: backdrop click, close/rotate button hover/focus, Escape, 90-degree rotation steps, and focus containment.
 - **Accessibility**: `role="dialog"`, `aria-modal="true"`, labelled by image alt text when present.
 - **Motion**: opacity and transform-only entrance; disabled under reduced motion.
