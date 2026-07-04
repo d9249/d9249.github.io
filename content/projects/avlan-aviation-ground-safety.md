@@ -37,6 +37,11 @@ draft: false
 
 초기 버전(전신, '25년 기업혁신대상 대한상공회의소 회장상 수상)은 고정 파이프라인이었습니다. A-VLAN 재구축의 핵심 질문은 이것이었습니다 — **분석 능력을 어떻게 조합 가능한 단위로 쪼개고, 조합을 누가 결정하게 할 것인가.**
 
+<figure class="project-diagram">
+  <img src="/images/projects/avlan-overall-architecture.svg" alt="A-VLAN overall architecture diagram">
+  <figcaption>전체 구조. 영상 앵커링, 스킬 카탈로그, GoalOrchestrator, 안전 이벤트·법령 근거·운영 리포트가 하나의 분석 루프로 이어집니다.</figcaption>
+</figure>
+
 ## 딥다이브 ① 조합형 스킬 카탈로그 — 능력을 데이터로 만들기
 
 분석 능력을 **SkillDescriptor**로 선언화했습니다. 각 스킬은 자신이 무엇을 하는지(탐지·행동분석·준수판정·브리핑·브릿지 접현 분석 등), 어떤 입력을 요구하고 어떤 산출을 내는지를 기술하는 메타데이터를 가지며, 하나의 스킬이 N개의 실행 단계로 전개될 수 있습니다(1:N). 스킬 실행은 SkillPipelineExecutor가 담당하고, 탐지 결과는 파이프라인에 인라인으로 흐르며, 단계별로 적합한 모델을 역할 라우터가 배정합니다.

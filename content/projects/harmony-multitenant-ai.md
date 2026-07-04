@@ -31,6 +31,11 @@ draft: false
   <p>이 글은 2주 해커톤에서 내린 네 가지 설계 결정을 다룹니다. ① 에이전트 런타임을 프로토콜로 계약화한 이유, ② 프리페치 RAG를 버리고 에이전트 주도 검색으로 간 이유(검색 후보와 인용의 분리), ③ 벡터 인덱스 대신 PageIndex를 택한 트레이드오프, ④ AI가 만든 지식에 사람 게이트를 세운 방법.</p>
 </section>
 
+<figure class="harmony-diagram">
+  <img src="/images/projects/harmony-overall-architecture.svg" alt="Harmony overall architecture diagram">
+  <figcaption>전체 구조. 채널, IAIAgent 런타임 계약, 에이전트 주도 검색, human-gated knowledge loop, 배포·감사 경계가 한 턴 계약으로 연결됩니다.</figcaption>
+</figure>
+
 ## 딥다이브 ① 에이전트 런타임을 계약으로 — IAIAgent 프로토콜
 
 에이전트 구현체는 바뀝니다. 로컬 개발과 시연에서는 자체 런타임을, AWS 운영에서는 Bedrock Runtime Converse를 씁니다. 바뀌면 안 되는 것은 **한 턴이 남겨야 하는 사실의 모양**입니다.
@@ -52,6 +57,11 @@ draft: false
 
 이 분리가 준 것은 세 가지입니다. 인용 정합성 — UI가 "본 것"과 "쓴 것"을 구별해 표시할 수 있고, 멀티홉 — 첫 검색이 빗나가도 에이전트가 질의를 바꿔 재시도하며, 비용 통제 — 충분하면 추가 검색을 하지 않습니다. 검색 품질 문제로 보였던 것이 실은 **책임 소재 문제**(검색을 누가 결정하는가)였다는 것이 이 트러블슈팅의 결론입니다.
 
+<figure class="harmony-diagram">
+  <img src="/images/projects/harmony-deepdive-agentic-retrieval.svg" alt="Harmony agentic retrieval candidate and citation separation diagram">
+  <figcaption>에이전트 주도 검색 구조. 검색 후보(tool trace)와 실제 인용(citations)을 분리하고, 필요할 때만 멀티홉 재검색으로 확장합니다.</figcaption>
+</figure>
+
 ## 딥다이브 ③ PageIndex — 벡터 인덱스 없는 검색의 트레이드오프
 
 검색 백엔드로는 임베딩 벡터 스토어 대신 **PageIndex** 방식(reasoning-based retrieval)을 택했습니다. 문서를 chapter→section 계층 트리로 변환해 두고, 질의 시 LLM이 트리를 탐색하며 관련 노드를 고르는 구조입니다 — 사람이 목차를 보고 찾아가는 방식에 가깝습니다.
@@ -70,6 +80,11 @@ draft: false
 LLM-Wiki Compiler는 raw source를 ingest(포맷 정규화) → sanitize(이메일·전화번호·토큰·라이선스 위험 탐지와 redaction 후보) → classify(팀·permission tag·만료일 frontmatter 제안) → draft(검토 가능한 초안) 단계로 처리합니다. 결과는 곧바로 발행되지 않고 `PENDING` 리뷰 아이템이 됩니다. 리뷰어가 승인·발행해야만 corpus에 쓰이고 검색 인덱스가 리로드됩니다.
 
 같은 원리를 실행 시점에도 적용했습니다 — **approval gate**입니다. 턴 시작 전에 고위험 요청(외부 웹 검색, 서브에이전트 실행 등)을 감지하면 승인 레코드를 만들고 SSE `approval.required` 이벤트를 발행합니다. 관리자가 큐에서 승인/거절하면 `approval.decided` 이벤트로 사용자 흐름이 재개되거나 중단됩니다. 권한 태그에 따라 자동 승인 우회가 있어 임원·관리자 흐름은 막히지 않습니다. 처음에는 승인 저장소만 있고 채팅과 연결되지 않은 scaffold 상태였는데, 턴 전 감지 → SSE → 결정 UI를 end-to-end로 배선한 것이 실제 작동하는 게이트를 만들었습니다.
+
+<figure class="harmony-diagram">
+  <img src="/images/projects/harmony-deepdive-gated-knowledge.svg" alt="Harmony human-gated knowledge and approval gate diagram">
+  <figcaption>발행 게이트와 실행 게이트. 지식은 승인 후에만 corpus로 들어가고, 고위험 요청은 턴 시작 전 승인 이벤트로 분기됩니다.</figcaption>
+</figure>
 
 <figure class="harmony-diagram">
   <img src="/images/projects/harmony-knowledge-loop.svg" alt="Harmony human-gated knowledge loop diagram">

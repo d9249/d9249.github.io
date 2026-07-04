@@ -38,6 +38,11 @@ draft: false
 Jeani의 본체는 RFP 문서를 8개 관점(개요·요구사항·구조·인력·문서·발표·질의·현황)으로 병렬 분석하는 **analyzer 에이전트 8종**과, 같은 8개 관점으로 제안 산출물을 수정하는 **modifier 에이전트 8종**입니다. 각 에이전트는 Lambda로 배포되고 오케스트레이터가 병렬 호출·결과 통합을 담당합니다. 인증(Cognito)과 CI/CD는 팀원이 구축했습니다.
 
 <figure class="market-diagram">
+  <img src="/images/projects/market-intelligence-overall.svg" alt="Jeani overall architecture and contribution boundary diagram">
+  <figcaption>전체 구조와 기여 경계. 프론트엔드·BFF, KB Intelligence, IaC는 본인 담당이고, RFP 8+8 에이전트·인증·CI/CD는 팀 산출물로 분리됩니다.</figcaption>
+</figure>
+
+<figure class="market-diagram">
   <img src="/images/projects/market-intelligence-runtime.svg" alt="Jeani market intelligence runtime diagram">
   <figcaption>전체 런타임. RFP 업로드부터 분석·수정 에이전트, KB Intelligence, Bedrock KB 동기화까지 S3 lifecycle로 이어집니다.</figcaption>
 </figure>

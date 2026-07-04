@@ -38,6 +38,11 @@ draft: false
 
 그래서 이 엔진은 "검색해서 붙인다"에서 멈추지 않고, **corpus 구축 → 이중 검색 → 편중 방지 → 생성 후 재검증**의 4단계로 근거 품질을 통제합니다.
 
+<figure class="project-diagram">
+  <img src="/images/projects/plan2do-overall-architecture.svg" alt="Plan2Do overall architecture diagram">
+  <figcaption>전체 구조. 현장 입력을 산업안전 관련성으로 분류하고, 법령 corpus·이중 검색·LangGraph 위험성평가·SSE 리포트로 연결합니다.</figcaption>
+</figure>
+
 ## 딥다이브 ① 법령 XML을 검색 가능한 계층 corpus로
 
 법령 원문은 국가법령 XML로 제공되지만 그대로는 검색 corpus가 되지 못합니다. 원문자(①②③), 특수기호, HTML 태그, 전각 문자가 섞여 있어 임베딩 품질을 해치고, 무엇보다 법령은 평평한 텍스트가 아니라 **법령 → 조 → 항 → 호**의 계층 구조입니다.
@@ -51,6 +56,11 @@ draft: false
 그래서 검색을 이중으로 수행합니다. 먼저 LLM이 위험 설명에서 안전 도메인 키워드를 추출하고(JSON 파싱 실패 시 정규식·명사 기반 fallback), **원본 설명 검색**과 **키워드 강화 검색**을 각각 수행한 뒤 가중치를 두어 병합·재순위화합니다.
 
 병합 단계에는 편중 방지 cap을 둡니다 — 같은 법령에서 최대 2건(per-law cap), 같은 조에서 최대 1건(per-article cap). 유사도 상위만 자르면 검색 결과가 특정 법령 한 곳의 인접 조문들로 도배되는데, 위험성평가 근거는 서로 다른 법령·조문을 폭넓게 커버할수록 유용하기 때문입니다. 유사도 순위를 다양성 제약과 교환한 설계입니다.
+
+<figure class="project-diagram">
+  <img src="/images/projects/plan2do-deepdive-search.svg" alt="Plan2Do dual legal search and law cap diagram">
+  <figcaption>이중 검색 구조. 원본 설명 검색과 키워드 강화 검색을 병렬로 수행하고, 법령·조문 cap으로 근거 편중을 줄입니다.</figcaption>
+</figure>
 
 ## 딥다이브 ③ 법령 준수 검증 — 검색이 붙인 근거를 다시 심판한다
 
