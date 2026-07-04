@@ -19,9 +19,9 @@ stack:
   - "Cython"
   - "Docker Compose"
 details:
-  - "OCR bbox와 선분 신호를 결합해 표 구조 후보를 여러 개 만들고, 비교·선택하는 로직 기반 표 구조 복원 엔진을 단독 설계·고도화했습니다. 관련 기술은 특허 출원 중입니다."
-  - "HTML table GT 기준 TEDS/TEDS-S, Cell F1, CER, Row/Col 일치를 함께 측정하는 벤치마크 콘솔을 만들고, baseline 대비 개선을 정량으로 증명했습니다."
-  - "RSA-OAEP + AES-256-GCM 모델 번들 암호화와 Cython 컴파일 기반 secure build로 고객사 납품 파이프라인을 구축, K사 공급 계약을 수주했습니다."
+  - "OCR bbox와 선분 신호를 결합해 표 구조 후보를 여러 개 생성→비교→선택하는 로직 기반 복원 엔진을 단독 설계·고도화 → TEDS 0.9188 / Cell F1 0.9702까지 끌어올리고 관련 기술을 특허 출원했습니다."
+  - "HTML table GT 기준 TEDS/TEDS-S·Cell F1·CER·Row/Col 일치를 함께 재는 벤치마크 콘솔을 구축 → '좋아졌다'는 주장을 baseline 대비 정량 수치로 증명 가능하게 만들었습니다."
+  - "RSA-OAEP + AES-256-GCM 번들 암호화와 Cython secure build로 고객사 납품 파이프라인을 구축 → 모델 유출 없는 온프레미스 납품을 가능하게 해 K사 공급 계약을 수주했습니다."
 order: 30
 draft: false
 ---

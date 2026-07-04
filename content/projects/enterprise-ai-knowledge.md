@@ -20,9 +20,9 @@ stack:
   - "Vue 3"
   - "Celery"
 details:
-  - "LightRAG 구조를 Milvus + Neo4j 조합으로 재구성하고, local/global/hybrid/naive/mix 5가지 검색 모드를 갖춘 Graph + Vector Hybrid RAG 파이프라인을 구축했습니다."
-  - "content/title/domain/structure 4개 벡터 필드를 병렬 검색하고 RRF(k=60)로 융합하는 멀티벡터 검색을 설계·구현했습니다."
-  - "다중 저장소에 걸친 지식 삭제 잔존 문제와 동시 연결 초기화 경합을 세션 기반 삭제 파이프라인과 asyncio.Lock double-check 패턴으로 해결했습니다."
+  - "LightRAG를 Milvus + Neo4j로 재구성해 local/global/hybrid/naive/mix 5개 검색 모드를 한 파이프라인에 통합 → 질의 성격에 따라 벡터·그래프 검색을 골라 쓰는 Hybrid RAG를 구축했습니다."
+  - "content/title/domain/structure 4개 벡터 필드를 병렬 검색해 RRF(k=60)로 융합 → 단일 임베딩이 놓치는 제목·도메인·구조 신호까지 반영한 멀티벡터 검색을 구현했습니다."
+  - "다중 저장소 삭제 잔존과 동시 연결 초기화 경합을 세션 기반 삭제 파이프라인·asyncio.Lock double-check로 해결 → Graph/Vector 인덱스가 서로 어긋나지 않는 삭제 일관성을 확보했습니다."
 order: 20
 draft: false
 ---

@@ -17,10 +17,10 @@ stack:
   - "PCA / GKDE"
   - "MovieLens-1M / FilmTrust / Yelp2018 / Douban-book"
 details:
-  - "GCN 기반 추천에서 임베딩 값이 작은 범위로 수렴하며 정보가 약화되는 문제와 깊은 Layer를 쌓기 어려운 문제를 연구 주제로 정의했습니다."
-  - "Egress 초기화로 더 넓은 임베딩 초기화 범위를 적용하고, Weighted Forwarding으로 전파 전 임베딩에 가중치를 곱해 다음 Layer에 전달하는 구조를 제안했습니다."
-  - "FilmTrust, MovieLens-1M, Yelp2018, Douban-book 벤치마크에서 Recall@20/NDCG@20과 최고 성능 epoch를 비교했습니다."
-  - "LightGCN, BUIR, MixGCF, SGL, SimGCL, XSimGCL 등 기존 추천 알고리즘에 제안 기법을 적용해 효과와 한계를 검증했습니다."
+  - "GCN 추천의 임베딩 값 손실(좁은 범위 수렴)과 깊은 Layer 구성 한계를 문제로 정의하고 Egress 초기화로 초기 임베딩 범위를 넓힘 → 학습 속도와 추천 정확도 개선을 확인했습니다."
+  - "전파 전 임베딩에 가중치를 곱해 전달하는 Weighted Forwarding으로 layer가 깊어질수록 신호가 희석되는 문제를 완화 → over-smoothing 없이 더 깊은 GCN 구성이 가능함을 검증했습니다."
+  - "FilmTrust·MovieLens-1M·Yelp2018·Douban-book 4개 벤치마크에서 LightGCN·SGL·SimGCL·XSimGCL 등에 제안 기법을 이식해 Recall@20/NDCG@20을 비교 → 기법의 효과와 한계를 다각 검증했습니다."
+  - "이 연구를 석사학위논문과 SCIE(Q2) 저널 2편(Electronics·CMC) 1저자 논문으로 게재 → 추천 시스템 최적화 성과를 학술적으로 인정받았습니다."
 order: 60
 draft: false
 ---

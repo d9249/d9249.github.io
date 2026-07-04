@@ -18,9 +18,9 @@ stack:
   - "SQLAlchemy"
   - "OpenTofu"
 details:
-  - "run_turn/stream_turn을 정의한 IAIAgent 프로토콜로 에이전트 런타임을 계약화하고, 로컬·Bedrock·stub 3개 구현을 같은 계약 아래 교체 가능하게 만들었습니다."
-  - "프리페치 RAG를 에이전트 주도 검색으로 전환해, 검색 후보(tool trace)와 실제 인용(citations)을 분리하고 멀티홉(최대 6회) 검색을 가능하게 했습니다."
-  - "LLM-Wiki Compiler가 만든 지식 초안은 review queue에서 사람이 승인·발행해야만 검색 corpus에 편입되는 human-gated loop를 설계했습니다."
+  - "run_turn/stream_turn IAIAgent 프로토콜로 런타임을 계약화하고 로컬·Bedrock·stub 3개 구현을 같은 계약으로 교체 가능하게 만듦 → 모델·인프라가 바뀌어도 상위 코드는 그대로인 벤더 독립 구조를 확보했습니다."
+  - "프리페치 RAG를 에이전트 주도 멀티홉(최대 6회) 검색으로 전환하고 검색 후보(tool trace)와 실제 인용(citations)을 분리 → '무엇을 봤는지'와 '무엇을 근거로 답했는지'가 따로 추적되는 검색을 구현했습니다."
+  - "LLM이 만든 지식 초안을 review queue에서 사람이 승인해야만 공식 corpus에 편입되는 human-gated loop를 설계 → AI 생성 지식이 검증 없이 사내 정답이 되는 위험을 원천 차단했습니다."
 order: 10
 draft: false
 ---

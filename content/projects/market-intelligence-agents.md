@@ -20,9 +20,9 @@ stack:
   - "Next.js"
   - "TypeScript"
 details:
-  - "시장 인텔리전스 수집을 supervisor 오케스트레이터 + 5개 전문 에이전트(planner/researcher/competitor/tech analyst/synthesizer)로 설계하고 KB 동기화까지 자동화했습니다. (본인 담당)"
-  - "Next.js 프론트엔드와 14개 BFF 라우트를 구현하고, S3 단일 소스 원칙으로 클라이언트 상태 불일치를 해결했습니다. (본인 담당)"
-  - "AWS EST Gen AI 실무 역량 강화 과정(2025.09.08–12.05, 13주)의 팀 프로젝트로 수행하고 과정을 이수했습니다."
+  - "시장 인텔리전스 수집을 supervisor + 5개 전문 에이전트(planner·researcher·competitor·tech·synthesizer)로 설계하고 Bedrock KB 동기화까지 자동화 → RFP만 넣으면 조사 리포트가 KB에 쌓이는 무인 수집 루프를 만들었습니다. (본인 담당)"
+  - "Next.js 프론트엔드와 14개 BFF 라우트를 구현하고 S3 단일 소스 원칙을 적용 → 여러 산출물 화면 사이의 클라이언트 상태 불일치를 제거했습니다. (본인 담당)"
+  - "AWS EST Gen AI 실무 과정(2025.09–12, 13주) 팀 프로젝트로, 8+8 RFP 분석·수정 에이전트 위에 본인이 KB Intelligence 오케스트레이터·프론트엔드·IaC를 얹어 완성했습니다."
 order: 40
 draft: false
 ---

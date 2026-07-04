@@ -18,9 +18,9 @@ stack:
   - "OCR"
   - "RAG"
 details:
-  - "ArtygenSpace에서는 booxTory와 arti, 두 개의 제품 프로젝트를 중심으로 연구와 엔지니어링을 수행했습니다."
-  - "booxTory는 AI 독서 경험, arti는 CATS/MERGE/CLEAR/NEXIS 네 가지 핵심 AI 솔루션으로 정리했습니다."
-  - "내부 저장소 이름보다 제품명, 솔루션명, 역할, 기술 리드 범위를 중심으로 설명합니다."
+  - "ArtygenSpace 1년간 booxTory·arti 두 제품의 AI 연구·엔지니어링을 수행 → 두 제품 모두 CES 2025 혁신상(booxTory Best of Innovation·arti Honoree)에 기여했습니다."
+  - "booxTory는 개인화 AI 독서 경험, arti는 CATS·MERGE·CLEAR·NEXIS 4개 핵심 AI 솔루션으로 제품화 → 콘텐츠 생성·비전·문서·검색을 아우르는 풀스택 AI 역량을 보였습니다."
+  - "각 프로젝트를 저장소가 아니라 제품명·솔루션명·역할·기술 리드 범위 중심으로 정리 → '무엇을 만들고 무엇을 책임졌는가'로 읽히게 구성했습니다."
 order: 50
 draft: false
 ---

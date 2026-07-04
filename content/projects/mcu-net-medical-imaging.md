@@ -16,9 +16,9 @@ stack:
   - "Pancreas-CT"
   - "Dice Coefficient"
 details:
-  - "췌장 CT segmentation에서는 서로 다른 패치 크기의 U-Net을 마지막 단계에서 연쇄 결합하는 MCU-Net 구조를 제안했습니다."
-  - "Pancreas-CT 데이터셋 82개 3D CT scan, 19,328장 슬라이스를 대상으로 4-fold 검증과 Dice coefficient 기반 평가를 수행했습니다."
-  - "MCU-Net M5 구조는 DSC 0.916으로 기존 U-Net 0.896, Attention U-Net 0.832, RSTN 0.846 대비 높은 분할 성능을 보였습니다."
+  - "크기가 작고 경계가 모호해 분할이 어려운 췌장 문제에, 서로 다른 패치 크기의 U-Net 특징을 마지막 단계에서 연쇄 결합하는 MCU-Net 구조를 제안 → 작은 장기·제한된 데이터에서 안정적 분할을 노렸습니다."
+  - "Pancreas-CT 82개 3D scan·19,328 슬라이스로 4-fold·Dice 기반 평가를 설계 → 성능 수치뿐 아니라 '어떤 기준으로 쟀는지'까지 명확한 검증 체계를 갖췄습니다."
+  - "MCU-Net M5가 DSC 0.916으로 U-Net 0.896·Attention U-Net 0.832·RSTN 0.846을 상회 → 개선을 입증하고 KCI 1저자 논문으로 게재했습니다."
 order: 70
 draft: false
 ---

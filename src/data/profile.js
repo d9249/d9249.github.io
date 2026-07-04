@@ -22,37 +22,37 @@ export const evidenceItems = [
     label: "product ai",
     value: "CES 2025",
     description:
-      "booxTory Best of Innovation과 arti Honoree 제품에서 AI 엔진, 추천, 생성, 편집 자동화 기능을 실제 제품 경험으로 연결했습니다.",
+      "booxTory Best of Innovation과 arti Honoree 두 제품에서 개인화 독서 AI 엔진과 CATS·MERGE·CLEAR·NEXIS 4개 핵심 AI 솔루션을 기술 리드했습니다.",
   },
   {
-    label: "enterprise ai",
-    value: "AsianaIDT",
+    label: "product engineering",
+    value: "AI 제품 8종",
     description:
-      "사내 지식 관리, 산업안전 RAG, 시장 인텔리전스, 문서 OCR·표 구조 복원, 영상 기반 관제 브리핑을 Graph/Vector RAG, 멀티모달 에이전트, 운영 콘솔 단위로 구현했습니다.",
+      "ArtygenSpace booxTory·arti(콘텐츠 AI)부터 AsianaIDT AIO·Harmony·Plan2Do·Jeani·InVision OCR·A-VLAN(엔터프라이즈 AI)까지, 8개 AI 제품을 RAG·멀티에이전트·비전으로 설계·구축했습니다.",
   },
   {
-    label: "minister awards",
-    value: "장관상 2회",
+    label: "awards",
+    value: "장관상 2·회장상 1",
     description:
-      "WIS 2025 혁신상과 Plan2Do 산업안전 플랫폼 성과에서 장관상급 수상으로 AI 제품화와 현장 적용성을 인정받았습니다.",
+      "행정안전부(Plan2Do)·과학기술정보통신부(WIS 2025) 장관상과 대한상공회의소 회장상(AI 항공조업 안전기술)까지, AI 제품화 성과를 정부·산업에서 3회 수상했습니다.",
+  },
+  {
+    label: "productization",
+    value: "특허·공급계약",
+    description:
+      "InVision OCR에서 표 구조 복원을 TEDS 0.9188까지 고도화하고, 관련 기술 특허 출원과 K사 솔루션 공급 계약 수주로 연구를 사업 성과로 연결했습니다.",
   },
   {
     label: "research",
-    value: "SCIE 3 / KCI 2",
+    value: "SCIE Q2 3편",
     description:
-      "LightGCN, WF-GCN, 의료영상 딥러닝을 중심으로 추천 시스템과 의료 AI 연구 성과를 1저자 논문으로 축적했습니다.",
+      "추천 시스템(LightGCN·WF-GCN)과 의료영상 딥러닝에서 SCIE(Q2) 저널 3편을 1저자로 발표하고, Best Paper 2회를 수상했습니다.",
   },
   {
     label: "modeling",
     value: "Top 1% 7회",
     description:
-      "DACON 39개 대회, HD현대 AI Challenge 4위, 상위 1% 7회로 데이터 분석과 실전 모델링 역량을 검증했습니다.",
-  },
-  {
-    label: "academic awards",
-    value: "Best Paper 2회",
-    description:
-      "APIC-IST 2022와 KIIT 논문 성과로 추천 시스템, 의료영상, PoseNet 기반 응용 연구의 학술 성과를 남겼습니다.",
+      "DACON 39개 대회 상위 1% 7회, HD현대 AI Challenge 4위, LG Aimers 4기 팀리더로 실전 데이터 분석·모델링 역량을 검증했습니다.",
   },
 ];
 

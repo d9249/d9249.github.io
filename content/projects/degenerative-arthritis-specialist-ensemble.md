@@ -17,9 +17,9 @@ stack:
   - "KneeXray"
   - "Kellgren–Lawrence Grade"
 details:
-  - "KneeXray 데이터셋 8,260장의 무릎 X-ray를 Kellgren–Lawrence grade 0~4의 5-class classification 문제로 정의했습니다."
-  - "VGGNet, DenseNet, ResNet, TinyNet, EfficientNet, MobileNet, Xception, ViT 계열 모델을 같은 조건에서 비교했습니다."
-  - "각 grade에서 가장 강한 모델을 선택하는 specialist ensemble을 구성해 accuracy 77.05%, precision 0.79, recall 0.77, F1 0.78을 확인했습니다."
+  - "인접 grade 차이가 작고 class 불균형이 심한 KneeXray 8,260장 K-L grade 0~4 5-class 분류를, 전체 accuracy만으로는 유용성을 설명하기 어려운 문제로 정의했습니다."
+  - "VGG·DenseNet·ResNet·EfficientNet·MobileNet·Xception·ViT 계열을 동일 조건에서 비교해 grade별 강점 모델을 식별 → 단일 모델의 한계를 데이터로 드러냈습니다."
+  - "grade마다 가장 강한 모델을 결합하는 class별 specialist ensemble을 구성 → accuracy 77.05%·F1 0.78로 단일 모델을 넘어서고 SCIE(Q2·CMC) 1저자 논문으로 게재했습니다."
 order: 69
 draft: false
 ---
