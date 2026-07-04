@@ -10,17 +10,36 @@ const getImagePayload = (image) => ({
 const getViewportSize = (container) => {
   const rect = container?.getBoundingClientRect();
   const visualViewport = window.visualViewport;
-  const height =
-    visualViewport?.height || window.innerHeight || rect?.height || 0;
-  const width = visualViewport?.width || window.innerWidth || rect?.width || 0;
+  const layoutHeight =
+    window.innerHeight || rect?.height || visualViewport?.height || 0;
+  const layoutWidth =
+    window.innerWidth || rect?.width || visualViewport?.width || 0;
+  const height = visualViewport?.height || layoutHeight;
 
   return {
     height: Math.round(height),
-    layoutHeight: Math.round(window.innerHeight || rect?.height || height),
-    layoutWidth: Math.round(window.innerWidth || rect?.width || width),
+    layoutHeight: Math.round(layoutHeight),
+    layoutWidth: Math.round(layoutWidth),
+    screenWidth: Math.round(window.screen?.width || layoutWidth),
     offsetTop: Math.round(visualViewport?.offsetTop || 0),
-    width: Math.round(width),
+    width: Math.round(layoutWidth),
   };
+};
+
+const getMobileAwareViewportWidth = (viewportSize) => {
+  const widths = [
+    viewportSize.width,
+    viewportSize.layoutWidth,
+    viewportSize.screenWidth,
+  ].filter((width) => width > 0);
+
+  if (!widths.length) {
+    return 0;
+  }
+
+  const narrowWidth = Math.min(...widths);
+
+  return narrowWidth <= 680 ? narrowWidth : viewportSize.width;
 };
 
 const getLightboxFitMetrics = (viewportWidth, rotation) => {
@@ -56,12 +75,11 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
     };
   }
 
-  const metrics = getLightboxFitMetrics(viewportSize.width, rotation);
+  const viewportWidth = getMobileAwareViewportWidth(viewportSize);
+  const metrics = getLightboxFitMetrics(viewportWidth, rotation);
   const availableWidth = Math.max(
     1,
-    viewportSize.width -
-      metrics.horizontalGutterTotal -
-      metrics.framePaddingTotal,
+    viewportWidth - metrics.horizontalGutterTotal - metrics.framePaddingTotal,
   );
   const availableHeight = Math.max(
     1,
@@ -72,18 +90,20 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
       metrics.verticalOverflowAllowance,
   );
   const isQuarterTurn = rotation % 180 !== 0;
-  const hasMobileRotation = viewportSize.width <= 680 && isQuarterTurn;
+  const hasMobileRotation = viewportWidth <= 680 && isQuarterTurn;
   const visibleNaturalWidth = isQuarterTurn
     ? activeImage.naturalHeight
     : activeImage.naturalWidth;
   const visibleNaturalHeight = isQuarterTurn
     ? activeImage.naturalWidth
     : activeImage.naturalHeight;
-  const scale = Math.min(
-    availableWidth / visibleNaturalWidth,
-    availableHeight / visibleNaturalHeight,
-    1,
-  );
+  const scale = hasMobileRotation
+    ? Math.min(availableWidth / visibleNaturalWidth, 1)
+    : Math.min(
+        availableWidth / visibleNaturalWidth,
+        availableHeight / visibleNaturalHeight,
+        1,
+      );
   const imageWidth = Math.round(activeImage.naturalWidth * scale);
   const imageHeight = Math.round(activeImage.naturalHeight * scale);
   const stageWidth = isQuarterTurn ? imageHeight : imageWidth;
@@ -109,6 +129,7 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
       "--project-lightbox-frame-max-height": hasMobileRotation
         ? "none"
         : undefined,
+      "--project-lightbox-image-aspect": `${activeImage.naturalWidth / activeImage.naturalHeight}`,
       "--project-lightbox-stage-width": `${stageWidth}px`,
     },
     image: {
@@ -203,12 +224,14 @@ const ProjectImageLightbox = ({ html }) => {
     updateViewportSize();
     const frameId = window.requestAnimationFrame(updateViewportSize);
     window.visualViewport?.addEventListener("resize", updateViewportSize);
+    window.visualViewport?.addEventListener("scroll", updateViewportSize);
     window.addEventListener("orientationchange", updateViewportSize);
     window.addEventListener("resize", updateViewportSize);
 
     return () => {
       window.cancelAnimationFrame(frameId);
       window.visualViewport?.removeEventListener("resize", updateViewportSize);
+      window.visualViewport?.removeEventListener("scroll", updateViewportSize);
       window.removeEventListener("orientationchange", updateViewportSize);
       window.removeEventListener("resize", updateViewportSize);
     };
@@ -272,6 +295,30 @@ const ProjectImageLightbox = ({ html }) => {
 
   const rotateImage = React.useCallback(() => {
     setRotation((currentRotation) => (currentRotation + 90) % 360);
+  }, []);
+
+  const syncActiveImageSize = React.useCallback((event) => {
+    const { naturalHeight, naturalWidth } = event.currentTarget;
+
+    if (!naturalHeight || !naturalWidth) {
+      return;
+    }
+
+    setActiveImage((currentImage) => {
+      if (
+        !currentImage ||
+        (currentImage.naturalHeight === naturalHeight &&
+          currentImage.naturalWidth === naturalWidth)
+      ) {
+        return currentImage;
+      }
+
+      return {
+        ...currentImage,
+        naturalHeight,
+        naturalWidth,
+      };
+    });
   }, []);
 
   const trapLightboxFocus = React.useCallback((event) => {
@@ -357,6 +404,7 @@ const ProjectImageLightbox = ({ html }) => {
                 src={activeImage.src}
                 alt={activeImage.alt}
                 style={fittedImageStyles.image}
+                onLoad={syncActiveImageSize}
               />
             </span>
             <figcaption className="project-lightbox-footer">
