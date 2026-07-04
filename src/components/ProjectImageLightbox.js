@@ -10,14 +10,16 @@ const getImagePayload = (image) => ({
 const getViewportSize = (container) => {
   const rect = container?.getBoundingClientRect();
   const visualViewport = window.visualViewport;
+  const height =
+    visualViewport?.height || window.innerHeight || rect?.height || 0;
+  const width = visualViewport?.width || window.innerWidth || rect?.width || 0;
 
   return {
-    height: Math.round(
-      rect?.height || visualViewport?.height || window.innerHeight,
-    ),
-    width: Math.round(
-      rect?.width || visualViewport?.width || window.innerWidth,
-    ),
+    height: Math.round(height),
+    layoutHeight: Math.round(window.innerHeight || rect?.height || height),
+    layoutWidth: Math.round(window.innerWidth || rect?.width || width),
+    offsetTop: Math.round(visualViewport?.offsetTop || 0),
+    width: Math.round(width),
   };
 };
 
@@ -32,7 +34,7 @@ const getLightboxFitMetrics = (viewportWidth, rotation) => {
     horizontalGutterTotal: isMobile ? 32 : 64,
     verticalGutterTotal: hasMobileRotation ? 64 : isMobile ? 32 : 64,
     verticalOverflowAllowance: hasMobileRotation
-      ? Math.min(112, Math.round(viewportWidth * 0.24))
+      ? Math.min(144, Math.round(viewportWidth * 0.36))
       : 0,
   };
 };
@@ -45,6 +47,7 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
     !viewportSize.width
   ) {
     return {
+      lightbox: undefined,
       frame: undefined,
       image: {
         transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
@@ -85,8 +88,23 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
   const imageHeight = Math.round(activeImage.naturalHeight * scale);
   const stageWidth = isQuarterTurn ? imageHeight : imageWidth;
   const stageHeight = isQuarterTurn ? imageWidth : imageHeight;
+  const visualBottomGap = Math.max(
+    hasMobileRotation ? 16 : 0,
+    viewportSize.layoutHeight -
+      viewportSize.offsetTop -
+      viewportSize.height +
+      (hasMobileRotation ? 16 : 0),
+  );
+  const visualTopGap = Math.max(
+    hasMobileRotation ? 14 : 0,
+    viewportSize.offsetTop + (hasMobileRotation ? 14 : 0),
+  );
 
   return {
+    lightbox: {
+      "--project-lightbox-visual-bottom-gap": `${visualBottomGap}px`,
+      "--project-lightbox-visual-top-gap": `${visualTopGap}px`,
+    },
     frame: {
       "--project-lightbox-frame-max-height": hasMobileRotation
         ? "none"
@@ -299,6 +317,7 @@ const ProjectImageLightbox = ({ html }) => {
         <div
           ref={lightboxRef}
           className="project-lightbox"
+          style={fittedImageStyles.lightbox}
           data-project-lightbox-rotated={
             rotation % 180 !== 0 ? "true" : undefined
           }
