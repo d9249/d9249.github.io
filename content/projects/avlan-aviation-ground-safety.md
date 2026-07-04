@@ -55,8 +55,8 @@ draft: false
 루프 설계에서 가장 중요한 결정은 종료 조건입니다. 생성형 루프는 "조금만 더 하면 나아질 것 같은" 상태가 계속되기 때문입니다. A-VLAN은 **이중 종료**를 씁니다 — 평가 단계의 커버리지 기반 **만족 판정**이 나거나, **max_iterations 도달**이면 멈춥니다. 만족 판정은 열려 있는 목표를 끝까지 쫓게 하고, 반복 상한은 비용과 지연의 최악 케이스를 보장합니다. refine이 만들 수 있는 조정도 허용 목록으로 제한해(허용된 조정 유형 검사) 루프가 임의 방향으로 발산하지 않게 했습니다.
 
 <figure class="project-diagram">
-  <img src="/images/projects/avlan-goal-loop.svg" alt="A-VLAN goal-driven multi-skill control loop diagram">
-  <figcaption>목표 주도 관제 루프. 스킬 카탈로그에서 조합을 선택·조립·평가·정제하며, 만족 판정 또는 반복 상한으로 종료합니다.</figcaption>
+  <img src="/images/projects/avlan-deepdive-goal-loop.svg" alt="A-VLAN GoalOrchestrator control loop with dual termination diagram">
+  <figcaption>GoalOrchestrator 관제 루프. 유효 카탈로그(전역 ∪ 커스텀)에서 스킬 조합을 select → compose → evaluate → refine으로 순환시키고, 커버리지 만족 판정 또는 max_iterations 도달의 이중 종료로 멈춥니다.</figcaption>
 </figure>
 
 평가를 조정하는 손잡이는 3개로 정리했습니다 — 객관 지표(탐지 근거 수치 기반 판정), 단일화(중복 산출 통합), 세분화(per-person 행동 분석 등 granularity 조정). 안전 이벤트 판정 자체도 규칙화되어 있습니다: 실제 프레임 해상도 기준 거리 정규화, 시간 구간(interval) 룰, 경계선 통과(line-cross) 룰이 safety_events로 흐릅니다. 판정에 법령 근거가 필요하면 항공법령 코퍼스에 대한 **듀얼 RAG**(정확 문자열 매칭 + 벡터 검색)로 조문을 붙입니다 — 법령 인용은 유사도만으로는 위험하고, 조문 번호 같은 식별자는 정확 매칭이 더 신뢰할 수 있기 때문입니다.

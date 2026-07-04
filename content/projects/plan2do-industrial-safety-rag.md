@@ -89,6 +89,11 @@ draft: false
 
 중요한 설계 결정은 제거 내역을 숨기지 않는 것입니다. 최종 HTML 리포트에는 검증 요약 — 유지·제거 건수와 removal_rate — 이 함께 표기됩니다. 검토자는 "이 표의 근거는 기계가 한 번 걸러낸 것"임을 알고 보게 되고, 제거율이 비정상적으로 높으면 검색 단계의 문제를 역추적하는 신호가 됩니다. 생성형 시스템에서 신뢰는 결과가 아니라 **검증 과정의 가시화**에서 나온다는 것이 이 단계에서 얻은 결론입니다.
 
+<figure class="project-diagram">
+  <img src="/images/projects/plan2do-deepdive-validation.svg" alt="Plan2Do legal compliance validation diagram">
+  <figcaption>법령 준수 검증. 감소대책 단위로 매칭 법령을 LLM이 재판정해 validated_laws / removed_laws / overall_relevance로 구조화하고, removal_rate 집계를 최종 HTML 리포트에 그대로 표기합니다.</figcaption>
+</figure>
+
 ## 실행 구조 — LangGraph 상태 머신과 SSE
 
 전체 흐름은 LangGraph 상태 머신 하나로 이어집니다. 위험요인 입력을 정규화하고, 위험요인별 법령 검색을 수행한 뒤, 위험 상세 분석과 감소대책 생성을 **병렬로** 실행하고, 법령 검증을 거쳐 검토용 HTML 표(체크박스·위험요인·예상 위험 수준·감소대책·관련 근거)를 생성합니다.
