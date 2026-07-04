@@ -40,8 +40,8 @@
     <rect x="330" y="82" width="220" height="120"/>
     <text x="356" y="119" class="title">Workflow Spec</text>
     <text x="356" y="150" class="body">
-      <tspan x="356" dy="0">layer1, layer2</tspan>
-      <tspan x="356" dy="22">layer3, metadata</tspan>
+      <tspan x="356" dy="0">graph layers</tspan>
+      <tspan x="356" dy="22">node metadata</tspan>
       <tspan x="356" dy="22">nodes and edges</tspan>
     </text>
   </g>
@@ -50,7 +50,7 @@
     <rect x="610" y="82" width="218" height="120"/>
     <text x="636" y="119" class="title">Agent API</text>
     <text x="636" y="150" class="body">
-      <tspan x="636" dy="0">/api/v1/agent</tspan>
+      <tspan x="636" dy="0">workflow endpoints</tspan>
       <tspan x="636" dy="22">save, update, stream</tspan>
     </text>
   </g>

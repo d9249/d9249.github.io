@@ -57,7 +57,7 @@
 
   <rect x="560" y="285" width="440" height="450" class="panel"/>
   <text x="600" y="335" class="eyebrow">Scope Composer</text>
-  <text x="600" y="378" class="box-title">SessionScopedRetrievalEngine</text>
+  <text x="600" y="378" class="box-title">Session-scoped retrieval engine</text>
   <text x="600" y="416" class="box-text">요청마다 현재 user, session, Space role,</text>
   <text x="600" y="440" class="box-text">knowledge mode를 읽어 검색 후보를 다시 만든다.</text>
 

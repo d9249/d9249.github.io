@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="760" viewBox="0 0 1600 760" role="img" aria-labelledby="title desc">
+  <title id="title">A-VLAN wall-clock to frame anchoring pipeline</title>
+  <desc id="desc">A wall-clock time query is mapped to a frame index in a 50x compressed video using the recording start time encoded in the filename and the video fps, then reported in both real time and playback position.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="50%" stop-color="#f7fff9"/>
+      <stop offset="100%" stop-color="#fff9ef"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#1e2d35" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#435e70"/>
+    </marker>
+    <style>
+      .title { font: 800 35px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #101820; }
+      .sub { font: 500 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #536572; }
+      .eyebrow { font: 800 13px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0; text-transform: uppercase; fill: #068469; }
+      .box-title { font: 800 22px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #121a22; }
+      .box-text { font: 500 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5d68; }
+      .small { font: 800 13px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #596875; }
+      .mono { font: 700 17px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #0b5c4d; }
+      .panel { fill: #ffffff; stroke: #d9e3ea; stroke-width: 2; rx: 18; filter: url(#shadow); }
+      .soft { fill: #f8fbfd; stroke: #d9e3ea; stroke-width: 2; rx: 16; }
+      .green { fill: #eaf8ef; stroke: #9bd9b8; stroke-width: 2; rx: 16; }
+      .blue { fill: #edf6ff; stroke: #a5c9ed; stroke-width: 2; rx: 16; }
+      .amber { fill: #fff7e8; stroke: #e8c276; stroke-width: 2; rx: 16; }
+      .line { fill: none; stroke: #435e70; stroke-width: 3; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1600" height="760" fill="url(#bg)"/>
+
+  <text class="eyebrow" x="60" y="56">WALL-CLOCK ↔ FRAME ANCHORING</text>
+  <text class="title" x="60" y="98">"10시 59분에 무슨 일이 있었나" — 압축 영상에서 실제 시각 복원</text>
+  <text class="sub" x="60" y="130">50배 압축 CCTV 영상에서 시각 기반 질의와 시각 표기 리포트를 가능하게 하는 결정적 매핑</text>
+
+  <!-- Step 1: time query -->
+  <rect class="panel" x="60" y="180" width="300" height="150" rx="18"/>
+  <text class="eyebrow" x="86" y="214">01 TIME QUERY</text>
+  <text class="box-title" x="86" y="244">시각 기반 질의</text>
+  <text class="box-text" x="86" y="274">운영자는 프레임 번호가 아니라</text>
+  <text class="box-text" x="86" y="296">시각으로 묻는다 — "10:59경 상황"</text>
+
+  <!-- Step 2: filename decode -->
+  <rect class="panel" x="420" y="180" width="360" height="150" rx="18"/>
+  <text class="eyebrow" x="446" y="214">02 FILENAME DECODE</text>
+  <text class="mono" x="446" y="246">20250716_105946_x50.mp4</text>
+  <text class="box-text" x="446" y="274">촬영 시작 시각 2025-07-16 10:59:46</text>
+  <text class="box-text" x="446" y="296">압축 배율 ×50 (타임랩스)</text>
+
+  <!-- Step 3: mapping -->
+  <rect class="panel" x="840" y="180" width="360" height="150" rx="18"/>
+  <text class="eyebrow" x="866" y="214">03 DETERMINISTIC MAPPING</text>
+  <text class="box-title" x="866" y="244">시각 → 프레임 인덱스</text>
+  <text class="box-text" x="866" y="274">벽시계 시각 − 시작 시각 = 원본 경과</text>
+  <text class="box-text" x="866" y="296">경과 ÷ 배율 × fps = 프레임 idx</text>
+
+  <!-- Step 4: anchor + span -->
+  <rect class="panel" x="1260" y="180" width="280" height="150" rx="18"/>
+  <text class="eyebrow" x="1286" y="214">04 ANCHOR + SPAN</text>
+  <text class="box-title" x="1286" y="244">앵커 프레임 확정</text>
+  <text class="box-text" x="1286" y="274">구간 미지정 시 앵커 전후</text>
+  <text class="box-text" x="1286" y="296">N 프레임으로 분석 span 구성</text>
+
+  <path class="line" d="M360 255 H416"/>
+  <path class="line" d="M780 255 H836"/>
+  <path class="line" d="M1200 255 H1256"/>
+
+  <!-- Step 5: VLM brief -->
+  <rect class="green" x="240" y="400" width="500" height="150" rx="16"/>
+  <text class="eyebrow" x="266" y="434">05 VLM SCENE BRIEF</text>
+  <text class="box-title" x="266" y="464">앵커 스틸 + 탐지 요약 → 세션 브리프</text>
+  <text class="box-text" x="266" y="492">앵커 프레임 JPEG와 탐지 결과를 멀티모달로 전달,</text>
+  <text class="box-text" x="266" y="514">이후 모든 스킬 실행이 같은 상황 인식 위에서 동작</text>
+
+  <!-- Step 6: report -->
+  <rect class="amber" x="860" y="400" width="560" height="150" rx="16"/>
+  <text class="eyebrow" x="886" y="434">06 DUAL-NOTATION REPORT</text>
+  <text class="box-title" x="886" y="464">실제 시각과 재생 위치를 병기</text>
+  <text class="box-text" x="886" y="492">"&lt;영상명&gt;의 10시59분46초" — 운영자는 실제 시각으로 이해</text>
+  <text class="box-text" x="886" y="514">압축 영상 재생 위치 mm:ss — 검증자는 바로 그 지점 재생</text>
+
+  <path class="line" d="M1400 334 V368 H490 V396"/>
+  <path class="line" d="M740 475 H856"/>
+
+  <!-- Bottom note -->
+  <rect class="soft" x="60" y="610" width="1480" height="90" rx="16"/>
+  <text class="eyebrow" x="86" y="644">WHY IT MATTERS</text>
+  <text class="box-text" x="86" y="672">매핑이 없으면 시각 질의도, 리포트의 "언제"도 불가능하다 — 파일명 메타데이터와 fps만으로 외부 인프라 없이 결정적 매핑을 확보했다</text>
+</svg>

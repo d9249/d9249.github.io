@@ -32,7 +32,7 @@
   <g class="node ops" transform="translate(88 145)">
     <rect width="280" height="98"/>
     <text x="24" y="36"><tspan>Terraform</tspan></text>
-    <text class="sub" x="24" y="62"><tspan>kb_intelligence.tf</tspan></text>
+    <text class="sub" x="24" y="62"><tspan>KB intelligence module</tspan></text>
     <text class="sub" x="24" y="82"><tspan>Lambda and triggers</tspan></text>
   </g>
   <g class="node event" transform="translate(88 315)">

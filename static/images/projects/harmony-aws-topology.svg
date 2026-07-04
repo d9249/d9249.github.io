@@ -34,7 +34,7 @@
 
   <text x="70" y="76" class="eyebrow">AWS Deployment Contract</text>
   <text x="70" y="124" class="title">Harmony는 Agent runtime을 앱이 소유하고, AWS는 인증·네트워크·컴퓨트·저장소·모델 호출을 담당한다</text>
-  <text x="70" y="158" class="sub">agent_core는 Terraform 모듈 이름이며, 실제 배포 단위는 ECS Fargate의 FastAPI Agent container다</text>
+  <text x="70" y="158" class="sub">배포 단위는 ECS Fargate의 FastAPI Agent container이며, 최소 모듈 구성만으로 한 턴 실행을 검증한다</text>
 
   <rect x="70" y="245" width="255" height="110" class="edge"/>
   <text x="100" y="286" class="box-title">CloudFront Web</text>
@@ -79,7 +79,7 @@
 
   <rect x="1270" y="330" width="260" height="86" class="data"/>
   <text x="1300" y="366" class="box-title">EFS PageIndex</text>
-  <text x="1300" y="394" class="box-text">/mnt/pageindex shared files</text>
+  <text x="1300" y="394" class="box-text">shared index volume</text>
 
   <rect x="1270" y="450" width="260" height="86" class="data"/>
   <text x="1300" y="486" class="box-title">S3 Corpus / Audit</text>

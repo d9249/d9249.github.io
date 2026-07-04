@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">A-VLAN goal-driven multi-skill control loop</title>
+  <desc id="desc">GoalOrchestrator selects, composes, evaluates, and refines skill combinations from a catalog until the goal is satisfied or the iteration cap is reached.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="50%" stop-color="#f7fff9"/>
+      <stop offset="100%" stop-color="#fff9ef"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#1e2d35" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#435e70"/>
+    </marker>
+    <style>
+      .title { font: 800 35px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #101820; }
+      .sub { font: 500 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #536572; }
+      .eyebrow { font: 800 13px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0; text-transform: uppercase; fill: #068469; }
+      .box-title { font: 800 22px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #121a22; }
+      .box-text { font: 500 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5d68; }
+      .small { font: 800 13px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #596875; }
+      .panel { fill: #ffffff; stroke: #d9e3ea; stroke-width: 2; rx: 18; filter: url(#shadow); }
+      .soft { fill: #f8fbfd; stroke: #d9e3ea; stroke-width: 2; rx: 16; }
+      .green { fill: #eaf8ef; stroke: #9bd9b8; stroke-width: 2; rx: 16; }
+      .blue { fill: #edf6ff; stroke: #a5c9ed; stroke-width: 2; rx: 16; }
+      .amber { fill: #fff7e8; stroke: #e8c276; stroke-width: 2; rx: 16; }
+      .red { fill: #fff0ee; stroke: #e8aaa0; stroke-width: 2; rx: 16; }
+      .line { fill: none; stroke: #435e70; stroke-width: 3; marker-end: url(#arrow); }
+      .thin { fill: none; stroke: #92a3ae; stroke-width: 2; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <text class="eyebrow" x="60" y="56">GOAL-DRIVEN CONTROL LOOP</text>
+  <text class="title" x="60" y="98">GoalOrchestrator — 스킬을 조합하고, 스스로 끝을 판단한다</text>
+  <text class="sub" x="60" y="130">목표가 충족될 때까지 select → compose → evaluate → refine을 반복하되, 이중 종료로 비용과 지연의 상한을 보장한다</text>
+
+  <!-- Left column: goal + catalog -->
+  <rect class="panel" x="60" y="170" width="330" height="150" rx="18"/>
+  <text class="eyebrow" x="86" y="204">GOAL INPUT</text>
+  <text class="box-title" x="86" y="234">운영자 목표 / 질의</text>
+  <text class="box-text" x="86" y="264">"안전 구역 침범 여부 브리핑"</text>
+  <text class="box-text" x="86" y="288">"브릿지 접현 절차 준수 판정"</text>
+
+  <rect class="panel" x="60" y="360" width="330" height="330" rx="18"/>
+  <text class="eyebrow" x="86" y="394">SKILL CATALOG</text>
+  <text class="box-title" x="86" y="424">유효 카탈로그 = 전역 ∪ 커스텀</text>
+  <rect class="soft" x="86" y="444" width="278" height="58" rx="12"/>
+  <text class="box-text" x="102" y="468">SkillDescriptor (1:N 단계 전개)</text>
+  <text class="box-text" x="102" y="490">탐지 · 행동분석 · 준수판정 · 브리핑</text>
+  <rect class="soft" x="86" y="514" width="278" height="58" rx="12"/>
+  <text class="box-text" x="102" y="538">사용자 커스텀 스킬</text>
+  <text class="box-text" x="102" y="560">실행 학습 → 초안 자동 제안 → 승인</text>
+  <rect class="soft" x="86" y="586" width="278" height="58" rx="12"/>
+  <text class="box-text" x="102" y="610">planned / pipeline 카탈로그 분리</text>
+  <text class="box-text" x="102" y="632">그래프 무결성(drift) 검사</text>
+  <text class="small" x="86" y="672">능력을 코드가 아니라 데이터로 관리</text>
+
+  <!-- Center: the loop -->
+  <rect class="panel" x="450" y="170" width="640" height="520" rx="18"/>
+  <text class="eyebrow" x="476" y="204">CONTROL LOOP</text>
+  <text class="box-title" x="476" y="234">select → compose → evaluate → refine</text>
+
+  <rect class="blue" x="500" y="264" width="250" height="88" rx="16"/>
+  <text class="box-title" x="520" y="298">01 SELECT</text>
+  <text class="box-text" x="520" y="324">목표에 맞는 스킬 조합 선택</text>
+  <text class="box-text" x="520" y="344">과거 실행 결과가 선택 힌트</text>
+
+  <rect class="blue" x="790" y="264" width="250" height="88" rx="16"/>
+  <text class="box-title" x="810" y="298">02 COMPOSE</text>
+  <text class="box-text" x="810" y="324">실행 순서로 파이프라인 조립</text>
+  <text class="box-text" x="810" y="344">모델 역할 라우터가 단계 배정</text>
+
+  <rect class="green" x="790" y="404" width="250" height="88" rx="16"/>
+  <text class="box-title" x="810" y="438">03 EVALUATE</text>
+  <text class="box-text" x="810" y="464">산출의 목표 커버리지 평가</text>
+  <text class="box-text" x="810" y="484">3레버: 객관지표·단일화·세분화</text>
+
+  <rect class="amber" x="500" y="404" width="250" height="88" rx="16"/>
+  <text class="box-title" x="520" y="438">04 REFINE</text>
+  <text class="box-text" x="520" y="464">부족 항목에 대한 조정 생성</text>
+  <text class="box-text" x="520" y="484">허용 목록 내 조정만 반영</text>
+
+  <path class="line" d="M750 308 H786"/>
+  <path class="line" d="M915 352 V400"/>
+  <path class="line" d="M790 448 H754"/>
+  <path class="line" d="M625 404 V356"/>
+
+  <rect class="red" x="500" y="540" width="540" height="120" rx="16"/>
+  <text class="box-title" x="520" y="574">이중 종료 (Dual Termination)</text>
+  <text class="box-text" x="520" y="602">① 만족 판정 — 커버리지 기반으로 목표 충족 시 종료</text>
+  <text class="box-text" x="520" y="626">② max_iterations 도달 — 비용·지연의 최악 케이스 상한 보장</text>
+  <text class="small" x="520" y="650">열린 목표는 끝까지, 그러나 발산은 없다</text>
+  <path class="line" d="M915 492 V536"/>
+
+  <path class="line" d="M390 245 H446"/>
+  <path class="line" d="M390 525 H446"/>
+
+  <!-- Right column: outputs -->
+  <rect class="panel" x="1150" y="170" width="390" height="520" rx="18"/>
+  <text class="eyebrow" x="1176" y="204">OUTPUTS</text>
+  <text class="box-title" x="1176" y="234">판정과 근거가 함께 남는다</text>
+
+  <rect class="green" x="1176" y="258" width="338" height="94" rx="16"/>
+  <text class="box-title" x="1194" y="290">Safety Events</text>
+  <text class="box-text" x="1194" y="316">프레임 해상도 기준 거리 정규화</text>
+  <text class="box-text" x="1194" y="338">interval · line-cross 규칙 판정</text>
+
+  <rect class="blue" x="1176" y="372" width="338" height="94" rx="16"/>
+  <text class="box-title" x="1194" y="404">항공법령 듀얼 RAG</text>
+  <text class="box-text" x="1194" y="430">정확 문자열 매칭 + 벡터 검색</text>
+  <text class="box-text" x="1194" y="452">조문 식별자는 정확 매칭 우선</text>
+
+  <rect class="soft" x="1176" y="486" width="338" height="94" rx="16"/>
+  <text class="box-title" x="1194" y="518">브리핑 리포트</text>
+  <text class="box-text" x="1194" y="544">탐지 근거 수치가 붙은 관제 보고</text>
+  <text class="box-text" x="1194" y="566">추출 시점을 실제 시각으로 표기</text>
+
+  <text class="small" x="1176" y="640">per-person 행동 분석 등</text>
+  <text class="small" x="1176" y="662">세분화 레버로 granularity 조정</text>
+
+  <path class="line" d="M1090 430 H1146"/>
+
+  <!-- Bottom guardrail band -->
+  <rect class="soft" x="60" y="730" width="1480" height="110" rx="16"/>
+  <text class="eyebrow" x="86" y="764">REFACTORING SAFETY NET</text>
+  <text class="box-text" x="86" y="792">Clean/Hexagonal 전면 재구성에 앞서 plan-shape identity 오라클 테스트를 먼저 배치 — 같은 목표가 같은 형태의 실행 계획을 만드는지 기계로 검증</text>
+  <text class="box-text" x="86" y="816">refine이 만들 수 있는 조정은 허용 목록으로 제한되어 루프가 임의 방향으로 발산하지 않는다</text>
+</svg>

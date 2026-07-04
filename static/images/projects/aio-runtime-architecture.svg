@@ -50,9 +50,9 @@
 
   <g class="node api">
     <rect x="370" y="146" width="250" height="146"/>
-    <text x="396" y="183" class="title">FastAPI /api/v1</text>
+    <text x="396" y="183" class="title">FastAPI REST API</text>
     <text x="396" y="214" class="body">
-      <tspan x="396" dy="0">15 routers</tspan>
+      <tspan x="396" dy="0">160+ endpoints</tspan>
       <tspan x="396" dy="22">JWT permission dependency</tspan>
       <tspan x="396" dy="22">SSE progress streams</tspan>
     </text>

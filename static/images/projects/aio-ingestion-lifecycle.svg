@@ -39,7 +39,7 @@
     <rect x="300" y="84" width="196" height="110"/>
     <text x="324" y="121" class="title">Upload Begin</text>
     <text x="324" y="152" class="body">
-      <tspan x="324" dy="0">/doc/upload/begin</tspan>
+      <tspan x="324" dy="0">upload session API</tspan>
       <tspan x="324" dy="22">session metadata</tspan>
     </text>
   </g>
@@ -66,7 +66,7 @@
     <rect x="812" y="244" width="220" height="106"/>
     <text x="836" y="281" class="title">Document Record</text>
     <text x="836" y="312" class="body">
-      <tspan x="836" dy="0">tb_doc, tb_doc_file</tspan>
+      <tspan x="836" dy="0">doc + file records</tspan>
       <tspan x="836" dy="22">upload status</tspan>
     </text>
   </g>
@@ -84,7 +84,7 @@
     <rect x="300" y="434" width="196" height="112"/>
     <text x="324" y="471" class="title">Ingestion API</text>
     <text x="324" y="502" class="body">
-      <tspan x="324" dy="0">/dataset/ingestion</tspan>
+      <tspan x="324" dy="0">ingestion session API</tspan>
       <tspan x="324" dy="22">session provider</tspan>
     </text>
   </g>
