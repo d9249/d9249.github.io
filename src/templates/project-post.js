@@ -1,6 +1,7 @@
 import * as React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
+import ProjectImageLightbox from "../components/ProjectImageLightbox";
 import SectionHeading from "../components/SectionHeading";
 import { formatReadableArticleHtml } from "../utils/articleHtml";
 
@@ -25,6 +26,10 @@ const ProjectPostTemplate = ({ data }) => {
   const metrics = project.frontmatter.metrics || [];
   const stack = project.frontmatter.stack || [];
   const titleParts = getProjectTitleParts(project.frontmatter);
+  const projectHtml = React.useMemo(
+    () => formatReadableArticleHtml(project.html),
+    [project.html],
+  );
 
   useIsomorphicLayoutEffect(() => {
     if (typeof window === "undefined" || window.location.hash) {
@@ -101,12 +106,7 @@ const ProjectPostTemplate = ({ data }) => {
 
       <section className="shell project-detail-body">
         <article className="project-detail-main">
-          <div
-            className="article-body project-markdown-body"
-            dangerouslySetInnerHTML={{
-              __html: formatReadableArticleHtml(project.html),
-            }}
-          />
+          <ProjectImageLightbox html={projectHtml} />
 
           {details.length ? (
             <section className="project-detail-section">

@@ -8,6 +8,8 @@
   --accent: oklch(70% 0.18 145);
   --accent-2: oklch(66% 0.18 245);
   --accent-3: oklch(72% 0.16 35);
+  --overlay: oklch(0% 0 0 / 0.72);
+  --shadow-modal: 0 24px 90px color-mix(in oklch, var(--fg) 24%, transparent);
   --font-display:
     -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui,
     sans-serif;
@@ -29,6 +31,7 @@ html[data-theme="dark"] {
   --accent: oklch(74% 0.18 145);
   --accent-2: oklch(72% 0.14 235);
   --accent-3: oklch(72% 0.15 30);
+  --overlay: oklch(0% 0 0 / 0.78);
 }
 
 * {
@@ -3253,6 +3256,131 @@ figcaption,
   margin: 28px 0;
 }
 
+.project-markdown-body img.project-lightbox-trigger {
+  cursor: zoom-in;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.project-markdown-body img.project-lightbox-trigger:hover {
+  transform: translateY(-1px);
+}
+
+.project-markdown-body img.project-lightbox-trigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 6px color-mix(in oklch, var(--accent) 16%, transparent);
+}
+
+body.project-lightbox-open {
+  overflow: hidden;
+}
+
+.project-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: max(20px, env(safe-area-inset-top))
+    max(20px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom))
+    max(20px, env(safe-area-inset-left));
+  background: var(--overlay);
+  backdrop-filter: blur(18px);
+}
+
+.project-lightbox-frame {
+  display: grid;
+  gap: 12px;
+  width: min(1100px, 100%);
+  max-height: calc(100dvh - 80px);
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in oklch, var(--surface) 96%, var(--bg));
+  box-shadow: var(--shadow-modal);
+  animation: project-lightbox-enter 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-lightbox-image {
+  display: block;
+  width: 100%;
+  max-height: calc(100dvh - 152px);
+  object-fit: contain;
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.project-lightbox-frame figcaption {
+  margin: 0;
+  padding: 0 4px 2px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.project-lightbox-close {
+  position: fixed;
+  top: max(20px, env(safe-area-inset-top));
+  right: max(20px, env(safe-area-inset-right));
+  z-index: 1;
+  display: inline-grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in oklch, var(--surface) 92%, transparent);
+  color: var(--fg);
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.project-lightbox-close:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklch, var(--accent) 64%, var(--border));
+  background: color-mix(in oklch, var(--surface) 98%, var(--bg));
+}
+
+.project-lightbox-close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.project-lightbox-close svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.9;
+}
+
+@keyframes project-lightbox-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-lightbox-frame {
+    animation: none;
+  }
+}
+
 .article-body blockquote {
   margin: 34px 0;
   padding: 0 0 0 22px;
@@ -4525,6 +4653,29 @@ figcaption,
 
   .article-body {
     font-size: 17px;
+  }
+
+  .project-lightbox {
+    padding: max(14px, env(safe-area-inset-top))
+      max(14px, env(safe-area-inset-right))
+      max(14px, env(safe-area-inset-bottom))
+      max(14px, env(safe-area-inset-left));
+  }
+
+  .project-lightbox-frame {
+    max-height: calc(100dvh - 66px);
+    padding: 8px;
+  }
+
+  .project-lightbox-image {
+    max-height: calc(100dvh - 126px);
+  }
+
+  .project-lightbox-close {
+    top: max(14px, env(safe-area-inset-top));
+    right: max(14px, env(safe-area-inset-right));
+    width: 36px;
+    height: 36px;
   }
 
   .project-markdown-body .harmony-lead-panel,
