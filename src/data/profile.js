@@ -28,7 +28,7 @@ export const evidenceItems = [
     label: "enterprise ai",
     value: "AsianaIDT",
     description:
-      "사내 지식 관리, 산업안전 RAG, 시장 인텔리전스, 문서 OCR·표 구조 복원을 Graph/Vector RAG, 멀티 에이전트, 운영 콘솔 단위로 구현했습니다.",
+      "사내 지식 관리, 산업안전 RAG, 시장 인텔리전스, 문서 OCR·표 구조 복원, 영상 기반 관제 브리핑을 Graph/Vector RAG, 멀티모달 에이전트, 운영 콘솔 단위로 구현했습니다.",
   },
   {
     label: "minister awards",
@@ -61,12 +61,14 @@ export const timelineItems = [
     date: "2025.07 - now",
     title: "AsianaIDT, AI/ML Engineer & Researcher",
     description:
-      "사내 지식 관리, 산업안전 RAG, 시장 인텔리전스, 문서 OCR, 권한형 에이전트 런타임을 제품과 운영 단위로 설계하고 구현합니다.",
+      "사내 지식 관리, 산업안전 RAG, 시장 인텔리전스, 문서 OCR, 영상·멀티모달 관제, 권한형 에이전트 런타임을 제품과 운영 단위로 설계하고 구현합니다.",
     bullets: [
-      "AIO와 Harmony에서 문서 저장소, ingestion, Graph + Vector RAG, ACL, permission-aware retrieval, persona/session/tool trace, human review queue를 연결했습니다.",
-      "Plan2Do에서 현장 이미지와 문서 입력, 산업안전 법령 XML corpus, Qdrant 검색, LangGraph workflow, 검토용 위험성평가 HTML 표를 API 제품으로 묶었습니다.",
-      "Jeani에서 RFP 기반 planner, 병렬 market/competitor/tech agent, synthesizer, S3 산출물 lifecycle, Bedrock Knowledge Base sync로 시장 조사 운영 루프를 만들었습니다.",
-      "InVision OCR에서 OCR/레이아웃 분석, 로직 기반 표 구조 복원, parser 기반 문서 재조립, 벤치마크 콘솔을 연결하고 TEDS 0.9188, TEDS-S 0.9506, Cell F1 0.9702 수준까지 고도화했습니다.",
+      "AIO와 Harmony에서 문서 ingestion, Graph + Vector RAG, ACL 기반 permission-aware retrieval, persona·session·tool trace, human review queue를 사내 지식 에이전트 플랫폼으로 연결했습니다.",
+      "Plan2Do에서 현장 이미지·문서 입력, 산업안전 법령 XML corpus, Qdrant 검색, LangGraph workflow, 검토용 위험성평가 HTML 표를 산업안전 RAG API로 묶었습니다.",
+      "Jeani에서 RFP 기반 planner, 병렬 market·competitor·tech agent, synthesizer, S3 산출물 lifecycle, Bedrock Knowledge Base sync로 시장 조사 운영 루프를 만들었습니다.",
+      "InVision OCR에서 OCR·레이아웃 분석, 로직 기반 표 구조 복원, parser 기반 문서 재조립, 벤치마크 콘솔을 연결해 TEDS 0.9188 / TEDS-S 0.9506 / Cell F1 0.9702까지 고도화했습니다.",
+      "A-VLAN에서 탐지 JSON Text2SQL, 매뉴얼 Chroma RAG, 항공법령 듀얼 RAG(리터럴+벡터), 영상 행동 분석을 조합형 스킬 레지스트리와 GoalOrchestrator(SELECT→COMPOSE→EVALUATE→REFINE) 루프로 묶어 항공 지상조업 관제 브리핑을 구현했습니다.",
+      "BEV에서 단안 주기장 영상을 검출 → VLM 공시제원 → 지면 호모그래피로 이어 미터 척도 3D 조감도와 작업·위험 영역을 복원하고, 소실점·화면밖·정확도(R2)까지 개선했습니다.",
     ],
   },
   {
