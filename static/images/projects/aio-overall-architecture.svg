@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="900" viewBox="0 0 2000 900" role="img" aria-labelledby="t d">
+  <title id="t">AIO overall architecture — paper figure style</title>
+  <desc id="d">Documents are parsed into structured chunks, grounded into a knowledge graph and a 4-field vector database, and queries are answered through five retrieval modes fused with RRF.</desc>
+  <defs>
+    <marker id="sage" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#b7cfb2"/>
+    </marker>
+    <marker id="dark" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
+    </marker>
+    <style>
+      .hdr  { font: italic 700 27px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 20px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14.5px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 19px Georgia, serif; fill: #c2571a; }
+      .qtxt { font: italic 600 16px Georgia, serif; fill: #7a3d12; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .grpO { fill: #fffcf8; stroke: #c2571a; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .flow { fill: none; stroke: #c9dcc5; stroke-width: 15; stroke-linecap: round; marker-end: url(#sage); }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark); }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
+      .node { stroke: #2f3b45; stroke-width: 1.6; }
+    </style>
+  </defs>
+  <rect width="2000" height="900" fill="#ffffff"/>
+
+  <!-- ===================== INPUT DOCUMENTS ===================== -->
+  <rect class="grpK" x="42" y="150" width="180" height="620" rx="18"/>
+  <text class="hdr2" x="60" y="136">Input Documents</text>
+  <g>
+    <!-- doc icons -->
+    <g transform="translate(85,200)">
+      <path class="ink" d="M0 0 H62 L82 20 V92 H0 Z"/><path class="ink" d="M62 0 V20 H82" fill="none"/>
+      <line x1="14" y1="38" x2="66" y2="38" stroke="#8a97a1" stroke-width="3"/><line x1="14" y1="54" x2="66" y2="54" stroke="#8a97a1" stroke-width="3"/><line x1="14" y1="70" x2="48" y2="70" stroke="#8a97a1" stroke-width="3"/>
+      <text class="lbl" x="20" y="118">PDF</text>
+    </g>
+    <g transform="translate(85,345)">
+      <path class="ink" d="M0 0 H62 L82 20 V92 H0 Z"/><path class="ink" d="M62 0 V20 H82" fill="none"/>
+      <rect x="14" y="34" width="52" height="40" fill="#e8f1fa" stroke="#a9c6e0" stroke-width="2"/>
+      <text class="lbl" x="16" y="118">DOCX</text>
+    </g>
+    <g transform="translate(85,490)">
+      <path class="ink" d="M0 0 H62 L82 20 V92 H0 Z"/><path class="ink" d="M62 0 V20 H82" fill="none"/>
+      <circle cx="30" cy="50" r="14" fill="#fdefe2" stroke="#d9b38c" stroke-width="2"/><path d="M18 76 L34 58 L48 70 L60 56 L66 76 Z" fill="#e6f2e8" stroke="#a9cdb1" stroke-width="2"/>
+      <text class="lbl" x="20" y="118">PPTX</text>
+    </g>
+    <g transform="translate(85,635)">
+      <path class="ink" d="M0 0 H62 L82 20 V92 H0 Z"/><path class="ink" d="M62 0 V20 H82" fill="none"/>
+      <g stroke="#8a97a1" stroke-width="2.4"><line x1="14" y1="40" x2="66" y2="40"/><line x1="14" y1="58" x2="66" y2="58"/><line x1="14" y1="76" x2="66" y2="76"/><line x1="32" y1="30" x2="32" y2="84"/><line x1="50" y1="30" x2="50" y2="84"/></g>
+      <text class="lbl" x="20" y="118">XLSX</text>
+    </g>
+  </g>
+  <path class="flow" d="M228 460 H262"/>
+
+  <!-- ===================== 1) INGESTION ===================== -->
+  <text class="step" x="280" y="136">1)</text>
+  <text class="hdr" x="312" y="136">Async Content Ingestion</text>
+  <rect class="grpB" x="272" y="150" width="400" height="620" rx="20"/>
+  <text class="sub" x="296" y="184">Celery workers · upload session → parse → chunk</text>
+
+  <!-- parallel parser block arrow -->
+  <g transform="translate(296,330)">
+    <path d="M0 26 H74 V0 L128 52 L74 104 V78 H0 Z" fill="#eef2ee" stroke="#b7c6b3" stroke-width="2.5"/>
+    <text class="lbl" x="12" y="46">Parallel</text><text class="lbl" x="12" y="66">Parser</text>
+  </g>
+
+  <text class="hdr2" x="452" y="238">Structured Chunk List</text>
+  <!-- chunk stack -->
+  <g transform="translate(470,258)">
+    <rect class="peach" x="0" y="0"   width="92" height="44" rx="9"/>
+    <rect class="peach" x="0" y="52"  width="92" height="44" rx="9"/>
+    <rect class="peach" x="0" y="104" width="92" height="44" rx="9"/>
+    <text class="sml" x="34" y="170">···</text>
+    <rect class="green" x="0" y="186" width="92" height="44" rx="9"/>
+    <rect class="green" x="0" y="238" width="92" height="44" rx="9"/>
+    <rect class="blue"  x="0" y="300" width="92" height="44" rx="9"/>
+    <rect class="blue"  x="0" y="352" width="92" height="44" rx="9"/>
+    <g transform="translate(112,0)">
+      <text class="lbl" transform="translate(14,30) rotate(90)">Text Info</text>
+      <text class="lbl" transform="translate(14,196) rotate(90)">Table Info</text>
+      <text class="lbl" transform="translate(14,308) rotate(90)">Meta Info</text>
+    </g>
+  </g>
+  <text class="sml" x="296" y="470">chunk 단위 업로드 · 진행률 SSE</text>
+  <text class="sml" x="296" y="492">중복 검증 · 재시도 단위 분리</text>
+  <path class="thin" d="M430 382 H462"/>
+
+  <path class="flow" d="M678 460 H712"/>
+
+  <!-- ===================== 2) GROUNDING ===================== -->
+  <text class="step" x="730" y="136">2)</text>
+  <text class="hdr" x="762" y="136">Graph + Vector Knowledge Grounding</text>
+  <text class="sub" x="1100" y="184">(each dataset)</text>
+  <rect class="grpB" x="722" y="150" width="700" height="620" rx="20"/>
+
+  <!-- LLM extraction pill -->
+  <rect class="pill" x="780" y="240" width="210" height="58" rx="29"/>
+  <g transform="translate(798,258)"><path d="M11 0 L13 8 L21 10 L13 12 L11 20 L9 12 L1 10 L9 8 Z" fill="#c2571a"/></g>
+  <text class="lbl" x="828" y="264">Entity &amp; Relation</text>
+  <text class="lbl" x="828" y="282">Extraction — LLM</text>
+
+  <!-- embedding pill -->
+  <rect class="pill" x="780" y="560" width="210" height="58" rx="29"/>
+  <g transform="translate(798,578)"><path d="M11 0 L13 8 L21 10 L13 12 L11 20 L9 12 L1 10 L9 8 Z" fill="#4a7fa5"/></g>
+  <text class="lbl" x="828" y="584">4-Field Embedding</text>
+  <text class="lbl" x="828" y="602">— Text Encoder</text>
+
+  <path class="thin" d="M750 460 V269 H776"/>
+  <path class="thin" d="M750 460 V589 H776"/>
+  <circle cx="750" cy="460" r="4" fill="#2f3b45"/>
+
+  <!-- Knowledge Graph panel -->
+  <rect class="grpK" x="1006" y="196" width="392" height="256" rx="18"/>
+  <text class="hdr2" x="1026" y="230">Knowledge Graph</text>
+  <g transform="translate(1300,208)"><ellipse cx="20" cy="8" rx="20" ry="7" class="ink"/><path class="ink" d="M0 8 V30 A20 7 0 0 0 40 30 V8" fill="#fff"/><ellipse cx="20" cy="30" rx="20" ry="7" fill="none" stroke="#2f3b45" stroke-width="1.8"/><text class="sml" x="-6" y="56">Neo4j</text></g>
+  <g stroke="#7d8b95" stroke-width="2">
+    <line x1="1080" y1="330" x2="1150" y2="290"/><line x1="1150" y1="290" x2="1222" y2="330"/><line x1="1150" y1="290" x2="1150" y2="374"/>
+    <line x1="1080" y1="330" x2="1150" y2="374"/><line x1="1222" y1="330" x2="1286" y2="300"/><line x1="1222" y1="330" x2="1276" y2="382"/>
+  </g>
+  <circle class="node" cx="1080" cy="330" r="17" fill="#fdefe2"/>
+  <circle class="node" cx="1150" cy="290" r="20" fill="#cfe3d4"/>
+  <circle class="node" cx="1222" cy="330" r="17" fill="#e8f1fa"/>
+  <circle class="node" cx="1150" cy="374" r="13" fill="#efe9f7"/>
+  <circle class="node" cx="1286" cy="300" r="12" fill="#fdefe2"/>
+  <circle class="node" cx="1276" cy="382" r="14" fill="#e8f1fa"/>
+  <text class="sml" x="1104" y="264">entity</text>
+  <text class="sml" x="1240" y="288">relation</text>
+  <text class="sml" x="1040" y="424">entity·relation 서술도 임베딩되어 벡터로 저장</text>
+
+  <!-- Vector DB panel -->
+  <rect class="grpK" x="1006" y="490" width="392" height="256" rx="18"/>
+  <text class="hdr2" x="1026" y="524">Vector Database</text>
+  <g transform="translate(1296,502)"><ellipse cx="20" cy="8" rx="20" ry="7" class="ink"/><path class="ink" d="M0 8 V30 A20 7 0 0 0 40 30 V8" fill="#fff"/><ellipse cx="20" cy="30" rx="20" ry="7" fill="none" stroke="#2f3b45" stroke-width="1.8"/><text class="sml" x="-8" y="56">Milvus</text></g>
+  <g transform="translate(1040,556)">
+    <g><rect class="peach" x="8"  y="14" width="70" height="16" rx="4"/><rect class="peach" x="4"  y="7" width="70" height="16" rx="4"/><rect class="peach" x="0"  y="0" width="70" height="16" rx="4"/><text class="sml" x="2" y="52">content</text></g>
+    <g transform="translate(88,0)"><rect class="blue" x="8" y="14" width="70" height="16" rx="4"/><rect class="blue" x="4" y="7" width="70" height="16" rx="4"/><rect class="blue" x="0" y="0" width="70" height="16" rx="4"/><text class="sml" x="14" y="52">title</text></g>
+    <g transform="translate(176,0)"><rect class="purp" x="8" y="14" width="70" height="16" rx="4"/><rect class="purp" x="4" y="7" width="70" height="16" rx="4"/><rect class="purp" x="0" y="0" width="70" height="16" rx="4"/><text class="sml" x="4" y="52">domain</text></g>
+    <g transform="translate(264,0)"><rect class="green" x="8" y="14" width="70" height="16" rx="4"/><rect class="green" x="4" y="7" width="70" height="16" rx="4"/><rect class="green" x="0" y="0" width="70" height="16" rx="4"/><text class="sml" x="0" y="52">structure</text></g>
+  </g>
+  <text class="sml" x="1040" y="656">4 vector fields per chunk · COSINE / HNSW index</text>
+  <text class="sml" x="1040" y="678">chunk / entity / relationship collections</text>
+  <text class="sml" x="1040" y="716">삭제는 세션 기반 — Milvus·Neo4j·RDB 교차 정리</text>
+
+  <path class="thin" d="M990 269 H1002"/>
+  <path class="thin" d="M990 589 H1002"/>
+
+  <path class="flow" d="M1428 460 H1462"/>
+
+  <!-- ===================== 3) QUERY & FUSION ===================== -->
+  <text class="step" x="1480" y="136">3)</text>
+  <text class="hdr" x="1512" y="136">Query, Retrieval &amp; RRF Fusion</text>
+  <rect class="grpB" x="1472" y="150" width="490" height="620" rx="20"/>
+
+  <!-- query bubble -->
+  <rect class="grpO" x="1496" y="180" width="330" height="72" rx="16"/>
+  <text class="qtxt" x="1516" y="210">“문서 전반의 규정과 절차,</text>
+  <text class="qtxt" x="1516" y="234">어떤 관계로 연결되어 있지?”</text>
+  <g transform="translate(1856,192)"><circle cx="18" cy="18" r="13" fill="none" stroke="#2f3b45" stroke-width="3"/><line x1="28" y1="28" x2="42" y2="42" stroke="#2f3b45" stroke-width="4" stroke-linecap="round"/></g>
+  <text class="hdr2" x="1852" y="266">Query</text>
+
+  <rect class="pill" x="1496" y="284" width="300" height="44" rx="22"/>
+  <text class="lbl" x="1520" y="312">High-/Low-level Keys Extraction</text>
+
+  <!-- two retrieval branches -->
+  <rect class="blue" x="1496" y="366" width="270" height="76" rx="12"/>
+  <text class="lbl" x="1514" y="394">Graph-based Retrieval</text>
+  <text class="sml" x="1514" y="416">local · global · hybrid</text>
+  <rect class="green" x="1496" y="462" width="270" height="76" rx="12"/>
+  <text class="lbl" x="1514" y="490">Embedding-based Retrieval</text>
+  <text class="sml" x="1514" y="512">naive · 4-field parallel ×2k</text>
+
+  <!-- RRF box -->
+  <rect class="amber" x="1790" y="396" width="148" height="118" rx="14"/>
+  <text class="hdr2" x="1812" y="430">RRF</text>
+  <text class="sml" x="1812" y="454">Σ 1 / (k + rank)</text>
+  <text class="sml" x="1812" y="474">k = 60 · 동일 가중</text>
+  <text class="sml" x="1812" y="498">mix mode 융합</text>
+  <path class="thin" d="M1766 404 H1776 V434 H1786"/>
+  <path class="thin" d="M1766 500 H1776 V476 H1786"/>
+  <path class="thin" d="M1646 328 V362"/>
+  <path class="thin" d="M1646 442 V458"/>
+
+  <!-- retrieved + response -->
+  <g transform="translate(1830,540)">
+    <rect class="peach" x="0" y="0" width="84" height="26" rx="6"/><rect class="blue" x="0" y="32" width="84" height="26" rx="6"/><rect class="green" x="0" y="64" width="84" height="26" rx="6"/>
+  </g>
+  <text class="lbl" transform="translate(1948,544) rotate(90)">Retrieved Info</text>
+  <path class="thin" d="M1866 514 V534"/>
+  <path class="thin" d="M1872 634 V664 H1826"/>
+  <text class="sml" x="1884" y="658">LLM</text>
+
+  <rect class="grpO" x="1496" y="642" width="324" height="86" rx="16"/>
+  <text class="hdr2" x="1516" y="672">Response</text>
+  <text class="qtxt" x="1516" y="700">“근거 chunk와 그래프 관계를 함께 인용해 …”</text>
+  <g transform="translate(1760,596)">
+    <rect x="0" y="10" width="34" height="24" rx="6" fill="#fff" stroke="#2f3b45" stroke-width="2"/>
+    <circle cx="10" cy="22" r="3" fill="#2f3b45"/><circle cx="24" cy="22" r="3" fill="#2f3b45"/>
+    <line x1="17" y1="10" x2="17" y2="2" stroke="#2f3b45" stroke-width="2"/><circle cx="17" cy="2" r="2.5" fill="#c2571a"/>
+  </g>
+
+  <!-- ===================== caption ===================== -->
+  <line x1="42" y1="800" x2="1958" y2="800" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="42" y="836">Figure. AIO 전체 아키텍처 — 문서는 비동기 파이프라인으로 chunk가 되고, LLM 추출과 4-필드 임베딩으로 Graph + Vector 이중 인덱스에 적재되며, 질의는 5개 모드(local·global·hybrid·naive·mix)와 RRF(k=60) 융합으로 응답된다.</text>
+  <text class="sub" x="42" y="862">Deep-dive 별도 도판: ① RRF 4-벡터 융합 상세 ② 세션 기반 삭제 파이프라인 ③ LangGraph Agent Builder(65 nodes / 20 categories)</text>
+</svg>

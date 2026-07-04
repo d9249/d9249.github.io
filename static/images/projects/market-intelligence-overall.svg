@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="900" viewBox="0 0 2000 900" role="img" aria-labelledby="tmo dmo">
+  <title id="tmo">Jeani market intelligence overall architecture — paper figure style</title>
+  <desc id="dmo">A user uploads an RFP through a Next.js frontend and 14 BFF routes, team-built 8 analyzer and 8 modifier Lambda agents process it, KB Intelligence collects market data on an EventBridge schedule, and everything flows through an S3 lifecycle into Bedrock Knowledge Base sync, all defined with Terraform.</desc>
+  <defs>
+    <marker id="sage" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#b7cfb2"/>
+    </marker>
+    <marker id="dark" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
+    </marker>
+    <style>
+      .hdr  { font: italic 700 27px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 20px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14.5px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 19px Georgia, serif; fill: #c2571a; }
+      .qtxt { font: italic 600 16px Georgia, serif; fill: #7a3d12; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .grpO { fill: #fffcf8; stroke: #c2571a; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .flow { fill: none; stroke: #c9dcc5; stroke-width: 15; stroke-linecap: round; marker-end: url(#sage); }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark); }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
+    </style>
+  </defs>
+  <rect width="2000" height="900" fill="#ffffff"/>
+
+  <!-- ===================== legend ===================== -->
+  <rect class="grpO" x="1470" y="34" width="30" height="20" rx="6"/>
+  <text class="sml" x="1510" y="49">주황 점선 — 본인 담당 (Frontend·BFF / KB Intelligence / IaC)</text>
+  <rect class="grpB" x="1470" y="62" width="30" height="20" rx="6"/>
+  <text class="sml" x="1510" y="77">파랑 점선 — 팀 산출물 (8+8 에이전트 · 인증 · CI/CD)</text>
+
+  <!-- ===================== USER / RFP ===================== -->
+  <rect class="grpK" x="42" y="150" width="180" height="470" rx="18"/>
+  <text class="hdr2" x="60" y="136">User / RFP</text>
+  <circle class="ink" cx="132" cy="225" r="20"/>
+  <path class="ink" d="M100 292 Q100 252 132 252 Q164 252 164 292 Z"/>
+  <text class="lbl" x="115" y="318">User</text>
+  <path class="thin" d="M132 334 V366"/>
+  <g transform="translate(91,380)">
+    <path class="ink" d="M0 0 H62 L82 20 V92 H0 Z"/><path class="ink" d="M62 0 V20 H82" fill="none"/>
+    <line x1="14" y1="38" x2="66" y2="38" stroke="#8a97a1" stroke-width="3"/><line x1="14" y1="54" x2="66" y2="54" stroke="#8a97a1" stroke-width="3"/><line x1="14" y1="70" x2="48" y2="70" stroke="#8a97a1" stroke-width="3"/>
+    <text class="lbl" x="24" y="118">RFP</text>
+  </g>
+  <text class="sml" x="66" y="546">제안요청서 업로드</text>
+  <text class="sml" x="66" y="568">결과 조회 · 다운로드</text>
+  <path class="flow" d="M228 385 H262"/>
+
+  <!-- ===================== 1) FRONTEND & BFF (mine) ===================== -->
+  <text class="step" x="280" y="136">1)</text>
+  <text class="hdr" x="312" y="136">Frontend &amp; BFF</text>
+  <text class="step" x="548" y="136">— 본인</text>
+  <rect class="grpO" x="272" y="150" width="370" height="470" rx="20"/>
+  <text class="sub" x="296" y="184">Next.js App Router · 브라우저와 AWS 사이 경계</text>
+
+  <rect class="blue" x="296" y="220" width="320" height="110" rx="12"/>
+  <text class="lbl" x="316" y="252">Next.js Frontend</text>
+  <text class="sml" x="316" y="278">대시보드 · 현황 분석 · 검색 · 프로필</text>
+  <text class="sml" x="316" y="300">docx / pptx export 다운로드</text>
+  <path class="thin" d="M456 334 V360"/>
+  <rect class="amber" x="296" y="364" width="320" height="120" rx="12"/>
+  <text class="lbl" x="316" y="394">BFF 14 Routes</text>
+  <text class="sml" x="316" y="418">RFP 업로드/분석 · 목록·상세 · 갱신 폴링</text>
+  <text class="sml" x="316" y="438">수정 요청 · webhook · S3 이벤트 수신</text>
+  <text class="sml" x="316" y="458">KB sync 트리거 · export · health</text>
+  <text class="sml" x="296" y="524">인증 · 응답 정형화 · 캐시 정책을 BFF가 관장</text>
+  <text class="sml" x="296" y="546">브라우저는 AWS 자원을 직접 만지지 않음</text>
+
+  <path class="flow" d="M648 385 H682"/>
+
+  <!-- ===================== 2) RFP AGENTS (team) ===================== -->
+  <text class="step" x="700" y="136">2)</text>
+  <text class="hdr" x="732" y="136">RFP Analysis Agents — Team</text>
+  <rect class="grpB" x="692" y="150" width="430" height="470" rx="20"/>
+  <text class="sub" x="716" y="184">Lambda 배포 · 오케스트레이터가 병렬 호출·결과 통합</text>
+
+  <rect class="green" x="716" y="240" width="180" height="130" rx="12"/>
+  <text class="lbl" x="736" y="270">8 Analyzers</text>
+  <text class="sml" x="736" y="296">RFP 8관점 병렬 분석</text>
+  <text class="sml" x="736" y="318">Lambda ×8</text>
+  <text class="hdr2" x="901" y="312">∥</text>
+  <rect class="purp" x="926" y="240" width="180" height="130" rx="12"/>
+  <text class="lbl" x="946" y="270">8 Modifiers</text>
+  <text class="sml" x="946" y="296">산출물 8관점 수정</text>
+  <text class="sml" x="946" y="318">Lambda ×8</text>
+
+  <path class="thin" d="M806 374 V406"/>
+  <path class="thin" d="M1016 374 V406"/>
+  <rect class="grpK" x="716" y="410" width="390" height="140" rx="14"/>
+  <text class="lbl" x="736" y="440">8 Perspectives</text>
+  <g>
+    <rect class="peach" x="736"  y="456" width="86" height="32" rx="8"/><text class="sml" x="766" y="477">개요</text>
+    <rect class="peach" x="828"  y="456" width="86" height="32" rx="8"/><text class="sml" x="846" y="477">요구사항</text>
+    <rect class="peach" x="920"  y="456" width="86" height="32" rx="8"/><text class="sml" x="950" y="477">구조</text>
+    <rect class="peach" x="1012" y="456" width="86" height="32" rx="8"/><text class="sml" x="1042" y="477">인력</text>
+    <rect class="peach" x="736"  y="498" width="86" height="32" rx="8"/><text class="sml" x="766" y="519">문서</text>
+    <rect class="peach" x="828"  y="498" width="86" height="32" rx="8"/><text class="sml" x="858" y="519">발표</text>
+    <rect class="peach" x="920"  y="498" width="86" height="32" rx="8"/><text class="sml" x="950" y="519">질의</text>
+    <rect class="peach" x="1012" y="498" width="86" height="32" rx="8"/><text class="sml" x="1042" y="519">현황</text>
+  </g>
+  <text class="sml" x="716" y="584">인증(Cognito) · CI/CD — 팀원 구축</text>
+
+  <path class="flow" d="M1128 385 H1162"/>
+
+  <!-- ===================== 3) KB INTELLIGENCE (mine) ===================== -->
+  <text class="step" x="1180" y="136">3)</text>
+  <text class="hdr" x="1212" y="136">KB Intelligence</text>
+  <text class="step" x="1448" y="136">— 본인</text>
+  <rect class="grpO" x="1172" y="150" width="400" height="470" rx="20"/>
+  <text class="sub" x="1196" y="184">supervisor 패턴 · 5 전문 에이전트 오케스트레이션</text>
+
+  <rect class="pill" x="1196" y="210" width="210" height="40" rx="20"/>
+  <text class="lbl" x="1216" y="235">EventBridge 주기 실행</text>
+  <g transform="translate(1430,206)">
+    <circle class="ink" cx="20" cy="20" r="16"/>
+    <line x1="20" y1="20" x2="20" y2="9" stroke="#2f3b45" stroke-width="2.4" stroke-linecap="round"/>
+    <line x1="20" y1="20" x2="29" y2="24" stroke="#2f3b45" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+  <path class="thin" d="M1301 254 V276"/>
+  <rect class="amber" x="1196" y="280" width="350" height="64" rx="12"/>
+  <text class="lbl" x="1216" y="306">Supervisor Orchestrator</text>
+  <text class="sml" x="1216" y="328">병렬 호출 · 결과 통합 · 완료 시 KB sync</text>
+  <path class="thin" d="M1371 348 V372"/>
+  <rect class="peach" x="1196" y="376" width="350" height="40" rx="9"/>
+  <text class="lbl" x="1216" y="401">Planner — 조사 계획 (plan schema)</text>
+  <rect class="blue" x="1196" y="424" width="350" height="40" rx="9"/>
+  <text class="lbl" x="1216" y="449">Researcher — 시장 동향 검색면</text>
+  <rect class="purp" x="1196" y="472" width="350" height="40" rx="9"/>
+  <text class="lbl" x="1216" y="497">Competitor — 경쟁사 우선순위 조사</text>
+  <rect class="green" x="1196" y="520" width="350" height="40" rx="9"/>
+  <text class="lbl" x="1216" y="545">Tech Analyst — 기술 트렌드 검색면</text>
+  <rect class="amber" x="1196" y="568" width="350" height="40" rx="9"/>
+  <text class="lbl" x="1216" y="593">Synthesizer — 종합 보고 · URL 중복 필터</text>
+
+  <path class="flow" d="M1578 385 H1612"/>
+
+  <!-- ===================== 4) S3 & BEDROCK KB ===================== -->
+  <text class="step" x="1630" y="136">4)</text>
+  <text class="hdr" x="1662" y="136">S3 &amp; Bedrock KB</text>
+  <rect class="grpK" x="1622" y="150" width="336" height="470" rx="18"/>
+  <text class="sub" x="1646" y="184">단일 소스 · lifecycle prefix</text>
+
+  <text class="hdr2" x="1646" y="234">S3 Lifecycle</text>
+  <g transform="translate(1866,196)">
+    <ellipse cx="20" cy="8" rx="20" ry="7" class="ink"/>
+    <path class="ink" d="M0 8 V30 A20 7 0 0 0 40 30 V8" fill="#fff"/>
+    <ellipse cx="20" cy="30" rx="20" ry="7" fill="none" stroke="#2f3b45" stroke-width="1.8"/>
+    <text class="sml" x="12" y="56">S3</text>
+  </g>
+  <rect class="peach" x="1646" y="264" width="200" height="46" rx="9"/>
+  <text class="lbl" x="1662" y="283">input/</text><text class="sml" x="1662" y="301">RFP 원본</text>
+  <path class="thin" d="M1746 313 V323"/>
+  <rect class="blue" x="1646" y="326" width="200" height="46" rx="9"/>
+  <text class="lbl" x="1662" y="345">plans/</text><text class="sml" x="1662" y="363">search_plan.json</text>
+  <path class="thin" d="M1746 375 V385"/>
+  <rect class="purp" x="1646" y="388" width="200" height="46" rx="9"/>
+  <text class="lbl" x="1662" y="407">workflows/</text><text class="sml" x="1662" y="425">분석·수정 산출물</text>
+  <path class="thin" d="M1746 437 V447"/>
+  <rect class="green" x="1646" y="450" width="200" height="46" rx="9"/>
+  <text class="lbl" x="1662" y="469">daily_updates/</text><text class="sml" x="1662" y="487">시장 인텔리전스 보고</text>
+  <path class="thin" d="M1746 500 V526"/>
+  <rect class="green" x="1646" y="530" width="280" height="64" rx="12"/>
+  <text class="lbl" x="1666" y="556">Bedrock KB Sync</text>
+  <text class="sml" x="1666" y="578">저장 즉시 자동 트리거</text>
+
+  <!-- return: S3 single source back to frontend -->
+  <path class="thin" d="M1700 622 V656 H457 V628"/>
+  <text class="sml" x="700" y="648">S3 단일 소스 — 화면 상태는 S3에서 재구성</text>
+
+  <!-- ===================== IaC band (mine) ===================== -->
+  <rect class="grpO" x="272" y="688" width="1686" height="72" rx="16"/>
+  <text class="hdr2" x="296" y="732">Terraform IaC — 본인</text>
+  <text class="lbl" x="560" y="732">Lambda · S3 prefix 구조 · DynamoDB · EventBridge 스케줄 · Bedrock KB 연결 — 팀 누구나 같은 환경 재현</text>
+
+  <!-- ===================== caption ===================== -->
+  <line x1="42" y1="800" x2="1958" y2="800" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="42" y="836">Figure. Jeani 전체 아키텍처 — RFP는 Next.js 프론트와 BFF 14 라우트를 거쳐 8+8 분석·수정 에이전트(Lambda)로 흐르고, KB Intelligence(supervisor + 5 agents)가 EventBridge 주기로 시장 정보를 수집해 S3 lifecycle → Bedrock KB 동기화로 이어진다.</text>
+  <text class="sub" x="42" y="862">주황 점선 = 본인 담당. Deep-dive 별도 도판: ① KB Intelligence supervisor 파이프라인(계획·실행 분리) ② S3 단일 소스 트러블슈팅(3중 원인).</text>
+</svg>

@@ -38,13 +38,13 @@ draft: false
 
 설계 기반으로 LightRAG의 구조를 가져오되 그대로 쓰지 않았습니다. 저장 백엔드를 Qdrant에서 Milvus로 전환하고, 스토리지 계층을 지식 저장소별 멀티 네임스페이스 구조로 재설계했으며, Neo4j·Milvus·NetworkX 각각의 저장소 래퍼를 모듈로 분리해 서비스 계층이 특정 구현체에 묶이지 않게 했습니다.
 
+<div class="aio-diagram">
+  <img src="/images/projects/aio-overall-architecture.svg" alt="AIO overall architecture — async ingestion, graph + vector grounding, query and RRF fusion" />
+</div>
+
 ## 딥다이브 ① Graph + Vector 이중 인덱스와 5가지 검색 모드
 
 문서가 지식이 되는 파이프라인은 이렇습니다. 업로드된 문서는 Celery worker가 비동기로 parsing → chunking → indexing을 수행하고, 이 과정에서 **세 종류의 벡터 컬렉션**(chunk / entity / relationship)과 **Neo4j 그래프**가 함께 만들어집니다. chunk에서 LLM이 엔티티와 관계를 추출하고, 엔티티·관계 각각의 서술도 임베딩되어 벡터로 저장됩니다. 업로드·문서 메타데이터·ingestion·인덱싱이 서로 다른 실패 지점과 재시도 단위를 갖도록 분리했고, 진행률은 SSE로 화면에 흐릅니다.
-
-<div class="aio-diagram">
-  <img src="/images/projects/aio-ingestion-lifecycle.svg" alt="AIO document upload and ingestion lifecycle" />
-</div>
 
 질의 시에는 먼저 키워드 추출기가 질문에서 저수준(구체 엔티티)·고수준(주제·테마) 키워드를 분리하고, 검색 모드에 따라 다른 경로를 탑니다.
 
@@ -81,11 +81,19 @@ draft: false
 
 RRF를 고른 이유는 점수 정규화가 필요 없어서입니다. 필드마다 유사도 분포가 달라 raw score를 섞으면 특정 필드가 랭킹을 지배하는데, RRF는 순위만 사용하므로(1/(k+rank) 합산, 동일 가중치) 분포 차이에 강건합니다. 컬렉션 로드를 검색 전 1회로 묶고 필드별 검색을 asyncio.gather로 병렬화해, 검색을 4배로 늘리면서도 지연 증가를 억제했습니다.
 
+<div class="aio-diagram">
+  <img src="/images/projects/aio-deepdive-rrf.svg" alt="RRF 4-vector fusion — parallel field search fused by reciprocal rank" />
+</div>
+
 ## 딥다이브 ③ 정합성 트러블슈팅 2건
 
 **삭제했는데 남아 있는 지식.** 지식 저장소를 삭제해도 검색 결과에 유령처럼 남는 문제가 있었습니다. 원인은 지식 하나가 물리적으로 여러 저장소에 흩어져 있다는 점입니다 — PostgreSQL의 메타데이터, Milvus의 chunk/entity/relationship 컬렉션, Neo4j의 그래프 노드와 관계. 초기 삭제 로직은 메타데이터 중심으로 지워 인덱스 잔존물을 남겼습니다. 해결은 삭제를 단일 DELETE가 아니라 **삭제 세션**으로 다루는 것이었습니다. 삭제 요청이 오면 세션을 만들고, 저장소별 삭제 태스크를 발행해 벡터 컬렉션 엔트리·그래프 노드·관계·메타데이터를 각각 정리하며, 상태를 추적해 부분 실패를 드러냅니다. "삭제는 즉시 끝난다"는 가정을 버리고 삭제도 ingestion처럼 비동기 파이프라인으로 승격시킨 것이 핵심입니다.
 
 **동시 요청이 만든 이중 연결.** 비동기 서버에서 여러 요청이 동시에 그래프 DB 연결을 초기화하려 하면서 커넥션이 중복 생성되는 경합이 있었습니다. 싱글톤이되 연결은 지연 초기화해야 하는 상황이라 **asyncio.Lock + double-check** 패턴으로 풀었습니다. Lock 획득 후 연결 여부를 다시 확인(double-check)한 뒤에만 연결을 수행하고, 연결 URI는 폴백 체인(외부 인스턴스 → Docker 네트워크 → localhost)으로 시도해 배포 환경별 연결 실패가 서비스 기동 실패로 번지지 않게 했습니다.
+
+<div class="aio-diagram">
+  <img src="/images/projects/aio-deepdive-deletion.svg" alt="Session-based deletion pipeline — before and after, with asyncio.Lock double-check singleton" />
+</div>
 
 ## Agent Builder — 검색 전략을 조립 가능하게
 
@@ -102,16 +110,12 @@ RRF를 고른 이유는 점수 정규화가 필요 없어서입니다. 필드마
 노드 라이브러리는 검색(전처리·검색·후처리·rerank), 생성, 라우팅·분기·루프, 데이터 ingestion, 멀티모달(vision) 등 **20개 카테고리 65개 노드 모듈**(코드 재집계 기준)로 구성했습니다. 위에서 설명한 멀티벡터 검색과 법령 준수 검증도 각각 노드로 등록되어 있어 워크플로우에 그대로 꽂을 수 있습니다.
 
 <div class="aio-diagram">
-  <img src="/images/projects/aio-agent-workflow.svg" alt="AIO agent workflow builder" />
+  <img src="/images/projects/aio-deepdive-agent-builder.svg" alt="Agent Builder execution path — canvas to JSON spec to LangGraph StateGraph to SSE streaming" />
 </div>
 
 ## 시스템 규모와 구조
 
 런타임은 FastAPI 백엔드 + Vue 3 콘솔이며, PostgreSQL(메타데이터·권한)·Milvus(벡터)·Neo4j(그래프)·Redis(캐시·태스크 브로커)·Elasticsearch(텍스트 검색) **5종 저장소**와 Celery worker를 docker-compose로 오케스트레이션합니다. API 표면은 라우터 기준 **160여 개 엔드포인트**(코드 재집계 기준)로, 문서 저장소·데이터셋 ingestion·지식 그래프 질의·Agent 실행·계정/역할/ACL이 분리된 라우터로 운영됩니다. 권한은 JWT + role/permission/ACL bitmask로 평가되며, 접근 불가 문서가 답변 근거에 섞이지 않도록 검색 경로와 연결됩니다.
-
-<div class="aio-diagram">
-  <img src="/images/projects/aio-runtime-architecture.svg" alt="AIO runtime architecture" />
-</div>
 
 ## 정리
 

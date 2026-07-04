@@ -1,90 +1,170 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
-  <title id="title">ArtygenSpace RAG and vector intelligence loop</title>
-  <desc id="desc">RAG and vector search flow from source documents and multimedia assets to embeddings, vector stores, search, and generated answers.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="900" viewBox="0 0 2000 900" role="img" aria-labelledby="t d">
+  <title id="t">ArtygenSpace RAG and vector intelligence — paper figure style</title>
+  <desc id="d">Whitepaper PDFs become FAISS RetrievalQA answers, and scene combinations become BGE-M3 Qdrant recommendation candidates, treated as one retrieval-candidate design problem.</desc>
   <defs>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M2 2 L10 6 L2 10 Z" fill="#334155"/>
+    <marker id="sage" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#b7cfb2"/>
+    </marker>
+    <marker id="dark" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
     </marker>
     <style>
-      .bg { fill: #f8fafc; }
-      .line { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
-      .soft { fill: none; stroke: #94a3b8; stroke-width: 2.5; marker-end: url(#arrow); }
-      .node rect { fill: #ffffff; stroke: #0f766e; stroke-width: 2.5; rx: 8; }
-      .doc rect { fill: #eff6ff; stroke: #2563eb; }
-      .media rect { fill: #fff7ed; stroke: #c2410c; }
-      .out rect { fill: #f1f5f9; stroke: #334155; }
-      .title { font: 800 28px Inter, "Apple SD Gothic Neo", sans-serif; fill: #0f172a; }
-      .label { font: 800 18px Inter, "Apple SD Gothic Neo", sans-serif; fill: #0f172a; }
-      .sub { font: 600 14px Inter, "Apple SD Gothic Neo", sans-serif; fill: #475569; }
+      .hdr  { font: italic 700 27px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 20px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14.5px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 19px Georgia, serif; fill: #c2571a; }
+      .qtxt { font: italic 600 16px Georgia, serif; fill: #7a3d12; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .grpO { fill: #fffcf8; stroke: #c2571a; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .flow { fill: none; stroke: #c9dcc5; stroke-width: 15; stroke-linecap: round; marker-end: url(#sage); }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark); }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
     </style>
   </defs>
-  <rect class="bg" width="1200" height="680"/>
-  <text class="title" x="60" y="58">RAG and Vector Intelligence Loop</text>
-  <text class="sub" x="60" y="86">문서 답변과 멀티미디어 추천을 같은 검색 설계로 다루기</text>
+  <rect width="2000" height="900" fill="#ffffff"/>
 
-  <g class="node doc" transform="translate(80 135)">
-    <rect width="220" height="112"/>
-    <text class="label" x="110" y="38" text-anchor="middle">
-      <tspan x="110" dy="0">Report PDF</tspan>
-      <tspan x="110" dy="26">콘텐츠 백서</tspan>
-    </text>
-    <text class="sub" x="110" y="86" text-anchor="middle">문서 RAG 입력</text>
+  <!-- ===================== SOURCE ASSETS ===================== -->
+  <rect class="grpK" x="42" y="150" width="200" height="620" rx="18"/>
+  <text class="hdr2" x="58" y="136">Source Assets</text>
+  <g transform="translate(92,196)">
+    <path class="ink" d="M0 0 H62 L82 20 V92 H0 Z"/><path class="ink" d="M62 0 V20 H82" fill="none"/>
+    <line x1="14" y1="38" x2="66" y2="38" stroke="#8a97a1" stroke-width="3"/><line x1="14" y1="54" x2="66" y2="54" stroke="#8a97a1" stroke-width="3"/><line x1="14" y1="70" x2="48" y2="70" stroke="#8a97a1" stroke-width="3"/>
+    <text class="lbl" x="4" y="118">백서 PDF</text>
+    <text class="sml" x="-14" y="140">2021 · 2022 · 2023</text>
   </g>
-  <g class="node media" transform="translate(80 405)">
-    <rect width="220" height="112"/>
-    <text class="label" x="110" y="38" text-anchor="middle">
-      <tspan x="110" dy="0">Sound Assets</tspan>
-      <tspan x="110" dy="26">효과음/BGM</tspan>
-    </text>
-    <text class="sub" x="110" y="86" text-anchor="middle">추천 검색 입력</text>
+  <g transform="translate(104,410)">
+    <ellipse cx="10" cy="52" rx="11" ry="8" fill="#efe9f7" stroke="#2f3b45" stroke-width="1.8"/>
+    <line x1="20" y1="52" x2="20" y2="8" stroke="#2f3b45" stroke-width="2.4"/>
+    <path d="M20 8 Q42 14 42 30 Q34 22 20 22 Z" fill="#2f3b45"/>
+    <text class="lbl" x="-14" y="94">효과음 자산</text>
+    <text class="sml" x="-14" y="116">장면 사운드 후보</text>
   </g>
-  <g class="node" transform="translate(382 135)">
-    <rect width="220" height="112"/>
-    <text class="label" x="110" y="38" text-anchor="middle">
-      <tspan x="110" dy="0">Chunk / Prompt</tspan>
-      <tspan x="110" dy="26">근거 문서</tspan>
-    </text>
-    <text class="sub" x="110" y="86" text-anchor="middle">FAISS RAG</text>
+  <g transform="translate(96,596)">
+    <ellipse cx="10" cy="56" rx="11" ry="8" fill="#e8f1fa" stroke="#2f3b45" stroke-width="1.8"/>
+    <ellipse cx="52" cy="50" rx="11" ry="8" fill="#e8f1fa" stroke="#2f3b45" stroke-width="1.8"/>
+    <line x1="20" y1="56" x2="20" y2="12" stroke="#2f3b45" stroke-width="2.4"/>
+    <line x1="62" y1="50" x2="62" y2="6" stroke="#2f3b45" stroke-width="2.4"/>
+    <path d="M20 12 L62 6 L62 16 L20 22 Z" fill="#2f3b45"/>
+    <text class="lbl" x="-6" y="98">배경음악 자산</text>
+    <text class="sml" x="-6" y="120">분위기 · 상황</text>
   </g>
-  <g class="node" transform="translate(382 405)">
-    <rect width="220" height="112"/>
-    <text class="label" x="110" y="38" text-anchor="middle">
-      <tspan x="110" dy="0">Metadata</tspan>
-      <tspan x="110" dy="26">상황/감정</tspan>
-    </text>
-    <text class="sub" x="110" y="86" text-anchor="middle">payload 생성</text>
-  </g>
-  <g class="node" transform="translate(690 270)">
-    <rect width="230" height="120"/>
-    <text class="label" x="115" y="40" text-anchor="middle">
-      <tspan x="115" dy="0">Embedding</tspan>
-      <tspan x="115" dy="28">Vector Store</tspan>
-    </text>
-    <text class="sub" x="115" y="92" text-anchor="middle">FAISS / Qdrant</text>
-  </g>
-  <g class="node out" transform="translate(990 135)">
-    <rect width="160" height="112"/>
-    <text class="label" x="80" y="38" text-anchor="middle">
-      <tspan x="80" dy="0">Answer</tspan>
-      <tspan x="80" dy="26">with source</tspan>
-    </text>
-    <text class="sub" x="80" y="86" text-anchor="middle">보고서 응답</text>
-  </g>
-  <g class="node out" transform="translate(990 405)">
-    <rect width="160" height="112"/>
-    <text class="label" x="80" y="38" text-anchor="middle">
-      <tspan x="80" dy="0">Search</tspan>
-      <tspan x="80" dy="26">candidates</tspan>
-    </text>
-    <text class="sub" x="80" y="86" text-anchor="middle">추천 후보</text>
+  <path class="flow" d="M248 460 H282"/>
+
+  <!-- ===================== 1) CORPUS & SCENE BUILD ===================== -->
+  <text class="step" x="300" y="136">1)</text>
+  <text class="hdr" x="332" y="136">Corpus &amp; Scene Build</text>
+  <rect class="grpB" x="292" y="150" width="470" height="620" rx="20"/>
+  <text class="sub" x="316" y="184">문서와 장면 조합을 검색 후보 원천으로</text>
+
+  <rect class="grpK" x="314" y="204" width="426" height="210" rx="16"/>
+  <text class="hdr2" x="332" y="236">Document Path</text>
+  <rect class="peach" x="332" y="258" width="184" height="76" rx="10"/>
+  <text class="lbl" x="348" y="288">PDF Load &amp; Chunk</text>
+  <text class="sml" x="348" y="312">재귀 문자 분할</text>
+  <path class="thin" d="M520 296 H552"/>
+  <g transform="translate(556,254)">
+    <rect class="peach" x="0" y="0"  width="92" height="26" rx="6"/>
+    <rect class="peach" x="0" y="32" width="92" height="26" rx="6"/>
+    <rect class="peach" x="0" y="64" width="92" height="26" rx="6"/>
+    <text class="sml" x="4" y="116">structured chunk list</text>
   </g>
 
-  <path class="line" d="M300 191 H382"/>
-  <path class="line" d="M300 461 H382"/>
-  <path class="line" d="M602 191 H650 V300 H690"/>
-  <path class="line" d="M602 461 H650 V360 H690"/>
-  <path class="line" d="M920 300 H960 V191 H990"/>
-  <path class="line" d="M920 360 H960 V461 H990"/>
-  <path class="soft" d="M190 517 V590 H1070 V517"/>
-  <text class="sub" x="423" y="620">검색 결과는 다시 prompt, metadata, asset catalog를 개선하는 피드백이 됩니다.</text>
+  <rect class="grpK" x="314" y="444" width="426" height="296" rx="16"/>
+  <text class="hdr2" x="332" y="476">Scene Combination Path</text>
+  <rect class="purp" x="332" y="498" width="192" height="76" rx="10"/>
+  <text class="lbl" x="348" y="526">조합 생성</text>
+  <text class="sml" x="348" y="550">상황·환경·감정·행동</text>
+  <path class="thin" d="M528 536 H558"/>
+  <rect class="green" x="562" y="498" width="158" height="76" rx="10"/>
+  <text class="lbl" x="576" y="526">Rule Filter</text>
+  <text class="sml" x="576" y="550">불가능 조합 제거</text>
+  <path class="thin" d="M641 578 V644 H600"/>
+  <rect class="peach" x="332" y="612" width="264" height="64" rx="10"/>
+  <text class="lbl" x="348" y="638">Sentence + Payload</text>
+  <text class="sml" x="348" y="660">자연어 문장과 metadata</text>
+  <text class="sml" x="332" y="714">BGM: 분위기·상황 조합 → 파일명·설명·프롬프트</text>
+
+  <path class="flow" d="M768 460 H802"/>
+
+  <!-- ===================== 2) EMBEDDING & VECTOR STORE ===================== -->
+  <text class="step" x="820" y="136">2)</text>
+  <text class="hdr" x="852" y="136">Embedding &amp; Vector Store</text>
+  <rect class="grpB" x="812" y="150" width="520" height="620" rx="20"/>
+  <text class="sub" x="836" y="184">두 경로를 각각의 벡터 인덱스로 적재</text>
+
+  <rect class="pill" x="836" y="246" width="214" height="56" rx="28"/>
+  <g transform="translate(854,264)"><path d="M11 0 L13 8 L21 10 L13 12 L11 20 L9 12 L1 10 L9 8 Z" fill="#c2571a"/></g>
+  <text class="lbl" x="886" y="280">OpenAI Embedding</text>
+  <path class="thin" d="M1054 274 H1082"/>
+  <rect class="grpK" x="1086" y="204" width="222" height="190" rx="16"/>
+  <text class="hdr2" x="1104" y="236">FAISS Store</text>
+  <g transform="translate(1244,212)"><ellipse cx="20" cy="8" rx="20" ry="7" class="ink"/><path class="ink" d="M0 8 V30 A20 7 0 0 0 40 30 V8" fill="#fff"/><ellipse cx="20" cy="30" rx="20" ry="7" fill="none" stroke="#2f3b45" stroke-width="1.8"/></g>
+  <g transform="translate(1104,262)">
+    <rect class="peach" x="8" y="14" width="76" height="16" rx="4"/><rect class="peach" x="4" y="7" width="76" height="16" rx="4"/><rect class="peach" x="0" y="0" width="76" height="16" rx="4"/>
+  </g>
+  <text class="sml" x="1104" y="326">chunk vector index</text>
+  <text class="sml" x="1104" y="348">RetrievalQA retriever</text>
+
+  <rect class="grpK" x="836" y="420" width="472" height="96" rx="16"/>
+  <text class="hdr2" x="856" y="452">Embedding Toolkit</text>
+  <text class="sml" x="856" y="478">multilingual-e5-large · 3072차원 확장 · L2 정규화</text>
+  <text class="sml" x="856" y="500">대용량 embedding CSV 분할 처리</text>
+
+  <rect class="pill" x="836" y="556" width="214" height="56" rx="28"/>
+  <g transform="translate(854,574)"><path d="M11 0 L13 8 L21 10 L13 12 L11 20 L9 12 L1 10 L9 8 Z" fill="#4a7fa5"/></g>
+  <text class="lbl" x="886" y="590">BGE-M3 Embedding</text>
+  <path class="thin" d="M1054 584 H1082"/>
+  <rect class="grpK" x="1086" y="500" width="222" height="240" rx="16"/>
+  <text class="hdr2" x="1104" y="532">Qdrant Collection</text>
+  <rect class="peach" x="1104" y="548" width="130" height="26" rx="6"/><text class="sml" x="1114" y="566">situation</text>
+  <rect class="blue"  x="1104" y="582" width="130" height="26" rx="6"/><text class="sml" x="1114" y="600">environment</text>
+  <rect class="purp"  x="1104" y="616" width="130" height="26" rx="6"/><text class="sml" x="1114" y="634">emotion</text>
+  <rect class="green" x="1104" y="650" width="130" height="26" rx="6"/><text class="sml" x="1114" y="668">action</text>
+  <g transform="translate(1252,594)"><ellipse cx="20" cy="8" rx="20" ry="7" class="ink"/><path class="ink" d="M0 8 V30 A20 7 0 0 0 40 30 V8" fill="#fff"/><ellipse cx="20" cy="30" rx="20" ry="7" fill="none" stroke="#2f3b45" stroke-width="1.8"/></g>
+  <text class="sml" x="1104" y="708">payload filter · 분포 점검</text>
+
+  <path class="flow" d="M1338 460 H1372"/>
+
+  <!-- ===================== 3) ANSWER & SEARCH ===================== -->
+  <text class="step" x="1390" y="136">3)</text>
+  <text class="hdr" x="1422" y="136">Answer &amp; Search</text>
+  <rect class="grpB" x="1382" y="150" width="576" height="620" rx="20"/>
+
+  <rect class="grpO" x="1406" y="196" width="344" height="68" rx="14"/>
+  <text class="qtxt" x="1424" y="238">“2025년 콘텐츠 수출 전망은?”</text>
+  <g transform="translate(1782,200)"><circle cx="18" cy="18" r="13" fill="none" stroke="#2f3b45" stroke-width="3"/><line x1="28" y1="28" x2="42" y2="42" stroke="#2f3b45" stroke-width="4" stroke-linecap="round"/></g>
+  <text class="hdr2" x="1782" y="280">Query</text>
+  <path class="thin" d="M1578 264 V296"/>
+  <rect class="pill" x="1406" y="300" width="294" height="50" rx="25"/>
+  <text class="lbl" x="1430" y="331">RetrievalQA — GPT-4o</text>
+  <path class="thin" d="M1553 350 V382"/>
+  <rect class="peach" x="1406" y="386" width="314" height="76" rx="12"/>
+  <text class="lbl" x="1424" y="416">Answer + 참조 문서 저장</text>
+  <text class="sml" x="1424" y="440">보고서형 응답 관리</text>
+
+  <rect class="grpO" x="1406" y="506" width="344" height="68" rx="14"/>
+  <text class="qtxt" x="1424" y="548">“무서운 숲 장면의 효과음은?”</text>
+  <path class="thin" d="M1578 574 V606"/>
+  <rect class="pill" x="1406" y="610" width="294" height="50" rx="25"/>
+  <text class="lbl" x="1430" y="641">Payload Filter Search</text>
+  <path class="thin" d="M1553 660 V692"/>
+  <rect class="green" x="1406" y="696" width="314" height="64" rx="12"/>
+  <text class="lbl" x="1424" y="722">효과음 · BGM 추천 후보</text>
+  <text class="sml" x="1424" y="746">장면 맥락 기반 top-k</text>
+  <text class="sml" x="1770" y="622">Qdrant utilities</text>
+  <text class="sml" x="1770" y="644">컬렉션·분포·filter 점검</text>
+
+  <!-- ===================== caption ===================== -->
+  <line x1="42" y1="800" x2="1958" y2="800" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="42" y="836">Figure. RAG &amp; Vector Intelligence 전체 구조 — 콘텐츠산업백서 PDF는 chunk와 OpenAI embedding, FAISS RetrievalQA(GPT-4o)로 참조 문서 기반 답변이 되고, 상황·환경·감정·행동 조합은 BGE-M3 embedding과 Qdrant payload 검색으로 효과음·배경음악 추천 후보가 된다.</text>
+  <text class="sub" x="42" y="862">문서 답변과 멀티미디어 추천을 같은 “검색 후보 설계” 문제로 다루며, multilingual-e5-large 임베딩은 3072차원 확장·정규화로 CSV 자산에 재사용된다.</text>
 </svg>

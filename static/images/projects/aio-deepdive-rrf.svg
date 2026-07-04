@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="640" viewBox="0 0 1700 640" role="img" aria-labelledby="t2 d2">
+  <title id="t2">Deep dive: RRF 4-vector fusion</title>
+  <desc id="d2">A query embedding searches four vector fields in parallel, each returning a ranked list, fused by reciprocal rank fusion with k=60 into a final ranking.</desc>
+  <defs>
+    <marker id="dark2" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
+    </marker>
+    <style>
+      .hdr  { font: italic 700 26px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 19px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 18px Georgia, serif; fill: #c2571a; }
+      .mth  { font: italic 700 17px Georgia, serif; fill: #7a3d12; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark2); }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
+    </style>
+  </defs>
+  <rect width="1700" height="640" fill="#ffffff"/>
+
+  <text class="step" x="46" y="52">Deep Dive ①</text>
+  <text class="hdr" x="168" y="52">RRF 4-Vector Fusion — 한 chunk를 네 방향에서 검색한다</text>
+  <text class="sub" x="46" y="80">단일 content 임베딩의 한계(같은 본문·다른 법령, 제목·구조가 의도의 핵심인 질의)를 필드 분리 + 순위 융합으로 해결</text>
+
+  <!-- Query -->
+  <rect class="grpK" x="46" y="120" width="250" height="120" rx="16"/>
+  <text class="hdr2" x="66" y="152">Query</text>
+  <text class="sml" x="66" y="176">질의 1회 임베딩</text>
+  <rect class="pill" x="66" y="192" width="180" height="34" rx="17"/>
+  <text class="lbl" x="88" y="214">query_embedding</text>
+
+  <!-- chunk schema -->
+  <rect class="grpK" x="46" y="300" width="250" height="270" rx="16"/>
+  <text class="hdr2" x="66" y="332">Chunk Schema</text>
+  <text class="sml" x="66" y="354">필드마다 독립 HNSW 인덱스</text>
+  <rect class="peach" x="66" y="372" width="200" height="38" rx="8"/><text class="lbl" x="82" y="396">content_vector</text>
+  <rect class="blue"  x="66" y="418" width="200" height="38" rx="8"/><text class="lbl" x="82" y="442">title_vector</text>
+  <rect class="purp"  x="66" y="464" width="200" height="38" rx="8"/><text class="lbl" x="82" y="488">domain_vector</text>
+  <rect class="green" x="66" y="510" width="200" height="38" rx="8"/><text class="lbl" x="82" y="534">structure_vector</text>
+
+  <!-- parallel search group -->
+  <rect class="grpB" x="380" y="120" width="640" height="450" rx="20"/>
+  <text class="hdr2" x="404" y="154">Parallel Field Search</text>
+  <text class="sub" x="404" y="178">asyncio.gather · 컬렉션 로드는 사전 1회</text>
+
+  <!-- 4 lanes -->
+  <g transform="translate(410,180)">
+    <rect class="peach" x="0" y="0" width="130" height="40" rx="20"/><text class="lbl" x="22" y="25">content 검색</text>
+    <path class="thin" d="M134 20 H166"/>
+    <rect class="peach" x="170" y="2"  width="150" height="10" rx="3"/>
+    <rect class="peach" x="170" y="16" width="120" height="10" rx="3"/>
+    <rect class="peach" x="170" y="30" width="135" height="10" rx="3"/>
+    <text class="sml" x="336" y="28">top_k × 2</text>
+  </g>
+  <g transform="translate(410,272)">
+    <rect class="blue" x="0" y="0" width="130" height="40" rx="20"/><text class="lbl" x="34" y="25">title 검색</text>
+    <path class="thin" d="M134 20 H166"/>
+    <rect class="blue" x="170" y="2"  width="140" height="10" rx="3"/>
+    <rect class="blue" x="170" y="16" width="150" height="10" rx="3"/>
+    <rect class="blue" x="170" y="30" width="110" height="10" rx="3"/>
+    <text class="sml" x="336" y="28">top_k × 2</text>
+  </g>
+  <g transform="translate(410,364)">
+    <rect class="purp" x="0" y="0" width="130" height="40" rx="20"/><text class="lbl" x="20" y="25">domain 검색</text>
+    <path class="thin" d="M134 20 H166"/>
+    <rect class="purp" x="170" y="2"  width="125" height="10" rx="3"/>
+    <rect class="purp" x="170" y="16" width="150" height="10" rx="3"/>
+    <rect class="purp" x="170" y="30" width="140" height="10" rx="3"/>
+    <text class="sml" x="336" y="28">top_k × 2</text>
+  </g>
+  <g transform="translate(410,456)">
+    <rect class="green" x="0" y="0" width="130" height="40" rx="20"/><text class="lbl" x="12" y="25">structure 검색</text>
+    <path class="thin" d="M134 20 H166"/>
+    <rect class="green" x="170" y="2"  width="145" height="10" rx="3"/>
+    <rect class="green" x="170" y="16" width="115" height="10" rx="3"/>
+    <rect class="green" x="170" y="30" width="150" height="10" rx="3"/>
+    <text class="sml" x="336" y="28">top_k × 2</text>
+  </g>
+
+  <!-- fan-in to RRF -->
+  <path fill="none" stroke="#2f3b45" stroke-width="2.2" d="M830 200 H900 M830 292 H900 M830 384 H900 M830 476 H900 M900 200 V476"/>
+  <circle cx="900" cy="200" r="4" fill="#2f3b45"/><circle cx="900" cy="292" r="4" fill="#2f3b45"/>
+  <circle cx="900" cy="384" r="4" fill="#2f3b45"/><circle cx="900" cy="476" r="4" fill="#2f3b45"/>
+  <path class="thin" d="M900 340 H1056"/>
+
+  <!-- query/chunk arrows into group -->
+  <path class="thin" d="M300 180 H340 V340 H376"/>
+  <path class="thin" d="M300 435 H340"/>
+  <circle cx="340" cy="340" r="4" fill="#2f3b45"/>
+
+  <!-- RRF box -->
+  <rect class="amber" x="1060" y="230" width="280" height="200" rx="16"/>
+  <text class="hdr2" x="1084" y="266">Reciprocal Rank Fusion</text>
+  <text class="mth" x="1084" y="304">score(d) = Σ 1 / (k + rankᵢ(d))</text>
+  <text class="sml" x="1084" y="332">k = 60 — 상위권 차이를 완만히 반영</text>
+  <text class="sml" x="1084" y="354">동일 가중치 — 필드 간 편향 없음</text>
+  <text class="sml" x="1084" y="386">점수 정규화 불필요: 순위만 사용하므로</text>
+  <text class="sml" x="1084" y="406">필드별 유사도 분포 차이에 강건</text>
+
+  <!-- final ranking -->
+  <rect class="grpK" x="1420" y="200" width="240" height="260" rx="16"/>
+  <text class="hdr2" x="1442" y="234">Final Ranking</text>
+  <g transform="translate(1442,256)">
+    <rect class="green" x="0" y="0"  width="190" height="30" rx="7"/><text class="sml" x="12" y="20">1위 — 4개 필드 순위 합산</text>
+    <rect class="peach" x="0" y="38" width="190" height="30" rx="7"/><text class="sml" x="12" y="58">2위</text>
+    <rect class="blue"  x="0" y="76" width="190" height="30" rx="7"/><text class="sml" x="12" y="96">3위</text>
+    <text class="sml" x="80" y="132">···</text>
+    <rect class="purp"  x="0" y="146" width="190" height="30" rx="7"/><text class="sml" x="12" y="166">top_k 로 절단</text>
+  </g>
+  <path class="thin" d="M1344 340 H1382 V330 H1416"/>
+
+  <!-- caption -->
+  <line x1="46" y1="590" x2="1660" y2="590" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="46" y="620">Figure. RRF 4-벡터 융합 상세 — 필드별 top_k×2 병렬 검색 후 순위 기반 융합. raw score 합산 시 특정 필드가 랭킹을 지배하는 문제를 순위만 사용해 회피한다.</text>
+</svg>

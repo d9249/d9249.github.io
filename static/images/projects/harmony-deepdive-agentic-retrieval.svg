@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="640" viewBox="0 0 1700 640" role="img" aria-labelledby="ht2 hd2">
+  <title id="ht2">Deep dive: prefetch RAG versus agentic retrieval</title>
+  <desc id="hd2">Before: a single system-side search with k=5 injected into the prompt makes every chunk look like a citation. After: the agent decides to call knowledge_search, accumulates a tool trace over up to six hops, and citations are extracted only from actually cited sources.</desc>
+  <defs>
+    <marker id="sage2" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#b7cfb2"/>
+    </marker>
+    <marker id="dark2" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
+    </marker>
+    <style>
+      .hdr  { font: italic 700 26px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 19px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 18px Georgia, serif; fill: #c2571a; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .grpO { fill: #fffcf8; stroke: #c2571a; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .flow { fill: none; stroke: #c9dcc5; stroke-width: 15; stroke-linecap: round; marker-end: url(#sage2); }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark2); }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
+    </style>
+  </defs>
+  <rect width="1700" height="640" fill="#ffffff"/>
+
+  <text class="step" x="46" y="52">Deep Dive ②</text>
+  <text class="hdr" x="168" y="52">검색 후보와 인용의 분리 — Prefetch RAG를 버리다</text>
+  <text class="sub" x="46" y="80">검색을 누가 결정하는가 — 시스템 선검색(1-hop)에서 에이전트 주도 멀티홉으로</text>
+
+  <!-- ===================== BEFORE ===================== -->
+  <rect class="grpK" x="46" y="110" width="640" height="440" rx="18"/>
+  <text class="hdr2" x="70" y="144">BEFORE — Prefetch RAG</text>
+  <text class="sml" x="310" y="144">1-hop 고정</text>
+
+  <rect class="pill" x="70" y="180" width="170" height="44" rx="22"/>
+  <text class="lbl" x="94" y="208">user message</text>
+  <path class="thin" d="M244 202 H278"/>
+
+  <rect class="blue" x="282" y="174" width="200" height="60" rx="12"/>
+  <text class="lbl" x="302" y="199">시스템이 1회 검색</text>
+  <text class="sml" x="302" y="221">k = 5 — 항상</text>
+  <path class="thin" d="M382 234 V266"/>
+
+  <rect class="pill" x="282" y="270" width="200" height="160" rx="14"/>
+  <text class="lbl" x="302" y="296">system prompt</text>
+  <rect class="peach" x="302" y="312" width="160" height="16" rx="4"/>
+  <rect class="peach" x="302" y="334" width="160" height="16" rx="4"/>
+  <rect class="peach" x="302" y="356" width="160" height="16" rx="4"/>
+  <rect class="peach" x="302" y="378" width="160" height="16" rx="4"/>
+  <rect class="peach" x="302" y="400" width="160" height="16" rx="4"/>
+  <path class="thin" d="M486 350 H520"/>
+
+  <rect class="grpO" x="524" y="300" width="140" height="100" rx="14"/>
+  <text class="lbl" x="544" y="330">응답</text>
+  <text class="sml" x="544" y="354">모든 chunk가</text>
+  <text class="sml" x="544" y="374">인용처럼 표시</text>
+
+  <text class="sml" x="70" y="480">· 에이전트가 "더 찾을지"를 결정할 수 없음 — 재검색 없음</text>
+  <text class="sml" x="70" y="504">· 쓰지 않은 문서도 근거로 표시 — 인용 정합성 붕괴</text>
+
+  <path class="flow" d="M700 330 H744"/>
+
+  <!-- ===================== AFTER ===================== -->
+  <rect class="grpB" x="756" y="110" width="904" height="440" rx="18"/>
+  <text class="hdr2" x="780" y="144">AFTER — Agentic Retrieval</text>
+  <text class="sml" x="1036" y="144">멀티홉 최대 6회</text>
+
+  <rect class="pill" x="780" y="176" width="200" height="44" rx="22"/>
+  <text class="lbl" x="804" y="204">warm hint — k = 1</text>
+  <path class="thin" d="M880 220 V252"/>
+
+  <rect class="amber" x="780" y="256" width="220" height="100" rx="14"/>
+  <text class="hdr2" x="800" y="288">Agent</text>
+  <text class="sml" x="800" y="314">검색 필요를 스스로 판단</text>
+  <text class="sml" x="800" y="336">knowledge_search 호출</text>
+  <path class="thin" d="M1004 306 H1038"/>
+
+  <rect class="blue" x="1042" y="256" width="210" height="100" rx="12"/>
+  <text class="lbl" x="1062" y="288">knowledge_search</text>
+  <text class="sml" x="1062" y="314">질의 · 결과 · 소요시간</text>
+  <path class="thin" d="M1256 306 H1290"/>
+
+  <rect class="grpK" x="1294" y="196" width="330" height="220" rx="16"/>
+  <text class="hdr2" x="1314" y="228">Tool Trace</text>
+  <text class="sml" x="1436" y="228">검색 후보 — "본 것"</text>
+  <rect class="peach" x="1314" y="250" width="280" height="26" rx="6"/><text class="sml" x="1326" y="268">hop 1 — query · results</text>
+  <rect class="blue"  x="1314" y="288" width="280" height="26" rx="6"/><text class="sml" x="1326" y="306">hop 2 — 질의 변경 재검색</text>
+  <rect class="purp"  x="1314" y="326" width="280" height="26" rx="6"/><text class="sml" x="1326" y="344">hop 3</text>
+  <text class="sml" x="1326" y="380">··· 최대 6 hop</text>
+
+  <path class="thin" d="M1147 360 V420 H890 V364"/>
+  <text class="sml" x="920" y="444">부족하면 질의를 바꿔 재검색 — multi-hop ≤ 6</text>
+
+  <path class="thin" d="M1459 416 V452"/>
+  <rect class="green" x="1294" y="456" width="330" height="74" rx="12"/>
+  <text class="lbl" x="1314" y="486">Citations — 실제 인용된 소스만</text>
+  <text class="sml" x="1314" y="510">trace에서 분리 추출 — "쓴 것"</text>
+
+  <text class="sml" x="780" y="484">· 충분하면 추가 검색 없음 — 비용 통제</text>
+  <text class="sml" x="780" y="508">· UI가 "본 것"과 "쓴 것"을 구별해 표시</text>
+
+  <!-- caption -->
+  <line x1="46" y1="584" x2="1660" y2="584" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="46" y="616">Figure. Prefetch RAG(좌)는 1회 검색 결과 전체가 인용처럼 표시되지만, Agentic Retrieval(우)은 에이전트가 검색을 결정하고 tool trace(후보)와 citations(실제 인용)를 분리한다.</text>
+</svg>

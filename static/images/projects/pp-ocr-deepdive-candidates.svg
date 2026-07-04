@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="700" viewBox="0 0 1700 700" role="img" aria-labelledby="t2 d2">
+  <title id="t2">Deep dive: table structure candidate generation, comparison and selection</title>
+  <desc id="d2">A table region produces four parallel structure candidates — line-based lattice, bbox grouping, header inference and a correction layer — which are compared by structural stability; the selected structure is emitted with diagnostic rationale, and failure cases accumulate into a regression casebook loop.</desc>
+  <defs>
+    <marker id="dark2" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
+    </marker>
+    <style>
+      .hdr  { font: italic 700 26px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 19px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 18px Georgia, serif; fill: #c2571a; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark2); }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
+      .grid { stroke: #8a97a1; stroke-width: 2; }
+    </style>
+  </defs>
+  <rect width="1700" height="700" fill="#ffffff"/>
+
+  <text class="step" x="46" y="52">Deep Dive ①</text>
+  <text class="hdr" x="168" y="52">표 구조 복원 — 후보 생성 · 비교 · 선택 프레임</text>
+  <text class="sub" x="46" y="80">단일 전략이 무너지는 표 변형(병합 셀 · 다단 헤더 · 끊긴 격자선)을 성격이 다른 후보의 병렬 생성과 비교 · 선택으로 해결</text>
+
+  <!-- Table region input -->
+  <rect class="grpK" x="46" y="140" width="250" height="250" rx="16"/>
+  <text class="hdr2" x="66" y="172">Table Region</text>
+  <g transform="translate(76,196)">
+    <rect x="0" y="0" width="190" height="110" class="ink"/>
+    <line class="grid" x1="0" y1="34" x2="190" y2="34"/>
+    <line class="grid" x1="0" y1="72" x2="80" y2="72"/>
+    <line class="grid" x1="132" y1="72" x2="190" y2="72"/>
+    <line class="grid" x1="64" y1="34" x2="64" y2="110"/>
+    <line class="grid" x1="128" y1="0" x2="128" y2="110"/>
+    <rect x="10" y="44" width="42" height="16" rx="3" fill="#fdefe2" stroke="#d9b38c" stroke-width="1.4"/>
+    <rect x="74" y="82" width="42" height="16" rx="3" fill="#fdefe2" stroke="#d9b38c" stroke-width="1.4"/>
+    <rect x="140" y="44" width="38" height="16" rx="3" fill="#fdefe2" stroke="#d9b38c" stroke-width="1.4"/>
+  </g>
+  <text class="sml" x="66" y="340">OCR bbox + 검출 선분</text>
+  <text class="sml" x="66" y="362">격자선 일부 누락 · 병합 셀 포함</text>
+  <path class="thin" d="M300 265 H356"/>
+
+  <!-- Candidate generation group -->
+  <rect class="grpB" x="360" y="120" width="560" height="460" rx="20"/>
+  <text class="hdr2" x="384" y="154">Candidate Generation</text>
+  <text class="sub" x="384" y="178">성격이 다른 4종 구조 후보를 병렬 생성</text>
+
+  <g transform="translate(384,196)">
+    <rect class="peach" x="0" y="0" width="230" height="64" rx="10"/>
+    <text class="lbl" x="16" y="26">선분 기반 Lattice</text>
+    <text class="sml" x="16" y="48">선이 온전할 때 가장 정확</text>
+    <path class="thin" d="M234 32 H264"/>
+    <g transform="translate(268,4)">
+      <rect x="0" y="0" width="140" height="56" fill="#fff" stroke="#d9b38c" stroke-width="1.6"/>
+      <line class="grid" x1="0" y1="19" x2="140" y2="19"/>
+      <line class="grid" x1="0" y1="38" x2="58" y2="38"/>
+      <line class="grid" x1="96" y1="38" x2="140" y2="38"/>
+      <line class="grid" x1="47" y1="0" x2="47" y2="56"/>
+      <line class="grid" x1="94" y1="0" x2="94" y2="56"/>
+    </g>
+  </g>
+  <g transform="translate(384,288)">
+    <rect class="blue" x="0" y="0" width="230" height="64" rx="10"/>
+    <text class="lbl" x="16" y="26">bbox 기반 Grouping</text>
+    <text class="sml" x="16" y="48">행 간격 · 열 정렬 추정</text>
+    <path class="thin" d="M234 32 H264"/>
+    <g transform="translate(268,4)" fill="none" stroke="#a9c6e0" stroke-width="1.8" stroke-dasharray="4 3">
+      <rect x="0" y="0" width="40" height="14"/><rect x="52" y="0" width="40" height="14"/><rect x="100" y="0" width="40" height="14"/>
+      <rect x="0" y="21" width="40" height="14"/><rect x="52" y="21" width="40" height="14"/><rect x="100" y="21" width="40" height="14"/>
+      <rect x="0" y="42" width="40" height="14"/><rect x="52" y="42" width="40" height="14"/><rect x="100" y="42" width="40" height="14"/>
+    </g>
+  </g>
+  <g transform="translate(384,380)">
+    <rect class="purp" x="0" y="0" width="230" height="64" rx="10"/>
+    <text class="lbl" x="16" y="26">헤더 추론</text>
+    <text class="sml" x="16" y="48">colspan · 행 헤더 계층 보존</text>
+    <path class="thin" d="M234 32 H264"/>
+    <g transform="translate(268,4)">
+      <rect x="0" y="0" width="140" height="56" fill="#fff" stroke="#c3aede" stroke-width="1.6"/>
+      <rect x="0" y="0" width="140" height="19" fill="#efe9f7" stroke="#c3aede" stroke-width="1.6"/>
+      <line class="grid" x1="0" y1="38" x2="140" y2="38"/>
+      <line class="grid" x1="47" y1="19" x2="47" y2="56"/>
+      <line class="grid" x1="94" y1="19" x2="94" y2="56"/>
+    </g>
+  </g>
+  <g transform="translate(384,472)">
+    <rect class="green" x="0" y="0" width="230" height="64" rx="10"/>
+    <text class="lbl" x="16" y="26">보정 · 복구 계층</text>
+    <text class="sml" x="16" y="48">누락 선 복구 · 텍스트 재결합</text>
+    <path class="thin" d="M234 32 H264"/>
+    <g transform="translate(268,4)">
+      <rect x="0" y="0" width="140" height="56" fill="#fff" stroke="#a9cdb1" stroke-width="1.6"/>
+      <line class="grid" x1="0" y1="19" x2="140" y2="19"/>
+      <line class="grid" x1="0" y1="38" x2="58" y2="38"/>
+      <line x1="58" y1="38" x2="96" y2="38" stroke="#c2571a" stroke-width="2" stroke-dasharray="5 3"/>
+      <line class="grid" x1="96" y1="38" x2="140" y2="38"/>
+      <line class="grid" x1="47" y1="0" x2="47" y2="56"/>
+      <line class="grid" x1="94" y1="0" x2="94" y2="56"/>
+    </g>
+  </g>
+
+  <!-- fan-in bus -->
+  <path fill="none" stroke="#2f3b45" stroke-width="2.2" d="M828 228 H868 M828 320 H868 M828 412 H868 M828 504 H868 M868 228 V504"/>
+  <circle cx="868" cy="228" r="4" fill="#2f3b45"/><circle cx="868" cy="320" r="4" fill="#2f3b45"/>
+  <circle cx="868" cy="412" r="4" fill="#2f3b45"/><circle cx="868" cy="504" r="4" fill="#2f3b45"/>
+  <path class="thin" d="M868 366 H986"/>
+
+  <!-- compare & select -->
+  <rect class="amber" x="990" y="286" width="250" height="160" rx="16"/>
+  <text class="hdr2" x="1014" y="320">구조 안정성 비교 · 선택</text>
+  <text class="sml" x="1014" y="348">후보별 구조 안정성 평가</text>
+  <text class="sml" x="1014" y="370">가장 설득력 있는 구조 선택</text>
+  <text class="sml" x="1014" y="392">선택 근거 진단 기록</text>
+  <text class="sml" x="1014" y="420">연구 화면에서 케이스 단위 추적</text>
+
+  <!-- final table -->
+  <path class="thin" d="M1244 366 H1296 V340 H1336"/>
+  <rect class="grpK" x="1340" y="240" width="250" height="200" rx="16"/>
+  <text class="hdr2" x="1362" y="274">최종 표 구조</text>
+  <g transform="translate(1372,292)">
+    <rect x="0" y="0" width="186" height="90" class="ink"/>
+    <rect x="0" y="0" width="186" height="28" fill="#e6f2e8" stroke="#a9cdb1" stroke-width="1.6"/>
+    <line class="grid" x1="0" y1="59" x2="186" y2="59"/>
+    <line class="grid" x1="62" y1="28" x2="62" y2="90"/>
+    <line class="grid" x1="124" y1="0" x2="124" y2="90"/>
+  </g>
+  <text class="sml" x="1362" y="416">병합 셀 · 헤더 계층 포함 출력</text>
+
+  <!-- failure case & casebook loop -->
+  <path class="thin" d="M1115 446 V496"/>
+  <rect class="peach" x="1015" y="500" width="200" height="60" rx="10"/>
+  <text class="lbl" x="1032" y="526">실패 케이스</text>
+  <text class="sml" x="1032" y="548">선택 근거와 함께 기록</text>
+  <path class="thin" d="M1219 530 H1336"/>
+  <rect class="green" x="1340" y="496" width="250" height="72" rx="10"/>
+  <text class="lbl" x="1358" y="524">회귀 케이스북</text>
+  <text class="sml" x="1358" y="548">실패 사례 축적 → 회귀 세트</text>
+  <path fill="none" stroke="#2f3b45" stroke-width="2.2" stroke-dasharray="7 5" marker-end="url(#dark2)" d="M1465 568 V608 H640 V588"/>
+  <text class="sml" x="700" y="602">보정 규칙 개선 후 회귀 재검증 루프</text>
+
+  <!-- caption -->
+  <line x1="46" y1="640" x2="1660" y2="640" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="46" y="670">Figure. 표 구조 복원 상세 — 표 영역마다 4종 후보를 병렬 생성해 구조 안정성으로 비교 · 선택하고 근거를 남긴다. 실패 케이스는 회귀 케이스북으로 축적되어 규칙 개선의 재검증 루프를 이룬다. (보정 규칙의 구체 조건 · 판정 로직은 특허 출원 범위로 비공개)</text>
+</svg>

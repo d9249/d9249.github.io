@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="700" viewBox="0 0 1700 700" role="img" aria-labelledby="ht4 hd4">
+  <title id="ht4">Deep dive: human-gated knowledge loop and runtime approval gate</title>
+  <desc id="hd4">Top: raw sources pass through ingest, sanitize, classify and draft stages into a pending review queue; only human approval publishes to the corpus and reloads the index. Bottom: high-risk requests are detected before the turn, an SSE approval event is raised, an admin decides, and the flow resumes or stops, with an auto-approval bypass path.</desc>
+  <defs>
+    <marker id="dark4" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
+    </marker>
+    <marker id="gray4" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#7d8b95"/>
+    </marker>
+    <style>
+      .hdr  { font: italic 700 26px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 19px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 18px Georgia, serif; fill: #c2571a; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark4); }
+      .bypass { fill: none; stroke: #7d8b95; stroke-width: 2.2; stroke-dasharray: 6 5; marker-end: url(#gray4); }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
+    </style>
+  </defs>
+  <rect width="1700" height="700" fill="#ffffff"/>
+
+  <text class="step" x="46" y="52">Deep Dive ④</text>
+  <text class="hdr" x="168" y="52">Human-gated Knowledge Loop — AI가 만든 지식에 게이트 세우기</text>
+  <text class="sub" x="46" y="80">업로드가 곧 공식 지식이 되지 않도록 — 지식 편입과 고위험 실행, 두 지점의 사람 게이트</text>
+
+  <!-- ===================== PUBLISH PIPELINE ===================== -->
+  <rect class="grpB" x="46" y="104" width="1614" height="240" rx="18"/>
+  <text class="hdr2" x="70" y="138">① 발행 게이트 — LLM-Wiki Compiler</text>
+  <text class="sml" x="404" y="138">지식 편입 시점</text>
+
+  <g transform="translate(84,176)">
+    <path class="ink" d="M0 0 H46 L62 16 V72 H0 Z"/><path class="ink" d="M46 0 V16 H62" fill="none"/>
+    <line x1="10" y1="30" x2="52" y2="30" stroke="#8a97a1" stroke-width="2.6"/>
+    <line x1="10" y1="44" x2="52" y2="44" stroke="#8a97a1" stroke-width="2.6"/>
+    <line x1="10" y1="58" x2="38" y2="58" stroke="#8a97a1" stroke-width="2.6"/>
+    <text class="lbl" x="-8" y="98">raw source</text>
+  </g>
+  <path class="thin" d="M156 212 H186"/>
+
+  <rect class="peach" x="190" y="170" width="140" height="84" rx="12"/>
+  <text class="lbl" x="210" y="200">ingest</text>
+  <text class="sml" x="210" y="224">포맷 정규화</text>
+  <path class="thin" d="M334 212 H364"/>
+
+  <rect class="blue" x="368" y="170" width="190" height="84" rx="12"/>
+  <text class="lbl" x="388" y="198">sanitize</text>
+  <text class="sml" x="388" y="222">PII·token·license 탐지</text>
+  <text class="sml" x="388" y="242">redaction 후보</text>
+  <path class="thin" d="M562 212 H592"/>
+
+  <rect class="purp" x="596" y="170" width="190" height="84" rx="12"/>
+  <text class="lbl" x="616" y="198">classify</text>
+  <text class="sml" x="616" y="222">팀 · tag · 만료일</text>
+  <text class="sml" x="616" y="242">frontmatter 제안</text>
+  <path class="thin" d="M790 212 H820"/>
+
+  <rect class="peach" x="824" y="170" width="130" height="84" rx="12"/>
+  <text class="lbl" x="844" y="200">draft</text>
+  <text class="sml" x="844" y="224">검토용 초안</text>
+  <path class="thin" d="M958 212 H988"/>
+
+  <rect class="amber" x="992" y="170" width="180" height="84" rx="12"/>
+  <text class="lbl" x="1012" y="200">Review Queue</text>
+  <text class="sml" x="1012" y="224">PENDING</text>
+  <path class="thin" d="M1176 212 H1206"/>
+
+  <rect class="pill" x="1210" y="170" width="184" height="84" rx="14"/>
+  <circle cx="1236" cy="196" r="8" fill="#fff" stroke="#2f3b45" stroke-width="1.8"/>
+  <path d="M1224 216 A13 10 0 0 1 1248 216" fill="#fff" stroke="#2f3b45" stroke-width="1.8"/>
+  <text class="lbl" x="1260" y="200">사람 승인 / 거절</text>
+  <text class="sml" x="1260" y="224">거절 → 반려</text>
+  <path class="thin" d="M1398 212 H1428"/>
+
+  <rect class="green" x="1432" y="170" width="200" height="84" rx="12"/>
+  <text class="lbl" x="1452" y="198">발행</text>
+  <text class="sml" x="1452" y="222">corpus write</text>
+  <text class="sml" x="1452" y="242">+ index reload</text>
+
+  <text class="sml" x="70" y="320">승인 전에는 어떤 초안도 검색 corpus에 존재하지 않는다 — 발행 시에만 write와 index reload가 일어난다</text>
+
+  <!-- ===================== RUNTIME APPROVAL GATE ===================== -->
+  <rect class="grpB" x="46" y="384" width="1614" height="230" rx="18"/>
+  <text class="hdr2" x="70" y="418">② 실행 게이트 — Runtime Approval</text>
+  <text class="sml" x="396" y="418">턴 시작 전</text>
+
+  <path class="bypass" d="M186 480 V448 H1245 V474"/>
+  <text class="sml" x="620" y="440">권한 태그 기반 자동 승인 — 게이트 우회 (임원·관리자 흐름은 막히지 않음)</text>
+
+  <rect class="blue" x="76" y="480" width="220" height="90" rx="12"/>
+  <text class="lbl" x="96" y="510">고위험 요청 감지</text>
+  <text class="sml" x="96" y="534">웹 검색 · 서브에이전트 등</text>
+  <path class="thin" d="M300 525 H330"/>
+
+  <rect class="amber" x="334" y="480" width="230" height="90" rx="12"/>
+  <text class="lbl" x="354" y="510">SSE approval.required</text>
+  <text class="sml" x="354" y="534">승인 레코드 생성</text>
+  <path class="thin" d="M568 525 H598"/>
+
+  <rect class="pill" x="602" y="480" width="210" height="90" rx="14"/>
+  <circle cx="630" cy="508" r="8" fill="#fff" stroke="#2f3b45" stroke-width="1.8"/>
+  <path d="M618 528 A13 10 0 0 1 642 528" fill="#fff" stroke="#2f3b45" stroke-width="1.8"/>
+  <text class="lbl" x="656" y="512">관리자 큐 결정</text>
+  <text class="sml" x="656" y="536">승인 / 거절</text>
+  <path class="thin" d="M816 525 H846"/>
+
+  <rect class="amber" x="850" y="480" width="230" height="90" rx="12"/>
+  <text class="lbl" x="870" y="510">SSE approval.decided</text>
+  <text class="sml" x="870" y="534">사용자 흐름에 통지</text>
+
+  <path fill="none" stroke="#2f3b45" stroke-width="2.2" d="M1084 525 H1120 M1120 500 V558"/>
+  <circle cx="1120" cy="500" r="4" fill="#2f3b45"/>
+  <circle cx="1120" cy="558" r="4" fill="#2f3b45"/>
+  <path class="thin" d="M1120 500 H1156"/>
+  <path class="thin" d="M1120 558 H1156"/>
+  <rect class="green" x="1160" y="478" width="170" height="44" rx="10"/>
+  <text class="lbl" x="1180" y="506">재개 — 턴 실행</text>
+  <rect class="peach" x="1160" y="536" width="170" height="44" rx="10"/>
+  <text class="lbl" x="1180" y="564">중단</text>
+  <text class="sml" x="1364" y="516">결정 전까지 턴은</text>
+  <text class="sml" x="1364" y="536">시작되지 않는다</text>
+
+  <!-- caption -->
+  <line x1="46" y1="644" x2="1660" y2="644" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="46" y="676">Figure. 지식 편입(위)과 고위험 실행(아래) 모두 사람 게이트를 통과해야 진행된다 — 컴파일 결과는 PENDING 큐에 머물고, 실행 게이트는 턴 전 감지 → SSE → 결정 UI로 end-to-end 배선되었다.</text>
+</svg>

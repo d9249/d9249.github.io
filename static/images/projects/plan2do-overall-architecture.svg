@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="900" viewBox="0 0 2000 900" role="img" aria-labelledby="t d">
+  <title id="t">Plan2Do overall architecture — paper figure style</title>
+  <desc id="d">Legal XML is normalized into hierarchical chunks stored in Qdrant; field inputs pass through a LangGraph workflow of dual retrieval, parallel risk analysis and mitigation generation, and legal compliance validation, producing an HTML risk assessment table with a validation summary.</desc>
+  <defs>
+    <marker id="sage" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#b7cfb2"/>
+    </marker>
+    <marker id="dark" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
+    </marker>
+    <style>
+      .hdr  { font: italic 700 27px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 20px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14.5px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 19px Georgia, serif; fill: #c2571a; }
+      .qtxt { font: italic 600 16px Georgia, serif; fill: #7a3d12; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .grpO { fill: #fffcf8; stroke: #c2571a; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .flow { fill: none; stroke: #c9dcc5; stroke-width: 15; stroke-linecap: round; marker-end: url(#sage); }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark); }
+      .join { fill: none; stroke: #2f3b45; stroke-width: 2.2; }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
+    </style>
+  </defs>
+  <rect width="2000" height="900" fill="#ffffff"/>
+
+  <!-- ===================== INPUT (user contact) ===================== -->
+  <text class="hdr2" x="60" y="136">Input — 현장 입력</text>
+  <rect class="grpO" x="42" y="150" width="630" height="250" rx="18"/>
+  <!-- image icon -->
+  <g transform="translate(80,186)">
+    <path class="ink" d="M0 0 H62 L82 20 V92 H0 Z"/><path class="ink" d="M62 0 V20 H82" fill="none"/>
+    <circle cx="28" cy="44" r="12" fill="#fdefe2" stroke="#d9b38c" stroke-width="2"/>
+    <path d="M14 76 L32 54 L46 68 L58 54 L68 76 Z" fill="#e6f2e8" stroke="#a9cdb1" stroke-width="2"/>
+    <text class="lbl" x="4" y="116">현장 이미지</text>
+  </g>
+  <!-- document icon -->
+  <g transform="translate(224,186)">
+    <path class="ink" d="M0 0 H62 L82 20 V92 H0 Z"/><path class="ink" d="M62 0 V20 H82" fill="none"/>
+    <line x1="14" y1="38" x2="66" y2="38" stroke="#8a97a1" stroke-width="3"/><line x1="14" y1="54" x2="66" y2="54" stroke="#8a97a1" stroke-width="3"/><line x1="14" y1="70" x2="48" y2="70" stroke="#8a97a1" stroke-width="3"/>
+    <text class="lbl" x="6" y="116">PDF · 문서</text>
+  </g>
+  <!-- text query -->
+  <text class="sml" x="366" y="196">텍스트 질의</text>
+  <rect class="pill" x="366" y="204" width="284" height="72" rx="16"/>
+  <text class="qtxt" x="384" y="234">“고소 작업 중 작업자가</text>
+  <text class="qtxt" x="384" y="258">안전대를 걸지 않음”</text>
+  <!-- relevance gate -->
+  <rect class="amber" x="80" y="330" width="480" height="48" rx="24"/>
+  <text class="lbl" x="106" y="360">산업안전 관련성 분류 — 무관한 입력은 거절</text>
+
+  <path class="flow" d="M678 275 H710"/>
+
+  <!-- ===================== 1) LEGAL CORPUS (offline) ===================== -->
+  <text class="step" x="46" y="446">1)</text>
+  <text class="hdr" x="80" y="446">Legal Corpus 구축 (Offline)</text>
+  <rect class="grpB" x="42" y="460" width="630" height="310" rx="20"/>
+  <text class="sub" x="66" y="496">산업안전보건법·중대재해처벌법·건설기술진흥법 계열 XML</text>
+
+  <!-- XML doc icon -->
+  <g transform="translate(66,552)">
+    <path class="ink" d="M0 0 H62 L82 20 V92 H0 Z"/><path class="ink" d="M62 0 V20 H82" fill="none"/>
+    <text class="sml" x="18" y="58">&lt;/&gt;</text>
+    <text class="lbl" x="8" y="118">법령 XML</text>
+  </g>
+  <path class="thin" d="M154 598 H182"/>
+  <!-- normalize box -->
+  <rect class="blue" x="186" y="552" width="140" height="92" rx="12"/>
+  <text class="lbl" x="200" y="586">문자 정규화</text>
+  <text class="sml" x="200" y="610">조·항·호 분할</text>
+  <text class="sml" x="200" y="630">계층 보존</text>
+  <path class="thin" d="M330 598 H358"/>
+  <!-- chunk stack -->
+  <g transform="translate(362,550)">
+    <rect class="peach" x="0" y="0"  width="118" height="30" rx="7"/>
+    <rect class="peach" x="0" y="36" width="118" height="30" rx="7"/>
+    <rect class="peach" x="0" y="72" width="118" height="30" rx="7"/>
+    <text class="lbl" x="0" y="124">조·항·호 chunk</text>
+  </g>
+  <path class="thin" d="M484 598 H512"/>
+  <!-- Qdrant cylinder -->
+  <g transform="translate(524,556)">
+    <ellipse cx="36" cy="12" rx="36" ry="12" class="ink"/>
+    <path class="ink" d="M0 12 V62 A36 12 0 0 0 72 62 V12" fill="#fff"/>
+    <ellipse cx="36" cy="62" rx="36" ry="12" fill="none" stroke="#2f3b45" stroke-width="1.8"/>
+    <text class="lbl" x="10" y="112">Qdrant</text>
+  </g>
+  <text class="sml" x="66" y="722">chunk 제목에 법령명·조 번호 포함 — 결과가 그 자체로 인용 가능한 표기</text>
+  <text class="sml" x="66" y="746">text-embedding-3-large 임베딩 → Qdrant 법령 컬렉션 적재</text>
+
+  <path class="flow" d="M678 600 H710"/>
+
+  <!-- ===================== 2) LANGGRAPH RISK WORKFLOW ===================== -->
+  <text class="step" x="724" y="136">2)</text>
+  <text class="hdr" x="758" y="136">LangGraph Risk Workflow</text>
+  <rect class="grpB" x="716" y="150" width="900" height="620" rx="20"/>
+  <text class="sub" x="740" y="184">상태 머신 — 단계 완료마다 SSE 진행 이벤트 반환</text>
+
+  <!-- normalize input pill -->
+  <rect class="pill" x="756" y="252" width="240" height="46" rx="23"/>
+  <text class="lbl" x="778" y="281">입력 정규화 · 위험요인 추출</text>
+  <path class="thin" d="M876 302 V501"/>
+
+  <!-- dual retrieval box -->
+  <rect class="blue" x="756" y="505" width="300" height="190" rx="14"/>
+  <text class="hdr2" x="778" y="540">법령 이중 검색</text>
+  <text class="sml" x="778" y="566">원본 설명 ∥ 키워드 강화 병렬</text>
+  <text class="sml" x="778" y="588">가중 병합 · 재순위화</text>
+  <text class="sml" x="778" y="618">편중 방지 cap:</text>
+  <text class="sml" x="778" y="640">같은 법령 ≤ 2 · 같은 조 ≤ 1</text>
+
+  <!-- split to parallel -->
+  <path class="thin" d="M1056 600 H1088 V460 H1116"/>
+  <path class="thin" d="M1056 600 H1088 V690 H1116"/>
+  <circle cx="1088" cy="600" r="4" fill="#2f3b45"/>
+  <text class="sml" x="1110" y="586">병렬 분기</text>
+
+  <!-- parallel boxes -->
+  <rect class="purp" x="1120" y="420" width="230" height="80" rx="12"/>
+  <text class="lbl" x="1140" y="452">위험 상세 분석</text>
+  <text class="sml" x="1140" y="476">예상 위험 수준 추정</text>
+  <rect class="green" x="1120" y="650" width="230" height="80" rx="12"/>
+  <text class="lbl" x="1140" y="682">감소대책 생성</text>
+  <text class="sml" x="1140" y="706">근거 법령 매칭 포함</text>
+
+  <!-- merge to validation -->
+  <path class="thin" d="M1350 460 H1382 V575 H1408"/>
+  <path class="join" d="M1350 690 H1382 V575"/>
+  <circle cx="1382" cy="575" r="4" fill="#2f3b45"/>
+
+  <!-- validation box -->
+  <rect class="amber" x="1412" y="475" width="184" height="200" rx="14"/>
+  <text class="hdr2" x="1430" y="510">법령 준수 검증</text>
+  <text class="sml" x="1430" y="536">대책별 근거 재판정</text>
+  <text class="sml" x="1430" y="558">무관 법령 제거</text>
+  <text class="sml" x="1430" y="588">validated / removed</text>
+  <text class="sml" x="1430" y="610">removal_rate %</text>
+
+  <path class="flow" d="M1622 575 H1668"/>
+
+  <!-- ===================== 3) OUTPUT ===================== -->
+  <text class="step" x="1680" y="136">3)</text>
+  <text class="hdr" x="1714" y="136">Output</text>
+  <rect class="grpO" x="1676" y="150" width="282" height="620" rx="18"/>
+  <text class="sub" x="1700" y="184">검토용 리포트</text>
+
+  <text class="hdr2" x="1700" y="216">위험성평가 HTML 표</text>
+  <g transform="translate(1700,230)">
+    <rect class="ink" x="0" y="0" width="234" height="160" rx="6"/>
+    <rect x="1" y="1" width="232" height="30" rx="5" fill="#fdf3dd" stroke="none"/>
+    <line x1="0" y1="32" x2="234" y2="32" stroke="#2f3b45" stroke-width="1.6"/>
+    <line x1="0" y1="74" x2="234" y2="74" stroke="#8a97a1" stroke-width="1.4"/>
+    <line x1="0" y1="116" x2="234" y2="116" stroke="#8a97a1" stroke-width="1.4"/>
+    <line x1="38" y1="0" x2="38" y2="160" stroke="#8a97a1" stroke-width="1.4"/>
+    <line x1="146" y1="0" x2="146" y2="160" stroke="#8a97a1" stroke-width="1.4"/>
+    <g stroke="#2f3b45" stroke-width="1.6" fill="#fff">
+      <rect x="11" y="45" width="16" height="16" rx="3"/>
+      <rect x="11" y="87" width="16" height="16" rx="3"/>
+      <rect x="11" y="129" width="16" height="16" rx="3"/>
+    </g>
+    <path d="M14 52 L18 57 L25 47" fill="none" stroke="#4a7fa5" stroke-width="2"/>
+    <g stroke="#8a97a1" stroke-width="3">
+      <line x1="50" y1="52" x2="132" y2="52"/><line x1="158" y1="52" x2="222" y2="52"/>
+      <line x1="50" y1="94" x2="120" y2="94"/><line x1="158" y1="94" x2="210" y2="94"/>
+      <line x1="50" y1="136" x2="128" y2="136"/><line x1="158" y1="136" x2="216" y2="136"/>
+    </g>
+  </g>
+  <text class="sml" x="1700" y="416">체크박스·위험요인·수준·대책·근거</text>
+
+  <rect class="amber" x="1700" y="460" width="234" height="100" rx="12"/>
+  <text class="lbl" x="1718" y="492">검증 요약</text>
+  <text class="sml" x="1718" y="516">유지·제거 건수 표기</text>
+  <text class="sml" x="1718" y="538">removal_rate % 공개</text>
+
+  <rect class="pill" x="1700" y="600" width="234" height="48" rx="24"/>
+  <text class="lbl" x="1718" y="630">SSE 진행 이벤트</text>
+  <text class="sml" x="1876" y="630">· · ·</text>
+
+  <!-- ===================== caption ===================== -->
+  <line x1="42" y1="800" x2="1958" y2="800" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="42" y="836">Figure. Plan2Do AI 엔진 전체 아키텍처 — 법령 XML은 조·항·호 계층 chunk로 Qdrant에 적재되고(offline), 현장 입력은 LangGraph 워크플로우에서 이중 검색·병렬 생성·법령 준수 검증을 거쳐 검증 요약이 붙은 위험성평가 표로 반환된다.</text>
+  <text class="sub" x="42" y="862">수상 관계: Plan2Do 플랫폼이 행정안전부 장관상('25)·한국건설기술연구원 원장상('25) 수상 — 본 도판의 AI 엔진 전체를 단독 개발하여 플랫폼에 탑재. Deep-dive 별도 도판: ② 이중 검색 ③ 법령 준수 검증</text>
+</svg>

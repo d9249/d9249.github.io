@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="640" viewBox="0 0 1700 640" role="img" aria-labelledby="t2 d2">
+  <title id="t2">Deep dive: dual retrieval with anti-concentration cap</title>
+  <desc id="d2">A risk description is searched directly and via LLM-extracted safety keywords in parallel; results are merged with weights, re-ranked, and capped per law and per article to guarantee evidence diversity.</desc>
+  <defs>
+    <marker id="dark2" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
+    </marker>
+    <style>
+      .hdr  { font: italic 700 26px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 19px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 18px Georgia, serif; fill: #c2571a; }
+      .qtxt { font: italic 600 16px Georgia, serif; fill: #7a3d12; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .grpO { fill: #fffcf8; stroke: #c2571a; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark2); }
+      .join { fill: none; stroke: #2f3b45; stroke-width: 2.2; }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
+    </style>
+  </defs>
+  <rect width="1700" height="640" fill="#ffffff"/>
+
+  <text class="step" x="46" y="52">Deep Dive ②</text>
+  <text class="hdr" x="170" y="52">이중 검색 — 어휘 간극과 편중을 함께 잡는다</text>
+  <text class="sub" x="46" y="80">위험 설명과 법령 조문은 같은 내용을 다른 어휘로 말한다 — recall 손실은 키워드 강화로, 편중은 cap으로 통제</text>
+
+  <!-- risk description -->
+  <text class="hdr2" x="50" y="124">위험 설명</text>
+  <rect class="grpO" x="46" y="132" width="300" height="106" rx="16"/>
+  <text class="qtxt" x="66" y="172">“고소 작업 중 작업자가</text>
+  <text class="qtxt" x="66" y="198">안전대를 걸지 않음”</text>
+
+  <!-- keyword extraction -->
+  <path class="thin" d="M196 242 V296"/>
+  <rect class="pill" x="46" y="300" width="300" height="76" rx="20"/>
+  <g transform="translate(66,324)"><path d="M11 0 L13 8 L21 10 L13 12 L11 20 L9 12 L1 10 L9 8 Z" fill="#c2571a"/></g>
+  <text class="lbl" x="100" y="331">LLM 안전 키워드 추출</text>
+  <text class="sml" x="100" y="353">예: 추락 · 안전대 · 고소작업</text>
+  <text class="sml" x="46" y="406">JSON 파싱 실패 시</text>
+  <text class="sml" x="46" y="426">정규식·명사 기반 fallback</text>
+
+  <!-- parallel search group -->
+  <rect class="grpB" x="420" y="130" width="540" height="330" rx="20"/>
+  <text class="hdr2" x="444" y="162">이중 병렬 검색</text>
+  <text class="sub" x="444" y="186">Qdrant 법령 컬렉션 대상</text>
+  <g transform="translate(878,142)">
+    <ellipse cx="20" cy="8" rx="20" ry="7" class="ink"/>
+    <path class="ink" d="M0 8 V30 A20 7 0 0 0 40 30 V8" fill="#fff"/>
+    <ellipse cx="20" cy="30" rx="20" ry="7" fill="none" stroke="#2f3b45" stroke-width="1.8"/>
+    <text class="sml" x="-4" y="56">Qdrant</text>
+  </g>
+
+  <!-- lane 1: original description -->
+  <g transform="translate(450,210)">
+    <rect class="blue" x="0" y="0" width="170" height="44" rx="22"/><text class="lbl" x="24" y="27">원본 설명 검색</text>
+    <path class="thin" d="M174 22 H206"/>
+    <rect class="blue" x="210" y="4"  width="140" height="10" rx="3"/>
+    <rect class="blue" x="210" y="18" width="115" height="10" rx="3"/>
+    <rect class="blue" x="210" y="32" width="130" height="10" rx="3"/>
+  </g>
+  <!-- lane 2: keyword-boosted -->
+  <g transform="translate(450,316)">
+    <rect class="purp" x="0" y="0" width="170" height="44" rx="22"/><text class="lbl" x="16" y="27">키워드 강화 검색</text>
+    <path class="thin" d="M174 22 H206"/>
+    <rect class="purp" x="210" y="4"  width="130" height="10" rx="3"/>
+    <rect class="purp" x="210" y="18" width="140" height="10" rx="3"/>
+    <rect class="purp" x="210" y="32" width="110" height="10" rx="3"/>
+  </g>
+
+  <!-- arrows into lanes -->
+  <path class="thin" d="M350 185 H392 V232 H446"/>
+  <path class="thin" d="M350 338 H446"/>
+
+  <!-- fan-in -->
+  <path class="join" d="M810 232 H880 M810 338 H880 M880 232 V338"/>
+  <circle cx="880" cy="232" r="4" fill="#2f3b45"/><circle cx="880" cy="338" r="4" fill="#2f3b45"/>
+  <path class="thin" d="M880 285 H1001"/>
+
+  <!-- weighted merge -->
+  <rect class="amber" x="1005" y="200" width="200" height="170" rx="14"/>
+  <text class="hdr2" x="1024" y="234">가중 병합</text>
+  <text class="sml" x="1024" y="262">두 결과에 가중치 부여</text>
+  <text class="sml" x="1024" y="284">재순위화</text>
+  <text class="sml" x="1024" y="314">중복 chunk 제거</text>
+  <path class="thin" d="M1205 285 H1246"/>
+
+  <!-- cap -->
+  <rect class="green" x="1250" y="190" width="190" height="190" rx="14"/>
+  <text class="hdr2" x="1268" y="224">편중 방지 cap</text>
+  <text class="sml" x="1268" y="252">같은 법령 ≤ 2건</text>
+  <text class="sml" x="1268" y="274">같은 조 ≤ 1건</text>
+  <text class="sml" x="1268" y="304">유사도 순위를</text>
+  <text class="sml" x="1268" y="326">다양성 제약과 교환</text>
+  <path class="thin" d="M1440 285 H1476"/>
+
+  <!-- diverse evidence list -->
+  <rect class="grpK" x="1480" y="140" width="185" height="330" rx="16"/>
+  <text class="hdr2" x="1496" y="172">다양성 확보 근거</text>
+  <g transform="translate(1496,190)">
+    <rect class="peach" x="0" y="0"   width="152" height="30" rx="7"/><text class="sml" x="12" y="20">법령 A · 제x조</text>
+    <rect class="peach" x="0" y="38"  width="152" height="30" rx="7"/><text class="sml" x="12" y="58">법령 A · 제y조</text>
+    <rect class="blue"  x="0" y="76"  width="152" height="30" rx="7"/><text class="sml" x="12" y="96">법령 B · 제z조</text>
+    <rect class="green" x="0" y="114" width="152" height="30" rx="7"/><text class="sml" x="12" y="134">법령 C · 제w조</text>
+    <rect class="purp"  x="0" y="152" width="152" height="30" rx="7"/><text class="sml" x="12" y="172">행정규칙 D</text>
+  </g>
+  <text class="sml" x="1496" y="408">서로 다른 법령·조문을</text>
+  <text class="sml" x="1496" y="428">폭넓게 커버</text>
+
+  <!-- caption -->
+  <line x1="46" y1="560" x2="1660" y2="560" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="46" y="592">Figure. 이중 검색 상세 — LLM 키워드 추출(실패 시 정규식·명사 fallback) 후 원본 설명과 키워드 강화 질의를 병렬 검색하고, 가중 병합·재순위 뒤 같은 법령 최대 2건·같은 조 최대 1건 cap으로 근거 다양성을 확보한다.</text>
+</svg>

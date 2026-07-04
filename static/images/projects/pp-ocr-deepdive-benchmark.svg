@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="680" viewBox="0 0 1700 680" role="img" aria-labelledby="t3 d3">
+  <title id="t3">Deep dive: TEDS benchmark console and regression gate</title>
+  <desc id="d3">HTML table ground truth feeds a layered metric hierarchy — TEDS/TEDS-S for structure, Cell F1 for cells, CER for text, Row/Col counts — evaluated by an async experiment console with CI95, pairwise and ablation analysis, gated by an 18-case regression set.</desc>
+  <defs>
+    <marker id="dark3" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
+    </marker>
+    <style>
+      .hdr  { font: italic 700 26px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 19px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 18px Georgia, serif; fill: #c2571a; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark3); }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
+      .grid { stroke: #8a97a1; stroke-width: 2; }
+    </style>
+  </defs>
+  <rect width="1700" height="680" fill="#ffffff"/>
+
+  <text class="step" x="46" y="52">Deep Dive ②</text>
+  <text class="hdr" x="180" y="52">정량 평가 — TEDS 벤치마크 &amp; 회귀 게이트</text>
+  <text class="sub" x="46" y="80">"그럴듯해 보이는 결과"가 아니라 GT 기준 지표 계층과 회귀 게이트로 개선을 통제한다</text>
+
+  <!-- Ground truth -->
+  <rect class="grpK" x="46" y="150" width="250" height="230" rx="16"/>
+  <text class="hdr2" x="66" y="182">Ground Truth</text>
+  <g transform="translate(96,204)">
+    <path class="ink" d="M0 0 H100 L124 24 V128 H0 Z"/><path class="ink" d="M100 0 V24 H124" fill="none"/>
+    <g transform="translate(18,42)">
+      <rect x="0" y="0" width="88" height="60" fill="#fff" stroke="#8a97a1" stroke-width="2"/>
+      <rect x="0" y="0" width="88" height="20" fill="#e6f2e8" stroke="#8a97a1" stroke-width="2"/>
+      <line class="grid" x1="0" y1="40" x2="88" y2="40"/>
+      <line class="grid" x1="30" y1="0" x2="30" y2="60"/>
+      <line class="grid" x1="59" y1="0" x2="59" y2="60"/>
+    </g>
+  </g>
+  <text class="lbl" x="66" y="358">HTML table GT · 실행 조건 명시</text>
+  <path class="thin" d="M300 265 H346"/>
+
+  <!-- Metric hierarchy -->
+  <rect class="grpB" x="350" y="130" width="470" height="450" rx="20"/>
+  <text class="hdr2" x="374" y="164">Metric Hierarchy — 지표 계층</text>
+  <text class="sub" x="374" y="188">구조 오류와 텍스트 오류를 분리 진단</text>
+
+  <rect class="green" x="374" y="210" width="420" height="72" rx="10"/>
+  <text class="lbl" x="392" y="238">TEDS / TEDS-S</text>
+  <text class="sml" x="392" y="262">표 전체 구조 — 트리 편집 거리 유사도</text>
+
+  <rect class="blue" x="374" y="298" width="420" height="72" rx="10"/>
+  <text class="lbl" x="392" y="326">Cell F1</text>
+  <text class="sml" x="392" y="350">셀 매칭 정확도</text>
+
+  <rect class="peach" x="374" y="386" width="420" height="72" rx="10"/>
+  <text class="lbl" x="392" y="414">CER</text>
+  <text class="sml" x="392" y="438">셀 내 텍스트 오류율</text>
+
+  <rect class="purp" x="374" y="474" width="420" height="72" rx="10"/>
+  <text class="lbl" x="392" y="502">Row / Col 일치</text>
+  <text class="sml" x="392" y="526">행 · 열 수 일치</text>
+
+  <path class="thin" d="M824 355 H880"/>
+
+  <!-- Benchmark console -->
+  <rect class="grpK" x="884" y="130" width="470" height="450" rx="18"/>
+  <text class="hdr2" x="908" y="164">Benchmark Console</text>
+
+  <rect class="pill" x="908" y="186" width="300" height="68" rx="34"/>
+  <text class="lbl" x="936" y="214">Async Experiment Job</text>
+  <text class="sml" x="936" y="238">취소 · 재개 · stale 처리</text>
+
+  <path fill="none" stroke="#2f3b45" stroke-width="2.2" d="M1058 254 V268 M973 268 H1257"/>
+  <circle cx="1058" cy="268" r="4" fill="#2f3b45"/>
+  <path class="thin" d="M973 268 V286"/>
+  <path class="thin" d="M1115 268 V286"/>
+  <path class="thin" d="M1257 268 V286"/>
+
+  <rect class="blue" x="908" y="290" width="130" height="56" rx="10"/>
+  <text class="lbl" x="924" y="314">CI95</text>
+  <text class="sml" x="924" y="334">신뢰구간</text>
+  <rect class="blue" x="1050" y="290" width="130" height="56" rx="10"/>
+  <text class="lbl" x="1066" y="314">Pairwise</text>
+  <text class="sml" x="1066" y="334">메서드 간 비교</text>
+  <rect class="blue" x="1192" y="290" width="130" height="56" rx="10"/>
+  <text class="lbl" x="1208" y="314">Ablation</text>
+  <text class="sml" x="1208" y="334">구성 요소 분석</text>
+
+  <path fill="none" stroke="#2f3b45" stroke-width="2.2" d="M973 346 V370 M1115 346 V370 M1257 346 V370 M973 370 H1257"/>
+  <circle cx="1118" cy="370" r="4" fill="#2f3b45"/>
+  <path class="thin" d="M1118 370 V386"/>
+
+  <rect class="green" x="908" y="390" width="420" height="64" rx="10"/>
+  <text class="lbl" x="926" y="416">최신 실행 — hf_finance_legal_mrc 480샘플</text>
+  <text class="sml" x="926" y="438">TEDS 0.9188 · TEDS-S 0.9506 · Cell F1 0.9702</text>
+
+  <rect class="peach" x="908" y="470" width="420" height="64" rx="10"/>
+  <text class="lbl" x="926" y="496">baseline 비교군</text>
+  <text class="sml" x="926" y="518">fixed threshold 0.7540 · kmeans 0.3304 · 외부 VLM 등록</text>
+
+  <text class="sml" x="908" y="554">hf_korean_table 100샘플 (동일 조건 실행)</text>
+  <text class="sml" x="908" y="572">TEDS 0.9174 · Cell F1 0.9934 · Row 1.00 · Col 0.96</text>
+
+  <path class="thin" d="M1358 325 H1406"/>
+
+  <!-- Regression gate -->
+  <rect class="amber" x="1410" y="230" width="250" height="190" rx="16"/>
+  <text class="hdr2" x="1434" y="264">회귀 게이트</text>
+  <text class="lbl" x="1434" y="296">18케이스 회귀 세트</text>
+  <text class="sml" x="1434" y="322">실패 사례를 케이스북으로 축적</text>
+  <text class="sml" x="1434" y="344">수정은 회귀 통과 후에만 반영</text>
+  <text class="sml" x="1434" y="372">"고치면 다른 게 깨지는" 문제를</text>
+  <text class="sml" x="1434" y="392">명시적 게이트로 통제</text>
+
+  <!-- caption -->
+  <line x1="46" y1="620" x2="1660" y2="620" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="46" y="650">Figure. 정량 평가 상세 — HTML table GT 기준으로 TEDS/TEDS-S · Cell F1 · CER · Row/Col을 계층화해 측정하고, 비동기 실험 콘솔이 CI95 · pairwise · ablation 분석을 지원하며, 18케이스 회귀 게이트가 개선의 반영 조건이 된다.</text>
+</svg>

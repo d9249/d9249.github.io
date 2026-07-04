@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="900" viewBox="0 0 2000 900" role="img" aria-labelledby="ht hd">
+  <title id="ht">Harmony overall architecture — paper figure style</title>
+  <desc id="hd">Channel requests are normalized through the IAIAgent runtime contract into TurnResult, grounded via permission-first PageIndex tree search with a human-gated knowledge loop, and deployed on AWS behind a triple defense line.</desc>
+  <defs>
+    <marker id="sage" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#b7cfb2"/>
+    </marker>
+    <marker id="dark" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
+    </marker>
+    <style>
+      .hdr  { font: italic 700 27px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 20px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14.5px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 19px Georgia, serif; fill: #c2571a; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .grpO { fill: #fffcf8; stroke: #c2571a; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .flow { fill: none; stroke: #c9dcc5; stroke-width: 15; stroke-linecap: round; marker-end: url(#sage); }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark); }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
+    </style>
+  </defs>
+  <rect width="2000" height="900" fill="#ffffff"/>
+
+  <!-- hackathon badge -->
+  <rect class="amber" x="1636" y="44" width="322" height="48" rx="24"/>
+  <g transform="translate(1658,58)"><path d="M11 0 L13 8 L21 10 L13 12 L11 20 L9 12 L1 10 L9 8 Z" fill="#c2571a"/></g>
+  <text class="lbl" x="1690" y="74">Hackathon 2주 — 2026.05.11–05.22</text>
+
+  <!-- ===================== CHANNELS ===================== -->
+  <rect class="grpK" x="42" y="150" width="200" height="520" rx="18"/>
+  <text class="hdr2" x="60" y="136">Channels</text>
+  <g transform="translate(88,205)">
+    <rect class="ink" x="0" y="0" width="84" height="56" rx="12"/>
+    <path d="M22 54 L22 74 L42 55 Z" fill="#fff" stroke="#2f3b45" stroke-width="1.8"/>
+    <line x1="22" y1="55" x2="41" y2="55" stroke="#fff" stroke-width="3"/>
+    <circle cx="22" cy="28" r="3.5" fill="#2f3b45"/><circle cx="42" cy="28" r="3.5" fill="#2f3b45"/><circle cx="62" cy="28" r="3.5" fill="#2f3b45"/>
+    <text class="lbl" x="8" y="102">개인 채팅</text>
+  </g>
+  <g transform="translate(88,352)">
+    <rect class="blue" x="18" y="0" width="70" height="46" rx="10"/>
+    <rect class="ink" x="0" y="18" width="70" height="46" rx="10"/>
+    <circle cx="20" cy="41" r="3" fill="#2f3b45"/><circle cx="35" cy="41" r="3" fill="#2f3b45"/><circle cx="50" cy="41" r="3" fill="#2f3b45"/>
+    <text class="lbl" x="2" y="100">Space 채팅</text>
+  </g>
+  <g transform="translate(88,500)">
+    <rect class="ink" x="26" y="0" width="32" height="52" rx="16"/>
+    <path d="M12 40 V44 A32 32 0 0 0 76 44 V40" fill="none" stroke="#2f3b45" stroke-width="2.2"/>
+    <line x1="44" y1="76" x2="44" y2="88" stroke="#2f3b45" stroke-width="2.2"/>
+    <line x1="28" y1="88" x2="60" y2="88" stroke="#2f3b45" stroke-width="2.2"/>
+    <text class="lbl" x="-4" y="114">Voice meeting</text>
+  </g>
+  <path class="flow" d="M248 410 H284"/>
+
+  <!-- ===================== 1) RUNTIME CONTRACT ===================== -->
+  <text class="step" x="310" y="136">1)</text>
+  <text class="hdr" x="342" y="136">Runtime Contract</text>
+  <rect class="grpB" x="292" y="150" width="610" height="520" rx="20"/>
+  <text class="sub" x="316" y="184">IAIAgent protocol — 한 턴이 남겨야 하는 사실의 모양</text>
+
+  <rect class="pill" x="316" y="206" width="300" height="56" rx="28"/>
+  <g transform="translate(336,224)"><path d="M11 0 L13 8 L21 10 L13 12 L11 20 L9 12 L1 10 L9 8 Z" fill="#c2571a"/></g>
+  <text class="lbl" x="370" y="228">IAIAgent 프로토콜</text>
+  <text class="sml" x="370" y="248">run_turn / stream_turn</text>
+  <path class="thin" d="M620 234 H656"/>
+
+  <rect class="amber" x="660" y="196" width="222" height="128" rx="14"/>
+  <text class="hdr2" x="680" y="228">TurnResult</text>
+  <text class="sml" x="680" y="254">text · tool calls</text>
+  <text class="sml" x="680" y="276">citations · usage</text>
+  <text class="sml" x="680" y="298">persona · model · latency</text>
+
+  <path class="thin" d="M466 266 V296"/>
+  <rect class="grpK" x="316" y="300" width="280" height="250" rx="16"/>
+  <text class="hdr2" x="336" y="332">구현 3종</text>
+  <text class="sml" x="446" y="332">same contract</text>
+  <rect class="blue"  x="336" y="352" width="240" height="42" rx="9"/><text class="lbl" x="352" y="378">로컬 런타임 — dev·시연</text>
+  <rect class="green" x="336" y="404" width="240" height="42" rx="9"/><text class="lbl" x="352" y="430">Bedrock Converse — 운영</text>
+  <rect class="peach" x="336" y="456" width="240" height="42" rx="9"/><text class="lbl" x="352" y="482">Stub — 테스트</text>
+  <text class="sml" x="336" y="530">fail-fast — 조용한 폴백 없음</text>
+
+  <rect class="purp" x="660" y="360" width="222" height="120" rx="14"/>
+  <text class="lbl" x="680" y="392">4×6 Persona 합성</text>
+  <text class="sml" x="680" y="416">4 teams × 6 grades</text>
+  <text class="sml" x="680" y="438">턴마다 system prompt 주입</text>
+
+  <rect class="pill" x="660" y="500" width="222" height="56" rx="28"/>
+  <text class="lbl" x="684" y="524">ContextVar 고정</text>
+  <text class="sml" x="684" y="544">user / session per request</text>
+
+  <text class="sml" x="316" y="596">SSE: turn / token / tool.call / citation / approval 이벤트</text>
+  <text class="sml" x="316" y="618">UI와 감사 로그가 같은 사실을 본다</text>
+
+  <path class="flow" d="M908 410 H944"/>
+
+  <!-- ===================== 2) KNOWLEDGE PLANE ===================== -->
+  <text class="step" x="970" y="136">2)</text>
+  <text class="hdr" x="1002" y="136">Knowledge Plane</text>
+  <rect class="grpB" x="952" y="150" width="560" height="520" rx="20"/>
+  <text class="sub" x="976" y="184">권한 선계산 → reasoning-based 트리 탐색</text>
+
+  <rect class="green" x="976" y="216" width="210" height="96" rx="12"/>
+  <text class="lbl" x="996" y="246">권한 선계산</text>
+  <text class="sml" x="996" y="270">channel · team · tag</text>
+  <text class="sml" x="996" y="290">corpus 먼저 축소</text>
+  <path class="thin" d="M1190 264 H1226"/>
+
+  <rect class="blue" x="1230" y="200" width="258" height="200" rx="14"/>
+  <text class="hdr2" x="1250" y="232">PageIndex 탐색</text>
+  <g fill="none" stroke="#7d8b95" stroke-width="2">
+    <path d="M1360 277 V296 H1300 V303"/>
+    <path d="M1360 277 V296 H1420 V303"/>
+    <path d="M1300 323 V338 H1272 V347"/>
+    <path d="M1300 323 V338 H1330 V347"/>
+    <path d="M1420 323 V347"/>
+  </g>
+  <circle cx="1360" cy="266" r="11" fill="#e6f2e8" stroke="#2f3b45" stroke-width="1.6"/>
+  <circle cx="1300" cy="314" r="9"  fill="#fdefe2" stroke="#2f3b45" stroke-width="1.6"/>
+  <circle cx="1420" cy="314" r="9"  fill="#fdefe2" stroke="#2f3b45" stroke-width="1.6"/>
+  <circle cx="1272" cy="356" r="7"  fill="#efe9f7" stroke="#2f3b45" stroke-width="1.6"/>
+  <circle cx="1330" cy="356" r="7"  fill="#efe9f7" stroke="#2f3b45" stroke-width="1.6"/>
+  <circle cx="1420" cy="356" r="7"  fill="#efe9f7" stroke="#2f3b45" stroke-width="1.6"/>
+  <text class="sml" x="1250" y="388">chapter → section 목차 탐색</text>
+
+  <rect class="grpK" x="976" y="440" width="512" height="200" rx="16"/>
+  <text class="hdr2" x="996" y="472">Human-gated Knowledge Loop</text>
+  <rect class="pill" x="996" y="500" width="150" height="76" rx="14"/>
+  <text class="lbl" x="1016" y="530">LLM-Wiki</text>
+  <text class="lbl" x="1016" y="552">Compiler</text>
+  <path class="thin" d="M1150 538 H1186"/>
+  <rect class="amber" x="1190" y="500" width="150" height="76" rx="12"/>
+  <text class="lbl" x="1206" y="530">Review Queue</text>
+  <text class="sml" x="1206" y="552">PENDING</text>
+  <path class="thin" d="M1344 538 H1380"/>
+  <rect class="green" x="1384" y="500" width="90" height="76" rx="12"/>
+  <text class="lbl" x="1404" y="530">발행</text>
+  <text class="sml" x="1404" y="552">corpus</text>
+  <text class="sml" x="996" y="612">사람 승인 시에만 corpus write + index reload</text>
+
+  <path class="flow" d="M1518 410 H1554"/>
+
+  <!-- ===================== 3) AWS DEPLOYMENT ===================== -->
+  <text class="step" x="1580" y="136">3)</text>
+  <text class="hdr" x="1612" y="136">AWS Deployment</text>
+  <rect class="grpB" x="1562" y="150" width="396" height="520" rx="20"/>
+  <text class="sub" x="1586" y="184">OpenTofu 계약 · 최소 8 모듈</text>
+
+  <rect class="blue" x="1586" y="210" width="348" height="64" rx="12"/>
+  <text class="lbl" x="1606" y="238">CloudFront · API GW · Cognito</text>
+  <text class="sml" x="1606" y="260">edge / auth 경계</text>
+  <path class="thin" d="M1760 274 V306"/>
+  <rect class="peach" x="1586" y="310" width="348" height="64" rx="12"/>
+  <text class="lbl" x="1606" y="338">ECS Fargate — Agent</text>
+  <text class="sml" x="1606" y="360">private VPC</text>
+  <path class="thin" d="M1760 374 V402"/>
+  <rect class="grpK" x="1574" y="406" width="372" height="190" rx="16"/>
+  <text class="hdr2" x="1594" y="438">Data &amp; Model</text>
+  <rect class="green" x="1594" y="452" width="160" height="54" rx="10"/>
+  <text class="lbl" x="1608" y="474">Aurora</text><text class="sml" x="1608" y="494">PostgreSQL</text>
+  <rect class="purp" x="1770" y="452" width="160" height="54" rx="10"/>
+  <text class="lbl" x="1784" y="474">EFS</text><text class="sml" x="1784" y="494">PageIndex tree</text>
+  <rect class="peach" x="1594" y="520" width="160" height="54" rx="10"/>
+  <text class="lbl" x="1608" y="542">S3</text><text class="sml" x="1608" y="562">corpus · audit</text>
+  <rect class="blue" x="1770" y="520" width="160" height="54" rx="10"/>
+  <text class="lbl" x="1784" y="542">Bedrock</text><text class="sml" x="1784" y="562">Runtime</text>
+  <text class="sml" x="1586" y="632">로컬은 SQLite·파일 corpus로</text>
+  <text class="sml" x="1586" y="652">같은 코드가 동작</text>
+
+  <!-- ===================== TRIPLE DEFENSE ===================== -->
+  <rect class="grpO" x="292" y="690" width="1220" height="76" rx="16"/>
+  <text class="hdr2" x="316" y="736">3중 방어선</text>
+  <rect class="blue" x="450" y="706" width="190" height="46" rx="23"/>
+  <text class="lbl" x="478" y="734">1) JWT 인증</text>
+  <path class="thin" d="M644 729 H678"/>
+  <rect class="purp" x="682" y="706" width="300" height="46" rx="23"/>
+  <text class="lbl" x="706" y="734">2) 페르소나 팀 컨텍스트 주입</text>
+  <path class="thin" d="M986 729 H1020"/>
+  <rect class="green" x="1024" y="706" width="290" height="46" rx="23"/>
+  <text class="lbl" x="1048" y="734">3) 검색 corpus 팀 필터</text>
+  <text class="sml" x="1338" y="724">한 층이 뚫려도</text>
+  <text class="sml" x="1338" y="744">다른 층이 잡는다</text>
+
+  <!-- ===================== caption ===================== -->
+  <line x1="42" y1="800" x2="1958" y2="800" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="42" y="836">Figure. Harmony 전체 아키텍처 — 세 채널의 요청은 IAIAgent 계약으로 정규화되어 TurnResult(text·tool calls·citations·usage)를 남기고, 권한 선계산 후 PageIndex 트리 탐색으로 근거를 찾으며, 지식 편입은 human-gated loop를 거친다.</text>
+  <text class="sub" x="42" y="862">격리는 3중 방어선(JWT → 페르소나 팀 주입 → 검색 팀 필터), 배포는 OpenTofu로 CloudFront–Cognito–Fargate–Aurora·EFS·S3·Bedrock을 계약화했다. 해커톤 2주 결과물.</text>
+</svg>
