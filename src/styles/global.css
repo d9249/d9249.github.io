@@ -4761,14 +4761,15 @@ body.project-lightbox-open {
     );
     --project-lightbox-gutter-block-end: calc(
       max(
-          var(--space-18, 72px),
+          var(--space-12, 48px),
           var(--project-lightbox-visual-bottom-gap, 0px)
         ) +
-        var(--space-4, 16px)
+        var(--space-2, 8px)
     );
-    --project-lightbox-gutter-block-total: 152px;
+    --project-lightbox-gutter-block-total: 88px;
     --project-lightbox-caption-space: 48px;
 
+    align-items: start;
     overflow: hidden;
   }
 

@@ -7,6 +7,8 @@ const getImagePayload = (image) => ({
   src: image.currentSrc || image.getAttribute("src") || "",
 });
 
+const MOBILE_ROTATED_FRAME_GUTTER = 88;
+
 const getViewportSize = (container) => {
   const rect = container?.getBoundingClientRect();
   const visualViewport = window.visualViewport;
@@ -127,7 +129,7 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
     },
     frame: {
       "--project-lightbox-frame-max-height": hasMobileRotation
-        ? `${Math.max(260, viewportSize.height - 152)}px`
+        ? `${Math.max(300, viewportSize.height - MOBILE_ROTATED_FRAME_GUTTER)}px`
         : undefined,
       "--project-lightbox-image-aspect": `${activeImage.naturalWidth / activeImage.naturalHeight}`,
       "--project-lightbox-stage-width": `${stageWidth}px`,
