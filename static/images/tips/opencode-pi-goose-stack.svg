@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">OpenCode, Pi, Goose AI agent stack layers</title>
+  <desc id="desc">A three-layer diagram: Pi as agent harness toolkit, Goose as local agent workbench, and OpenCode as coding-first software development agent.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#020617" flood-opacity="0.34"/>
+    </filter>
+    <style>
+      .title { font: 700 52px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #f8fafc; }
+      .subtitle { font: 400 26px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #cbd5e1; }
+      .label { font: 800 40px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #0f172a; }
+      .role { font: 700 27px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #1f2937; }
+      .copy { font: 400 23px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #334155; }
+      .chip { font: 700 18px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #e5e7eb; letter-spacing: .04em; }
+      .question { font: 700 26px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #e5e7eb; }
+    </style>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <circle cx="1330" cy="130" r="260" fill="#2563eb" opacity="0.16"/>
+  <circle cx="240" cy="860" r="300" fill="#22c55e" opacity="0.13"/>
+
+  <text class="title" x="120" y="112">OpenCode · Pi · Goose</text>
+  <text class="subtitle" x="120" y="156">세 도구를 “순위”가 아니라 AI agent stack의 서로 다른 계층으로 보기</text>
+
+  <g filter="url(#shadow)">
+    <rect x="145" y="225" width="1310" height="165" rx="30" fill="#dbeafe"/>
+    <rect x="145" y="425" width="1310" height="165" rx="30" fill="#dcfce7"/>
+    <rect x="145" y="625" width="1310" height="165" rx="30" fill="#fef3c7"/>
+  </g>
+
+  <g>
+    <rect x="195" y="252" width="135" height="48" rx="24" fill="#1d4ed8"/>
+    <text class="chip" x="232" y="284">BUILD</text>
+    <text class="label" x="365" y="288">Pi</text>
+    <text class="role" x="465" y="288">agent kernel / harness / toolkit</text>
+    <text class="copy" x="365" y="335">에이전트를 직접 만들고, provider abstraction · tool calling · state를 공부할 때</text>
+    <text class="copy" x="365" y="368">권한 경계는 Pi 내부가 아니라 컨테이너·샌드박스 같은 실행 환경에서 설계</text>
+  </g>
+
+  <g>
+    <rect x="195" y="452" width="135" height="48" rx="24" fill="#15803d"/>
+    <text class="chip" x="220" y="484">WORK</text>
+    <text class="label" x="365" y="488">Goose</text>
+    <text class="role" x="530" y="488">local AI agent workbench / orchestration surface</text>
+    <text class="copy" x="365" y="535">Desktop · CLI · API와 MCP/ACP extension으로 로컬 작업 환경을 묶고 싶을 때</text>
+    <text class="copy" x="365" y="568">코딩뿐 아니라 research, writing, automation, data workflow까지 포괄</text>
+  </g>
+
+  <g>
+    <rect x="195" y="652" width="135" height="48" rx="24" fill="#b45309"/>
+    <text class="chip" x="216" y="684">CODE</text>
+    <text class="label" x="365" y="688">OpenCode</text>
+    <text class="role" x="610" y="688">coding-first software-development agent</text>
+    <text class="copy" x="365" y="735">저장소 안에서 탐색 · 계획 · 수정 · 테스트를 반복하는 일상 개발 파트너</text>
+    <text class="copy" x="365" y="768">build/plan agent처럼 권한 모드를 나눠 coding task에 집중</text>
+  </g>
+
+  <text class="question" x="120" y="865">핵심 질문</text>
+  <text class="subtitle" x="120" y="905">“어느 도구가 더 좋은가?”보다 “나는 agent stack의 어느 계층에서 일하고 있는가?”</text>
+</svg>
