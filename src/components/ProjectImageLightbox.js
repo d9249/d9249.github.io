@@ -7,13 +7,30 @@ const getImagePayload = (image) => ({
   src: image.currentSrc || image.getAttribute("src") || "",
 });
 
-const getLightboxFitMetrics = (viewportWidth) => {
+const getViewportSize = (container) => {
+  const rect = container?.getBoundingClientRect();
+  const visualViewport = window.visualViewport;
+
+  return {
+    height: Math.round(
+      rect?.height || visualViewport?.height || window.innerHeight,
+    ),
+    width: Math.round(
+      rect?.width || visualViewport?.width || window.innerWidth,
+    ),
+  };
+};
+
+const getLightboxFitMetrics = (viewportWidth, rotation) => {
   const isMobile = viewportWidth <= 680;
+  const isQuarterTurn = rotation % 180 !== 0;
+  const hasMobileRotation = isMobile && isQuarterTurn;
 
   return {
     captionSpace: isMobile ? 48 : 54,
     framePaddingTotal: isMobile ? 16 : 24,
-    gutterTotal: isMobile ? 32 : 64,
+    horizontalGutterTotal: isMobile ? 32 : 64,
+    verticalGutterTotal: hasMobileRotation ? 88 : isMobile ? 32 : 64,
   };
 };
 
@@ -32,15 +49,17 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
     };
   }
 
-  const metrics = getLightboxFitMetrics(viewportSize.width);
+  const metrics = getLightboxFitMetrics(viewportSize.width, rotation);
   const availableWidth = Math.max(
     1,
-    viewportSize.width - metrics.gutterTotal - metrics.framePaddingTotal,
+    viewportSize.width -
+      metrics.horizontalGutterTotal -
+      metrics.framePaddingTotal,
   );
   const availableHeight = Math.max(
     1,
     viewportSize.height -
-      metrics.gutterTotal -
+      metrics.verticalGutterTotal -
       metrics.captionSpace -
       metrics.framePaddingTotal,
   );
@@ -80,6 +99,7 @@ const ProjectImageLightbox = ({ html }) => {
   const articleRef = React.useRef(null);
   const closeButtonRef = React.useRef(null);
   const captionId = React.useId();
+  const lightboxRef = React.useRef(null);
   const [activeImage, setActiveImage] = React.useState(null);
   const [rotation, setRotation] = React.useState(0);
   const rotateButtonRef = React.useRef(null);
@@ -147,17 +167,18 @@ const ProjectImageLightbox = ({ html }) => {
     }
 
     const updateViewportSize = () => {
-      setViewportSize({
-        height: window.innerHeight,
-        width: window.innerWidth,
-      });
+      setViewportSize(getViewportSize(lightboxRef.current));
     };
 
     updateViewportSize();
+    const frameId = window.requestAnimationFrame(updateViewportSize);
+    window.visualViewport?.addEventListener("resize", updateViewportSize);
     window.addEventListener("orientationchange", updateViewportSize);
     window.addEventListener("resize", updateViewportSize);
 
     return () => {
+      window.cancelAnimationFrame(frameId);
+      window.visualViewport?.removeEventListener("resize", updateViewportSize);
       window.removeEventListener("orientationchange", updateViewportSize);
       window.removeEventListener("resize", updateViewportSize);
     };
@@ -168,10 +189,7 @@ const ProjectImageLightbox = ({ html }) => {
 
     if (payload.src) {
       setRotation(0);
-      setViewportSize({
-        height: window.innerHeight,
-        width: window.innerWidth,
-      });
+      setViewportSize(getViewportSize(lightboxRef.current));
       setActiveImage(payload);
     }
   }, []);
@@ -267,7 +285,11 @@ const ProjectImageLightbox = ({ html }) => {
 
       {activeImage ? (
         <div
+          ref={lightboxRef}
           className="project-lightbox"
+          data-project-lightbox-rotated={
+            rotation % 180 !== 0 ? "true" : undefined
+          }
           role="dialog"
           aria-modal="true"
           aria-label={

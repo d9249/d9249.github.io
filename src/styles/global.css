@@ -3279,7 +3279,12 @@ body.project-lightbox-open {
 
 .project-lightbox {
   --project-lightbox-gutter: var(--space-8, 32px);
-  --project-lightbox-gutter-total: 64px;
+  --project-lightbox-gutter-block-end: var(--project-lightbox-gutter);
+  --project-lightbox-gutter-block-start: var(--project-lightbox-gutter);
+  --project-lightbox-gutter-inline-end: var(--project-lightbox-gutter);
+  --project-lightbox-gutter-inline-start: var(--project-lightbox-gutter);
+  --project-lightbox-gutter-block-total: 64px;
+  --project-lightbox-gutter-inline-total: 64px;
   --project-lightbox-caption-space: 54px;
 
   position: fixed;
@@ -3287,10 +3292,13 @@ body.project-lightbox-open {
   z-index: 80;
   display: grid;
   place-items: center;
-  padding: max(var(--project-lightbox-gutter), env(safe-area-inset-top))
-    max(var(--project-lightbox-gutter), env(safe-area-inset-right))
-    max(var(--project-lightbox-gutter), env(safe-area-inset-bottom))
-    max(var(--project-lightbox-gutter), env(safe-area-inset-left));
+  padding: max(
+      var(--project-lightbox-gutter-block-start),
+      env(safe-area-inset-top)
+    )
+    max(var(--project-lightbox-gutter-inline-end), env(safe-area-inset-right))
+    max(var(--project-lightbox-gutter-block-end), env(safe-area-inset-bottom))
+    max(var(--project-lightbox-gutter-inline-start), env(safe-area-inset-left));
   background: var(--overlay);
   backdrop-filter: blur(18px);
 }
@@ -3299,8 +3307,8 @@ body.project-lightbox-open {
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
   gap: 12px;
-  width: min(1680px, calc(100vw - var(--project-lightbox-gutter-total)));
-  max-height: calc(100dvh - var(--project-lightbox-gutter-total));
+  width: min(1680px, calc(100vw - var(--project-lightbox-gutter-inline-total)));
+  max-height: calc(100dvh - var(--project-lightbox-gutter-block-total));
   margin: 0;
   padding: 12px;
   border: 1px solid var(--border);
@@ -3318,7 +3326,7 @@ body.project-lightbox-open {
   left: 50%;
   max-width: 100%;
   max-height: calc(
-    100dvh - var(--project-lightbox-gutter-total) -
+    100dvh - var(--project-lightbox-gutter-block-total) -
       var(--project-lightbox-caption-space)
   );
   object-fit: contain;
@@ -4704,8 +4712,17 @@ body.project-lightbox-open {
 
   .project-lightbox {
     --project-lightbox-gutter: var(--space-4, 16px);
-    --project-lightbox-gutter-total: 32px;
+    --project-lightbox-gutter-block-total: 32px;
+    --project-lightbox-gutter-inline-total: 32px;
     --project-lightbox-caption-space: 48px;
+  }
+
+  .project-lightbox[data-project-lightbox-rotated="true"] {
+    --project-lightbox-gutter-block-start: var(--space-18, 72px);
+    --project-lightbox-gutter-block-end: var(--space-4, 16px);
+    --project-lightbox-gutter-block-total: 88px;
+
+    align-items: start;
   }
 
   .project-lightbox-frame {
