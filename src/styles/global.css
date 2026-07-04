@@ -3278,23 +3278,29 @@ body.project-lightbox-open {
 }
 
 .project-lightbox {
+  --project-lightbox-gutter: var(--space-12, 48px);
+  --project-lightbox-gutter-total: 96px;
+  --project-lightbox-caption-space: 54px;
+
   position: fixed;
   inset: 0;
   z-index: 80;
   display: grid;
   place-items: center;
-  padding: max(20px, env(safe-area-inset-top))
-    max(20px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom))
-    max(20px, env(safe-area-inset-left));
+  padding: max(var(--project-lightbox-gutter), env(safe-area-inset-top))
+    max(var(--project-lightbox-gutter), env(safe-area-inset-right))
+    max(var(--project-lightbox-gutter), env(safe-area-inset-bottom))
+    max(var(--project-lightbox-gutter), env(safe-area-inset-left));
   background: var(--overlay);
   backdrop-filter: blur(18px);
 }
 
 .project-lightbox-frame {
   display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
   gap: 12px;
-  width: min(1100px, 100%);
-  max-height: calc(100dvh - 80px);
+  width: min(1680px, calc(100vw - var(--project-lightbox-gutter-total)));
+  max-height: calc(100dvh - var(--project-lightbox-gutter-total));
   margin: 0;
   padding: 12px;
   border: 1px solid var(--border);
@@ -3306,8 +3312,13 @@ body.project-lightbox-open {
 
 .project-lightbox-image {
   display: block;
-  width: 100%;
-  max-height: calc(100dvh - 152px);
+  width: auto;
+  max-width: 100%;
+  max-height: calc(
+    100dvh - var(--project-lightbox-gutter-total) -
+      var(--project-lightbox-caption-space)
+  );
+  justify-self: center;
   object-fit: contain;
   border-radius: 6px;
   background: var(--surface);
@@ -4656,19 +4667,13 @@ body.project-lightbox-open {
   }
 
   .project-lightbox {
-    padding: max(14px, env(safe-area-inset-top))
-      max(14px, env(safe-area-inset-right))
-      max(14px, env(safe-area-inset-bottom))
-      max(14px, env(safe-area-inset-left));
+    --project-lightbox-gutter: var(--space-5, 20px);
+    --project-lightbox-gutter-total: 40px;
+    --project-lightbox-caption-space: 46px;
   }
 
   .project-lightbox-frame {
-    max-height: calc(100dvh - 66px);
     padding: 8px;
-  }
-
-  .project-lightbox-image {
-    max-height: calc(100dvh - 126px);
   }
 
   .project-lightbox-close {

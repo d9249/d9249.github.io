@@ -101,7 +101,7 @@ All spacing derives from a 4px base.
 
 - **Structure**: fixed modal backdrop, icon-only close button, figure, full-size image, optional caption.
 - **Variants**: light and dark theme inherit the same surface, border, overlay, and shadow tokens.
-- **Spacing**: 12px modal padding on desktop, 8px image-frame padding on mobile.
+- **Spacing**: viewport gutters leave comfortable inspection space: 48px desktop, 20px mobile; image frame padding is 12px desktop and 8px mobile.
 - **States**: backdrop click, close button hover/focus, Escape, and focus containment.
 - **Accessibility**: `role="dialog"`, `aria-modal="true"`, labelled by image alt text when present.
 - **Motion**: opacity and transform-only entrance; disabled under reduced motion.

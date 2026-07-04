@@ -5,9 +5,6 @@ import ProjectImageLightbox from "../components/ProjectImageLightbox";
 import SectionHeading from "../components/SectionHeading";
 import { formatReadableArticleHtml } from "../utils/articleHtml";
 
-const useIsomorphicLayoutEffect =
-  typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
-
 const getProjectTitleParts = (frontmatter) => {
   const name = frontmatter.projectName || frontmatter.title;
   const tagline = frontmatter.tagline;
@@ -30,29 +27,6 @@ const ProjectPostTemplate = ({ data }) => {
     () => formatReadableArticleHtml(project.html),
     [project.html],
   );
-
-  useIsomorphicLayoutEffect(() => {
-    if (typeof window === "undefined" || window.location.hash) {
-      return undefined;
-    }
-
-    const scrollToTop = () => {
-      window.scrollTo({
-        behavior: "auto",
-        left: 0,
-        top: 0,
-      });
-    };
-    const frameId = window.requestAnimationFrame(scrollToTop);
-    const timeoutId = window.setTimeout(scrollToTop, 120);
-
-    scrollToTop();
-
-    return () => {
-      window.cancelAnimationFrame(frameId);
-      window.clearTimeout(timeoutId);
-    };
-  }, [project.fields.slug]);
 
   return (
     <Layout>
