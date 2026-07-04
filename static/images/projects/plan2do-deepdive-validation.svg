@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="640" viewBox="0 0 1700 640" role="img" aria-labelledby="t3 d3">
+  <title id="t3">Deep dive: legal compliance validation</title>
+  <desc id="d3">For each mitigation measure, matched laws are re-judged by an LLM into structured JSON (validated_laws, removed_laws, overall_relevance), aggregated into removal_rate, and surfaced in the final HTML report.</desc>
+  <defs>
+    <marker id="dark3" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
+    </marker>
+    <style>
+      .hdr  { font: italic 700 26px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 19px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 18px Georgia, serif; fill: #c2571a; }
+      .mth  { font: italic 700 17px Georgia, serif; fill: #7a3d12; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .grpO { fill: #fffcf8; stroke: #c2571a; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark3); }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
+    </style>
+  </defs>
+  <rect width="1700" height="640" fill="#ffffff"/>
+
+  <text class="step" x="46" y="52">Deep Dive ③</text>
+  <text class="hdr" x="176" y="52">법령 준수 검증 — 검색이 붙인 근거를 다시 심판한다</text>
+  <text class="sub" x="46" y="80">벡터 유사도는 관련성의 필요조건이지 충분조건이 아니다 — 생성 이후 대책 단위 LLM 재판정으로 무관 근거를 제거하고, 제거 내역까지 공개한다</text>
+
+  <!-- Input per measure -->
+  <rect class="grpK" x="46" y="130" width="284" height="400" rx="16"/>
+  <text class="hdr2" x="66" y="162">Input — 감소대책 단위</text>
+  <text class="sml" x="66" y="186">생성 완료 후 대책별로 재검증</text>
+  <rect class="peach" x="66" y="204" width="224" height="44" rx="9"/>
+  <text class="lbl" x="84" y="231">위험요인 (hazard)</text>
+  <rect class="green" x="66" y="258" width="224" height="44" rx="9"/>
+  <text class="lbl" x="84" y="285">감소대책 (measure)</text>
+  <text class="sml" x="66" y="332">벡터 검색이 매칭한 법령 근거</text>
+  <rect class="blue" x="66" y="346" width="224" height="36" rx="8"/>
+  <text class="lbl" x="84" y="369">매칭 법령 ①</text>
+  <rect class="blue" x="66" y="392" width="224" height="36" rx="8"/>
+  <text class="lbl" x="84" y="415">매칭 법령 ②</text>
+  <rect class="blue" x="66" y="438" width="224" height="36" rx="8"/>
+  <text class="lbl" x="84" y="461">매칭 법령 ③</text>
+  <text class="sml" x="66" y="510">유사도 상위 → 근거 후보일 뿐</text>
+
+  <path class="thin" d="M330 330 H406"/>
+
+  <!-- LLM judge -->
+  <rect class="amber" x="410" y="240" width="310" height="180" rx="16"/>
+  <g transform="translate(434,264)"><path d="M11 0 L13 8 L21 10 L13 12 L11 20 L9 12 L1 10 L9 8 Z" fill="#c2571a"/></g>
+  <text class="hdr2" x="464" y="282">LLM 재판정</text>
+  <text class="mth" x="434" y="318">이 법령이 해당 위험요인과</text>
+  <text class="mth" x="434" y="344">감소대책에 직접 관련 있는가?</text>
+  <text class="sml" x="434" y="376">대책 단위 판정 · JSON 스키마 강제</text>
+  <text class="sml" x="434" y="398">검색 통과 ≠ 관련 — 다시 심판</text>
+
+  <path class="thin" d="M720 330 H786"/>
+
+  <!-- Structured JSON -->
+  <rect class="grpK" x="790" y="160" width="290" height="340" rx="16"/>
+  <text class="hdr2" x="810" y="192">Structured JSON 판정</text>
+  <rect class="green" x="810" y="210" width="250" height="58" rx="10"/>
+  <text class="lbl" x="828" y="234">validated_laws</text>
+  <text class="sml" x="828" y="256">직접 관련 확인 → 유지</text>
+  <rect class="peach" x="810" y="282" width="250" height="58" rx="10"/>
+  <text class="lbl" x="828" y="306">removed_laws</text>
+  <text class="sml" x="828" y="328">무관 판정 → 근거에서 제거</text>
+  <rect class="blue" x="810" y="354" width="250" height="58" rx="10"/>
+  <text class="lbl" x="828" y="378">overall_relevance</text>
+  <text class="sml" x="828" y="400">매칭 적절성 점수 0–1</text>
+  <text class="sml" x="810" y="444">대책은 유지 — 근거만 정리</text>
+  <text class="sml" x="810" y="466">점수는 품질 모니터링 신호</text>
+
+  <path class="thin" d="M1080 330 H1146"/>
+
+  <!-- Aggregate -->
+  <rect class="amber" x="1150" y="245" width="200" height="170" rx="14"/>
+  <text class="hdr2" x="1170" y="277">집계 Aggregate</text>
+  <text class="lbl" x="1170" y="307">total removed 건수</text>
+  <text class="lbl" x="1170" y="331">removal_rate %</text>
+  <text class="sml" x="1170" y="361">전체 매칭 대비 제거 비율</text>
+  <text class="sml" x="1170" y="383">제거율 급등 → 검색 역추적</text>
+
+  <path class="thin" d="M1350 330 H1416"/>
+
+  <!-- HTML report -->
+  <rect class="grpO" x="1420" y="160" width="240" height="340" rx="16"/>
+  <text class="hdr2" x="1440" y="192">HTML Report</text>
+  <g transform="translate(1588,168) scale(0.55)">
+    <path class="ink" d="M0 0 H62 L82 20 V92 H0 Z"/><path class="ink" d="M62 0 V20 H82" fill="none"/>
+    <line x1="14" y1="38" x2="66" y2="38" stroke="#8a97a1" stroke-width="3"/><line x1="14" y1="54" x2="66" y2="54" stroke="#8a97a1" stroke-width="3"/><line x1="14" y1="70" x2="48" y2="70" stroke="#8a97a1" stroke-width="3"/>
+  </g>
+  <text class="sml" x="1440" y="232">검증 요약을 함께 표기</text>
+  <rect class="green" x="1440" y="248" width="200" height="36" rx="8"/>
+  <text class="lbl" x="1456" y="271">유지 validated 건수</text>
+  <rect class="peach" x="1440" y="294" width="200" height="36" rx="8"/>
+  <text class="lbl" x="1456" y="317">제거 removed 건수</text>
+  <rect class="amber" x="1440" y="340" width="200" height="36" rx="8"/>
+  <text class="lbl" x="1456" y="363">removal_rate %</text>
+  <text class="sml" x="1440" y="408">제거 내역을 숨기지 않는다</text>
+  <text class="sml" x="1440" y="430">기계가 걸러낸 근거임을</text>
+  <text class="sml" x="1440" y="452">검토자가 알고 보게 한다</text>
+
+  <!-- caption -->
+  <line x1="46" y1="560" x2="1660" y2="560" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="46" y="592">Figure. 법령 준수 검증 — 감소대책 단위로 매칭 법령을 LLM이 재판정해 validated_laws / removed_laws / overall_relevance로 구조화하고, removal_rate 집계를 최종 HTML 리포트에 그대로 표기한다.</text>
+  <text class="sub" x="46" y="618">생성형 시스템의 신뢰는 결과가 아니라 검증 과정의 가시화에서 나온다.</text>
+</svg>

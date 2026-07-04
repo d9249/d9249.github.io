@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="700" viewBox="0 0 1700 700" role="img" aria-labelledby="t2 d2">
+  <title id="t2">Deep dive: GoalOrchestrator control loop with dual termination</title>
+  <desc id="d2">A goal and an effective skill catalog feed a select-compose-evaluate-refine loop; the loop stops on coverage-based satisfaction or when max_iterations is reached.</desc>
+  <defs>
+    <marker id="sage" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#b7cfb2"/>
+    </marker>
+    <marker id="dark2" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
+    </marker>
+    <style>
+      .hdr  { font: italic 700 26px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 19px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 18px Georgia, serif; fill: #c2571a; }
+      .mth  { font: italic 700 17px Georgia, serif; fill: #7a3d12; }
+      .qtxt { font: italic 600 16px Georgia, serif; fill: #7a3d12; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .grpO { fill: #fffcf8; stroke: #c2571a; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .flow { fill: none; stroke: #c9dcc5; stroke-width: 15; stroke-linecap: round; marker-end: url(#sage); }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark2); }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
+    </style>
+  </defs>
+  <rect width="1700" height="700" fill="#ffffff"/>
+
+  <text class="step" x="46" y="52">Deep Dive ②</text>
+  <text class="hdr" x="196" y="52">GoalOrchestrator 관제 루프 — 조합을 결정하고, 끝을 판단한다</text>
+  <text class="sub" x="46" y="82">select → compose → evaluate → refine 순환 · 만족 판정 또는 max_iterations 도달이면 종료 — 비용·지연의 최악 케이스 상한 보장</text>
+
+  <!-- ===== Goal input ===== -->
+  <rect class="grpO" x="46" y="110" width="304" height="120" rx="16"/>
+  <text class="hdr2" x="66" y="142">Goal Input</text>
+  <text class="qtxt" x="66" y="174">“안전 구역 침범 여부 브리핑”</text>
+  <text class="qtxt" x="66" y="200">“브릿지 접현 절차 준수 판정”</text>
+  <g transform="translate(294,118)">
+    <circle cx="14" cy="14" r="11" fill="none" stroke="#2f3b45" stroke-width="3"/>
+    <line x1="22" y1="22" x2="34" y2="34" stroke="#2f3b45" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- ===== Skill catalog ===== -->
+  <rect class="grpK" x="46" y="270" width="304" height="296" rx="16"/>
+  <text class="hdr2" x="66" y="302">Skill Catalog</text>
+  <text class="sml" x="66" y="324">유효 카탈로그 = 전역 ∪ 커스텀</text>
+  <rect class="blue" x="66" y="340" width="264" height="38" rx="8"/>
+  <text class="lbl" x="82" y="364">전역 스킬 카탈로그</text>
+  <text class="lbl" x="190" y="398">∪</text>
+  <rect class="purp" x="66" y="408" width="264" height="38" rx="8"/>
+  <text class="lbl" x="82" y="432">사용자 커스텀 스킬</text>
+  <rect class="peach" x="66" y="460" width="264" height="44" rx="8"/>
+  <text class="lbl" x="82" y="479">SkillDescriptor</text>
+  <text class="sml" x="82" y="497">1:N 실행 단계로 전개</text>
+  <rect class="green" x="66" y="514" width="264" height="44" rx="8"/>
+  <text class="lbl" x="82" y="533">planned · pipeline 카탈로그 분리</text>
+  <text class="sml" x="82" y="551">그래프 무결성(drift) 검사</text>
+
+  <!-- entry bus: goal + catalog -> select -->
+  <path fill="none" stroke="#2f3b45" stroke-width="2.2" d="M350 170 H404 M350 418 H404 M404 170 V418"/>
+  <circle cx="404" cy="170" r="4" fill="#2f3b45"/>
+  <circle cx="404" cy="418" r="4" fill="#2f3b45"/>
+  <circle cx="404" cy="246" r="4" fill="#2f3b45"/>
+  <path class="thin" d="M404 246 H424"/>
+
+  <!-- ===== Control loop ===== -->
+  <rect class="grpB" x="430" y="110" width="650" height="456" rx="20"/>
+  <text class="hdr2" x="454" y="146">Control Loop</text>
+  <text class="sub" x="454" y="172">refine 조정은 허용 목록 내로만 반영 — 임의 방향 발산 방지</text>
+
+  <rect class="blue" x="470" y="200" width="250" height="92" rx="12"/>
+  <text class="hdr2" x="490" y="234">① Select</text>
+  <text class="sml" x="490" y="258">목표에 맞는 스킬 조합 선택</text>
+  <text class="sml" x="490" y="278">과거 실행 결과 = 선택 힌트</text>
+
+  <rect class="purp" x="810" y="200" width="250" height="92" rx="12"/>
+  <text class="hdr2" x="830" y="234">② Compose</text>
+  <text class="sml" x="830" y="258">실행 순서로 파이프라인 조립</text>
+  <text class="sml" x="830" y="278">역할 라우터가 단계별 모델 배정</text>
+
+  <rect class="green" x="810" y="350" width="250" height="92" rx="12"/>
+  <text class="hdr2" x="830" y="384">③ Evaluate</text>
+  <text class="sml" x="830" y="408">산출의 목표 커버리지 평가</text>
+  <text class="sml" x="830" y="428">만족 판정 신호 생성</text>
+
+  <rect class="amber" x="470" y="350" width="250" height="92" rx="12"/>
+  <text class="hdr2" x="490" y="384">④ Refine</text>
+  <text class="sml" x="490" y="408">부족 항목에 대한 조정 생성</text>
+  <text class="sml" x="490" y="428">허용된 조정 유형만 통과</text>
+
+  <!-- cycle arrows -->
+  <path class="thin" d="M724 246 H806"/>
+  <path class="thin" d="M935 296 V346"/>
+  <path class="thin" d="M806 396 H728"/>
+  <path class="thin" d="M595 346 V300"/>
+  <text class="sub" x="672" y="328">iterate — 만족까지 반복</text>
+
+  <!-- evaluate levers -->
+  <rect class="pill" x="470" y="496" width="186" height="36" rx="18"/>
+  <text class="lbl" x="492" y="519">객관 지표(수치 판정)</text>
+  <rect class="pill" x="672" y="496" width="186" height="36" rx="18"/>
+  <text class="lbl" x="694" y="519">단일화(중복 통합)</text>
+  <rect class="pill" x="874" y="496" width="186" height="36" rx="18"/>
+  <text class="lbl" x="896" y="519">세분화(per-person)</text>
+  <path fill="none" stroke="#2f3b45" stroke-width="2.2" d="M563 496 V476 M765 496 V476 M967 496 V476 M563 476 H967"/>
+  <circle cx="563" cy="476" r="4" fill="#2f3b45"/>
+  <circle cx="765" cy="476" r="4" fill="#2f3b45"/>
+  <circle cx="967" cy="476" r="4" fill="#2f3b45"/>
+  <circle cx="935" cy="476" r="4" fill="#2f3b45"/>
+  <path class="thin" d="M935 476 V448"/>
+  <text class="sml" x="470" y="556">evaluate를 조정하는 3개 레버</text>
+
+  <!-- loop exit -->
+  <path class="flow" d="M1064 396 H1104"/>
+
+  <!-- ===== Dual termination ===== -->
+  <rect class="grpK" x="1130" y="110" width="524" height="456" rx="20"/>
+  <text class="hdr2" x="1152" y="146">Dual Termination — 이중 종료</text>
+  <text class="sub" x="1152" y="172">둘 중 하나가 성립하면 루프를 멈춘다</text>
+
+  <rect class="green" x="1176" y="200" width="450" height="104" rx="12"/>
+  <text class="hdr2" x="1196" y="234">만족 판정 (Satisfied)</text>
+  <text class="sml" x="1196" y="258">커버리지 기반 — 산출이 목표를 커버하면 종료</text>
+  <text class="sml" x="1196" y="278">열려 있는 목표를 끝까지 쫓게 한다</text>
+
+  <text class="lbl" x="1372" y="330">— OR —</text>
+
+  <rect class="amber" x="1176" y="344" width="450" height="104" rx="12"/>
+  <text class="hdr2" x="1196" y="378">max_iterations 도달</text>
+  <text class="sml" x="1196" y="402">반복 상한 — 비용·지연의 최악 케이스 보장</text>
+  <text class="sml" x="1196" y="422">“조금만 더” 상태의 무한 연장 차단</text>
+
+  <path fill="none" stroke="#2f3b45" stroke-width="2.2" d="M1176 396 H1156"/>
+  <circle cx="1156" cy="252" r="4" fill="#2f3b45"/>
+  <circle cx="1156" cy="396" r="4" fill="#2f3b45"/>
+  <path class="thin" d="M1176 252 H1156 V519 H1172"/>
+
+  <rect class="pill" x="1176" y="492" width="450" height="54" rx="16"/>
+  <text class="lbl" x="1196" y="516">Loop End — 산출 확정</text>
+  <text class="sml" x="1196" y="536">safety events · 법령 근거 · 브리핑 리포트</text>
+
+  <!-- caption -->
+  <line x1="46" y1="606" x2="1654" y2="606" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="46" y="636">Figure. GoalOrchestrator 관제 루프 — 유효 카탈로그(전역 ∪ 커스텀)에서 스킬 조합을 select → compose → evaluate → refine으로 순환시키고,</text>
+  <text class="sub" x="46" y="662">커버리지 기반 만족 판정 또는 max_iterations 도달로 종료한다. refine의 조정은 허용 목록 내로 제한되어 루프가 임의 방향으로 발산하지 않는다.</text>
+</svg>

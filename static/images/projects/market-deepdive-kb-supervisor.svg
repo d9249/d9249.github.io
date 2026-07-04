@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="680" viewBox="0 0 1700 680" role="img" aria-labelledby="t4 d4">
+  <title id="t4">Deep dive: KB Intelligence supervisor pipeline</title>
+  <desc id="d4">A planner extracts a plan schema from the RFP; researcher, competitor, and tech analyst agents execute the plan in parallel via ThreadPoolExecutor; a synthesizer merges results into daily_updates and triggers Knowledge Base sync, scheduled by EventBridge.</desc>
+  <defs>
+    <marker id="dark4" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
+    </marker>
+    <style>
+      .hdr  { font: italic 700 26px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 19px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 18px Georgia, serif; fill: #c2571a; }
+      .mth  { font: italic 700 17px Georgia, serif; fill: #7a3d12; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .grpO { fill: #fffcf8; stroke: #c2571a; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark4); }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
+    </style>
+  </defs>
+  <rect width="1700" height="680" fill="#ffffff"/>
+
+  <text class="step" x="46" y="52">Deep Dive ①</text>
+  <text class="hdr" x="170" y="52">KB Intelligence — 계획과 실행의 분리</text>
+  <text class="sub" x="46" y="80">Planner가 RFP에서 plan schema(계약)를 뽑고, 나머지 에이전트는 그 계약을 실행한다 — 새 도메인 RFP에도 코드 수정 없이 대응</text>
+
+  <!-- RFP -->
+  <rect class="grpK" x="46" y="140" width="210" height="200" rx="16"/>
+  <text class="hdr2" x="66" y="172">RFP 문서</text>
+  <g transform="translate(84,188) scale(0.85)">
+    <path class="ink" d="M0 0 H62 L82 20 V92 H0 Z"/><path class="ink" d="M62 0 V20 H82" fill="none"/>
+    <line x1="14" y1="38" x2="66" y2="38" stroke="#8a97a1" stroke-width="3"/><line x1="14" y1="54" x2="66" y2="54" stroke="#8a97a1" stroke-width="3"/><line x1="14" y1="70" x2="48" y2="70" stroke="#8a97a1" stroke-width="3"/>
+  </g>
+  <text class="sml" x="66" y="298">S3 업로드 · 프로젝트 맥락</text>
+  <text class="sml" x="66" y="320">없으면 기본 컨텍스트</text>
+
+  <!-- EventBridge -->
+  <rect class="grpO" x="46" y="390" width="210" height="140" rx="16"/>
+  <g transform="translate(216,416)">
+    <circle cx="0" cy="0" r="14" class="ink"/>
+    <line x1="0" y1="0" x2="0" y2="-8" stroke="#2f3b45" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="6" y2="3" stroke="#2f3b45" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <text class="hdr2" x="66" y="424">EventBridge</text>
+  <text class="sml" x="66" y="452">스케줄 주기 실행</text>
+  <text class="sml" x="66" y="474">시장 정보 상시 갱신 루프</text>
+
+  <path class="thin" d="M256 240 H296"/>
+  <path class="thin" d="M256 460 H296"/>
+
+  <!-- Supervisor group -->
+  <rect class="grpB" x="300" y="130" width="1090" height="400" rx="20"/>
+  <text class="hdr2" x="324" y="162">Supervisor Orchestrator</text>
+  <text class="sub" x="324" y="186">1 supervisor + 5 agents · 결과 통합 → 저장 → KB sync 트리거</text>
+
+  <!-- Planner -->
+  <rect class="amber" x="330" y="270" width="170" height="110" rx="14"/>
+  <text class="hdr2" x="352" y="302">Planner</text>
+  <text class="sml" x="352" y="330">RFP 파싱</text>
+  <text class="sml" x="352" y="352">→ 조사 계획 수립</text>
+  <path class="thin" d="M500 325 H536"/>
+
+  <!-- plan schema -->
+  <rect class="grpK" x="540" y="200" width="260" height="250" rx="16"/>
+  <text class="hdr2" x="560" y="232">plan schema</text>
+  <text class="sml" x="560" y="254">실행 계약 · search_plan.json</text>
+  <rect class="peach" x="560" y="268" width="220" height="50" rx="9"/>
+  <text class="lbl" x="576" y="290">경쟁사</text>
+  <text class="sml" x="576" y="310">name · priority · reason</text>
+  <rect class="blue" x="560" y="326" width="220" height="50" rx="9"/>
+  <text class="lbl" x="576" y="348">검색 키워드</text>
+  <text class="sml" x="576" y="368">keyword · category · purpose</text>
+  <rect class="purp" x="560" y="384" width="220" height="50" rx="9"/>
+  <text class="lbl" x="576" y="406">기술·시장 주제</text>
+  <text class="sml" x="576" y="426">search_query</text>
+
+  <!-- fan-out bus -->
+  <path fill="none" stroke="#2f3b45" stroke-width="2.2" d="M800 325 H840 M840 245 V405"/>
+  <circle cx="840" cy="245" r="4" fill="#2f3b45"/><circle cx="840" cy="325" r="4" fill="#2f3b45"/><circle cx="840" cy="405" r="4" fill="#2f3b45"/>
+  <path class="thin" d="M840 245 H876"/>
+  <path class="thin" d="M840 325 H876"/>
+  <path class="thin" d="M840 405 H876"/>
+
+  <!-- 3 search agents -->
+  <rect class="blue" x="880" y="210" width="220" height="70" rx="12"/>
+  <text class="lbl" x="898" y="236">Researcher</text>
+  <text class="sml" x="898" y="258">시장 동향 검색면</text>
+  <rect class="peach" x="880" y="290" width="220" height="70" rx="12"/>
+  <text class="lbl" x="898" y="316">Competitor</text>
+  <text class="sml" x="898" y="338">경쟁사 우선순위 조사</text>
+  <rect class="purp" x="880" y="370" width="220" height="70" rx="12"/>
+  <text class="lbl" x="898" y="396">Tech Analyst</text>
+  <text class="sml" x="898" y="418">기술 트렌드 검색면</text>
+  <text class="sml" x="880" y="470">ThreadPoolExecutor — 3 검색면 병렬 호출</text>
+
+  <!-- fan-in bus -->
+  <path fill="none" stroke="#2f3b45" stroke-width="2.2" d="M1100 245 H1130 M1100 325 H1130 M1100 405 H1130 M1130 245 V405"/>
+  <circle cx="1130" cy="245" r="4" fill="#2f3b45"/><circle cx="1130" cy="325" r="4" fill="#2f3b45"/><circle cx="1130" cy="405" r="4" fill="#2f3b45"/>
+  <path class="thin" d="M1130 325 H1166"/>
+
+  <!-- Synthesizer -->
+  <rect class="green" x="1170" y="240" width="190" height="170" rx="14"/>
+  <text class="hdr2" x="1190" y="272">Synthesizer</text>
+  <text class="sml" x="1190" y="300">검색면 결과 종합 보고</text>
+  <text class="sml" x="1190" y="322">duplicate URL 필터</text>
+  <text class="sml" x="1190" y="344">출처 메타데이터 기록</text>
+
+  <text class="mth" x="330" y="502">계획과 실행의 분리 — 키워드 하드코딩 없이 새 도메인 RFP 대응</text>
+
+  <!-- to daily_updates -->
+  <path class="thin" d="M1360 325 H1410 V255 H1446"/>
+
+  <!-- daily_updates -->
+  <rect class="grpK" x="1450" y="170" width="210" height="170" rx="16"/>
+  <text class="hdr2" x="1470" y="202">daily_updates</text>
+  <text class="sml" x="1470" y="240">S3 보고서 저장 경로</text>
+  <text class="sml" x="1470" y="262">search_plan.json 동반</text>
+  <g transform="translate(1594,282)">
+    <ellipse cx="20" cy="8" rx="20" ry="7" class="ink"/><path class="ink" d="M0 8 V30 A20 7 0 0 0 40 30 V8" fill="#fff"/><ellipse cx="20" cy="30" rx="20" ry="7" fill="none" stroke="#2f3b45" stroke-width="1.8"/>
+  </g>
+  <text class="sml" x="1470" y="312">계획 → 보고 추적 가능</text>
+
+  <path class="thin" d="M1555 340 V386"/>
+
+  <!-- KB sync -->
+  <rect class="amber" x="1450" y="390" width="210" height="140" rx="16"/>
+  <text class="hdr2" x="1470" y="422">KB Sync 트리거</text>
+  <text class="sml" x="1470" y="450">Bedrock Knowledge Base</text>
+  <text class="sml" x="1470" y="472">동기화 자동 실행</text>
+  <text class="sml" x="1470" y="500">지식 신선도 유지</text>
+
+  <!-- caption -->
+  <line x1="46" y1="600" x2="1660" y2="600" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="46" y="632">Figure. KB Intelligence supervisor 파이프라인 — Planner가 plan schema(계약)를 산출하고, Researcher·Competitor·Tech Analyst가 ThreadPoolExecutor로 병렬 실행, Synthesizer 종합 후 daily_updates 저장과 KB 동기화가 자동으로 이어진다.</text>
+  <text class="sub" x="46" y="658">EventBridge 주기 실행으로 RFP가 있으면 프로젝트 맥락, 없으면 기본 컨텍스트로 지식 신선도를 유지한다.</text>
+</svg>

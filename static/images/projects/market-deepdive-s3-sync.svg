@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="640" viewBox="0 0 1700 640" role="img" aria-labelledby="t5 d5">
+  <title id="t5">Deep dive: S3 display troubleshooting</title>
+  <desc id="d5">One symptom, three causes: Next.js layered caching, trusting empty responses, and dual state sources; each fixed separately and prevented structurally by S3SyncProvider enforcing S3 as the single source of truth.</desc>
+  <defs>
+    <marker id="dark5" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#2f3b45"/>
+    </marker>
+    <style>
+      .hdr  { font: italic 700 26px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .hdr2 { font: 700 19px Georgia, "Times New Roman", serif; fill: #17222b; }
+      .sub  { font: italic 500 15px Georgia, serif; fill: #5c6a75; }
+      .lbl  { font: 600 14px -apple-system, "Segoe UI", sans-serif; fill: #2f3b45; }
+      .sml  { font: 500 12.5px -apple-system, "Segoe UI", sans-serif; fill: #5c6a75; }
+      .step { font: 800 18px Georgia, serif; fill: #c2571a; }
+      .mth  { font: italic 700 17px Georgia, serif; fill: #7a3d12; }
+      .qtxt { font: italic 600 16px Georgia, serif; fill: #7a3d12; }
+      .grpB { fill: #fdfefe; stroke: #4a7fa5; stroke-width: 2.5; stroke-dasharray: 11 8; }
+      .grpK { fill: none; stroke: #333c44; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .grpO { fill: #fffcf8; stroke: #c2571a; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .pill { fill: #ffffff; stroke: #333c44; stroke-width: 2; stroke-dasharray: 7 5; }
+      .peach{ fill: #fdefe2; stroke: #d9b38c; stroke-width: 1.6; }
+      .blue { fill: #e8f1fa; stroke: #a9c6e0; stroke-width: 1.6; }
+      .purp { fill: #efe9f7; stroke: #c3aede; stroke-width: 1.6; }
+      .green{ fill: #e6f2e8; stroke: #a9cdb1; stroke-width: 1.6; }
+      .amber{ fill: #fdf3dd; stroke: #dfc084; stroke-width: 1.8; }
+      .thin { fill: none; stroke: #2f3b45; stroke-width: 2.2; marker-end: url(#dark5); }
+      .ink  { stroke: #2f3b45; stroke-width: 1.8; fill: #fff; }
+    </style>
+  </defs>
+  <rect width="1700" height="640" fill="#ffffff"/>
+
+  <text class="step" x="46" y="52">Deep Dive ②</text>
+  <text class="hdr" x="172" y="52">S3 표시 트러블슈팅 — 원인은 하나가 아니었다</text>
+  <text class="sub" x="46" y="80">“새로고침하면 가끔 고쳐지는” 상태 불일치 — 첫 수정에서 멈추지 않고 세 원인을 분리해 잡은 뒤, 구조로 재발을 막는다</text>
+
+  <!-- Symptom -->
+  <rect class="grpO" x="46" y="170" width="280" height="280" rx="16"/>
+  <text class="hdr2" x="66" y="204">증상</text>
+  <g transform="translate(258,182)">
+    <rect x="0" y="10" width="34" height="24" rx="6" fill="#fff" stroke="#2f3b45" stroke-width="2"/>
+    <circle cx="10" cy="22" r="3" fill="#2f3b45"/><circle cx="24" cy="22" r="3" fill="#2f3b45"/>
+    <line x1="17" y1="10" x2="17" y2="2" stroke="#2f3b45" stroke-width="2"/><circle cx="17" cy="2" r="2.5" fill="#c2571a"/>
+  </g>
+  <text class="qtxt" x="66" y="244">“S3에는 있는 제안서가</text>
+  <text class="qtxt" x="66" y="270">화면에 안 보인다”</text>
+  <text class="qtxt" x="66" y="306">“삭제한 제안서가</text>
+  <text class="qtxt" x="66" y="332">계속 보인다”</text>
+  <text class="sml" x="66" y="376">새로고침하면 가끔 고쳐지는</text>
+  <text class="sml" x="66" y="398">전형적 상태 불일치 버그</text>
+
+  <!-- fan-out bus -->
+  <path fill="none" stroke="#2f3b45" stroke-width="2.2" d="M326 310 H366 M366 218 V478"/>
+  <circle cx="366" cy="218" r="4" fill="#2f3b45"/><circle cx="366" cy="310" r="4" fill="#2f3b45"/>
+  <circle cx="366" cy="348" r="4" fill="#2f3b45"/><circle cx="366" cy="478" r="4" fill="#2f3b45"/>
+  <path class="thin" d="M366 218 H426"/>
+  <path class="thin" d="M366 348 H426"/>
+  <path class="thin" d="M366 478 H426"/>
+
+  <!-- causes group -->
+  <rect class="grpB" x="400" y="120" width="900" height="440" rx="20"/>
+  <text class="hdr2" x="424" y="152">3중 원인 — 증상은 하나, 원인은 셋</text>
+
+  <!-- row 1 -->
+  <rect class="peach" x="430" y="168" width="340" height="100" rx="12"/>
+  <text class="step" x="448" y="200">①</text>
+  <text class="lbl" x="478" y="200">Next.js 다층 캐시</text>
+  <text class="sml" x="448" y="226">fetch·라우트 응답이 층층이 캐싱</text>
+  <text class="sml" x="448" y="248">갱신 잦은 S3 목록이 stale로 잔존</text>
+  <path class="thin" d="M770 218 H826"/>
+  <rect class="green" x="830" y="168" width="440" height="100" rx="12"/>
+  <text class="lbl" x="850" y="200">캐시 전면 차단</text>
+  <text class="sml" x="850" y="226">데이터 조회 fetch에 cache: 'no-store' 강제</text>
+  <text class="sml" x="850" y="248">BFF 라우트 응답에 Cache-Control: no-store 명시</text>
+
+  <!-- row 2 -->
+  <rect class="peach" x="430" y="298" width="340" height="100" rx="12"/>
+  <text class="step" x="448" y="330">②</text>
+  <text class="lbl" x="478" y="330">빈 응답을 믿는 로직</text>
+  <text class="sml" x="448" y="356">일시 오류·동기화 타이밍의 빈 목록을</text>
+  <text class="sml" x="448" y="378">'데이터 없음'으로 신뢰 → 상태 삭제</text>
+  <path class="thin" d="M770 348 H826"/>
+  <rect class="green" x="830" y="298" width="440" height="100" rx="12"/>
+  <text class="lbl" x="850" y="330">응답 검증 분리</text>
+  <text class="sml" x="850" y="356">실패·빈 응답은 상태 덮어쓰기의 근거가 아님</text>
+  <text class="sml" x="850" y="378">검증을 통과한 데이터만 상태에 반영</text>
+
+  <!-- row 3 -->
+  <rect class="peach" x="430" y="428" width="340" height="100" rx="12"/>
+  <text class="step" x="448" y="460">③</text>
+  <text class="lbl" x="478" y="460">상태 소스 이원화 — 근본 원인</text>
+  <text class="sml" x="448" y="486">localStorage와 S3가 각자 진실을 주장</text>
+  <text class="sml" x="448" y="508">새로고침 복불복의 정체</text>
+  <path class="thin" d="M770 478 H826"/>
+  <rect class="green" x="830" y="428" width="440" height="100" rx="12"/>
+  <text class="lbl" x="850" y="456">S3SyncProvider — 앱 루트에 배치</text>
+  <rect class="blue" x="850" y="472" width="110" height="32" rx="16"/>
+  <text class="sml" x="864" y="492">S3 목록 fetch</text>
+  <path class="thin" d="M960 488 H982"/>
+  <rect class="peach" x="986" y="472" width="140" height="32" rx="16"/>
+  <text class="sml" x="1000" y="492">localStorage 정리</text>
+  <path class="thin" d="M1126 488 H1148"/>
+  <rect class="green" x="1152" y="472" width="100" height="32" rx="16"/>
+  <text class="sml" x="1166" y="492">상태 재구성</text>
+
+  <!-- fan-in bus -->
+  <path fill="none" stroke="#2f3b45" stroke-width="2.2" d="M1270 218 H1310 M1270 348 H1310 M1270 478 H1310 M1310 218 V478"/>
+  <circle cx="1310" cy="218" r="4" fill="#2f3b45"/><circle cx="1310" cy="348" r="4" fill="#2f3b45"/><circle cx="1310" cy="478" r="4" fill="#2f3b45"/>
+  <path class="thin" d="M1310 348 H1356"/>
+
+  <!-- principle -->
+  <rect class="amber" x="1360" y="268" width="300" height="160" rx="16"/>
+  <text class="hdr2" x="1382" y="300">단일 소스 원칙</text>
+  <text class="mth" x="1382" y="336">“로컬은 캐시, 진실은 S3”</text>
+  <text class="sml" x="1382" y="368">컴포넌트가 아닌 앱 계층에서 강제</text>
+  <text class="sml" x="1382" y="390">무엇이 갱신되든 화면은 진실을 표시</text>
+
+  <!-- caption -->
+  <line x1="46" y1="580" x2="1660" y2="580" stroke="#333c44" stroke-width="2" stroke-dasharray="12 8"/>
+  <text class="sub" x="46" y="612">Figure. S3 표시 불일치 트러블슈팅 — 캐시 계층·빈 응답 신뢰·상태 소스 이원화 세 원인을 각각 해결하고, S3SyncProvider가 앱 시작 시 S3 기준으로 로컬 상태를 재구성해 재발을 구조적으로 막는다.</text>
+</svg>
