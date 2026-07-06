@@ -28,7 +28,7 @@ draft: false
 ---
 
 <div class="aio-lead-panel">
-  <span class="aio-kicker">백엔드 핵심 · 프론트 주작성 · 2025.10 – 2026.02</span>
+  <span class="aio-kicker">백엔드 핵심 · 2025.10 – 2026.02</span>
   <p><strong>AIO는 기업 문서가 데이터셋이 되고, 데이터셋이 지식 그래프와 벡터 인덱스로 바뀌며, 그 지식을 Agent Workflow에서 재사용하는 전체 흐름을 제품화한 시스템입니다.</strong> 이 글은 그 중 세 가지 기술 문제를 다룹니다 — ① 그래프와 벡터를 왜, 어떻게 함께 쓰는가, ② 벡터 하나로 부족할 때의 멀티벡터 융합, ③ 저장소 5종에 걸친 데이터 정합성.</p>
 </div>
 
@@ -44,7 +44,7 @@ draft: false
 
 ## 딥다이브 ① Graph + Vector 이중 인덱스와 5가지 검색 모드
 
-문서가 지식이 되는 파이프라인은 이렇습니다. 업로드된 문서는 Celery worker가 비동기로 parsing → chunking → indexing을 수행하고, 이 과정에서 **세 종류의 벡터 컬렉션**(chunk / entity / relationship)과 **Neo4j 그래프**가 함께 만들어집니다. chunk에서 LLM이 엔티티와 관계를 추출하고, 엔티티·관계 각각의 서술도 임베딩되어 벡터로 저장됩니다. 업로드·문서 메타데이터·ingestion·인덱싱이 서로 다른 실패 지점과 재시도 단위를 갖도록 분리했고, 진행률은 SSE로 화면에 흐릅니다.
+문서가 지식이 되는 파이프라인은 이렇습니다. 업로드된 문서는 Celery worker가 비동기로 `parsing` → `chunking` → `indexing`을 수행하고, 이 과정에서 **세 종류의 벡터 컬렉션**(chunk / entity / relationship)과 **Neo4j 그래프**가 함께 만들어집니다. chunk에서 LLM이 엔티티와 관계를 추출하고, 엔티티·관계 각각의 서술도 임베딩되어 벡터로 저장됩니다. 업로드·문서 메타데이터·ingestion·인덱싱이 서로 다른 실패 지점과 재시도 단위를 갖도록 분리했고, 진행률은 SSE로 화면에 흐릅니다.
 
 질의 시에는 먼저 키워드 추출기가 질문에서 저수준(구체 엔티티)·고수준(주제·테마) 키워드를 분리하고, 검색 모드에 따라 다른 경로를 탑니다.
 
@@ -107,7 +107,7 @@ RRF를 고른 이유는 점수 정규화가 필요 없어서입니다. 필드마
   <div><strong>5. Stream</strong><span>답변과 conversation state를 화면으로 스트리밍합니다.</span></div>
 </div>
 
-노드 라이브러리는 검색(전처리·검색·후처리·rerank), 생성, 라우팅·분기·루프, 데이터 ingestion, 멀티모달(vision) 등 **20개 카테고리 65개 노드 모듈**(코드 재집계 기준)로 구성했습니다. 위에서 설명한 멀티벡터 검색과 법령 준수 검증도 각각 노드로 등록되어 있어 워크플로우에 그대로 꽂을 수 있습니다.
+노드 라이브러리는 검색(전처리·검색·후처리·rerank), 생성, 라우팅·분기·루프, 데이터 ingestion, 멀티모달(vision) 등 **20개 카테고리 65개 노드 모듈**로 구성했습니다. 위에서 설명한 멀티벡터 검색과 법령 준수 검증도 각각 노드로 등록되어 있어 워크플로우에 그대로 꽂을 수 있습니다.
 
 <div class="aio-diagram">
   <img src="/images/projects/aio-deepdive-agent-builder.svg" alt="Agent Builder execution path — canvas to JSON spec to LangGraph StateGraph to SSE streaming" />
@@ -115,8 +115,8 @@ RRF를 고른 이유는 점수 정규화가 필요 없어서입니다. 필드마
 
 ## 시스템 규모와 구조
 
-런타임은 FastAPI 백엔드 + Vue 3 콘솔이며, PostgreSQL(메타데이터·권한)·Milvus(벡터)·Neo4j(그래프)·Redis(캐시·태스크 브로커)·Elasticsearch(텍스트 검색) **5종 저장소**와 Celery worker를 docker-compose로 오케스트레이션합니다. API 표면은 라우터 기준 **160여 개 엔드포인트**(코드 재집계 기준)로, 문서 저장소·데이터셋 ingestion·지식 그래프 질의·Agent 실행·계정/역할/ACL이 분리된 라우터로 운영됩니다. 권한은 JWT + role/permission/ACL bitmask로 평가되며, 접근 불가 문서가 답변 근거에 섞이지 않도록 검색 경로와 연결됩니다.
+런타임은 FastAPI 백엔드 + Vue 3 콘솔이며, PostgreSQL(메타데이터·권한)·Milvus(벡터)·Neo4j(그래프)·Redis(캐시·태스크 브로커)·Elasticsearch(텍스트 검색) **5종 저장소**와 Celery worker를 docker-compose로 오케스트레이션합니다. API 표면은 라우터 기준 **160여 개 엔드포인트**로, 문서 저장소·데이터셋 ingestion·지식 그래프 질의·Agent 실행·계정/역할/ACL이 분리된 라우터로 운영됩니다. 권한은 JWT + role/permission/ACL bitmask로 평가되며, 접근 불가 문서가 답변 근거에 섞이지 않도록 검색 경로와 연결됩니다.
 
 ## 정리
 
-AIO에서 내가 만든 핵심은 화면 수가 아니라 **검색 품질을 구조로 푼 것**입니다. 그래프와 벡터의 이중 인덱스, 질의 유형별 5가지 검색 경로, 4벡터 RRF 융합은 각각 "벡터 하나로는 안 되는" 구체적인 실패 케이스에서 출발한 설계입니다. 그리고 그 인덱스들이 5종 저장소에 흩어질 때 생기는 정합성 문제 — 삭제 잔존, 초기화 경합 — 를 세션 기반 삭제 파이프라인과 double-check 락으로 마무리했습니다. 이 엔진은 이후 Plan2do의 법령 검색 전략을 노드로 이식받으며 사내 공용 워크플로우 기반으로 확장되었습니다.
+AIO에서 개발한 핵심 구현은 **검색 품질을 구조로 푼 것**입니다. 그래프와 벡터의 이중 인덱스, 질의 유형별 5가지 검색 경로, 4벡터 RRF 융합은 각각 "벡터 하나로는 답변 품질이 너무 떨어진다." 구체적인 실패 케이스에서 출발한 설계입니다. 그리고 그 인덱스들이 5종 저장소에 흩어질 때 생기는 정합성 문제 — 삭제 잔존, 초기화 경합 — 를 세션 기반 삭제 파이프라인과 double-check 락으로 마무리했습니다. 이 엔진은 이후 Plan2do의 법령 검색 전략을 노드로 이식받으며 법령 워크플로우 기반으로 확장되었습니다.
