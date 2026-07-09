@@ -118,12 +118,17 @@ const applyImageTone = (image) => {
   }
 };
 
-const BlogArticleBody = ({ html }) => {
+const BlogArticleBody = ({
+  bodyClassName = "article-body blog-markdown-body",
+  defaultAlt = "블로그 이미지",
+  emptyLabel = "블로그 이미지 확대 보기",
+  html,
+}) => {
   return (
     <ProjectImageLightbox
-      bodyClassName="article-body blog-markdown-body"
-      defaultAlt="블로그 이미지"
-      emptyLabel="블로그 이미지 확대 보기"
+      bodyClassName={bodyClassName}
+      defaultAlt={defaultAlt}
+      emptyLabel={emptyLabel}
       html={html}
       onImageReady={applyImageTone}
     />

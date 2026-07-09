@@ -1,5 +1,6 @@
 import * as React from "react";
 import { graphql, Link } from "gatsby";
+import BlogArticleBody from "../components/BlogArticleBody";
 import Layout from "../components/Layout";
 import { PageViewCounter } from "../components/ViewCounter";
 import tipCategories from "../data/tipCategories.json";
@@ -40,9 +41,11 @@ const TipPostTemplate = ({ data, pageContext }) => {
                 </a>
               ))}
             </div>
-            <div
-              className="article-body"
-              dangerouslySetInnerHTML={{ __html: tipHtml }}
+            <BlogArticleBody
+              bodyClassName="article-body blog-markdown-body tip-markdown-body"
+              defaultAlt="Tips 이미지"
+              emptyLabel="Tips 이미지 확대 보기"
+              html={tipHtml}
             />
             <nav
               className="related-grid adjacent-posts"
