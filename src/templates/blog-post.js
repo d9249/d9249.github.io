@@ -1,6 +1,7 @@
 import * as React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
+import BlogArticleBody from "../components/BlogArticleBody";
 import { PageViewCounter } from "../components/ViewCounter";
 import categories from "../data/categories.json";
 import { formatReadableArticleHtml } from "../utils/articleHtml";
@@ -74,10 +75,7 @@ const BlogPostTemplate = ({ data, pageContext }) => {
               <div className="hero-image" />
               <figcaption>{post.frontmatter.description}</figcaption>
             </figure>
-            <div
-              className="article-body"
-              dangerouslySetInnerHTML={{ __html: postHtml }}
-            />
+            <BlogArticleBody html={postHtml} />
             <nav
               className="related-grid adjacent-posts"
               aria-label="Adjacent posts"

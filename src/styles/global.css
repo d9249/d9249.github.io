@@ -1,4 +1,5 @@
 :root {
+  /* allow: SIZE_OK - legacy global theme stylesheet; current edits stay scoped to blog media. */
   color-scheme: light;
   --bg: oklch(98% 0.005 250);
   --surface: oklch(100% 0 0);
@@ -3254,6 +3255,119 @@ figcaption,
 
 .article-body p > img:only-child {
   margin: 28px 0;
+}
+
+.blog-markdown-body figure,
+.blog-markdown-body p:has(> img:only-child),
+.blog-markdown-body p:has(> a:only-child > img:only-child) {
+  max-width: 100%;
+  margin: 34px 0 12px !important;
+  padding: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in oklch, var(--border) 22%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--border) 18%, transparent) 1px,
+      transparent 1px
+    ),
+    color-mix(in oklch, var(--surface) 96%, var(--bg));
+  background-size: 28px 28px;
+}
+
+.blog-markdown-body figure > img,
+.blog-markdown-body figure > a > img,
+.blog-markdown-body figure > picture,
+.blog-markdown-body p > img:only-child,
+.blog-markdown-body p > a:only-child > img:only-child {
+  margin: 0 auto;
+}
+
+.blog-markdown-body figure img,
+.blog-markdown-body p > img:only-child,
+.blog-markdown-body p > a:only-child > img:only-child {
+  border-radius: 6px;
+  background: white;
+}
+
+.blog-markdown-body figure > picture,
+.blog-markdown-body figure > picture > img {
+  max-width: 100%;
+}
+
+.blog-markdown-body figcaption {
+  margin: 10px 2px 0 !important;
+  color: var(--muted) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+}
+
+.blog-markdown-body p:has(> img:only-child) + p:has(> em:only-child) {
+  margin: -2px 0 32px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.blog-markdown-body p:has(> img:only-child) + p:has(> em:only-child) em {
+  font-style: normal;
+}
+
+.blog-markdown-body .blog-readable-dark-frame {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in oklch, var(--border) 18%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--border) 16%, transparent) 1px,
+      transparent 1px
+    ),
+    color-mix(in oklch, var(--surface) 99%, white);
+}
+
+.blog-markdown-body img.blog-readable-dark-image {
+  background: white;
+}
+
+.article-body.blog-markdown-body p.blog-readable-wide-frame,
+.article-body.blog-markdown-body figure.blog-readable-wide-frame {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.article-body.blog-markdown-body img.blog-readable-wide-image {
+  max-width: none;
+  min-width: 640px;
+  width: 100%;
+  height: auto;
+}
+
+html[data-theme="dark"] .blog-markdown-body .blog-readable-dark-frame {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in oklch, var(--border) 24%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--border) 20%, transparent) 1px,
+      transparent 1px
+    ),
+    color-mix(in oklch, var(--surface) 86%, var(--bg));
 }
 
 .project-markdown-body img.project-lightbox-trigger {

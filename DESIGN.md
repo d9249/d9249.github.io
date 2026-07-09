@@ -97,6 +97,17 @@ All spacing derives from a 4px base.
 - **Accessibility**: image alt text is preserved; keyboard image activation uses Enter/Space.
 - **Motion**: micro-interactions use 160ms transform/opacity transitions.
 
+### Blog Article Media
+
+- **Structure**: Blog Markdown HTML rendered inside `.article-body.blog-markdown-body`.
+- **Variants**: standalone Markdown images, explicit HTML figures, image links, and image captions written as italic paragraphs.
+- **Spacing**: 34px block rhythm, 12px media-frame padding, 6-8px image radius.
+- **Surface**: images sit inside a tokenized surface frame with a 1px border and subtle grid texture so source charts do not float against the page canvas.
+- **Contrast**: very dark, wide analytical images are detected in the browser and receive a brighter inspection frame without mutating source pixels; incorrect dark/matte conversions are rejected during collection instead of repaired by CSS.
+- **Inspection**: wide analytical images preserve a usable chart width with horizontal pan on narrow viewports instead of shrinking axis labels and legends into noise.
+- **Caption**: captions use muted mono text and override legacy inline caption colors from older generated posts.
+- **Accessibility**: original image alt text remains on the image; captions are visible text and not a replacement for alt text.
+
 ### Project Image Lightbox
 
 - **Structure**: fixed modal backdrop, icon-only close button, figure, bounded image viewport, fitted image stage, caption footer, icon-only rotate control.
