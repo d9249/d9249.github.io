@@ -3432,7 +3432,14 @@ body.project-lightbox-open {
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
   gap: 12px;
-  width: min(1680px, calc(100vw - var(--project-lightbox-gutter-inline-total)));
+  width: min(
+    1680px,
+    calc(100vw - var(--project-lightbox-gutter-inline-total)),
+    var(
+      --project-lightbox-frame-width,
+      calc(100vw - var(--project-lightbox-gutter-inline-total))
+    )
+  );
   overflow: hidden;
   max-height: var(
     --project-lightbox-frame-max-height,

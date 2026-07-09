@@ -101,17 +101,25 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
   const visibleNaturalHeight = isQuarterTurn
     ? activeImage.naturalWidth
     : activeImage.naturalHeight;
+  const scaleLimit = viewportWidth > 680 ? 1.6 : 1;
   const scale = hasMobileRotation
-    ? Math.min(availableWidth / visibleNaturalWidth, 1)
+    ? Math.min(availableWidth / visibleNaturalWidth, scaleLimit)
     : Math.min(
         availableWidth / visibleNaturalWidth,
         availableHeight / visibleNaturalHeight,
-        1,
+        scaleLimit,
       );
   const imageWidth = Math.round(activeImage.naturalWidth * scale);
   const imageHeight = Math.round(activeImage.naturalHeight * scale);
   const stageWidth = isQuarterTurn ? imageHeight : imageWidth;
   const stageHeight = isQuarterTurn ? imageWidth : imageHeight;
+  const frameWidth =
+    viewportWidth > 680
+      ? Math.min(
+          viewportWidth - metrics.horizontalGutterTotal,
+          stageWidth + metrics.framePaddingTotal,
+        )
+      : undefined;
   const visualBottomGap = Math.max(
     hasMobileRotation ? 16 : 0,
     viewportSize.layoutHeight -
@@ -132,6 +140,9 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
     frame: {
       "--project-lightbox-frame-max-height": hasMobileRotation
         ? `${Math.max(300, viewportSize.height - MOBILE_ROTATED_FRAME_GUTTER)}px`
+        : undefined,
+      "--project-lightbox-frame-width": frameWidth
+        ? `${Math.round(frameWidth)}px`
         : undefined,
       "--project-lightbox-image-aspect": `${activeImage.naturalWidth / activeImage.naturalHeight}`,
       "--project-lightbox-stage-width": `${stageWidth}px`,
