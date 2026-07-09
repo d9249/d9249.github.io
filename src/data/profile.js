@@ -32,13 +32,13 @@ export const evidenceItems = [
   },
   {
     label: "awards",
-    value: "장관상 2·회장상 1",
+    value: "장관상 · 회장상",
     description:
       "행정안전부(Plan2Do)·과학기술정보통신부(WIS 2025) 장관상과 대한상공회의소 회장상(AI 항공조업 안전기술)까지, AI 제품화 성과를 정부·산업에서 3회 수상했습니다.",
   },
   {
     label: "productization",
-    value: "특허·공급계약",
+    value: "특허 · 공급계약",
     description:
       "InVision OCR에서 표 구조 복원을 TEDS 0.9188까지 고도화하고, 관련 기술 특허 출원과 K사 솔루션 공급 계약 수주로 연구를 사업 성과로 연결했습니다.",
   },
