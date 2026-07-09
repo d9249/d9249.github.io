@@ -3370,18 +3370,18 @@ html[data-theme="dark"] .blog-markdown-body .blog-readable-dark-frame {
     color-mix(in oklch, var(--surface) 86%, var(--bg));
 }
 
-.project-markdown-body img.project-lightbox-trigger {
+.article-body img.project-lightbox-trigger {
   cursor: zoom-in;
   transition:
     transform 160ms ease,
     box-shadow 160ms ease;
 }
 
-.project-markdown-body img.project-lightbox-trigger:hover {
+.article-body img.project-lightbox-trigger:hover {
   transform: translateY(-1px);
 }
 
-.project-markdown-body img.project-lightbox-trigger:focus-visible {
+.article-body img.project-lightbox-trigger:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 4px;
   box-shadow: 0 0 0 6px color-mix(in oklch, var(--accent) 16%, transparent);

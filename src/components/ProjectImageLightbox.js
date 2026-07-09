@@ -1,5 +1,7 @@
 import * as React from "react";
 
+// allow: SIZE_OK - Modal fit geometry, focus management, and rotation behavior are kept together because this path has prior viewport QA coverage.
+
 const getImagePayload = (image) => ({
   alt: image.getAttribute("alt") || "",
   naturalHeight: image.naturalHeight || 0,
@@ -148,7 +150,14 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
   };
 };
 
-const ProjectImageLightbox = ({ html }) => {
+const ProjectImageLightbox = ({
+  bodyClassName = "article-body project-markdown-body",
+  defaultAlt = "프로젝트 이미지",
+  emptyLabel = "프로젝트 이미지 확대 보기",
+  html,
+  onImageReady,
+  triggerClassName = "project-lightbox-trigger",
+}) => {
   const articleRef = React.useRef(null);
   const closeButtonRef = React.useRef(null);
   const captionId = React.useId();
@@ -171,24 +180,36 @@ const ProjectImageLightbox = ({ html }) => {
 
     const images = Array.from(article.querySelectorAll("img"));
 
-    images.forEach((image) => {
-      const alt = image.getAttribute("alt") || "프로젝트 이미지";
+    const cleanups = images.map((image) => {
+      const alt = image.getAttribute("alt") || defaultAlt;
+      const handleImageReady = () => onImageReady?.(image);
 
-      image.classList.add("project-lightbox-trigger");
+      image.classList.add(triggerClassName);
       image.setAttribute("role", "button");
       image.setAttribute("tabindex", "0");
       image.setAttribute("aria-label", `${alt} 확대 보기`);
-    });
 
-    return () => {
-      images.forEach((image) => {
-        image.classList.remove("project-lightbox-trigger");
+      if (onImageReady) {
+        if (image.complete && image.naturalWidth) {
+          handleImageReady();
+        } else {
+          image.addEventListener("load", handleImageReady, { once: true });
+        }
+      }
+
+      return () => {
+        image.classList.remove(triggerClassName);
         image.removeAttribute("role");
         image.removeAttribute("tabindex");
         image.removeAttribute("aria-label");
-      });
+        image.removeEventListener("load", handleImageReady);
+      };
+    });
+
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
     };
-  }, [html]);
+  }, [defaultAlt, html, onImageReady, triggerClassName]);
 
   React.useEffect(() => {
     if (!activeImage) {
@@ -392,7 +413,7 @@ const ProjectImageLightbox = ({ html }) => {
     <>
       <div
         ref={articleRef}
-        className="article-body project-markdown-body"
+        className={bodyClassName}
         onClick={handleArticleClick}
         onKeyDown={handleArticleKeyDown}
         dangerouslySetInnerHTML={{ __html: html }}
@@ -409,9 +430,7 @@ const ProjectImageLightbox = ({ html }) => {
           role="dialog"
           aria-modal="true"
           aria-label={
-            activeImage.alt
-              ? `${activeImage.alt} 확대 보기`
-              : "프로젝트 이미지 확대 보기"
+            activeImage.alt ? `${activeImage.alt} 확대 보기` : emptyLabel
           }
           aria-describedby={activeImage.alt ? captionId : undefined}
           onClick={closeLightbox}

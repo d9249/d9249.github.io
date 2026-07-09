@@ -1,4 +1,5 @@
 import * as React from "react";
+import ProjectImageLightbox from "./ProjectImageLightbox";
 
 const DARK_ANALYSIS_IMAGE_CLASS = "blog-readable-dark-image";
 const DARK_ANALYSIS_FRAME_CLASS = "blog-readable-dark-frame";
@@ -118,37 +119,13 @@ const applyImageTone = (image) => {
 };
 
 const BlogArticleBody = ({ html }) => {
-  const bodyRef = React.useRef(null);
-
-  React.useEffect(() => {
-    const body = bodyRef.current;
-    if (!body) {
-      return undefined;
-    }
-
-    const images = Array.from(body.querySelectorAll("img"));
-    const cleanups = images.map((image) => {
-      if (image.complete && image.naturalWidth) {
-        applyImageTone(image);
-        return undefined;
-      }
-
-      const handleLoad = () => applyImageTone(image);
-      image.addEventListener("load", handleLoad, { once: true });
-
-      return () => image.removeEventListener("load", handleLoad);
-    });
-
-    return () => {
-      cleanups.forEach((cleanup) => cleanup?.());
-    };
-  }, [html]);
-
   return (
-    <div
-      ref={bodyRef}
-      className="article-body blog-markdown-body"
-      dangerouslySetInnerHTML={{ __html: html }}
+    <ProjectImageLightbox
+      bodyClassName="article-body blog-markdown-body"
+      defaultAlt="블로그 이미지"
+      emptyLabel="블로그 이미지 확대 보기"
+      html={html}
+      onImageReady={applyImageTone}
     />
   );
 };

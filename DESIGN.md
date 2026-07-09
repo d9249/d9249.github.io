@@ -106,12 +106,13 @@ All spacing derives from a 4px base.
 - **Contrast**: very dark, wide analytical images are detected in the browser and receive a brighter inspection frame without mutating source pixels; incorrect dark/matte conversions are rejected during collection instead of repaired by CSS.
 - **Inspection**: wide analytical images preserve a usable chart width with horizontal pan on narrow viewports instead of shrinking axis labels and legends into noise.
 - **Caption**: captions use muted mono text and override legacy inline caption colors from older generated posts.
+- **States**: images expose the shared zoom cursor, focus ring, click activation, and Enter/Space keyboard activation used by project article images.
 - **Accessibility**: original image alt text remains on the image; captions are visible text and not a replacement for alt text.
 
-### Project Image Lightbox
+### Article Image Lightbox
 
 - **Structure**: fixed modal backdrop, icon-only close button, figure, bounded image viewport, fitted image stage, caption footer, icon-only rotate control.
-- **Variants**: light and dark theme inherit the same surface, border, overlay, and shadow tokens.
+- **Variants**: project and blog article media share the same light and dark theme surface, border, overlay, and shadow tokens.
 - **Spacing**: viewport gutters leave comfortable inspection space: 32px desktop, 16px mobile; rotated mobile images reserve close-button and browser-toolbar clearance without leaving a large unused lower gutter, anchor the frame from the top clearance so the added height grows downward, use Safari `visualViewport` offsets for height, size dense diagrams from the stable layout width with a `100vw` CSS fallback before height, keep the frame inside the visible viewport, reset image scrolling on open/rotate, and scroll only the clipped image viewport while the caption and rotate control stay in a separate frame footer that image content cannot paint over; image frame padding is 12px desktop and 8px mobile.
 - **States**: backdrop click, close/rotate button hover/focus, Escape, 90-degree rotation steps, and focus containment.
 - **Accessibility**: `role="dialog"`, `aria-modal="true"`, labelled by image alt text when present.
