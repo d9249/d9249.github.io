@@ -60,6 +60,80 @@ import { getProjectProfileTags } from "../utils/projectProfileTags";
 const CARD_DECK_SIZE = 4;
 const PROJECT_DECK_SIZE = 2;
 const POST_DECK_SIZE = 3;
+const PROFILE_ASCII = String.raw`               ..:.
+           .=*###%##=.
+          -%@%%###%%%#*+:
+         :%@@@%@@@%%%%@@%*
+        =%@@@@%%@@@@@@@@@@#
+       :%%@%%%%%@@@@@@@@@%@*
+       *%%%%%%%@@@%@@@@@%@@@:
+      .%@@%#%%@@%%%@%%@@@@@@=
+      .%@@%%#######%#*%@@@@@-
+       #@@@@%%%%%###**%%@@@@:
+       =%%@@%%%##++*##%@@@@#
+        %%+=--==-..-=+++*#@+
+        =#..--*=: .--*++=+#-.
+       =:+:  .:.  .::::--+*=-
+       .:+:       .-:...:++-
+        ..:    .. .=-...-++.
+         .-:.   :-=+-..:==:
+           ::..  .:--::-+.
+           ::..:===++--==
+            -::..::---==.
+            :=:....::-+=
+            .==:..::-++-
+            .:---=++++=-
+            :..:--===--=
+          .::...:::--::---:
+        .+%:... ...::::-=*@*:
+      =#%@@+  . ...:::::-#@@@*:
+   -*%%%%%%%+    ......-#@@@@@@#=
+-*%%%%%%%%%%@#=:....:-+%@@@@@%%@@%+:
+%%%%%%%%%%%%@@@%%###%%@@@@@@@@@@@@@%
+%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@
+%%%%@%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@`;
+const PROFILE_FACT_GROUPS = [
+  {
+    title: "Profile",
+    items: [
+      { label: "Name", value: "Sangmin Lee" },
+      { label: "Role", value: "AI Engineer & Researcher" },
+      { label: "Current", value: "AsianaIDT · AI/ML" },
+      { label: "Focus", value: "RAG · Agents · OCR · Vision" },
+    ],
+  },
+  {
+    title: "Stack",
+    items: [
+      { label: "Languages", value: "Python · JavaScript" },
+      { label: "AI / Data", value: "PyTorch · LangGraph · FastAPI" },
+      { label: "Infra", value: "AWS · Docker · Kubernetes" },
+    ],
+  },
+  {
+    title: "Highlights",
+    items: [
+      { label: "Products", value: "AI products ×8" },
+      { label: "Research", value: "SCIE Q2 ×3 · KCI ×2" },
+      { label: "Awards", value: "CES 2025 · Minister ×2" },
+    ],
+  },
+  {
+    title: "Contact",
+    items: [
+      {
+        label: "Email",
+        value: "dodo9249@gmail.com",
+        href: "mailto:dodo9249@gmail.com",
+      },
+      {
+        label: "GitHub",
+        value: "github.com/d9249",
+        href: "https://github.com/d9249",
+      },
+    ],
+  },
+];
 const SKILL_LOGOS = new Map([
   ["Linux (Ubuntu)", siUbuntu],
   ["Linux", siLinux],
@@ -315,41 +389,51 @@ const IndexPage = ({ data }) => {
             ))}
           </div>
         </div>
-        <aside className="terminal-card" aria-label="Profile summary">
+        <aside className="terminal-card" aria-labelledby="whoami-title">
           <div className="terminal-top">
-            <div className="traffic">
+            <div className="traffic" aria-hidden="true">
               <span />
               <span />
               <span />
             </div>
-            <span>portfolio/profile.js</span>
+            <span>~/portfolio/whoami</span>
           </div>
-          <div className="terminal-body">
-            <p>
-              <span className="cmd">$</span> whoami
-            </p>
-            <p>
-              Sangmin Lee
-              <br />
-              AI Engineer &amp; Researcher
-            </p>
-            <div className="terminal-output">
-              <div className="terminal-row">
-                <span>current</span>
-                <strong>AsianaIDT AI/ML</strong>
-              </div>
-              <div className="terminal-row">
-                <span>focus</span>
-                <strong>RAG / Agents / OCR / Market Intel</strong>
-              </div>
-              <div className="terminal-row">
-                <span>recognition</span>
-                <strong>CES 2025 / Minister Award</strong>
-              </div>
-              <div className="terminal-row">
-                <span>research</span>
-                <strong>SCIE 3 / KCI 2</strong>
-              </div>
+          <div className="terminal-body whoami-body">
+            <figure
+              className="ascii-portrait"
+              role="img"
+              aria-label="이상민의 프로필 사진을 표현한 ASCII 아트"
+            >
+              <pre aria-hidden="true">{PROFILE_ASCII}</pre>
+            </figure>
+            <div className="whoami-profile">
+              <p className="whoami-command">
+                <span className="cmd">$</span> whoami
+              </p>
+              <p className="whoami-host" id="whoami-title">
+                <strong>sangmin</strong>@d9249
+                <span aria-hidden="true" />
+              </p>
+              {PROFILE_FACT_GROUPS.map((group) => (
+                <section className="whoami-group" key={group.title}>
+                  <h2>{group.title}</h2>
+                  <dl className="whoami-facts">
+                    {group.items.map((item) => (
+                      <div className="whoami-fact" key={item.label}>
+                        <dt>{item.label}</dt>
+                        <span className="whoami-leader" aria-hidden="true" />
+                        <dd>
+                          {item.href ? (
+                            <a href={item.href}>{item.value}</a>
+                          ) : (
+                            item.value
+                          )}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              ))}
             </div>
           </div>
         </aside>
@@ -383,9 +467,9 @@ const IndexPage = ({ data }) => {
               AI Engineer &amp; Researcher
             </h3>
             <p>
-              연구의 언어를 제품·운영·비즈니스 가치의 언어로 번역합니다.
-              문제 정의, AI 아키텍처 설계, 백엔드, 관찰성, 배포, 검증까지
-              이어지는 실제 시스템을 만드는 데 집중합니다.
+              연구의 언어를 제품·운영·비즈니스 가치의 언어로 번역합니다. 문제
+              정의, AI 아키텍처 설계, 백엔드, 관찰성, 배포, 검증까지 이어지는
+              실제 시스템을 만드는 데 집중합니다.
             </p>
             <dl className="profile-facts">
               <div>

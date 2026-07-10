@@ -524,8 +524,8 @@ body.search-is-open .header-actions > :not(.search-layer) {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.65fr);
-  gap: 56px;
+  grid-template-columns: minmax(0, 1fr) minmax(560px, 590px);
+  gap: 40px;
   align-items: end;
   padding: 92px 0 72px;
   border-bottom: 1px solid var(--border);
@@ -635,9 +635,18 @@ h3 {
 }
 
 .terminal-card {
-  background: oklch(16% 0.018 245);
-  color: oklch(94% 0.006 245);
-  border: 1px solid oklch(26% 0.018 245);
+  --terminal-bg: oklch(15.5% 0.018 245);
+  --terminal-surface: oklch(19% 0.02 245);
+  --terminal-border: oklch(30% 0.02 245);
+  --terminal-text: oklch(92% 0.01 235);
+  --terminal-muted: oklch(69% 0.03 235);
+  --terminal-label: oklch(78% 0.11 75);
+  --terminal-value: oklch(78% 0.08 225);
+  --terminal-success: oklch(78% 0.13 145);
+  min-width: 0;
+  background: var(--terminal-bg);
+  color: var(--terminal-text);
+  border: 1px solid var(--terminal-border);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 18px 55px color-mix(in oklch, var(--fg) 12%, transparent);
@@ -649,10 +658,18 @@ h3 {
   justify-content: space-between;
   gap: 12px;
   padding: 12px 14px;
-  border-bottom: 1px solid oklch(26% 0.018 245);
-  color: oklch(71% 0.025 245);
+  border-bottom: 1px solid var(--terminal-border);
+  background: var(--terminal-surface);
+  color: var(--terminal-muted);
   font-family: var(--font-mono);
   font-size: 11px;
+}
+
+.terminal-top > span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .traffic {
@@ -678,37 +695,146 @@ h3 {
 .terminal-body {
   padding: 22px;
   font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.7;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
 }
 
 .terminal-body p {
-  margin: 0 0 12px;
+  margin: 0;
 }
 
 .cmd {
-  color: var(--accent);
+  color: var(--terminal-success);
 }
 
-.terminal-output {
+.whoami-body {
   display: grid;
-  gap: 8px;
-  margin-top: 18px;
-  color: oklch(85% 0.012 245);
+  grid-template-columns: minmax(180px, 0.39fr) minmax(0, 0.61fr);
+  gap: 22px;
+  align-items: center;
 }
 
-.terminal-row {
+.ascii-portrait {
+  display: grid;
+  min-width: 0;
+  place-items: center;
+  margin: 0;
+  overflow: hidden;
+  color: color-mix(in oklch, var(--terminal-text) 82%, var(--terminal-muted));
+}
+
+.ascii-portrait pre {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: clamp(6.8px, 0.55vw, 7.8px);
+  font-variant-ligatures: none;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  white-space: pre;
+  user-select: none;
+}
+
+.whoami-profile {
+  min-width: 0;
+}
+
+.whoami-command {
+  color: var(--terminal-muted);
+  line-height: 1.4;
+}
+
+.whoami-host {
   display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding-top: 8px;
-  border-top: 1px solid oklch(25% 0.016 245);
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+  color: var(--terminal-text);
+  font-size: 12px;
+  line-height: 1.4;
 }
 
-.terminal-row strong {
-  color: oklch(96% 0.005 245);
+.whoami-host strong {
+  color: var(--terminal-success);
   font-weight: 700;
+}
+
+.whoami-host span {
+  flex: 1 1 32px;
+  min-width: 20px;
+  border-top: 1px solid var(--terminal-border);
+}
+
+.whoami-group {
+  margin-top: 8px;
+}
+
+.whoami-group h2 {
+  margin: 0 0 2px;
+  color: var(--terminal-label);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+}
+
+.whoami-facts {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+}
+
+.whoami-fact {
+  display: grid;
+  grid-template-columns: max-content minmax(8px, 1fr) minmax(0, auto);
+  gap: 5px;
+  align-items: baseline;
+  min-width: 0;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.whoami-fact dt,
+.whoami-fact dd {
+  margin: 0;
+}
+
+.whoami-fact dt {
+  color: var(--terminal-muted);
+}
+
+.whoami-leader {
+  min-width: 8px;
+  border-bottom: 1px dotted
+    color-mix(in oklch, var(--terminal-muted) 58%, transparent);
+  transform: translateY(-0.28em);
+}
+
+.whoami-fact dd {
+  min-width: 0;
+  color: var(--terminal-value);
   text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.whoami-fact a {
+  text-decoration: underline;
+  text-decoration-color: color-mix(
+    in oklch,
+    var(--terminal-value) 54%,
+    transparent
+  );
+  text-underline-offset: 2px;
+}
+
+.whoami-fact a:hover {
+  color: var(--terminal-text);
+}
+
+.whoami-fact a:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--terminal-success);
+  outline-offset: 2px;
 }
 
 .section {
@@ -4370,6 +4496,14 @@ body.project-lightbox-open {
   font-weight: 800;
 }
 
+@media (max-width: 1120px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 44px;
+    align-items: start;
+  }
+}
+
 @media (max-width: 980px) {
   .hero,
   .section-head,
@@ -4644,14 +4778,18 @@ body.project-lightbox-open {
     padding-left: 16px;
   }
 
-  .terminal-row {
-    display: grid;
-    gap: 2px;
+  .whoami-body {
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
 
-  .terminal-row strong {
-    text-align: left;
-    overflow-wrap: anywhere;
+  .ascii-portrait pre {
+    font-size: 7px;
+  }
+
+  .whoami-profile {
+    width: min(100%, 460px);
+    margin: 0 auto;
   }
 
   .section {
@@ -5163,5 +5301,21 @@ body.project-lightbox-open {
 
   .slide-thumb {
     flex-basis: 118px;
+  }
+}
+
+@media (max-width: 420px) {
+  .whoami-fact {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 2px 0;
+  }
+
+  .whoami-leader {
+    display: none;
+  }
+
+  .whoami-fact dd {
+    text-align: left;
   }
 }
