@@ -43,6 +43,7 @@ and small accent flashes that make dense career/project evidence easy to scan.
 | Body            | 16px                       | 400     | 1.6         | 0           | Default text              |
 | Body small      | 14-15px                    | 400     | 1.5-1.65    | 0           | Supporting copy           |
 | Mono label      | 11-12px                    | 700-800 | 1.2-1.45    | 0.04-0.08em | Metadata, chips, controls |
+| ASCII portrait  | 9px desktop, 9-10px mobile | 400     | 1 / 0.84    | 0           | Desktop / mobile portrait |
 
 ### Font Stack
 
@@ -87,6 +88,13 @@ All spacing derives from a 4px base.
 - Fixed-format controls use stable dimensions and 8px or smaller radii.
 
 ## 5. Components
+
+### Home ASCII Profile
+
+- **Structure**: `.terminal-body.whoami-body` contains a live monospace portrait and the profile facts column.
+- **Spacing**: 16px terminal padding and column gap; the desktop portrait column is 252px wide and aligns the shoulder line with the bottom of the profile facts.
+- **Typography**: the portrait uses the mono stack at 9px with 1.0 line height on desktop and 9-10px with compact 0.84 line height on mobile, zero letter spacing, and horizontal scaling to correct terminal glyph aspect ratio.
+- **Responsive**: when the hero collapses the terminal stays centered at up to 590px; at 680px and below it narrows to 360px, stacks the columns, retains 16px spacing, and widens the portrait without overflowing the content width.
 
 ### Project Article
 
