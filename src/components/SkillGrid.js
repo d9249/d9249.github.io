@@ -41,7 +41,9 @@ const SkillPanel = ({ panel }) => (
         {String(panel.skills.length).padStart(2, "0")}
       </span>
     </header>
-    <ul className="skill-list">
+    <ul
+      className={`skill-list${panel.skills.length % 2 ? " skill-list--odd" : ""}`}
+    >
       {panel.skills.map((skill) => (
         <li key={skill}>
           <SkillIcon name={skill} />

@@ -81,6 +81,7 @@ All spacing derives from a 4px base.
 - Max shell width: `min(1180px, calc(100% - 40px))`.
 - Project detail grid: `0.68fr / 0.32fr`, collapsing to one column below 980px.
 - Mobile shell: `min(100% - 28px, 1180px)` below 680px.
+- Primary navigation collapses behind the menu control through 1059px so the full link row never forces horizontal overflow.
 
 ### Rules
 
@@ -94,15 +95,15 @@ All spacing derives from a 4px base.
 - **Structure**: `.terminal-body.whoami-body` contains a live monospace portrait and the profile facts column.
 - **Spacing**: 16px terminal padding and column gap; the desktop portrait column is 252px wide and aligns the shoulder line with the bottom of the profile facts.
 - **Typography**: the portrait uses the mono stack at 9px with 1.0 line height on desktop and 9-10px with compact 0.84 line height on mobile, zero letter spacing, and horizontal scaling to correct terminal glyph aspect ratio.
-- **Responsive**: when the hero collapses the terminal stays centered at up to 590px; at 680px and below it narrows to 360px, stacks the columns, retains 16px spacing, and widens the portrait without overflowing the content width.
+- **Responsive**: when the hero collapses the terminal stays centered at up to 590px; at 680px and below it fills the mobile shell, stacks the columns, retains 16px internal spacing, and widens the portrait without overflowing the content width. The mobile hero gap contracts to 24px and its vertical padding to 48px/32px so the profile is not isolated by excess whitespace.
 
 ### Home Skill Matrix
 
 - **Structure**: top-level stack groups and AI sub-groups are flattened into peer `.skill-card` panels so every category participates in the same packing system; each panel contains one header and one contiguous skill-cell matrix rather than nested cards.
-- **Layout**: `.skill-grid` uses auto-fit columns with a 340px minimum, a 1px internal measurement row, 12px visible panel separation, and dense row-span packing measured with `ResizeObserver`; resizing must repack panels without fixed `nth-child` coordinates or orphaned vertical voids. The measurement row does not define visible spacing, which remains on the 4px token scale.
-- **Cells**: skill cells use a 1px separator grid, square edges inside the panel, 12px mono labels, and a stable 28px icon column. The last row stretches to the panel width instead of leaving an empty slot.
+- **Layout**: `.skill-grid` uses auto-fit columns with a 340px minimum, a 1px internal measurement row, 12px desktop and 8px mobile panel separation, and dense row-span packing measured with `ResizeObserver`; resizing must repack panels without fixed `nth-child` coordinates or orphaned vertical voids. The measurement row does not define visible spacing, which remains on the 4px token scale.
+- **Cells**: skill cells use a 1px separator grid, square edges inside the panel, 12px mono labels, and a stable 28px icon column. Even lists use two cells per row; odd lists finish with three equal compact tiles so no item becomes a visually emphasized full-width orphan and no empty slot remains.
 - **Icons**: use the installed Simple Icons path and upstream brand color when a maintained product mark exists; otherwise use a semantically matched Lucide outline icon with the existing green, blue, warm, or ink accent tokens. Text initials are not an icon fallback.
-- **Responsive**: the matrix resolves to three columns at the desktop shell, two columns on tablet, and one column on narrow mobile; skill cells use two columns only when both labels retain a usable width and collapse to one at 360px and below.
+- **Responsive**: the matrix resolves to three columns at the desktop shell, two columns on tablet, and one column on narrow mobile; a named card container collapses skill cells to one column whenever the card content box is 340px or narrower, with equivalent viewport fallbacks through 370px and across the 681-736px and 1084-1090px column transitions for browsers without container-query support.
 - **Accessibility**: icons are decorative because every cell retains its visible technology name; headings and source order remain logical even when dense visual packing fills an earlier empty grid position.
 
 ### Project Article
