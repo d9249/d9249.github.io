@@ -4,7 +4,9 @@
 
 `d9249.github.io` is a calm, high-craft technical portfolio: precise enough for
 research evidence, warm enough to feel personal, and immediate enough to behave
-like a native Apple surface. The emotion is **quiet confidence**.
+like a native Apple surface. The emotion is **quiet confidence**. Apple KR is a
+runtime reference for restraint, spacing, and responsive behavior rather than a
+brand or asset source.
 
 The memorable moment is the home hero: a soft field of cool daylight behind a
 floating profile console. It preserves the owner's engineering identity without
@@ -57,9 +59,9 @@ translucent hierarchy, optical typography, and reduced-motion equivalents.
 
 | Level      | Size                             | Weight  | Leading | Tracking   | Usage                        |
 | ---------- | -------------------------------- | ------- | ------- | ---------- | ---------------------------- |
-| Display    | `clamp(3.2rem, 6.8vw, 6.7rem)`   | 760     | `0.96`  | `-0.055em` | Home hero                    |
-| Page title | `clamp(2.7rem, 5vw, 5.2rem)`     | 740     | `1`     | `-0.045em` | Projects, research, articles |
-| Section    | `clamp(2.15rem, 3.7vw, 3.7rem)`  | 720     | `1.04`  | `-0.035em` | Section headings             |
+| Display    | `clamp(2.75rem, 4.6vw, 3.5rem)`  | 700     | `1.08`  | `-0.035em` | Home hero                    |
+| Page title | `clamp(2.25rem, 4vw, 3.5rem)`    | 720     | `1.05`  | `-0.04em`  | Projects, research, articles |
+| Section    | `clamp(1.9rem, 3.2vw, 2.8rem)`   | 720     | `1.04`  | `-0.04em`  | Section headings             |
 | Card title | `1.25rem-2rem`                   | 650-700 | `1.16`  | `-0.02em`  | Cards and panels             |
 | Lead       | `clamp(1.12rem, 1.8vw, 1.42rem)` | 430     | `1.55`  | `-0.012em` | Hero and page summaries      |
 | Body       | `1rem`                           | 400     | `1.68`  | `-0.006em` | Default copy                 |
@@ -99,6 +101,10 @@ requires it.
 - Mobile shell: `min(100% - 32px, 1200px)`.
 - The layout shifts at content pressure, not device names: 1060px navigation,
   980px detail grids, 760px multi-column cards, 680px compact mobile.
+- At 760px and below, repeated card collections use horizontally scrollable
+  snap rails with a visible next-card edge. This preserves every item while
+  preventing long research, skill, project, and blog lists from dominating the
+  vertical page.
 - Primary sections have no box around the whole section. Cards group meaningful
   sub-objects; white space groups the larger narrative.
 - Rounded geometry follows scale: 12px controls, 18px cards, 24-30px large
@@ -106,10 +112,11 @@ requires it.
 
 ## 5. Components
 
-### Floating Navigation
+### Global Navigation
 
-- A centered translucent capsule floats above scrolling content with a soft
-  scroll-edge shadow, bright rim, and 24px blur. It never becomes an opaque bar.
+- A full-width translucent bar stays at the top of the page. Its content row is
+  44px on desktop and 48px on touch layouts, with no capsule radius or floating
+  shadow. The bar uses a restrained 20px blur and a single quiet separator.
 - Desktop navigation exposes every destination. The active destination is blue
   and receives a quiet filled capsule. Mobile uses an anchored sheet below the
   header and exits through the same path it entered.
@@ -149,6 +156,16 @@ requires it.
 - The shared lightbox preserves its existing fitted stage, rotation, keyboard
   activation, Escape dismissal, focus containment, and mobile visualViewport
   behavior. Its material is updated, not its proven geometry.
+- Project evidence media always renders on an opaque neutral white inspection
+  surface with no saturation, opacity, or blend filter.
+
+### Global Footer
+
+- The footer is a full-width neutral information surface, not a collection of
+  floating pills. It uses compact directory columns, plain text links, a small
+  status row, and one legal separator.
+- Desktop uses three directory columns; narrow layouts use two columns without
+  hiding destinations.
 
 ### Primitive states
 

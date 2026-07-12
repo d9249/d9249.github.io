@@ -114,16 +114,23 @@ const TipPostTemplate = ({ data, pageContext }) => {
                 </div>
               ) : null}
             </div>
-            <div className="source-card post-sources-card">
-              <div className="meta">Source</div>
-              <div className="post-source-list">
-                <a href={tip.frontmatter.sourceUrl}>
-                  <span>01</span>
-                  <strong>{tip.frontmatter.repository}</strong>
-                  <code>{tip.frontmatter.sourceUrl}</code>
-                </a>
+            {tip.frontmatter.sourceUrl ? (
+              <div className="source-card post-sources-card">
+                <div className="meta">Source</div>
+                <div className="post-source-list">
+                  <a href={tip.frontmatter.sourceUrl}>
+                    <span>01</span>
+                    <strong>{tip.frontmatter.repository}</strong>
+                    <code>{tip.frontmatter.sourceUrl}</code>
+                  </a>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="source-card post-sources-card">
+                <div className="meta">Source status</div>
+                <p>현재 공개된 공식 소스를 확인할 수 없습니다.</p>
+              </div>
+            )}
           </aside>
         </div>
       </section>

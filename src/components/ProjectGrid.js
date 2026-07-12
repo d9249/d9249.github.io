@@ -6,11 +6,9 @@ const normalizeProject = (project) => {
   const slug = project.fields?.slug || `/projects/${project.slug}/`;
   const name = frontmatter.projectName || frontmatter.title;
   const tagline = frontmatter.tagline;
-  const displayTitle = [name, tagline].filter(Boolean).join(" - ");
 
   return {
     details: frontmatter.details || [],
-    displayTitle,
     key: project.id || slug || frontmatter.title,
     metrics: frontmatter.metrics || [],
     name,
@@ -29,12 +27,7 @@ const ProjectGrid = ({ className, projects }) => (
       const project = normalizeProject(rawProject);
 
       return (
-        <Link
-          className="project-card"
-          key={project.key}
-          to={project.slug}
-          aria-label={`${project.displayTitle} 상세 내용 보기`}
-        >
+        <article className="project-card" key={project.key}>
           <div className="project-card-header">
             <div>
               <div className="meta">{project.period}</div>
@@ -69,9 +62,12 @@ const ProjectGrid = ({ className, projects }) => (
             ))}
           </div>
           <div className="project-card-actions">
-            <span>상세 내용 보기 →</span>
+            <Link className="project-card-link" to={project.slug}>
+              <span className="visually-hidden">{project.name}: </span>
+              <span>상세 내용 보기 →</span>
+            </Link>
           </div>
-        </Link>
+        </article>
       );
     })}
   </div>

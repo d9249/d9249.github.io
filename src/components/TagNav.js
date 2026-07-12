@@ -16,6 +16,21 @@ const estimateTagWidth = (tag) => {
   return Math.ceil(Math.min(220, Math.max(76, labelWidth + countWidth + 46)));
 };
 
+const getCollapsedTags = (tags, activeTag) => {
+  const active = activeTag
+    ? tags.find((tag) => tag.label === activeTag)
+    : undefined;
+
+  if (!active) {
+    return tags.slice(0, COLLAPSED_TAG_LIMIT);
+  }
+
+  return [active, ...tags.filter((tag) => tag.label !== activeTag)].slice(
+    0,
+    COLLAPSED_TAG_LIMIT,
+  );
+};
+
 const getTetrisRows = (tags, listWidth, measuredWidths) => {
   const widthLimit = Math.max(
     240,
@@ -127,7 +142,7 @@ const TagNav = ({
   const listRef = React.useRef(null);
   const measureRef = React.useRef(null);
   const shouldCollapse = tags.length > COLLAPSED_TAG_LIMIT;
-  const [expanded, setExpanded] = React.useState(Boolean(activeTag));
+  const [expanded, setExpanded] = React.useState(false);
   const [listWidth, setListWidth] = React.useState(FALLBACK_LIST_WIDTH);
   const [measuredWidths, setMeasuredWidths] = React.useState([]);
 
@@ -137,14 +152,20 @@ const TagNav = ({
 
   const visibleTags = React.useMemo(
     () =>
-      shouldCollapse && !expanded ? tags.slice(0, COLLAPSED_TAG_LIMIT) : tags,
-    [expanded, shouldCollapse, tags],
+      shouldCollapse && !expanded ? getCollapsedTags(tags, activeTag) : tags,
+    [activeTag, expanded, shouldCollapse, tags],
   );
   const hiddenTagCount = tags.length - visibleTags.length;
   const tetrisRows = React.useMemo(
     () => getTetrisRows(visibleTags, listWidth, measuredWidths),
     [listWidth, measuredWidths, visibleTags],
   );
+
+  useIsomorphicLayoutEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollLeft = 0;
+    }
+  }, [visibleTags]);
 
   useIsomorphicLayoutEffect(() => {
     if (!listRef.current) {

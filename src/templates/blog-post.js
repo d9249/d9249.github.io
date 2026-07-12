@@ -22,23 +22,53 @@ const getSourceLabel = (href) => {
   }
 };
 
+const splitSourceList = (sourceLine) => {
+  const sources = [];
+  let bracketDepth = 0;
+  let parenthesisDepth = 0;
+  let sourceStart = 0;
+
+  for (let index = 0; index < sourceLine.length; index += 1) {
+    const character = sourceLine[index];
+
+    if (character === "[") bracketDepth += 1;
+    if (character === "]") bracketDepth = Math.max(0, bracketDepth - 1);
+    if (character === "(") parenthesisDepth += 1;
+    if (character === ")") {
+      parenthesisDepth = Math.max(0, parenthesisDepth - 1);
+    }
+
+    const nextSource = sourceLine
+      .slice(index + 1)
+      .match(/^\s*(?:https?:\/\/|\[)/);
+    if (
+      character === "," &&
+      bracketDepth === 0 &&
+      parenthesisDepth === 0 &&
+      nextSource
+    ) {
+      sources.push(sourceLine.slice(sourceStart, index).trim());
+      sourceStart = index + 1;
+    }
+  }
+
+  sources.push(sourceLine.slice(sourceStart).trim());
+  return sources.filter(Boolean);
+};
+
 const getPostSources = (rawMarkdownBody) => {
   const match = rawMarkdownBody?.match(sourceLinePattern);
   if (!match) {
     return [];
   }
 
-  return match[1]
-    .split(/\s*,\s*/)
-    .map((source) => source.trim())
-    .filter(Boolean)
-    .map((source) => {
-      const markdownLink = source.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-      const href = markdownLink ? markdownLink[2] : source;
-      const label = markdownLink ? markdownLink[1] : getSourceLabel(href);
+  return splitSourceList(match[1]).map((source) => {
+    const markdownLink = source.match(/^\[(.+)\]\((https?:\/\/[^)]+)\)$/);
+    const href = markdownLink ? markdownLink[2] : source;
+    const label = markdownLink ? markdownLink[1] : getSourceLabel(href);
 
-      return { href, label };
-    });
+    return { href, label };
+  });
 };
 
 const removeSourceParagraph = (html) =>
@@ -71,10 +101,6 @@ const BlogPostTemplate = ({ data, pageContext }) => {
             </Link>
             <h1>{post.frontmatter.title}</h1>
             <p className="deck">{post.frontmatter.description}</p>
-            <figure>
-              <div className="hero-image" />
-              <figcaption>{post.frontmatter.description}</figcaption>
-            </figure>
             <BlogArticleBody html={postHtml} />
             <nav
               className="related-grid adjacent-posts"

@@ -140,5 +140,5 @@ Headroom은 AI agent를 매일 쓰는 개발자에게 꽤 현실적인 문제를
 - [Headroom MCP documentation](https://headroom-docs.vercel.app/docs/mcp)
 - [Headroom proxy documentation](https://headroom-docs.vercel.app/docs/proxy)
 - [Headroom limitations](https://headroom-docs.vercel.app/docs/limitations)
-- [Headroom filesystem contract](https://headroom-docs.vercel.app/docs/filesystem-contract)
+- [Headroom filesystem contract](https://github.com/headroomlabs-ai/headroom/blob/main/docs/content/docs/filesystem-contract.mdx)
 - [Headroom SECURITY.md](https://github.com/chopratejas/headroom/blob/main/SECURITY.md)

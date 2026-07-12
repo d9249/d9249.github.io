@@ -78,14 +78,14 @@ cd awesome-opensource-ai
 git checkout 8df7636852256651a0f9a51db0eaadc90e5a08e8
 ```
 
-새 프로젝트를 제안하려면 `CONTRIBUTING.md`를 먼저 읽어야 한다. 메인 README의 기본 기준은 대략 다음과 같다.
+새 프로젝트를 제안하려면 `CONTRIBUTING.md`를 먼저 읽어야 한다. 현재 기여 기준은 특정 Star 수로 진입을 제한하지 않고, 다음과 같은 품질 신호를 함께 확인한다.
 
-- GitHub Star 1000개 이상
-- 최근 6개월 안의 의미 있는 개발 활동
-- 실제 배포나 운영 사용 증거
-- 문서, 테스트, 릴리스 등 프로젝트 품질 신호
+- 오픈소스 라이선스와 공개 저장소
+- AI와 직접 관련된 명확한 목적
+- 설치·사용 방법을 설명하는 문서
+- 유지보수 상태와 커뮤니티가 검토할 수 있는 공개 이력
 
-이 기준을 아직 만족하지 못하는 새 프로젝트는 `EMERGING.md` 쪽에 들어갈 수 있다. Emerging 목록은 1000 stars 미만이지만 활성 개발, 명확한 문제 정의, 기본 문서, OSI 승인 라이선스, 성장 가능성이 있는 프로젝트를 위한 별도 공간이다.
+과거의 별도 `EMERGING.md` 구분은 현재 폐지됐다. 따라서 프로젝트 규모보다 현행 `CONTRIBUTING.md`의 포함 기준과 카테고리 적합성을 기준으로 제안하는 편이 정확하다.
 
 ## 활용 포인트
 
@@ -120,6 +120,5 @@ git checkout 8df7636852256651a0f9a51db0eaadc90e5a08e8
 - [Awesome Open Source AI GitHub repository](https://github.com/alvinreal/awesome-opensource-ai)
 - [Awesome Open Source AI README](https://github.com/alvinreal/awesome-opensource-ai/blob/main/README.md)
 - [CONTRIBUTING.md](https://github.com/alvinreal/awesome-opensource-ai/blob/main/CONTRIBUTING.md)
-- [EMERGING.md](https://github.com/alvinreal/awesome-opensource-ai/blob/main/EMERGING.md)
 - [LICENSE — CC0 1.0 Universal](https://github.com/alvinreal/awesome-opensource-ai/blob/main/LICENSE)
 - [PyTorchKR 소개 글](https://discuss.pytorch.kr/t/awesome-open-source-ai-ai-14/10375)

@@ -37,13 +37,13 @@ draft: false
 
 저자들은 baseline 실패를 GPT-4o evaluator로 분류했다. FP16 baseline의 163개 실패에서 가장 큰 세 범주는 다음과 같다.
 
-| 실패 범주 | Count | Confidence-weighted |
-|---|---:|---:|
-| Authentication / credential issue | 46 | 39.45 |
-| Reasoning / planning error | 43 | 35.30 |
-| Wrong API params / schema mismatch | 29 | 25.05 |
-| Other | 24 | 20.05 |
-| Missing API call / wrong API name | 13 | 11.45 |
+| 실패 범주                          | Count | Confidence-weighted |
+| ---------------------------------- | ----: | ------------------: |
+| Authentication / credential issue  |    46 |               39.45 |
+| Reasoning / planning error         |    43 |               35.30 |
+| Wrong API params / schema mismatch |    29 |               25.05 |
+| Other                              |    24 |               20.05 |
+| Missing API call / wrong API name  |    13 |               11.45 |
 
 이 분포가 중요한 이유는 실패들이 서로 독립적이지 않기 때문이다. 논문은 많은 trajectory에서 모델이 API 문서를 먼저 확인하지 않고 endpoint를 호출하고, parameter 이름이나 타입을 틀리고, 오류 응답을 받은 뒤에도 문서를 보지 않은 채 trial-and-error로 맞추려 한다고 설명한다. 그 과정에서 turn과 context budget을 쓰고, 이미 얻은 authentication token을 잃어버리며, 다시 credential을 추출하는 반복 루프에 빠진다.
 
@@ -64,7 +64,7 @@ AppWorld observation
 세 역할은 같은 Qwen3-8B weights를 사용하지만, 입력과 책임이 다르다.
 
 | 역할 | 입력/관찰 범위 | 해결하려는 실패 |
-|---|---|---|
+| --- | --- | --- |
 | Main Agent | 현재 observation + 요약된 history | ReAct-style로 다음 Python code/API call 생성 |
 | Summarization Model | 긴 대화 이력, 이전 artifact | context truncation으로 token, credential, API response, pagination state를 잃는 문제 |
 | Correction Model | 제안된 action, 실행 feedback, 관련 API documentation | 잘못된 argument, schema mismatch, 반복적 code repair loop |
@@ -86,7 +86,7 @@ AppWorld observation
 주요 결과는 Table 3에 정리되어 있다.
 
 | Difficulty | FP16 Baseline | FP16 Scaffold | AWQ Baseline | AWQ Scaffold |
-|---|---:|---:|---:|---:|
+| --- | --: | --: | --: | --: |
 | Aggregate | 5.4 [2.8, 9.9] | 8.9 [5.5, 14.2] | 3.0 [1.3, 6.8] | 5.9 [3.3, 10.6] |
 | Difficulty 1 | 15.8 | 26.3 | 5.3 | 14.0 |
 | Difficulty 2 | 0.0 | 0.0 | 2.1 | 4.2 |
@@ -99,7 +99,7 @@ AppWorld observation
 더 큰 모델과의 비교도 제시된다.
 
 | Model | Parameters | AppWorld test_normal task goal completion |
-|---|---:|---:|
+| --- | --: | --: |
 | GPT-4o | — | 48.8 |
 | Claude 3.5 Sonnet | — | 33.2 |
 | LLaMA-3-70B-Instruct | 70B | 20.8 |
@@ -124,12 +124,12 @@ AppWorld observation
 
 ablation도 구조를 이해하는 데 중요하다. AWQ 32K context에서 correction node만 켜면 aggregate가 3.0%에서 4.8%로 오르고, full scaffold는 5.9%까지 간다.
 
-| Difficulty | Baseline | Correction Only | Full Scaffold |
-|---|---:|---:|---:|
-| Aggregate | 3.0 | 4.8 | 5.9 |
-| Difficulty 1 | 5.3 | 12.3 | 14.0 |
-| Difficulty 2 | 2.1 | 2.1 | 4.2 |
-| Difficulty 3 | 1.6 | 0.0 | 0.0 |
+| Difficulty   | Baseline | Correction Only | Full Scaffold |
+| ------------ | -------: | --------------: | ------------: |
+| Aggregate    |      3.0 |             4.8 |           5.9 |
+| Difficulty 1 |      5.3 |            12.3 |          14.0 |
+| Difficulty 2 |      2.1 |             2.1 |           4.2 |
+| Difficulty 3 |      1.6 |             0.0 |           0.0 |
 
 이 표는 교정기가 가장 큰 단기 개선을 만들고, 요약기는 difficulty-2처럼 조금 더 긴 상태 보존이 필요한 작업에서 추가 이득을 준다는 해석을 가능하게 한다. 반대로 difficulty-3에서는 history isolation이 오히려 손해가 될 수 있다.
 
@@ -142,7 +142,7 @@ ablation도 구조를 이해하는 데 중요하다. AWQ 32K context에서 corre
 이건 agent product를 만드는 팀에게 꽤 실용적인 메시지다. 모델을 바꾸기 전에 trajectory log를 보고 실패를 다음처럼 나눠볼 수 있다.
 
 | 관찰되는 실패 | 모델 교체 전 점검할 runtime 개입 |
-|---|---|
+| --- | --- |
 | token, session id, API response를 잃어버림 | artifact-aware summarization, structured memory, state slot 보존 |
 | API argument 이름·타입을 반복해서 틀림 | docs retrieval, schema validator, pre-execution correction |
 | 같은 수정 시도를 반복함 | isolated reviewer, loop detector, action history monitor |
@@ -156,4 +156,4 @@ ablation도 구조를 이해하는 데 중요하다. AWQ 32K context에서 corre
 
 그래도 이 논문은 작은 에이전트 시스템을 바라보는 관점을 잘 바꾼다. 모델을 하나의 monolithic actor로 보지 말고, 같은 weights라도 **state compression, action generation, isolated correction**이라는 서로 다른 역할로 호출할 수 있다. 그리고 남은 실패 분포가 reasoning/planning 쪽으로 이동한다면, 그때 비로소 모델 학습이나 더 큰 모델 투입이 필요한 영역이 선명해진다. 좋은 에이전트 엔지니어링은 “모델이 못한다”에서 끝나는 것이 아니라, 어떤 실패는 런타임이 흡수하고 어떤 실패는 모델 능력으로 남겨야 하는지를 분해하는 일에 가깝다.
 
-Sources: https://arxiv.org/abs/2604.11465, https://arxiv.org/html/2604.11465, https://arxiv.org/pdf/2604.11465, https://github.com/Aimpoint-Digital/appworld-agent
+Sources: https://arxiv.org/abs/2604.11465, https://arxiv.org/html/2604.11465, https://arxiv.org/pdf/2604.11465

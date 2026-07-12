@@ -3,37 +3,52 @@ import { Link } from "gatsby";
 import { navItems } from "../data/navigation";
 import BlogSearch from "./BlogSearch";
 
-const getPreferredTheme = () => {
-  if (typeof window === "undefined") {
-    return "light";
-  }
-
+const getStoredTheme = () => {
   try {
     const storedTheme = window.localStorage.getItem("theme");
     if (storedTheme === "dark" || storedTheme === "light") {
       return storedTheme;
     }
   } catch (error) {
-    // Ignore storage access errors and fall back to the system preference.
+    return null;
   }
+
+  return null;
+};
+
+const storeTheme = (theme) => {
+  try {
+    window.localStorage.setItem("theme", theme);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+const getPreferredTheme = () => {
+  if (typeof window === "undefined") {
+    return "light";
+  }
+
+  const storedTheme = getStoredTheme();
+  if (storedTheme) return storedTheme;
 
   return window.matchMedia?.("(prefers-color-scheme: dark)")?.matches
     ? "dark"
     : "light";
 };
 
-const applyTheme = (theme) => {
+const applyTheme = (theme, { persist = true } = {}) => {
   document.documentElement.classList.add("theme-is-transitioning");
   document.documentElement.dataset.theme = theme;
+  document.documentElement.style.colorScheme = theme;
   window.requestAnimationFrame(() => {
     window.requestAnimationFrame(() => {
       document.documentElement.classList.remove("theme-is-transitioning");
     });
   });
-  try {
-    window.localStorage.setItem("theme", theme);
-  } catch (error) {
-    // The visual state can still update even when persistence is unavailable.
+  if (persist) {
+    storeTheme(theme);
   }
 };
 
@@ -47,7 +62,40 @@ const Navbar = () => {
     const initialTheme =
       document.documentElement.dataset.theme || getPreferredTheme();
     document.documentElement.dataset.theme = initialTheme;
+    document.documentElement.style.colorScheme = initialTheme;
     setTheme(initialTheme);
+  }, []);
+
+  React.useEffect(() => {
+    const root = document.documentElement;
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+    const syncThemeState = () => {
+      const nextTheme = root.dataset.theme || getPreferredTheme();
+      root.style.colorScheme = nextTheme;
+      setTheme(nextTheme);
+    };
+    const syncStoredTheme = (event) => {
+      if (event.key !== "theme") return;
+      applyTheme(getPreferredTheme(), { persist: false });
+    };
+    const syncSystemTheme = () => {
+      if (getStoredTheme()) return;
+      applyTheme(systemTheme.matches ? "dark" : "light", { persist: false });
+    };
+    const observer = new MutationObserver(syncThemeState);
+
+    observer.observe(root, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+    window.addEventListener("storage", syncStoredTheme);
+    systemTheme.addEventListener?.("change", syncSystemTheme);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("storage", syncStoredTheme);
+      systemTheme.removeEventListener?.("change", syncSystemTheme);
+    };
   }, []);
 
   React.useEffect(() => {
@@ -84,7 +132,9 @@ const Navbar = () => {
 
   const toggleTheme = () => {
     setTheme((currentTheme) => {
-      const nextTheme = currentTheme === "dark" ? "light" : "dark";
+      const activeTheme =
+        document.documentElement.dataset.theme || currentTheme;
+      const nextTheme = activeTheme === "dark" ? "light" : "dark";
       applyTheme(nextTheme);
       return nextTheme;
     });
@@ -93,7 +143,7 @@ const Navbar = () => {
   return (
     <header className="masthead">
       <div className="shell masthead-inner">
-        <Link className="wordmark" to="/" aria-label="이상민 홈">
+        <Link className="wordmark" to="/">
           <span className="prompt-dot" />
           <span className="wordmark-copy">
             <strong className="wordmark-name">Sangmin Lee</strong>
@@ -101,6 +151,7 @@ const Navbar = () => {
               AI Engineer &amp; Researcher
             </small>
           </span>
+          <span className="visually-hidden"> 홈</span>
         </Link>
         <nav
           id="primary-navigation"
@@ -131,11 +182,10 @@ const Navbar = () => {
           <button
             className="theme-toggle"
             type="button"
-            aria-label={
-              theme === "dark" ? "라이트 모드로 전환" : "다크 모드로 전환"
-            }
+            aria-label="다크 모드"
             title={theme === "dark" ? "Light mode" : "Dark mode"}
             data-theme-state={theme}
+            aria-pressed={theme === "dark"}
             onClick={toggleTheme}
           >
             <svg

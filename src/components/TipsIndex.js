@@ -102,9 +102,13 @@ const TipCard = ({ tip }) => {
         <span title={tip.frontmatter.repository}>
           {tip.frontmatter.repository}
         </span>
-        <a href={tip.frontmatter.sourceUrl} target="_blank" rel="noreferrer">
-          Source
-        </a>
+        {tip.frontmatter.sourceUrl ? (
+          <a href={tip.frontmatter.sourceUrl} target="_blank" rel="noreferrer">
+            Source
+          </a>
+        ) : (
+          <span>Unavailable</span>
+        )}
       </div>
     </article>
   );

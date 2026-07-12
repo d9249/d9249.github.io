@@ -503,8 +503,13 @@ const ResearchPage = () => {
         </div>
       </section>
 
-      <section className="shell section">
-        <SectionHeading kicker="Overview" title="연구 요약" />
+      <section
+        className="shell section research-overview-section"
+        aria-labelledby="research-overview-title"
+      >
+        <h2 className="visually-hidden" id="research-overview-title">
+          연구 요약
+        </h2>
         <div className="evidence-grid">
           {researchStats.map((item) => (
             <article className="evidence-card" key={item.label}>

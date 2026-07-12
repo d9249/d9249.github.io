@@ -88,11 +88,11 @@ MMSkills의 가장 실용적인 설계 포인트는 branch loading이다. main t
 이번 작업에서 확인한 companion source는 꽤 풍부하다.
 
 | 표면 | 확인한 내용 |
-|---|---|
+| --- | --- |
 | Hugging Face Papers | `2605.13527` paper page와 markdown mirror 제공 |
 | arXiv | v2 HTML/PDF, figure/table/caption 제공 |
 | Project page | overview, demo/case, skill library, submission page 제공 |
-| GitHub | `DeepExperience/MMSkills`, Apache-2.0, runtime/adapter/OSWorld integration 코드 제공 |
+| GitHub | `zkangning/MMSkills_for_Visual_Agents`, Apache-2.0, runtime/adapter/OSWorld integration 코드 제공 |
 | Hugging Face Dataset | `zhangkangning/mmskills`, public/non-gated, Apache-2.0 card, 515개 공개 skill package 제공 |
 
 Hugging Face Dataset card 기준 공개 패키지는 Ubuntu 247개, macOS 234개, VAB-Minecraft 24개, Mario 10개로 구성되어 총 515개다. 전체적으로 1,488개 state card, 3,141개 view, 3,153개 image가 공개 파일 트리로 배포된다. GitHub 저장소에는 OSWorld-ready runtime subset, task-to-skill mapping, agent adapter, install scripts가 있으며, Dataset은 full package archive에 가깝다.
@@ -103,14 +103,14 @@ Hugging Face Dataset card 기준 공개 패키지는 Ubuntu 247개, macOS 234개
 
 논문은 OSWorld, macOSWorld, VAB-Minecraft, Super Mario Bros에서 no-skill, text-only skill, MMSkills 조건을 비교한다. OSWorld overall만 보면 MMSkills는 모든 보고 모델에서 no-skill보다 높다.
 
-| 모델 | No skill | Text-only | MMSkills | MMSkills - No skill |
-|---|---:|---:|---:|---:|
-| Gemini 3.1 Pro | 44.08 | 40.76 | 50.11 | +6.03pp |
-| Gemini 3 Flash | 36.65 | 40.27 | 47.97 | +11.32pp |
-| Qwen3-VL-235B | 21.34 | 28.57 | 39.17 | +17.83pp |
-| GLM-5V | 28.71 | 36.61 | 38.51 | +9.80pp |
-| Kimi-K2.6 | 34.98 | 39.66 | 46.59 | +11.61pp |
-| Qwen3-VL-8B-Instruct | 10.78 | 14.93 | 25.40 | +14.62pp |
+| 모델                 | No skill | Text-only | MMSkills | MMSkills - No skill |
+| -------------------- | -------: | --------: | -------: | ------------------: |
+| Gemini 3.1 Pro       |    44.08 |     40.76 |    50.11 |             +6.03pp |
+| Gemini 3 Flash       |    36.65 |     40.27 |    47.97 |            +11.32pp |
+| Qwen3-VL-235B        |    21.34 |     28.57 |    39.17 |            +17.83pp |
+| GLM-5V               |    28.71 |     36.61 |    38.51 |             +9.80pp |
+| Kimi-K2.6            |    34.98 |     39.66 |    46.59 |            +11.61pp |
+| Qwen3-VL-8B-Instruct |    10.78 |     14.93 |    25.40 |            +14.62pp |
 
 보수적으로 읽어야 할 부분도 있다. 일부 domain에서는 text-only가 특정 모델에서 도움이 되고, 다른 곳에서는 직접적인 skill load가 오히려 방해가 된다. 하지만 전체 패턴은 분명하다. multimodal evidence가 들어간 branch-loaded skill은 단순 텍스트 힌트보다 더 안정적으로 transfer된다.
 
@@ -186,6 +186,6 @@ MMSkills에서 바로 재사용할 수 있는 원칙은 네 가지다.
 
 - Hugging Face Papers: [MMSkills: Towards Multimodal Skills for General Visual Agents](https://huggingface.co/papers/2605.13527)
 - arXiv: [2605.13527](https://arxiv.org/abs/2605.13527)
-- Project: [deepexperience.github.io/MMSkills](https://deepexperience.github.io/MMSkills/)
-- GitHub: [DeepExperience/MMSkills](https://github.com/DeepExperience/MMSkills)
+- Project: [MMSkills for Visual Agents](https://zkangning.github.io/MMSkills_for_Visual_Agents/)
+- GitHub: [zkangning/MMSkills_for_Visual_Agents](https://github.com/zkangning/MMSkills_for_Visual_Agents)
 - Dataset: [zhangkangning/mmskills](https://huggingface.co/datasets/zhangkangning/mmskills)

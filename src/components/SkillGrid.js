@@ -24,35 +24,76 @@ const createSkillPanels = (groups) =>
     ];
   });
 
-const SkillPanel = ({ panel }) => (
-  <article
-    className="skill-card"
-    aria-label={`${panel.title}: ${panel.summary}`}
-  >
-    <header className="skill-card-header">
-      <div>
-        <span className="skill-card-label">{panel.label}</span>
-        <h3>{panel.title}</h3>
-      </div>
-      <span
-        className="skill-card-count"
-        aria-label={`${panel.skills.length}개 기술`}
+const SkillPanel = ({ compact, panel }) => {
+  const [expanded, setExpanded] = React.useState(false);
+  const Header = compact ? "summary" : "header";
+  const content = (
+    <>
+      <Header className="skill-card-header">
+        <div>
+          <span className="skill-card-label">{panel.label}</span>
+          <h3>{panel.title}</h3>
+        </div>
+        <span
+          className="skill-card-count"
+          aria-label={`${panel.skills.length}개 기술`}
+        >
+          {String(panel.skills.length).padStart(2, "0")}
+        </span>
+      </Header>
+      <ul className="skill-list">
+        {panel.skills.map((skill) => (
+          <li key={skill}>
+            <SkillIcon name={skill} />
+            <span className="skill-logo-name">{skill}</span>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+
+  if (!compact) {
+    return (
+      <article
+        className="skill-card"
+        aria-label={`${panel.title}: ${panel.summary}`}
       >
-        {String(panel.skills.length).padStart(2, "0")}
-      </span>
-    </header>
-    <ul
-      className={`skill-list${panel.skills.length % 2 ? " skill-list--odd" : ""}`}
+        {content}
+      </article>
+    );
+  }
+
+  return (
+    <article
+      className="skill-card"
+      aria-label={`${panel.title}: ${panel.summary}`}
     >
-      {panel.skills.map((skill) => (
-        <li key={skill}>
-          <SkillIcon name={skill} />
-          <span className="skill-logo-name">{skill}</span>
-        </li>
-      ))}
-    </ul>
-  </article>
-);
+      <details
+        className="skill-card-disclosure"
+        open={expanded}
+        onToggle={(event) => setExpanded(event.currentTarget.open)}
+      >
+        {content}
+      </details>
+    </article>
+  );
+};
+
+const useCompactSkillPanels = () => {
+  const [compact, setCompact] = React.useState(false);
+
+  React.useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 760px)");
+    const updateCompact = () => setCompact(mediaQuery.matches);
+
+    updateCompact();
+    mediaQuery.addEventListener?.("change", updateCompact);
+
+    return () => mediaQuery.removeEventListener?.("change", updateCompact);
+  }, []);
+
+  return compact;
+};
 
 const useDenseSkillGrid = () => {
   const gridRef = React.useRef(null);
@@ -102,12 +143,13 @@ const useDenseSkillGrid = () => {
 
 const SkillGrid = ({ groups }) => {
   const gridRef = useDenseSkillGrid();
+  const compact = useCompactSkillPanels();
   const panels = createSkillPanels(groups);
 
   return (
     <div className="skill-grid" ref={gridRef}>
       {panels.map((panel) => (
-        <SkillPanel key={panel.id} panel={panel} />
+        <SkillPanel compact={compact} key={panel.id} panel={panel} />
       ))}
     </div>
   );

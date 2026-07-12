@@ -4,8 +4,7 @@ date: "2026-06-06T21:40:05"
 description: "hadihonarvar/flock은 macOS·Linux 머신의 Ollama, vLLM, MLX-LM, llama.cpp-RPC 백엔드를 OpenAI·Anthropic 호환 API, 키·쿼터·감사 로그, 대시보드로 묶는 Go 기반 로컬 LLM 오케스트레이터다."
 author: "Sangmin Lee"
 repository: "hadihonarvar/flock"
-sourceUrl: "https://github.com/hadihonarvar/flock"
-status: "Open source alpha"
+status: "Upstream unavailable"
 license: "Apache-2.0"
 platforms:
   - "macos-linux"
@@ -27,11 +26,11 @@ draft: false
 
 AI coding agent를 오래 쓰다 보면 “모델 하나를 로컬에서 띄우는 것”보다 “여러 개발자가 쓰는 엔드포인트를 어떻게 운영할 것인가”가 더 까다롭다. 한 명은 Mac Studio에서 MLX를 쓰고, 다른 한 명은 Linux GPU 박스의 vLLM을 쓰고, Cursor·Claude Code·Aider·Continue 같은 클라이언트는 서로 다른 API 호환성을 기대한다. 여기에 사용자별 key, 일일 token quota, 감사 로그, fallback 정책까지 붙이면 단순한 `ollama serve`만으로는 부족해진다.
 
+> 공개 상태 안내 (2026-07-12): 이 글이 다룬 원본 저장소, 릴리스, 설치 스크립트는 현재 공개 접근이 중단됐고 공식 이전 경로도 확인되지 않았다. 아래 내용은 공개 당시 구조를 기록한 아카이브이며, 설치·운영 가이드로 사용하면 안 된다.
+
 `Flock`은 이 지점을 겨냥한 **self-hosted LLM control plane**이다. 저장소의 표현을 빌리면 “one endpoint, your hardware”에 가깝다. Go 단일 바이너리가 로컬 inference engine 앞단의 gateway, leader/worker control plane, CLI, embedded admin UI를 함께 제공하고, 외부 client에는 OpenAI-compatible API와 Anthropic-compatible API를 노출한다.
 
 조사 시점 기준 `hadihonarvar/flock`은 기본 브랜치가 `main`, 주 구현 언어는 Go, checked-in `LICENSE`와 GitHub API 모두 Apache-2.0이다. GitHub latest release는 `v0.1.0`이고, Release asset은 `flock-darwin-amd64.tar.gz`, `flock-darwin-arm64.tar.gz`, `flock-linux-amd64.tar.gz`, `flock-linux-arm64.tar.gz`, `checksums.txt`로 확인된다. 다만 README와 `TASKS.md`의 default-branch 문서는 v0.4 수준의 shipped/gap 메모까지 앞서 적고 있으므로, 실사용자는 **release tarball 기준 기능**과 **main branch 문서 기준 기능**을 분리해서 보는 편이 안전하다.
-
-![Flock repository](https://opengraph.githubassets.com/d9249-flock-20260606/hadihonarvar/flock)
 
 ## Flock 개요
 
@@ -49,23 +48,7 @@ Flock을 완성형 chat UI나 Claude Code 같은 agent UI로 보면 과장이다
 
 ## 설치와 첫 실행
 
-공식 Quick Start는 macOS Apple Silicon과 Linux x86_64/arm64를 대상으로 한다. 가장 빠른 경로는 Ollama를 먼저 띄우고 Flock installer를 실행하는 방식이다.
-
-```bash
-# macOS Apple Silicon
-brew install --cask ollama
-open -a Ollama
-curl -fsSL https://raw.githubusercontent.com/hadihonarvar/flock/main/installer/install.sh | sh
-FLOCK_DEFAULT_MODEL=llama-3.2-1b flock up
-```
-
-```bash
-# Linux x86_64 / arm64
-curl -fsSL https://ollama.com/install.sh | sh
-sudo systemctl enable --now ollama
-curl -fsSL https://raw.githubusercontent.com/hadihonarvar/flock/main/installer/install.sh | sh
-FLOCK_DEFAULT_MODEL=llama-3.2-1b flock up
-```
+공개 당시 Quick Start는 macOS Apple Silicon과 Linux x86_64/arm64를 대상으로 Ollama와 전용 installer를 함께 사용했다. 그러나 현재 installer와 Release를 검증할 공식 배포 경로가 없으므로 재공개 전까지 설치를 시도하지 않는 편이 안전하다.
 
 installer는 `--version`, `--install-dir`, `--no-engine`, `--dry-run` 같은 옵션을 제공하고, Release의 `checksums.txt`를 찾으면 `shasum -a 256`로 검증한 뒤 바이너리를 설치한다. GoReleaser 설정도 darwin/linux × amd64/arm64 build를 생성하도록 되어 있다. Homebrew tap 설정은 템플릿/주석 형태로 남아 있지만, 조사 시점 `.goreleaser.yaml`에서는 tap publishing block이 비활성화되어 있으므로 **공식 설치 경로는 installer 또는 GitHub Release tarball**로 보는 편이 맞다.
 
@@ -149,11 +132,4 @@ Flock은 “Ollama 대체재”라기보다, Ollama/vLLM/MLX/llama.cpp를 이미
 
 ## 참고한 공개 자료
 
-- [hadihonarvar/flock GitHub repository](https://github.com/hadihonarvar/flock)
-- [Flock README](https://github.com/hadihonarvar/flock/blob/main/README.md)
-- [Flock QUICKSTART.md](https://github.com/hadihonarvar/flock/blob/main/QUICKSTART.md)
-- [Flock ARCHITECTURE.md](https://github.com/hadihonarvar/flock/blob/main/ARCHITECTURE.md)
-- [Flock MODELS.md](https://github.com/hadihonarvar/flock/blob/main/MODELS.md)
-- [Flock TASKS.md](https://github.com/hadihonarvar/flock/blob/main/TASKS.md)
-- [Flock SECURITY.md](https://github.com/hadihonarvar/flock/blob/main/SECURITY.md)
-- [Flock latest release v0.1.0](https://github.com/hadihonarvar/flock/releases/tag/v0.1.0)
+- `hadihonarvar/flock` 원본 저장소와 v0.1.0 릴리스(2026-07-12 기준 공개 접근 중단, 공식 후속 미확인)

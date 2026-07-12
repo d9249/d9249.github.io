@@ -71,7 +71,7 @@ Qwen의 답은 모델 학습과 평가를 “일회성 태스크”가 아니라
 셋째는 **장시간 자율 실행을 위한 API·하네스 적합성**이다. 공식 API 예시는 `qwen3.7-max` 모델명과 `enable_thinking`, `preserve_thinking` 옵션을 보여 준다. 특히 `preserve_thinking`은 agentic task에서 이전 턴의 thinking content를 보존하는 기능으로 설명된다. Claude Code는 Anthropic 호환 API로, OpenClaw와 Qwen Code는 Model Studio / Qwen 계열 CLI로 연결하는 방식이 제시된다.
 
 | 구성 요소 | 공개 자료에서 확인되는 내용 | 실무적으로 읽는 법 |
-|---|---|---|
+| --- | --- | --- |
 | 모델 포지션 | Qwen3.7-Max, Qwen의 최신 proprietary model | 오픈 웨이트보다 상용 agent backbone 성격이 강함 |
 | 실행 표면 | Alibaba Cloud Model Studio, OpenAI 호환 API, Anthropic 호환 API | 기존 코딩 에이전트·CLI 런타임에 붙이기 쉬운 배포 전략 |
 | 에이전트 옵션 | `enable_thinking`, `preserve_thinking` | 긴 다중 턴 실행에서 추론 문맥을 이어가려는 인터페이스 |
@@ -97,7 +97,7 @@ General agent 쪽에서는 MCP-Mark 60.8, MCP-Atlas 76.4, Skillsbench 59.2, Qwen
 핵심 숫자를 실무 관점에서 다시 추리면 다음과 같다.
 
 | 축 | 지표 | Qwen3.7-Max | 해석 |
-|---|---:|---:|---|
+| --- | --: | --: | --- |
 | Coding agent | Terminal Bench 2.0-Terminus | 69.7 | DS-V4-Pro Max 67.9보다 높게 보고된 터미널 기반 장기 실행 점수 |
 | Coding agent | SWE-Pro | 60.6 | 비교군 중 최고값으로 제시되어 어려운 코드 수정 태스크를 강조 |
 | General agent | MCP-Mark | 60.8 | MCP 기반 tool-use 환경에서 강한 수치 |
@@ -141,4 +141,4 @@ Qwen3.7-Max 블로그에서 가장 눈에 띄는 사례는 SGLang의 **Extend At
 
 그래도 방향성은 꽤 명확하다. Qwen3.7-Max는 오픈 웨이트 Qwen3.6 계열이 보여 준 “agentic coding 모델”의 흐름을 상용 프런티어 모델 쪽으로 확장한다. 이제 경쟁 포인트는 단순한 채팅 품질이나 한 번의 코딩 답안이 아니라, **수십 시간 동안 실행하고, 여러 하네스에서 일반화하고, reward hacking까지 감시하는 모델 운영 능력**이다. 그런 의미에서 Qwen3.7-Max는 Qwen이 에이전트 시대의 파운데이션 모델을 어떻게 정의하는지 보여 주는 중요한 이정표다.
 
-Sources: https://qwen.ai/blog?id=qwen3.7, https://modelstudio.console.alibabacloud.com/?tab=doc#/doc/?type=model&url=2840915, https://github.com/SKYLENAGE-AI/QwenClawBench, https://github.com/sgl-project/sglang/blob/main/python/sglang/srt/layers/attention/triton_ops/extend_attention.py
+Sources: https://qwen.ai/blog?id=qwen3.7, https://modelstudio.console.alibabacloud.com/?tab=doc#/doc/?type=model&url=2840915, https://github.com/SKYLENAGE-AI/QwenClawBench, https://github.com/sgl-project/sglang/blob/main/python/sglang/kernels/ops/attention/extend_attention.py

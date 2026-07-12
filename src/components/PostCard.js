@@ -20,7 +20,7 @@ const PostCard = ({ post, featured = false }) => {
       <Link
         className="post-thumb"
         to={fields.slug}
-        aria-label={frontmatter.title}
+        aria-label={`${categoryLabel}: ${frontmatter.title}`}
         title={frontmatter.title}
       >
         <span>{categoryLabel}</span>

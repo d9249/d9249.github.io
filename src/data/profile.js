@@ -366,11 +366,11 @@ export const awardItems = [
     links: [
       {
         label: "아시아나IDT 뉴스",
-        href: "https://www.asianaidt.com/idthome/pages/ko/company/news_view?mid=2&postid=5109&menu1=1000&menu2=1200",
+        href: "https://www.asianaidt.com/pages/ko/company/news_view?mid=2&postid=5109&menu1=1000&menu2=1200",
       },
       {
         label: "아시아나IDT 연혁",
-        href: "https://www.asianaidt.com/idthome/pages/ko/company/history?menu1=1000&menu2=1100",
+        href: "https://www.asianaidt.com/pages/ko/company/history?menu1=1000&menu2=1100",
       },
     ],
   },
@@ -513,7 +513,7 @@ export const competitionItems = [
         href: "/evidence/competitions/diya-4th-sangmin-lee.pdf",
       },
     ],
-    href: "https://doityourselfai.github.io/",
+    href: "https://doityourselfai.notion.site/DIYA-cbbd248d5e7a43cf9f5b0b39bc6ccd82",
   },
   {
     title: "산업인공지능 단기집중교육",

@@ -49,7 +49,10 @@ const DaconCompetitionsPage = () => (
         </div>
       </div>
 
-      <div className="dacon-record-list">
+      <div
+        className="dacon-record-list"
+        aria-label="DACON participation records"
+      >
         {daconCompetitionItems.map((item, index) => (
           <article className="dacon-record" key={`${item.title}-${index}`}>
             <span className="dacon-record-index">
