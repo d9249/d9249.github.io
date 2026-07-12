@@ -10,7 +10,7 @@ import {
 const DaconCompetitionsPage = () => (
   <Layout>
     <section className="shell section dacon-page">
-      <SectionHeading kicker="DACON" title="DACON 경진대회" />
+      <SectionHeading as="h1" kicker="DACON" title="DACON 경진대회" />
 
       <div className="dacon-hero">
         <div>

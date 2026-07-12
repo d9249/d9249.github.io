@@ -176,7 +176,10 @@ const IndexPage = ({ data }) => {
       <section className="shell hero">
         <div>
           <p className="eyebrow">AI Engineer &amp; Researcher</p>
-          <h1>AI 연구를 제품 가치로 연결하는 엔지니어</h1>
+          <h1>
+            AI 연구를 <span className="hero-title-nowrap">제품 가치로</span>{" "}
+            연결하는 엔지니어
+          </h1>
           <p className="hero-copy">
             연구의 깊이를 RAG, 멀티 에이전트, Document AI,{" "}
             <span className="hero-copy-nowrap">운영 가능한</span> 플랫폼으로

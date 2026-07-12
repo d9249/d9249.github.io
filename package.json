@@ -10,7 +10,8 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md,css,yml}\"",
     "portfolio:export": "node scripts/portfolio/export-keynote.js",
     "serve": "gatsby serve",
-    "start": "npm run develop"
+    "start": "npm run develop",
+    "doctor": "react-doctor --no-telemetry"
   },
   "dependencies": {
     "gatsby": "^5.14.1",
@@ -27,6 +28,10 @@
     "simple-icons": "^16.19.0"
   },
   "devDependencies": {
-    "prettier": "^3.6.2"
+    "playwright": "^1.61.1",
+    "prettier": "^3.6.2",
+    "react-doctor": "^0.7.6",
+    "react-grab": "^0.1.48",
+    "react-scan": "^0.5.7"
   }
 }

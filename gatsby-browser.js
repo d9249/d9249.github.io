@@ -1,4 +1,10 @@
 import "./src/styles/global.css";
+import "./src/styles/apple-design.css";
+
+if (process.env.NODE_ENV === "development") {
+  void import("react-grab");
+  void import("react-scan");
+}
 
 const isProjectRoute = (pathname) =>
   pathname === "/projects/" || pathname?.startsWith("/projects/");

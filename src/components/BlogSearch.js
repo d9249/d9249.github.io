@@ -124,7 +124,9 @@ const BlogSearch = () => {
   const tips = data.tips.nodes;
   const titleId = React.useId();
   const inputId = React.useId();
+  const dialogRef = React.useRef(null);
   const inputRef = React.useRef(null);
+  const triggerRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
 
@@ -189,26 +191,47 @@ const BlogSearch = () => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     document.body.classList.add("search-is-open");
-    window.setTimeout(() => inputRef.current?.focus(), 0);
+    const focusTimeout = window.setTimeout(() => inputRef.current?.focus(), 0);
 
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
+        event.preventDefault();
         setOpen(false);
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+      const focusable = dialogRef.current?.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (!focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
+      window.clearTimeout(focusTimeout);
       document.body.style.overflow = previousOverflow;
       document.body.classList.remove("search-is-open");
       window.removeEventListener("keydown", handleKeyDown);
+      window.requestAnimationFrame(() => triggerRef.current?.focus());
     };
   }, [open]);
 
   return (
     <>
       <button
+        ref={triggerRef}
         className="search-toggle"
         type="button"
         aria-label="검색 열기"
@@ -228,6 +251,7 @@ const BlogSearch = () => {
             onClick={() => setOpen(false)}
           />
           <section
+            ref={dialogRef}
             className="search-dialog"
             role="dialog"
             aria-modal="true"

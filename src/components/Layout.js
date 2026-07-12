@@ -6,8 +6,11 @@ import { ViewCounterProvider } from "./ViewCounter";
 const Layout = ({ children }) => (
   <ViewCounterProvider>
     <div className="page">
+      <a className="skip-link" href="#main-content">
+        본문으로 바로가기
+      </a>
       <Navbar />
-      <main id="top">{children}</main>
+      <main id="main-content">{children}</main>
       <Footer />
     </div>
   </ViewCounterProvider>

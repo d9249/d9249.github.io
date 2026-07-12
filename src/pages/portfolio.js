@@ -109,6 +109,7 @@ const PortfolioPage = () => {
   const [isLandscapeMode, setIsLandscapeMode] = React.useState(false);
   const [controlsVisible, setControlsVisible] = React.useState(true);
   const stageRef = React.useRef(null);
+  const slideStripRef = React.useRef(null);
   const activeThumbRef = React.useRef(null);
   const hideControlsTimerRef = React.useRef(null);
   const activeSlide = slides[activeIndex];
@@ -331,9 +332,18 @@ const PortfolioPage = () => {
   }, [slides.length]);
 
   React.useEffect(() => {
-    activeThumbRef.current?.scrollIntoView({
-      block: "nearest",
-      inline: "center",
+    const strip = slideStripRef.current;
+    const thumbnail = activeThumbRef.current;
+    if (!strip || !thumbnail) return;
+
+    const targetLeft =
+      thumbnail.offsetLeft - (strip.clientWidth - thumbnail.offsetWidth) / 2;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    strip.scrollTo({
+      behavior: reduceMotion ? "auto" : "smooth",
+      left: Math.max(0, targetLeft),
     });
   }, [activeIndex]);
 
@@ -343,7 +353,7 @@ const PortfolioPage = () => {
         <div className="shell portfolio-hero">
           <div>
             <p className="eyebrow">Portfolio Deck</p>
-            <h2>이상민 포트폴리오</h2>
+            <h1>이상민 포트폴리오</h1>
             <p className="portfolio-copy">
               AI 연구, 제품 개발 프로젝트들을 발표용 슬라이드로 정리했습니다.
             </p>
@@ -421,7 +431,11 @@ const PortfolioPage = () => {
             </div>
           </div>
 
-          <div className="slide-strip" aria-label="Slide thumbnails">
+          <div
+            className="slide-strip"
+            ref={slideStripRef}
+            aria-label="Slide thumbnails"
+          >
             {slides.map((slide, index) => (
               <button
                 className={`slide-thumb ${

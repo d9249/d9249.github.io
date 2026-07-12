@@ -13,6 +13,7 @@ const BlogCategoryTemplate = ({ data, pageContext }) => {
     <Layout>
       <section className="shell section">
         <SectionHeading
+          as="h1"
           kicker="Category"
           title={pageContext.label}
           description={pageContext.description}

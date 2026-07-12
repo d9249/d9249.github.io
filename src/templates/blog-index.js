@@ -22,7 +22,7 @@ const BlogIndexTemplate = ({ data, pageContext }) => {
   return (
     <Layout>
       <section className="shell section">
-        <SectionHeading kicker="Blog" title="Knowledge WIKI" />
+        <SectionHeading as="h1" kicker="Blog" title="Knowledge WIKI" />
         <CategoryNav />
         <TagNav tagSummaries={tagSummaries} />
         <div className="blog-list-summary" aria-live="polite">

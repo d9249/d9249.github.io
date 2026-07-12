@@ -23,7 +23,13 @@ const getPreferredTheme = () => {
 };
 
 const applyTheme = (theme) => {
+  document.documentElement.classList.add("theme-is-transitioning");
   document.documentElement.dataset.theme = theme;
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
+      document.documentElement.classList.remove("theme-is-transitioning");
+    });
+  });
   try {
     window.localStorage.setItem("theme", theme);
   } catch (error) {
@@ -34,6 +40,8 @@ const applyTheme = (theme) => {
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   const [theme, setTheme] = React.useState("light");
+  const menuButtonRef = React.useRef(null);
+  const navRef = React.useRef(null);
 
   React.useEffect(() => {
     const initialTheme =
@@ -41,6 +49,38 @@ const Navbar = () => {
     document.documentElement.dataset.theme = initialTheme;
     setTheme(initialTheme);
   }, []);
+
+  React.useEffect(() => {
+    if (!open) return undefined;
+
+    const focusFrame = window.requestAnimationFrame(() => {
+      navRef.current?.querySelector("a")?.focus();
+    });
+    const handleKeyDown = (event) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      setOpen(false);
+      window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+    };
+    const handlePointerDown = (event) => {
+      if (
+        navRef.current?.contains(event.target) ||
+        menuButtonRef.current?.contains(event.target)
+      ) {
+        return;
+      }
+      setOpen(false);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("pointerdown", handlePointerDown);
+
+    return () => {
+      window.cancelAnimationFrame(focusFrame);
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [open]);
 
   const toggleTheme = () => {
     setTheme((currentTheme) => {
@@ -53,11 +93,18 @@ const Navbar = () => {
   return (
     <header className="masthead">
       <div className="shell masthead-inner">
-        <Link className="wordmark" to="/" aria-label="home">
+        <Link className="wordmark" to="/" aria-label="이상민 홈">
           <span className="prompt-dot" />
-          <span>ideal@soul:~</span>
+          <span className="wordmark-copy">
+            <strong className="wordmark-name">Sangmin Lee</strong>
+            <small className="wordmark-role">
+              AI Engineer &amp; Researcher
+            </small>
+          </span>
         </Link>
         <nav
+          id="primary-navigation"
+          ref={navRef}
           className={`nav ${open ? "is-open" : ""}`}
           aria-label="Primary navigation"
         >
@@ -67,7 +114,13 @@ const Navbar = () => {
                 {item.label}
               </a>
             ) : (
-              <Link key={item.to} to={item.to} onClick={() => setOpen(false)}>
+              <Link
+                activeClassName="is-active"
+                key={item.to}
+                partiallyActive={item.to !== "/" && !item.to.includes("#")}
+                to={item.to}
+                onClick={() => setOpen(false)}
+              >
                 {item.label}
               </Link>
             ),
@@ -102,8 +155,10 @@ const Navbar = () => {
             </svg>
           </button>
           <button
+            ref={menuButtonRef}
             className="menu-button"
             type="button"
+            aria-controls="primary-navigation"
             aria-expanded={open}
             aria-label={open ? "메뉴 닫기" : "메뉴 열기"}
             title={open ? "Close menu" : "Open menu"}

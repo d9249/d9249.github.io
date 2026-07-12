@@ -11,9 +11,10 @@ const ContactPage = ({ data }) => {
     <Layout>
       <section className="shell section">
         <SectionHeading
+          as="h1"
           kicker="Contact"
           title="연구와 제품 사이의 의미를 남기는 사람"
-          description="인공지능 연구와 이를 활용한 제품 및 서비스를 연구 합니다."
+          description="인공지능 연구와 이를 활용한 제품 및 서비스를 연구합니다."
         />
         <div className="career-layout">
           <aside className="profile-panel">
@@ -84,9 +85,6 @@ export const query = graphql`
 export const Head = () => (
   <>
     <title>Contact</title>
-    <meta
-      name="description"
-      content="Sangmin Lee 연락 및 소개 페이지입니다."
-    />
+    <meta name="description" content="Sangmin Lee 연락 및 소개 페이지입니다." />
   </>
 );

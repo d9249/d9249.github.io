@@ -17,8 +17,10 @@ const themeScript = `
 })();
 `;
 
-export const onRenderBody = ({ setHeadComponents }) => {
+export const onRenderBody = ({ setHeadComponents, setHtmlAttributes }) => {
+  setHtmlAttributes({ lang: "ko" });
   setHeadComponents([
+    <link key="favicon" rel="icon" href="/favicon.svg" type="image/svg+xml" />,
     <script
       key="theme-init"
       dangerouslySetInnerHTML={{ __html: themeScript }}

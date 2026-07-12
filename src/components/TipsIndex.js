@@ -128,12 +128,14 @@ const TipsIndex = ({
   const firstTipNumber = totalVisibleTips === 0 ? 0 : skip + 1;
   const lastTipNumber = Math.min(totalVisibleTips, skip + visibleTips.length);
   const pageTitle = label || activeCategoryData?.label || "Application Tips";
-  const pageDescription = description ?? activeCategoryData?.description ?? null;
+  const pageDescription =
+    description ?? activeCategoryData?.description ?? null;
 
   return (
     <Layout>
       <section className="shell section">
         <SectionHeading
+          as="h1"
           kicker="Tips"
           title={pageTitle}
           description={pageDescription}

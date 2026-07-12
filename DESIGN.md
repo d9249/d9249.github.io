@@ -2,168 +2,218 @@
 
 ## 1. Atmosphere & Identity
 
-A quiet technical portfolio with an engineering-notebook feel. The signature is
-thin-line structure: restrained panels, monospace metadata, soft grid texture,
-and small accent flashes that make dense career/project evidence easy to scan.
+`d9249.github.io` is a calm, high-craft technical portfolio: precise enough for
+research evidence, warm enough to feel personal, and immediate enough to behave
+like a native Apple surface. The emotion is **quiet confidence**.
+
+The memorable moment is the home hero: a soft field of cool daylight behind a
+floating profile console. It preserves the owner's engineering identity without
+making the whole site look like a terminal. Information stays dense, while
+hierarchy, translucency, and breathing room make the common path obvious.
+
+The source of truth is `skills/apple-design/SKILL.md`, especially Purpose,
+Familiarity, Simplicity, Craft, instant response, spatial consistency,
+translucent hierarchy, optical typography, and reduced-motion equivalents.
 
 ## 2. Color
 
 ### Palette
 
-| Role         | Token            | Light                                                         | Dark                   | Usage                                    |
-| ------------ | ---------------- | ------------------------------------------------------------- | ---------------------- | ---------------------------------------- |
-| Background   | `--bg`           | `oklch(98% 0.005 250)`                                        | `oklch(16% 0.018 250)` | Page canvas and grid base                |
-| Surface      | `--surface`      | `oklch(100% 0 0)`                                             | `oklch(22% 0.018 250)` | Cards, panels, dialogs                   |
-| Text primary | `--fg`           | `oklch(19% 0.018 245)`                                        | `oklch(94% 0.008 245)` | Body, headings, icons                    |
-| Text muted   | `--muted`        | `oklch(48% 0.018 245)`                                        | `oklch(70% 0.018 245)` | Captions, metadata, secondary copy       |
-| Border       | `--border`       | `oklch(88% 0.01 245)`                                         | `oklch(34% 0.018 250)` | Dividers, card outlines, controls        |
-| Accent green | `--accent`       | `oklch(70% 0.18 145)`                                         | `oklch(74% 0.18 145)`  | Primary links, focus, active metadata    |
-| Accent blue  | `--accent-2`     | `oklch(66% 0.18 245)`                                         | `oklch(72% 0.14 235)`  | Secondary bullets and technical emphasis |
-| Accent warm  | `--accent-3`     | `oklch(72% 0.16 35)`                                          | `oklch(72% 0.15 30)`   | Small status dots and warm contrast      |
-| Overlay      | `--overlay`      | `oklch(0% 0 0 / 0.72)`                                        | `oklch(0% 0 0 / 0.78)` | Modal backdrop                           |
-| Modal shadow | `--shadow-modal` | `0 24px 90px color-mix(in oklch, var(--fg) 24%, transparent)` | Same                   | Dialog elevation                         |
+| Role           | Token           | Light                         | Dark                          | Usage                                  |
+| -------------- | --------------- | ----------------------------- | ----------------------------- | -------------------------------------- |
+| Canvas         | `--bg`          | `oklch(97.8% 0.007 250)`      | `oklch(14.5% 0.012 255)`      | Page atmosphere                        |
+| Elevated solid | `--surface`     | `oklch(100% 0 0)`             | `oklch(20.5% 0.014 255)`      | Opaque fallback and article canvas     |
+| Primary text   | `--fg`          | `oklch(20% 0.016 255)`        | `oklch(96% 0.006 250)`        | Headings, body, icons                  |
+| Secondary text | `--muted`       | `oklch(48% 0.018 255)`        | `oklch(72% 0.014 250)`        | Supporting text and metadata           |
+| Separator      | `--border`      | `oklch(86% 0.012 250 / 0.78)` | `oklch(34% 0.014 255 / 0.78)` | Hairlines and surface rims             |
+| System blue    | `--accent`      | `oklch(57% 0.19 252)`         | `oklch(70% 0.16 248)`         | Primary actions, links, focus          |
+| On accent      | `--on-accent`   | `oklch(99% 0 0)`              | `oklch(99% 0 0)`              | Legible text on solid accent fills     |
+| Sky light      | `--accent-soft` | `oklch(88% 0.07 240)`         | `oklch(39% 0.08 245)`         | Atmospheric light and selected fills   |
+| Cyan signal    | `--accent-2`    | `oklch(68% 0.13 218)`         | `oklch(76% 0.12 218)`         | Technical/evidence accents             |
+| Warm signal    | `--accent-3`    | `oklch(72% 0.14 55)`          | `oklch(76% 0.13 55)`          | Limited warning or recognition accents |
+| Scrim          | `--overlay`     | `oklch(8% 0.012 255 / 0.58)`  | `oklch(2% 0.006 255 / 0.72)`  | Modal focus                            |
 
 ### Rules
 
-- Use the existing OKLCH tokens; extend this table before adding a new color.
-- Accent colors are for interaction and evidence emphasis, not decoration.
-- Project-page diagrams and screenshots sit on `--surface` with a 1px border.
+- System blue carries agency: links, selected state, focus, and primary actions.
+- Cool sky/cyan light creates atmosphere but never replaces semantic contrast.
+- Color is applied on the solid/background layer, never as low-contrast text on
+  translucent foregrounds.
+- Dark mode is tuned independently, not produced by inverting light mode.
+- Project diagrams and screenshots retain neutral backgrounds so evidence is not
+  color-shifted.
 
 ## 3. Typography
 
-### Scale
+### Font stacks
 
-| Level           | Size                       | Weight  | Line Height | Tracking    | Usage                     |
-| --------------- | -------------------------- | ------- | ----------- | ----------- | ------------------------- |
-| Display         | `clamp(44px, 6vw, 82px)`   | 760-800 | 0.98-1.08   | 0           | Project and home heroes   |
-| Section         | `clamp(34px, 3.6vw, 48px)` | 700-780 | 1.08        | 0           | Section headings          |
-| Article heading | 28px                       | 700     | 1.2         | 0           | Markdown `h2`/`h3`        |
-| Card heading    | 20-34px                    | 700     | 1.08-1.35   | 0           | Cards and panels          |
-| Body large      | 18-23px                    | 400     | 1.5-1.82    | 0           | Lead and article text     |
-| Body            | 16px                       | 400     | 1.6         | 0           | Default text              |
-| Body small      | 14-15px                    | 400     | 1.5-1.65    | 0           | Supporting copy           |
-| Mono label      | 11-12px                    | 700-800 | 1.2-1.45    | 0.04-0.08em | Metadata, chips, controls |
-| ASCII portrait  | 9px desktop, 9-10px mobile | 400     | 1 / 0.84    | 0           | Desktop / mobile portrait |
+- Display: `--font-display`, `-apple-system`, `BlinkMacSystemFont`,
+  `SF Pro Display`, system UI.
+- Body: `--font-body`, `-apple-system`, `BlinkMacSystemFont`, `SF Pro Text`,
+  system UI.
+- Mono: `--font-mono`, `SFMono-Regular`, Menlo, Monaco, Consolas.
 
-### Font Stack
+### Optical scale
 
-- Display: `--font-display`, Apple/system sans.
-- Body: `--font-body`, Apple/system sans.
-- Mono: `--font-mono`, Menlo/Monaco/Consolas-compatible stack.
+| Level      | Size                             | Weight  | Leading | Tracking   | Usage                        |
+| ---------- | -------------------------------- | ------- | ------- | ---------- | ---------------------------- |
+| Display    | `clamp(3.2rem, 6.8vw, 6.7rem)`   | 760     | `0.96`  | `-0.055em` | Home hero                    |
+| Page title | `clamp(2.7rem, 5vw, 5.2rem)`     | 740     | `1`     | `-0.045em` | Projects, research, articles |
+| Section    | `clamp(2.15rem, 3.7vw, 3.7rem)`  | 720     | `1.04`  | `-0.035em` | Section headings             |
+| Card title | `1.25rem-2rem`                   | 650-700 | `1.16`  | `-0.02em`  | Cards and panels             |
+| Lead       | `clamp(1.12rem, 1.8vw, 1.42rem)` | 430     | `1.55`  | `-0.012em` | Hero and page summaries      |
+| Body       | `1rem`                           | 400     | `1.68`  | `-0.006em` | Default copy                 |
+| Small      | `0.84rem-0.92rem`                | 450     | `1.5`   | `0`        | Supporting copy              |
+| Label      | `0.68rem-0.76rem`                | 650     | `1.25`  | `0.065em`  | Metadata and controls        |
 
 ### Rules
 
-- Keep letter spacing at `0` except uppercase metadata.
-- Use `word-break: keep-all`, `text-wrap: pretty`, and balanced headings for Korean copy.
+- Use optical sizing where available. Large headings tighten; small labels open.
+- Korean copy uses `word-break: keep-all`, `text-wrap: pretty`, and enough line
+  height for legibility. One-line locking is reserved for genuinely short labels.
+- The root remains `100%`; spacing and type use `rem` so browser text scaling
+  grows the layout instead of clipping it.
+- Mono is a precise accent for code and metadata, not the site's primary voice.
 
 ## 4. Spacing & Layout
 
-### Base Unit
+Layout spacing derives from a 4px base and is exposed as tokens. Optical type,
+icon, and material values may use fractional units when rendered alignment
+requires it.
 
-All spacing derives from a 4px base.
+| Token        | Value     | Usage             |
+| ------------ | --------- | ----------------- |
+| `--space-1`  | `0.25rem` | Optical nudges    |
+| `--space-2`  | `0.5rem`  | Compact icon gaps |
+| `--space-3`  | `0.75rem` | Labels and chips  |
+| `--space-4`  | `1rem`    | Control padding   |
+| `--space-5`  | `1.25rem` | Compact cards     |
+| `--space-6`  | `1.5rem`  | Default cards     |
+| `--space-8`  | `2rem`    | Groups            |
+| `--space-10` | `2.5rem`  | Large groups      |
+| `--space-12` | `3rem`    | Section internals |
+| `--space-16` | `4rem`    | Mobile sections   |
+| `--space-24` | `6rem`    | Desktop sections  |
 
-| Token        | Value | Usage                                 |
-| ------------ | ----- | ------------------------------------- |
-| `--space-1`  | 4px   | Tight icon and caption adjustments    |
-| `--space-2`  | 8px   | Compact chip and caption gaps         |
-| `--space-3`  | 12px  | Inline groups and control padding     |
-| `--space-4`  | 16px  | Mobile panel padding, small grid gaps |
-| `--space-5`  | 20px  | Panel padding                         |
-| `--space-6`  | 24px  | Default card padding                  |
-| `--space-7`  | 28px  | Project body gaps                     |
-| `--space-8`  | 32px  | Larger groups                         |
-| `--space-10` | 40px  | Section rhythm                        |
-| `--space-12` | 48px  | Major content breaks                  |
-| `--space-18` | 72px  | Section vertical padding              |
-
-### Grid
-
-- Max shell width: `min(1180px, calc(100% - 40px))`.
-- Project detail grid: `0.68fr / 0.32fr`, collapsing to one column below 980px.
-- Mobile shell: `min(100% - 28px, 1180px)` below 680px.
-- Primary navigation collapses behind the menu control through 1059px so the full link row never forces horizontal overflow.
-
-### Rules
-
-- Prefer grids with `minmax(0, 1fr)` so Korean/English mixed strings cannot overflow.
-- Fixed-format controls use stable dimensions and 8px or smaller radii.
+- Reading shell: `min(1200px, calc(100% - 48px))`; article measure: 760px.
+- Mobile shell: `min(100% - 32px, 1200px)`.
+- The layout shifts at content pressure, not device names: 1060px navigation,
+  980px detail grids, 760px multi-column cards, 680px compact mobile.
+- Primary sections have no box around the whole section. Cards group meaningful
+  sub-objects; white space groups the larger narrative.
+- Rounded geometry follows scale: 12px controls, 18px cards, 24-30px large
+  surfaces. Nested radii decrease inward.
 
 ## 5. Components
 
-### Home ASCII Profile
+### Floating Navigation
 
-- **Structure**: `.terminal-body.whoami-body` contains a live monospace portrait and the profile facts column.
-- **Spacing**: 16px terminal padding and column gap; the desktop portrait column is 252px wide and aligns the shoulder line with the bottom of the profile facts.
-- **Typography**: the portrait uses the mono stack at 9px with 1.0 line height on desktop and 9-10px with compact 0.84 line height on mobile, zero letter spacing, and horizontal scaling to correct terminal glyph aspect ratio.
-- **Responsive**: when the hero collapses the terminal stays centered at up to 590px; at 680px and below it fills the mobile shell, stacks the columns, retains 16px internal spacing, and widens the portrait without overflowing the content width. The mobile hero gap contracts to 24px and its vertical padding to 48px/32px so the profile is not isolated by excess whitespace.
+- A centered translucent capsule floats above scrolling content with a soft
+  scroll-edge shadow, bright rim, and 24px blur. It never becomes an opaque bar.
+- Desktop navigation exposes every destination. The active destination is blue
+  and receives a quiet filled capsule. Mobile uses an anchored sheet below the
+  header and exits through the same path it entered.
+- Search, theme, and menu controls are 44px or larger on touch layouts, show
+  pointer-down scale immediately, and retain visible focus rings.
 
-### Home Skill Matrix
+### Hero Profile Console
 
-- **Structure**: top-level stack groups and AI sub-groups are flattened into peer `.skill-card` panels so every category participates in the same packing system; each panel contains one header and one contiguous skill-cell matrix rather than nested cards.
-- **Layout**: `.skill-grid` uses auto-fit columns with a 340px minimum, a 1px internal measurement row, 12px desktop and 8px mobile panel separation, and dense row-span packing measured with `ResizeObserver`; resizing must repack panels without fixed `nth-child` coordinates or orphaned vertical voids. The measurement row does not define visible spacing, which remains on the 4px token scale.
-- **Cells**: skill cells use a 1px separator grid, square edges inside the panel, 12px mono labels, and a stable 28px icon column. Even lists use two cells per row; odd lists finish with three equal compact tiles so no item becomes a visually emphasized full-width orphan and no empty slot remains.
-- **Icons**: use the installed Simple Icons path and upstream brand color when a maintained product mark exists; otherwise use a semantically matched Lucide outline icon with the existing green, blue, warm, or ink accent tokens. Text initials are not an icon fallback.
-- **Responsive**: the matrix resolves to three columns at the desktop shell, two columns on tablet, and one column on narrow mobile; a named card container collapses skill cells to one column whenever the card content box is 340px or narrower, with equivalent viewport fallbacks through 370px and across the 681-736px and 1084-1090px column transitions for browsers without container-query support.
-- **Accessibility**: icons are decorative because every cell retains its visible technology name; headings and source order remain logical even when dense visual packing fills an earlier empty grid position.
+- The home hero is a two-column editorial composition: decisive statement and
+  one elevated console. Atmospheric light belongs to the page layer; the console
+  uses thick translucent material, a bright rim, and a deep diffuse shadow.
+- The ASCII portrait remains a personal signature, but terminal chrome is
+  secondary to the person's name, role, and direct paths.
+- Primary and secondary actions are visually distinct and share identical hit
+  geometry. External profile links use compact glass pills.
 
-### Project Article
+### Content Cards
 
-- **Structure**: Markdown HTML rendered inside `.article-body.project-markdown-body`.
-- **Variants**: lead panels, feature grids, fact grids, flow strips, diagrams, screenshot cards.
-- **Spacing**: 14px diagram padding, 28-42px block rhythm, 6-8px image radius.
-- **States**: links and controls have hover/focus; images expose zoom cursor and focus ring.
-- **Accessibility**: image alt text is preserved; keyboard image activation uses Enter/Space.
-- **Motion**: micro-interactions use 160ms transform/opacity transitions.
+- Evidence, project, research, recognition, post, tip, skill, and supporting
+  cards share the `--material-card` recipe, 18-22px radius, and a top-light rim.
+- Hover raises only interactive cards by 3px and strengthens the shadow. Press
+  immediately scales them to `0.985`. Non-interactive cards do not animate.
+- Cards avoid decorative nesting. Chips are metadata, not miniature cards.
 
-### Blog Article Media
+### Section Heading
 
-- **Structure**: Blog Markdown HTML rendered inside `.article-body.blog-markdown-body`.
-- **Variants**: standalone Markdown images, explicit HTML figures, image links, and image captions written as italic paragraphs.
-- **Spacing**: 34px block rhythm, 12px media-frame padding, 6-8px image radius.
-- **Surface**: images sit inside a tokenized surface frame with a 1px border and subtle grid texture so source charts do not float against the page canvas.
-- **Contrast**: very dark, wide analytical images are detected in the browser and receive a brighter inspection frame without mutating source pixels; incorrect dark/matte conversions are rejected during collection instead of repaired by CSS.
-- **Inspection**: wide analytical images preserve a usable chart width with horizontal pan on narrow viewports instead of shrinking axis labels and legends into noise.
-- **Caption**: captions use muted mono text and override legacy inline caption colors from older generated posts.
-- **States**: images expose the shared zoom cursor, focus ring, click activation, and Enter/Space keyboard activation used by project article images.
-- **Accessibility**: original image alt text remains on the image; captions are visible text and not a replacement for alt text.
+- The eyebrow establishes context; the title carries the story. Actions remain
+  adjacent to the section they affect and use direct labels.
+- Section dividers are atmospheric spacing or a short gradient hairline, never a
+  full-width grid rule.
 
-### Article Image Lightbox
+### Article & Evidence Media
 
-- **Structure**: fixed modal backdrop, icon-only close button, figure, bounded image viewport, fitted image stage, caption footer, icon-only rotate control.
-- **Variants**: project, blog, and tips article media share the same light and dark theme surface, border, overlay, and shadow tokens.
-- **Spacing**: viewport gutters leave comfortable inspection space: 32px desktop, 16px mobile; desktop frames fit the calculated image stage instead of stretching to the viewport and may upscale readable images to 1.6x while staying inside the visible viewport; rotated mobile images reserve close-button and browser-toolbar clearance without leaving a large unused lower gutter, anchor the frame from the top clearance so the added height grows downward, use Safari `visualViewport` offsets for height, size dense diagrams from the stable layout width with a `100vw` CSS fallback before height, reset image scrolling on open/rotate, and scroll only the clipped image viewport while the caption and rotate control stay in a separate frame footer that image content cannot paint over; image frame padding is 12px desktop and 8px mobile.
-- **States**: backdrop click, close/rotate button hover/focus, Escape, 90-degree rotation steps, and focus containment.
-- **Accessibility**: `role="dialog"`, `aria-modal="true"`, labelled by image alt text when present.
-- **Motion**: opacity and transform-only entrance; disabled under reduced motion.
+- Articles use an opaque reading surface with generous measure and quiet chrome.
+- Images and diagrams use neutral inspection frames. Wide analytical images pan
+  horizontally on mobile rather than shrinking labels below readability.
+- The shared lightbox preserves its existing fitted stage, rotation, keyboard
+  activation, Escape dismissal, focus containment, and mobile visualViewport
+  behavior. Its material is updated, not its proven geometry.
+
+### Primitive states
+
+Every interactive primitive implements default, hover, pointer-down, focus,
+disabled, and reduced-motion states. Search additionally implements empty,
+results, and dismiss states; deck controls expose unavailable navigation.
 
 ## 6. Motion & Interaction
 
-| Type    | Duration | Easing                        | Usage                                |
-| ------- | -------- | ----------------------------- | ------------------------------------ |
-| Micro   | 160ms    | ease                          | Link, chip, image, and control hover |
-| Dialog  | 180ms    | cubic-bezier(0.16, 1, 0.3, 1) | Modal entrance                       |
-| Ambient | 1.8s     | ease-in-out                   | Prompt cursor pulse                  |
+| Behavior            | Token                      | Curve                      | Usage                               |
+| ------------------- | -------------------------- | -------------------------- | ----------------------------------- |
+| Immediate press     | `--motion-press: 100ms`    | `ease-out`                 | `scale(0.97-0.985)` on pointer-down |
+| Micro response      | `--motion-fast: 180ms`     | `cubic-bezier(.2,.8,.2,1)` | Color, rim, small transforms        |
+| Material arrival    | `--motion-material: 320ms` | `cubic-bezier(.16,1,.3,1)` | Search, mobile nav, dialog          |
+| Page/section reveal | `--motion-reveal: 480ms`   | `cubic-bezier(.16,1,.3,1)` | First-view content only             |
 
-### Rules
-
-- Animate `transform`, `opacity`, `filter`, or border/background color only.
-- Respect `prefers-reduced-motion`.
-- Interactive images must not shift layout on hover.
+- The interface responds on pointer-down; no artificial delay is introduced.
+- Enter and exit paths are spatially symmetric and anchored to the trigger.
+- Only `transform`, `opacity`, `filter`, and color/rim properties animate.
+- No decorative perpetual motion. The old prompt-dot breathing loop is removed.
+- `prefers-reduced-motion` replaces movement with a short cross-fade.
+- `prefers-reduced-transparency` removes blur and raises material opacity.
+- `prefers-contrast: more` uses solid surfaces and strong separators.
 
 ## 7. Depth & Surface
 
-### Strategy
+The page uses three distinct material weights.
 
-Mixed, but restrained: primary separation comes from 1px borders and tonal
-surface shifts; shadows are reserved for overlays and selected hero materials.
+| Level             | Token/recipe                                                        | Usage                       |
+| ----------------- | ------------------------------------------------------------------- | --------------------------- |
+| Canvas light      | radial sky and cyan glow over `--bg`                                | Atmosphere behind content   |
+| Card material     | translucent surface + 18px blur + bright inset rim + diffuse shadow | Cards and controls          |
+| Floating material | translucent surface + 28px blur + saturation + stronger rim/shadow  | Navigation, search, console |
+| Opaque reading    | `--surface` + subtle border/shadow                                  | Long articles and evidence  |
+| Modal             | `--overlay` + floating material                                     | Lightbox and focused tasks  |
 
-| Level         | Value                                                   | Usage                             |
-| ------------- | ------------------------------------------------------- | --------------------------------- |
-| Border        | `1px solid var(--border)`                               | Cards, panels, diagrams, controls |
-| Tonal surface | `color-mix(in oklch, var(--surface) 92-97%, var(--bg))` | Cards and article blocks          |
-| Modal         | `--shadow-modal` plus `--overlay`                       | Project image lightbox            |
+- Translucency communicates hierarchy; it is not stacked on another translucent
+  foreground surface.
+- Larger surfaces read thicker through stronger blur and deeper shadow.
+- Shadows stay cool and diffuse. There are no hard black drop shadows.
+- Dark mode uses lighter rims and lower-opacity shadows to keep material edges
+  legible without glowing every card.
 
-### Rules
+## 8. Accessibility, Responsibility & Accepted Debt
 
-- Keep card radius at 8px or less.
-- Avoid nested decorative cards; framed tools, diagrams, and screenshots may use bordered containers.
+### Constraints
+
+- Text and controls target WCAG AA contrast in both themes.
+- Keyboard focus is always visible. Icon-only controls keep explicit Korean
+  `aria-label` text. Touch targets are at least 44px where space permits.
+- Color never carries state alone. Current navigation, disabled deck controls,
+  and errors retain a structural or textual cue.
+- Browser zoom, text scaling, reduced motion, reduced transparency, and increased
+  contrast are first-class states.
+- The design adds no tracking, autoplay media, sound, vibration, or unexpected
+  consent request. Existing view counting behavior is unchanged.
+
+### Accepted debt
+
+- The 5,000+ line legacy `global.css` remains because it contains proven article,
+  PDF, lightbox, and responsive edge-case behavior. The Apple redesign is loaded
+  afterward from `apple-design.css`, allowing a reversible visual migration
+  without weakening those behaviors.
+- The ASCII portrait remains fixed-width art and may become compact on very small
+  screens; the adjacent semantic profile facts remain fully accessible.
+- Gatsby's route transitions are not gesture-driven, so the current redesign uses
+  interruptible CSS micro-interactions rather than introducing a large motion
+  runtime solely for page navigation.

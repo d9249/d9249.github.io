@@ -94,7 +94,11 @@ const CompetitionsPage = () => {
   return (
     <Layout>
       <section className="shell section recognition-page">
-        <SectionHeading kicker="Competitions" title="대회 및 외부 활동" />
+        <SectionHeading
+          as="h1"
+          kicker="Competitions"
+          title="대회 및 외부 활동"
+        />
         <div className="recognition-list">
           {competitionRows.map((row) => {
             const activeItem = row.find((item) =>

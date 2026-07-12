@@ -13,6 +13,7 @@ const BlogTagTemplate = ({ data, pageContext }) => {
     <Layout>
       <section className="shell section">
         <SectionHeading
+          as="h1"
           kicker="Tag"
           title={`#${pageContext.tag}`}
           description={`${pageContext.tag} 태그가 붙은 글입니다.`}

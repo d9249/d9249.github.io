@@ -7,7 +7,7 @@ import SectionHeading from "../components/SectionHeading";
 const ProjectsPage = ({ data }) => (
   <Layout>
     <section className="shell section projects-page">
-      <SectionHeading kicker="Projects" title="프로젝트" />
+      <SectionHeading as="h1" kicker="Projects" title="프로젝트" />
       <ProjectGrid projects={data.projects.nodes} />
     </section>
   </Layout>

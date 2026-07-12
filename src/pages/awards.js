@@ -94,7 +94,7 @@ const AwardsPage = () => {
   return (
     <Layout>
       <section className="shell section recognition-page">
-        <SectionHeading kicker="Awards" title="수상 기록" />
+        <SectionHeading as="h1" kicker="Awards" title="수상 기록" />
         <div className="recognition-list">
           {awardRows.map((row) => {
             const activeItem = row.find((item) =>
