@@ -74,8 +74,9 @@ const useDenseSkillGrid = () => {
 
         const styles = window.getComputedStyle(grid);
         const rowHeight = Number.parseFloat(styles.gridAutoRows) || 1;
-        const panelGap =
-          Number.parseFloat(styles.getPropertyValue("--skill-panel-gap")) || 12;
+        // Dense rows encode the resolved column gap into each card span so the
+        // physical vertical and horizontal spacing stay equal.
+        const panelGap = Number.parseFloat(styles.columnGap) || 12;
 
         cards.forEach((card) => {
           const span = Math.ceil(

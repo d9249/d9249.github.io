@@ -501,6 +501,10 @@ html[lang="ko"] body {
   white-space: nowrap;
 }
 
+.phrase-nowrap {
+  white-space: nowrap;
+}
+
 .hero-copy {
   max-width: 32rem;
   margin-top: var(--space-8);
@@ -667,6 +671,16 @@ html[lang="ko"] body {
 .whoami-body {
   grid-template-columns: 14.5rem minmax(0, 1fr);
   gap: var(--space-5);
+}
+
+.whoami-facts {
+  gap: var(--space-1);
+}
+
+.whoami-fact a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
 }
 
 .ascii-portrait pre {
@@ -847,7 +861,7 @@ html[lang="ko"] body {
 }
 
 .evidence-grid {
-  gap: var(--space-4);
+  gap: var(--space-6);
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -874,7 +888,7 @@ html[lang="ko"] body {
 
 .career-layout {
   grid-template-columns: minmax(17.5rem, 0.34fr) minmax(0, 0.66fr);
-  gap: var(--space-5);
+  gap: var(--space-8);
 }
 
 .profile-panel {
@@ -930,10 +944,16 @@ html[lang="ko"] body {
 .post-grid,
 .tip-grid,
 .paper-grid,
+.paper-row-grid,
+.recognition-list,
+.recognition-row-grid,
 .recognition-grid,
 .research-grid,
-.related-grid {
-  gap: var(--space-4);
+.related-grid,
+.dacon-stat-grid,
+.dacon-domain-grid,
+.dacon-record-list {
+  gap: var(--space-6);
 }
 
 .project-card,
@@ -942,6 +962,11 @@ html[lang="ko"] body {
 .research-card,
 .tip-card {
   padding: var(--space-6);
+}
+
+.paper-card {
+  display: flex;
+  flex-direction: column;
 }
 
 .project-card h3 {
@@ -964,8 +989,8 @@ html[lang="ko"] body {
 
 .card-deck-controls button,
 .paper-viewer-control {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border: 1px solid var(--rim-light);
   border-radius: 50%;
   background: var(--material-card-strong);
@@ -974,6 +999,22 @@ html[lang="ko"] body {
   transition:
     transform var(--motion-press) ease-out,
     background var(--motion-fast) var(--ease-fluid);
+}
+
+.paper-viewer-control-text {
+  width: auto;
+  min-width: 3.5rem;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-control);
+}
+
+.paper-viewer-zoom {
+  min-width: 3rem;
+  height: 2.75rem;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-control);
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
 }
 
 .card-deck-controls button:not(:disabled):hover,
@@ -998,7 +1039,7 @@ html[lang="ko"] body {
 }
 
 .skill-grid {
-  --skill-panel-gap: var(--space-4);
+  --skill-panel-gap: var(--space-6);
 }
 
 .skill-card {
@@ -1156,6 +1197,44 @@ html[lang="ko"] body {
   color: var(--accent);
   text-decoration-color: color-mix(in oklch, var(--accent) 32%, transparent);
   text-underline-offset: 0.18em;
+}
+
+.research-links {
+  gap: var(--space-3);
+  align-items: center;
+  margin-top: var(--space-2);
+  font-family: var(--font-body);
+}
+
+.paper-viewer-toggle {
+  border: 1px solid color-mix(in oklch, var(--accent) 22%, var(--border));
+  background: color-mix(in oklch, var(--accent) 7%, var(--surface));
+  box-shadow: none;
+  color: color-mix(in oklch, var(--accent) 88%, var(--fg));
+  font-weight: 700;
+}
+
+.paper-viewer-toggle:hover {
+  border-color: color-mix(in oklch, var(--accent) 46%, var(--border));
+  background: color-mix(in oklch, var(--accent) 12%, var(--surface));
+  color: color-mix(in oklch, var(--accent) 88%, var(--fg));
+}
+
+.research-links a {
+  min-height: 2.75rem;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: color-mix(in oklch, var(--surface) 92%, transparent);
+  font-size: 0.78rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.research-links a:hover {
+  border-color: color-mix(in oklch, var(--accent) 34%, var(--border));
+  background: color-mix(in oklch, var(--accent) 6%, var(--surface));
+  color: var(--accent);
 }
 
 .article-body blockquote {

@@ -195,8 +195,11 @@ const PaperViewerToolbar = ({
       >
         -
       </button>
-      <span className="paper-viewer-zoom">
-        {pdfFitMode === "fit" ? "맞춤" : `${pdfZoom}%`}
+      <span
+        className="paper-viewer-zoom"
+        aria-label={`현재 확대: ${pdfFitMode === "fit" ? "화면 맞춤" : `${pdfZoom}%`}`}
+      >
+        {pdfFitMode === "fit" ? "자동" : `${pdfZoom}%`}
       </span>
       <button
         type="button"
