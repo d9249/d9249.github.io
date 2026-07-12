@@ -1,50 +1,10 @@
 import * as React from "react";
 import { graphql, Link } from "gatsby";
-import {
-  siAiohttp,
-  siApachekafka,
-  siConfluence,
-  siDjango,
-  siDocker,
-  siElasticsearch,
-  siFastapi,
-  siGit,
-  siGithubactions,
-  siJira,
-  siJavascript,
-  siKibana,
-  siKubernetes,
-  siLangchain,
-  siLanggraph,
-  siLinux,
-  siLogstash,
-  siMilvus,
-  siMongodb,
-  siMysql,
-  siNestjs,
-  siNotion,
-  siNumpy,
-  siOpencv,
-  siPandas,
-  siPostgresql,
-  siPostman,
-  siPytorch,
-  siPytest,
-  siPython,
-  siQdrant,
-  siReact,
-  siRedis,
-  siScikitlearn,
-  siStreamlit,
-  siTensorflow,
-  siUbuntu,
-  siVuedotjs,
-  siWeightsandbiases,
-} from "simple-icons";
 import Layout from "../components/Layout";
 import PostCard from "../components/PostCard";
 import ProjectGrid from "../components/ProjectGrid";
 import SectionHeading from "../components/SectionHeading";
+import SkillGrid from "../components/SkillGrid";
 import { navItems } from "../data/navigation";
 import {
   awardItems,
@@ -134,79 +94,6 @@ const PROFILE_FACT_GROUPS = [
     ],
   },
 ];
-const SKILL_LOGOS = new Map([
-  ["Linux (Ubuntu)", siUbuntu],
-  ["Linux", siLinux],
-  ["Python", siPython],
-  ["JavaScript", siJavascript],
-  ["React.js", siReact],
-  ["Vue.js", siVuedotjs],
-  ["Django", siDjango],
-  ["Nest.js", siNestjs],
-  ["Langchain", siLangchain],
-  ["Langgraph", siLanggraph],
-  ["PyTorch", siPytorch],
-  ["NumPy", siNumpy],
-  ["Pandas", siPandas],
-  ["OpenCV", siOpencv],
-  ["Scikit-learn", siScikitlearn],
-  ["TensorFlow", siTensorflow],
-  ["FastAPI", siFastapi],
-  ["aiohttp", siAiohttp],
-  ["Streamlit", siStreamlit],
-  ["MySQL", siMysql],
-  ["PostgreSQL", siPostgresql],
-  ["MongoDB", siMongodb],
-  ["Qdrant", siQdrant],
-  ["Milvus", siMilvus],
-  ["Redis", siRedis],
-  ["Kafka", siApachekafka],
-  ["Docker", siDocker],
-  ["Docker-Compose", siDocker],
-  ["Kubernetes", siKubernetes],
-  ["Elasticsearch", siElasticsearch],
-  ["Logstash", siLogstash],
-  ["Kibana", siKibana],
-  ["wandb", siWeightsandbiases],
-  ["Git", siGit],
-  ["Jira", siJira],
-  ["Confluence", siConfluence],
-  ["Postman", siPostman],
-  ["Notion", siNotion],
-  ["pytest", siPytest],
-  ["Github Actions", siGithubactions],
-]);
-const SKILL_MARKS = new Map([
-  ["Linux (Ubuntu)", "LX"],
-  ["Windows", "WIN"],
-  ["UNIX", "UX"],
-  ["JavaScript", "JS"],
-  ["React.js", "R"],
-  ["Vue.js", "V"],
-  ["Django", "DJ"],
-  ["Nest.js", "N"],
-  ["MyBatis", "MB"],
-  ["Langsmith", "LS"],
-  ["Langchain", "LC"],
-  ["Langgraph", "LG"],
-  ["PyTorch", "PT"],
-  ["NumPy", "NP"],
-  ["Pandas", "PD"],
-  ["OpenCV", "CV"],
-  ["Scikit-learn", "SK"],
-  ["TensorFlow", "TF"],
-  ["FastAPI", "FA"],
-  ["PostgreSQL", "PG"],
-  ["MongoDB", "MDB"],
-  ["Qdrant", "QD"],
-  ["AWS SageMaker", "AWS"],
-  ["AWS CLI", "CLI"],
-  ["Docker-Compose", "DC"],
-  ["Kubernetes", "K8S"],
-  ["Elasticsearch", "ES"],
-  ["Github Actions", "GHA"],
-]);
-
 const getCardDecks = (items, deckSize = CARD_DECK_SIZE) =>
   Array.from({ length: Math.ceil(items.length / deckSize) }, (_, index) =>
     items.slice(index * deckSize, (index + 1) * deckSize),
@@ -214,72 +101,6 @@ const getCardDecks = (items, deckSize = CARD_DECK_SIZE) =>
 
 const getDeckLabel = (index, total) =>
   `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
-
-const getReadableLogoColor = (hex) => {
-  const normalizedHex = hex.padEnd(6, "0").slice(0, 6);
-  const red = Number.parseInt(normalizedHex.slice(0, 2), 16);
-  const green = Number.parseInt(normalizedHex.slice(2, 4), 16);
-  const blue = Number.parseInt(normalizedHex.slice(4, 6), 16);
-  const brightness = (red * 299 + green * 587 + blue * 114) / 1000;
-
-  return brightness > 150 ? "#101820" : "#ffffff";
-};
-
-const getSkillLogoStyle = (icon) => ({
-  "--skill-logo-color": `#${icon.hex}`,
-  "--skill-logo-contrast": getReadableLogoColor(icon.hex),
-});
-
-const getSkillMark = (skill) => {
-  const knownMark = SKILL_MARKS.get(skill);
-
-  if (knownMark) {
-    return knownMark;
-  }
-
-  const words = skill
-    .replace(/\([^)]*\)/g, "")
-    .replace(/[./_-]/g, " ")
-    .split(/\s+/)
-    .filter(Boolean);
-
-  if (!words.length) {
-    return skill.slice(0, 2).toUpperCase();
-  }
-
-  if (words.length === 1) {
-    return words[0].slice(0, 3).toUpperCase();
-  }
-
-  return words
-    .slice(0, 3)
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase();
-};
-
-const SkillChip = ({ skill }) => {
-  const skillLogo = SKILL_LOGOS.get(skill);
-
-  return (
-    <li className={skillLogo ? "has-skill-logo" : undefined}>
-      <span
-        className="skill-logo-mark"
-        style={skillLogo ? getSkillLogoStyle(skillLogo) : undefined}
-        aria-hidden="true"
-      >
-        {skillLogo ? (
-          <svg viewBox="0 0 24 24" focusable="false">
-            <path d={skillLogo.path} />
-          </svg>
-        ) : (
-          getSkillMark(skill)
-        )}
-      </span>
-      <span className="skill-logo-name">{skill}</span>
-    </li>
-  );
-};
 
 const IndexPage = ({ data }) => {
   const posts = data.posts.nodes;
@@ -741,45 +562,12 @@ const IndexPage = ({ data }) => {
         id="skills"
         aria-labelledby="skills-title"
       >
-        <SectionHeading kicker="Skills" title="기술 스택" />
-        <div className="skill-grid">
-          {skillGroups.map((group) => (
-            <article
-              className="skill-card"
-              key={group.title}
-              aria-label={`${group.title}: ${group.summary}`}
-            >
-              <h3>{group.title}</h3>
-              {group.skillClusters?.length ? (
-                <div className="skill-cluster-list">
-                  {group.skillClusters.map((cluster) => (
-                    <section className="skill-cluster" key={cluster.title}>
-                      <h4>{cluster.title}</h4>
-                      <ul className="skill-list">
-                        {cluster.skills.map((skill) => (
-                          <SkillChip key={skill} skill={skill} />
-                        ))}
-                      </ul>
-                    </section>
-                  ))}
-                </div>
-              ) : (
-                <ul className="skill-list">
-                  {group.skills.map((skill) => (
-                    <SkillChip key={skill} skill={skill} />
-                  ))}
-                </ul>
-              )}
-              {group.contexts?.length ? (
-                <ul className="skill-context-list">
-                  {group.contexts.map((context) => (
-                    <li key={context}>{context}</li>
-                  ))}
-                </ul>
-              ) : null}
-            </article>
-          ))}
-        </div>
+        <SectionHeading
+          kicker="Skills"
+          title="기술 스택"
+          titleId="skills-title"
+        />
+        <SkillGrid groups={skillGroups} />
       </section>
 
       <section

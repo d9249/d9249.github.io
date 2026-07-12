@@ -1,10 +1,10 @@
 import * as React from "react";
 
-const SectionHeading = ({ kicker, title, description, action }) => (
+const SectionHeading = ({ kicker, title, titleId, description, action }) => (
   <div className="section-head">
     <div>
       {kicker && <p className="eyebrow">{kicker}</p>}
-      <h2>{title}</h2>
+      <h2 id={titleId}>{title}</h2>
     </div>
     {(description || action) && (
       <div className="section-side">

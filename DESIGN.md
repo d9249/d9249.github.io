@@ -96,6 +96,15 @@ All spacing derives from a 4px base.
 - **Typography**: the portrait uses the mono stack at 9px with 1.0 line height on desktop and 9-10px with compact 0.84 line height on mobile, zero letter spacing, and horizontal scaling to correct terminal glyph aspect ratio.
 - **Responsive**: when the hero collapses the terminal stays centered at up to 590px; at 680px and below it narrows to 360px, stacks the columns, retains 16px spacing, and widens the portrait without overflowing the content width.
 
+### Home Skill Matrix
+
+- **Structure**: top-level stack groups and AI sub-groups are flattened into peer `.skill-card` panels so every category participates in the same packing system; each panel contains one header and one contiguous skill-cell matrix rather than nested cards.
+- **Layout**: `.skill-grid` uses auto-fit columns with a 340px minimum, a 1px internal measurement row, 12px visible panel separation, and dense row-span packing measured with `ResizeObserver`; resizing must repack panels without fixed `nth-child` coordinates or orphaned vertical voids. The measurement row does not define visible spacing, which remains on the 4px token scale.
+- **Cells**: skill cells use a 1px separator grid, square edges inside the panel, 12px mono labels, and a stable 28px icon column. The last row stretches to the panel width instead of leaving an empty slot.
+- **Icons**: use the installed Simple Icons path and upstream brand color when a maintained product mark exists; otherwise use a semantically matched Lucide outline icon with the existing green, blue, warm, or ink accent tokens. Text initials are not an icon fallback.
+- **Responsive**: the matrix resolves to three columns at the desktop shell, two columns on tablet, and one column on narrow mobile; skill cells use two columns only when both labels retain a usable width and collapse to one at 360px and below.
+- **Accessibility**: icons are decorative because every cell retains its visible technology name; headings and source order remain logical even when dense visual packing fills an earlier empty grid position.
+
 ### Project Article
 
 - **Structure**: Markdown HTML rendered inside `.article-body.project-markdown-body`.
