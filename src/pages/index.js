@@ -208,7 +208,6 @@ const IndexPage = ({ data }) => {
   const profileTags = getProjectProfileTags(projects);
   const totalBlogPostCount = data.blogPosts.totalCount;
   const heroNavItems = navItems.filter((item) => item.showInHero);
-  const mobileHeroNavItems = navItems.filter((item) => item.to !== "/");
   const paperDecks = getCardDecks(paperItems);
   const awardDecks = getCardDecks(awardItems);
   const projectDecks = getCardDecks(projects, PROJECT_DECK_SIZE);
@@ -291,27 +290,6 @@ const IndexPage = ({ data }) => {
             aria-label="Shortcut navigation"
           >
             {heroNavItems.map((item) => {
-              const className =
-                item.heroVariant === "primary"
-                  ? "button-primary"
-                  : "button-secondary";
-
-              return item.reloadDocument ? (
-                <a className={className} key={item.to} href={item.to}>
-                  {item.heroLabel}
-                </a>
-              ) : (
-                <Link className={className} key={item.to} to={item.to}>
-                  {item.heroLabel}
-                </Link>
-              );
-            })}
-          </nav>
-          <nav
-            className="hero-actions hero-button-actions hero-button-actions-mobile"
-            aria-label="모바일 빠른 이동"
-          >
-            {mobileHeroNavItems.map((item) => {
               const className =
                 item.heroVariant === "primary"
                   ? "button-primary"

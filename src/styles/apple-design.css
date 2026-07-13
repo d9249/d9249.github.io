@@ -2233,7 +2233,6 @@ html[lang="ko"] body {
 }
 
 /* 2026 responsive UX consolidation */
-.hero-button-actions-mobile,
 .mobile-card-carousel,
 .mobile-career-layout,
 .mobile-skill-browser {
@@ -2268,35 +2267,6 @@ html[lang="ko"] body {
   .responsive-desktop-only,
   .skill-grid-desktop {
     display: none !important;
-  }
-
-  .hero-button-actions-mobile {
-    display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    margin-inline: 0;
-    padding: 0 0 var(--space-2);
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scroll-padding-inline: 0;
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
-  }
-
-  .hero-button-actions-mobile::-webkit-scrollbar {
-    display: none;
-  }
-
-  .hero-button-actions-mobile .button-primary,
-  .hero-button-actions-mobile .button-secondary,
-  .hero-button-actions-mobile > :nth-child(n) {
-    display: inline-flex;
-    flex: 0 0 auto;
-    min-height: 2.75rem;
-    scroll-snap-align: start;
-    white-space: nowrap;
   }
 
   .mobile-career-layout {
