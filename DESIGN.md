@@ -105,6 +105,10 @@ requires it.
   snap rails with a visible next-card edge. This preserves every item while
   preventing long research, skill, project, and blog lists from dominating the
   vertical page.
+- The mobile skill rail uses two equal-height cards per snap page and fills
+  pages greedily in source order. Each card keeps its header fixed while its
+  skill list scrolls internally, so dense and compact categories share the same
+  predictable geometry without changing label typography.
 - Compact category filters wrap in place so every destination remains visible
   without a sideways gesture. Large tag collections keep a concise initial
   set, then open into a bounded, paged vertical browser instead of extending

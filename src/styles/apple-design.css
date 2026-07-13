@@ -2324,6 +2324,10 @@ html[lang="ko"] body {
     --mobile-carousel-card-gap: var(--space-4);
     --mobile-carousel-card-inset: var(--space-8);
     --mobile-carousel-card-width: min(calc(100cqi - var(--space-16)), 24rem);
+    --mobile-skill-page-max-height: clamp(26rem, 68svh, 32rem);
+    --mobile-skill-card-height: calc(
+      (var(--mobile-skill-page-max-height) - var(--space-4)) / 2
+    );
 
     display: block;
     min-width: 0;
@@ -2376,7 +2380,7 @@ html[lang="ko"] body {
   .mobile-card-carousel .project-card,
   .mobile-card-carousel .paper-card,
   .mobile-card-carousel .recognition-card,
-  .mobile-card-carousel .skill-card,
+  .mobile-card-carousel .mobile-skill-page,
   .mobile-card-carousel .post-card {
     flex: 0 0 var(--mobile-carousel-card-width) !important;
     width: var(--mobile-carousel-card-width) !important;
@@ -2541,13 +2545,26 @@ html[lang="ko"] body {
     display: block;
   }
 
+  .mobile-skill-page {
+    display: flex;
+    max-height: var(--mobile-skill-page-max-height);
+    flex-direction: column;
+    gap: var(--space-4);
+    align-self: flex-start;
+  }
+
   .mobile-skill-browser .skill-card {
     grid-template-rows: auto minmax(0, 1fr);
-    height: clamp(26rem, 68svh, 32rem);
+    width: 100%;
+    height: var(--mobile-skill-card-height);
+    max-height: var(--mobile-skill-card-height);
+    flex: 0 0 auto;
     min-height: 0;
-    align-self: stretch;
-    align-content: stretch;
+    align-self: flex-start;
+    align-content: start;
     padding: var(--space-5);
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
   }
 
   .mobile-skill-browser .skill-card-header {

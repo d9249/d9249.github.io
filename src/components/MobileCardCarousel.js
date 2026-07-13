@@ -19,6 +19,7 @@ const getVisiblePageIndexes = (itemCount, activeIndex) => {
 };
 
 const MobileCardCarousel = ({
+  adaptiveHeight = false,
   ariaLabel,
   children,
   itemSelector,
@@ -28,6 +29,7 @@ const MobileCardCarousel = ({
   const frameRef = React.useRef(null);
   const [activeIndex, setActiveIndex] = React.useState(0);
   const [itemCount, setItemCount] = React.useState(0);
+  const [viewportHeight, setViewportHeight] = React.useState(null);
 
   const getItems = React.useCallback(() => {
     const scrollContainer = getScrollContainer(viewportRef.current);
@@ -73,6 +75,20 @@ const MobileCardCarousel = ({
         });
 
         setActiveIndex(closestIndex);
+
+        if (adaptiveHeight) {
+          const activeItem = items[closestIndex];
+          const styles = window.getComputedStyle(scrollContainer);
+          const verticalPadding =
+            (Number.parseFloat(styles.paddingTop) || 0) +
+            (Number.parseFloat(styles.paddingBottom) || 0);
+
+          setViewportHeight(
+            Math.ceil(
+              activeItem.getBoundingClientRect().height + verticalPadding,
+            ),
+          );
+        }
       });
     };
 
@@ -87,7 +103,7 @@ const MobileCardCarousel = ({
       scrollContainer.removeEventListener("scroll", syncActiveIndex);
       window.removeEventListener("resize", syncActiveIndex);
     };
-  }, [children, getItems]);
+  }, [adaptiveHeight, children, getItems]);
 
   const moveTo = React.useCallback(
     (nextIndex) => {
@@ -141,7 +157,15 @@ const MobileCardCarousel = ({
             <path d="m15 18-6-6 6-6" />
           </svg>
         </button>
-        <div className="mobile-card-carousel-viewport" ref={viewportRef}>
+        <div
+          className="mobile-card-carousel-viewport"
+          ref={viewportRef}
+          style={
+            adaptiveHeight && viewportHeight
+              ? { height: `${viewportHeight}px` }
+              : undefined
+          }
+        >
           {children}
         </div>
         <button
