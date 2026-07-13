@@ -21,19 +21,20 @@ translucent hierarchy, optical typography, and reduced-motion equivalents.
 
 ### Palette
 
-| Role           | Token           | Light                         | Dark                          | Usage                                  |
-| -------------- | --------------- | ----------------------------- | ----------------------------- | -------------------------------------- |
-| Canvas         | `--bg`          | `oklch(97.8% 0.007 250)`      | `oklch(14.5% 0.012 255)`      | Page atmosphere                        |
-| Elevated solid | `--surface`     | `oklch(100% 0 0)`             | `oklch(20.5% 0.014 255)`      | Opaque fallback and article canvas     |
-| Primary text   | `--fg`          | `oklch(20% 0.016 255)`        | `oklch(96% 0.006 250)`        | Headings, body, icons                  |
-| Secondary text | `--muted`       | `oklch(48% 0.018 255)`        | `oklch(72% 0.014 250)`        | Supporting text and metadata           |
-| Separator      | `--border`      | `oklch(86% 0.012 250 / 0.78)` | `oklch(34% 0.014 255 / 0.78)` | Hairlines and surface rims             |
-| System blue    | `--accent`      | `oklch(57% 0.19 252)`         | `oklch(70% 0.16 248)`         | Primary actions, links, focus          |
-| On accent      | `--on-accent`   | `oklch(99% 0 0)`              | `oklch(99% 0 0)`              | Legible text on solid accent fills     |
-| Sky light      | `--accent-soft` | `oklch(88% 0.07 240)`         | `oklch(39% 0.08 245)`         | Atmospheric light and selected fills   |
-| Cyan signal    | `--accent-2`    | `oklch(68% 0.13 218)`         | `oklch(76% 0.12 218)`         | Technical/evidence accents             |
-| Warm signal    | `--accent-3`    | `oklch(72% 0.14 55)`          | `oklch(76% 0.13 55)`          | Limited warning or recognition accents |
-| Scrim          | `--overlay`     | `oklch(8% 0.012 255 / 0.58)`  | `oklch(2% 0.006 255 / 0.72)`  | Modal focus                            |
+| Role           | Token                    | Light                         | Dark                          | Usage                                  |
+| -------------- | ------------------------ | ----------------------------- | ----------------------------- | -------------------------------------- |
+| Canvas         | `--bg`                   | `oklch(97.8% 0.007 250)`      | `oklch(14.5% 0.012 255)`      | Page atmosphere                        |
+| Elevated solid | `--surface`              | `oklch(100% 0 0)`             | `oklch(20.5% 0.014 255)`      | Opaque fallback and article canvas     |
+| Primary text   | `--fg`                   | `oklch(20% 0.016 255)`        | `oklch(96% 0.006 250)`        | Headings, body, icons                  |
+| Secondary text | `--muted`                | `oklch(48% 0.018 255)`        | `oklch(72% 0.014 250)`        | Supporting text and metadata           |
+| Separator      | `--border`               | `oklch(86% 0.012 250 / 0.78)` | `oklch(34% 0.014 255 / 0.78)` | Hairlines and surface rims             |
+| System blue    | `--accent`               | `oklch(57% 0.19 252)`         | `oklch(70% 0.16 248)`         | Links, selected accents, focus         |
+| Primary fill   | `--control-primary-fill` | `oklch(52% 0.18 252)`         | `oklch(52% 0.18 248)`         | AA-safe solid and gradient CTA fill    |
+| On accent      | `--on-accent`            | `oklch(99% 0 0)`              | `oklch(99% 0 0)`              | Legible text on solid accent fills     |
+| Sky light      | `--accent-soft`          | `oklch(88% 0.07 240)`         | `oklch(39% 0.08 245)`         | Atmospheric light and selected fills   |
+| Cyan signal    | `--accent-2`             | `oklch(68% 0.13 218)`         | `oklch(76% 0.12 218)`         | Technical/evidence accents             |
+| Warm signal    | `--accent-3`             | `oklch(72% 0.14 55)`          | `oklch(76% 0.13 55)`          | Limited warning or recognition accents |
+| Scrim          | `--overlay`              | `oklch(8% 0.012 255 / 0.58)`  | `oklch(2% 0.006 255 / 0.72)`  | Modal focus                            |
 
 ### Rules
 
@@ -118,6 +119,10 @@ requires it.
   sub-objects; white space groups the larger narrative.
 - Rounded geometry follows scale: 12px controls, 18px cards, 24-30px large
   surfaces. Nested radii decrease inward.
+- Standard text controls use `--control-height: 2.75rem` and
+  `--control-radius: 0.875rem`. Compact desktop navigation may be visually
+  smaller only when its surrounding row preserves a clear target; touch layouts
+  return to the full 44px geometry.
 
 ## 5. Components
 
@@ -159,6 +164,31 @@ requires it.
 - Section dividers are atmospheric spacing or a short gradient hairline, never a
   full-width grid rule.
 
+### Actions & Controls
+
+- The shared control material is defined by `--control-surface`,
+  `--control-surface-hover`, `--control-border`, `--control-highlight`,
+  `--control-shadow`, and `--control-shadow-hover`. It uses a quiet top light,
+  one crisp rim, and a short diffuse shadow so controls read as tactile without
+  becoming floating glass ornaments.
+- Primary actions keep an AA-safe `--control-primary-fill`, white label, and
+  `--control-primary-shadow` through hover. Hover may lift by one pixel; it never
+  demotes the action to a pale outline. Pointer-down removes the lift and
+  compresses to `0.98`.
+- Secondary and evidence actions use the neutral control material. Selected or
+  emphasized secondary actions receive a restrained blue tonal fill rather than
+  a second competing solid CTA.
+- Icon-only controls use the same material and state model. Directional controls
+  may be circular; utility controls use a compact squircle. Shape communicates
+  function, while depth, rim, focus, and press feedback remain consistent.
+- Filter, tag, and page controls are flatter members of the same family: neutral
+  by default, tonal blue when selected, and visibly structural when disabled.
+- Text actions remain text actions. They gain color or arrow movement on hover
+  instead of being boxed merely for decorative consistency.
+- Compact external profile pills retain their semantic pill shape but share the
+  control rim and top-light recipe. Button labels, card copy, and existing
+  typography are not rewritten to manufacture visual novelty.
+
 ### Article & Evidence Media
 
 - Articles use an opaque reading surface with generous measure and quiet chrome.
@@ -184,6 +214,10 @@ Every interactive primitive implements default, hover, pointer-down, focus,
 disabled, and reduced-motion states. Search additionally implements empty,
 results, and dismiss states; deck controls expose unavailable navigation.
 
+Disabled controls remove lift and depth, lower contrast, and preserve their
+geometry so toolbars do not move. Focus uses the global 3px blue ring outside the
+control; focus is never represented by color fill alone.
+
 ## 6. Motion & Interaction
 
 | Behavior            | Token                      | Curve                      | Usage                               |
@@ -203,15 +237,16 @@ results, and dismiss states; deck controls expose unavailable navigation.
 
 ## 7. Depth & Surface
 
-The page uses three distinct material weights.
+The page uses six distinct material weights.
 
-| Level             | Token/recipe                                                        | Usage                       |
-| ----------------- | ------------------------------------------------------------------- | --------------------------- |
-| Canvas light      | radial sky and cyan glow over `--bg`                                | Atmosphere behind content   |
-| Card material     | translucent surface + 18px blur + bright inset rim + diffuse shadow | Cards and controls          |
-| Floating material | translucent surface + 28px blur + saturation + stronger rim/shadow  | Navigation, search, console |
-| Opaque reading    | `--surface` + subtle border/shadow                                  | Long articles and evidence  |
-| Modal             | `--overlay` + floating material                                     | Lightbox and focused tasks  |
+| Level             | Token/recipe                                                        | Usage                        |
+| ----------------- | ------------------------------------------------------------------- | ---------------------------- |
+| Canvas light      | radial sky and cyan glow over `--bg`                                | Atmosphere behind content    |
+| Card material     | translucent surface + 18px blur + bright inset rim + diffuse shadow | Cards                        |
+| Control material  | `--control-surface` + `--control-border` + top light + short shadow | Buttons, toggles, pagination |
+| Floating material | translucent surface + 28px blur + saturation + stronger rim/shadow  | Navigation, search, console  |
+| Opaque reading    | `--surface` + subtle border/shadow                                  | Long articles and evidence   |
+| Modal             | `--overlay` + floating material                                     | Lightbox and focused tasks   |
 
 - Translucency communicates hierarchy; it is not stacked on another translucent
   foreground surface.
