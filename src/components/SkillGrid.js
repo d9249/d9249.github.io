@@ -105,8 +105,17 @@ const useDenseSkillGrid = () => {
   return gridRef;
 };
 
+const getTitleWidthScore = (title) =>
+  Array.from(title).reduce(
+    (score, character) =>
+      score + (/[^\u0000-\u00ff]/.test(character) ? 1.7 : 1),
+    0,
+  );
+
 const getMobileSkillDensity = (panel) =>
-  panel.skills.length > 8 ? "wide" : "compact";
+  panel.skills.length > 8 || getTitleWidthScore(panel.title) > 18
+    ? "wide"
+    : "compact";
 
 const MobileSkillBrowser = ({ panels }) => {
   const gridRef = useDenseSkillGrid();

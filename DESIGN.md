@@ -160,8 +160,9 @@ requires it.
 ### Skill Board
 
 - Desktop skills use the existing dense masonry grid. Mobile preserves the
-  same cards in a tighter two-column board, with high-density panels spanning
-  both columns and compact panels filling available space greedily.
+  same cards in a tighter two-column board, with high-density or long-title
+  panels spanning both columns and compact panels filling available space
+  greedily.
 - Card height follows content. Skill lists do not receive fixed heights,
   truncation, or internal scrolling; the document owns the vertical gesture.
 - When a two-column card would pressure labels, the board switches to one card
