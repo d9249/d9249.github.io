@@ -1,7 +1,6 @@
 import * as React from "react";
+import MobileCardCarousel from "./MobileCardCarousel";
 import SkillIcon from "./SkillIcon";
-
-const MOBILE_SKILL_PREVIEW_LIMIT = 3;
 
 const createSkillPanels = (groups) =>
   groups.flatMap((group, groupIndex) => {
@@ -54,82 +53,25 @@ const SkillPanel = ({ panel }) => (
   </article>
 );
 
-const MobileSkillPanel = ({ expanded, onToggle, panel }) => {
-  const detailsId = React.useId();
-  const hasMoreSkills = panel.skills.length > MOBILE_SKILL_PREVIEW_LIMIT;
-  const visibleSkills = expanded
-    ? panel.skills
-    : panel.skills.slice(0, MOBILE_SKILL_PREVIEW_LIMIT);
-
-  return (
-    <article
-      className={`skill-card mobile-skill-card${expanded ? " is-expanded" : ""}`}
-      aria-label={`${panel.title}: ${panel.summary}`}
-    >
-      <header className="skill-card-header">
-        <div>
-          <span className="skill-card-label">{panel.label}</span>
-          <h3>{panel.title}</h3>
-        </div>
-        <span
-          className="skill-card-count"
-          aria-label={`${panel.skills.length}개 기술`}
-        >
-          {String(panel.skills.length).padStart(2, "0")}
-        </span>
-      </header>
-      <ul className="skill-list" id={detailsId}>
-        {visibleSkills.map((skill) => (
-          <li key={skill}>
-            <SkillIcon name={skill} />
-            <span className="skill-logo-name">{skill}</span>
-          </li>
-        ))}
-      </ul>
-      {hasMoreSkills ? (
-        <button
-          className="mobile-skill-toggle"
-          type="button"
-          aria-controls={detailsId}
-          aria-expanded={expanded}
-          onClick={onToggle}
-        >
-          <span>
-            {expanded ? "접기" : `전체 ${panel.skills.length}개 보기`}
-          </span>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </button>
-      ) : null}
-    </article>
-  );
-};
-
 const MobileSkillBrowser = ({ panels }) => {
-  const [expandedPanelId, setExpandedPanelId] = React.useState(null);
-
   if (!panels.length) {
     return null;
   }
 
   return (
-    <section className="mobile-skill-browser" aria-label="모바일 기술 스택">
-      <div className="skill-grid mobile-skill-grid">
-        {panels.map((panel) => (
-          <MobileSkillPanel
-            expanded={expandedPanelId === panel.id}
-            key={panel.id}
-            onToggle={() =>
-              setExpandedPanelId((currentId) =>
-                currentId === panel.id ? null : panel.id,
-              )
-            }
-            panel={panel}
-          />
-        ))}
-      </div>
-    </section>
+    <div className="mobile-skill-browser">
+      <MobileCardCarousel
+        ariaLabel="모바일 기술 스택"
+        itemSelector=".skill-card"
+        statusLabel="기술 스택 카드"
+      >
+        <div className="skill-grid mobile-carousel-track">
+          {panels.map((panel) => (
+            <SkillPanel key={panel.id} panel={panel} />
+          ))}
+        </div>
+      </MobileCardCarousel>
+    </div>
   );
 };
 

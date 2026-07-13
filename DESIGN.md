@@ -101,18 +101,10 @@ requires it.
 - Mobile shell: `min(100% - 32px, 1200px)`.
 - The layout shifts at content pressure, not device names: 1060px navigation,
   980px detail grids, 760px multi-column cards, 680px compact mobile.
-- At tablet content pressure and below, the home page presents long project,
-  research, award, and competition collections as bounded editorial previews.
-  At 760px and below, shortcut navigation also becomes a wrapped grid. Compact
-  grids use the available width; dedicated index links preserve access to every
-  item without repeating carousel arrows and pagination dots down the page.
-- Mobile skill summaries use an intrinsic-height two-column grid. Short groups
-  never inherit the height of longer groups; long groups disclose in place and
-  become full-width only while expanded.
-- Top-level home sections use block-axis proximity snapping as a gentle
-  wayfinding aid. Sections taller than the viewport remain freely scrollable;
-  snapping never moves DOM focus, never uses mandatory stops, and is disabled
-  when reduced motion is requested.
+- At 760px and below, repeated card collections use horizontally scrollable
+  snap rails with a visible next-card edge. This preserves every item while
+  preventing long research, skill, project, and blog lists from dominating the
+  vertical page.
 - Compact category filters wrap in place so every destination remains visible
   without a sideways gesture. Large tag collections keep a concise initial
   set, then open into a bounded, paged vertical browser instead of extending

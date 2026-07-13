@@ -21,23 +21,13 @@ const normalizeProject = (project) => {
   };
 };
 
-const ProjectGrid = ({ className, projects, variant = "full" }) => (
+const ProjectGrid = ({ className, projects }) => (
   <div className={["project-grid", className].filter(Boolean).join(" ")}>
     {projects.map((rawProject) => {
       const project = normalizeProject(rawProject);
-      const isCompact = variant === "compact";
-      const visibleMetrics = isCompact
-        ? project.metrics.slice(0, 1)
-        : project.metrics;
-      const visibleStack = isCompact
-        ? project.stack.slice(0, 2)
-        : project.stack;
 
       return (
-        <article
-          className={`project-card${isCompact ? " is-compact" : ""}`}
-          key={project.key}
-        >
+        <article className="project-card" key={project.key}>
           <div className="project-card-header">
             <div>
               <div className="meta">{project.period}</div>
@@ -51,17 +41,15 @@ const ProjectGrid = ({ className, projects, variant = "full" }) => (
               </h3>
             </div>
           </div>
-          {isCompact ? null : <p>{project.summary}</p>}
-          {!isCompact ? (
-            <ul className="project-details">
-              {project.details.map((detail) => (
-                <li key={detail}>{detail}</li>
-              ))}
-            </ul>
-          ) : null}
-          {visibleMetrics.length > 0 && (
+          <p>{project.summary}</p>
+          <ul className="project-details">
+            {project.details.map((detail) => (
+              <li key={detail}>{detail}</li>
+            ))}
+          </ul>
+          {project.metrics.length > 0 && (
             <div className="project-metrics">
-              {visibleMetrics.map((metric) => (
+              {project.metrics.map((metric) => (
                 <span className="metric-chip" key={metric}>
                   {metric}
                 </span>
@@ -69,7 +57,7 @@ const ProjectGrid = ({ className, projects, variant = "full" }) => (
             </div>
           )}
           <div className="project-stack" aria-label={`${project.title} stack`}>
-            {visibleStack.map((tool) => (
+            {project.stack.map((tool) => (
               <span key={tool}>{tool}</span>
             ))}
           </div>

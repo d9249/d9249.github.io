@@ -140,7 +140,6 @@ const CompetitionsPage = () => {
                         item.href ? (
                           <div
                             className="research-links competition-card-actions"
-                            role="group"
                             aria-label={`${item.title} 관련 링크`}
                           >
                             {inlineLinks.map((link) => {
