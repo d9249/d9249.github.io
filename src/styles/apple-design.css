@@ -3655,6 +3655,7 @@ html[lang="ko"] body {
 .research-publications-section .paper-card .research-links > :is(a, button) {
   display: inline-flex;
   width: fit-content;
+  min-width: var(--control-height);
   min-height: var(--control-height);
   align-items: center;
   justify-content: flex-start;
