@@ -3640,3 +3640,53 @@ html[lang="ko"] body {
     color: var(--on-accent);
   }
 }
+
+#competitions .competition-card .research-links,
+.recognition-page .competition-card-actions,
+.research-publications-section .paper-card .research-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+#competitions .competition-card :is(.research-links a, .paper-link),
+.recognition-page .competition-card-actions > :is(a, button),
+.research-publications-section .paper-card .research-links > :is(a, button) {
+  display: inline-flex;
+  width: fit-content;
+  min-height: var(--control-height);
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: color-mix(in oklch, var(--accent) 78%, var(--fg));
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: left;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+#competitions
+  .competition-card
+  :is(.research-links a, .paper-link):is(:hover, :active),
+.recognition-page
+  .competition-card-actions
+  > :is(a, button):is(:hover, :active),
+.research-publications-section
+  .paper-card
+  .research-links
+  > :is(a, button):is(:hover, :active) {
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: transparent;
+  box-shadow: none;
+  color: var(--accent);
+  transform: none;
+}

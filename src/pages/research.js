@@ -631,7 +631,7 @@ const ResearchPage = () => {
         </div>
       </section>
 
-      <section className="shell section">
+      <section className="shell section research-publications-section">
         <SectionHeading kicker="Publications" title="전체 논문 리스트" />
         {isMobilePaperViewer ? (
           <div className="paper-grid paper-category-list">
