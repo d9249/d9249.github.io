@@ -2834,7 +2834,7 @@ html[lang="ko"] body {
   .competition-card-actions,
   #competitions .competition-card .research-links {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-2);
     width: 100%;
   }
@@ -2846,12 +2846,10 @@ html[lang="ko"] body {
     min-width: 0;
   }
 
-  .competition-card-actions,
-  #competitions .competition-card .research-links {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
+  .research-links > :only-child,
+  .research-links > :is(a, button):last-child:nth-child(odd),
   .competition-card-actions > :only-child,
+  .competition-card-actions > :is(a, button):last-child:nth-child(odd),
   #competitions .competition-card .research-links > :only-child {
     grid-column: 1 / -1;
   }
@@ -2927,6 +2925,156 @@ html[lang="ko"] body {
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
+  }
+
+  .research-page-hero {
+    padding: var(--space-8) 0 var(--space-6);
+  }
+
+  .research-page-hero .project-detail-hero-grid {
+    gap: var(--space-5);
+  }
+
+  .research-page-hero h1 {
+    font-size: clamp(2rem, 8.8vw, 2.4rem);
+  }
+
+  .research-page-hero .project-detail-copy {
+    margin: var(--space-3) 0 0;
+    font-size: 0.96rem;
+    line-height: 1.6;
+  }
+
+  .research-page-hero .project-detail-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .research-page-hero .project-detail-facts > div {
+    gap: var(--space-1);
+    padding: var(--space-3);
+  }
+
+  .research-page-hero .project-detail-facts > div:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .research-page-hero .project-detail-facts strong {
+    font-size: 0.82rem;
+  }
+
+  .research-overview-section {
+    padding: var(--space-6) 0;
+  }
+
+  .research-overview-section .evidence-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+    padding: 0;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .research-overview-section .evidence-card {
+    width: auto;
+    min-height: 0;
+    padding: var(--space-3);
+    scroll-snap-align: none;
+  }
+
+  .research-overview-section .evidence-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .research-overview-section .value {
+    margin-top: var(--space-2);
+    font-size: 1.75rem;
+  }
+
+  .research-overview-section .evidence-card p {
+    display: -webkit-box;
+    margin-top: var(--space-2);
+    overflow: hidden;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .research-publications-section {
+    padding-top: var(--space-8);
+  }
+
+  .research-paper-list,
+  .research-paper-list .paper-category-groups {
+    gap: var(--space-8) !important;
+  }
+
+  .research-paper-list .paper-category-group {
+    gap: var(--space-3);
+  }
+
+  .research-paper-list .paper-category-rail .paper-card {
+    min-height: 0;
+    gap: var(--space-2);
+    padding: var(--space-4);
+  }
+
+  .research-paper-list .paper-card h3 {
+    font-size: 1.08rem;
+    line-height: 1.18;
+  }
+
+  .research-paper-list .paper-card > p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .research-paper-list .paper-authors,
+  .research-paper-list .research-facts {
+    gap: var(--space-1);
+    margin-top: 0;
+  }
+
+  .research-paper-list .paper-author-chip,
+  .research-paper-list .paper-card .research-facts span {
+    min-height: 1.75rem;
+    padding: 0.3rem 0.48rem;
+    border-radius: 0.5rem;
+    font-size: 0.68rem;
+    line-height: 1.25;
+  }
+}
+
+@media (max-width: 680px) {
+  .competition-page .recognition-list {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    width: calc(100% + var(--space-8));
+    margin-inline: calc(var(--space-4) * -1);
+    padding: var(--space-2) var(--space-4) var(--space-4);
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: var(--space-4);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .competition-page .recognition-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .competition-page .recognition-row-grid {
+    display: contents !important;
+  }
+
+  .competition-page .recognition-card {
+    flex: 0 0 min(82vw, 22rem);
+    width: min(82vw, 22rem);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 }
 

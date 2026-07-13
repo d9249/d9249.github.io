@@ -93,7 +93,7 @@ const CompetitionsPage = () => {
 
   return (
     <Layout>
-      <section className="shell section recognition-page">
+      <section className="shell section recognition-page competition-page">
         <SectionHeading
           as="h1"
           kicker="Competitions"

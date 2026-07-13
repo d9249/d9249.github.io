@@ -118,6 +118,10 @@ requires it.
   set, then open into a bounded, paged vertical browser instead of extending
   the page, mounting the entire taxonomy, or hiding newly revealed tags
   off-screen.
+- Mobile research summaries compress into small grids, while dedicated
+  research, award, and competition inventories use consistent horizontal card
+  rails. Evidence actions form two columns; a single or odd final action spans
+  the row.
 - Primary sections have no box around the whole section. Cards group meaningful
   sub-objects; white space groups the larger narrative.
 - Rounded geometry follows scale: 12px controls, 18px cards, 24-30px large

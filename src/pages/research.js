@@ -585,7 +585,7 @@ const ResearchPage = () => {
 
   return (
     <Layout>
-      <section className="shell project-detail-hero">
+      <section className="shell project-detail-hero research-page-hero">
         <div className="project-detail-hero-grid">
           <div>
             <p className="eyebrow">Research</p>
@@ -635,10 +635,10 @@ const ResearchPage = () => {
         </div>
       </section>
 
-      <section className="shell section">
+      <section className="shell section research-publications-section">
         <SectionHeading kicker="Publications" title="전체 논문 리스트" />
         {isMobilePaperViewer ? (
-          <div className="paper-grid paper-category-list">
+          <div className="paper-grid paper-category-list research-paper-list">
             {mobilePaperFamilies.map((family) => (
               <section className="paper-category-family" key={family.key}>
                 <div className="paper-category-family-heading">
