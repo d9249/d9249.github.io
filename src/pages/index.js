@@ -125,8 +125,12 @@ const PaperSummaryCard = ({ item }) => (
   </article>
 );
 
-const RecognitionSummaryCard = ({ item, actionLabel = "증빙 보기" }) => (
-  <article className="recognition-card">
+const RecognitionSummaryCard = ({
+  item,
+  actionLabel = "증빙 보기",
+  className = "",
+}) => (
+  <article className={`recognition-card${className ? ` ${className}` : ""}`}>
     <div className="meta">{item.period}</div>
     <h3>{item.title}</h3>
     <strong>{item.result}</strong>
@@ -650,6 +654,7 @@ const IndexPage = ({ data }) => {
           {competitionItems.map((item) => (
             <RecognitionSummaryCard
               actionLabel="활동 보기"
+              className="competition-card"
               item={item}
               key={item.title}
             />
@@ -664,6 +669,7 @@ const IndexPage = ({ data }) => {
             {competitionItems.map((item) => (
               <RecognitionSummaryCard
                 actionLabel="활동 보기"
+                className="competition-card"
                 item={item}
                 key={item.title}
               />

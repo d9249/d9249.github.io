@@ -2292,6 +2292,7 @@ html[lang="ko"] body {
   .mobile-card-carousel .project-card,
   .mobile-card-carousel .paper-card,
   .mobile-card-carousel .recognition-card,
+  .mobile-card-carousel .skill-card,
   .mobile-card-carousel .post-card {
     flex: 0 0 var(--mobile-carousel-card-width) !important;
     width: var(--mobile-carousel-card-width) !important;
@@ -2453,60 +2454,15 @@ html[lang="ko"] body {
   }
 
   .mobile-skill-browser {
-    display: grid;
-    gap: var(--space-4);
-  }
-
-  .mobile-skill-tabs {
-    display: flex;
-    gap: var(--space-5);
-    margin-inline: calc(var(--space-4) * -1);
-    padding: 0 var(--space-4);
-    border-bottom: 1px solid var(--border);
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scrollbar-width: none;
-  }
-
-  .mobile-skill-tabs::-webkit-scrollbar {
-    display: none;
-  }
-
-  .mobile-skill-tabs button {
-    position: relative;
-    flex: 0 0 auto;
-    min-height: 3rem;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: var(--muted);
-    font: 620 0.84rem/1 var(--font-body);
-    white-space: nowrap;
-  }
-
-  .mobile-skill-tabs button::after {
-    position: absolute;
-    right: 0;
-    bottom: -1px;
-    left: 0;
-    height: 2px;
-    border-radius: 999px 999px 0 0;
-    background: var(--accent);
-    content: "";
-    opacity: 0;
-  }
-
-  .mobile-skill-tabs button.is-active {
-    color: var(--accent);
-  }
-
-  .mobile-skill-tabs button.is-active::after {
-    opacity: 1;
+    display: block;
   }
 
   .mobile-skill-browser .skill-card {
+    grid-template-rows: auto minmax(0, 1fr);
+    height: clamp(26rem, 68svh, 32rem);
     min-height: 0;
-    align-content: start;
+    align-self: stretch;
+    align-content: stretch;
     padding: var(--space-5);
   }
 
@@ -2520,6 +2476,39 @@ html[lang="ko"] body {
 
   .mobile-skill-browser .skill-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-height: 0;
+    overflow-y: auto;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .competition-card-actions,
+  #competitions .competition-card .research-links {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+    width: 100%;
+  }
+
+  .competition-card-actions > :is(a, button),
+  #competitions .competition-card :is(.research-links a, .paper-link) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0 var(--space-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-control);
+    background: color-mix(in oklch, var(--surface) 92%, transparent);
+    color: var(--accent);
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 650;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    white-space: normal;
   }
 
   .paper-category-list,

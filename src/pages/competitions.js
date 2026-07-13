@@ -139,7 +139,7 @@ const CompetitionsPage = () => {
                         externalLinks.length ||
                         item.href ? (
                           <div
-                            className="research-links"
+                            className="research-links competition-card-actions"
                             aria-label={`${item.title} 관련 링크`}
                           >
                             {inlineLinks.map((link) => {
