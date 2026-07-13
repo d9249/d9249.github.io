@@ -75,19 +75,27 @@ const MobileCardCarousel = ({
 
   const moveTo = React.useCallback(
     (nextIndex) => {
+      const scrollContainer = getScrollContainer(viewportRef.current);
       const items = getItems();
       const target = items[nextIndex];
 
-      if (!target) {
+      if (!scrollContainer || !target) {
         return;
       }
 
-      target.scrollIntoView({
+      const containerRect = scrollContainer.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      const targetCenter =
+        targetRect.left -
+        containerRect.left +
+        scrollContainer.scrollLeft +
+        targetRect.width / 2;
+
+      scrollContainer.scrollTo({
         behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
           ? "auto"
           : "smooth",
-        block: "nearest",
-        inline: "center",
+        left: Math.max(0, targetCenter - scrollContainer.clientWidth / 2),
       });
       setActiveIndex(nextIndex);
     },
@@ -95,6 +103,8 @@ const MobileCardCarousel = ({
   );
 
   const visibleCount = Math.max(itemCount, React.Children.count(children));
+  const visibleIndex = Math.min(activeIndex + 1, Math.max(visibleCount, 1));
+  const progress = (visibleIndex / Math.max(visibleCount, 1)) * 100;
   const hasPrevious = activeIndex > 0;
   const hasNext = activeIndex < visibleCount - 1;
 
@@ -127,13 +137,19 @@ const MobileCardCarousel = ({
           </svg>
         </button>
       </div>
-      <span className="mobile-card-carousel-status" aria-live="polite">
-        {String(Math.min(activeIndex + 1, Math.max(visibleCount, 1))).padStart(
-          2,
-          "0",
-        )}{" "}
-        / {String(Math.max(visibleCount, 1)).padStart(2, "0")}
-      </span>
+      <div className="mobile-card-carousel-status" aria-live="polite">
+        <span className="mobile-card-carousel-progress" aria-hidden="true">
+          <span style={{ width: `${progress}%` }} />
+        </span>
+        <span className="mobile-card-carousel-count" aria-hidden="true">
+          <strong>{visibleIndex}</strong>
+          <span>/</span>
+          {Math.max(visibleCount, 1)}
+        </span>
+        <span className="visually-hidden">
+          {statusLabel} {visibleIndex} / {Math.max(visibleCount, 1)}
+        </span>
+      </div>
     </section>
   );
 };

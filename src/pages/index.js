@@ -125,7 +125,7 @@ const PaperSummaryCard = ({ item }) => (
   </article>
 );
 
-const AwardSummaryCard = ({ item }) => (
+const RecognitionSummaryCard = ({ item, actionLabel = "증빙 보기" }) => (
   <article className="recognition-card">
     <div className="meta">{item.period}</div>
     <h3>{item.title}</h3>
@@ -147,26 +147,56 @@ const AwardSummaryCard = ({ item }) => (
     ) : null}
     {item.href ? (
       <a className="paper-link" href={item.href}>
-        증빙 보기 →
+        {actionLabel} →
       </a>
     ) : null}
   </article>
 );
 
-const TimelineCard = ({ item, compact = false }) => (
-  <article className={`timeline-item${compact ? " is-compact" : ""}`}>
-    <div className="timeline-date">{item.date}</div>
-    <div>
-      <h3>{item.title}</h3>
-      <p>{item.description}</p>
-      <ul className="timeline-bullets">
-        {(compact ? item.bullets.slice(0, 3) : item.bullets).map((bullet) => (
-          <li key={bullet}>{bullet}</li>
-        ))}
-      </ul>
-    </div>
-  </article>
-);
+const TimelineCard = ({ item, compact = false }) => {
+  const [expanded, setExpanded] = React.useState(false);
+  const detailsId = React.useId();
+  const hasMoreDetails = compact && item.bullets.length > 3;
+  const visibleBullets =
+    hasMoreDetails && !expanded ? item.bullets.slice(0, 3) : item.bullets;
+
+  return (
+    <article
+      className={`timeline-item${compact ? " is-compact" : ""}${
+        expanded ? " is-expanded" : ""
+      }`}
+    >
+      <div className="timeline-date">{item.date}</div>
+      <div>
+        <h3>{item.title}</h3>
+        <p>{item.description}</p>
+        <ul className="timeline-bullets" id={detailsId}>
+          {visibleBullets.map((bullet) => (
+            <li key={bullet}>{bullet}</li>
+          ))}
+        </ul>
+        {hasMoreDetails ? (
+          <button
+            className="timeline-detail-toggle"
+            type="button"
+            aria-controls={detailsId}
+            aria-expanded={expanded}
+            onClick={() => setExpanded((current) => !current)}
+          >
+            <span>
+              {expanded
+                ? "간략히 보기"
+                : `전체 ${item.bullets.length}개 항목 보기`}
+            </span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
+        ) : null}
+      </div>
+    </article>
+  );
+};
 
 const IndexPage = ({ data }) => {
   const posts = data.posts.nodes;
@@ -589,7 +619,7 @@ const IndexPage = ({ data }) => {
           </div>
           <div className="recognition-grid card-deck-grid" key={awardDeckIndex}>
             {activeAwardDeck.map((item) => (
-              <AwardSummaryCard item={item} key={item.title} />
+              <RecognitionSummaryCard item={item} key={item.title} />
             ))}
           </div>
         </div>
@@ -600,7 +630,7 @@ const IndexPage = ({ data }) => {
         >
           <div className="recognition-grid mobile-carousel-track">
             {awardItems.map((item) => (
-              <AwardSummaryCard item={item} key={item.title} />
+              <RecognitionSummaryCard item={item} key={item.title} />
             ))}
           </div>
         </MobileCardCarousel>
@@ -616,38 +646,30 @@ const IndexPage = ({ data }) => {
           title="대회 및 외부 활동"
           action={<Link to="/competitions/">전체 대회 보기 →</Link>}
         />
-        <div className="recognition-grid">
+        <div className="recognition-grid responsive-desktop-only">
           {competitionItems.map((item) => (
-            <article className="recognition-card" key={item.title}>
-              <div className="meta">{item.period}</div>
-              <h3>{item.title}</h3>
-              <strong>{item.result}</strong>
-              <p>{item.description}</p>
-              <div className="research-facts">
-                {item.facts.map((fact) => (
-                  <span key={fact}>{fact}</span>
-                ))}
-              </div>
-              {item.links?.length ? (
-                <div
-                  className="research-links"
-                  aria-label={`${item.title} 관련 링크`}
-                >
-                  {item.links.map((link) => (
-                    <a key={link.href} href={link.href}>
-                      {link.label} →
-                    </a>
-                  ))}
-                </div>
-              ) : null}
-              {item.href ? (
-                <a className="paper-link" href={item.href}>
-                  활동 보기 →
-                </a>
-              ) : null}
-            </article>
+            <RecognitionSummaryCard
+              actionLabel="활동 보기"
+              item={item}
+              key={item.title}
+            />
           ))}
         </div>
+        <MobileCardCarousel
+          ariaLabel="모바일 대회 및 외부 활동"
+          itemSelector=".recognition-card"
+          statusLabel="대회 카드"
+        >
+          <div className="recognition-grid mobile-carousel-track">
+            {competitionItems.map((item) => (
+              <RecognitionSummaryCard
+                actionLabel="활동 보기"
+                item={item}
+                key={item.title}
+              />
+            ))}
+          </div>
+        </MobileCardCarousel>
       </section>
 
       <section

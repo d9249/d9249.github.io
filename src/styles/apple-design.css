@@ -2135,6 +2135,21 @@ html[lang="ko"] body {
 }
 
 @media (max-width: 760px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero > div,
+  .hero > .terminal-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .hero > .terminal-card {
+    justify-self: stretch;
+  }
+
   .hero-button-actions-desktop,
   .responsive-desktop-only,
   .skill-grid-desktop {
@@ -2144,12 +2159,14 @@ html[lang="ko"] body {
   .hero-button-actions-mobile {
     display: flex;
     flex-wrap: nowrap;
-    width: calc(100% + var(--space-8));
-    margin-inline: calc(var(--space-4) * -1);
-    padding: 0 var(--space-4) var(--space-2);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-inline: 0;
+    padding: 0 0 var(--space-2);
     overflow-x: auto;
     overscroll-behavior-inline: contain;
-    scroll-padding-inline: var(--space-4);
+    scroll-padding-inline: 0;
     scroll-snap-type: x proximity;
     scrollbar-width: none;
   }
@@ -2220,6 +2237,8 @@ html[lang="ko"] body {
   }
 
   .mobile-card-carousel {
+    --mobile-carousel-card-width: min(76vw, 22rem);
+
     display: block;
     min-width: 0;
   }
@@ -2242,7 +2261,8 @@ html[lang="ko"] body {
     width: 100%;
     margin: 0;
     padding: var(--space-2)
-      max(var(--space-6), calc((100% - min(82vw, 22rem)) / 2)) var(--space-4) !important;
+      max(var(--space-6), calc((100% - var(--mobile-carousel-card-width)) / 2))
+      var(--space-4) !important;
     border: 0;
     border-radius: 0;
     background: transparent;
@@ -2252,7 +2272,7 @@ html[lang="ko"] body {
     overscroll-behavior-inline: contain;
     scroll-padding-inline: max(
       var(--space-6),
-      calc((100% - min(82vw, 22rem)) / 2)
+      calc((100% - var(--mobile-carousel-card-width)) / 2)
     );
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
@@ -2267,8 +2287,8 @@ html[lang="ko"] body {
   .mobile-card-carousel .paper-card,
   .mobile-card-carousel .recognition-card,
   .mobile-card-carousel .post-card {
-    flex: 0 0 min(82vw, 22rem) !important;
-    width: min(82vw, 22rem) !important;
+    flex: 0 0 var(--mobile-carousel-card-width) !important;
+    width: var(--mobile-carousel-card-width) !important;
     min-width: 0;
     scroll-snap-align: center;
     scroll-snap-stop: always;
@@ -2294,7 +2314,55 @@ html[lang="ko"] body {
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
+  }
+
+  .mobile-card-carousel
+    .timeline-item.is-compact:not(.is-expanded)
+    > div:last-child
+    > p {
+    -webkit-line-clamp: 4;
+  }
+
+  .mobile-card-carousel .timeline-item.is-expanded > div:last-child > p,
+  .mobile-card-carousel .timeline-item.is-expanded .timeline-bullets li {
+    display: list-item;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+  }
+
+  .mobile-card-carousel .timeline-item.is-expanded > div:last-child > p {
+    display: block;
+  }
+
+  .timeline-detail-toggle {
+    display: inline-flex;
+    gap: var(--space-2);
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    margin-top: var(--space-4);
+    padding: 0 var(--space-4);
+    border: 1px solid color-mix(in oklch, var(--accent) 24%, var(--border));
+    border-radius: var(--radius-control);
+    background: color-mix(in oklch, var(--accent) 7%, var(--surface));
+    color: var(--accent);
+    font: 650 0.78rem/1 var(--font-body);
+  }
+
+  .timeline-detail-toggle svg {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform var(--motion-fast) var(--ease-fluid);
+  }
+
+  .timeline-detail-toggle[aria-expanded="true"] svg {
+    transform: rotate(180deg);
   }
 
   .mobile-card-carousel .project-details li:nth-child(n + 4),
@@ -2322,11 +2390,11 @@ html[lang="ko"] body {
   }
 
   .mobile-card-carousel-arrow.is-previous {
-    left: calc(var(--space-3) * -1);
+    left: 0;
   }
 
   .mobile-card-carousel-arrow.is-next {
-    right: calc(var(--space-3) * -1);
+    right: 0;
   }
 
   .mobile-card-carousel-arrow:disabled {
@@ -2348,14 +2416,55 @@ html[lang="ko"] body {
   }
 
   .mobile-card-carousel-status {
-    display: block;
-    margin-top: var(--space-1);
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    width: fit-content;
+    min-height: 2rem;
+    margin: var(--space-2) auto 0;
+    padding: 0.32rem 0.62rem 0.32rem 0.72rem;
+    border: 1px solid var(--rim-light);
+    border-radius: 999px;
+    background: var(--material-card-strong);
+    box-shadow: 0 0.4rem 1.2rem color-mix(in oklch, var(--fg) 7%, transparent);
     color: var(--muted);
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
     font-weight: 650;
-    text-align: center;
-    letter-spacing: 0.06em;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+  }
+
+  .mobile-card-carousel-progress {
+    display: block;
+    width: 3.75rem;
+    height: 0.25rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: color-mix(in oklch, var(--border) 84%, transparent);
+  }
+
+  .mobile-card-carousel-progress > span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--accent);
+    transition: width var(--motion-material) var(--ease-fluid);
+  }
+
+  .mobile-card-carousel-count {
+    display: inline-flex;
+    gap: 0.24rem;
+    align-items: baseline;
+  }
+
+  .mobile-card-carousel-count strong {
+    color: var(--fg);
+    font-size: 0.76rem;
+  }
+
+  .mobile-card-carousel-count > span {
+    color: color-mix(in oklch, var(--muted) 68%, transparent);
   }
 
   .mobile-skill-browser {
