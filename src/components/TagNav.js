@@ -3,6 +3,7 @@ import { Link } from "gatsby";
 import { getTagPath, getTagSummaries } from "../utils/tags";
 
 const COLLAPSED_TAG_LIMIT = 18;
+const EXPANDED_TAG_PAGE_SIZE = 72;
 const TAG_ROW_GAP = 7;
 const FALLBACK_LIST_WIDTH = 420;
 
@@ -29,6 +30,18 @@ const getCollapsedTags = (tags, activeTag) => {
     0,
     COLLAPSED_TAG_LIMIT,
   );
+};
+
+const getTagPageForActiveTag = (tags, activeTag) => {
+  if (!activeTag) {
+    return 0;
+  }
+
+  const activeTagIndex = tags.findIndex((tag) => tag.label === activeTag);
+
+  return activeTagIndex < 0
+    ? 0
+    : Math.floor(activeTagIndex / EXPANDED_TAG_PAGE_SIZE);
 };
 
 const getTetrisRows = (tags, listWidth, measuredWidths) => {
@@ -94,11 +107,20 @@ const getTetrisRows = (tags, listWidth, measuredWidths) => {
     .map((row) => row.items);
 };
 
-const TagChip = ({ activeTag, getTagPathForTag, linkedTags, tag, width }) => {
+const TagChip = ({
+  activeTag,
+  getTagPathForTag,
+  linkedTags,
+  nativeNavigation,
+  tag,
+  width,
+}) => {
   const className = `tag-nav-link${tag.label === activeTag ? " is-active" : ""}`;
-  const style = {
-    "--tag-item-basis": `${width}px`,
-  };
+  const style = Number.isFinite(width)
+    ? {
+        "--tag-item-basis": `${width}px`,
+      }
+    : undefined;
   const content = (
     <>
       <span>#{tag.label}</span>
@@ -114,13 +136,18 @@ const TagChip = ({ activeTag, getTagPathForTag, linkedTags, tag, width }) => {
     );
   }
 
+  const tagPath = getTagPathForTag(tag.label);
+
+  if (nativeNavigation) {
+    return (
+      <a href={tagPath} className={className} style={style}>
+        {content}
+      </a>
+    );
+  }
+
   return (
-    <Link
-      key={tag.slug}
-      to={getTagPathForTag(tag.label)}
-      className={className}
-      style={style}
-    >
+    <Link to={tagPath} className={className} style={style}>
       {content}
     </Link>
   );
@@ -142,28 +169,63 @@ const TagNav = ({
   const listRef = React.useRef(null);
   const measureRef = React.useRef(null);
   const shouldCollapse = tags.length > COLLAPSED_TAG_LIMIT;
+  const initialTagPage = React.useMemo(
+    () => getTagPageForActiveTag(tags, activeTag),
+    [activeTag, tags],
+  );
+  const tagPageCount = Math.max(
+    1,
+    Math.ceil(tags.length / EXPANDED_TAG_PAGE_SIZE),
+  );
   const [expanded, setExpanded] = React.useState(false);
+  const [tagPage, setTagPage] = React.useState(initialTagPage);
   const [listWidth, setListWidth] = React.useState(FALLBACK_LIST_WIDTH);
   const [measuredWidths, setMeasuredWidths] = React.useState([]);
+  const currentTagPage = Math.min(tagPage, tagPageCount - 1);
+  const tagPageStart = currentTagPage * EXPANDED_TAG_PAGE_SIZE;
+  const tagPageEnd = Math.min(
+    tags.length,
+    tagPageStart + EXPANDED_TAG_PAGE_SIZE,
+  );
 
   const toggleTags = () => {
+    if (!expanded) {
+      setTagPage(initialTagPage);
+    }
+
     setExpanded((current) => !current);
   };
 
-  const visibleTags = React.useMemo(
+  const showPreviousTagPage = () => {
+    setTagPage((current) => Math.max(0, current - 1));
+  };
+
+  const showNextTagPage = () => {
+    setTagPage((current) => Math.min(tagPageCount - 1, current + 1));
+  };
+
+  const visibleTags = React.useMemo(() => {
+    if (shouldCollapse && !expanded) {
+      return getCollapsedTags(tags, activeTag);
+    }
+
+    if (expanded) {
+      return tags.slice(tagPageStart, tagPageEnd);
+    }
+
+    return tags;
+  }, [activeTag, expanded, shouldCollapse, tagPageEnd, tagPageStart, tags]);
+  const hiddenTagCount = Math.max(0, tags.length - COLLAPSED_TAG_LIMIT);
+  const tagRows = React.useMemo(
     () =>
-      shouldCollapse && !expanded ? getCollapsedTags(tags, activeTag) : tags,
-    [activeTag, expanded, shouldCollapse, tags],
-  );
-  const hiddenTagCount = tags.length - visibleTags.length;
-  const tetrisRows = React.useMemo(
-    () => getTetrisRows(visibleTags, listWidth, measuredWidths),
-    [listWidth, measuredWidths, visibleTags],
+      expanded ? [] : getTetrisRows(visibleTags, listWidth, measuredWidths),
+    [expanded, listWidth, measuredWidths, visibleTags],
   );
 
   useIsomorphicLayoutEffect(() => {
     if (listRef.current) {
       listRef.current.scrollLeft = 0;
+      listRef.current.scrollTop = 0;
     }
   }, [visibleTags]);
 
@@ -190,7 +252,7 @@ const TagNav = ({
   }, []);
 
   useIsomorphicLayoutEffect(() => {
-    if (!measureRef.current) {
+    if (expanded || !measureRef.current) {
       return;
     }
 
@@ -205,14 +267,20 @@ const TagNav = ({
 
       return hasSameWidths ? currentWidths : nextWidths;
     });
-  }, [visibleTags]);
+  }, [expanded, visibleTags]);
 
   if (!tags.length) {
     return null;
   }
 
   return (
-    <nav className="tag-nav" aria-label={ariaLabel}>
+    <nav
+      className="tag-nav"
+      aria-label={ariaLabel}
+      data-expanded={expanded ? "true" : "false"}
+      data-tag-count={visibleTags.length}
+      data-total-tag-count={tags.length}
+    >
       <div className="tag-nav-header">
         <span className="tag-nav-label">Tags</span>
         {shouldCollapse ? (
@@ -231,28 +299,78 @@ const TagNav = ({
         ) : null}
       </div>
       <div className="tag-nav-list" id={listId} ref={listRef}>
-        {tetrisRows.map((row, rowIndex) => (
-          <div className="tag-nav-row" key={`tag-row-${rowIndex}`}>
-            {row.map(({ tag, width }) => (
+        {expanded
+          ? visibleTags.map((tag) => (
               <TagChip
                 activeTag={activeTag}
                 getTagPathForTag={getTagPathForTag}
                 key={tag.slug}
                 linkedTags={linkedTags}
+                nativeNavigation
                 tag={tag}
-                width={width}
               />
+            ))
+          : tagRows.map((row, rowIndex) => (
+              <div className="tag-nav-row" key={`tag-row-${rowIndex}`}>
+                {row.map(({ tag, width }) => (
+                  <TagChip
+                    activeTag={activeTag}
+                    getTagPathForTag={getTagPathForTag}
+                    key={tag.slug}
+                    linkedTags={linkedTags}
+                    tag={tag}
+                    width={width}
+                  />
+                ))}
+              </div>
             ))}
-          </div>
-        ))}
       </div>
-      <div className="tag-nav-measurer" ref={measureRef} aria-hidden="true">
-        {visibleTags.map((tag) => (
-          <span className="tag-nav-measure-chip" key={tag.slug}>
-            <span>#{tag.label}</span>
-            <strong>{tag.count}</strong>
+      {expanded && tagPageCount > 1 ? (
+        <div className="tag-nav-pagination">
+          <span className="tag-nav-page-summary">
+            {tagPageStart + 1}–{tagPageEnd} / {tags.length}
           </span>
-        ))}
+          <div className="tag-nav-page-actions">
+            <button
+              className="tag-nav-page-button"
+              type="button"
+              aria-controls={listId}
+              aria-label="이전 태그 페이지"
+              disabled={currentTagPage === 0}
+              onClick={showPreviousTagPage}
+            >
+              <span aria-hidden="true">‹</span>
+            </button>
+            <strong>
+              {currentTagPage + 1} / {tagPageCount}
+            </strong>
+            <button
+              className="tag-nav-page-button"
+              type="button"
+              aria-controls={listId}
+              aria-label="다음 태그 페이지"
+              disabled={currentTagPage === tagPageCount - 1}
+              onClick={showNextTagPage}
+            >
+              <span aria-hidden="true">›</span>
+            </button>
+          </div>
+        </div>
+      ) : null}
+      <span className="visually-hidden" aria-live="polite">
+        {expanded
+          ? `전체 ${tags.length}개 중 ${tagPageStart + 1}번째부터 ${tagPageEnd}번째 태그가 표시되었습니다. 태그 목록 안에서 세로로 스크롤할 수 있습니다.`
+          : `주요 태그 ${visibleTags.length}개가 표시되었습니다.`}
+      </span>
+      <div className="tag-nav-measurer" ref={measureRef} aria-hidden="true">
+        {expanded
+          ? null
+          : visibleTags.map((tag) => (
+              <span className="tag-nav-measure-chip" key={tag.slug}>
+                <span>#{tag.label}</span>
+                <strong>{tag.count}</strong>
+              </span>
+            ))}
       </div>
     </nav>
   );

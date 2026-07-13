@@ -105,6 +105,11 @@ requires it.
   snap rails with a visible next-card edge. This preserves every item while
   preventing long research, skill, project, and blog lists from dominating the
   vertical page.
+- Compact category filters wrap in place so every destination remains visible
+  without a sideways gesture. Large tag collections keep a concise initial
+  set, then open into a bounded, paged vertical browser instead of extending
+  the page, mounting the entire taxonomy, or hiding newly revealed tags
+  off-screen.
 - Primary sections have no box around the whole section. Cards group meaningful
   sub-objects; white space groups the larger narrative.
 - Rounded geometry follows scale: 12px controls, 18px cards, 24-30px large
