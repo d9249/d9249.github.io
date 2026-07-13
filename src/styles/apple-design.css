@@ -3641,6 +3641,22 @@ html[lang="ko"] body {
   }
 }
 
+#competitions .competition-card {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+#competitions .competition-card > :not(.research-links):not(.paper-link) {
+  grid-column: 1 / -1;
+}
+
+#competitions .competition-card > .paper-link {
+  grid-column: 1 / -1;
+}
+
+#competitions .competition-card > .research-links + .paper-link {
+  grid-column: auto;
+}
+
 #competitions .competition-card .research-links,
 .recognition-page .competition-card-actions,
 .research-publications-section .paper-card .research-links {
