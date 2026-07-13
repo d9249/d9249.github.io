@@ -3349,9 +3349,18 @@ figcaption,
 .blog-markdown-body figure > img,
 .blog-markdown-body figure > a > img,
 .blog-markdown-body figure > picture,
+.blog-markdown-body figure > .blog-figure-media > img,
+.blog-markdown-body figure > .blog-figure-media > a > img,
+.blog-markdown-body figure > .blog-figure-media > picture,
 .blog-markdown-body p > img:only-child,
 .blog-markdown-body p > a:only-child > img:only-child {
   margin: 0 auto;
+}
+
+.blog-markdown-body figure > .blog-figure-media {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .blog-markdown-body figure img,
@@ -3406,7 +3415,9 @@ figcaption,
 }
 
 .article-body.blog-markdown-body p.blog-readable-wide-frame,
-.article-body.blog-markdown-body figure.blog-readable-wide-frame {
+.article-body.blog-markdown-body
+  figure.blog-readable-wide-frame
+  > .blog-figure-media {
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;

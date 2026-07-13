@@ -194,6 +194,8 @@ requires it.
 - Articles use an opaque reading surface with generous measure and quiet chrome.
 - Images and diagrams use neutral inspection frames. Wide analytical images pan
   horizontally on mobile rather than shrinking labels below readability.
+- In figures, only the media viewport pans horizontally; captions remain outside
+  that scroll layer so article text never follows an image gesture.
 - The shared lightbox preserves its existing fitted stage, rotation, keyboard
   activation, Escape dismissal, focus containment, and mobile visualViewport
   behavior. Its material is updated, not its proven geometry.

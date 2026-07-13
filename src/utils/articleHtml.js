@@ -55,6 +55,8 @@ const ABBREVIATIONS = new Set([
 ]);
 
 const PARAGRAPH_PATTERN = /<p(\s[^>]*)?>([\s\S]*?)<\/p>/g;
+const FIGURE_PATTERN = /<figure(\s[^>]*)?>([\s\S]*?)<\/figure>/g;
+const FIGCAPTION_PATTERN = /<figcaption\b/i;
 const TAG_PATTERN = /<[^>]+>/g;
 
 const isClosingTag = (tag) => /^<\//.test(tag);
@@ -286,8 +288,27 @@ const insertSentenceBreaks = (innerHtml) => {
     .join("");
 };
 
+const wrapFigureMedia = (html) =>
+  html.replace(FIGURE_PATTERN, (match, attributes = "", innerHtml) => {
+    if (/\bblog-figure-media\b/.test(innerHtml)) {
+      return match;
+    }
+
+    const captionIndex = innerHtml.search(FIGCAPTION_PATTERN);
+    const mediaHtml =
+      captionIndex === -1 ? innerHtml : innerHtml.slice(0, captionIndex);
+    const captionHtml =
+      captionIndex === -1 ? "" : innerHtml.slice(captionIndex);
+
+    if (!/<(?:img|picture|video|iframe|object|embed)\b/i.test(mediaHtml)) {
+      return match;
+    }
+
+    return `<figure${attributes}><div class="blog-figure-media">${mediaHtml}</div>${captionHtml}</figure>`;
+  });
+
 const formatReadableArticleHtml = (html = "") =>
-  String(html).replace(
+  wrapFigureMedia(String(html)).replace(
     PARAGRAPH_PATTERN,
     (match, attributes = "", innerHtml) => {
       if (shouldSkipParagraph(innerHtml)) {
