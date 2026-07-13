@@ -1,6 +1,7 @@
 import * as React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
+import MobileCardCarousel from "../components/MobileCardCarousel";
 import PostCard from "../components/PostCard";
 import ProjectGrid from "../components/ProjectGrid";
 import SectionHeading from "../components/SectionHeading";
@@ -102,12 +103,78 @@ const getCardDecks = (items, deckSize = CARD_DECK_SIZE) =>
 const getDeckLabel = (index, total) =>
   `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
 
+const PaperSummaryCard = ({ item }) => (
+  <article className="paper-card">
+    <div className="paper-card-top">
+      <div className="meta">{item.type}</div>
+      <span>{item.year}</span>
+    </div>
+    <h3>{item.title}</h3>
+    <div className="paper-venue">{item.venue}</div>
+    <p>{item.description}</p>
+    <div className="research-facts">
+      {item.facts.map((fact) => (
+        <span key={fact}>{fact}</span>
+      ))}
+    </div>
+    {item.href ? (
+      <a className="paper-link" href={item.href}>
+        {item.linkLabel || "논문 보기"} →
+      </a>
+    ) : null}
+  </article>
+);
+
+const AwardSummaryCard = ({ item }) => (
+  <article className="recognition-card">
+    <div className="meta">{item.period}</div>
+    <h3>{item.title}</h3>
+    <strong>{item.result}</strong>
+    <p>{item.description}</p>
+    <div className="research-facts">
+      {item.facts.map((fact) => (
+        <span key={fact}>{fact}</span>
+      ))}
+    </div>
+    {item.links?.length ? (
+      <div className="research-links" aria-label={`${item.title} 증빙 링크`}>
+        {item.links.map((link) => (
+          <a key={link.href} href={link.href}>
+            {link.label} →
+          </a>
+        ))}
+      </div>
+    ) : null}
+    {item.href ? (
+      <a className="paper-link" href={item.href}>
+        증빙 보기 →
+      </a>
+    ) : null}
+  </article>
+);
+
+const TimelineCard = ({ item, compact = false }) => (
+  <article className={`timeline-item${compact ? " is-compact" : ""}`}>
+    <div className="timeline-date">{item.date}</div>
+    <div>
+      <h3>{item.title}</h3>
+      <p>{item.description}</p>
+      <ul className="timeline-bullets">
+        {(compact ? item.bullets.slice(0, 3) : item.bullets).map((bullet) => (
+          <li key={bullet}>{bullet}</li>
+        ))}
+      </ul>
+    </div>
+  </article>
+);
+
 const IndexPage = ({ data }) => {
   const posts = data.posts.nodes;
   const projects = data.projects.nodes;
   const profileTags = getProjectProfileTags(projects);
   const totalBlogPostCount = data.blogPosts.totalCount;
   const heroNavItems = navItems.filter((item) => item.showInHero);
+  const mobileHeroNavItems = navItems.filter((item) => item.to !== "/");
   const paperDecks = getCardDecks(paperItems);
   const awardDecks = getCardDecks(awardItems);
   const projectDecks = getCardDecks(projects, PROJECT_DECK_SIZE);
@@ -186,10 +253,31 @@ const IndexPage = ({ data }) => {
             번역합니다.
           </p>
           <nav
-            className="hero-actions hero-button-actions"
+            className="hero-actions hero-button-actions hero-button-actions-desktop"
             aria-label="Shortcut navigation"
           >
             {heroNavItems.map((item) => {
+              const className =
+                item.heroVariant === "primary"
+                  ? "button-primary"
+                  : "button-secondary";
+
+              return item.reloadDocument ? (
+                <a className={className} key={item.to} href={item.to}>
+                  {item.heroLabel}
+                </a>
+              ) : (
+                <Link className={className} key={item.to} to={item.to}>
+                  {item.heroLabel}
+                </Link>
+              );
+            })}
+          </nav>
+          <nav
+            className="hero-actions hero-button-actions hero-button-actions-mobile"
+            aria-label="모바일 빠른 이동"
+          >
+            {mobileHeroNavItems.map((item) => {
               const className =
                 item.heroVariant === "primary"
                   ? "button-primary"
@@ -282,8 +370,12 @@ const IndexPage = ({ data }) => {
         id="career"
         aria-labelledby="career-title"
       >
-        <SectionHeading kicker="Experience" title="실무 및 연구 경력" />
-        <div className="career-layout">
+        <SectionHeading
+          kicker="Experience"
+          title="실무 및 연구 경력"
+          titleId="career-title"
+        />
+        <div className="career-layout responsive-desktop-only">
           <aside className="profile-panel">
             <div className="avatar-large">SM</div>
             <h3>
@@ -320,23 +412,36 @@ const IndexPage = ({ data }) => {
           </aside>
           <div className="timeline">
             {timelineItems.map((item) => (
-              <article
-                className="timeline-item"
-                key={`${item.date}-${item.title}`}
-              >
-                <div className="timeline-date">{item.date}</div>
-                <div>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                  <ul className="timeline-bullets">
-                    {item.bullets.map((bullet) => (
-                      <li key={bullet}>{bullet}</li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
+              <TimelineCard key={`${item.date}-${item.title}`} item={item} />
             ))}
           </div>
+        </div>
+        <div className="mobile-career-layout">
+          <div className="mobile-career-summary">
+            <span className="avatar-large" aria-hidden="true">
+              SM
+            </span>
+            <div>
+              <strong>이상민</strong>
+              <span>AI Engineer &amp; Researcher</span>
+            </div>
+            <a href="mailto:dodo9249@gmail.com">Email</a>
+          </div>
+          <MobileCardCarousel
+            ariaLabel="모바일 실무 및 연구 경력"
+            itemSelector=".timeline-item"
+            statusLabel="경력 카드"
+          >
+            <div className="timeline mobile-carousel-track">
+              {timelineItems.map((item) => (
+                <TimelineCard
+                  compact
+                  key={`${item.date}-${item.title}`}
+                  item={item}
+                />
+              ))}
+            </div>
+          </MobileCardCarousel>
         </div>
       </section>
 
@@ -350,7 +455,7 @@ const IndexPage = ({ data }) => {
           title="프로젝트"
           action={<Link to="/projects/">전체 프로젝트 보기 →</Link>}
         />
-        <div className="card-deck project-card-deck">
+        <div className="card-deck project-card-deck responsive-desktop-only">
           <div className="card-deck-toolbar" aria-live="polite">
             <span className="card-deck-status">{projectDeckStatus}</span>
             <div className="card-deck-controls">
@@ -382,6 +487,13 @@ const IndexPage = ({ data }) => {
             projects={activeProjectDeck}
           />
         </div>
+        <MobileCardCarousel
+          ariaLabel="모바일 프로젝트"
+          itemSelector=".project-card"
+          statusLabel="프로젝트 카드"
+        >
+          <ProjectGrid className="mobile-carousel-track" projects={projects} />
+        </MobileCardCarousel>
       </section>
 
       <section
@@ -394,7 +506,7 @@ const IndexPage = ({ data }) => {
           title="연구 목록"
           action={<Link to="/research/">전체 연구 보기 →</Link>}
         />
-        <div className="card-deck">
+        <div className="card-deck responsive-desktop-only">
           <div className="card-deck-toolbar" aria-live="polite">
             <span className="card-deck-status">Deck {paperDeckLabel}</span>
             <div className="card-deck-controls">
@@ -422,28 +534,21 @@ const IndexPage = ({ data }) => {
           </div>
           <div className="paper-grid card-deck-grid" key={paperDeckIndex}>
             {activePaperDeck.map((item) => (
-              <article className="paper-card" key={item.title}>
-                <div className="paper-card-top">
-                  <div className="meta">{item.type}</div>
-                  <span>{item.year}</span>
-                </div>
-                <h3>{item.title}</h3>
-                <div className="paper-venue">{item.venue}</div>
-                <p>{item.description}</p>
-                <div className="research-facts">
-                  {item.facts.map((fact) => (
-                    <span key={fact}>{fact}</span>
-                  ))}
-                </div>
-                {item.href ? (
-                  <a className="paper-link" href={item.href}>
-                    {item.linkLabel || "논문 보기"} →
-                  </a>
-                ) : null}
-              </article>
+              <PaperSummaryCard item={item} key={item.title} />
             ))}
           </div>
         </div>
+        <MobileCardCarousel
+          ariaLabel="모바일 연구 목록"
+          itemSelector=".paper-card"
+          statusLabel="연구 카드"
+        >
+          <div className="paper-grid mobile-carousel-track">
+            {paperItems.map((item) => (
+              <PaperSummaryCard item={item} key={item.title} />
+            ))}
+          </div>
+        </MobileCardCarousel>
       </section>
 
       <section
@@ -456,7 +561,7 @@ const IndexPage = ({ data }) => {
           title="수상 기록"
           action={<Link to="/awards/">전체 수상 보기 →</Link>}
         />
-        <div className="card-deck">
+        <div className="card-deck responsive-desktop-only">
           <div className="card-deck-toolbar" aria-live="polite">
             <span className="card-deck-status">Deck {awardDeckLabel}</span>
             <div className="card-deck-controls">
@@ -484,37 +589,21 @@ const IndexPage = ({ data }) => {
           </div>
           <div className="recognition-grid card-deck-grid" key={awardDeckIndex}>
             {activeAwardDeck.map((item) => (
-              <article className="recognition-card" key={item.title}>
-                <div className="meta">{item.period}</div>
-                <h3>{item.title}</h3>
-                <strong>{item.result}</strong>
-                <p>{item.description}</p>
-                <div className="research-facts">
-                  {item.facts.map((fact) => (
-                    <span key={fact}>{fact}</span>
-                  ))}
-                </div>
-                {item.links?.length ? (
-                  <div
-                    className="research-links"
-                    aria-label={`${item.title} 증빙 링크`}
-                  >
-                    {item.links.map((link) => (
-                      <a key={link.href} href={link.href}>
-                        {link.label} →
-                      </a>
-                    ))}
-                  </div>
-                ) : null}
-                {item.href ? (
-                  <a className="paper-link" href={item.href}>
-                    증빙 보기 →
-                  </a>
-                ) : null}
-              </article>
+              <AwardSummaryCard item={item} key={item.title} />
             ))}
           </div>
         </div>
+        <MobileCardCarousel
+          ariaLabel="모바일 수상 기록"
+          itemSelector=".recognition-card"
+          statusLabel="수상 카드"
+        >
+          <div className="recognition-grid mobile-carousel-track">
+            {awardItems.map((item) => (
+              <AwardSummaryCard item={item} key={item.title} />
+            ))}
+          </div>
+        </MobileCardCarousel>
       </section>
 
       <section
@@ -584,7 +673,7 @@ const IndexPage = ({ data }) => {
           title="최근 지식"
           action={<Link to="/blog/">전체 지식 보기 →</Link>}
         />
-        <div className="card-deck">
+        <div className="card-deck responsive-desktop-only">
           <div className="card-deck-toolbar" aria-live="polite">
             <span className="card-deck-status">Deck {postDeckStatus}</span>
             <div className="card-deck-controls">
@@ -619,6 +708,17 @@ const IndexPage = ({ data }) => {
             ))}
           </div>
         </div>
+        <MobileCardCarousel
+          ariaLabel="모바일 최근 지식"
+          itemSelector=".post-card"
+          statusLabel="글 카드"
+        >
+          <div className="post-grid compact-posts mobile-carousel-track">
+            {posts.map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
+          </div>
+        </MobileCardCarousel>
       </section>
     </Layout>
   );

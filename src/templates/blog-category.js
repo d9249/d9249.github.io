@@ -12,12 +12,7 @@ const BlogCategoryTemplate = ({ data, pageContext }) => {
   return (
     <Layout>
       <section className="shell section">
-        <SectionHeading
-          as="h1"
-          kicker="Category"
-          title={pageContext.label}
-          description={pageContext.description}
-        />
+        <SectionHeading as="h1" kicker="Category" title={pageContext.label} />
         <CategoryNav />
         <TagNav tagSummaries={pageContext.tagSummaries} />
         {posts.length > 0 ? (

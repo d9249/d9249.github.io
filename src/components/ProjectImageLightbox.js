@@ -10,6 +10,10 @@ const getImagePayload = (image) => ({
 });
 
 const MOBILE_ROTATED_FRAME_GUTTER = 88;
+const DESKTOP_MIN_WIDTH = 761;
+const MIN_ZOOM = 1;
+const MAX_ZOOM = 2;
+const ZOOM_STEP = 0.5;
 
 const getViewportSize = (container) => {
   const rect = container?.getBoundingClientRect();
@@ -62,7 +66,7 @@ const getLightboxFitMetrics = (viewportWidth, rotation) => {
   };
 };
 
-const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
+const getFittedImageStyles = (activeImage, rotation, viewportSize, zoom) => {
   if (
     !activeImage?.naturalHeight ||
     !activeImage?.naturalWidth ||
@@ -102,13 +106,16 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
     ? activeImage.naturalWidth
     : activeImage.naturalHeight;
   const scaleLimit = viewportWidth > 680 ? 1.6 : 1;
-  const scale = hasMobileRotation
+  const baseScale = hasMobileRotation
     ? Math.min(availableWidth / visibleNaturalWidth, scaleLimit)
     : Math.min(
         availableWidth / visibleNaturalWidth,
         availableHeight / visibleNaturalHeight,
         scaleLimit,
       );
+  const appliedZoom = viewportWidth >= DESKTOP_MIN_WIDTH ? zoom : MIN_ZOOM;
+  const isZoomed = appliedZoom > MIN_ZOOM;
+  const scale = baseScale * appliedZoom;
   const imageWidth = Math.round(activeImage.naturalWidth * scale);
   const imageHeight = Math.round(activeImage.naturalHeight * scale);
   const stageWidth = isQuarterTurn ? imageHeight : imageWidth;
@@ -149,13 +156,15 @@ const getFittedImageStyles = (activeImage, rotation, viewportSize) => {
     },
     image: {
       height: `${imageHeight}px`,
-      maxHeight: isQuarterTurn ? "none" : undefined,
-      maxWidth: isQuarterTurn ? "none" : undefined,
+      maxHeight: isQuarterTurn || isZoomed ? "none" : undefined,
+      maxWidth: isQuarterTurn || isZoomed ? "none" : undefined,
       transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
       width: `${imageWidth}px`,
     },
     stage: {
       height: `${stageHeight}px`,
+      justifySelf: isZoomed ? "start" : undefined,
+      maxWidth: isZoomed ? "none" : undefined,
       width: `${stageWidth}px`,
     },
   };
@@ -172,11 +181,15 @@ const ProjectImageLightbox = ({
   const articleRef = React.useRef(null);
   const closeButtonRef = React.useRef(null);
   const captionId = React.useId();
+  const imageViewportId = React.useId();
   const imageViewportRef = React.useRef(null);
   const lightboxRef = React.useRef(null);
   const [activeImage, setActiveImage] = React.useState(null);
   const [rotation, setRotation] = React.useState(0);
   const rotateButtonRef = React.useRef(null);
+  const zoomInButtonRef = React.useRef(null);
+  const zoomOutButtonRef = React.useRef(null);
+  const [zoom, setZoom] = React.useState(MIN_ZOOM);
   const [viewportSize, setViewportSize] = React.useState({
     height: 0,
     width: 0,
@@ -230,6 +243,7 @@ const ProjectImageLightbox = ({
     const handleEscape = (event) => {
       if (event.key === "Escape") {
         setActiveImage(null);
+        setZoom(MIN_ZOOM);
       }
     };
 
@@ -277,6 +291,7 @@ const ProjectImageLightbox = ({
 
     if (payload.src) {
       setRotation(0);
+      setZoom(MIN_ZOOM);
       setViewportSize(getViewportSize(lightboxRef.current));
       setActiveImage(payload);
     }
@@ -322,6 +337,7 @@ const ProjectImageLightbox = ({
 
   const closeLightbox = React.useCallback(() => {
     setActiveImage(null);
+    setZoom(MIN_ZOOM);
   }, []);
 
   const keepLightboxOpen = React.useCallback((event) => {
@@ -342,6 +358,43 @@ const ProjectImageLightbox = ({
     imageViewport.scrollLeft = 0;
     imageViewport.scrollTop = 0;
   }, []);
+
+  const desktopZoomEnabled =
+    getMobileAwareViewportWidth(viewportSize) >= DESKTOP_MIN_WIDTH;
+
+  const updateZoom = React.useCallback(
+    (delta) => {
+      if (!desktopZoomEnabled) {
+        return;
+      }
+
+      setZoom((currentZoom) =>
+        Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, currentZoom + delta)),
+      );
+    },
+    [desktopZoomEnabled],
+  );
+
+  const zoomIn = React.useCallback(() => {
+    updateZoom(ZOOM_STEP);
+  }, [updateZoom]);
+
+  const zoomOut = React.useCallback(() => {
+    updateZoom(-ZOOM_STEP);
+  }, [updateZoom]);
+
+  const toggleImageZoom = React.useCallback(
+    (event) => {
+      event.stopPropagation();
+
+      if (!desktopZoomEnabled) {
+        return;
+      }
+
+      setZoom((currentZoom) => (currentZoom > MIN_ZOOM ? MIN_ZOOM : MAX_ZOOM));
+    },
+    [desktopZoomEnabled],
+  );
 
   const rotateImage = React.useCallback(() => {
     setRotation((currentRotation) => (currentRotation + 90) % 360);
@@ -389,7 +442,13 @@ const ProjectImageLightbox = ({
     return () => {
       window.cancelAnimationFrame(frameId);
     };
-  }, [activeImage, resetImageViewportScroll, rotation]);
+  }, [activeImage, resetImageViewportScroll, rotation, zoom]);
+
+  React.useEffect(() => {
+    if (activeImage && !desktopZoomEnabled && zoom !== MIN_ZOOM) {
+      setZoom(MIN_ZOOM);
+    }
+  }, [activeImage, desktopZoomEnabled, zoom]);
 
   const trapLightboxFocus = React.useCallback((event) => {
     if (event.key !== "Tab") {
@@ -398,8 +457,10 @@ const ProjectImageLightbox = ({
 
     const focusTargets = [
       closeButtonRef.current,
+      zoomOutButtonRef.current,
+      zoomInButtonRef.current,
       rotateButtonRef.current,
-    ].filter(Boolean);
+    ].filter((target) => target && !target.disabled);
 
     if (!focusTargets.length) {
       return;
@@ -416,9 +477,10 @@ const ProjectImageLightbox = ({
   }, []);
 
   const fittedImageStyles = React.useMemo(
-    () => getFittedImageStyles(activeImage, rotation, viewportSize),
-    [activeImage, rotation, viewportSize],
+    () => getFittedImageStyles(activeImage, rotation, viewportSize, zoom),
+    [activeImage, rotation, viewportSize, zoom],
   );
+  const zoomPercentage = Math.round(zoom * 100);
 
   return (
     <>
@@ -437,6 +499,15 @@ const ProjectImageLightbox = ({
           style={fittedImageStyles.lightbox}
           data-project-lightbox-rotated={
             rotation % 180 !== 0 ? "true" : undefined
+          }
+          data-project-lightbox-can-zoom={
+            desktopZoomEnabled ? "true" : undefined
+          }
+          data-project-lightbox-zoom={
+            desktopZoomEnabled ? zoom.toFixed(1) : undefined
+          }
+          data-project-lightbox-zoomed={
+            desktopZoomEnabled && zoom > MIN_ZOOM ? "true" : undefined
           }
           role="dialog"
           aria-modal="true"
@@ -466,6 +537,7 @@ const ProjectImageLightbox = ({
             onTouchMove={keepLightboxTouch}
           >
             <span
+              id={imageViewportId}
               ref={imageViewportRef}
               className="project-lightbox-image-viewport"
             >
@@ -474,10 +546,13 @@ const ProjectImageLightbox = ({
                 style={fittedImageStyles.stage}
               >
                 <img
-                  className="project-lightbox-image"
+                  className={`project-lightbox-image project-lightbox-zoom-target${
+                    desktopZoomEnabled && zoom > MIN_ZOOM ? " is-zoomed" : ""
+                  }`}
                   src={activeImage.src}
                   alt={activeImage.alt}
                   style={fittedImageStyles.image}
+                  onClick={toggleImageZoom}
                   onLoad={handleLightboxImageLoad}
                 />
               </span>
@@ -489,20 +564,54 @@ const ProjectImageLightbox = ({
               >
                 {activeImage.alt}
               </span>
-              <button
-                ref={rotateButtonRef}
-                className="project-lightbox-rotate"
-                type="button"
-                aria-label={`이미지 90도 회전, 현재 ${rotation}도`}
-                onClick={rotateImage}
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M4 12a8 8 0 0 1 13.66-5.66L20 8.68" />
-                  <path d="M20 4v4.68h-4.68" />
-                  <path d="M20 12a8 8 0 0 1-13.66 5.66L4 15.32" />
-                  <path d="M4 20v-4.68h4.68" />
-                </svg>
-              </button>
+              <span className="project-lightbox-actions">
+                {desktopZoomEnabled ? (
+                  <>
+                    <button
+                      ref={zoomOutButtonRef}
+                      className="project-lightbox-zoom project-lightbox-zoom-out"
+                      type="button"
+                      aria-controls={imageViewportId}
+                      aria-label={`이미지 축소, 현재 ${zoomPercentage}%`}
+                      disabled={zoom <= MIN_ZOOM}
+                      onClick={zoomOut}
+                    >
+                      <span aria-hidden="true">−</span>
+                    </button>
+                    <output
+                      className="project-lightbox-zoom-value"
+                      aria-live="polite"
+                    >
+                      {zoomPercentage}%
+                    </output>
+                    <button
+                      ref={zoomInButtonRef}
+                      className="project-lightbox-zoom project-lightbox-zoom-in"
+                      type="button"
+                      aria-controls={imageViewportId}
+                      aria-label={`이미지 확대, 현재 ${zoomPercentage}%`}
+                      disabled={zoom >= MAX_ZOOM}
+                      onClick={zoomIn}
+                    >
+                      <span aria-hidden="true">+</span>
+                    </button>
+                  </>
+                ) : null}
+                <button
+                  ref={rotateButtonRef}
+                  className="project-lightbox-rotate"
+                  type="button"
+                  aria-label={`이미지 90도 회전, 현재 ${rotation}도`}
+                  onClick={rotateImage}
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M4 12a8 8 0 0 1 13.66-5.66L20 8.68" />
+                    <path d="M20 4v4.68h-4.68" />
+                    <path d="M20 12a8 8 0 0 1-13.66 5.66L4 15.32" />
+                    <path d="M4 20v-4.68h4.68" />
+                  </svg>
+                </button>
+              </span>
             </figcaption>
           </figure>
         </div>

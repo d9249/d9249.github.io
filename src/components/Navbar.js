@@ -1,7 +1,41 @@
 import * as React from "react";
+import { useLocation } from "@gatsbyjs/reach-router";
 import { Link } from "gatsby";
 import { navItems } from "../data/navigation";
 import BlogSearch from "./BlogSearch";
+
+const SECTION_ACTIVATION_RATIO = 0.3;
+const SECTION_NAVIGATION_TIMEOUT = 1600;
+
+const getHomeSectionId = (to) => {
+  const match = to.match(/^\/#([^/?#]+)$/);
+  return match ? match[1] : null;
+};
+
+const homeSectionIds = navItems
+  .map((item) => getHomeSectionId(item.to))
+  .filter(Boolean);
+
+const getSectionActivationLine = () =>
+  Math.round(window.innerHeight * SECTION_ACTIVATION_RATIO);
+
+const getActiveHomeSection = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const activationLine = getSectionActivationLine();
+
+  return homeSectionIds.reduce((activeSection, sectionId) => {
+    const section = document.getElementById(sectionId);
+
+    if (section && section.getBoundingClientRect().top <= activationLine) {
+      return sectionId;
+    }
+
+    return activeSection;
+  }, null);
+};
 
 const getStoredTheme = () => {
   try {
@@ -53,10 +87,38 @@ const applyTheme = (theme, { persist = true } = {}) => {
 };
 
 const Navbar = () => {
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+  const [activeSection, setActiveSection] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [theme, setTheme] = React.useState("light");
   const menuButtonRef = React.useRef(null);
   const navRef = React.useRef(null);
+  const pendingSectionRef = React.useRef(null);
+  const pendingSectionTimerRef = React.useRef(null);
+
+  const clearPendingSection = React.useCallback(() => {
+    pendingSectionRef.current = null;
+
+    if (pendingSectionTimerRef.current !== null) {
+      window.clearTimeout(pendingSectionTimerRef.current);
+      pendingSectionTimerRef.current = null;
+    }
+  }, []);
+
+  const selectHomeSection = React.useCallback(
+    (sectionId) => {
+      clearPendingSection();
+      pendingSectionRef.current = sectionId;
+      setActiveSection(sectionId);
+      pendingSectionTimerRef.current = window.setTimeout(() => {
+        pendingSectionRef.current = null;
+        pendingSectionTimerRef.current = null;
+        setActiveSection(getActiveHomeSection());
+      }, SECTION_NAVIGATION_TIMEOUT);
+    },
+    [clearPendingSection],
+  );
 
   React.useEffect(() => {
     const initialTheme =
@@ -65,6 +127,63 @@ const Navbar = () => {
     document.documentElement.style.colorScheme = initialTheme;
     setTheme(initialTheme);
   }, []);
+
+  React.useEffect(() => {
+    if (!isHome) {
+      clearPendingSection();
+      setActiveSection(null);
+      return undefined;
+    }
+
+    const hashSection = location.hash.replace(/^#/, "");
+    if (homeSectionIds.includes(hashSection)) {
+      selectHomeSection(hashSection);
+    } else {
+      clearPendingSection();
+      setActiveSection(getActiveHomeSection());
+    }
+
+    const sections = homeSectionIds
+      .map((sectionId) => document.getElementById(sectionId))
+      .filter(Boolean);
+
+    if (!sections.length || typeof IntersectionObserver === "undefined") {
+      return clearPendingSection;
+    }
+
+    const syncActiveSection = () => {
+      const pendingSection = pendingSectionRef.current;
+
+      if (pendingSection) {
+        const pendingElement = document.getElementById(pendingSection);
+        const pendingRect = pendingElement?.getBoundingClientRect();
+        const activationLine = getSectionActivationLine();
+
+        if (
+          pendingRect &&
+          pendingRect.top <= activationLine &&
+          pendingRect.bottom > activationLine
+        ) {
+          clearPendingSection();
+        } else {
+          return;
+        }
+      }
+
+      setActiveSection(getActiveHomeSection());
+    };
+    const observer = new IntersectionObserver(syncActiveSection, {
+      rootMargin: "-30% 0px -69% 0px",
+      threshold: 0,
+    });
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => {
+      observer.disconnect();
+      clearPendingSection();
+    };
+  }, [clearPendingSection, isHome, location.hash, selectHomeSection]);
 
   React.useEffect(() => {
     const root = document.documentElement;
@@ -140,6 +259,21 @@ const Navbar = () => {
     });
   };
 
+  const handleNavigation = (item) => {
+    setOpen(false);
+
+    const sectionId = getHomeSectionId(item.to);
+    if (sectionId) {
+      selectHomeSection(sectionId);
+      return;
+    }
+
+    clearPendingSection();
+    if (item.to === "/") {
+      setActiveSection(null);
+    }
+  };
+
   return (
     <header className="masthead">
       <div className="shell masthead-inner">
@@ -159,23 +293,52 @@ const Navbar = () => {
           className={`nav ${open ? "is-open" : ""}`}
           aria-label="Primary navigation"
         >
-          {navItems.map((item) =>
-            item.reloadDocument ? (
-              <a key={item.to} href={item.to} onClick={() => setOpen(false)}>
-                {item.label}
-              </a>
-            ) : (
+          {navItems.map((item) => {
+            const sectionId = getHomeSectionId(item.to);
+            const isReloadActive =
+              item.reloadDocument && location.pathname.startsWith(item.to);
+
+            if (item.reloadDocument) {
+              return (
+                <a
+                  key={item.to}
+                  href={item.to}
+                  className={isReloadActive ? "is-active" : undefined}
+                  aria-current={isReloadActive ? "page" : undefined}
+                  onClick={() => handleNavigation(item)}
+                >
+                  {item.label}
+                </a>
+              );
+            }
+
+            return (
               <Link
-                activeClassName="is-active"
+                getProps={({ isPartiallyCurrent }) => {
+                  const isActive = sectionId
+                    ? isHome && activeSection === sectionId
+                    : item.to === "/"
+                      ? isHome && !activeSection
+                      : item.to !== "/" && isPartiallyCurrent;
+
+                  return {
+                    className: isActive ? "is-active" : undefined,
+                    "aria-current": isActive
+                      ? sectionId
+                        ? "location"
+                        : "page"
+                      : undefined,
+                  };
+                }}
                 key={item.to}
-                partiallyActive={item.to !== "/" && !item.to.includes("#")}
+                partiallyActive={item.to !== "/" && !sectionId}
                 to={item.to}
-                onClick={() => setOpen(false)}
+                onClick={() => handleNavigation(item)}
               >
                 {item.label}
               </Link>
-            ),
-          )}
+            );
+          })}
         </nav>
         <div className="header-actions">
           <BlogSearch />

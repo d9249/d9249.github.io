@@ -24,75 +24,74 @@ const createSkillPanels = (groups) =>
     ];
   });
 
-const SkillPanel = ({ compact, panel }) => {
-  const [expanded, setExpanded] = React.useState(false);
-  const Header = compact ? "summary" : "header";
-  const content = (
-    <>
-      <Header className="skill-card-header">
-        <div>
-          <span className="skill-card-label">{panel.label}</span>
-          <h3>{panel.title}</h3>
-        </div>
-        <span
-          className="skill-card-count"
-          aria-label={`${panel.skills.length}개 기술`}
-        >
-          {String(panel.skills.length).padStart(2, "0")}
-        </span>
-      </Header>
-      <ul className="skill-list">
-        {panel.skills.map((skill) => (
-          <li key={skill}>
-            <SkillIcon name={skill} />
-            <span className="skill-logo-name">{skill}</span>
-          </li>
-        ))}
-      </ul>
-    </>
-  );
-
-  if (!compact) {
-    return (
-      <article
-        className="skill-card"
-        aria-label={`${panel.title}: ${panel.summary}`}
+const SkillPanel = ({ id, labelledBy, panel }) => (
+  <article
+    className="skill-card"
+    id={id}
+    aria-label={labelledBy ? undefined : `${panel.title}: ${panel.summary}`}
+    aria-labelledby={labelledBy}
+    role={labelledBy ? "tabpanel" : undefined}
+  >
+    <header className="skill-card-header">
+      <div>
+        <span className="skill-card-label">{panel.label}</span>
+        <h3>{panel.title}</h3>
+      </div>
+      <span
+        className="skill-card-count"
+        aria-label={`${panel.skills.length}개 기술`}
       >
-        {content}
-      </article>
-    );
+        {String(panel.skills.length).padStart(2, "0")}
+      </span>
+    </header>
+    <ul className="skill-list">
+      {panel.skills.map((skill) => (
+        <li key={skill}>
+          <SkillIcon name={skill} />
+          <span className="skill-logo-name">{skill}</span>
+        </li>
+      ))}
+    </ul>
+  </article>
+);
+
+const getPanelDomId = (index) => `mobile-skill-panel-${index}`;
+const getTabDomId = (index) => `mobile-skill-tab-${index}`;
+
+const MobileSkillBrowser = ({ panels }) => {
+  const [activeIndex, setActiveIndex] = React.useState(0);
+  const activePanel = panels[activeIndex] || panels[0];
+
+  if (!activePanel) {
+    return null;
   }
 
   return (
-    <article
-      className="skill-card"
-      aria-label={`${panel.title}: ${panel.summary}`}
-    >
-      <details
-        className="skill-card-disclosure"
-        open={expanded}
-        onToggle={(event) => setExpanded(event.currentTarget.open)}
-      >
-        {content}
-      </details>
-    </article>
+    <section className="mobile-skill-browser" aria-label="기술 스택 탐색">
+      <div className="mobile-skill-tabs" role="tablist" aria-label="기술 분야">
+        {panels.map((panel, index) => (
+          <button
+            className={index === activeIndex ? "is-active" : undefined}
+            id={getTabDomId(index)}
+            key={panel.id}
+            type="button"
+            role="tab"
+            aria-controls={getPanelDomId(index)}
+            aria-selected={index === activeIndex}
+            tabIndex={index === activeIndex ? 0 : -1}
+            onClick={() => setActiveIndex(index)}
+          >
+            {panel.title}
+          </button>
+        ))}
+      </div>
+      <SkillPanel
+        id={getPanelDomId(activeIndex)}
+        labelledBy={getTabDomId(activeIndex)}
+        panel={activePanel}
+      />
+    </section>
   );
-};
-
-const useCompactSkillPanels = () => {
-  const [compact, setCompact] = React.useState(false);
-
-  React.useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 760px)");
-    const updateCompact = () => setCompact(mediaQuery.matches);
-
-    updateCompact();
-    mediaQuery.addEventListener?.("change", updateCompact);
-
-    return () => mediaQuery.removeEventListener?.("change", updateCompact);
-  }, []);
-
-  return compact;
 };
 
 const useDenseSkillGrid = () => {
@@ -115,8 +114,6 @@ const useDenseSkillGrid = () => {
 
         const styles = window.getComputedStyle(grid);
         const rowHeight = Number.parseFloat(styles.gridAutoRows) || 1;
-        // Dense rows encode the resolved column gap into each card span so the
-        // physical vertical and horizontal spacing stay equal.
         const panelGap = Number.parseFloat(styles.columnGap) || 12;
 
         cards.forEach((card) => {
@@ -143,15 +140,17 @@ const useDenseSkillGrid = () => {
 
 const SkillGrid = ({ groups }) => {
   const gridRef = useDenseSkillGrid();
-  const compact = useCompactSkillPanels();
   const panels = createSkillPanels(groups);
 
   return (
-    <div className="skill-grid" ref={gridRef}>
-      {panels.map((panel) => (
-        <SkillPanel compact={compact} key={panel.id} panel={panel} />
-      ))}
-    </div>
+    <>
+      <div className="skill-grid skill-grid-desktop" ref={gridRef}>
+        {panels.map((panel) => (
+          <SkillPanel key={panel.id} panel={panel} />
+        ))}
+      </div>
+      <MobileSkillBrowser panels={panels} />
+    </>
   );
 };
 

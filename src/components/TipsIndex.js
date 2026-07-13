@@ -118,7 +118,6 @@ const TipsIndex = ({
   activeCategory,
   activeTag,
   currentPage = 1,
-  description,
   label,
   pageCount = 1,
   skip = 0,
@@ -132,18 +131,11 @@ const TipsIndex = ({
   const firstTipNumber = totalVisibleTips === 0 ? 0 : skip + 1;
   const lastTipNumber = Math.min(totalVisibleTips, skip + visibleTips.length);
   const pageTitle = label || activeCategoryData?.label || "Application Tips";
-  const pageDescription =
-    description ?? activeCategoryData?.description ?? null;
 
   return (
     <Layout>
       <section className="shell section">
-        <SectionHeading
-          as="h1"
-          kicker="Tips"
-          title={pageTitle}
-          description={pageDescription}
-        />
+        <SectionHeading as="h1" kicker="Tips" title={pageTitle} />
         <TipCategoryNav activeCategory={activeCategory} />
         <TagNav
           ariaLabel="Tip tags"

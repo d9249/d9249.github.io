@@ -18,7 +18,6 @@ const TipsIndexTemplate = ({ data, pageContext }) => (
     activeCategory={pageContext.activeCategory}
     activeTag={pageContext.activeTag}
     currentPage={pageContext.currentPage}
-    description={pageContext.description}
     label={pageContext.label}
     pageCount={pageContext.pageCount}
     skip={pageContext.skip}

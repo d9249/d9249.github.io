@@ -357,6 +357,7 @@ export const paperItems = [
 
 export const awardItems = [
   {
+    category: "product",
     title: "Plan2Do 수상",
     result: "안전산업진흥 유공 행정안전부 장관상, 한국건설기술연구원 원장상",
     period: "2025.12",
@@ -375,6 +376,7 @@ export const awardItems = [
     ],
   },
   {
+    category: "product",
     title: "CES 2025 AI Innovation Awards",
     result: "booxTory Best of Innovation / arti Honoree",
     period: "2025",
@@ -393,6 +395,7 @@ export const awardItems = [
     ],
   },
   {
+    category: "product",
     title: "WIS 2025 혁신상",
     result: "과학기술정보통신부 장관상",
     period: "2025",
@@ -407,6 +410,7 @@ export const awardItems = [
     ],
   },
   {
+    category: "research",
     title: "APIC-IST 2022 Best Paper Award",
     result: "Best Paper Award",
     period: "2022",
@@ -415,6 +419,7 @@ export const awardItems = [
     facts: ["Medical Imaging", "Xception", "1st author"],
   },
   {
+    category: "research",
     title: "KIIT Best Paper Award",
     result: "Best Paper Award",
     period: "2021",
@@ -423,6 +428,7 @@ export const awardItems = [
     facts: ["PoseNet", "KIIT", "1st author"],
   },
   {
+    category: "research",
     title: "한국정보기술학회 대학생논문경진대회",
     result: "우수논문상 동상",
     period: "2021",
@@ -437,6 +443,7 @@ export const awardItems = [
     ],
   },
   {
+    category: "product",
     title: "경기대학교 AI컴퓨터공학부 캡스톤디자인전시회",
     result: "장려상",
     period: "2021",

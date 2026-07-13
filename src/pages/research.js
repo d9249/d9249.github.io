@@ -7,7 +7,7 @@ const PDF_ZOOM_MIN = 60;
 const PDF_ZOOM_MAX = 180;
 const PDF_ZOOM_STEP = 20;
 const PDF_DEFAULT_ZOOM = 100;
-const MOBILE_PAPER_VIEWER_QUERY = "(max-width: 680px)";
+const MOBILE_PAPER_VIEWER_QUERY = "(max-width: 760px)";
 const PDF_WORKER_SRC = "/vendor/pdfjs/pdf.worker.min.mjs";
 
 let pdfJsPromise;
@@ -39,6 +39,65 @@ const getPaperLinks = (item) => [
 ];
 
 const getPaperKey = (item) => `${item.year}-${item.title}`;
+
+const sortPapersByDate = (items) =>
+  items
+    .map((item, index) => ({ item, index }))
+    .sort(
+      (left, right) =>
+        Number(right.item.year) - Number(left.item.year) ||
+        left.index - right.index,
+    )
+    .map(({ item }) => item);
+
+const getPapersByType = (type) =>
+  sortPapersByDate(paperItems.filter((item) => item.type === type));
+
+const mobilePaperFamilies = [
+  {
+    key: "thesis",
+    label: "학위 논문",
+    groups: [
+      {
+        key: "masters-thesis",
+        label: null,
+        items: getPapersByType("Master's Thesis"),
+      },
+    ],
+  },
+  {
+    key: "journals",
+    label: "저널",
+    groups: [
+      {
+        key: "international-journals",
+        label: "해외 저널",
+        items: getPapersByType("SCIE Journal"),
+      },
+      {
+        key: "domestic-journals",
+        label: "국내 저널",
+        items: getPapersByType("KCI Journal"),
+      },
+    ],
+  },
+  {
+    key: "conferences",
+    label: "컨퍼런스",
+    groups: [
+      {
+        key: "international-conferences",
+        label: "해외 컨퍼런스",
+        items: getPapersByType("International Conference"),
+      },
+      {
+        key: "domestic-conferences",
+        label: "국내 컨퍼런스",
+        items: getPapersByType("Domestic Conference"),
+      },
+    ],
+  },
+];
 
 const getPdfSrc = (item, zoom, fitMode) => {
   const params = ["toolbar=0", "navpanes=0", "scrollbar=1"];
@@ -398,6 +457,57 @@ const PaperCanvasPdfViewer = ({
   );
 };
 
+const PaperCard = ({ item, activeViewerId, isPdfOpen, onTogglePdf }) => {
+  const links = getPaperLinks(item);
+  const paperKey = getPaperKey(item);
+
+  return (
+    <article className="paper-card">
+      <div className="paper-card-top">
+        <div className="meta">{item.type}</div>
+        <span>{item.year}</span>
+      </div>
+      <h3>{item.title}</h3>
+      <div className="paper-venue">{item.venue}</div>
+      <p>{item.description}</p>
+      {item.authors?.length ? (
+        <div className="paper-authors" aria-label={`${item.title} 저자`}>
+          {item.authors.map((author) => (
+            <span className="paper-author-chip" key={author}>
+              {author}
+            </span>
+          ))}
+        </div>
+      ) : null}
+      <div className="research-facts">
+        {item.facts.map((fact) => (
+          <span key={fact}>{fact}</span>
+        ))}
+      </div>
+      {item.pdfHref || links.length ? (
+        <div className="research-links" aria-label={`${item.title} 논문 링크`}>
+          {item.pdfHref ? (
+            <button
+              type="button"
+              className="paper-viewer-toggle"
+              aria-controls={activeViewerId}
+              aria-expanded={isPdfOpen}
+              onClick={() => onTogglePdf(paperKey)}
+            >
+              {isPdfOpen ? "PDF 닫기" : "PDF 미리보기"} →
+            </button>
+          ) : null}
+          {links.map((link) => (
+            <a key={link.href} href={link.href}>
+              {link.label} →
+            </a>
+          ))}
+        </div>
+      ) : null}
+    </article>
+  );
+};
+
 const paperRows = paperItems.reduce((rows, item, index) => {
   if (index % 2 === 0) {
     rows.push([item]);
@@ -523,78 +633,43 @@ const ResearchPage = () => {
 
       <section className="shell section">
         <SectionHeading kicker="Publications" title="전체 논문 리스트" />
-        <div className="paper-grid">
-          {paperRows.map((row, rowIndex) => {
-            const activeItem = row.find(
-              (item) => activePdf === getPaperKey(item),
-            );
-            const viewerId = `paper-viewer-row-${rowIndex}`;
-
-            return (
-              <React.Fragment key={row.map((item) => item.title).join("|")}>
-                <div className="paper-row-grid">
-                  {row.map((item, itemIndex) => {
-                    const links = getPaperLinks(item);
-                    const paperKey = getPaperKey(item);
-                    const isPdfOpen = activePdf === paperKey;
-                    const mobileViewerId = `paper-viewer-card-${rowIndex}-${itemIndex}`;
-                    const activeViewerId = isMobilePaperViewer
-                      ? mobileViewerId
-                      : viewerId;
+        {isMobilePaperViewer ? (
+          <div className="paper-grid paper-category-list">
+            {mobilePaperFamilies.map((family) => (
+              <section className="paper-category-family" key={family.key}>
+                <div className="paper-category-family-heading">
+                  <div className="meta">Publication type</div>
+                  <h2>{family.label}</h2>
+                </div>
+                <div className="paper-category-groups">
+                  {family.groups.map((group) => {
+                    const activeItem = group.items.find(
+                      (item) => activePdf === getPaperKey(item),
+                    );
+                    const viewerId = `paper-viewer-group-${group.key}`;
 
                     return (
-                      <article className="paper-card" key={item.title}>
-                        <div className="paper-card-top">
-                          <div className="meta">{item.type}</div>
-                          <span>{item.year}</span>
+                      <section className="paper-category-group" key={group.key}>
+                        {group.label ? <h3>{group.label}</h3> : null}
+                        <div className="paper-row-grid paper-category-rail">
+                          {group.items.map((item) => {
+                            const paperKey = getPaperKey(item);
+
+                            return (
+                              <PaperCard
+                                key={paperKey}
+                                item={item}
+                                activeViewerId={viewerId}
+                                isPdfOpen={activePdf === paperKey}
+                                onTogglePdf={togglePdf}
+                              />
+                            );
+                          })}
                         </div>
-                        <h3>{item.title}</h3>
-                        <div className="paper-venue">{item.venue}</div>
-                        <p>{item.description}</p>
-                        {item.authors?.length ? (
-                          <div
-                            className="paper-authors"
-                            aria-label={`${item.title} 저자`}
-                          >
-                            {item.authors.map((author) => (
-                              <span className="paper-author-chip" key={author}>
-                                {author}
-                              </span>
-                            ))}
-                          </div>
-                        ) : null}
-                        <div className="research-facts">
-                          {item.facts.map((fact) => (
-                            <span key={fact}>{fact}</span>
-                          ))}
-                        </div>
-                        {item.pdfHref || links.length ? (
-                          <div
-                            className="research-links"
-                            aria-label={`${item.title} 논문 링크`}
-                          >
-                            {item.pdfHref ? (
-                              <button
-                                type="button"
-                                className="paper-viewer-toggle"
-                                aria-controls={activeViewerId}
-                                aria-expanded={isPdfOpen}
-                                onClick={() => togglePdf(paperKey)}
-                              >
-                                {isPdfOpen ? "PDF 닫기" : "PDF 미리보기"} →
-                              </button>
-                            ) : null}
-                            {links.map((link) => (
-                              <a key={link.href} href={link.href}>
-                                {link.label} →
-                              </a>
-                            ))}
-                          </div>
-                        ) : null}
-                        {isMobilePaperViewer && isPdfOpen && item.pdfHref ? (
+                        {activeItem?.pdfHref ? (
                           <PaperCanvasPdfViewer
-                            item={item}
-                            viewerId={mobileViewerId}
+                            item={activeItem}
+                            viewerId={viewerId}
                             pdfZoom={pdfZoom}
                             pdfFitMode={pdfFitMode}
                             isPdfFullView={isPdfFullView}
@@ -603,26 +678,55 @@ const ResearchPage = () => {
                             onToggleFullView={togglePdfFullView}
                           />
                         ) : null}
-                      </article>
+                      </section>
                     );
                   })}
                 </div>
-                {!isMobilePaperViewer && activeItem?.pdfHref ? (
-                  <PaperIframePdfViewer
-                    item={activeItem}
-                    viewerId={viewerId}
-                    pdfZoom={pdfZoom}
-                    pdfFitMode={pdfFitMode}
-                    isPdfFullView={isPdfFullView}
-                    onChangeZoom={changePdfZoom}
-                    onFitToView={fitPdfToView}
-                    onToggleFullView={togglePdfFullView}
-                  />
-                ) : null}
-              </React.Fragment>
-            );
-          })}
-        </div>
+              </section>
+            ))}
+          </div>
+        ) : (
+          <div className="paper-grid">
+            {paperRows.map((row, rowIndex) => {
+              const activeItem = row.find(
+                (item) => activePdf === getPaperKey(item),
+              );
+              const viewerId = `paper-viewer-row-${rowIndex}`;
+
+              return (
+                <React.Fragment key={row.map((item) => item.title).join("|")}>
+                  <div className="paper-row-grid">
+                    {row.map((item) => {
+                      const paperKey = getPaperKey(item);
+
+                      return (
+                        <PaperCard
+                          key={paperKey}
+                          item={item}
+                          activeViewerId={viewerId}
+                          isPdfOpen={activePdf === paperKey}
+                          onTogglePdf={togglePdf}
+                        />
+                      );
+                    })}
+                  </div>
+                  {activeItem?.pdfHref ? (
+                    <PaperIframePdfViewer
+                      item={activeItem}
+                      viewerId={viewerId}
+                      pdfZoom={pdfZoom}
+                      pdfFitMode={pdfFitMode}
+                      isPdfFullView={isPdfFullView}
+                      onChangeZoom={changePdfZoom}
+                      onFitToView={fitPdfToView}
+                      onToggleFullView={togglePdfFullView}
+                    />
+                  ) : null}
+                </React.Fragment>
+              );
+            })}
+          </div>
+        )}
       </section>
     </Layout>
   );
