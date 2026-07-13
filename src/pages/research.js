@@ -485,7 +485,11 @@ const PaperCard = ({ item, activeViewerId, isPdfOpen, onTogglePdf }) => {
         ))}
       </div>
       {item.pdfHref || links.length ? (
-        <div className="research-links" aria-label={`${item.title} 논문 링크`}>
+        <div
+          className="research-links"
+          role="group"
+          aria-label={`${item.title} 논문 링크`}
+        >
           {item.pdfHref ? (
             <button
               type="button"

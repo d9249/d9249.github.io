@@ -93,7 +93,11 @@ const AwardCard = ({ item, activeEvidence, onToggleEvidence }) => {
         ))}
       </div>
       {inlineLinks.length || externalLinks.length || item.href ? (
-        <div className="research-links" aria-label={`${item.title} 증빙 링크`}>
+        <div
+          className="research-links"
+          role="group"
+          aria-label={`${item.title} 증빙 링크`}
+        >
           {externalLinks.map((link) => (
             <a key={link.href} href={link.href}>
               {link.label} →

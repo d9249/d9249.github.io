@@ -21,6 +21,8 @@ import { getProjectProfileTags } from "../utils/projectProfileTags";
 const CARD_DECK_SIZE = 4;
 const PROJECT_DECK_SIZE = 2;
 const POST_DECK_SIZE = 3;
+const HOME_PREVIEW_SIZE = 4;
+const HOME_RECOGNITION_PREVIEW_SIZE = 2;
 const PROFILE_ASCII = String.raw`               ..:.
            .=*###%##=.
           -%@%%###%%%#*+:
@@ -103,15 +105,15 @@ const getCardDecks = (items, deckSize = CARD_DECK_SIZE) =>
 const getDeckLabel = (index, total) =>
   `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
 
-const PaperSummaryCard = ({ item }) => (
-  <article className="paper-card">
+const PaperSummaryCard = ({ compact = false, item }) => (
+  <article className={`paper-card${compact ? " is-compact" : ""}`}>
     <div className="paper-card-top">
       <div className="meta">{item.type}</div>
       <span>{item.year}</span>
     </div>
     <h3>{item.title}</h3>
     <div className="paper-venue">{item.venue}</div>
-    <p>{item.description}</p>
+    {compact ? null : <p>{item.description}</p>}
     <div className="research-facts">
       {item.facts.map((fact) => (
         <span key={fact}>{fact}</span>
@@ -126,33 +128,42 @@ const PaperSummaryCard = ({ item }) => (
 );
 
 const RecognitionSummaryCard = ({
+  compact = false,
   item,
   actionLabel = "증빙 보기",
   className = "",
 }) => (
-  <article className={`recognition-card${className ? ` ${className}` : ""}`}>
+  <article
+    className={`recognition-card${compact ? " is-compact" : ""}${
+      className ? ` ${className}` : ""
+    }`}
+  >
     <div className="meta">{item.period}</div>
     <h3>{item.title}</h3>
     <strong>{item.result}</strong>
-    <p>{item.description}</p>
+    {compact ? null : <p>{item.description}</p>}
     <div className="research-facts">
       {item.facts.map((fact) => (
         <span key={fact}>{fact}</span>
       ))}
     </div>
-    {item.links?.length ? (
-      <div className="research-links" aria-label={`${item.title} 증빙 링크`}>
-        {item.links.map((link) => (
+    {item.links?.length || item.href ? (
+      <div
+        className="research-links"
+        role="group"
+        aria-label={`${item.title} 증빙 링크`}
+      >
+        {(item.links || []).map((link) => (
           <a key={link.href} href={link.href}>
             {link.label} →
           </a>
         ))}
+        {item.href ? (
+          <a className="paper-link" href={item.href}>
+            {actionLabel} →
+          </a>
+        ) : null}
       </div>
-    ) : null}
-    {item.href ? (
-      <a className="paper-link" href={item.href}>
-        {actionLabel} →
-      </a>
     ) : null}
   </article>
 );
@@ -274,7 +285,7 @@ const IndexPage = ({ data }) => {
 
   return (
     <Layout>
-      <section className="shell hero">
+      <section className="shell hero home-focus-section">
         <div>
           <p className="eyebrow">AI Engineer &amp; Researcher</p>
           <h1>
@@ -386,8 +397,15 @@ const IndexPage = ({ data }) => {
         </aside>
       </section>
 
-      <section className="shell section" aria-labelledby="proof-title">
-        <SectionHeading kicker="Highlights" title="주요 성과" />
+      <section
+        className="shell section home-focus-section"
+        aria-labelledby="proof-title"
+      >
+        <SectionHeading
+          kicker="Highlights"
+          title="주요 성과"
+          titleId="proof-title"
+        />
         <div className="evidence-grid">
           {evidenceItems.map((item) => (
             <article className="evidence-card" key={item.label}>
@@ -400,7 +418,7 @@ const IndexPage = ({ data }) => {
       </section>
 
       <section
-        className="shell section"
+        className="shell section home-focus-section"
         id="career"
         aria-labelledby="career-title"
       >
@@ -480,13 +498,14 @@ const IndexPage = ({ data }) => {
       </section>
 
       <section
-        className="shell section"
+        className="shell section home-focus-section"
         id="projects"
         aria-labelledby="projects-title"
       >
         <SectionHeading
           kicker="Projects"
           title="프로젝트"
+          titleId="projects-title"
           action={<Link to="/projects/">전체 프로젝트 보기 →</Link>}
         />
         <div className="card-deck project-card-deck responsive-desktop-only">
@@ -521,23 +540,22 @@ const IndexPage = ({ data }) => {
             projects={activeProjectDeck}
           />
         </div>
-        <MobileCardCarousel
-          ariaLabel="모바일 프로젝트"
-          itemSelector=".project-card"
-          statusLabel="프로젝트 카드"
-        >
-          <ProjectGrid className="mobile-carousel-track" projects={projects} />
-        </MobileCardCarousel>
+        <ProjectGrid
+          className="home-mobile-summary-grid home-mobile-project-grid"
+          projects={projects.slice(0, HOME_PREVIEW_SIZE)}
+          variant="compact"
+        />
       </section>
 
       <section
-        className="shell section"
+        className="shell section home-focus-section"
         id="research"
         aria-labelledby="research-title"
       >
         <SectionHeading
           kicker="Research"
           title="연구 목록"
+          titleId="research-title"
           action={<Link to="/research/">전체 연구 보기 →</Link>}
         />
         <div className="card-deck responsive-desktop-only">
@@ -572,27 +590,22 @@ const IndexPage = ({ data }) => {
             ))}
           </div>
         </div>
-        <MobileCardCarousel
-          ariaLabel="모바일 연구 목록"
-          itemSelector=".paper-card"
-          statusLabel="연구 카드"
-        >
-          <div className="paper-grid mobile-carousel-track">
-            {paperItems.map((item) => (
-              <PaperSummaryCard item={item} key={item.title} />
-            ))}
-          </div>
-        </MobileCardCarousel>
+        <div className="paper-grid home-mobile-summary-grid home-mobile-paper-grid">
+          {paperItems.slice(0, HOME_PREVIEW_SIZE).map((item) => (
+            <PaperSummaryCard compact item={item} key={item.title} />
+          ))}
+        </div>
       </section>
 
       <section
-        className="shell section"
+        className="shell section home-focus-section"
         id="awards"
         aria-labelledby="awards-title"
       >
         <SectionHeading
           kicker="Awards"
           title="수상 기록"
+          titleId="awards-title"
           action={<Link to="/awards/">전체 수상 보기 →</Link>}
         />
         <div className="card-deck responsive-desktop-only">
@@ -627,27 +640,22 @@ const IndexPage = ({ data }) => {
             ))}
           </div>
         </div>
-        <MobileCardCarousel
-          ariaLabel="모바일 수상 기록"
-          itemSelector=".recognition-card"
-          statusLabel="수상 카드"
-        >
-          <div className="recognition-grid mobile-carousel-track">
-            {awardItems.map((item) => (
-              <RecognitionSummaryCard item={item} key={item.title} />
-            ))}
-          </div>
-        </MobileCardCarousel>
+        <div className="recognition-grid home-mobile-summary-grid home-mobile-recognition-grid">
+          {awardItems.slice(0, HOME_RECOGNITION_PREVIEW_SIZE).map((item) => (
+            <RecognitionSummaryCard compact item={item} key={item.title} />
+          ))}
+        </div>
       </section>
 
       <section
-        className="shell section"
+        className="shell section home-focus-section"
         id="competitions"
         aria-labelledby="competitions-title"
       >
         <SectionHeading
           kicker="Competitions"
           title="대회 및 외부 활동"
+          titleId="competitions-title"
           action={<Link to="/competitions/">전체 대회 보기 →</Link>}
         />
         <div className="recognition-grid responsive-desktop-only">
@@ -660,26 +668,23 @@ const IndexPage = ({ data }) => {
             />
           ))}
         </div>
-        <MobileCardCarousel
-          ariaLabel="모바일 대회 및 외부 활동"
-          itemSelector=".recognition-card"
-          statusLabel="대회 카드"
-        >
-          <div className="recognition-grid mobile-carousel-track">
-            {competitionItems.map((item) => (
+        <div className="recognition-grid home-mobile-summary-grid home-mobile-recognition-grid">
+          {competitionItems
+            .slice(0, HOME_RECOGNITION_PREVIEW_SIZE)
+            .map((item) => (
               <RecognitionSummaryCard
                 actionLabel="활동 보기"
                 className="competition-card"
+                compact
                 item={item}
                 key={item.title}
               />
             ))}
-          </div>
-        </MobileCardCarousel>
+        </div>
       </section>
 
       <section
-        className="shell section"
+        className="shell section home-focus-section"
         id="skills"
         aria-labelledby="skills-title"
       >
@@ -692,13 +697,14 @@ const IndexPage = ({ data }) => {
       </section>
 
       <section
-        className="shell section"
+        className="shell section home-focus-section"
         id="latest"
         aria-labelledby="latest-title"
       >
         <SectionHeading
           kicker="Blog"
           title="최근 지식"
+          titleId="latest-title"
           action={<Link to="/blog/">전체 지식 보기 →</Link>}
         />
         <div className="card-deck responsive-desktop-only">

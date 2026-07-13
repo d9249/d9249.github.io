@@ -1349,7 +1349,7 @@ html[lang="ko"] body {
 .article-body a,
 .project-detail-panel a,
 .paper-link,
-.research-links a {
+.research-links :is(a, button) {
   color: var(--accent);
   text-decoration-color: color-mix(in oklch, var(--accent) 32%, transparent);
   text-underline-offset: 0.18em;
@@ -1362,8 +1362,40 @@ html[lang="ko"] body {
   font-family: var(--font-body);
 }
 
+.paper-link,
+.research-links :is(a, button) {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: 0.75rem;
+  background: color-mix(in oklch, var(--accent) 9%, var(--surface));
+  color: color-mix(in oklch, var(--accent) 88%, var(--fg));
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 680;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+  transition:
+    background var(--motion-fast) var(--ease-fluid),
+    color var(--motion-fast) var(--ease-fluid),
+    transform var(--motion-press) ease-out;
+}
+
+.paper-link:focus-visible,
+.research-links :is(a, button):focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .paper-viewer-toggle {
-  border: 1px solid color-mix(in oklch, var(--accent) 22%, var(--border));
+  border: 0;
   background: color-mix(in oklch, var(--accent) 7%, var(--surface));
   box-shadow: none;
   color: color-mix(in oklch, var(--accent) 88%, var(--fg));
@@ -1376,21 +1408,20 @@ html[lang="ko"] body {
   color: color-mix(in oklch, var(--accent) 88%, var(--fg));
 }
 
-.research-links a {
-  min-height: 2.75rem;
-  padding: 0 var(--space-3);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-control);
-  background: color-mix(in oklch, var(--surface) 92%, transparent);
-  font-size: 0.78rem;
-  font-weight: 650;
-  text-decoration: none;
+.research-links :is(a, button) {
+  border-bottom: 0;
 }
 
-.research-links a:hover {
-  border-color: color-mix(in oklch, var(--accent) 34%, var(--border));
-  background: color-mix(in oklch, var(--accent) 6%, var(--surface));
+.paper-link:hover,
+.research-links :is(a, button):hover {
+  border-bottom: 0;
+  background: color-mix(in oklch, var(--accent) 15%, var(--surface));
   color: var(--accent);
+}
+
+.paper-link:active,
+.research-links :is(a, button):active {
+  transform: scale(0.98);
 }
 
 .article-body blockquote {
@@ -2165,6 +2196,12 @@ html[lang="ko"] body {
   .paper-card:hover {
     transform: none;
   }
+
+  .paper-link:active,
+  .research-links :is(a, button):active,
+  .mobile-skill-toggle[aria-expanded="true"] svg {
+    transform: none;
+  }
 }
 
 @keyframes apple-fade-in {
@@ -2227,13 +2264,21 @@ html[lang="ko"] body {
   .recognition-card,
   .research-card,
   .skill-card,
-  .tip-card {
+  .tip-card,
+  .paper-link,
+  .research-links :is(a, button) {
     border-color: var(--border);
+  }
+
+  .paper-link,
+  .research-links :is(a, button) {
+    border: 1px solid var(--border);
   }
 }
 
 /* 2026 responsive UX consolidation */
 .hero-button-actions-mobile,
+.home-mobile-summary-grid,
 .mobile-card-carousel,
 .mobile-career-layout,
 .mobile-skill-browser {
@@ -2271,32 +2316,106 @@ html[lang="ko"] body {
   }
 
   .hero-button-actions-mobile {
-    display: flex;
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
     width: 100%;
     max-width: 100%;
     min-width: 0;
     margin-inline: 0;
-    padding: 0 0 var(--space-2);
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scroll-padding-inline: 0;
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
-  }
-
-  .hero-button-actions-mobile::-webkit-scrollbar {
-    display: none;
+    padding: 0;
+    overflow: visible;
+    scroll-snap-type: none;
   }
 
   .hero-button-actions-mobile .button-primary,
   .hero-button-actions-mobile .button-secondary,
   .hero-button-actions-mobile > :nth-child(n) {
-    display: inline-flex;
-    flex: 0 0 auto;
+    display: flex;
+    width: 100%;
+    min-width: 0;
     min-height: 2.75rem;
-    scroll-snap-align: start;
-    white-space: nowrap;
+    padding-inline: var(--space-3);
+    scroll-snap-align: none;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .home-mobile-summary-grid {
+    display: grid !important;
+    width: 100%;
+    min-width: 0;
+    gap: var(--space-3) !important;
+    align-items: stretch;
+    margin: 0;
+    padding: 0 !important;
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+  }
+
+  .home-mobile-project-grid,
+  .home-mobile-paper-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .home-mobile-recognition-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .home-mobile-summary-grid
+    > :is(.project-card, .paper-card, .recognition-card) {
+    width: auto !important;
+    min-width: 0;
+    min-height: 0;
+    padding: var(--space-4);
+    gap: var(--space-3);
+    border-radius: var(--radius-card);
+    scroll-snap-align: none;
+  }
+
+  .home-mobile-summary-grid :is(.project-card h3, .paper-card h3) {
+    margin-top: var(--space-1);
+    font-size: clamp(0.96rem, 4.4vw, 1.08rem);
+    line-height: 1.18;
+    text-wrap: pretty;
+  }
+
+  .home-mobile-summary-grid .recognition-card h3 {
+    font-size: 1.12rem;
+  }
+
+  .home-mobile-summary-grid .recognition-card > strong {
+    font-size: 0.96rem;
+  }
+
+  .home-mobile-summary-grid .project-title-tagline {
+    font-size: 0.76rem;
+    line-height: 1.35;
+  }
+
+  .home-mobile-summary-grid .project-metrics,
+  .home-mobile-summary-grid .project-stack {
+    gap: var(--space-1);
+    padding-top: var(--space-2);
+  }
+
+  .home-mobile-summary-grid
+    :is(.metric-chip, .project-stack span, .research-facts span) {
+    font-size: 0.68rem;
+  }
+
+  .home-mobile-summary-grid .project-card-actions {
+    padding-top: 0;
+    font-size: 0.72rem;
+  }
+
+  .home-mobile-summary-grid .paper-venue {
+    font-size: 0.68rem;
+    line-height: 1.45;
+  }
+
+  .home-mobile-summary-grid .research-links {
+    width: 100%;
   }
 
   .mobile-career-layout {
@@ -2411,7 +2530,7 @@ html[lang="ko"] body {
     flex: 0 0 var(--mobile-carousel-card-width) !important;
     width: var(--mobile-carousel-card-width) !important;
     min-width: 0;
-    scroll-snap-align: center;
+    scroll-snap-align: none center;
     scroll-snap-stop: always;
   }
 
@@ -2571,16 +2690,36 @@ html[lang="ko"] body {
     display: block;
   }
 
+  .mobile-skill-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: var(--space-3) !important;
+    align-items: start;
+    width: 100%;
+    margin: 0;
+    padding: 0 !important;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
   .mobile-skill-browser .skill-card {
-    grid-template-rows: auto minmax(0, 1fr);
-    height: clamp(26rem, 68svh, 32rem);
+    grid-template-rows: auto auto auto;
+    width: auto;
+    height: auto;
     min-height: 0;
-    align-self: stretch;
-    align-content: stretch;
-    padding: var(--space-5);
+    align-self: start;
+    align-content: start;
+    padding: 0;
+    scroll-snap-align: none;
+  }
+
+  .mobile-skill-browser .skill-card.is-expanded {
+    grid-column: 1 / -1;
   }
 
   .mobile-skill-browser .skill-card-header {
+    align-items: center;
+    padding: var(--space-3);
     cursor: default;
   }
 
@@ -2589,40 +2728,132 @@ html[lang="ko"] body {
   }
 
   .mobile-skill-browser .skill-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    min-height: 0;
-    overflow-y: auto;
-    touch-action: pan-y;
-    -webkit-overflow-scrolling: touch;
+    grid-template-columns: minmax(0, 1fr);
+    overflow: visible;
+    touch-action: auto;
   }
 
-  .competition-card-actions,
-  #competitions .competition-card .research-links {
+  .mobile-skill-browser .skill-card.is-expanded .skill-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mobile-skill-browser .skill-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .mobile-skill-browser .skill-list li {
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    min-height: 2.75rem;
+    padding: var(--space-2);
+    font-size: 0.68rem;
+  }
+
+  .mobile-skill-browser :is(.skill-logo-mark, .skill-logo-mark svg) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .mobile-skill-toggle {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0 var(--space-3);
+    border: 0;
+    border-top: 1px solid color-mix(in oklch, var(--border) 72%, transparent);
+    background: color-mix(in oklch, var(--accent) 6%, var(--surface));
+    color: var(--accent);
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 680;
+    text-align: left;
+  }
+
+  .mobile-skill-toggle svg {
+    width: 1rem;
+    height: 1rem;
+    flex: 0 0 auto;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform var(--motion-fast) var(--ease-fluid);
+  }
+
+  .mobile-skill-toggle[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+
+  .mobile-skill-toggle:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: -3px;
+  }
+
+  .mobile-skill-toggle:hover {
+    background: color-mix(in oklch, var(--accent) 12%, var(--surface));
+  }
+
+  .mobile-skill-toggle:active {
+    background: color-mix(in oklch, var(--accent) 17%, var(--surface));
+  }
+
+  .paper-card .research-facts,
+  .recognition-card .research-facts {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-2);
     width: 100%;
   }
 
-  .competition-card-actions > :is(a, button),
-  #competitions .competition-card :is(.research-links a, .paper-link) {
+  .home-mobile-paper-grid .research-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .paper-card .research-facts span,
+  .recognition-card .research-facts span {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    min-height: 2.75rem;
-    padding: 0 var(--space-3);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-control);
-    background: color-mix(in oklch, var(--surface) 92%, transparent);
-    color: var(--accent);
-    font-family: var(--font-body);
-    font-size: 0.78rem;
-    font-weight: 650;
-    line-height: 1.2;
+    min-height: 2.25rem;
+    padding: var(--space-2);
+    border: 0;
+    border-radius: 0.65rem;
+    background: color-mix(in oklch, var(--accent) 6%, var(--surface));
+    line-height: 1.3;
     text-align: center;
-    text-decoration: none;
     white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .research-links,
+  .competition-card-actions,
+  #competitions .competition-card .research-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr));
+    gap: var(--space-2);
+    width: 100%;
+  }
+
+  .research-links > :is(a, button),
+  .competition-card-actions > :is(a, button),
+  #competitions .competition-card :is(.research-links a, .paper-link) {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .competition-card-actions,
+  #competitions .competition-card .research-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .competition-card-actions > :only-child,
+  #competitions .competition-card .research-links > :only-child {
+    grid-column: 1 / -1;
   }
 
   .paper-category-list,
@@ -2696,6 +2927,113 @@ html[lang="ko"] body {
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 980px) {
+  #projects > .responsive-desktop-only,
+  #research > .responsive-desktop-only,
+  #awards > .responsive-desktop-only,
+  #competitions > .responsive-desktop-only {
+    display: none !important;
+  }
+
+  .home-mobile-summary-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: var(--space-4) !important;
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+    margin: 0;
+    padding: 0 !important;
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+  }
+
+  .home-mobile-summary-grid
+    > :is(.project-card, .paper-card, .recognition-card) {
+    width: auto !important;
+    min-width: 0;
+    min-height: 0;
+    padding: var(--space-5);
+    gap: var(--space-3);
+    scroll-snap-align: none;
+  }
+
+  .home-mobile-summary-grid .research-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+    width: 100%;
+  }
+
+  .home-mobile-summary-grid .research-facts span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 2.25rem;
+    padding: var(--space-2);
+    border: 0;
+    border-radius: 0.65rem;
+    background: color-mix(in oklch, var(--accent) 6%, var(--surface));
+    line-height: 1.3;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .home-mobile-summary-grid .research-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+    width: 100%;
+  }
+
+  .home-mobile-summary-grid .research-links > :is(a, button) {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .home-mobile-summary-grid .research-links > :only-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  html:has(#main-content > .home-focus-section) {
+    scroll-padding-block: calc(2.75rem + var(--space-4)) var(--space-4);
+    scroll-snap-type: block proximity;
+  }
+
+  #main-content > .home-focus-section {
+    scroll-snap-align: start none;
+    scroll-snap-stop: normal;
+  }
+}
+
+@media (max-width: 359px) {
+  .home-mobile-project-grid,
+  .home-mobile-paper-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  html:has(#main-content > .home-focus-section) {
+    scroll-snap-type: none;
+  }
+
+  .mobile-skill-toggle[aria-expanded="true"] svg {
+    transform: none;
+  }
+}
+
+@media (max-width: 980px) and (prefers-contrast: more) {
+  .paper-card .research-facts span,
+  .recognition-card .research-facts span {
+    border: 1px solid var(--border);
   }
 }
 
