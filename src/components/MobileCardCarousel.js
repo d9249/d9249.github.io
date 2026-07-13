@@ -1,6 +1,22 @@
 import * as React from "react";
 
+const MAX_VISIBLE_PAGES = 7;
+
 const getScrollContainer = (viewport) => viewport?.firstElementChild || null;
+
+const getVisiblePageIndexes = (itemCount, activeIndex) => {
+  const visiblePageCount = Math.min(itemCount, MAX_VISIBLE_PAGES);
+  const maxStartIndex = Math.max(itemCount - visiblePageCount, 0);
+  const startIndex = Math.min(
+    Math.max(activeIndex - Math.floor(visiblePageCount / 2), 0),
+    maxStartIndex,
+  );
+
+  return Array.from(
+    { length: visiblePageCount },
+    (_, index) => startIndex + index,
+  );
+};
 
 const MobileCardCarousel = ({
   ariaLabel,
@@ -104,7 +120,10 @@ const MobileCardCarousel = ({
 
   const visibleCount = Math.max(itemCount, React.Children.count(children));
   const visibleIndex = Math.min(activeIndex + 1, Math.max(visibleCount, 1));
-  const progress = (visibleIndex / Math.max(visibleCount, 1)) * 100;
+  const visiblePageIndexes = getVisiblePageIndexes(
+    Math.max(visibleCount, 1),
+    visibleIndex - 1,
+  );
   const hasPrevious = activeIndex > 0;
   const hasNext = activeIndex < visibleCount - 1;
 
@@ -138,13 +157,15 @@ const MobileCardCarousel = ({
         </button>
       </div>
       <div className="mobile-card-carousel-status" aria-live="polite">
-        <span className="mobile-card-carousel-progress" aria-hidden="true">
-          <span style={{ width: `${progress}%` }} />
-        </span>
-        <span className="mobile-card-carousel-count" aria-hidden="true">
-          <strong>{visibleIndex}</strong>
-          <span>/</span>
-          {Math.max(visibleCount, 1)}
+        <span className="mobile-card-carousel-pagination" aria-hidden="true">
+          {visiblePageIndexes.map((index) => (
+            <span
+              className={`mobile-card-carousel-page${
+                index === visibleIndex - 1 ? " is-active" : ""
+              }`}
+              key={`page-${index}`}
+            />
+          ))}
         </span>
         <span className="visually-hidden">
           {statusLabel} {visibleIndex} / {Math.max(visibleCount, 1)}

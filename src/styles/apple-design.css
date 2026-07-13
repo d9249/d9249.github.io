@@ -2237,7 +2237,9 @@ html[lang="ko"] body {
   }
 
   .mobile-card-carousel {
-    --mobile-carousel-card-width: min(76vw, 22rem);
+    --mobile-carousel-card-gap: var(--space-4);
+    --mobile-carousel-card-inset: var(--space-8);
+    --mobile-carousel-card-width: min(calc(100cqi - var(--space-16)), 24rem);
 
     display: block;
     min-width: 0;
@@ -2249,6 +2251,7 @@ html[lang="ko"] body {
   }
 
   .mobile-card-carousel-viewport {
+    container-type: inline-size;
     min-width: 0;
     margin-inline: calc(var(--space-4) * -1);
     overflow: hidden;
@@ -2257,11 +2260,14 @@ html[lang="ko"] body {
   .mobile-card-carousel .mobile-carousel-track {
     display: flex !important;
     grid-template-columns: none !important;
-    gap: var(--space-3) !important;
+    gap: var(--mobile-carousel-card-gap) !important;
     width: 100%;
     margin: 0;
     padding: var(--space-2)
-      max(var(--space-6), calc((100% - var(--mobile-carousel-card-width)) / 2))
+      max(
+        var(--mobile-carousel-card-inset),
+        calc((100% - var(--mobile-carousel-card-width)) / 2)
+      )
       var(--space-4) !important;
     border: 0;
     border-radius: 0;
@@ -2271,7 +2277,7 @@ html[lang="ko"] body {
     overflow-y: hidden;
     overscroll-behavior-inline: contain;
     scroll-padding-inline: max(
-      var(--space-6),
+      var(--mobile-carousel-card-inset),
       calc((100% - var(--mobile-carousel-card-width)) / 2)
     );
     scroll-snap-type: x mandatory;
@@ -2373,7 +2379,7 @@ html[lang="ko"] body {
   .mobile-card-carousel-arrow {
     position: absolute;
     z-index: 3;
-    top: 50%;
+    top: calc(100% + var(--space-3));
     display: grid;
     width: 2.75rem;
     height: 2.75rem;
@@ -2384,7 +2390,6 @@ html[lang="ko"] body {
     background: color-mix(in oklch, var(--surface) 92%, transparent);
     box-shadow: 0 0.55rem 1.5rem color-mix(in oklch, var(--fg) 13%, transparent);
     color: var(--fg);
-    transform: translateY(-65%);
     backdrop-filter: blur(18px) saturate(1.15);
     -webkit-backdrop-filter: blur(18px) saturate(1.15);
   }
@@ -2402,7 +2407,7 @@ html[lang="ko"] body {
   }
 
   .mobile-card-carousel-arrow:not(:disabled):active {
-    transform: translateY(-65%) scale(0.95);
+    transform: scale(0.95);
   }
 
   .mobile-card-carousel-arrow svg {
@@ -2417,54 +2422,34 @@ html[lang="ko"] body {
 
   .mobile-card-carousel-status {
     display: flex;
-    gap: var(--space-2);
     align-items: center;
-    width: fit-content;
-    min-height: 2rem;
-    margin: var(--space-2) auto 0;
-    padding: 0.32rem 0.62rem 0.32rem 0.72rem;
-    border: 1px solid var(--rim-light);
-    border-radius: 999px;
-    background: var(--material-card-strong);
-    box-shadow: 0 0.4rem 1.2rem color-mix(in oklch, var(--fg) 7%, transparent);
-    color: var(--muted);
-    font-family: var(--font-body);
-    font-size: 0.7rem;
-    font-weight: 650;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0;
+    justify-content: center;
+    min-height: 2.75rem;
+    margin: var(--space-3) 0 0;
   }
 
-  .mobile-card-carousel-progress {
-    display: block;
-    width: 3.75rem;
-    height: 0.25rem;
-    overflow: hidden;
-    border-radius: 999px;
-    background: color-mix(in oklch, var(--border) 84%, transparent);
-  }
-
-  .mobile-card-carousel-progress > span {
-    display: block;
-    height: 100%;
-    border-radius: inherit;
-    background: var(--accent);
-    transition: width var(--motion-material) var(--ease-fluid);
-  }
-
-  .mobile-card-carousel-count {
+  .mobile-card-carousel-pagination {
     display: inline-flex;
-    gap: 0.24rem;
-    align-items: baseline;
+    gap: 0.56rem;
+    align-items: center;
+    justify-content: center;
   }
 
-  .mobile-card-carousel-count strong {
-    color: var(--fg);
-    font-size: 0.76rem;
+  .mobile-card-carousel-page {
+    display: block;
+    width: 0.5rem;
+    height: 0.5rem;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    background: color-mix(in oklch, var(--muted) 58%, transparent);
+    transition:
+      width var(--motion-material) var(--ease-fluid),
+      background-color var(--motion-fast) var(--ease-fluid);
   }
 
-  .mobile-card-carousel-count > span {
-    color: color-mix(in oklch, var(--muted) 68%, transparent);
+  .mobile-card-carousel-page.is-active {
+    width: 1.9rem;
+    background: var(--fg);
   }
 
   .mobile-skill-browser {
