@@ -21,6 +21,7 @@ const getVisiblePageIndexes = (itemCount, activeIndex) => {
 const MobileCardCarousel = ({
   adaptiveHeight = false,
   ariaLabel,
+  beforeCards,
   children,
   itemSelector,
   statusLabel = "카드",
@@ -145,7 +146,7 @@ const MobileCardCarousel = ({
 
   return (
     <section className="mobile-card-carousel" aria-label={ariaLabel}>
-      <div className="mobile-card-carousel-stage">
+      <div className="mobile-card-carousel-controls">
         <button
           className="mobile-card-carousel-arrow is-previous"
           type="button"
@@ -157,16 +158,20 @@ const MobileCardCarousel = ({
             <path d="m15 18-6-6 6-6" />
           </svg>
         </button>
-        <div
-          className="mobile-card-carousel-viewport"
-          ref={viewportRef}
-          style={
-            adaptiveHeight && viewportHeight
-              ? { height: `${viewportHeight}px` }
-              : undefined
-          }
-        >
-          {children}
+        <div className="mobile-card-carousel-status" aria-live="polite">
+          <span className="mobile-card-carousel-pagination" aria-hidden="true">
+            {visiblePageIndexes.map((index) => (
+              <span
+                className={`mobile-card-carousel-page${
+                  index === visibleIndex - 1 ? " is-active" : ""
+                }`}
+                key={`page-${index}`}
+              />
+            ))}
+          </span>
+          <span className="visually-hidden">
+            {statusLabel} {visibleIndex} / {Math.max(visibleCount, 1)}
+          </span>
         </div>
         <button
           className="mobile-card-carousel-arrow is-next"
@@ -180,20 +185,21 @@ const MobileCardCarousel = ({
           </svg>
         </button>
       </div>
-      <div className="mobile-card-carousel-status" aria-live="polite">
-        <span className="mobile-card-carousel-pagination" aria-hidden="true">
-          {visiblePageIndexes.map((index) => (
-            <span
-              className={`mobile-card-carousel-page${
-                index === visibleIndex - 1 ? " is-active" : ""
-              }`}
-              key={`page-${index}`}
-            />
-          ))}
-        </span>
-        <span className="visually-hidden">
-          {statusLabel} {visibleIndex} / {Math.max(visibleCount, 1)}
-        </span>
+      {beforeCards ? (
+        <div className="mobile-card-carousel-context">{beforeCards}</div>
+      ) : null}
+      <div className="mobile-card-carousel-stage">
+        <div
+          className="mobile-card-carousel-viewport"
+          ref={viewportRef}
+          style={
+            adaptiveHeight && viewportHeight
+              ? { height: `${viewportHeight}px` }
+              : undefined
+          }
+        >
+          {children}
+        </div>
       </div>
     </section>
   );

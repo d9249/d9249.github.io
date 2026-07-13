@@ -365,7 +365,11 @@ const IndexPage = ({ data }) => {
       </section>
 
       <section className="shell section" aria-labelledby="proof-title">
-        <SectionHeading kicker="Highlights" title="주요 성과" />
+        <SectionHeading
+          kicker="Highlights"
+          title="주요 성과"
+          titleId="proof-title"
+        />
         <div className="evidence-grid">
           {evidenceItems.map((item) => (
             <article className="evidence-card" key={item.label}>
@@ -429,18 +433,20 @@ const IndexPage = ({ data }) => {
           </div>
         </div>
         <div className="mobile-career-layout">
-          <div className="mobile-career-summary">
-            <span className="avatar-large" aria-hidden="true">
-              SM
-            </span>
-            <div>
-              <strong>이상민</strong>
-              <span>AI Engineer &amp; Researcher</span>
-            </div>
-            <a href="mailto:dodo9249@gmail.com">Email</a>
-          </div>
           <MobileCardCarousel
             ariaLabel="모바일 실무 및 연구 경력"
+            beforeCards={
+              <div className="mobile-career-summary">
+                <span className="avatar-large" aria-hidden="true">
+                  SM
+                </span>
+                <div>
+                  <strong>이상민</strong>
+                  <span>AI Engineer &amp; Researcher</span>
+                </div>
+                <a href="mailto:dodo9249@gmail.com">Email</a>
+              </div>
+            }
             itemSelector=".timeline-item"
             statusLabel="경력 카드"
           >
@@ -465,6 +471,7 @@ const IndexPage = ({ data }) => {
         <SectionHeading
           kicker="Projects"
           title="프로젝트"
+          titleId="projects-title"
           action={<Link to="/projects/">전체 프로젝트 보기 →</Link>}
         />
         <div className="card-deck project-card-deck responsive-desktop-only">
@@ -516,6 +523,7 @@ const IndexPage = ({ data }) => {
         <SectionHeading
           kicker="Research"
           title="연구 목록"
+          titleId="research-title"
           action={<Link to="/research/">전체 연구 보기 →</Link>}
         />
         <div className="card-deck responsive-desktop-only">
@@ -571,6 +579,7 @@ const IndexPage = ({ data }) => {
         <SectionHeading
           kicker="Awards"
           title="수상 기록"
+          titleId="awards-title"
           action={<Link to="/awards/">전체 수상 보기 →</Link>}
         />
         <div className="card-deck responsive-desktop-only">
@@ -626,6 +635,7 @@ const IndexPage = ({ data }) => {
         <SectionHeading
           kicker="Competitions"
           title="대회 및 외부 활동"
+          titleId="competitions-title"
           action={<Link to="/competitions/">전체 대회 보기 →</Link>}
         />
         <div className="recognition-grid responsive-desktop-only">
@@ -677,6 +687,7 @@ const IndexPage = ({ data }) => {
         <SectionHeading
           kicker="Blog"
           title="최근 지식"
+          titleId="latest-title"
           action={<Link to="/blog/">전체 지식 보기 →</Link>}
         />
         <div className="card-deck responsive-desktop-only">

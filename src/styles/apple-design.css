@@ -712,9 +712,30 @@ html[lang="ko"] body {
 }
 
 .section-head {
-  grid-template-columns: minmax(0, 0.7fr) minmax(17rem, 0.3fr);
-  gap: var(--space-12);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
   margin-bottom: var(--space-10);
+}
+
+.section-heading-copy,
+.section-title-row {
+  min-width: 0;
+}
+
+.section-title-row {
+  display: flex;
+  gap: var(--space-5);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-title-row .section-action {
+  flex: 0 0 auto;
+}
+
+.section-side {
+  width: min(100%, 42rem);
+  justify-self: end;
 }
 
 .section h2,
@@ -794,13 +815,14 @@ html[lang="ko"] body {
 }
 
 .section-action a {
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   padding: 0 var(--space-4);
   border-radius: var(--radius-control);
   background: color-mix(in oklch, var(--accent) 8%, transparent);
   transition:
     background var(--motion-fast) var(--ease-fluid),
     transform var(--motion-press) ease-out;
+  white-space: nowrap;
 }
 
 .section-action a:hover {
@@ -1840,7 +1862,11 @@ html[lang="ko"] body {
   .section-head {
     grid-template-columns: 1fr;
     gap: var(--space-4);
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-4);
+  }
+
+  .section-title-row {
+    align-items: flex-start;
   }
 
   .section-action {
@@ -2334,8 +2360,20 @@ html[lang="ko"] body {
   }
 
   .mobile-card-carousel-stage {
-    position: relative;
     min-width: 0;
+  }
+
+  .mobile-card-carousel-controls {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+    gap: var(--space-3);
+    align-items: center;
+    min-width: 0;
+    margin-bottom: var(--space-3);
+  }
+
+  .mobile-card-carousel-context {
+    margin-bottom: var(--space-5);
   }
 
   .mobile-card-carousel-viewport {
@@ -2466,9 +2504,6 @@ html[lang="ko"] body {
   }
 
   .mobile-card-carousel-arrow {
-    position: absolute;
-    z-index: 3;
-    top: calc(100% + var(--space-3));
     display: grid;
     width: 2.75rem;
     height: 2.75rem;
@@ -2484,11 +2519,11 @@ html[lang="ko"] body {
   }
 
   .mobile-card-carousel-arrow.is-previous {
-    left: 0;
+    justify-self: start;
   }
 
   .mobile-card-carousel-arrow.is-next {
-    right: 0;
+    justify-self: end;
   }
 
   .mobile-card-carousel-arrow:disabled {
@@ -2514,7 +2549,6 @@ html[lang="ko"] body {
     align-items: center;
     justify-content: center;
     min-height: 2.75rem;
-    margin: var(--space-3) 0 0;
   }
 
   .mobile-card-carousel-pagination {

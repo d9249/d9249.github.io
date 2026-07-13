@@ -153,7 +153,9 @@ requires it.
 ### Section Heading
 
 - The eyebrow establishes context; the title carries the story. Actions remain
-  adjacent to the section they affect and use direct labels.
+  on the title row, adjacent to the section they affect, and use direct labels.
+- Mobile carousel controls sit between the section heading and the cards they
+  move.
 - Section dividers are atmospheric spacing or a short gradient hairline, never a
   full-width grid rule.
 
