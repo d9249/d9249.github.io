@@ -2387,10 +2387,6 @@ html[lang="ko"] body {
     --mobile-carousel-card-gap: var(--space-4);
     --mobile-carousel-card-inset: var(--space-8);
     --mobile-carousel-card-width: min(calc(100cqi - var(--space-16)), 24rem);
-    --mobile-skill-page-max-height: clamp(26rem, 68svh, 32rem);
-    --mobile-skill-card-height: calc(
-      (var(--mobile-skill-page-max-height) - var(--space-4)) / 2
-    );
 
     display: block;
     min-width: 0;
@@ -2614,44 +2610,84 @@ html[lang="ko"] body {
 
   .mobile-skill-browser {
     display: block;
+    container-name: mobile-skill-board;
+    container-type: inline-size;
   }
 
-  .mobile-skill-page {
-    display: flex;
-    max-height: var(--mobile-skill-page-max-height);
-    flex-direction: column;
-    gap: var(--space-4);
-    align-self: flex-start;
+  .mobile-skill-grid {
+    --skill-panel-gap: var(--space-3);
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: var(--skill-panel-gap);
+    padding: 0;
+    overflow: visible;
+    scroll-snap-type: none;
   }
 
-  .mobile-skill-browser .skill-card {
-    grid-template-rows: auto minmax(0, 1fr);
+  .mobile-skill-grid[data-dense-ready="true"] {
+    grid-auto-flow: dense;
+    grid-auto-rows: 1px;
+    column-gap: var(--skill-panel-gap);
+    row-gap: 0;
+  }
+
+  .mobile-skill-grid .skill-card {
+    grid-template-rows: auto auto;
     width: 100%;
-    height: var(--mobile-skill-card-height);
-    max-height: var(--mobile-skill-card-height);
-    flex: 0 0 auto;
+    height: auto;
+    max-height: none;
     min-height: 0;
     align-self: flex-start;
     align-content: start;
-    padding: var(--space-5);
+    padding: 0;
     scroll-snap-align: none;
     scroll-snap-stop: normal;
   }
 
-  .mobile-skill-browser .skill-card-header {
+  .mobile-skill-grid .skill-card[data-skill-density="wide"] {
+    grid-column: 1 / -1;
+  }
+
+  .mobile-skill-grid .skill-card-header {
+    align-items: flex-end;
+    padding: var(--space-4);
+    border-bottom-color: color-mix(in oklch, var(--border) 68%, transparent);
     cursor: default;
   }
 
-  .mobile-skill-browser .skill-card-header::after {
+  .mobile-skill-grid .skill-card-header::after {
     display: none;
   }
 
-  .mobile-skill-browser .skill-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .mobile-skill-grid .skill-list {
+    grid-template-columns: minmax(0, 1fr);
     min-height: 0;
-    overflow-y: auto;
-    touch-action: pan-y;
-    -webkit-overflow-scrolling: touch;
+    overflow: visible;
+    touch-action: auto;
+  }
+
+  .mobile-skill-grid .skill-card[data-skill-density="wide"] .skill-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mobile-skill-grid .skill-list li {
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    gap: var(--space-2);
+    min-height: 2.5rem;
+    padding: var(--space-2);
+    font-size: 0.7rem;
+  }
+
+  .mobile-skill-grid .skill-logo-mark {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .mobile-skill-grid .skill-logo-mark svg {
+    width: 0.95rem;
+    height: 0.95rem;
   }
 
   .competition-card-actions,
@@ -2754,6 +2790,20 @@ html[lang="ko"] body {
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
+  }
+}
+
+@container mobile-skill-board (max-width: 22rem) {
+  .mobile-skill-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mobile-skill-grid .skill-card {
+    grid-column: 1 / -1;
+  }
+
+  .mobile-skill-grid .skill-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

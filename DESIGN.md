@@ -104,12 +104,14 @@ requires it.
   980px detail grids, 760px multi-column cards, 680px compact mobile.
 - At 760px and below, repeated card collections use horizontally scrollable
   snap rails with a visible next-card edge. This preserves every item while
-  preventing long research, skill, project, and blog lists from dominating the
+  preventing long research, project, and blog lists from dominating the
   vertical page.
-- The mobile skill rail uses two equal-height cards per snap page and fills
-  pages greedily in source order. Each card keeps its header fixed while its
-  skill list scrolls internally, so dense and compact categories share the same
-  predictable geometry without changing label typography.
+- Mobile skills are an exception: they use a natural-height dense board in the
+  page scroll, never a nested horizontal or vertical scroller. Compact panels
+  may share a row, while panels with many skills span the full board width. At
+  narrow content pressure the board becomes one column and each panel uses a
+  compact two-column skill list. Titles, labels, counts, icons, and every skill
+  remain visible without a disclosure control.
 - Compact category filters wrap in place so every destination remains visible
   without a sideways gesture. Large tag collections keep a concise initial
   set, then open into a bounded, paged vertical browser instead of extending
@@ -154,6 +156,16 @@ requires it.
 - Hover raises only interactive cards by 3px and strengthens the shadow. Press
   immediately scales them to `0.985`. Non-interactive cards do not animate.
 - Cards avoid decorative nesting. Chips are metadata, not miniature cards.
+
+### Skill Board
+
+- Desktop skills use the existing dense masonry grid. Mobile preserves the
+  same cards in a tighter two-column board, with high-density panels spanning
+  both columns and compact panels filling available space greedily.
+- Card height follows content. Skill lists do not receive fixed heights,
+  truncation, or internal scrolling; the document owns the vertical gesture.
+- When a two-column card would pressure labels, the board switches to one card
+  per row while retaining two skill columns inside each card.
 
 ### Section Heading
 
