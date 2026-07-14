@@ -153,6 +153,10 @@ requires it.
 
 - Evidence, project, research, recognition, post, tip, skill, and supporting
   cards share the `--material-card` recipe, 18-22px radius, and a top-light rim.
+- In desktop two-column collections, cards in the same visual row share their
+  semantic content tracks so headings, summaries, metadata, and actions retain
+  matching horizontal baselines even when copy length differs. Single-column
+  and mobile carousel cards keep their natural content flow.
 - Hover raises only interactive cards by 3px and strengthens the shadow. Press
   immediately scales them to `0.985`. Non-interactive cards do not animate.
 - Cards avoid decorative nesting. Chips are metadata, not miniature cards.

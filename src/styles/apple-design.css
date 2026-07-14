@@ -3692,7 +3692,8 @@ html[lang="ko"] body {
 }
 
 #competitions .competition-card {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: var(--space-3);
 }
 
 #competitions .competition-card > :not(.research-links):not(.paper-link) {
@@ -3707,18 +3708,17 @@ html[lang="ko"] body {
   grid-column: auto;
 }
 
-#competitions .competition-card .research-links,
-.recognition-page .competition-card-actions,
-.research-publications-section .paper-card .research-links {
+#competitions .competition-card .research-links {
   display: flex;
+  width: fit-content;
   flex-wrap: wrap;
   gap: var(--space-3);
   align-items: center;
+  margin-top: 0;
 }
 
-#competitions .competition-card :is(.research-links a, .paper-link),
-.recognition-page .competition-card-actions > :is(a, button),
-.research-publications-section .paper-card .research-links > :is(a, button) {
+#awards .recognition-card :is(.research-links a, .paper-link),
+#competitions .competition-card :is(.research-links a, .paper-link) {
   display: inline-flex;
   width: fit-content;
   min-width: var(--control-height);
@@ -3730,30 +3730,84 @@ html[lang="ko"] body {
   border-radius: 0;
   background: transparent;
   box-shadow: none;
-  color: color-mix(in oklch, var(--accent) 78%, var(--fg));
-  font-family: var(--font-mono);
+  color: var(--accent);
+  font-family: var(--font-body);
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 650;
   line-height: 1.2;
   text-align: left;
   text-decoration: none;
   white-space: nowrap;
 }
 
+#awards
+  .recognition-card
+  :is(.research-links a, .paper-link):is(:hover, :focus-visible, :active),
 #competitions
   .competition-card
-  :is(.research-links a, .paper-link):is(:hover, :active),
-.recognition-page
-  .competition-card-actions
-  > :is(a, button):is(:hover, :active),
-.research-publications-section
-  .paper-card
-  .research-links
-  > :is(a, button):is(:hover, :active) {
+  :is(.research-links a, .paper-link):is(:hover, :focus-visible, :active) {
   border: 0;
   border-bottom: 1px solid currentColor;
   background: transparent;
   box-shadow: none;
   color: var(--accent);
   transform: none;
+}
+
+@media (min-width: 1121px) {
+  @supports (grid-template-rows: subgrid) {
+    #projects .project-grid.card-deck-grid > .project-card,
+    #research .paper-grid.card-deck-grid > .paper-card,
+    #awards .recognition-grid.card-deck-grid > .recognition-card,
+    #competitions
+      > .recognition-grid.responsive-desktop-only
+      > .competition-card {
+      display: grid;
+      grid-row: span 6;
+      grid-template-rows: subgrid;
+    }
+
+    #projects .project-card > .project-card-header,
+    #research .paper-card > .paper-card-top,
+    #awards .recognition-card > .meta,
+    #competitions .competition-card > .meta {
+      grid-row: 1;
+    }
+
+    #projects .project-card > p,
+    #research .paper-card > h3,
+    #awards .recognition-card > h3,
+    #competitions .competition-card > h3 {
+      grid-row: 2;
+    }
+
+    #projects .project-card > .project-details,
+    #research .paper-card > .paper-venue,
+    #awards .recognition-card > strong,
+    #competitions .competition-card > strong {
+      grid-row: 3;
+    }
+
+    #projects .project-card > .project-metrics,
+    #research .paper-card > p,
+    #awards .recognition-card > p,
+    #competitions .competition-card > p {
+      grid-row: 4;
+    }
+
+    #projects .project-card > .project-stack,
+    #research .paper-card > .research-facts,
+    #awards .recognition-card > .research-facts,
+    #competitions .competition-card > .research-facts {
+      grid-row: 5;
+      margin-top: 0;
+    }
+
+    #projects .project-card > .project-card-actions,
+    #research .paper-card > .paper-link,
+    #awards .recognition-card > :is(.research-links, .paper-link),
+    #competitions .competition-card > :is(.research-links, .paper-link) {
+      grid-row: 6;
+    }
+  }
 }
