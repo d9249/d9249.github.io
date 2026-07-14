@@ -195,9 +195,12 @@ requires it.
 - Secondary and evidence actions use the neutral control material. Selected or
   emphasized secondary actions receive a restrained blue tonal fill rather than
   a second competing solid CTA.
-- Icon-only controls use the same material and state model. Directional controls
-  may be circular; utility controls use a compact squircle. Shape communicates
-  function, while depth, rim, focus, and press feedback remain consistent.
+- Icon-only controls use the same state model. In the global header, search,
+  theme, and menu stay as inline glyphs on transparent hit areas without
+  individual fills, rims, or shadows; desktop keeps compact 36px geometry while
+  touch layouts expand to 44px. Focus and press feedback remain visible.
+  Directional controls may be circular, while other utility controls use a
+  compact squircle and the shared control material.
 - Filter, tag, and page controls are flatter members of the same family: neutral
   by default, tonal blue when selected, and visibly structural when disabled.
 - Text actions remain text actions. They gain color or arrow movement on hover

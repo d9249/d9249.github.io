@@ -3568,13 +3568,43 @@ html[lang="ko"] body {
   outline-offset: 3px;
 }
 
+.header-actions {
+  gap: 0;
+}
+
+.theme-toggle,
+.search-toggle,
+.menu-button {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+:is(.theme-toggle, .search-toggle, .menu-button):not(:disabled):hover {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  color: var(--accent);
+  transform: none;
+}
+
+:is(.theme-toggle, .search-toggle, .menu-button):not(:disabled):active {
+  background: transparent;
+  box-shadow: none;
+  transform: scale(0.9);
+}
+
+.header-actions :is(.theme-toggle, .search-toggle, .menu-button):focus-visible {
+  outline-offset: -3px;
+}
+
 @media (max-width: 1060px) {
   .theme-toggle,
   .search-toggle,
   .menu-button {
     width: 2.75rem;
     height: 2.75rem;
-    border-radius: var(--control-radius);
   }
 }
 
@@ -3664,9 +3694,6 @@ html[lang="ko"] body {
   .research-links a,
   .timeline-detail-toggle,
   .project-backlink,
-  .theme-toggle,
-  .search-toggle,
-  .menu-button,
   .search-clear,
   .search-close,
   .card-deck-controls button,
@@ -3681,6 +3708,18 @@ html[lang="ko"] body {
   .tag-nav a,
   .tag-nav-toggle {
     background: var(--surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .header-actions :is(.theme-toggle, .search-toggle, .menu-button),
+  .header-actions
+    :is(.theme-toggle, .search-toggle, .menu-button):not(:disabled):hover,
+  .header-actions
+    :is(.theme-toggle, .search-toggle, .menu-button):not(:disabled):active {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
