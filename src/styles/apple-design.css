@@ -2437,6 +2437,18 @@ html[lang="ko"] body {
     display: none;
   }
 
+  .mobile-card-carousel
+    .mobile-carousel-track
+    > :is(
+      .project-card,
+      .paper-card,
+      .recognition-card,
+      .mobile-skill-page,
+      .post-card
+    ) {
+    box-shadow: none;
+  }
+
   .mobile-card-carousel .timeline-item,
   .mobile-card-carousel .project-card,
   .mobile-card-carousel .paper-card,
