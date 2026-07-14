@@ -148,6 +148,9 @@ requires it.
   secondary to the person's name, role, and direct paths.
 - Primary and secondary actions are visually distinct and share identical hit
   geometry. External profile links use compact glass pills.
+- On touch layouts, the four external profile pills stay in one row with
+  unbroken labels and 44px hit height. The row may pan horizontally only when
+  browser text scaling makes it wider than the available viewport.
 
 ### Content Cards
 

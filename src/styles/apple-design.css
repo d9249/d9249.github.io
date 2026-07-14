@@ -129,7 +129,6 @@ html {
 }
 
 body {
-  min-width: 20rem;
   background:
     radial-gradient(
       circle at 12% 3%,
@@ -3609,7 +3608,30 @@ html[lang="ko"] body {
 }
 
 @media (max-width: 760px) {
-  .link-row a,
+  .link-row {
+    width: 100%;
+    flex-wrap: nowrap;
+    gap: var(--space-1);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+  }
+
+  .link-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .link-row a {
+    flex: 0 0 auto;
+    min-height: 2.75rem;
+    padding-inline: var(--space-2);
+    white-space: nowrap;
+  }
+
+  .link-row a:focus-visible {
+    outline-offset: -3px;
+  }
+
   .category-nav a,
   .tag-nav a,
   .tag-nav-toggle {
