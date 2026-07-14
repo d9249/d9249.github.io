@@ -1,10 +1,11 @@
 import * as React from "react";
+import { Link } from "gatsby";
 import InlineEvidenceViewer from "../components/InlineEvidenceViewer";
 import Layout from "../components/Layout";
 import SectionHeading from "../components/SectionHeading";
 import { competitionItems } from "../data/profile";
 
-const RECOGNITION_VIEWER_QUERY = "(max-width: 680px)";
+const COMPACT_COMPETITION_LAYOUT_QUERY = "(max-width: 980px)";
 
 const getEvidenceKey = (item, link) => `${item.title}-${link.href}`;
 
@@ -12,6 +13,13 @@ const getEvidenceId = (item, link) =>
   `competition-evidence-${getEvidenceKey(item, link).replace(/[^a-zA-Z0-9_-]+/g, "-")}`;
 
 const isInlineEvidenceLink = (link) => link.href?.startsWith("/evidence/");
+
+const ActivityLink = ({ href, children }) =>
+  href.startsWith("/") ? (
+    <Link to={href}>{children}</Link>
+  ) : (
+    <a href={href}>{children}</a>
+  );
 
 const useMediaQuery = (query) => {
   const [matches, setMatches] = React.useState(false);
@@ -49,10 +57,91 @@ const competitionRows = competitionItems.reduce((rows, item, index) => {
   return rows;
 }, []);
 
+const CompetitionCard = ({
+  item,
+  activeEvidence,
+  isCompactLayout,
+  isEvidenceFullView,
+  onToggleEvidence,
+  onToggleEvidenceFullView,
+}) => {
+  const inlineLinks = item.links?.filter(isInlineEvidenceLink) || [];
+  const externalLinks =
+    item.links?.filter((link) => !isInlineEvidenceLink(link)) || [];
+  const activeLink = inlineLinks.find(
+    (link) => activeEvidence === getEvidenceKey(item, link),
+  );
+
+  return (
+    <article className="project-card competition-project-card">
+      <div className="project-card-header">
+        <div>
+          <div className="meta">{item.period}</div>
+          <h3 className="project-title">
+            <span className="project-title-name">{item.title}</span>
+            <span className="project-title-tagline">{item.result}</span>
+          </h3>
+        </div>
+      </div>
+      <p>{item.description}</p>
+      <div className="project-metrics" aria-label={`${item.title} 주요 성과`}>
+        {item.facts.map((fact) => (
+          <span className="metric-chip" key={fact}>
+            {fact}
+          </span>
+        ))}
+      </div>
+      {inlineLinks.length || externalLinks.length || item.href ? (
+        <div
+          className="project-card-actions competition-project-actions"
+          aria-label={`${item.title} 관련 링크`}
+        >
+          {inlineLinks.map((link) => {
+            const evidenceKey = getEvidenceKey(item, link);
+            const isOpen = activeEvidence === evidenceKey;
+
+            return (
+              <button
+                key={link.href}
+                type="button"
+                className="paper-viewer-toggle"
+                aria-controls={getEvidenceId(item, link)}
+                aria-expanded={isOpen}
+                onClick={() => onToggleEvidence(evidenceKey)}
+              >
+                <span>{isOpen ? `${link.label} 닫기` : link.label} →</span>
+              </button>
+            );
+          })}
+          {externalLinks.map((link) => (
+            <a key={link.href} href={link.href}>
+              <span>{link.label} →</span>
+            </a>
+          ))}
+          {item.href ? (
+            <ActivityLink href={item.href}>
+              <span>활동 보기 →</span>
+            </ActivityLink>
+          ) : null}
+        </div>
+      ) : null}
+      {isCompactLayout && activeLink ? (
+        <InlineEvidenceViewer
+          itemTitle={item.title}
+          evidence={activeLink}
+          viewerId={getEvidenceId(item, activeLink)}
+          isFullView={isEvidenceFullView}
+          onToggleFullView={onToggleEvidenceFullView}
+        />
+      ) : null}
+    </article>
+  );
+};
+
 const CompetitionsPage = () => {
   const [activeEvidence, setActiveEvidence] = React.useState(null);
   const [isEvidenceFullView, setIsEvidenceFullView] = React.useState(false);
-  const isMobileEvidenceViewer = useMediaQuery(RECOGNITION_VIEWER_QUERY);
+  const isCompactLayout = useMediaQuery(COMPACT_COMPETITION_LAYOUT_QUERY);
 
   React.useEffect(() => {
     document.body.classList.toggle(
@@ -99,103 +188,61 @@ const CompetitionsPage = () => {
           kicker="Competitions"
           title="대회 및 외부 활동"
         />
-        <div className="recognition-list">
-          {competitionRows.map((row) => {
-            const activeItem = row.find((item) =>
-              item.links?.some(
-                (link) => activeEvidence === getEvidenceKey(item, link),
-              ),
-            );
-            const activeLink = activeItem?.links?.find(
-              (link) => activeEvidence === getEvidenceKey(activeItem, link),
-            );
+        {isCompactLayout ? (
+          <div className="project-grid">
+            {competitionItems.map((item) => (
+              <CompetitionCard
+                key={item.title}
+                item={item}
+                activeEvidence={activeEvidence}
+                isCompactLayout={isCompactLayout}
+                isEvidenceFullView={isEvidenceFullView}
+                onToggleEvidence={toggleEvidence}
+                onToggleEvidenceFullView={toggleEvidenceFullView}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="recognition-list">
+            {competitionRows.map((row) => {
+              const activeItem = row.find((item) =>
+                item.links?.some(
+                  (link) => activeEvidence === getEvidenceKey(item, link),
+                ),
+              );
+              const activeLink = activeItem?.links?.find(
+                (link) => activeEvidence === getEvidenceKey(activeItem, link),
+              );
 
-            return (
-              <React.Fragment key={row.map((item) => item.title).join("|")}>
-                <div className="recognition-row-grid">
-                  {row.map((item) => {
-                    const inlineLinks =
-                      item.links?.filter(isInlineEvidenceLink) || [];
-                    const externalLinks =
-                      item.links?.filter(
-                        (link) => !isInlineEvidenceLink(link),
-                      ) || [];
-                    const cardActiveLink = inlineLinks.find(
-                      (link) => activeEvidence === getEvidenceKey(item, link),
-                    );
-
-                    return (
-                      <article className="recognition-card" key={item.title}>
-                        <div className="meta">{item.period}</div>
-                        <h3>{item.title}</h3>
-                        <strong>{item.result}</strong>
-                        <p>{item.description}</p>
-                        <div className="research-facts">
-                          {item.facts.map((fact) => (
-                            <span key={fact}>{fact}</span>
-                          ))}
-                        </div>
-                        {inlineLinks.length ||
-                        externalLinks.length ||
-                        item.href ? (
-                          <div
-                            className="research-links competition-card-actions"
-                            aria-label={`${item.title} 관련 링크`}
-                          >
-                            {inlineLinks.map((link) => {
-                              const evidenceKey = getEvidenceKey(item, link);
-                              const isOpen = activeEvidence === evidenceKey;
-                              const viewerId = getEvidenceId(item, link);
-
-                              return (
-                                <button
-                                  key={link.href}
-                                  type="button"
-                                  className="paper-viewer-toggle"
-                                  aria-controls={viewerId}
-                                  aria-expanded={isOpen}
-                                  onClick={() => toggleEvidence(evidenceKey)}
-                                >
-                                  {isOpen ? `${link.label} 닫기` : link.label} →
-                                </button>
-                              );
-                            })}
-                            {externalLinks.map((link) => (
-                              <a key={link.href} href={link.href}>
-                                {link.label} →
-                              </a>
-                            ))}
-                            {item.href ? (
-                              <a href={item.href}>활동 보기 →</a>
-                            ) : null}
-                          </div>
-                        ) : null}
-                        {isMobileEvidenceViewer && cardActiveLink ? (
-                          <InlineEvidenceViewer
-                            itemTitle={item.title}
-                            evidence={cardActiveLink}
-                            viewerId={getEvidenceId(item, cardActiveLink)}
-                            isFullView={isEvidenceFullView}
-                            onToggleFullView={toggleEvidenceFullView}
-                          />
-                        ) : null}
-                      </article>
-                    );
-                  })}
-                </div>
-                {!isMobileEvidenceViewer && activeItem && activeLink ? (
-                  <InlineEvidenceViewer
-                    itemTitle={activeItem.title}
-                    evidence={activeLink}
-                    viewerId={getEvidenceId(activeItem, activeLink)}
-                    isFullView={isEvidenceFullView}
-                    onToggleFullView={toggleEvidenceFullView}
-                  />
-                ) : null}
-              </React.Fragment>
-            );
-          })}
-        </div>
+              return (
+                <React.Fragment key={row.map((item) => item.title).join("|")}>
+                  <div className="project-grid">
+                    {row.map((item) => (
+                      <CompetitionCard
+                        key={item.title}
+                        item={item}
+                        activeEvidence={activeEvidence}
+                        isCompactLayout={isCompactLayout}
+                        isEvidenceFullView={isEvidenceFullView}
+                        onToggleEvidence={toggleEvidence}
+                        onToggleEvidenceFullView={toggleEvidenceFullView}
+                      />
+                    ))}
+                  </div>
+                  {activeItem && activeLink ? (
+                    <InlineEvidenceViewer
+                      itemTitle={activeItem.title}
+                      evidence={activeLink}
+                      viewerId={getEvidenceId(activeItem, activeLink)}
+                      isFullView={isEvidenceFullView}
+                      onToggleFullView={toggleEvidenceFullView}
+                    />
+                  ) : null}
+                </React.Fragment>
+              );
+            })}
+          </div>
+        )}
       </section>
     </Layout>
   );
