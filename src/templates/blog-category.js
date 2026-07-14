@@ -13,7 +13,7 @@ const BlogCategoryTemplate = ({ data, pageContext }) => {
     <Layout>
       <section className="shell section">
         <SectionHeading as="h1" kicker="Category" title={pageContext.label} />
-        <CategoryNav />
+        <CategoryNav activeCategory={pageContext.category} />
         <TagNav tagSummaries={pageContext.tagSummaries} />
         {posts.length > 0 ? (
           <div className="post-grid">
