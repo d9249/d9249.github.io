@@ -556,11 +556,6 @@ html[lang="ko"] body {
   line-height: 1.55;
 }
 
-.hero-actions {
-  gap: var(--space-3);
-  margin-top: var(--space-8);
-}
-
 .button-primary,
 .button-secondary,
 .deck-button,
@@ -1856,10 +1851,6 @@ html[lang="ko"] body {
     padding: var(--space-12) 0 var(--space-10);
   }
 
-  .hero-button-actions > :nth-child(n + 3) {
-    display: none;
-  }
-
   .hero::before {
     top: 34%;
     right: -38%;
@@ -2169,11 +2160,6 @@ html[lang="ko"] body {
     height: 2.75rem;
   }
 
-  .hero-actions .button-primary,
-  .hero-actions .button-secondary {
-    flex-basis: calc(50% - var(--space-2));
-  }
-
   .terminal-body {
     padding: var(--space-4);
   }
@@ -2325,7 +2311,6 @@ html[lang="ko"] body {
     justify-self: stretch;
   }
 
-  .hero-button-actions-desktop,
   .responsive-desktop-only,
   .skill-grid-desktop {
     display: none !important;

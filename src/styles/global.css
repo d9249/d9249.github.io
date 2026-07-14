@@ -572,18 +572,6 @@ h3 {
   white-space: nowrap;
 }
 
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 30px;
-}
-
-.hero-button-actions {
-  width: fit-content;
-  max-width: 100%;
-}
-
 .link-row {
   display: flex;
   flex-wrap: wrap;
@@ -4730,16 +4718,6 @@ body.project-lightbox-open {
   .hero-copy {
     margin-top: 22px;
     font-size: 17px;
-  }
-
-  .hero-actions {
-    gap: 10px;
-    margin-top: 24px;
-  }
-
-  .hero-actions .button-primary,
-  .hero-actions .button-secondary {
-    flex: 1 1 112px;
   }
 
   .link-row {

@@ -146,8 +146,10 @@ requires it.
   uses thick translucent material, a bright rim, and a deep diffuse shadow.
 - The ASCII portrait remains a personal signature, but terminal chrome is
   secondary to the person's name, role, and direct paths.
-- Primary and secondary actions are visually distinct and share identical hit
-  geometry. External profile links use compact glass pills.
+- Route discovery belongs to the global navigation; the hero does not repeat
+  project, research, awards, competition, portfolio, blog, or tips shortcuts.
+- External profile links remain compact glass pills so direct identity and
+  contact paths stay available without competing with the hero statement.
 - On touch layouts, the four external profile pills stay in one row with
   unbroken labels and 44px hit height. The row may pan horizontally only when
   browser text scaling makes it wider than the available viewport.

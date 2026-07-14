@@ -6,7 +6,6 @@ import PostCard from "../components/PostCard";
 import ProjectGrid from "../components/ProjectGrid";
 import SectionHeading from "../components/SectionHeading";
 import SkillGrid from "../components/SkillGrid";
-import { navItems } from "../data/navigation";
 import {
   awardItems,
   competitionItems,
@@ -207,7 +206,6 @@ const IndexPage = ({ data }) => {
   const projects = data.projects.nodes;
   const profileTags = getProjectProfileTags(projects);
   const totalBlogPostCount = data.blogPosts.totalCount;
-  const heroNavItems = navItems.filter((item) => item.showInHero);
   const paperDecks = getCardDecks(paperItems);
   const awardDecks = getCardDecks(awardItems);
   const projectDecks = getCardDecks(projects, PROJECT_DECK_SIZE);
@@ -282,30 +280,9 @@ const IndexPage = ({ data }) => {
           </h1>
           <p className="hero-copy">
             연구의 깊이를 RAG, 멀티 에이전트, Document AI,{" "}
-            <span className="hero-copy-nowrap">운영 가능한</span> 플랫폼으로
+            <span className="hero-copy-nowrap">운영 가능한 플랫폼으로</span>{" "}
             번역합니다.
           </p>
-          <nav
-            className="hero-actions hero-button-actions hero-button-actions-desktop"
-            aria-label="Shortcut navigation"
-          >
-            {heroNavItems.map((item) => {
-              const className =
-                item.heroVariant === "primary"
-                  ? "button-primary"
-                  : "button-secondary";
-
-              return item.reloadDocument ? (
-                <a className={className} key={item.to} href={item.to}>
-                  {item.heroLabel}
-                </a>
-              ) : (
-                <Link className={className} key={item.to} to={item.to}>
-                  {item.heroLabel}
-                </Link>
-              );
-            })}
-          </nav>
           <div className="link-row" aria-label="Profile links">
             {heroLinks.map((link) => (
               <a key={link.href} href={link.href}>
