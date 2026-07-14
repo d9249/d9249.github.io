@@ -82,18 +82,27 @@ const AwardCard = ({ item, activeEvidence, onToggleEvidence }) => {
     item.links?.filter((link) => !isInlineEvidenceLink(link)) || [];
 
   return (
-    <article className="recognition-card">
-      <div className="meta">{item.period}</div>
-      <h3>{item.title}</h3>
-      <strong>{item.result}</strong>
+    <article className="project-card recognition-card award-project-card">
+      <div className="project-card-header">
+        <div className="meta">{item.period}</div>
+        <h3 className="project-title">
+          <span className="project-title-name">{item.title}</span>
+          <span className="project-title-tagline">{item.result}</span>
+        </h3>
+      </div>
       <p>{item.description}</p>
-      <div className="research-facts">
+      <div className="project-metrics">
         {item.facts.map((fact) => (
-          <span key={fact}>{fact}</span>
+          <span className="metric-chip" key={fact}>
+            {fact}
+          </span>
         ))}
       </div>
       {inlineLinks.length || externalLinks.length || item.href ? (
-        <div className="research-links" aria-label={`${item.title} 증빙 링크`}>
+        <div
+          className="project-card-actions project-inline-actions"
+          aria-label={`${item.title} 증빙 링크`}
+        >
           {externalLinks.map((link) => (
             <a key={link.href} href={link.href}>
               {link.label} →

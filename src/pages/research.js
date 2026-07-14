@@ -462,30 +462,43 @@ const PaperCard = ({ item, activeViewerId, isPdfOpen, onTogglePdf }) => {
   const paperKey = getPaperKey(item);
 
   return (
-    <article className="paper-card">
-      <div className="paper-card-top">
-        <div className="meta">{item.type}</div>
-        <span>{item.year}</span>
-      </div>
-      <h3>{item.title}</h3>
-      <div className="paper-venue">{item.venue}</div>
-      <p>{item.description}</p>
-      {item.authors?.length ? (
-        <div className="paper-authors" aria-label={`${item.title} 저자`}>
-          {item.authors.map((author) => (
-            <span className="paper-author-chip" key={author}>
-              {author}
-            </span>
-          ))}
+    <article className="project-card paper-card research-project-card">
+      <div className="project-card-header">
+        <div className="paper-card-top">
+          <div className="meta">{item.type}</div>
+          <span>{item.year}</span>
         </div>
-      ) : null}
-      <div className="research-facts">
+        <h3 className="project-title">
+          <span className="project-title-name">{item.title}</span>
+          <span className="project-title-tagline">{item.venue}</span>
+        </h3>
+      </div>
+      <p>{item.description}</p>
+      <div
+        className="paper-authors research-project-authors"
+        aria-label={item.authors?.length ? `${item.title} 저자` : undefined}
+        aria-hidden={item.authors?.length ? undefined : true}
+      >
+        {item.authors?.length
+          ? item.authors.map((author) => (
+              <span className="paper-author-chip" key={author}>
+                {author}
+              </span>
+            ))
+          : null}
+      </div>
+      <div className="project-metrics">
         {item.facts.map((fact) => (
-          <span key={fact}>{fact}</span>
+          <span className="metric-chip" key={fact}>
+            {fact}
+          </span>
         ))}
       </div>
       {item.pdfHref || links.length ? (
-        <div className="research-links" aria-label={`${item.title} 논문 링크`}>
+        <div
+          className="project-card-actions project-inline-actions"
+          aria-label={`${item.title} 논문 링크`}
+        >
           {item.pdfHref ? (
             <button
               type="button"

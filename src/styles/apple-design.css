@@ -3560,23 +3560,27 @@ html[lang="ko"] body {
 .search-toggle,
 .menu-button {
   border: 0;
-  border-radius: 0;
+  border-radius: 50%;
   background: transparent;
   box-shadow: none;
+  transition:
+    color var(--motion-fast) var(--ease-fluid),
+    background-color var(--motion-fast) var(--ease-fluid),
+    transform var(--motion-press) ease-out;
 }
 
 :is(.theme-toggle, .search-toggle, .menu-button):not(:disabled):hover {
   border-color: transparent;
-  background: transparent;
+  background: color-mix(in oklch, var(--accent) 10%, transparent);
   box-shadow: none;
   color: var(--accent);
   transform: none;
 }
 
 :is(.theme-toggle, .search-toggle, .menu-button):not(:disabled):active {
-  background: transparent;
+  background: color-mix(in oklch, var(--accent) 16%, transparent);
   box-shadow: none;
-  transform: scale(0.9);
+  transform: scale(0.92);
 }
 
 .header-actions :is(.theme-toggle, .search-toggle, .menu-button):focus-visible {
@@ -3856,6 +3860,154 @@ html[lang="ko"] body {
     #awards .recognition-card > :is(.research-links, .paper-link),
     #competitions .competition-card > :is(.research-links, .paper-link) {
       grid-row: 6;
+    }
+  }
+}
+
+/* Project-page card language for the standalone research and awards lists. */
+.research-project-card,
+.award-project-card {
+  display: grid;
+  min-height: 100%;
+  align-content: stretch;
+  gap: var(--space-5);
+  padding: var(--space-6);
+}
+
+.research-project-card {
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+}
+
+.award-project-card {
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+}
+
+.research-project-card .project-card-header,
+.award-project-card .project-card-header {
+  display: grid;
+  align-content: start;
+}
+
+.research-project-card .paper-card-top {
+  margin-bottom: var(--space-2);
+}
+
+.research-project-card h3,
+.award-project-card h3 {
+  margin-top: var(--space-2);
+  font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+  line-height: 1.08;
+}
+
+.research-project-card > p,
+.award-project-card > p {
+  align-self: start;
+  margin: 0;
+}
+
+.research-project-card .research-project-authors,
+.research-project-card .project-metrics,
+.award-project-card .project-metrics {
+  align-content: start;
+  margin-top: 0;
+}
+
+.project-inline-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  padding-top: 0;
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
+.project-inline-actions :is(a, .paper-viewer-toggle) {
+  display: inline-flex;
+  width: fit-content;
+  min-width: 0;
+  min-height: 0;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  line-height: 1.35;
+  text-align: left;
+  text-decoration: none;
+  transform: none;
+  white-space: nowrap;
+}
+
+.project-inline-actions
+  :is(a, .paper-viewer-toggle):is(:hover, :focus-visible, :active) {
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  outline-offset: 3px;
+  transform: none;
+}
+
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 761px) {
+    .research-publications-section .paper-row-grid {
+      grid-template-rows: repeat(5, auto);
+    }
+
+    .recognition-page .recognition-row-grid {
+      grid-template-rows: repeat(4, auto);
+    }
+
+    .research-publications-section .paper-row-grid > .research-project-card {
+      grid-row: span 5;
+      grid-template-rows: subgrid;
+    }
+
+    .recognition-page .recognition-row-grid > .award-project-card {
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .paper-category-rail,
+    .recognition-category-rail {
+      display: grid !important;
+      grid-template-columns: none !important;
+      grid-auto-flow: column;
+      grid-auto-columns: min(82vw, 22rem);
+      align-items: stretch;
+    }
+
+    .paper-category-rail {
+      grid-template-rows: repeat(5, auto);
+    }
+
+    .recognition-category-rail {
+      grid-template-rows: repeat(4, auto);
+    }
+
+    .paper-category-rail > .research-project-card {
+      grid-row: span 5;
+      grid-template-rows: subgrid;
+    }
+
+    .recognition-category-rail > .award-project-card {
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+    }
+
+    .paper-category-rail .research-project-card,
+    .recognition-category-rail .award-project-card {
+      width: auto;
     }
   }
 }
