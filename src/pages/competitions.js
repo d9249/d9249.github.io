@@ -57,20 +57,10 @@ const competitionRows = competitionItems.reduce((rows, item, index) => {
   return rows;
 }, []);
 
-const CompetitionCard = ({
-  item,
-  activeEvidence,
-  isCompactLayout,
-  isEvidenceFullView,
-  onToggleEvidence,
-  onToggleEvidenceFullView,
-}) => {
+const CompetitionCard = ({ item, activeEvidence, onToggleEvidence }) => {
   const inlineLinks = item.links?.filter(isInlineEvidenceLink) || [];
   const externalLinks =
     item.links?.filter((link) => !isInlineEvidenceLink(link)) || [];
-  const activeLink = inlineLinks.find(
-    (link) => activeEvidence === getEvidenceKey(item, link),
-  );
 
   return (
     <article className="project-card competition-project-card">
@@ -107,7 +97,9 @@ const CompetitionCard = ({
                 className="paper-viewer-toggle"
                 aria-controls={getEvidenceId(item, link)}
                 aria-expanded={isOpen}
-                onClick={() => onToggleEvidence(evidenceKey)}
+                onClick={(event) =>
+                  onToggleEvidence(evidenceKey, event.currentTarget)
+                }
               >
                 <span>{isOpen ? `${link.label} 닫기` : link.label} →</span>
               </button>
@@ -125,15 +117,6 @@ const CompetitionCard = ({
           ) : null}
         </div>
       ) : null}
-      {isCompactLayout && activeLink ? (
-        <InlineEvidenceViewer
-          itemTitle={item.title}
-          evidence={activeLink}
-          viewerId={getEvidenceId(item, activeLink)}
-          isFullView={isEvidenceFullView}
-          onToggleFullView={onToggleEvidenceFullView}
-        />
-      ) : null}
     </article>
   );
 };
@@ -142,20 +125,39 @@ const CompetitionsPage = () => {
   const [activeEvidence, setActiveEvidence] = React.useState(null);
   const [isEvidenceFullView, setIsEvidenceFullView] = React.useState(false);
   const isCompactLayout = useMediaQuery(COMPACT_COMPETITION_LAYOUT_QUERY);
+  const evidenceTriggerRef = React.useRef(null);
+  const activeItem = competitionItems.find((item) =>
+    item.links?.some((link) => activeEvidence === getEvidenceKey(item, link)),
+  );
+  const activeLink = activeItem?.links?.find(
+    (link) => activeEvidence === getEvidenceKey(activeItem, link),
+  );
+
+  const closeEvidence = React.useCallback(() => {
+    setActiveEvidence(null);
+    setIsEvidenceFullView(false);
+    window.requestAnimationFrame(() => evidenceTriggerRef.current?.focus());
+  }, []);
 
   React.useEffect(() => {
+    const isModalOpen = isCompactLayout && Boolean(activeLink);
+
     document.body.classList.toggle(
       "paper-viewer-fullscreen-open",
-      isEvidenceFullView,
+      isEvidenceFullView || isModalOpen,
     );
 
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
-        setIsEvidenceFullView(false);
+        if (isModalOpen) {
+          closeEvidence();
+        } else {
+          setIsEvidenceFullView(false);
+        }
       }
     };
 
-    if (isEvidenceFullView) {
+    if (isEvidenceFullView || isModalOpen) {
       window.addEventListener("keydown", handleKeyDown);
     }
 
@@ -163,15 +165,15 @@ const CompetitionsPage = () => {
       document.body.classList.remove("paper-viewer-fullscreen-open");
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isEvidenceFullView]);
+  }, [activeLink, closeEvidence, isCompactLayout, isEvidenceFullView]);
 
-  const toggleEvidence = (evidenceKey) => {
+  const toggleEvidence = (evidenceKey, trigger) => {
     if (activeEvidence === evidenceKey) {
-      setActiveEvidence(null);
-      setIsEvidenceFullView(false);
+      closeEvidence();
       return;
     }
 
+    evidenceTriggerRef.current = trigger;
     setActiveEvidence(evidenceKey);
     setIsEvidenceFullView(false);
   };
@@ -189,19 +191,28 @@ const CompetitionsPage = () => {
           title="대회 및 외부 활동"
         />
         {isCompactLayout ? (
-          <div className="project-grid">
-            {competitionItems.map((item) => (
-              <CompetitionCard
-                key={item.title}
-                item={item}
-                activeEvidence={activeEvidence}
-                isCompactLayout={isCompactLayout}
-                isEvidenceFullView={isEvidenceFullView}
-                onToggleEvidence={toggleEvidence}
-                onToggleEvidenceFullView={toggleEvidenceFullView}
+          <>
+            <div className="project-grid">
+              {competitionItems.map((item) => (
+                <CompetitionCard
+                  key={item.title}
+                  item={item}
+                  activeEvidence={activeEvidence}
+                  onToggleEvidence={toggleEvidence}
+                />
+              ))}
+            </div>
+            {activeItem && activeLink ? (
+              <InlineEvidenceViewer
+                itemTitle={activeItem.title}
+                evidence={activeLink}
+                viewerId={getEvidenceId(activeItem, activeLink)}
+                isFullView
+                isModal
+                onClose={closeEvidence}
               />
-            ))}
-          </div>
+            ) : null}
+          </>
         ) : (
           <div className="recognition-list">
             {competitionRows.map((row) => {
@@ -222,10 +233,7 @@ const CompetitionsPage = () => {
                         key={item.title}
                         item={item}
                         activeEvidence={activeEvidence}
-                        isCompactLayout={isCompactLayout}
-                        isEvidenceFullView={isEvidenceFullView}
                         onToggleEvidence={toggleEvidence}
-                        onToggleEvidenceFullView={toggleEvidenceFullView}
                       />
                     ))}
                   </div>

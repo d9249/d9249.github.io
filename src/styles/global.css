@@ -2037,6 +2037,43 @@ body.paper-viewer-fullscreen-open {
   max-height: none;
 }
 
+.paper-viewer-panel-modal {
+  z-index: 100;
+  isolation: isolate;
+  place-items: center;
+  background: var(--overlay);
+  cursor: zoom-out;
+}
+
+.paper-viewer-panel-modal::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  backdrop-filter: blur(18px);
+  content: "";
+  pointer-events: none;
+}
+
+.paper-viewer-panel-modal .paper-viewer {
+  cursor: default;
+  animation: project-lightbox-enter 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.paper-viewer-panel-modal .paper-viewer .paper-viewer-toolbar {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.paper-viewer-panel-modal .paper-viewer .paper-viewer-title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.paper-viewer-panel-modal .paper-viewer .paper-viewer-controls {
+  justify-content: flex-end;
+  width: auto;
+}
+
 .paper-link {
   width: fit-content;
   color: color-mix(in oklch, var(--accent) 78%, var(--fg));
