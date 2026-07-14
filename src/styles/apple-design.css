@@ -2610,6 +2610,8 @@ html[lang="ko"] body {
 
   .mobile-skill-browser {
     display: block;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
     container-name: mobile-skill-board;
     container-type: inline-size;
   }
