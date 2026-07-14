@@ -3562,12 +3562,12 @@ html[lang="ko"] body {
   gap: 0;
 }
 
-.theme-toggle,
-.search-toggle,
-.menu-button {
+.header-actions > :is(.theme-toggle, .search-toggle, .menu-button) {
+  padding: var(--space-1);
   border: 0;
   border-radius: 50%;
   background: transparent;
+  background-clip: content-box;
   box-shadow: none;
   transition:
     color var(--motion-fast) var(--ease-fluid),
@@ -3575,16 +3575,20 @@ html[lang="ko"] body {
     transform var(--motion-press) ease-out;
 }
 
-:is(.theme-toggle, .search-toggle, .menu-button):not(:disabled):hover {
+.header-actions
+  > :is(.theme-toggle, .search-toggle, .menu-button):not(:disabled):hover {
   border-color: transparent;
   background: color-mix(in oklch, var(--accent) 10%, transparent);
+  background-clip: content-box;
   box-shadow: none;
   color: var(--accent);
   transform: none;
 }
 
-:is(.theme-toggle, .search-toggle, .menu-button):not(:disabled):active {
+.header-actions
+  > :is(.theme-toggle, .search-toggle, .menu-button):not(:disabled):active {
   background: color-mix(in oklch, var(--accent) 16%, transparent);
+  background-clip: content-box;
   box-shadow: none;
   transform: scale(0.92);
 }
@@ -3594,11 +3598,10 @@ html[lang="ko"] body {
 }
 
 @media (max-width: 1060px) {
-  .theme-toggle,
-  .search-toggle,
-  .menu-button {
+  .header-actions > :is(.theme-toggle, .search-toggle, .menu-button) {
     width: 2.75rem;
     height: 2.75rem;
+    padding: var(--space-2);
   }
 }
 
