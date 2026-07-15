@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">Autoresearch for Skills의 binary eval 기반 개선 루프</title>
+  <desc id="desc">대상 skill과 평가 계약을 고정한 뒤 baseline을 측정하고, 한 번에 한 가지 mutation을 적용해 binary eval로 점수화한다. 점수가 좋아지면 keep하고 나빠지거나 같으면 discard하며 결과 파일에 기록한다.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F7FAFC"/>
+      <stop offset="1" stop-color="#EEF4FF"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#243B53" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#526A85"/>
+    </marker>
+    <style>
+      .h1 { font: 700 42px -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; fill: #162B44; }
+      .sub { font: 400 21px -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; fill: #526A85; }
+      .step { font: 700 19px -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; fill: #35506D; letter-spacing: 0.4px; }
+      .cardtitle { font: 700 28px -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; fill: #162B44; }
+      .body { font: 400 22px -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; fill: #36516B; }
+      .chip { font: 600 17px -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; fill: #33516E; }
+      .gate { font: 700 25px -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; fill: #162B44; }
+      .small { font: 500 17px -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; fill: #526A85; }
+      .loop { font: 700 18px -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; fill: #526A85; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="760" rx="28" fill="url(#bg)"/>
+  <text x="70" y="78" class="h1">Autoresearch for Skills: prompt를 고치기 전에 실험을 고정한다</text>
+  <text x="70" y="112" class="sub">공식 SKILL.md의 baseline → 단일 mutation → binary eval → keep / discard 흐름</text>
+
+  <path d="M 342 303 L 405 303" stroke="#526A85" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 665 303 L 728 303" stroke="#526A85" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 988 303 L 1051 303" stroke="#526A85" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="190" width="272" height="230" rx="20" fill="#FFFFFF" stroke="#C9D9EA" stroke-width="2"/>
+    <rect x="70" y="190" width="272" height="45" rx="20" fill="#DDEBFF"/>
+    <text x="95" y="220" class="step">01 · 실험 계약</text>
+    <text x="95" y="273" class="cardtitle">대상과 기준을 고정</text>
+    <text x="95" y="309" class="body">대상 SKILL.md</text>
+    <text x="95" y="338" class="body">3–5개 test input</text>
+    <text x="95" y="367" class="body">3–6개 binary eval</text>
+    <rect x="95" y="386" width="148" height="25" rx="12" fill="#EDF4FD"/>
+    <text x="109" y="404" class="chip">예산 · 반복 횟수</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="405" y="190" width="260" height="230" rx="20" fill="#FFFFFF" stroke="#C9D9EA" stroke-width="2"/>
+    <rect x="405" y="190" width="260" height="45" rx="20" fill="#E6F6EF"/>
+    <text x="430" y="220" class="step">02 · baseline</text>
+    <text x="430" y="273" class="cardtitle">원본을 먼저 측정</text>
+    <text x="430" y="309" class="body">수정 전 SKILL.md</text>
+    <text x="430" y="338" class="body">동일 입력으로 반복 실행</text>
+    <text x="430" y="367" class="body">점수와 실패를 기록</text>
+    <rect x="430" y="386" width="160" height="25" rx="12" fill="#E8F7EF"/>
+    <text x="444" y="404" class="chip">비교 가능한 출발점</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="728" y="190" width="260" height="230" rx="20" fill="#FFFFFF" stroke="#C9D9EA" stroke-width="2"/>
+    <rect x="728" y="190" width="260" height="45" rx="20" fill="#FFF1D8"/>
+    <text x="753" y="220" class="step">03 · 단일 mutation</text>
+    <text x="753" y="273" class="cardtitle">실패 패턴 하나 수정</text>
+    <text x="753" y="309" class="body">실패 output을 읽고</text>
+    <text x="753" y="338" class="body">가설 하나를 세운 뒤</text>
+    <text x="753" y="367" class="body">작은 prompt patch 적용</text>
+    <rect x="753" y="386" width="170" height="25" rx="12" fill="#FFF5E4"/>
+    <text x="767" y="404" class="chip">한 번에 한 가지 변화</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1051" y="190" width="279" height="230" rx="20" fill="#FFFFFF" stroke="#C9D9EA" stroke-width="2"/>
+    <rect x="1051" y="190" width="279" height="45" rx="20" fill="#F0E9FF"/>
+    <text x="1076" y="220" class="step">04 · binary eval</text>
+    <text x="1076" y="273" class="cardtitle">점수로 keep / discard</text>
+    <text x="1076" y="309" class="body">같은 eval을 다시 실행</text>
+    <text x="1076" y="338" class="body">좋아지면 keep</text>
+    <text x="1076" y="367" class="body">같거나 나빠지면 discard</text>
+    <rect x="1076" y="386" width="175" height="25" rx="12" fill="#F4EFFF"/>
+    <text x="1090" y="404" class="chip">주관적 점수는 배제</text>
+  </g>
+
+  <path d="M 1190 420 L 1190 490" stroke="#526A85" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 1140 545 L 765 545 Q 710 545 710 490 L 710 455" stroke="#526A85" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <text x="890" y="531" class="loop">다음 실험</text>
+
+  <g filter="url(#shadow)">
+    <rect x="860" y="488" width="440" height="180" rx="20" fill="#FFFFFF" stroke="#C9D9EA" stroke-width="2"/>
+    <text x="891" y="530" class="gate">결과를 남기고 다음 반복으로</text>
+    <rect x="892" y="553" width="128" height="43" rx="12" fill="#DDF6E8"/>
+    <text x="919" y="581" class="chip">KEEP</text>
+    <text x="1040" y="580" class="small">개선된 SKILL.md를 새 baseline으로</text>
+    <rect x="892" y="610" width="128" height="43" rx="12" fill="#FFE2E1"/>
+    <text x="910" y="638" class="chip">DISCARD</text>
+    <text x="1040" y="637" class="small">이전 버전으로 되돌리고 이유 기록</text>
+  </g>
+
+  <g>
+    <rect x="70" y="505" width="610" height="163" rx="20" fill="#FFFFFF" stroke="#C9D9EA" stroke-width="2"/>
+    <text x="100" y="545" class="gate">남는 artifact: 개선 자체보다 실험 이력이 중요하다</text>
+    <rect x="100" y="571" width="136" height="38" rx="11" fill="#EDF4FD"/><text x="117" y="596" class="chip">results.tsv</text>
+    <rect x="248" y="571" width="145" height="38" rx="11" fill="#EDF4FD"/><text x="265" y="596" class="chip">results.json</text>
+    <rect x="405" y="571" width="150" height="38" rx="11" fill="#EDF4FD"/><text x="423" y="596" class="chip">changelog.md</text>
+    <rect x="100" y="620" width="200" height="38" rx="11" fill="#EDF4FD"/><text x="117" y="645" class="chip">SKILL.md.baseline</text>
+    <rect x="312" y="620" width="155" height="38" rx="11" fill="#EDF4FD"/><text x="329" y="645" class="chip">dashboard.html</text>
+  </g>
+
+  <text x="70" y="718" class="sub">핵심 제약: eval은 yes / no로 판정 가능해야 하며, baseline이 충분히 높으면 계속 최적화할지 사용자에게 다시 묻는다.</text>
+</svg>
