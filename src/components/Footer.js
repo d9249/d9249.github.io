@@ -24,6 +24,7 @@ const footerGroups = [
     links: [
       { label: "Blog", to: "/blog/" },
       { label: "Tips", to: "/tips/", reloadDocument: true },
+      { label: "Newsroom", to: "/newsroom/" },
       { label: "Contact", to: "/contact/" },
     ],
   },

@@ -1,0 +1,104 @@
+import * as React from "react";
+import { graphql } from "gatsby";
+import Layout from "../components/Layout";
+import NewsroomGraph from "../components/NewsroomGraph";
+import SectionHeading from "../components/SectionHeading";
+import { buildNewsroomGraph } from "../utils/newsroom";
+
+const NewsroomPage = ({ data }) => {
+  const graph = React.useMemo(
+    () =>
+      buildNewsroomGraph({
+        posts: data.posts.nodes,
+        tips: data.tips.nodes,
+      }),
+    [data],
+  );
+  const latestDate =
+    [...data.posts.nodes, ...data.tips.nodes]
+      .map((node) => node.frontmatter.date)
+      .filter(Boolean)
+      .sort()
+      .at(-1) || null;
+
+  return (
+    <Layout>
+      <section className="shell section newsroom-page">
+        <SectionHeading
+          as="h1"
+          kicker="Newsroom"
+          title="지식 그래프"
+          description="Blog와 Tips의 모든 발행 글을 노드로, 태그와 related 프런트매터로 이어진 관계를 엣지로 그린 지도입니다. 새 글이 발행되면 빌드 시점에 자동으로 합류합니다."
+        />
+        <p className="newsroom-stats">
+          <span>{graph.nodes.length} pages</span>
+          <span>{graph.links.length} links</span>
+          <span>{graph.clusters.length} clusters</span>
+          {latestDate && <span>latest {latestDate}</span>}
+        </p>
+        <NewsroomGraph graph={graph} />
+      </section>
+    </Layout>
+  );
+};
+
+export default NewsroomPage;
+
+export const Head = () => (
+  <>
+    <title>Newsroom</title>
+    <meta
+      name="description"
+      content="블로그와 팁 전체 글을 태그 관계로 이은 인터랙티브 지식 그래프입니다."
+    />
+  </>
+);
+
+export const query = graphql`
+  query NewsroomPage {
+    posts: allMarkdownRemark(
+      filter: {
+        fields: { contentType: { eq: "blog-post" } }
+        frontmatter: { draft: { ne: true } }
+      }
+      sort: { frontmatter: { date: DESC } }
+    ) {
+      nodes {
+        id
+        fields {
+          slug
+          category
+        }
+        frontmatter {
+          title
+          description
+          date(formatString: "YYYY.MM.DD")
+          tags
+          related
+        }
+      }
+    }
+    tips: allMarkdownRemark(
+      filter: {
+        fields: { contentType: { eq: "tip" } }
+        frontmatter: { draft: { ne: true } }
+      }
+      sort: { frontmatter: { date: DESC } }
+    ) {
+      nodes {
+        id
+        fields {
+          slug
+        }
+        frontmatter {
+          title
+          description
+          date(formatString: "YYYY.MM.DD")
+          platforms
+          tags
+          related
+        }
+      }
+    }
+  }
+`;

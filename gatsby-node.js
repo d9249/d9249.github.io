@@ -353,6 +353,25 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   });
 };
 
+// Explicitly type optional frontmatter fields consumed by the newsroom
+// graph so posts that omit them (all of them today, for `related`) never
+// break schema inference or the /newsroom/ page query.
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createTypes(`
+    type MarkdownRemark implements Node {
+      frontmatter: MarkdownRemarkFrontmatter
+    }
+    type MarkdownRemarkFrontmatter {
+      title: String
+      description: String
+      draft: Boolean
+      tags: [String]
+      platforms: [String]
+      related: [String]
+    }
+  `);
+};
+
 const removeNullBytesFromHtml = (directory, sanitizedFiles) => {
   if (!fs.existsSync(directory)) {
     return;

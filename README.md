@@ -14,7 +14,7 @@
 - Keynote에서 export한 발표용 포트폴리오 슬라이드 뷰어
 
 주요 화면은 `src/pages/` 아래에 있으며 홈, 프로젝트, 연구, 수상, 대회,
-포트폴리오, 블로그, 연락처 페이지로 구성됩니다.
+포트폴리오, 블로그, 뉴스룸, 연락처 페이지로 구성됩니다.
 
 ## Tech Stack
 
@@ -130,6 +130,31 @@ draft: false
 Set `draft: true` to keep a post out of generated blog pages. When adding a new
 top-level blog category that should appear in navigation and receive a category
 page, also add it to `src/data/categories.json`.
+
+## Newsroom Knowledge Graph
+
+`/newsroom/`은 발행된 모든 Blog·Tips 글을 노드로, 태그 관계를 엣지로 그린
+인터랙티브 지식 그래프입니다 (`src/pages/newsroom.js`,
+`src/utils/newsroom.js`, `src/components/NewsroomGraph.js`).
+
+- 새 글은 빌드 시점에 자동으로 그래프에 합류합니다. 별도 설정이 필요 없습니다.
+- 엣지는 공유 태그(희귀 태그일수록 강하게)로 계산되고, 노드당 상위 5개로
+  제한되어 코퍼스가 커져도 읽기 좋은 밀도를 유지합니다.
+- 클러스터 색과 라벨은 `src/data/categories.json`과
+  `src/data/tipCategories.json` 순서를 따르므로 새 카테고리를 뒤에 추가해도
+  기존 색이 바뀌지 않습니다.
+- 선택 항목으로 frontmatter에 `related`를 적으면 태그와 무관하게 항상
+  유지되는 명시적 연결이 됩니다:
+
+```md
+related:
+
+- /blog/agent-systems/example-post/
+- /tips/example-tip/
+```
+
+QA: `npm run build && npx gatsby serve` 후
+`node scripts/qa/verify-newsroom-graph.mjs`.
 
 ## Project Case Studies
 

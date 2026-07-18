@@ -13,5 +13,6 @@ export const navItems = [
     to: "/tips/",
     reloadDocument: true,
   },
+  { label: "newsroom", to: "/newsroom/" },
   { label: "contact", to: "/contact/" },
 ];
