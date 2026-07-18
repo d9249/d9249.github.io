@@ -275,13 +275,14 @@ const IndexPage = ({ data }) => {
         <div>
           <p className="eyebrow">AI Engineer &amp; Researcher</p>
           <h1>
-            AI 연구를 <span className="hero-title-nowrap">제품 가치로</span>{" "}
-            연결하는 엔지니어
+            <span className="hero-title-nowrap">이상(Ideal)을</span> 설계하고,{" "}
+            <span className="hero-title-nowrap">평균(Mean)을</span> 넘어서는
+            엔지니어
           </h1>
           <p className="hero-copy">
-            연구의 깊이를 RAG, 멀티 에이전트, Document AI,{" "}
-            <span className="hero-copy-nowrap">운영 가능한 플랫폼으로</span>{" "}
-            번역합니다.
+            이름부터 이상과 평균 사이 — RAG, 멀티 에이전트, Document AI로 이상을{" "}
+            <span className="hero-copy-nowrap">운영 가능한 시스템으로</span>{" "}
+            수렴시키고, 결과는 평균으로 회귀시키지 않습니다.
           </p>
           <div className="link-row" aria-label="Profile links">
             {heroLinks.map((link) => (
