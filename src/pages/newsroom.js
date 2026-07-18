@@ -24,12 +24,7 @@ const NewsroomPage = ({ data }) => {
   return (
     <Layout>
       <section className="shell section newsroom-page">
-        <SectionHeading
-          as="h1"
-          kicker="Newsroom"
-          title="지식 그래프"
-          description="Blog와 Tips의 모든 발행 글을 노드로, 태그와 related 프런트매터로 이어진 관계를 엣지로 그린 지도입니다. 새 글이 발행되면 빌드 시점에 자동으로 합류합니다."
-        />
+        <SectionHeading as="h1" kicker="Newsroom" title="지식 그래프" />
         <div className="blog-list-summary">
           <span className="blog-list-count">
             {graph.nodes.length} pages, {graph.links.length} links,{" "}
