@@ -5352,22 +5352,29 @@ body.project-lightbox-open {
   }
 }
 /* Newsroom knowledge graph */
-.newsroom-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: -8px 0 18px;
+.newsroom-cluster-nav a {
+  gap: 7px;
+  cursor: pointer;
+  user-select: none;
 }
 
-.newsroom-stats span {
-  padding: 4px 10px;
-  border: 1px solid var(--border);
+.newsroom-cluster-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.newsroom-cluster-nav a strong {
+  display: grid;
+  min-width: 18px;
+  height: 18px;
+  place-items: center;
   border-radius: 999px;
-  background: color-mix(in oklch, var(--surface) 88%, var(--bg));
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
+  background: color-mix(in oklch, var(--accent) 18%, transparent);
+  color: var(--fg);
+  font-size: 10px;
+  font-weight: 800;
 }
 
 .newsroom-toolbar {
@@ -5378,9 +5385,14 @@ body.project-lightbox-open {
   margin-bottom: 12px;
 }
 
+.newsroom-search-box {
+  position: relative;
+  flex: 1 1 260px;
+  max-width: 360px;
+}
+
 .newsroom-search {
-  flex: 1 1 240px;
-  max-width: 340px;
+  width: 100%;
   padding: 9px 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -5395,9 +5407,55 @@ body.project-lightbox-open {
   outline: none;
 }
 
+.newsroom-search-results {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  left: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 320px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow-modal);
+  overflow-y: auto;
+}
+
+.newsroom-search-results button {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--fg);
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.newsroom-search-results button:hover,
+.newsroom-search-results button:focus-visible {
+  background: color-mix(in oklch, var(--accent) 10%, transparent);
+  outline: none;
+}
+
+.newsroom-search-result-meta {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
 .newsroom-zoom {
   display: flex;
   gap: 6px;
+  margin-left: auto;
 }
 
 .newsroom-zoom button {
@@ -5422,54 +5480,6 @@ body.project-lightbox-open {
   outline-offset: 2px;
 }
 
-.newsroom-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 14px;
-}
-
-.newsroom-legend-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 10px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: color-mix(in oklch, var(--surface) 88%, transparent);
-  color: var(--fg);
-  font-size: 12px;
-  font-weight: 650;
-  cursor: pointer;
-}
-
-.newsroom-legend-chip:hover {
-  border-color: color-mix(in oklch, var(--accent) 64%, var(--border));
-}
-
-.newsroom-legend-chip:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.newsroom-legend-chip.is-muted {
-  opacity: 0.42;
-}
-
-.newsroom-legend-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  flex: none;
-}
-
-.newsroom-legend-count {
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 800;
-}
-
 .newsroom-stage {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
@@ -5480,16 +5490,7 @@ body.project-lightbox-open {
 .newsroom-canvas-shell {
   position: relative;
   height: clamp(440px, 66vh, 720px);
-  border: 1px solid var(--border);
-  border-radius: 8px;
   overflow: hidden;
-  background:
-    radial-gradient(
-      circle at 30% 20%,
-      color-mix(in oklch, var(--accent) 5%, transparent),
-      transparent 52%
-    ),
-    color-mix(in oklch, var(--surface) 96%, var(--bg));
   touch-action: none;
 }
 
@@ -5531,9 +5532,6 @@ body.project-lightbox-open {
   flex-direction: column;
   gap: 10px;
   padding: 18px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: color-mix(in oklch, var(--surface) 94%, var(--bg));
   overflow-y: auto;
   max-height: clamp(440px, 66vh, 720px);
 }

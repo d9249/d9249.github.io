@@ -30,12 +30,17 @@ const NewsroomPage = ({ data }) => {
           title="지식 그래프"
           description="Blog와 Tips의 모든 발행 글을 노드로, 태그와 related 프런트매터로 이어진 관계를 엣지로 그린 지도입니다. 새 글이 발행되면 빌드 시점에 자동으로 합류합니다."
         />
-        <p className="newsroom-stats">
-          <span>{graph.nodes.length} pages</span>
-          <span>{graph.links.length} links</span>
-          <span>{graph.clusters.length} clusters</span>
-          {latestDate && <span>latest {latestDate}</span>}
-        </p>
+        <div className="blog-list-summary">
+          <span className="blog-list-count">
+            {graph.nodes.length} pages, {graph.links.length} links,{" "}
+            {graph.clusters.length} clusters
+          </span>
+          {latestDate && (
+            <div className="blog-list-meta">
+              <strong>latest {latestDate}</strong>
+            </div>
+          )}
+        </div>
         <NewsroomGraph graph={graph} />
       </section>
     </Layout>

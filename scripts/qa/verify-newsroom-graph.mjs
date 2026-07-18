@@ -22,18 +22,13 @@ try {
   await page.locator(".newsroom-canvas").waitFor({ state: "visible" });
   await page.waitForTimeout(1200);
 
-  // Stats must report a populated graph.
-  const stats = await page
-    .locator(".newsroom-stats span")
-    .evaluateAll((nodes) => nodes.map((node) => node.textContent ?? ""));
-  const pages = Number.parseInt(
-    stats.find((text) => text.includes("pages")) ?? "0",
-    10,
-  );
-  const links = Number.parseInt(
-    stats.find((text) => text.includes("links")) ?? "0",
-    10,
-  );
+  // Stats must report a populated graph in the shared blog summary style.
+  const summary = await page
+    .locator(".blog-list-summary .blog-list-count")
+    .innerText();
+  const [pages, links] = summary
+    .match(/\d+/g)
+    .map((value) => Number.parseInt(value, 10));
 
   assert(pages > 300, `graph must include the full corpus; saw ${pages} pages`);
   assert(links > pages / 2, `graph must be connected; saw ${links} links`);
@@ -59,17 +54,57 @@ try {
     `canvas must render the graph; painted ${drawnPixels}px`,
   );
 
-  // Legend chips mirror the curated cluster labels.
-  const legendCount = await page.locator(".newsroom-legend-chip").count();
-  assert(legendCount >= 10, `legend must list clusters; saw ${legendCount}`);
+  // Cluster nav must reuse the site chip pattern: All + one chip per cluster.
+  const clusterChips = page.locator(
+    ".newsroom-cluster-nav .category-nav-list a",
+  );
+  const chipCount = await clusterChips.count();
+  assert(chipCount >= 11, `cluster nav must list clusters; saw ${chipCount}`);
+  assert.equal(
+    await clusterChips.first().innerText(),
+    "All",
+    "cluster nav must start with an All chip",
+  );
 
-  // Searching then selecting must open the detail panel with a post link.
-  await page.locator(".newsroom-search").fill("claude");
+  // Selecting a cluster chip must activate it (single-active semantics).
+  await clusterChips.nth(1).click();
+  await page.waitForTimeout(300);
+  assert.equal(
+    await clusterChips.nth(1).getAttribute("aria-pressed"),
+    "true",
+    "clicking a cluster chip must activate it",
+  );
+  await clusterChips.first().click();
   await page.waitForTimeout(300);
 
-  // Click a node: probe canvas center region for a hit by clicking the
-  // densest cluster area (canvas hit-testing is internal, so click until
-  // the panel opens or fall back to a few sampled points).
+  // Search must surface a results dropdown that jumps to the node.
+  await page.locator(".newsroom-search").fill("claude");
+  await page.locator(".newsroom-search-results button").first().waitFor({
+    state: "visible",
+  });
+  const firstResultTitle = await page
+    .locator(".newsroom-search-results button span")
+    .first()
+    .innerText();
+  await page.locator(".newsroom-search-results button").first().click();
+  await page.waitForTimeout(400);
+
+  const panelTitle = await page.locator(".newsroom-panel-title").innerText();
+  assert(
+    firstResultTitle.replace(/…$/, "").startsWith(panelTitle.slice(0, 20)) ||
+      panelTitle.startsWith(firstResultTitle.replace(/…$/, "").slice(0, 20)),
+    `search result must select its node; result "${firstResultTitle}" vs panel "${panelTitle}"`,
+  );
+
+  const href = await page.locator(".newsroom-panel-link").getAttribute("href");
+  assert(
+    /^\/(blog|tips)\//.test(href ?? ""),
+    `panel link must target a blog or tip post; saw ${href}`,
+  );
+
+  // Clicking a canvas node directly must also open the panel.
+  await page.locator(".newsroom-search").fill("");
+  await page.keyboard.press("Escape");
   const shell = page.locator(".newsroom-canvas-shell");
   const box = await shell.boundingBox();
   const samples = [
@@ -96,19 +131,16 @@ try {
     }
   }
 
-  assert(panelOpened, "clicking a node must open the detail panel");
-
-  const href = await page.locator(".newsroom-panel-link").getAttribute("href");
-  assert(
-    /^\/(blog|tips)\//.test(href ?? ""),
-    `panel link must target a blog or tip post; saw ${href}`,
-  );
+  assert(panelOpened, "clicking a canvas node must open the detail panel");
 
   // Following the link must land on the actual article.
+  const articleHref = await page
+    .locator(".newsroom-panel-link")
+    .getAttribute("href");
   await page.locator(".newsroom-panel-link").click();
-  await page.waitForURL(`**${href}`);
+  await page.waitForURL(`**${articleHref}`);
   assert(
-    new URL(page.url()).pathname === href,
+    new URL(page.url()).pathname === articleHref,
     "panel link must navigate to the article",
   );
 } finally {

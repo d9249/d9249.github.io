@@ -4,6 +4,7 @@ import { Link } from "gatsby";
 const GOLDEN_ANGLE = 137.508;
 const LABEL_ZOOM_THRESHOLD = 0.85;
 const HUB_LABEL_COUNT = 14;
+const MAX_SEARCH_RESULTS = 8;
 
 const hashString = (value) => {
   let hash = 2166136261;
@@ -26,6 +27,11 @@ const clusterColor = (paletteIndex, dark) =>
 const truncate = (value, max) =>
   value.length > max ? `${value.slice(0, max - 1)}…` : value;
 
+// Tips cluster labels already carry a "Tips · " prefix, so only blog
+// entries need the type prefix added.
+const typedClusterLabel = (type, clusterLabel) =>
+  type === "tip" ? clusterLabel : `Blog · ${clusterLabel}`;
+
 const getTheme = () =>
   typeof document !== "undefined" &&
   document.documentElement.getAttribute("data-theme") === "dark"
@@ -34,7 +40,6 @@ const getTheme = () =>
 
 const THEME_COLORS = {
   light: {
-    background: "oklch(99% 0.003 250)",
     edge: "oklch(30% 0.02 245)",
     edgeAlpha: 0.09,
     label: "oklch(24% 0.02 245)",
@@ -42,7 +47,6 @@ const THEME_COLORS = {
     ring: "oklch(24% 0.02 245)",
   },
   dark: {
-    background: "oklch(17% 0.018 250)",
     edge: "oklch(90% 0.01 245)",
     edgeAlpha: 0.1,
     label: "oklch(92% 0.01 245)",
@@ -56,7 +60,6 @@ const buildSimulation = (graph) => {
     graph.clusters.map((cluster) => [cluster.id, cluster]),
   );
   const clusterAnchors = new Map();
-  const clusterCount = Math.max(1, graph.clusters.length);
 
   graph.clusters.forEach((cluster, index) => {
     const angle = ((index * GOLDEN_ANGLE) % 360) * (Math.PI / 180);
@@ -94,6 +97,19 @@ const buildSimulation = (graph) => {
       target: nodeById.get(link.target),
     }))
     .filter((link) => link.source && link.target);
+  const neighborsById = new Map();
+
+  links.forEach((link) => {
+    if (!neighborsById.has(link.source.id)) {
+      neighborsById.set(link.source.id, new Set());
+    }
+    if (!neighborsById.has(link.target.id)) {
+      neighborsById.set(link.target.id, new Set());
+    }
+    neighborsById.get(link.source.id).add(link.target.id);
+    neighborsById.get(link.target.id).add(link.source.id);
+  });
+
   const hubIds = new Set(
     [...nodes]
       .sort((left, right) => (right.degree || 0) - (left.degree || 0))
@@ -103,9 +119,9 @@ const buildSimulation = (graph) => {
 
   return {
     alpha: 1,
-    clusterCount,
     hubIds,
     links,
+    neighborsById,
     nodeById,
     nodes,
   };
@@ -188,9 +204,13 @@ const NewsroomGraph = ({ graph }) => {
   const canvasRef = React.useRef(null);
   const shellRef = React.useRef(null);
   const stateRef = React.useRef(null);
+  const searchBoxRef = React.useRef(null);
+  const listId = React.useId();
   const [selectedId, setSelectedId] = React.useState(null);
   const [query, setQuery] = React.useState("");
-  const [hiddenClusters, setHiddenClusters] = React.useState(() => new Set());
+  const [searchOpen, setSearchOpen] = React.useState(false);
+  const [activeCluster, setActiveCluster] = React.useState(null);
+  const [clustersExpanded, setClustersExpanded] = React.useState(false);
   const [tooltip, setTooltip] = React.useState(null);
   const [ready, setReady] = React.useState(false);
   const [themeName, setThemeName] = React.useState("light");
@@ -234,34 +254,102 @@ const NewsroomGraph = ({ graph }) => {
       .sort((left, right) => right.weight - left.weight);
   }, [graph, selectedNode]);
 
+  const clusterLabelById = React.useMemo(
+    () => new Map(graph.clusters.map((cluster) => [cluster.id, cluster.label])),
+    [graph],
+  );
+  const searchResults = React.useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+
+    if (!normalized) {
+      return [];
+    }
+
+    const scored = graph.nodes
+      .map((node) => {
+        const title = node.title.toLowerCase();
+        const titleIndex = title.indexOf(normalized);
+        const tagHit = node.tagLabels.some((tag) =>
+          tag.toLowerCase().includes(normalized),
+        );
+        const clusterHit = (clusterLabelById.get(node.cluster) || "")
+          .toLowerCase()
+          .includes(normalized);
+
+        if (titleIndex < 0 && !tagHit && !clusterHit) {
+          return null;
+        }
+
+        return {
+          node,
+          score:
+            (titleIndex === 0 ? 3 : titleIndex > 0 ? 2 : 0) +
+            (tagHit ? 1 : 0) +
+            (clusterHit ? 0.5 : 0),
+        };
+      })
+      .filter(Boolean)
+      .sort(
+        (left, right) =>
+          right.score - left.score ||
+          (right.node.date || "").localeCompare(left.node.date || ""),
+      );
+
+    return scored.slice(0, MAX_SEARCH_RESULTS).map((entry) => entry.node);
+  }, [clusterLabelById, graph, query]);
+
   // Keep view state (filters, selection) in a ref so pointer/draw handlers
   // never force a simulation rebuild.
   const viewRef = React.useRef({
-    hiddenClusters,
+    activeCluster: null,
     hoveredId: null,
     query: "",
     selectedId: null,
     theme: "light",
   });
 
-  const reheat = React.useCallback((amount = 0.3) => {
-    const state = stateRef.current;
-
-    if (state) {
-      state.sim.alpha = Math.max(state.sim.alpha, amount);
-      state.needsDraw = true;
-    }
-  }, []);
-
   React.useEffect(() => {
-    viewRef.current.hiddenClusters = hiddenClusters;
+    viewRef.current.activeCluster = activeCluster;
     viewRef.current.query = query.trim().toLowerCase();
     viewRef.current.selectedId = selectedId;
 
     if (stateRef.current) {
       stateRef.current.needsDraw = true;
     }
-  }, [hiddenClusters, query, selectedId]);
+  }, [activeCluster, query, selectedId]);
+
+  // Close the search dropdown when clicking outside of it.
+  React.useEffect(() => {
+    if (!searchOpen) {
+      return undefined;
+    }
+
+    const handlePointerDown = (event) => {
+      if (!searchBoxRef.current?.contains(event.target)) {
+        setSearchOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [searchOpen]);
+
+  const jumpToNode = React.useCallback((nodeId) => {
+    setSelectedId(nodeId);
+    stateRef.current?.centerOn?.(nodeId);
+  }, []);
+
+  const selectCluster = React.useCallback((clusterId) => {
+    setActiveCluster(clusterId);
+    setSelectedId(null);
+
+    if (clusterId) {
+      stateRef.current?.focusCluster?.(clusterId);
+    } else {
+      stateRef.current?.resetView?.();
+    }
+  }, []);
 
   React.useEffect(() => {
     const canvas = canvasRef.current;
@@ -274,7 +362,6 @@ const NewsroomGraph = ({ graph }) => {
     const sim = buildSimulation(graph);
     const state = {
       dragNode: null,
-      dragging: false,
       moved: false,
       needsDraw: true,
       panStart: null,
@@ -303,20 +390,8 @@ const NewsroomGraph = ({ graph }) => {
     let width = 0;
     let height = 0;
 
-    const resize = () => {
-      const rect = shell.getBoundingClientRect();
-      width = rect.width;
-      height = rect.height;
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      fitToContent();
-      state.needsDraw = true;
-    };
-
-    const fitToContent = () => {
-      if (!sim.nodes.length || !width || !height) {
+    const fitToNodes = (nodes, maxZoom) => {
+      if (!nodes.length || !width || !height) {
         return;
       }
 
@@ -325,7 +400,7 @@ const NewsroomGraph = ({ graph }) => {
       let maxX = -Infinity;
       let maxY = -Infinity;
 
-      sim.nodes.forEach((node) => {
+      nodes.forEach((node) => {
         minX = Math.min(minX, node.x);
         minY = Math.min(minY, node.y);
         maxX = Math.max(maxX, node.x);
@@ -336,7 +411,7 @@ const NewsroomGraph = ({ graph }) => {
       const contentWidth = Math.max(1, maxX - minX + padding * 2);
       const contentHeight = Math.max(1, maxY - minY + padding * 2);
       const k = Math.min(
-        1.4,
+        maxZoom,
         Math.min(width / contentWidth, height / contentHeight),
       );
 
@@ -345,6 +420,20 @@ const NewsroomGraph = ({ graph }) => {
         x: width / 2 - ((minX + maxX) / 2) * k,
         y: height / 2 - ((minY + maxY) / 2) * k,
       };
+      state.needsDraw = true;
+    };
+
+    const fitToContent = () => fitToNodes(sim.nodes, 1.4);
+
+    const resize = () => {
+      const rect = shell.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      fitToContent();
     };
 
     const toWorld = (screenX, screenY) => ({
@@ -352,8 +441,11 @@ const NewsroomGraph = ({ graph }) => {
       y: (screenY - state.transform.y) / state.transform.k,
     });
 
-    const isClusterVisible = (clusterId) =>
-      !viewRef.current.hiddenClusters.has(clusterId);
+    const inActiveCluster = (node) => {
+      const { activeCluster: focused } = viewRef.current;
+
+      return !focused || node.cluster === focused;
+    };
 
     const matchesQuery = (node) => {
       const { query: activeQuery } = viewRef.current;
@@ -376,10 +468,6 @@ const NewsroomGraph = ({ graph }) => {
       let bestDistance = Infinity;
 
       sim.nodes.forEach((node) => {
-        if (!isClusterVisible(node.cluster)) {
-          return;
-        }
-
         const dx = node.x - world.x;
         const dy = node.y - world.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -410,17 +498,11 @@ const NewsroomGraph = ({ graph }) => {
       const selected = view.selectedId
         ? sim.nodeById.get(view.selectedId)
         : null;
-      const neighborIds = new Set();
-
-      if (selected) {
-        sim.links.forEach((link) => {
-          if (link.source.id === selected.id) {
-            neighborIds.add(link.target.id);
-          } else if (link.target.id === selected.id) {
-            neighborIds.add(link.source.id);
-          }
-        });
-      }
+      const hovered = view.hoveredId ? sim.nodeById.get(view.hoveredId) : null;
+      const focusNode = hovered || selected;
+      const focusNeighborIds = focusNode
+        ? sim.neighborsById.get(focusNode.id) || new Set()
+        : null;
 
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       context.clearRect(0, 0, width, height);
@@ -429,29 +511,26 @@ const NewsroomGraph = ({ graph }) => {
 
       // Edges.
       sim.links.forEach((link) => {
-        if (
-          !isClusterVisible(link.source.cluster) ||
-          !isClusterVisible(link.target.cluster)
-        ) {
-          return;
-        }
-
-        const touchesSelection =
-          selected &&
-          (link.source.id === selected.id || link.target.id === selected.id);
+        const clusterDim =
+          !inActiveCluster(link.source) || !inActiveCluster(link.target);
+        const touchesFocus =
+          focusNode &&
+          (link.source.id === focusNode.id || link.target.id === focusNode.id);
 
         context.beginPath();
         context.moveTo(link.source.x, link.source.y);
         context.lineTo(link.target.x, link.target.y);
 
-        if (touchesSelection) {
-          context.strokeStyle = clusterColor(selected.paletteIndex, dark);
-          context.globalAlpha = 0.75;
+        if (touchesFocus) {
+          context.strokeStyle = clusterColor(focusNode.paletteIndex, dark);
+          context.globalAlpha = hovered && !selected ? 0.55 : 0.75;
           context.lineWidth = (link.related ? 2.2 : 1.5) / state.transform.k;
         } else {
           context.strokeStyle = colors.edge;
           context.globalAlpha =
-            selected || hasQuery ? colors.edgeAlpha * 0.5 : colors.edgeAlpha;
+            focusNode || hasQuery || clusterDim
+              ? colors.edgeAlpha * 0.45
+              : colors.edgeAlpha;
           context.lineWidth = (link.related ? 1.6 : 1) / state.transform.k;
         }
 
@@ -461,31 +540,35 @@ const NewsroomGraph = ({ graph }) => {
 
       // Nodes.
       sim.nodes.forEach((node) => {
-        if (!isClusterVisible(node.cluster)) {
-          return;
-        }
+        const isFocus = focusNode && node.id === focusNode.id;
+        const isFocusNeighbor = focusNeighborIds?.has(node.id);
+        const clusterDimmed = !inActiveCluster(node);
+        const queryDimmed = hasQuery && !matchesQuery(node);
+        const focusDimmed = focusNode && !isFocus && !isFocusNeighbor;
+        let alpha = 0.95;
 
-        const isSelected = selected && node.id === selected.id;
-        const isNeighbor = neighborIds.has(node.id);
-        const matched = matchesQuery(node);
-        const dimmed =
-          (hasQuery && !matched) ||
-          (selected && !isSelected && !isNeighbor && !hasQuery);
+        if (clusterDimmed) {
+          alpha = 0.12;
+        } else if (queryDimmed) {
+          alpha = 0.18;
+        } else if (focusDimmed) {
+          alpha = 0.3;
+        }
 
         context.beginPath();
         context.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
         context.fillStyle = clusterColor(node.paletteIndex, dark);
-        context.globalAlpha = dimmed ? 0.16 : 0.95;
+        context.globalAlpha = alpha;
         context.fill();
 
-        if (node.type === "tip" && !dimmed) {
+        if (node.type === "tip" && alpha > 0.4) {
           context.strokeStyle = colors.halo;
           context.lineWidth = 1.4 / state.transform.k;
           context.globalAlpha = 0.9;
           context.stroke();
         }
 
-        if (isSelected || node.id === view.hoveredId) {
+        if (isFocus || (selected && node.id === selected.id)) {
           context.strokeStyle = colors.ring;
           context.lineWidth = 1.8 / state.transform.k;
           context.globalAlpha = 1;
@@ -495,26 +578,25 @@ const NewsroomGraph = ({ graph }) => {
         context.globalAlpha = 1;
       });
 
-      // Labels: hubs, hovered, selection neighborhood, query matches.
+      // Labels: hubs, hovered/selected neighborhood, query matches.
       const labelZoomOk = state.transform.k >= LABEL_ZOOM_THRESHOLD;
       context.font = `600 ${11 / state.transform.k}px ui-sans-serif, system-ui, sans-serif`;
       context.textAlign = "center";
 
       sim.nodes.forEach((node) => {
-        if (!isClusterVisible(node.cluster)) {
+        if (!inActiveCluster(node)) {
           return;
         }
 
-        const isSelected = selected && node.id === selected.id;
-        const isNeighbor = neighborIds.has(node.id);
+        const isFocus = focusNode && node.id === focusNode.id;
+        const isFocusNeighbor = focusNeighborIds?.has(node.id);
         const matched = hasQuery && matchesQuery(node);
         const isHub = sim.hubIds.has(node.id);
         const showLabel =
-          isSelected ||
-          node.id === view.hoveredId ||
-          (isNeighbor && labelZoomOk) ||
+          isFocus ||
+          (isFocusNeighbor && labelZoomOk) ||
           (matched && labelZoomOk) ||
-          (!selected && !hasQuery && isHub && labelZoomOk);
+          (!focusNode && !hasQuery && isHub && labelZoomOk);
 
         if (!showLabel) {
           return;
@@ -617,7 +699,8 @@ const NewsroomGraph = ({ graph }) => {
         node
           ? {
               title: node.title,
-              meta: `${node.type === "tip" ? "Tips" : "Blog"} · ${node.clusterLabel}${node.date ? ` · ${node.date}` : ""}`,
+              meta: `${typedClusterLabel(node.type, node.clusterLabel)}${node.date ? ` · ${node.date}` : ""}`,
+              connections: node.degree || 0,
               x,
               y,
             }
@@ -688,7 +771,7 @@ const NewsroomGraph = ({ graph }) => {
     canvas.addEventListener("wheel", handleWheel, { passive: false });
     frameId = window.requestAnimationFrame(loop);
 
-    // Expose zoom controls to the toolbar buttons.
+    // Camera controls used by the toolbar, cluster nav, and search results.
     state.zoomBy = (factor) => {
       const centerX = width / 2;
       const centerY = height / 2;
@@ -704,6 +787,27 @@ const NewsroomGraph = ({ graph }) => {
     };
     state.resetView = () => {
       fitToContent();
+    };
+    state.focusCluster = (clusterId) => {
+      fitToNodes(
+        sim.nodes.filter((node) => node.cluster === clusterId),
+        1.6,
+      );
+    };
+    state.centerOn = (nodeId) => {
+      const node = sim.nodeById.get(nodeId);
+
+      if (!node) {
+        return;
+      }
+
+      const k = Math.max(state.transform.k, 1.1);
+
+      state.transform = {
+        k,
+        x: width / 2 - node.x * k,
+        y: height / 2 - node.y * k,
+      };
       state.needsDraw = true;
     };
 
@@ -723,34 +827,123 @@ const NewsroomGraph = ({ graph }) => {
     };
   }, [graph]);
 
-  const toggleCluster = (clusterId) => {
-    setHiddenClusters((previous) => {
-      const next = new Set(previous);
-
-      if (next.has(clusterId)) {
-        next.delete(clusterId);
-      } else {
-        next.add(clusterId);
-      }
-
-      return next;
-    });
-    reheat(0.08);
-  };
-
   const dark = ready && themeName === "dark";
+  const activeClusterLabel = activeCluster
+    ? clusterLabelById.get(activeCluster) || activeCluster
+    : "All";
+  const clusterChipProps = (clusterId) => ({
+    role: "button",
+    tabIndex: 0,
+    className: activeCluster === clusterId ? "is-active" : undefined,
+    "aria-pressed": activeCluster === clusterId,
+    onClick: () => selectCluster(clusterId),
+    onKeyDown: (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        selectCluster(clusterId);
+      }
+    },
+  });
 
   return (
     <div className="newsroom-graph">
+      <nav
+        className="category-nav newsroom-cluster-nav"
+        aria-label="Graph clusters"
+        data-expanded={clustersExpanded ? "true" : "false"}
+      >
+        <div className="category-nav-mobile-header">
+          <span className="tag-nav-label">Clusters</span>
+          <button
+            className="category-nav-toggle"
+            type="button"
+            aria-controls={listId}
+            aria-expanded={clustersExpanded}
+            aria-label={
+              clustersExpanded
+                ? "클러스터 접기"
+                : `클러스터 더 보기 (${graph.clusters.length}개 숨김)`
+            }
+            onClick={() => setClustersExpanded((current) => !current)}
+          >
+            {clustersExpanded ? "접기" : "더 보기"}
+          </button>
+        </div>
+        <div className="category-nav-list" id={listId}>
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <a key="all" {...clusterChipProps(null)}>
+            All
+          </a>
+          {graph.clusters.map((cluster) => (
+            /* eslint-disable-next-line jsx-a11y/anchor-is-valid */
+            <a key={cluster.id} {...clusterChipProps(cluster.id)}>
+              <span
+                className="newsroom-cluster-dot"
+                style={{
+                  background: clusterColor(cluster.paletteIndex, dark),
+                }}
+                aria-hidden="true"
+              />
+              {cluster.label}
+              <strong>{cluster.count}</strong>
+            </a>
+          ))}
+        </div>
+        <span className="visually-hidden" aria-live="polite">
+          현재 클러스터 필터는 {activeClusterLabel}입니다.
+        </span>
+      </nav>
       <div className="newsroom-toolbar">
-        <input
-          type="search"
-          className="newsroom-search"
-          placeholder="제목·태그·클러스터 검색"
-          aria-label="Newsroom 그래프 검색"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-        />
+        <div className="newsroom-search-box" ref={searchBoxRef}>
+          <input
+            type="search"
+            className="newsroom-search"
+            placeholder="제목·태그·클러스터 검색"
+            aria-label="Newsroom 그래프 검색"
+            aria-expanded={searchOpen && searchResults.length > 0}
+            value={query}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setSearchOpen(true);
+            }}
+            onFocus={() => setSearchOpen(true)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" && searchResults.length > 0) {
+                event.preventDefault();
+                jumpToNode(searchResults[0].id);
+                setSearchOpen(false);
+              }
+              if (event.key === "Escape") {
+                setSearchOpen(false);
+              }
+            }}
+          />
+          {searchOpen && searchResults.length > 0 && (
+            <div className="newsroom-search-results" role="listbox">
+              {searchResults.map((node) => (
+                <button
+                  key={node.id}
+                  type="button"
+                  role="option"
+                  aria-selected={node.id === selectedId}
+                  onClick={() => {
+                    jumpToNode(node.id);
+                    setSearchOpen(false);
+                  }}
+                >
+                  <span>{truncate(node.title, 60)}</span>
+                  <span className="newsroom-search-result-meta">
+                    {typedClusterLabel(
+                      node.type,
+                      clusterLabelById.get(node.cluster) || node.cluster,
+                    )}
+                    {node.date ? ` · ${node.date}` : ""}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
         <div
           className="newsroom-zoom"
           role="group"
@@ -772,33 +965,15 @@ const NewsroomGraph = ({ graph }) => {
           </button>
           <button
             type="button"
-            onClick={() => stateRef.current?.resetView?.()}
+            onClick={() => {
+              setActiveCluster(null);
+              stateRef.current?.resetView?.();
+            }}
             aria-label="화면 맞춤"
           >
             Fit
           </button>
         </div>
-      </div>
-      <div className="newsroom-legend" aria-label="클러스터 범례">
-        {graph.clusters.map((cluster) => (
-          <button
-            key={cluster.id}
-            type="button"
-            className={`newsroom-legend-chip${hiddenClusters.has(cluster.id) ? " is-muted" : ""}`}
-            onClick={() => toggleCluster(cluster.id)}
-            aria-pressed={!hiddenClusters.has(cluster.id)}
-          >
-            <span
-              className="newsroom-legend-dot"
-              style={{
-                background: clusterColor(cluster.paletteIndex, dark),
-              }}
-              aria-hidden="true"
-            />
-            {cluster.label}
-            <span className="newsroom-legend-count">{cluster.count}</span>
-          </button>
-        ))}
       </div>
       <div className="newsroom-stage">
         <div
@@ -815,6 +990,7 @@ const NewsroomGraph = ({ graph }) => {
             >
               <strong>{tooltip.title}</strong>
               <span>{tooltip.meta}</span>
+              <span>연결 {tooltip.connections}건 · 클릭해 살펴보기</span>
             </div>
           )}
         </div>
@@ -822,10 +998,11 @@ const NewsroomGraph = ({ graph }) => {
           {selectedNode ? (
             <>
               <p className="newsroom-panel-kicker">
-                {selectedNode.type === "tip" ? "Tips" : "Blog"} ·{" "}
-                {graph.clusters.find(
-                  (cluster) => cluster.id === selectedNode.cluster,
-                )?.label || selectedNode.cluster}
+                {typedClusterLabel(
+                  selectedNode.type,
+                  clusterLabelById.get(selectedNode.cluster) ||
+                    selectedNode.cluster,
+                )}
                 {selectedNode.date ? ` · ${selectedNode.date}` : ""}
               </p>
               <h3 className="newsroom-panel-title">{selectedNode.title}</h3>
@@ -852,7 +1029,7 @@ const NewsroomGraph = ({ graph }) => {
                       <li key={entry.node.id}>
                         <button
                           type="button"
-                          onClick={() => setSelectedId(entry.node.id)}
+                          onClick={() => jumpToNode(entry.node.id)}
                         >
                           {truncate(entry.node.title, 44)}
                         </button>
@@ -871,7 +1048,9 @@ const NewsroomGraph = ({ graph }) => {
                 글로 이동할 수 있습니다.
               </p>
               <p className="newsroom-panel-hint">
-                드래그로 이동, 스크롤로 확대, 흰 테두리 노드는 Tips입니다.
+                클러스터 칩을 누르면 해당 영역으로 화면이 이동하고, 검색 결과를
+                고르면 그래프가 그 글을 중앙에 맞춥니다. 흰 테두리 노드는
+                Tips입니다.
               </p>
             </div>
           )}
