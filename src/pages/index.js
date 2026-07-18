@@ -279,9 +279,10 @@ const IndexPage = ({ data }) => {
             <span className="hero-title-nowrap">평균(Mean)은 넘게</span>
           </h1>
           <p className="hero-copy">
-            이름 그대로 이상을 좇되, RAG, 멀티 에이전트, Document AI를{" "}
+            이상은 연구가 그리고, 평균은 엔지니어링이 넘습니다. 그 사이를 RAG,
+            멀티 에이전트, Document AI,{" "}
             <span className="hero-copy-nowrap">운영 가능한 시스템으로</span>{" "}
-            수렴시켜 결과가 평균으로 회귀하지 않게 만드는 엔지니어입니다.
+            잇습니다.
           </p>
           <div className="link-row" aria-label="Profile links">
             {heroLinks.map((link) => (
