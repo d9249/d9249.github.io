@@ -2080,8 +2080,8 @@ html[lang="ko"] body {
   }
 
   .footer-directory {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-4);
   }
 
   .footer-meta {
