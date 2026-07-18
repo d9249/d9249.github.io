@@ -1,22 +1,8 @@
 import * as React from "react";
 
-const MAX_VISIBLE_PAGES = 7;
+const DENSE_PAGINATION_THRESHOLD = 12;
 
 const getScrollContainer = (viewport) => viewport?.firstElementChild || null;
-
-const getVisiblePageIndexes = (itemCount, activeIndex) => {
-  const visiblePageCount = Math.min(itemCount, MAX_VISIBLE_PAGES);
-  const maxStartIndex = Math.max(itemCount - visiblePageCount, 0);
-  const startIndex = Math.min(
-    Math.max(activeIndex - Math.floor(visiblePageCount / 2), 0),
-    maxStartIndex,
-  );
-
-  return Array.from(
-    { length: visiblePageCount },
-    (_, index) => startIndex + index,
-  );
-};
 
 const MobileCardCarousel = ({
   adaptiveHeight = false,
@@ -137,9 +123,9 @@ const MobileCardCarousel = ({
 
   const visibleCount = Math.max(itemCount, React.Children.count(children));
   const visibleIndex = Math.min(activeIndex + 1, Math.max(visibleCount, 1));
-  const visiblePageIndexes = getVisiblePageIndexes(
-    Math.max(visibleCount, 1),
-    visibleIndex - 1,
+  const pageIndexes = Array.from(
+    { length: Math.max(visibleCount, 1) },
+    (_, index) => index,
   );
   const hasPrevious = activeIndex > 0;
   const hasNext = activeIndex < visibleCount - 1;
@@ -159,8 +145,16 @@ const MobileCardCarousel = ({
           </svg>
         </button>
         <div className="mobile-card-carousel-status" aria-live="polite">
-          <span className="mobile-card-carousel-pagination" aria-hidden="true">
-            {visiblePageIndexes.map((index) => (
+          <span
+            className="mobile-card-carousel-pagination"
+            data-dense={
+              pageIndexes.length > DENSE_PAGINATION_THRESHOLD
+                ? "true"
+                : undefined
+            }
+            aria-hidden="true"
+          >
+            {pageIndexes.map((index) => (
               <span
                 className={`mobile-card-carousel-page${
                   index === visibleIndex - 1 ? " is-active" : ""

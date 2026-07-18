@@ -1064,7 +1064,7 @@ export const skillGroups = [
         ],
       },
       {
-        title: "Recommendation / Graph",
+        title: "RecSys / Graph",
         skills: [
           "Recommender Systems",
           "GNN",
