@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="920" viewBox="0 0 1600 920" role="img" aria-labelledby="title desc">
+  <title id="title">Experience Distillation process map</title>
+  <desc id="desc">실제 환경에서 모은 반복 시도 기록을 경험 context로 교사에게 제공하고, 교사가 기록된 분기점에서 한 단계 결정만 생성해 학생 모델의 가중치에 학습시키는 흐름이다.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5f8fc"/>
+      <stop offset="1" stop-color="#edf3fb"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="11" flood-color="#1f3655" flood-opacity="0.13"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,6 L0,12 z" fill="#4776ad"/>
+    </marker>
+    <style>
+      .k { font-family: 'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif; }
+      .title { font-size: 48px; font-weight: 800; fill: #142a44; letter-spacing: -1.8px; }
+      .subtitle { font-size: 24px; fill: #52657a; }
+      .step { font-size: 20px; font-weight: 700; fill: #4776ad; letter-spacing: 1.2px; }
+      .head { font-size: 30px; font-weight: 800; fill: #142a44; letter-spacing: -0.8px; }
+      .body { font-size: 22px; fill: #40566e; letter-spacing: -0.5px; }
+      .chip { font-size: 18px; font-weight: 700; fill: #2c5f94; }
+      .bandhead { font-size: 22px; font-weight: 800; fill: #1f4169; }
+      .bandbody { font-size: 20px; fill: #36536f; }
+    </style>
+  </defs>
+  <rect width="1600" height="920" fill="url(#bg)"/>
+  <rect x="56" y="52" width="1488" height="816" rx="36" fill="#ffffff" filter="url(#shadow)"/>
+
+  <text x="120" y="138" class="k title">Experience Distillation: 경험을 다시 실행하지 않고 가중치에 옮기는 흐름</text>
+  <text x="120" y="182" class="k subtitle">기록된 과거 상태에서 교사의 다음 결정만 생성하고, 학생은 경험 context 없이 그 결정을 학습한다.</text>
+  <line x1="120" y1="218" x2="1480" y2="218" stroke="#d8e4f2" stroke-width="2"/>
+
+  <g filter="url(#shadow)">
+    <rect x="120" y="292" width="300" height="334" rx="25" fill="#f2f7fc" stroke="#c8dcef" stroke-width="2"/>
+    <rect x="460" y="292" width="300" height="334" rx="25" fill="#f6f4fc" stroke="#d8ceef" stroke-width="2"/>
+    <rect x="800" y="292" width="300" height="334" rx="25" fill="#eff9f7" stroke="#bfdfd7" stroke-width="2"/>
+    <rect x="1140" y="292" width="340" height="334" rx="25" fill="#fdf7ee" stroke="#ecd8ae" stroke-width="2"/>
+  </g>
+
+  <path d="M420 459 H438" stroke="#4776ad" stroke-width="5" fill="none"/>
+  <path d="M448 459 L434 450 L434 468 Z" fill="#4776ad"/>
+  <path d="M760 459 H778" stroke="#4776ad" stroke-width="5" fill="none"/>
+  <path d="M788 459 L774 450 L774 468 Z" fill="#4776ad"/>
+  <path d="M1100 459 H1118" stroke="#4776ad" stroke-width="5" fill="none"/>
+  <path d="M1128 459 L1114 450 L1114 468 Z" fill="#4776ad"/>
+
+  <text x="156" y="346" class="k step">STEP 01</text>
+  <text x="156" y="402" class="k head">실제 환경에서</text>
+  <text x="156" y="440" class="k head">반복 시도</text>
+  <text x="156" y="490" class="k body">도구 실행·테스트·보상·실패를</text>
+  <text x="156" y="522" class="k body">여러 trial에 걸쳐 기록한다.</text>
+  <rect x="156" y="558" width="218" height="40" rx="20" fill="#dcecf9"/>
+  <text x="178" y="585" class="k chip">경험 기록 τexp</text>
+
+  <text x="496" y="346" class="k step">STEP 02</text>
+  <text x="496" y="402" class="k head">교사는 경험 context를</text>
+  <text x="496" y="440" class="k head">읽고 더 깊게 추론</text>
+  <text x="496" y="490" class="k body">전처리한 기록과 reasoning</text>
+  <text x="496" y="522" class="k body">instruction을 함께 받는다.</text>
+  <rect x="496" y="558" width="218" height="40" rx="20" fill="#e8e1f7"/>
+  <text x="518" y="585" class="k chip">경험 조건 교사</text>
+
+  <text x="836" y="346" class="k step">STEP 03</text>
+  <text x="836" y="402" class="k head">기록된 분기점에서</text>
+  <text x="836" y="440" class="k head">다음 결정 하나 생성</text>
+  <text x="836" y="490" class="k body">실제 history는 재사용하고,</text>
+  <text x="836" y="522" class="k body">미래 관측은 생성하지 않는다.</text>
+  <rect x="836" y="558" width="218" height="40" rx="20" fill="#d8f0ea"/>
+  <text x="858" y="585" class="k chip">1-step branch</text>
+
+  <text x="1176" y="346" class="k step">STEP 04</text>
+  <text x="1176" y="402" class="k head">학생 가중치에</text>
+  <text x="1176" y="440" class="k head">경험의 결정을 내재화</text>
+  <text x="1176" y="490" class="k body">교사 결정만 loss로 학습하고</text>
+  <text x="1176" y="522" class="k body">배포 때는 경험 context가 없다.</text>
+  <rect x="1176" y="558" width="238" height="40" rx="20" fill="#f7e8ca"/>
+  <text x="1198" y="585" class="k chip">경험 없는 학생</text>
+
+  <rect x="120" y="694" width="1360" height="118" rx="24" fill="#eaf2fb" stroke="#c7daef" stroke-width="2"/>
+  <text x="158" y="742" class="k bandhead">핵심 제약</text>
+  <text x="158" y="778" class="k bandbody">교사의 target generation은 이미 관측한 history에서 끝난다. 따라서 새 환경 상호작용도, world model로 만든 미래 관측도 필요하지 않다.</text>
+</svg>
