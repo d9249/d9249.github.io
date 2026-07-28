@@ -1,67 +1,88 @@
 ---
-title: "Kimi K3는 2.8T·1M context를 ‘오픈 웨이트 이전’ API agent stack으로 먼저 꺼낸다"
-date: "2026-07-17T12:54:28+09:00"
-description: "Moonshot AI의 Kimi K3는 2.8T MoE, 1M context, native vision을 내세운 Kimi의 새 flagship이다. API·Kimi Code·Kimi Work에는 이미 들어왔지만, full weights와 technical report는 아직 예정된 공개물이다."
+title: "Kimi K3는 2.8T·104B 활성 경로를 open weight로 공개했다"
+date: "2026-07-28T18:36:05+09:00"
+description: "Moonshot AI의 Kimi K3는 2.8T parameter·104B activated MoE, 1M context, native vision을 내세운 모델이다. 96개 safetensors shard의 full weight와 47쪽 technical report가 공개됐지만, 64+ accelerator 배포 권고와 Kimi K3 License의 서비스 조건까지 함께 읽어야 하는 frontier-scale release다."
 author: "Sangmin Lee"
 category: "foundation-models"
 tags:
   - Kimi K3
   - Moonshot AI
   - MoE
-  - Long Context
+  - Open Weights
   - Agentic Coding
 image: "/images/blog/kimi-k3-benchmark-1.webp"
 draft: false
 ---
 
-Kimi K3를 읽을 때 가장 먼저 분리해야 할 것은 **모델의 규모**와 **공개의 형태**다. Moonshot AI는 K3를 2.8조 파라미터, 100만 토큰 context, native vision을 갖춘 “open 3T-class” flagship으로 소개한다. 동시에 공식 런치 페이지는 full model weights와 architecture·training·evaluation technical report를 7월 27일에 맞춰 공개하겠다고 밝힌다. 지금 당장 쓸 수 있는 것은 Kimi API, Kimi Code, Kimi Work라는 제품 표면이고, 지금 당장 내려받아 재현할 수 있는 것은 아직 아니다.
+Kimi K3를 처음 소개한 7월 17일의 런치 글은 API·Kimi Code·Kimi Work를 먼저 열고, full weight와 technical report는 7월 27일까지 공개하겠다고 예고했다. 그 약속은 실제 배포물로 이어졌다. 현재 공식 Hugging Face `moonshotai/Kimi-K3`에는 non-gated full model weight 96개 shard, custom Transformers implementation, tokenizer·vision processor·eval YAML이 있고, MoonshotAI GitHub repository에는 47쪽 `k3_tech_report.pdf`가 있다.
 
-이 순서는 단순한 릴리스 일정의 차이가 아니다. K3는 model checkpoint 하나보다 **장기 agent workflow를 위한 제품·serving·API contract**를 먼저 내놓았다. 1M context를 cache와 함께 쓰고, reasoning은 기본 `max`로 고정하며, tool call과 multi-turn history를 보존해야 한다는 API 규칙까지 모델의 사용법에 묶여 있다. 따라서 K3를 “큰 오픈 모델”이라고만 부르면 반만 맞는다. 현 단계에서 더 정확한 표현은 **오픈 웨이트 공개를 예고한, API-first frontier agent model**이다.
+따라서 K3는 더 이상 “오픈 웨이트 이전의 API-first flagship”이 아니다. 2.8T total parameter, **104B activated parameter**, 1M-token context를 가진 native multimodal MoE가 실제로 내려받을 수 있는 형태로 공개됐다. 다만 공개 weight가 곧바로 보편적인 self-hosting을 의미하지는 않는다. 저자들은 64개 이상 accelerator의 supernode 배포를 권하고, 모델은 MXFP4 weight·MXFP8 activation을 전제로 하며, 라이선스에는 대형 Model-as-a-Service 사업자와 대형 상용 product를 위한 별도 조건이 있다.
+
+이번 update에서 중요한 변화는 숫자 자체보다 **검증 가능한 공개 표면이 생겼다**는 점이다. architecture·post-training·infrastructure·evaluation을 담은 technical report, checkpoint 형식, custom code, license를 직접 읽을 수 있게 됐다. 반대로 official GitHub repository는 report와 README 중심이며 end-to-end training script나 standalone inference framework를 담은 제품형 codebase는 아니다. K3를 채택하려면 “open”과 “바로 운영 가능”을 계속 분리해야 한다.
 
 ## 무엇을 해결하려는가
 
-K3가 겨냥하는 문제는 일반적인 chat completion보다 오래 가는 agent task다. 런치 페이지는 대형 repository를 읽고 terminal tool을 조직하며, kernel을 profile·rewrite·benchmark하거나, research 자료를 읽고 실행 가능한 numerical pipeline으로 옮기거나, screenshot을 보며 frontend·CAD·game development를 반복하는 작업을 강조한다.
+K3가 겨냥하는 것은 단발 chat보다 오래 가는 agent task다. 대형 repository를 읽고 terminal tool을 조직하는 coding agent, 문서·web·spreadsheet를 다루는 knowledge work, screenshot을 보고 수정하는 frontend·CAD·game development가 대표적인 target이다. 이런 작업에서는 한 번의 answer quality보다 context 유지, tool-call loop, action 후 관측, 실패 복구, 긴 reasoning budget이 함께 작동해야 한다.
 
-이런 작업에서는 모델의 한 번짜리 답변 품질보다 다음 네 가지가 함께 중요하다.
+K3의 공개 report는 이를 `reason → act → observe → verify → adapt`의 일반 loop로 설명한다. general·agentic·coding domain에서 여러 reasoning-effort level의 RL을 수행하고, 전문화된 policy를 multi-teacher on-policy distillation으로 하나의 model에 합친다는 구상이다. training environment에는 verifiable search·professional knowledge work, software engineering·kernel optimization, vision-in-the-loop tool use, persistent assistant workflow, web development, autonomous execution을 포함한다고 적혀 있다.
 
-| 병목 | K3가 제시하는 답 | 현재 확인 가능한 범위 |
+| 병목 | K3가 제시하는 장치 | 실제 도입에서 확인할 점 |
 |---|---|---|
-| 장기 context | 1M-token context와 automatic caching | 공식 API 문서가 요청 형태·cache 사용을 설명 |
-| agent reasoning | thinking always-on, 현재 `reasoning_effort=max`만 지원 | K3 API에서 실제 contract로 공개 |
-| code + visual loop | native image·video input과 Kimi Code/Work | 공식 API·제품 페이지에서 사용 표면 확인 |
-| scale의 serving 비용 | sparse MoE, QAT, large-supernode 권장 | 구조적 설명은 런치 페이지에 있으나 세부 report는 대기 상태 |
-
-Moonshot이 특히 강조하는 것은 long-horizon coding이다. kernel optimization에서는 동일 sandbox에서 최대 24시간 동안 profile·rewrite·benchmark를 시켰고, GPU compiler 사례에서는 K3가 MLIR 위 tile-level IR, optimization pass, PTX code-generation path를 가진 MiniTriton을 만들었다고 소개한다. chip-design 사례는 48시간 autonomous run으로 45nm library에서 timing을 닫고 simulation상 8,700 tokens/s decode throughput을 냈다고 주장한다. 이 사례들은 independent reproduction이 아닌 회사의 공식 showcase이므로, “가능한 agent behavior의 예”로 읽어야지 일반 pass rate로 바꾸면 안 된다.
+| 긴 trace와 자료 | 1,048,576-token context, KDA, automatic prefix caching | 256 token을 넘는 불변 prefix를 유지해야 cache hit를 시도할 수 있음 |
+| compute와 model scale | 2.8T total / 104B activated Stable LatentMoE | 96 shard weight와 64+ accelerator 권고는 local deployment와 다른 문제 |
+| 긴 agent training | partial rollout·external KV retention·resumable microVM sandbox | 공개 report는 방법을 설명하지만 training harness 전체는 배포물에서 확인되지 않음 |
+| product loop | Kimi API·Kimi Code·Kimi Work | API history, tool schema, permission/approval 정책을 host product별로 검증해야 함 |
 
 ## 핵심 아이디어 / 구조 / 동작 방식
 
-공식 런치 페이지가 제공하는 K3의 architecture story는 두 층이다. 첫째는 long context와 deep model scale을 위한 **Kimi Delta Attention (KDA)** 및 **Attention Residuals (AttnRes)**다. KDA는 hybrid linear-attention 계열의 기반, AttnRes는 depth를 따라 표현을 일괄 축적하는 대신 필요한 representation을 선택적으로 되찾는 장치로 설명된다.
+### 1. sequence·depth·width를 나눠 다루는 93-layer MoE
 
-둘째는 2.8T 규모를 실제로 학습·serve하기 위한 sparse MoE 운영이다. Moonshot은 Stable LatentMoE에서 총 896 expert 중 16개를 효과적으로 활성화한다고 밝힌다. 여기에 router-score quantile로 allocation을 정하는 Quantile Balancing, attention head별 최적화를 내세우는 Per-Head Muon, SiTU, Gated MLA를 함께 언급한다. K2 대비 약 **2.5× scaling efficiency**를 얻었다는 수치는 공식 런치 페이지의 주장이다. 아직 technical report가 없으므로, exact active-parameter count, training FLOPs, data mixture, ablation과 같은 재현 가능한 근거는 공개되지 않았다.
+공식 model card는 K3를 93-layer MoE로 정리한다. attention layer는 **69 KDA + 24 Gated MLA**이며, 각 block은 KDA 세 층과 Gated MLA 한 층을 조합한다. KDA(Kimi Delta Attention)는 long context의 token mixing을 효율화하려는 hybrid linear-attention 계열이고, Gated MLA는 필요한 지점에서 더 높은 capacity의 attention을 보완한다.
 
-| 구성 | 공식 공개 자료가 말하는 내용 | 실무적 의미 |
+Attention Residuals(AttnRes)는 depth 방향의 정보 흐름을 다룬다. 이전 layer representation을 모두 동일하게 누적하는 대신, learned pseudo-query가 embedding과 앞선 block output 중 필요한 것을 선택적으로 가져온다. 저자들이 말하는 핵심은 KDA가 sequence length, AttnRes가 network depth, MoE가 model width의 병목을 나눠 푼다는 것이다.
+
+| 구조 축 | 공개된 K3 사양 | 의미 |
 |---|---|---|
-| 규모·문맥 | 2.8T parameters, 1M-token context | 큰 codebase·document corpus·long tool trace를 한 작업 안에 유지하려는 방향 |
-| 모달리티 | native vision, API의 image·video input | 스크린샷·파일·video를 agent input으로 넣을 수 있음 |
-| sparse routing | 896 experts 중 효과적으로 16개 활성화 | 총 parameter 크기와 step당 계산량을 분리하려는 MoE 설계 |
-| training·serve | QAT부터 MXFP4 weights / MXFP8 activations, 64+ accelerator supernode 권장 | full-weight 공개 뒤에도 일반 단일-node local inference와는 거리가 있을 가능성 |
-| serving | KDA prefix-cache 구현을 vLLM community에 기여 예정이라고 설명 | long context의 비용은 model architecture뿐 아니라 cache implementation에 좌우됨 |
+| 총규모 / 활성 경로 | 2.8T total / **104B activated** | 총 parameter와 token당 compute를 MoE routing으로 분리 |
+| expert | routed 896개 중 token당 16개 선택, shared expert 2개 | 극단적 sparsity를 안정적으로 운용하려는 설계 |
+| attention | 69 KDA + 24 Gated MLA | long-context 효율과 선택적 고용량 attention의 혼합 |
+| context | 1,048,576 tokens | 긴 codebase·tool trace를 한 session에 유지하려는 상한 |
+| vision | MoonViT-V2, 401M parameter | weight package에서는 text·image native path가 명시됨 |
+| quantization | MXFP4 weight / MXFP8 activation의 QAT | checkpoint 크기와 accelerator/kernel 호환성이 deployment 핵심이 됨 |
 
-API contract는 이 architecture story보다 더 즉시적이다. K3는 OpenAI-compatible Chat Completions에서 `model="kimi-k3"`로 호출한다. reasoning은 항상 활성화되어 있으며 지금은 `max`만 지원한다. multi-turn 및 tool-call loop에서는 이전 assistant message 전체를 다음 request에 그대로 돌려줘야 하고, `content`만 남기면 안 된다. 기본 `max_completion_tokens`는 131,072이며 최대 1,048,576까지 설정할 수 있다. `temperature=1.0`, `top_p=0.95`, `n=1` 등은 고정값이라 요청에서 생략하라고 API 문서가 안내한다.
+Stable LatentMoE에는 Normalized LatentMoE, SiTU-GLU, Quantile Balancing이 들어간다. 특히 Quantile Balancing은 router score의 quantile에서 expert allocation을 정해 heuristic update와 민감한 balancing hyperparameter를 줄이려는 방식이다. K3 technical report는 K2 대비 약 **2.5× overall scaling efficiency**를 주장하지만, 이는 저자 recipe 전체의 결과이지 architecture component 하나의 독립 효과로 읽어서는 안 된다.
 
-이 제약은 모델 사용의 작은 구현 detail이 아니다. K3가 stored reasoning history를 포함한 long-running agent runtime을 전제한다는 뜻이다. 기존 session에서 다른 model을 K3로 중간 교체하거나, harness가 완전한 assistant history를 되돌려주지 않으면 generation quality가 불안정해질 수 있다고 런치 페이지도 경고한다.
+### 2. 1M context RL은 model만의 문제가 아니다
+
+K3 report에서 인상적인 부분은 million-token agentic RL을 model loss만으로 설명하지 않는다는 점이다. partial rollout, external KV-cache retention, adaptive throttling, resumable microVM sandbox로 model state와 environment state를 오래 보존하는 co-located system을 제시한다. trajectory가 수백·수천 tool call과 누적 million-token context로 길어질 수 있다는 전제다.
+
+이 설계는 KDA-aware prefix cache management, fused kernel, context parallelism, balanced expert-parallel training, fleet-level scheduling과 연결된다. 즉 K3의 long-horizon claim은 “1M을 받을 수 있다”보다 **긴 context·sandbox·cache·expert parallelism을 동시에 유지하는 serving system**에 가깝다. 공개된 weight는 이 방향을 직접 검증할 출발점을 주지만, 같은 규모의 hardware와 runtime을 갖추지 못하면 report의 latency·cost profile을 그대로 재현할 수는 없다.
+
+### 3. API에서는 reasoning level과 history가 contract다
+
+Kimi API는 OpenAI-compatible Chat Completions에서 `model="kimi-k3"`로 호출한다. K3는 thinking을 끌 수 없으며 top-level `reasoning_effort`에 **`low`·`high`·`max`**를 넣을 수 있고 default는 `max`다. 초기 런치 시점의 “max only” 안내는 현재 문서 기준으로는 더 이상 정확하지 않다.
+
+multi-turn 및 tool-call loop에서는 이전 assistant message 전체를 다음 request에 그대로 넣어야 한다. `content`만 남기면 reasoning/tool state를 잃을 수 있다. `max_completion_tokens`는 기본 131,072, 최대 1,048,576이며, `temperature=1.0`, `top_p=0.95`, `n=1` 등은 fixed value라 request에서 생략하라고 문서가 안내한다. vision input은 public image URL을 직접 받지 않고 base64 또는 `ms://<file-id>`를 써야 한다.
 
 ## 공개된 근거에서 확인되는 점
 
-### API·제품 표면은 이미 열려 있다
+### 96 shard weight·technical report·custom code가 실제로 공개됐다
 
-K3는 Kimi.com, Kimi Work, Kimi Code, Kimi API에서 쓸 수 있다고 공식 런치 페이지가 명시한다. Kimi Code 페이지도 “K3 is now available” 및 최대 1M context를 안내한다. API 가격은 cache-hit input **$0.30/MTok**, cache-miss input **$3.00/MTok**, output **$15.00/MTok**으로 제시된다. Moonshot은 coding workload에서 cache-hit rate가 90% 이상이라고 설명하지만, 이 값은 제공사 workload에 대한 주장이지 모든 application의 보장치가 아니다.
+Hugging Face API 기준으로 `moonshotai/Kimi-K3`는 public·non-gated repository이며, 2026-07-27에 마지막 수정됐다. `model-00001-of-000096.safetensors`부터 `model-00096-of-000096.safetensors`까지의 weight, config·tokenizer, `modeling_kimi_k3.py`, vision processor, encoding module, evaluation YAML이 함께 있다. Hub metadata는 `custom_code`, `transformers`, `image-text-to-text`, `license:other`를 표시하며, full model weight는 Kimi K3 License 아래 배포된다.
 
-또한 K3 API 문서는 strict JSON Schema structured output, `tool_choice`, dynamic tool loading, partial mode를 지원한다고 밝힌다. 반면 official tools의 web search는 업데이트 중이라 가까운 시점의 production workflow에는 권장하지 않는다고도 적는다. “agentic”이라는 말이 다양한 기능을 뜻해도, 개별 tool의 성숙도는 다를 수 있다는 점을 보여 주는 좋은 caveat다.
+공식 GitHub repository `MoonshotAI/Kimi-K3`는 2026-07-27 생성됐고, root에는 README·LICENSE·assets·`k3_tech_report.pdf`가 있다. release endpoint는 404이고 tags도 비어 있다. 따라서 이 repo는 versioned runtime product보다 technical report와 release provenance를 위한 **source companion**으로 보는 편이 정확하다. end-to-end training script, data recipe implementation, benchmark harness, official vLLM/SGLang serving repo는 이 확인 범위의 root release 표면에서 보이지 않았다.
 
-### 코딩 benchmark: 상위권이지만 모든 행의 1위는 아니다
+| 공개 표면 | 확인된 내용 | 해석 |
+|---|---|---|
+| Hugging Face | non-gated full weight 96 shard, custom Transformers code, vision processor, eval artifacts | checkpoint·format·model implementation을 직접 inspect할 수 있음 |
+| GitHub | 47쪽 technical report, README, LICENSE, asset | method와 release provenance는 공개됐지만 runtime framework repo는 아님 |
+| API | `kimi-k3`, low/high/max effort, tool/vision/context caching 문서화 | managed product로는 바로 평가 가능 |
+| Kimi Code | K3 선택 및 최대 1M context 안내 | terminal/IDE workflow를 위한 hosted surface |
+| Kimi Work | local file·browser automation·cron·ask-before-acting 설명 | desktop knowledge-work product와 model capability는 별도 검증 대상 |
 
-공식 benchmark table의 K3 결과는 max thinking effort, temperature 1.0, top-p 1.0으로 보고됐다. 이 값은 API quickstart의 고정 `top_p=0.95` 설명과 다른데, benchmark harness setting과 product API default를 혼동하지 말아야 한다. 또한 비교 모델은 benchmark에 따라 KimiCode·Claude Code·Codex 등 서로 다른 harness를 썼고, Claude Fable 5에는 fallback, GPT-5.6 Sol에는 cyberguard가 포함될 수 있다고 공식 figure가 명시한다.
+### coding benchmark는 상위권이지만 harness를 섞어 읽으면 안 된다
+
+공식 table의 K3 수치는 `max` thinking effort에서 보고됐다. DeepSWE 67.5, ProgramBench **77.8**, Terminal-Bench 2.1 88.3, FrontierSWE 81.2, SWE-Marathon **42.0**, MLS-Bench-Lite 48.3이 핵심 coding 행이다. K3가 ProgramBench·SWE-Marathon에서 가장 높게 제시되지만, DeepSWE는 GPT-5.6 Sol 73.0, Terminal-Bench 2.1은 GPT-5.6 Sol 88.8, FrontierSWE와 MLS-Bench-Lite는 Claude Fable 5가 앞선다.
 
 <figure style="margin: 1.8rem 0;">
   <img
@@ -70,22 +91,15 @@ K3는 Kimi.com, Kimi Work, Kimi Code, Kimi API에서 쓸 수 있다고 공식 �
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
   <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
-    Moonshot AI 공식 coding benchmark figure. 모든 K3 값은 max thinking effort 기반이며, Fable 5의 fallback·GPT-5.6 Sol의 cyberguard 가능성 등 harness 차이가 figure와 footnote에 함께 표기돼 있다.
+    Moonshot AI 공식 coding benchmark figure. K3는 max effort, 비교 모델은 benchmark별 Kimi Code·Claude Code·Codex·Terminus 2 등 서로 다른 harness에 놓여 있어 단일 leaderboard로 읽으면 안 된다.
   </figcaption>
 </figure>
 
-| Benchmark | Kimi K3 | Claude Fable 5 | GPT-5.6 Sol | 읽는 법 |
-|---|---:|---:|---:|---|
-| DeepSWE | 67.5 | 70.0 | 73.0 | K3는 근접하지만 이 행의 최고점은 아님 |
-| Program Bench | **77.8** | 76.8 | 77.6 | 세 모델이 매우 가깝게 보고됨 |
-| Terminal-Bench 2.1 | 88.3 | 84.6 | **88.8** | terminal agent setting에서 상위권 경쟁 |
-| FrontierSWE | 81.2 | **86.6** | 71.3 | K3가 GPT-5.6 Sol보다 높지만 Fable 5보다 낮음 |
-| SWE Marathon | **42.0** | 35.0 | 39.0 | 장기 coding benchmark에서 K3가 공식 표의 최고점 |
-| MLS Bench | 48.3 | **49.9** | 46.2 | research-oriented coding에서도 근접하되 선두는 아님 |
+이 차이는 footnote에 실제로 드러난다. DeepSWE에서 K3는 Kimi Code harness로 평가됐고, 다른 행에서는 model별 best harness를 취하기도 한다. Claude Fable 5 result에는 fallback이 포함될 수 있고 GPT-5.6 Sol에는 cyberguard가 포함될 수 있다고 report가 명시한다. K3는 frontier coding agent table에 실질적으로 들어왔지만, 동일 policy·tool·fallback·compute budget에서 모두 이겼다는 뜻은 아니다.
 
-이 표가 말하는 가장 안전한 결론은 “K3가 frontier coding agent table에 들어왔다”이다. 여러 행에서 proprietary competitor에 근접하거나 앞서지만, DeepSWE·Terminal-Bench·FrontierSWE·MLS Bench를 모두 이긴 것은 아니다. Moonshot 자신도 K3의 overall performance가 가장 강한 proprietary model을 아직 뒤따른다고 쓴다. 따라서 이 release는 단일 champion score보다 **큰 long-context MoE를 agent harness로 연결했을 때의 경쟁력**으로 보는 편이 정확하다.
+### agentic·reasoning·vision 결과도 provenance를 나눠야 한다
 
-### knowledge work·vision도 넓지만, internal score를 따로 구분해야 한다
+K3는 BrowseComp 91.2, DeepSearchQA F1 95.0, ResearchRubrics 76.2, MCPMark-Verified 94.5, AutomationBench 30.8을 보고한다. reasoning에서는 GPQA Diamond 93.5, AA-LCR 74.7, HLE-Full 43.5 / tool 사용 56.0이 제시된다. vision 관련 공식 표에는 MMMU-Pro 81.6, MathVision 94.3, OmniDocBench 91.1이 있다.
 
 <figure style="margin: 1.8rem 0;">
   <img
@@ -94,39 +108,32 @@ K3는 Kimi.com, Kimi Work, Kimi Code, Kimi API에서 쓸 수 있다고 공식 �
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
   <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
-    Moonshot AI 공식 agentic·reasoning·vision benchmark figure. GDPval-AA v2, BrowseComp, Automation Bench, GPQA-Diamond, MMMU-Pro 등 공개·외부 성격의 benchmark와 internal benchmark가 함께 포함돼 있어 행별 provenance를 분리해 읽어야 한다.
+    Moonshot AI 공식 agentic·reasoning·vision benchmark figure. 공개 benchmark, Artificial Analysis의 Elo, Kimi internal benchmark가 한 표에 섞여 있으므로 행별 provenance가 중요하다.
   </figcaption>
 </figure>
 
-Agentic 쪽에서 K3는 BrowseComp 91.2, Automation Bench 30.8, MCP Atlas 84.2, SpreadsheetBench 2 34.8로 보고된다. reasoning에서는 GPQA-Diamond 93.5, HLE-Full 43.5, tools를 쓴 HLE-Full 56.0이고, vision에서는 MMMU-Pro 81.6, MathVision 94.3, OmniDocBench 91.1이 공식 표에 있다. 이 중 Kimi Code Bench 2.0과 DECK-Bench는 내부 benchmark라고 명시되어 있으며, GDPval-AA v2·AA-Briefcase는 Artificial Analysis에서 인용한 Elo score다. 한 장의 leaderboard로 합치지 말고 공개 benchmark, 외부 aggregator, internal evaluation을 구분해야 한다.
+Kimi Code Bench 2.0과 일부 knowledge-work evaluation은 internal benchmark이며, GDPval-AA v2·AA-Briefcase는 Artificial Analysis에서 인용한 Elo다. 따라서 이 수치는 release positioning의 근거이지만, 독립 reproduced score와 internal task score를 같은 신뢰도로 취급해서는 안 된다.
 
-### ‘open’이라는 말의 현재 상태
+### Kimi K3 License는 permissive-looking이지만 조건 없는 MIT가 아니다
 
-공식 release surface를 확인하면 K3는 아직 완전한 open-weight package가 아니다.
+license는 use·copy·modify·distribute·sublicense·sell·deploy·fine-tune·derivative work를 허용한다. 다만 **Model as a Service** 사업을 운영하는 licensee 및 affiliate의 연속 12개월 aggregate revenue가 2,000만 달러를 넘으면 commercial use 전에 Moonshot AI와 별도 agreement가 필요하다. 월간 active user가 1억 명을 넘거나 월 매출이 2,000만 달러를 넘는 상용 product/service는 UI에 `Kimi K3`를 눈에 띄게 표시해야 한다.
 
-| 표면 | 확인 결과 | 해석 |
-|---|---|---|
-| Kimi 런치 페이지 | full weights와 technical report를 7월 27일 공개 예정으로 안내 | architecture·training·evaluation의 독립 검증은 아직 제한적 |
-| Kimi API docs | `kimi-k3` 호출, vision/video, tool-call, context caching 문서화 | API product는 실제로 접근 가능한 표면 |
-| Hugging Face official author API | `author=moonshotai&search=K3` 결과가 빈 배열 | 확인 시점에는 공식 K3 model card/weights가 보이지 않음 |
-| MoonshotAI public GitHub org | K3 이름의 공개 repository가 확인되지 않음 | code·inference reference·technical report repo도 아직 공개 표면이 아님 |
-
-이 구분은 부정적인 평가가 아니라 release maturity의 정확한 표현이다. API에서 모델을 사용하는 것과, weights·license·checkpoint format·reference inference·evaluation protocol을 내려받아 검증하는 것은 다른 단계다. K3는 첫 단계를 먼저 열었고 두 번째 단계를 약속했다.
+이 조건들은 internal use, Moonshot official product, certified inference partner를 통해 접근하는 경우에는 적용되지 않는다고 쓰여 있다. 즉 개인 연구·사내 실험·대부분의 작은 product에는 폭넓은 권한을 주지만, 대규모 inference provider나 대형 commercial surface에까지 무조건적인 unrestricted license를 주는 형태는 아니다.
 
 ## 실무 관점에서의 해석
 
-K3의 가장 흥미로운 점은 2.8T라는 headline보다 **long-context agent를 운영하는 방식을 제품 계약으로 밀어 넣었다**는 데 있다. K3의 1M context는 단순히 큰 input limit가 아니다. cacheable prefix를 유지하라는 문서, full assistant message를 보존하라는 multi-turn 규칙, reasoning을 항상 켜는 모델 mode, Kimi Code·Kimi Work라는 host product가 함께 있을 때만 실제 작업 흐름이 된다.
+### autonomy를 설계하기 전에 boundary를 명시해야 한다
 
-도입 판단은 세 갈래로 나뉜다.
+공식 런치 글도 K3의 한계를 직접 적는다. long-horizon task에 강하게 맞춘 탓에, minor issue나 ambiguous user intent를 만났을 때 사용자 대신 예상 밖의 결정을 내릴 수 있다는 것이다. 잘 정의된 boundary 안에서만 행동해야 하는 application이라면 explicit behavioral constraint를 추가하라고 권한다. 제공사 스스로 Claude Fable 5와 GPT-5.6 Sol 대비 user experience gap도 남아 있다고 평가한다.
 
-| 목적 | 지금 가능한 경로 | 먼저 검증할 질문 |
-|---|---|---|
-| API 기반 coding agent | Kimi API 또는 Kimi Code | history preservation·tool schema·max-only reasoning 비용이 현재 harness와 맞는가 |
-| knowledge-work desktop agent | Kimi Work | local-file/browser/cron 권한과 approval model을 조직 정책에 맞출 수 있는가 |
-| self-host·fine-tune·reproducible research | 아직 대기 | weights, license, technical report, inference recipe, hardware requirement이 실제로 공개되는가 |
+따라서 K3를 autonomous executor로 붙일 때는 model score보다 먼저 **approval gate, write/delete/payment 같은 side effect의 allowlist, tool별 argument validation, task budget, human handoff**를 설계해야 한다. 이는 model의 결함을 단정하는 말이 아니라, official release가 스스로 밝힌 product-level caveat를 운영 control로 번역한 것이다.
 
-특히 “open 3T-class”라는 표현을 self-host 가능하다는 말로 번역하면 안 된다. 64+ accelerator supernode 권장, KDA prefix cache 구현의 별도 필요성, full weights와 report의 미공개 상태는 모두 큰 모델을 실제로 운영하기 위한 기술·인프라 조건이 아직 열려 있지 않다는 신호다. 현재는 API를 통해 capability를 평가할 수 있는 시점이며, open-weight ecosystem이 실제로 형성됐는지는 후속 release를 보고 판단해야 한다.
+K3의 변화는 “거대한 model이 나왔다”보다 **전면 공개의 검증 단위가 완성됐다**는 데 있다. 이제 weight 96 shard, custom model code, technical report, license, API doc을 함께 놓고 architecture·packaging·service contract를 구분할 수 있다. 특히 104B activated parameter라는 값은 2.8T headline보다 deployment planning에 더 직접적이지만, MoE routing과 1M context cache가 들어가는 순간 단일 GPU에서의 단순 parameter arithmetic만으로 운영 가능성을 판단할 수 없다.
 
-K3는 Kimi K2.7 Code가 밀었던 “모델 + Kimi Code + API” 방향을 한 단계 더 큰 scale과 더 긴 context로 연장한다. 다만 이번에는 모델 카드보다 product page가 먼저 왔다. 이 순서는 Moonshot이 K3를 일반 purpose checkpoint보다 **agent runtime의 backbone**으로 포지셔닝한다는 뜻일 수 있다. technical report와 weights가 공개된 뒤에는 KDA·AttnRes·Stable LatentMoE의 약속이 실제 training recipe와 serving cost로 이어지는지, 그리고 third-party inference stack이 1M context를 어느 수준까지 재현하는지가 진짜 검증 항목이 될 것이다.
+self-hosting 관점에서는 세 단계가 있다. 첫째, Hugging Face checkpoint가 실제 공개됐는가. 답은 그렇다. 둘째, model을 특정 hardware·runtime에서 안정적으로 serve할 수 있는가. 여기서는 MXFP4/MXFP8, KDA kernel, context parallelism, expert parallelism, 64+ accelerator 권고가 즉시 기술적 제약이 된다. 셋째, production API나 fine-tuning product로 재배포해도 license가 맞는가. 이 단계에서는 Kimi K3 License의 Model-as-a-Service 및 규모 조건을 법무·사업 측과 함께 읽어야 한다.
 
-Sources: https://www.kimi.com/blog/kimi-k3, https://www.kimi.com/blog/, https://platform.kimi.ai/docs/guide/kimi-k3-quickstart, https://www.kimi.com/code, https://www.kimi.com/products/kimi-work, https://huggingface.co/api/models?author=moonshotai&search=K3, https://api.github.com/orgs/MoonshotAI/repos?per_page=100&type=all
+API adoption에도 update가 있다. low/high/max reasoning effort가 생겼으므로, 기존의 max-only latency profile을 그대로 가정할 필요는 없다. 반면 K3는 항상 thinking mode를 켜며, long session에서는 complete assistant history와 unchanged prefix를 유지해야 한다. 비용은 cache-hit input $0.30/MTok, cache-miss input $3.00/MTok, output $15.00/MTok이고 context length에 따른 별도 tier는 없다. 긴 agent workflow에서 cache hit가 설계의 일부가 되어야 하는 이유다.
+
+결론적으로 K3는 “download 가능한 3T-class frontier model”이 됐지만 “평범한 open checkpoint”가 되지는 않았다. 공개된 것은 큰 장점이지만, 구현 난이도·hardware·license·benchmark provenance가 함께 커진 release다. 실무팀은 먼저 API에서 tool loop와 effort별 quality/cost를 작은 workload로 측정하고, self-hosting은 checkpoint download보다 **KDA-compatible runtime, MoE parallelism, 1M context memory, license fit**을 통과시키는 별도 project로 다루는 편이 현실적이다.
+
+Sources: https://www.kimi.com/blog/kimi-k3, https://huggingface.co/moonshotai/Kimi-K3, https://huggingface.co/api/models/moonshotai/Kimi-K3, https://github.com/MoonshotAI/Kimi-K3, https://github.com/MoonshotAI/Kimi-K3/blob/main/k3_tech_report.pdf, https://raw.githubusercontent.com/MoonshotAI/Kimi-K3/main/LICENSE, https://platform.kimi.ai/docs/guide/kimi-k3-quickstart, https://platform.kimi.ai/docs/pricing/chat-k3, https://www.kimi.com/code, https://www.kimi.com/products/kimi-work
