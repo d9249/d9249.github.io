@@ -36,7 +36,7 @@ draft: false
 
 논문이 겨냥하는 병목은 작은 모델의 단일 능력이 아니라 **범용 agent 행동의 조합**이다. 코드 agent는 repository 상태를 읽고 patch를 만들며 test feedback을 반영해야 한다. office agent는 여러 문서와 작업 자산을 다루고, tool-use agent는 서로 다른 schema와 긴 multi-step interaction을 견뎌야 한다. 한 domain의 trajectory만 대량으로 학습하면 그 scaffolding과 prompt 형식에 과적합할 위험도 있다.
 
-Nanbeige4.2-3B는 total parameter 기준으로는 4B, embedding을 제외하면 3B다. 더 큰 model을 그대로 축소하는 대신, hidden state가 같은 Transformer stack을 한 번 더 통과하도록 하는 **Looped Transformer**를 채택했다. 저자들은 이를 parameter를 더하지 않고 effective capacity를 키우는 방식으로 설명한다. base model 비교에서 Nanbeige4-3B 대비 GSM8K는 85.9에서 92.7, MMLU-Pro는 47.6에서 63.8, GPQA는 36.2에서 53.3으로 상승했다고 보고한다.
+Nanbeige4.2-3B는 total parameter 기준으로는 4B, embedding을 제외하면 3B다. 더 큰 model을 그대로 축소하는 대신, hidden state가 같은 Transformer stack을 **두 번 통과**하도록 하는 **Looped Transformer**를 채택했다. 저자들은 two-pass 구성이 표준 Transformer 대비 약 75%의 token efficiency를 유지하면서 가장 좋은 capacity 절충을 보였고, 더 많은 pass는 개선이 작지만 학습을 늦추고 optimization을 불안정하게 만들었다고 설명한다. loop pass 간 KV cache를 공유하면 cache는 절반이 되지만 성능 gain이 작아, 최종 model은 non-sharing full loop를 택했다. base model 비교에서 Nanbeige4-3B 대비 GSM8K는 85.9에서 92.7, MMLU-Pro는 47.6에서 63.8, GPQA는 36.2에서 53.3으로 상승했다고 보고한다.
 
 다만 architecture만으로 agent capability가 생기는 것은 아니다. 논문의 중심은 pre-training 뒤의 environment-grounded data와 RL 설계다. 특히 training trajectory를 단순 chat log가 아니라 실행·검증 가능한 작업 기록으로 만들고, model이 자주 실패하는 지점을 다음 data mining의 구조적 단서로 되돌리는 closed loop를 제시한다.
 
