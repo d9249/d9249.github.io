@@ -5,74 +5,12 @@ import BlogArticleBody from "../components/BlogArticleBody";
 import { PageViewCounter } from "../components/ViewCounter";
 import categories from "../data/categories.json";
 import { formatReadableArticleHtml } from "../utils/articleHtml";
+import { getPostSources, removePostSources } from "../utils/articleSources";
 import { getTagPath } from "../utils/tags";
 
 const labelByCategory = new Map(
   categories.map((category) => [category.slug, category.label]),
 );
-
-const sourceLinePattern = /(?:^|\n)Sources:\s*(.+?)\s*$/i;
-
-const getSourceLabel = (href) => {
-  try {
-    const url = new URL(href);
-    return url.hostname.replace(/^www\./, "");
-  } catch (error) {
-    return href;
-  }
-};
-
-const splitSourceList = (sourceLine) => {
-  const sources = [];
-  let bracketDepth = 0;
-  let parenthesisDepth = 0;
-  let sourceStart = 0;
-
-  for (let index = 0; index < sourceLine.length; index += 1) {
-    const character = sourceLine[index];
-
-    if (character === "[") bracketDepth += 1;
-    if (character === "]") bracketDepth = Math.max(0, bracketDepth - 1);
-    if (character === "(") parenthesisDepth += 1;
-    if (character === ")") {
-      parenthesisDepth = Math.max(0, parenthesisDepth - 1);
-    }
-
-    const nextSource = sourceLine
-      .slice(index + 1)
-      .match(/^\s*(?:https?:\/\/|\[)/);
-    if (
-      character === "," &&
-      bracketDepth === 0 &&
-      parenthesisDepth === 0 &&
-      nextSource
-    ) {
-      sources.push(sourceLine.slice(sourceStart, index).trim());
-      sourceStart = index + 1;
-    }
-  }
-
-  sources.push(sourceLine.slice(sourceStart).trim());
-  return sources.filter(Boolean);
-};
-
-const getPostSources = (rawMarkdownBody) => {
-  const match = rawMarkdownBody?.match(sourceLinePattern);
-  if (!match) {
-    return [];
-  }
-
-  return splitSourceList(match[1]).map((source) => {
-    const markdownLink = source.match(/^\[(.+)\]\((https?:\/\/[^)]+)\)$/);
-    const href = markdownLink ? markdownLink[2] : source;
-    const label = markdownLink ? markdownLink[1] : getSourceLabel(href);
-
-    return { href, label };
-  });
-};
-
-const removeSourceParagraph = (html) =>
-  html.replace(/\s*<p>Sources:\s*[\s\S]*?<\/p>\s*$/i, "");
 
 const wrapArticleTables = (html) =>
   html
@@ -84,9 +22,10 @@ const BlogPostTemplate = ({ data, pageContext }) => {
   const categoryLabel =
     labelByCategory.get(post.fields.category) || post.frontmatter.category;
   const postSources = getPostSources(post.rawMarkdownBody);
-  const postHtml = formatReadableArticleHtml(
-    wrapArticleTables(removeSourceParagraph(post.html)),
-  );
+  const articleHtml = postSources.length
+    ? removePostSources(post.html)
+    : post.html;
+  const postHtml = formatReadableArticleHtml(wrapArticleTables(articleHtml));
 
   return (
     <Layout>

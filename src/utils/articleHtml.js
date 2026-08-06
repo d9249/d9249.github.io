@@ -26,6 +26,7 @@ const VOID_TAGS = new Set([
 ]);
 
 const SENTENCE_ENDINGS = new Set([".", "?", "!", "。", "？", "！"]);
+const CITATION_SUFFIX_PATTERN = /^\[\d+(?:\s*[-,]\s*\d+)*\]/;
 const CLOSING_PUNCTUATION = new Set([
   '"',
   "'",
@@ -205,6 +206,17 @@ const collectBreaks = (text, textMap) => {
 
     while (CLOSING_PUNCTUATION.has(text[boundaryIndex + 1])) {
       boundaryIndex += 1;
+    }
+
+    let citationMatch = text
+      .slice(boundaryIndex + 1)
+      .match(CITATION_SUFFIX_PATTERN);
+
+    while (citationMatch) {
+      boundaryIndex += Array.from(citationMatch[0]).length;
+      citationMatch = text
+        .slice(boundaryIndex + 1)
+        .match(CITATION_SUFFIX_PATTERN);
     }
 
     let nextIndex = boundaryIndex + 1;
