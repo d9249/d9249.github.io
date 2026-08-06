@@ -21,7 +21,7 @@ KAIST 연구진의 **Query-Conditioned Test-Time Self-Training for Large Languag
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/quest-token-accuracy.png"
+    src="/images/blog/quest-token-accuracy.webp"
     alt="QueST token usage and accuracy comparison across MATH500 AIME24 and GPQA-Diamond"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -60,7 +60,7 @@ QueST의 동작은 세 단계로 요약된다.
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/quest-method-overview.png"
+    src="/images/blog/quest-method-overview.webp"
     alt="Overview of QueST query-conditioned test-time self-training with generated problem solution pairs and LoRA adaptation"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -87,7 +87,7 @@ Test-time optimization step 수는 benchmark 난도에 따라 다르다. 일반 
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/quest-main-results.png"
+    src="/images/blog/quest-main-results.webp"
     alt="QueST main results table across seven mathematical reasoning benchmarks"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -115,7 +115,7 @@ GPQA-Diamond 결과도 눈에 띈다. Qwen3-4B-Base는 22.22에서 QueST 적용 
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/quest-qualitative-pairs.png"
+    src="/images/blog/quest-qualitative-pairs.webp"
     alt="QueST generated problem solution pairs from surface variations to structural transformations"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -128,7 +128,7 @@ Qualitative analysis는 방법의 장점과 위험을 동시에 보여 준다. �
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/quest-test-time-correction.png"
+    src="/images/blog/quest-test-time-correction.webp"
     alt="QueST test-time correction example where the adapted model recovers the correct solution"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

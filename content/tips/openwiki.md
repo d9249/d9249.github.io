@@ -32,7 +32,7 @@ draft: false
 
 조사 시점 기준 여기서 다루는 OpenWiki는 `vercel-labs/openwiki`다. 이름이 같은 `langchain-ai/openwiki` CLI도 별도로 존재하지만, `openwiki.sh`가 연결하는 프로젝트는 Vercel Labs의 Next.js/eve 기반 웹 앱이다. GitHub 저장소는 공개되어 있으나 GitHub API license는 `null`이고 checked-in `LICENSE` 파일도 보이지 않았다. 따라서 “오픈소스”라고 단정하기보다 **source available preview**로 보는 편이 안전하다.
 
-![OpenWiki homepage showing the repository search box and generated wiki examples](/images/tips/openwiki-home.png)
+![OpenWiki homepage showing the repository search box and generated wiki examples](/images/tips/openwiki-home.webp)
 
 ## 무엇을 해주는 도구인가
 

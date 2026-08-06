@@ -31,7 +31,7 @@ AI 에이전트에게 긴 프로젝트나 연구 주제를 맡길 때 가장 귀
 
 조사 시점 기준 저장소 `AgriciDaniel/claude-obsidian`은 Python 중심으로 분류되는 MIT 오픈소스 프로젝트이며, GitHub 최신 Release는 `v1.6.0`이다. 공식 홈페이지/블로그는 프로젝트를 Andrej Karpathy의 LLM Wiki 패턴을 Obsidian과 Claude Code 위에 구현한 “AI second brain”으로 설명한다.
 
-![claude-obsidian cover](/images/tips/claude-obsidian-cover.png)
+![claude-obsidian cover](/images/tips/claude-obsidian-cover.webp)
 
 ## claude-obsidian 개요
 
@@ -48,7 +48,7 @@ claude-obsidian의 핵심 단위는 “앱”보다 **vault protocol**에 가깝
 
 여기서 중요한 것은 “채팅창에 답을 받는 것”이 아니라, 답변 과정에서 만들어진 지식이 Obsidian의 Markdown page와 canvas, graph 구조로 남는다는 점이다. 다음 세션은 `wiki/hot.md`를 읽고 최근 맥락을 복구하도록 설계되어 있다.
 
-![claude-obsidian wiki map](/images/tips/claude-obsidian-wiki-map.png)
+![claude-obsidian wiki map](/images/tips/claude-obsidian-wiki-map.webp)
 
 ## 설치와 첫 사용법
 

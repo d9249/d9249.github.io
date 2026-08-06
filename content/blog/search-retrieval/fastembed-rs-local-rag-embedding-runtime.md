@@ -19,7 +19,7 @@ RAG와 semantic search를 제품에 넣다 보면, 모델 자체보다 먼저 �
 
 작성 시점 GitHub API 기준 저장소는 Apache 2.0 라이선스, 901 stars, 127 forks를 갖고 있고, crates.io의 `fastembed` 최신 버전은 `5.13.4`다. crates.io API의 누적 다운로드 값은 1,163,816으로 표시된다. 숫자보다 중요한 것은 release shape다. 이 프로젝트는 단순 예제 repo가 아니라, Cargo package, docs.rs 문서, semantic release, 모델 enum, 테스트까지 갖춘 Rust 검색 인프라 building block에 가깝다.
 
-![FastEmbed-rs local embedding pipeline](/images/blog/fastembed-rs-local-embedding-pipeline.png)
+![FastEmbed-rs local embedding pipeline](/images/blog/fastembed-rs-local-embedding-pipeline.webp)
 
 *공식 README, `Cargo.toml`, source enum을 바탕으로 재구성한 로컬 inference pipeline 개념도. 프로젝트 공식 diagram은 아니며, fastembed-rs가 Rust API, Hugging Face 모델 자산, ONNX/Candle runtime, retrieval stack 출력을 어떻게 연결하는지 설명하기 위한 도식이다.*
 

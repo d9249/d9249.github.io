@@ -32,7 +32,7 @@ Skills Manager는 이 지점을 노리는 macOS 앱이다. GitHub 저장소나 �
 
 저장소의 주 언어는 Swift이고 UI는 SwiftUI 기반이다. README는 macOS 15 이상과 Swift 6 이상을 요구한다고 적고, Tuist 프로젝트·Info.plist·Sparkle appcast도 배포 앱의 최소 macOS 버전을 15.0으로 잡고 있다. 이 사이트의 플랫폼 카테고리는 아직 macOS와 Linux가 같은 `macos-linux` 버킷에 묶여 있지만, Skills Manager 자체는 macOS 전용 앱으로 봐야 한다.
 
-![Skills Manager UI](/images/tips/skills-manager-ui.png)
+![Skills Manager UI](/images/tips/skills-manager-ui.webp)
 
 ## Skills Manager 개요
 

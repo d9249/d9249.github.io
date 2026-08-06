@@ -32,7 +32,7 @@ AI 코딩 도구를 오래 쓰면 “좋은 프롬프트”보다 **반복 가�
 
 조사 시점 기준 GitHub API와 checked-in `LICENSE` 모두 MIT로 확인된다. GitHub Releases 목록의 최상단은 `v2.0.0-rc.1` prerelease이고, 최신 stable release는 `v1.10.0`이다. main branch의 `package.json`도 `2.0.0-rc.1`을 가리키며, npm은 `ecc-universal`의 `latest`가 `1.10.0`, `next`가 `2.0.0-rc.1`이라서, 실제 도입 전에는 “GitHub prerelease / stable release / main branch / npm dist-tag / Claude plugin” 중 어느 표면을 설치하는지 먼저 맞춰 보는 편이 좋다.
 
-![ECC hero](/images/tips/ecc-hero.png)
+![ECC hero](/images/tips/ecc-hero.webp)
 
 ## ECC를 무엇으로 봐야 하나
 

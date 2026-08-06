@@ -30,7 +30,7 @@ draft: false
 
 조사 시점 기준 LinkedIn 단축 링크는 `bytonylee/future-slide` 저장소의 `skills/tightened-slide/SKILL.md`로 연결된다. GitHub API와 checked-in `LICENSE`는 Apache-2.0으로 확인했고, 저장소 최신 Release는 `v0.0.3`이다. `bytonylee/future-slide-skill`과 README에 남아 있는 `jyoung105/future-slide-skill` 주소는 모두 현재 canonical 저장소인 `bytonylee/future-slide`로 redirect된다.
 
-![future-slide 4단계 워크플로](/images/tips/future-slide-flow-ko.png)
+![future-slide 4단계 워크플로](/images/tips/future-slide-flow-ko.webp)
 
 ## 무엇을 담고 있나
 

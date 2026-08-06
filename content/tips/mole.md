@@ -27,7 +27,7 @@ draft: false
 
 README 기준으로 Mole은 macOS용으로 만들어졌고, Windows 브랜치는 early adopter용 실험판이다. 최신 GitHub Release는 `V1.38.0 Owl`이며 darwin amd64/arm64 바이너리와 `SHA256SUMS`를 배포한다. 소스는 Shell과 Go 조합이고, 라이선스는 MIT다.
 
-![Mole cleanup preview and result](/images/tips/mole-hero.png)
+![Mole cleanup preview and result](/images/tips/mole-hero.webp)
 
 ## 무엇을 해주는 도구인가
 

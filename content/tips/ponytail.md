@@ -30,7 +30,7 @@ AI 코딩 에이전트를 쓰다 보면 “똑똑해서 많이 만드는” 문�
 
 저장소의 농담은 “조용한 senior dev가 한 줄로 끝낸다”지만, 실제 내용은 단순한 말투 프롬프트가 아니다. Claude Code, Codex, OpenCode, Gemini CLI, Copilot CLI, Cursor, Windsurf, Cline, Kiro 같은 agent host가 읽을 수 있는 rules, skills, hooks, plugin manifest, command 파일을 한 저장소에 맞춰 둔 **portable agent instruction distribution**에 가깝다.
 
-![Ponytail social preview](/images/tips/ponytail-social-preview.png)
+![Ponytail social preview](/images/tips/ponytail-social-preview.webp)
 
 조사 시점 기준 GitHub API와 checked-in `LICENSE` 모두 MIT로 확인된다. 최신 GitHub Release는 `v4.8.0`이고, 릴리스 노트는 MCP server와 `/ponytail-gain` scoreboard, Antigravity/CodeWhale 지원, comprehension-first guard를 강조한다. 다만 main branch의 `.claude-plugin`, `.codex-plugin`, `.github/plugin` manifest는 `4.7.0`, root `package.json`은 `0.1.0`, `ponytail-mcp/package.json`도 `0.1.0`이라서 “어느 설치 표면을 기준으로 버전을 볼 것인가”는 따로 확인하는 편이 좋다.
 

@@ -32,7 +32,7 @@ draft: false
 
 조사 시점 기준 상위 저장소의 GitHub Release와 tag는 없고, 이 앱도 npm 패키지로 배포되는 형태가 아니다. 소스는 TypeScript, Express, `@modelcontextprotocol/sdk`, `@modelcontextprotocol/ext-apps`, Vite single-file widget, `@gradio/client` 조합이며, top-level `LICENSE`는 MIT다.
 
-![FineTune Studio MCP widget](/images/tips/finetune-studio-mcp-studio.png)
+![FineTune Studio MCP widget](/images/tips/finetune-studio-mcp-studio.webp)
 
 ## FineTune Studio MCP 개요
 

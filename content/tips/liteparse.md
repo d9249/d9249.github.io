@@ -104,7 +104,7 @@ lit screenshot document.pdf -o ./screenshots
 
 첫째, **bounding box가 기본 산출물**이라는 점이 좋다. `lit parse document.pdf --format json`을 쓰면 page 단위 텍스트와 함께 각 text item의 위치가 들어온다. 공식 visual citations 문서는 이 좌표를 페이지 스크린샷 픽셀 좌표로 변환해, 검색한 문구가 실제 PDF 어디에 있었는지 노란 박스로 표시하는 예시를 제공한다.
 
-![LiteParse visual citation example](/images/tips/liteparse-visual-citation.png)
+![LiteParse visual citation example](/images/tips/liteparse-visual-citation.webp)
 
 둘째, **텍스트와 스크린샷을 같은 도구로 만든다.** RAG chunk에는 텍스트를 넣고, 답변 검증 UI에는 해당 페이지 이미지를 띄우는 식의 흐름을 만들 때 CLI가 둘 다 해주는 점이 편하다. 텍스트만 보고 애매한 표·도면·제품 스펙은 스크린샷을 함께 넘겨서 visual model이나 사람 검수자가 확인하게 만들 수 있다.
 

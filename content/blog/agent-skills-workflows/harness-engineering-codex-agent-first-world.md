@@ -102,7 +102,7 @@ OpenAI 공식 글은 실제로 Codex가 worktree별 앱 인스턴스를 띄우�
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/harness-engineering-codex-devtools.png"
+    src="/images/blog/harness-engineering-codex-devtools.webp"
     alt="OpenAI diagram showing Codex driving an app with Chrome DevTools MCP to validate its work"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -121,7 +121,7 @@ OpenAI 글의 layered domain architecture 예시는 이 철학을 잘 보여 준
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/harness-engineering-layered-architecture.png"
+    src="/images/blog/harness-engineering-layered-architecture.webp"
     alt="OpenAI diagram of layered domain architecture with explicit cross-cutting boundaries"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -166,7 +166,7 @@ OpenAI 글의 layered domain architecture 예시는 이 철학을 잘 보여 준
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/harness-engineering-agent-knowledge.png"
+    src="/images/blog/harness-engineering-agent-knowledge.webp"
     alt="OpenAI diagram showing that what Codex cannot see does not exist and must be encoded as markdown in the codebase"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

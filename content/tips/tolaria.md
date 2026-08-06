@@ -38,7 +38,7 @@ Types as lenses, not schemas 원칙으로 필수 필드나 강제 검증 없이 
 
 ![Tolaria repository](https://opengraph.githubassets.com/tolaria-tip/refactoringhq/tolaria)
 
-![Tolaria desktop interface](/images/tips/tolaria-interface.png)
+![Tolaria desktop interface](/images/tips/tolaria-interface.webp)
 
 ## Tolaria 개요
 

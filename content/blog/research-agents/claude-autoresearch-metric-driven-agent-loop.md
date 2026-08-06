@@ -10,7 +10,7 @@ tags:
   - Agent Skills
   - Autoresearch
   - Developer Tools
-image: "/images/blog/claude-autoresearch-loop.png"
+image: "/images/blog/claude-autoresearch-loop.webp"
 draft: false
 ---
 
@@ -34,7 +34,7 @@ Autoresearch의 기본 루프는 단순하다. 먼저 현재 상태와 git histo
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/claude-autoresearch-loop.png"
+    src="/images/blog/claude-autoresearch-loop.webp"
     alt="Autoresearch metric-driven loop with setup contract, one-change iterations, verification, keep or revert, TSV logging, and safety hooks"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

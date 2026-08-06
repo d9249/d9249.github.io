@@ -33,7 +33,7 @@ Tokscale은 이 흩어진 사용량을 한곳에 모아 보여주는 CLI다. 로
 
 저장소 기준 Rust가 핵심 구현이고, npm에는 `tokscale` alias package와 `@tokscale/cli` 패키지가 배포되어 있다. 최신 릴리스와 npm 버전은 `v2.1.1`이며, 라이선스는 MIT다.
 
-![Tokscale hero](/images/tips/tokscale-hero.png)
+![Tokscale hero](/images/tips/tokscale-hero.webp)
 
 ## Tokscale 개요
 
@@ -56,7 +56,7 @@ Tokscale은 AI 코딩 도구 사용량을 “개발자의 토큰 계기판”처
 
 ## TUI에서 무엇을 볼 수 있나
 
-![Tokscale TUI overview](/images/tips/tokscale-tui-overview.png)
+![Tokscale TUI overview](/images/tips/tokscale-tui-overview.webp)
 
 기본 실행은 인터랙티브 TUI다.
 
@@ -138,7 +138,7 @@ tokscale pricing "grok-code" --provider openrouter
 
 ## 웹 시각화와 리더보드
 
-![Tokscale contribution graph](/images/tips/tokscale-contributions-graph.png)
+![Tokscale contribution graph](/images/tips/tokscale-contributions-graph.webp)
 
 Tokscale은 로컬 CLI에서 끝나지 않고 웹 시각화와 social platform도 제공한다. contribution graph는 GitHub 잔디밭 UI를 AI 토큰 사용량에 맞게 바꾼 형태다. 2D/3D 보기 전환, 색상 팔레트, 도구별 필터, 날짜별 상세 breakdown, 총 비용과 active days, streak 같은 지표를 보여준다.
 

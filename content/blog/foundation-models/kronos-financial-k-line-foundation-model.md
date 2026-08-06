@@ -19,7 +19,7 @@ Kronos는 이 문제를 정면으로 겨냥한 논문이자 공개 모델 릴리
 
 흥미로운 점은 Kronos가 단순한 forecast model 하나가 아니라는 데 있다. 가격 시계열 예측, 수익률 예측, realized volatility 예측, synthetic K-line 생성, 투자 시뮬레이션까지 같은 토큰 기반 생성 모델로 묶으려 한다. GitHub와 Hugging Face에는 `Kronos-mini`, `Kronos-small`, `Kronos-base`와 tokenizer가 공개되어 있고, README 기준 `Kronos-large`는 표에는 있지만 아직 오픈소스 공개 대상은 아니다.
 
-![Kronos two-stage framework](/images/blog/kronos-framework.png)
+![Kronos two-stage framework](/images/blog/kronos-framework.webp)
 
 ## 무엇을 해결하려는가
 
@@ -59,13 +59,13 @@ Kronos-base의 경우 20-bit token을 그대로 2^20 vocabulary로 쓰면 embedd
 
 논문이 가장 크게 내세우는 수치는 가격 시계열 예측에서의 RankIC 개선이다. arXiv abstract와 본문은 Kronos가 price series forecasting에서 가장 강한 TSFM baseline 대비 RankIC를 93%, 가장 강한 non-pre-trained baseline 대비 87% 끌어올렸다고 주장한다. 또한 realized volatility forecasting에서는 MAE를 9% 낮추고, synthetic K-line generation에서는 generative fidelity를 22% 개선했다고 보고한다.
 
-![Kronos main experimental results](/images/blog/kronos-main-results.png)
+![Kronos main experimental results](/images/blog/kronos-main-results.webp)
 
 평가 범위는 꽤 넓다. 논문은 세 가지 예측 작업, 하나의 생성 작업, 하나의 투자 시뮬레이션을 함께 다룬다. Price series와 return forecasting은 IC/RankIC로 평가하고, volatility는 MAE와 R²를 사용한다. Synthetic K-line은 discriminative score와 Train-on-Synthetic-Test-on-Real(TSTR) 방식의 usefulness로 평가한다. 투자 시뮬레이션은 중국 A-share 시장에서 예측 신호로 top-k long-only 포트폴리오를 구성해 Annualized Excess Return(AER)과 Information Ratio(IR)를 본다.
 
 Synthetic K-line 결과도 흥미롭다. 논문은 원본과 생성 샘플을 t-SNE와 KDE로 비교해, Kronos의 합성 데이터가 실제 데이터 분포와 더 잘 겹친다고 주장한다. 이 지점은 단순 forecast 성능보다 더 중요할 수 있다. 금융 모델 개발에서 synthetic path는 리스크 시나리오, 데이터 증강, strategy stress test에 연결될 수 있기 때문이다.
 
-![Kronos synthetic K-line generation comparison](/images/blog/kronos-synthetic-kline.png)
+![Kronos synthetic K-line generation comparison](/images/blog/kronos-synthetic-kline.webp)
 
 릴리스 표면은 연구 코드와 공개 모델 사이의 중간 단계에 가깝다. GitHub API 기준 저장소는 MIT license로 표시되며, `LICENSE` 파일도 MIT License다. 2026-05-11 현재 API 기준 stars는 23,845, forks는 4,166, open issues는 189다. 다만 `/releases/latest`는 404이고 `/tags`도 비어 있다. 즉 관심도와 공개 코드는 충분하지만, 아직 semantic versioning이나 패키지 릴리스가 정리된 성숙한 라이브러리 형태라고 보긴 어렵다.
 
@@ -73,7 +73,7 @@ Hugging Face 쪽 공개는 더 직접적이다. `NeoQuasar/Kronos-mini`, `Kronos
 
 GitHub README에는 live demo도 연결되어 있다. 이 데모는 BTC/USDT 1시간봉을 대상으로 `Kronos-mini`를 사용해 최근 360시간을 context로 삼고, Monte Carlo sampling 30개 경로로 다음 24시간의 확률적 예측을 시각화한다. 다만 이런 데모는 모델 사용 예시이지 투자 판단 근거가 아니다. 블로그 독자 입장에서는 "Kronos가 단일 점 예측이 아니라 경로 분포와 불확실성을 내보내는 방식으로 쓰일 수 있다"는 정도로 받아들이는 것이 안전하다.
 
-![Kronos live probabilistic forecast demo](/images/blog/kronos-live-demo-top.png)
+![Kronos live probabilistic forecast demo](/images/blog/kronos-live-demo-top.webp)
 
 ## 실무 관점에서의 해석
 

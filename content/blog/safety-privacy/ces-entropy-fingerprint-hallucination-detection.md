@@ -19,7 +19,7 @@ LLM 환각 탐지는 실무에서 꽤 불편한 문제다. 답변이 나온 뒤 
 
 이 작업의 포인트는 “LLM이 불확실하면 환각한다”는 익숙한 직관을 조금 더 통계적인 형태로 바꾼 데 있다. CES는 생성 1회에서 나온 token logit 또는 top-k logprob만 사용하고, 추가 LLM query나 hidden-state 접근을 요구하지 않는다. 그래서 제품 관점에서는 완전한 사실 검증기라기보다, 답변이 나온 직후 낮은 비용으로 위험도를 매기는 **runtime triage score**에 가깝다.
 
-![CES pipeline summary](/images/blog/ces-entropy-fingerprint-hallucination-detection-pipeline.png)
+![CES pipeline summary](/images/blog/ces-entropy-fingerprint-hallucination-detection-pipeline.webp)
 
 *논문의 Figure 1을 바탕으로 재구성한 CES 흐름. calibration set으로 faithful entropy reference ECDF를 만들고, production generation에서는 mean·max entropy를 그 reference에 매핑해 threshold test를 수행한다.*
 

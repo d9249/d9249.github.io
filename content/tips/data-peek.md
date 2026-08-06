@@ -28,7 +28,7 @@ draft: false
 
 핵심은 단순 쿼리 실행만이 아니다. 스키마 탐색, Monaco 기반 SQL 에디터, 결과 그리드, ERD, 쿼리 히스토리, 저장 쿼리, CSV/JSON/Excel 내보내기, 인라인 데이터 편집, 성능 분석, AI 자연어 쿼리까지 “개발 중 데이터 확인”에 필요한 기능을 한 앱에 모아 둔다.
 
-![Data Peek 메인 화면](/images/tips/data-peek-hero.png)
+![Data Peek 메인 화면](/images/tips/data-peek-hero.webp)
 
 ## Data Peek이 풀려는 문제
 
@@ -47,7 +47,7 @@ README와 docs가 강조하는 방향은 다음과 같다.
 
 ## AI Assistant: 자연어에서 SQL로
 
-![Data Peek AI Assistant](/images/tips/data-peek-ai-assistant.png)
+![Data Peek AI Assistant](/images/tips/data-peek-ai-assistant.webp)
 
 Data Peek의 차별점은 AI Assistant가 앱 안에 붙어 있다는 점이다. README는 OpenAI, Anthropic, Google, Groq, 로컬 Ollama 모델을 지원한다고 설명한다. BYOK 방식이므로 사용자가 자신의 API 키나 로컬 모델을 설정하는 구조다.
 
@@ -63,7 +63,7 @@ AI Assistant 화면에서는 연결된 데이터베이스의 테이블 수와 �
 
 ## ERD와 스키마 탐색
 
-![Data Peek ERD 화면](/images/tips/data-peek-erd.png)
+![Data Peek ERD 화면](/images/tips/data-peek-erd.webp)
 
 ERD 화면도 Data Peek의 강점이다. 공식 스크린샷에서는 SaaS 예시 데이터베이스의 11개 테이블과 관계가 자동으로 시각화되어 있다. `organizations`를 중심으로 `users`, `projects`, `subscriptions`, `invoices`, `events`, `api_keys` 같은 테이블이 연결되고, 각 테이블 카드에는 컬럼명, 타입, PK/FK 표시가 함께 나온다.
 

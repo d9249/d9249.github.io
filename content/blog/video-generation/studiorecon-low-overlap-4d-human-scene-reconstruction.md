@@ -19,7 +19,7 @@ SIGGRAPH 2026 논문 **StudioRecon**은 이 조건을 `in-the-wild studio captur
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/studiorecon-pipeline.png"
+    src="/images/blog/studiorecon-pipeline.webp"
     alt="StudioRecon의 sparse-to-dense view synthesis, multi-view human pose estimation, decoupled Gaussian reconstruction, recursive enhancement pipeline"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

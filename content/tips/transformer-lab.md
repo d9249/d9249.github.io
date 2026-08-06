@@ -32,7 +32,7 @@ AI 연구 환경은 쉽게 조각난다. 모델은 Hugging Face에서 받고, in
 
 조사 시점 기준 저장소 `transformerlab/transformerlab-app`은 Python/TypeScript 중심의 AGPL-3.0 오픈소스이며, GitHub 최신 릴리스는 `v0.38.0`이다. README는 개인용과 팀용을 나눠 설명한다. 개인용은 로컬 machine에서 모델을 내려받고 train/evaluate/chat하는 흐름이고, 팀용은 Slurm, SkyPilot, cloud GPU, shared storage 위에서 task와 job을 queueing하는 흐름이다.
 
-![Transformer Lab task queue UI](/images/tips/transformer-lab-tasks.png)
+![Transformer Lab task queue UI](/images/tips/transformer-lab-tasks.webp)
 
 ## Transformer Lab 개요
 
@@ -92,7 +92,7 @@ lab job artifacts <job-id>
 
 Transformer Lab for Teams의 핵심은 기존 scheduler를 대체하는 것이 아니라, 그 위에 연구자가 쓰기 쉬운 layer를 얹는 것이다. README도 “Slurm clusters or SkyPilot clouds from one UI”를 강조하고, install 문서는 compute provider로 Slurm, SkyPilot, RunPod, dstack, AWS, Azure, GCP를 별도로 안내한다.
 
-![Transformer Lab architecture diagram](/images/tips/transformer-lab-architecture.png)
+![Transformer Lab architecture diagram](/images/tips/transformer-lab-architecture.webp)
 
 공식 architecture 이미지는 Transformer Lab을 세 층으로 그린다.
 

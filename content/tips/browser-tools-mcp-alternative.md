@@ -29,7 +29,7 @@ AI 에이전트에 브라우저 조작 능력을 붙일 때 가장 먼저 떠오
 
 핵심은 기능을 없애자는 이야기가 아니다. 에이전트에게 매번 수십 개 MCP tool schema를 주입하는 대신, 실제로 자주 쓰는 브라우저 작업만 짧은 README와 실행 파일로 노출하자는 전략이다. 원 글의 비교 기준에서는 Playwright MCP가 약 13.7k tokens, Chrome DevTools MCP가 약 18.0k tokens를 차지하는 반면, 네 개의 브라우저 도구를 설명하는 README는 225 tokens 수준이라고 설명한다.
 
-![MCP 대신 작은 browser tools를 쓰는 전략](/images/tips/browser-tools-mcp-alternative-header.png)
+![MCP 대신 작은 browser tools를 쓰는 전략](/images/tips/browser-tools-mcp-alternative-header.webp)
 
 ## 무엇을 담고 있나
 
@@ -61,7 +61,7 @@ MCP 서버는 클라이언트가 tool 설명과 JSON schema를 컨텍스트에 �
 
 또 하나의 차이는 출력 경로다. MCP tool output은 보통 에이전트 컨텍스트를 거쳐야 다음 단계로 넘어간다. CLI 스크립트는 stdout, 파일, pipe, 임시 이미지 경로를 그대로 쓸 수 있으므로 큰 HTML, cookie dump, scraper 결과를 파일로 저장한 뒤 필요한 부분만 다시 읽게 만들기 쉽다.
 
-![브라우저 도구 실험의 token tally 예시](/images/tips/browser-tools-mcp-alternative-tokens.png)
+![브라우저 도구 실험의 token tally 예시](/images/tips/browser-tools-mcp-alternative-tokens.webp)
 
 ## 설치와 첫 사용 흐름
 

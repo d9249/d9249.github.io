@@ -43,7 +43,7 @@ AGT는 단일 CLI라기보다 **에이전트 행동 거버넌스 런타임/SDK �
 
 공식 다이어그램도 이 구조를 잘 보여준다. LangChain, CrewAI, AutoGen, OpenAI Agents, LangGraph, Semantic Kernel, Google ADK 같은 프레임워크 위에 adapter/middleware를 얹고, 그 아래에 Agent OS, AgentMesh, Runtime, Hypervisor, SRE, Marketplace, Lightning, Observability 계층을 배치한다.
 
-![Agent Governance Toolkit 아키텍처 개요](/images/tips/agent-governance-toolkit-architecture.png)
+![Agent Governance Toolkit 아키텍처 개요](/images/tips/agent-governance-toolkit-architecture.webp)
 
 ## 왜 유용한가
 

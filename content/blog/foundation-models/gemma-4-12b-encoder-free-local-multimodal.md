@@ -21,7 +21,7 @@ Google이 공개한 **Gemma 4 12B Unified**는 이 중간 지점을 정면으로
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/gemma-4-12b-unified-hero.png"
+    src="/images/blog/gemma-4-12b-unified-hero.webp"
     alt="Official Google hero image for Gemma 4 12B Unified"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -48,7 +48,7 @@ Gemma 4 12B가 겨냥하는 첫 번째 병목은 **로컬 멀티모달 에이전
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/gemma-4-12b-encoder-free-architecture.png"
+    src="/images/blog/gemma-4-12b-encoder-free-architecture.webp"
     alt="Official Gemma 4 12B architecture diagram comparing traditional multimodal encoders with the encoder-free Gemma 4 12B pipeline"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

@@ -32,7 +32,7 @@ AI 에이전트의 `SKILL.md` 생태계가 커지면서, 문제는 “스킬을 
 
 조사 시점 기준 저장소 `Kamalnrf/claude-plugins`는 TypeScript 중심의 source-available 프로젝트다. GitHub API는 루트 license를 `null`로 보고했고 루트 `LICENSE` 파일도 확인되지 않았지만, README와 npm package metadata는 MIT를 표기한다. 따라서 개인 사용에는 바로 참고할 수 있지만, 팀 표준 도구로 재배포하거나 fork할 때는 라이선스 파일 상태를 다시 확인하는 편이 안전하다.
 
-![Claude Plugins Agent Skills registry](/images/tips/claude-plugins-skills-registry.png)
+![Claude Plugins Agent Skills registry](/images/tips/claude-plugins-skills-registry.webp)
 
 ## 무엇을 제공하나
 

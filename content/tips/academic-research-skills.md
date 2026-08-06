@@ -31,7 +31,7 @@ draft: false
 
 조사 시점 기준 GitHub API의 primary language는 Python, license 감지는 `Other`이고, checked-in `LICENSE`와 `POSITIONING.md`는 CC BY-NC 4.0을 명시한다. 그래서 일반적인 OSI식 “오픈소스 라이브러리”라기보다는 **비상업 학술 사용을 전제로 공개된 source-available workflow suite**로 보는 편이 정확하다.
 
-![Academic Research Skills pipeline](/images/tips/academic-research-skills-hero.png)
+![Academic Research Skills pipeline](/images/tips/academic-research-skills-hero.webp)
 
 ## 무엇을 담고 있나
 

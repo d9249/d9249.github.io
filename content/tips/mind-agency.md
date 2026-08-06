@@ -32,7 +32,7 @@ Mind Agency는 “프롬프트 템플릿을 잘 짜는 앱”이라기보다, �
 
 조사 시점 기준 저장소는 TypeScript 중심이며, Next.js 15, React 19, Electron, Node WebSocket 서버, Claude Agent SDK, 자체 MCP group server로 구성되어 있다. 최신 공개 릴리스는 `v0.4.0`이고, Windows용 `Mind-Agency-Setup-0.4.0.exe`가 GitHub Releases에 올라와 있다.
 
-![Mind Agency dashboard](/images/tips/mind-agency-dashboard.png)
+![Mind Agency dashboard](/images/tips/mind-agency-dashboard.webp)
 
 ## Mind Agency 개요
 
@@ -59,7 +59,7 @@ README가 강조하는 기능도 제품형 협업 도구에 가깝다. 에이전
 
 즉 CrewAI나 AutoGen 같은 프레임워크를 직접 조립하기보다, 팀 협업 UI와 운영 규칙까지 포함한 데스크톱 제품으로 실험해보고 싶은 사람에게 맞는 형태다.
 
-![Mind Agency workflows](/images/tips/mind-agency-workflows.png)
+![Mind Agency workflows](/images/tips/mind-agency-workflows.webp)
 
 ## 설치와 첫 사용법
 

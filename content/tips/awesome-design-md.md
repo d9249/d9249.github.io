@@ -31,7 +31,7 @@ AI 코딩 에이전트에게 “Vercel처럼 깔끔하게”, “Stripe 느낌�
 
 공개 컬렉션의 원천은 `VoltAgent/awesome-design-md` 저장소다. README는 “실제 웹사이트에서 추출한 DESIGN.md 파일 모음”이라고 설명하고, 사이트는 이를 브라우저에서 검색·미리보기·요청할 수 있는 형태로 보여준다. `AGENTS.md`가 코딩 에이전트에게 “어떻게 빌드할지”를 알려준다면, `DESIGN.md`는 “어떻게 보이고 느껴져야 하는지”를 알려주는 보조 컨텍스트 파일에 가깝다.
 
-![getdesign.md 소개 이미지](/images/tips/awesome-design-md-og.png)
+![getdesign.md 소개 이미지](/images/tips/awesome-design-md-og.webp)
 
 ## getdesign.md 개요
 

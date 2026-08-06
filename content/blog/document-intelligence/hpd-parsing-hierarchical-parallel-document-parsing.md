@@ -20,9 +20,9 @@ draft: false
 저자들은 HPD-Parsing이 OmniDocBench v1.6에서 1B parameter로 overall 94.91을 기록했고, batch size 512의 A800 80GB 조건에서 4,752.1 TPS와 2.68 PPS를 기록했다고 보고한다.[1] 이 값은 저자 측 benchmark·hardware·serving 조건의 결과이며, 일반적인 모든 OCR workload의 성능 보장은 아니다.[1][3]
 
 <figure style="margin: 1.8rem 0;">
-  <a href="/images/blog/hpd-parsing-decoding-comparison.png">
+  <a href="/images/blog/hpd-parsing-decoding-comparison.webp">
     <img
-      src="/images/blog/hpd-parsing-decoding-comparison.png"
+      src="/images/blog/hpd-parsing-decoding-comparison.webp"
       alt="기존 순차 autoregressive decoding과 HPD-Parsing의 계층적 병렬 decoding을 비교하고 OmniDocBench 성능 위치를 나타내는 공식 그림"
       style="width: 100%; max-width: 100%; height: auto; display: block; background: #fff;"
     />
@@ -62,9 +62,9 @@ main layout branch는 reading order에 따라 영역의 category와 normalized c
 content branch는 shared visual context와 자신이 fork된 지점의 structural prefix를 이어받고 `<CHILD>` 뒤에서 해당 영역의 내용만 생성한다.[1] 이 설계는 새 branch가 이미지 encoder를 다시 실행하거나 공통 prefill을 반복하지 않게 한다.[1]
 
 <figure style="margin: 1.8rem 0;">
-  <a href="/images/blog/hpd-parsing-architecture.png">
+  <a href="/images/blog/hpd-parsing-architecture.webp">
     <img
-      src="/images/blog/hpd-parsing-architecture.png"
+      src="/images/blog/hpd-parsing-architecture.webp"
       alt="visual encoder, main layout parsing, 여러 content decoding branch, shared-prefix KV cache reuse, P-MTP module로 구성된 HPD-Parsing 공식 아키텍처"
       style="width: 100%; max-width: 100%; height: auto; display: block; background: #fff;"
     />
@@ -106,9 +106,9 @@ input token budget을 함께 봐야 하는 이유도 있다. HPD-Parsing은 페�
 다만 paper abstract와 model card에서 “fastest existing parser 대비 2.62배”라는 문구를 볼 때는 TPS와 PPS의 기준을 분리해 읽을 필요가 있다. Table 2는 baseline 대비 2.62배가 PPS, 3.06배가 TPS이며, DeepSeek-OCR-2 대비 수치는 1.31배 PPS와 1.62배 TPS로 제시한다.[1][6]
 
 <figure style="margin: 1.8rem 0;">
-  <a href="/images/blog/hpd-parsing-length-efficiency.png">
+  <a href="/images/blog/hpd-parsing-length-efficiency.webp">
     <img
-      src="/images/blog/hpd-parsing-length-efficiency.png"
+      src="/images/blog/hpd-parsing-length-efficiency.webp"
       alt="output length bucket별 baseline과 HPD-Parsing의 decoding steps, request throughput, inference latency를 비교한 공식 효율 그래프"
       style="width: 100%; max-width: 100%; height: auto; display: block; background: #fff;"
     />

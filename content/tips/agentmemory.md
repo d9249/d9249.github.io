@@ -32,7 +32,7 @@ AI 코딩 에이전트를 오래 쓰다 보면 모델 성능보다 **기억의 �
 
 조사 시점 기준 저장소 `rohitg00/agentmemory`는 TypeScript 중심의 Apache-2.0 오픈소스이며, GitHub 최신 Release와 npm 패키지 `@agentmemory/agentmemory` 모두 `v0.9.18`이다. 실행 패키지는 Node.js `>=20`을 요구하고, 내부 런타임은 `iii-engine` v0.11.x 계열에 기대는 구조다.
 
-![agentmemory banner](/images/tips/agentmemory-banner.png)
+![agentmemory banner](/images/tips/agentmemory-banner.webp)
 
 ## agentmemory 개요
 
@@ -127,7 +127,7 @@ agentmemory가 잘 맞는 상황은 명확하다. 같은 프로젝트를 여러 
 
 agentmemory는 `http://localhost:3113` viewer를 자동으로 띄운다. 여기서는 live observation stream, session explorer, memory browser, knowledge graph, health dashboard를 볼 수 있다. session replay도 지원해서 과거 세션의 prompt, tool call, tool result, response를 timeline으로 다시 보는 흐름을 제공한다.
 
-![agentmemory iii console traces](/images/tips/agentmemory-iii-traces.png)
+![agentmemory iii console traces](/images/tips/agentmemory-iii-traces.webp)
 
 또 하나의 표면은 iii console이다. agentmemory가 iii-engine primitive 위에 올라가 있기 때문에 workers, functions, triggers, state, streams, traces를 엔진 관점에서 볼 수 있다. 제품 사용자에게는 viewer가 더 직관적이고, 런타임을 디버깅하거나 self-host 환경에서 상태를 확인할 때는 iii console이 더 낮은 레벨의 관측 창에 가깝다.
 

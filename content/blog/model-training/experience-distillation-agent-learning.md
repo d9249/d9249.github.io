@@ -85,9 +85,9 @@ agent가 실제 환경에서 배우게 하려면 대가가 크다. 코드 수정
 SWE에서는 EPD가 ICL reference를 완전히 복제하지는 못한다. 하지만 context를 제거한 상태에서 pass@1 51.4%를 보고했고, SFT의 8.0%와 큰 차이가 난다. TaleSuite에서는 normalized score 43.8로 ICL 45.6에 더 가깝다. 이 결과가 보여 주는 것은 “긴 경험 log를 학습 데이터로 쓰면 된다”가 아니라, **그 log로 강화된 teacher behavior를 target으로 다시 만들어야 한다**는 점이다.
 
 <figure style="margin: 1.8rem 0;">
-  <a href="/images/blog/experience-distillation-sample-efficiency.png">
+  <a href="/images/blog/experience-distillation-sample-efficiency.webp">
     <img
-      src="/images/blog/experience-distillation-sample-efficiency.png"
+      src="/images/blog/experience-distillation-sample-efficiency.webp"
       alt="749개 software-engineering task와 6개 TaleSuite task에서 ICL과 Experience Distillation이 PPO 또는 GRPO보다 각각 9.6배와 57.2배 적은 평균 환경 sample로 더 높은 보고 성능에 도달했음을 보여 주는 공식 비교 차트"
       style="width: 100%; max-width: 100%; height: auto; display: block; background: #fff;"
     />

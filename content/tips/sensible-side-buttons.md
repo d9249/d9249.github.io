@@ -51,7 +51,7 @@ SensibleSideButtons는 이 문제를 피하려고 M4/M5 이벤트를 잡아 기�
 
 SensibleSideButtons는 큰 설정 창을 열어두는 앱이 아니라 메뉴바에 상주하는 작은 유틸리티입니다. 실행 중이면 메뉴바 아이콘으로 상태를 확인하고, 필요할 때 메뉴에서 켜고 끌 수 있습니다.
 
-![SensibleSideButtons 메뉴바 아이콘](/images/tips/sensible-side-buttons-menubar.png)
+![SensibleSideButtons 메뉴바 아이콘](/images/tips/sensible-side-buttons-menubar.webp)
 
 소스의 `AppDelegate.m` 기준 메뉴에는 다음 옵션이 있습니다.
 
@@ -85,7 +85,7 @@ SensibleSideButtons는 큰 설정 창을 열어두는 앱이 아니라 메뉴바
 
 공식 웹사이트는 이 기술적 배경을 macOS의 트랙패드 페이지 이동 제스처와 연결해 설명합니다. 아래 이미지는 SensibleSideButtons 자체의 설정 화면이 아니라, 공식 설명에 등장하는 macOS 트랙패드의 “Swipe between pages” 설정 예시입니다.
 
-![macOS 트랙패드의 페이지 쓸어넘기기 설정](/images/tips/sensible-side-buttons-trackpad-settings.png)
+![macOS 트랙패드의 페이지 쓸어넘기기 설정](/images/tips/sensible-side-buttons-trackpad-settings.webp)
 
 이 차이가 중요합니다. 단순히 키보드 단축키를 보내는 앱이 아니라, macOS가 이미 갖고 있는 페이지 이동 제스처의 성격을 일반 마우스 사이드 버튼에 빌려오는 방식입니다.
 

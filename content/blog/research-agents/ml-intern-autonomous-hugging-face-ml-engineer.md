@@ -24,7 +24,7 @@ draft: false
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/ml-intern-signin-ui.png"
+    src="/images/blog/ml-intern-signin-ui.webp"
     alt="ML Intern Hugging Face Space sign-in screen"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

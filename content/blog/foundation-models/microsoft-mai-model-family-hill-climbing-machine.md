@@ -21,7 +21,7 @@ Microsoft AI가 Build 2026에서 공개한 MAI 모델 패밀리는 표면적으�
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/microsoft-mai-model-family-hill-climbing-machine-overview.png"
+    src="/images/blog/microsoft-mai-model-family-hill-climbing-machine-overview.webp"
     alt="Reconstructed overview diagram of Microsoft AI MAI model family, hill-climbing machine, clean data, infrastructure, evaluation, reinforcement learning, and product integration"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

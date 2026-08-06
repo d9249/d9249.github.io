@@ -10,7 +10,7 @@ tags:
   - Agent Systems
   - Embodiment
   - Richard Sutton
-image: "/images/blog/enactive-ai-concept-map.png"
+image: "/images/blog/enactive-ai-concept-map.webp"
 draft: false
 ---
 
@@ -22,7 +22,7 @@ draft: false
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/enactive-ai-concept-map.png"
+    src="/images/blog/enactive-ai-concept-map.webp"
     alt="Reconstructed concept map of enactive AI with experience, action-perception loop, autonomy, embodiment, mainstream AI, and RL"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

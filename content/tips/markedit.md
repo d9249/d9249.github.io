@@ -30,7 +30,7 @@ MarkEdit은 “Mac의 TextEdit처럼 단순하지만 Markdown 전용인 앱”�
 
 공식 README의 표현이 꽤 명확하다. MarkEdit은 무료 오픈소스 macOS 앱이고, 4MB급 가벼운 설치 크기, 10MB 파일도 쉽게 다루는 성능, macOS 네이티브 통합, GitHub Flavored Markdown 준수를 핵심 가치로 둔다. 저장소 기준 라이선스는 MIT이고, 최신 릴리스는 `v1.32.1`이다.
 
-![MarkEdit editor UI](/images/tips/markedit-editor.png)
+![MarkEdit editor UI](/images/tips/markedit-editor.webp)
 
 ## MarkEdit 개요
 
@@ -85,7 +85,7 @@ MarkEdit의 편집 화면은 “미리보기 패널을 항상 옆에 띄우는 �
 
 ## 통계와 완성 기능
 
-![MarkEdit statistics and completion](/images/tips/markedit-statistics.png)
+![MarkEdit statistics and completion](/images/tips/markedit-statistics.webp)
 
 MarkEdit에는 선택 영역 또는 전체 문서의 통계를 보여주는 패널이 있다. 글자 수, 단어 수, 문장 수, 문단 수, 예상 읽기 시간을 확인할 수 있고, UI를 깨끗하게 유지하기 위해 기본으로 항상 노출되지는 않는다.
 
@@ -109,7 +109,7 @@ macOS Sonoma의 inline predictive text, macOS Sequoia의 Apple Intelligence Writ
 
 ## 설정에서 먼저 볼 만한 것
 
-![MarkEdit settings](/images/tips/markedit-settings.png)
+![MarkEdit settings](/images/tips/markedit-settings.webp)
 
 MarkEdit은 “설정을 최소화한다”는 철학을 갖고 있지만, Markdown 작성 환경에 필요한 기본값은 꽤 실용적으로 제공한다. 설치 후 먼저 볼 만한 항목은 다음이다.
 

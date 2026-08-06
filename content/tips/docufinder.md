@@ -48,7 +48,7 @@ README 기준 핵심 기능은 다음과 같다.
 
 검색 결과 화면은 “검색어가 어디에서 걸렸는지”를 보여주는 쪽에 맞춰져 있다. 단순히 파일 목록만 뿌리는 것이 아니라, 본문 매치와 파일 경로, 문서 종류를 함께 보여주는 검색 앱에 가깝다.
 
-![Anything search results](/images/tips/docufinder-search-results.png)
+![Anything search results](/images/tips/docufinder-search-results.webp)
 
 ## 검색 구조가 꽤 로컬 지향이다
 

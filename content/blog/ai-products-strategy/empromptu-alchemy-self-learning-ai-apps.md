@@ -20,7 +20,7 @@ Empromptu의 현재 홈페이지도 “Build custom AI apps and models simultane
 
 내가 보기엔 이 제품의 흥미로운 지점은 “AI 앱을 만들어 준다”가 아니라, **앱을 모델 학습 데이터 수집 장치이자 governance surface로 바꾼다**는 데 있다. 만약 이 루프가 실제 배포 환경에서 안정적으로 작동한다면, 기업 입장에서는 매번 같은 foundation model API를 호출하는 tenant 상태에서 벗어나 자기 업무에서 나온 고신호 데이터를 모델 자산으로 축적하는 길이 생긴다.
 
-![Empromptu Alchemy loop](/images/blog/empromptu-alchemy-loop.png)
+![Empromptu Alchemy loop](/images/blog/empromptu-alchemy-loop.webp)
 
 *공개 제품 설명을 바탕으로 재구성한 합성 다이어그램이다. 실제 구현 세부와 “up to 98% accuracy” 같은 성능 주장은 배포별 근거로 다시 확인해야 한다.*
 

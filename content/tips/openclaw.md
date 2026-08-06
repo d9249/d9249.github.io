@@ -33,7 +33,7 @@ README 기준 OpenClaw는 Telegram, WhatsApp, Slack, Discord, Google Chat, Signa
 
 저장소는 TypeScript 중심의 MIT 오픈소스다. npm 패키지 이름은 `openclaw`이고 CLI 바이너리도 `openclaw`로 노출된다. 조사 시점의 npm `latest`는 `2026.5.7`, `beta`는 `2026.5.10-beta.1`이며, GitHub Release에는 macOS용 `OpenClaw-2026.5.7.dmg`와 ZIP 자산도 올라와 있다.
 
-![OpenClaw logo](/images/tips/openclaw-logo.png)
+![OpenClaw logo](/images/tips/openclaw-logo.webp)
 
 ## OpenClaw 개요
 

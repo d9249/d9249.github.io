@@ -20,9 +20,9 @@ draft: false
 논문은 Video-DeepResearch-35B-A3B가 저자 평가에서 평균 정확도 64.0%를 기록해 Claude-4.5-Sonnet의 59.0%보다 5.0%p 높았다고 보고한다.[3] 다만 이 숫자는 논문이 구성한 benchmark·도구 환경·평가 protocol 안의 결과이므로, 일반적인 비디오 이해 능력의 절대 순위라기보다 **시각 grounding을 강제하는 agent training recipe의 효과**로 읽는 편이 안전하다.[2]
 
 <figure style="margin: 1.8rem 0;">
-  <a href="/images/blog/video-deepresearch-paradigm.png">
+  <a href="/images/blog/video-deepresearch-paradigm.webp">
     <img
-      src="/images/blog/video-deepresearch-paradigm.png"
+      src="/images/blog/video-deepresearch-paradigm.webp"
       alt="기존 텍스트 우회 및 전체 이미지 검색과 달리 Video-DeepResearch가 비디오 프레임 선택, 객체 crop 검색, 텍스트 검색, 웹 탐색을 순서대로 연결하는 공식 구조도"
       style="width: 100%; max-width: 100%; height: auto; display: block; background: #fff;"
     />
@@ -55,9 +55,9 @@ Video-DeepResearch의 목표는 정답만 맞히는 모델이 아니라, **비�
 그 결과 논문은 30K video-grounded VQA와 7K의 정답 trajectory를 만들었다고 설명한다.[3] trajectory 단계에서는 처음에 `Select_Keyframe`과 `Crop_Search`만 허용하고, 충분한 visual context가 쌓인 뒤에야 `Search`와 `Visit`을 열어 준다.[3] 성공적으로 답한 기록만 rejection sampling으로 남기는 방식이다.[3]
 
 <figure style="margin: 1.8rem 0;">
-  <a href="/images/blog/video-deepresearch-data-pipeline.png">
+  <a href="/images/blog/video-deepresearch-data-pipeline.webp">
     <img
-      src="/images/blog/video-deepresearch-data-pipeline.png"
+      src="/images/blog/video-deepresearch-data-pipeline.webp"
       alt="비디오 필터링, keyframe 선택, 객체 추출과 이미지 검색, VQA 검증, 시각 인식과 웹 탐색을 분리한 trajectory 생성, 사람 검수 benchmark 구축을 보여 주는 Video-DeepResearch 공식 파이프라인"
       style="width: 100%; max-width: 100%; height: auto; display: block; background: #fff;"
     />

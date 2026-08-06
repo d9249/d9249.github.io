@@ -32,7 +32,7 @@ OpenHuman은 “개인 AI 비서를 쓰고 싶지만 터미널과 설정 파일�
 
 조사 시점 기준 GitHub 저장소 `tinyhumansai/openhuman`은 Rust가 주 언어로 잡히며, checked-in `LICENSE`와 GitHub API 모두 GPL 계열로 식별된다. 최신 stable GitHub Release는 `v0.54.0`이고, 소스 `main`의 `Cargo.toml`·Tauri 설정은 `0.54.22`까지 앞서 있어 release, staging tag, source version을 구분해서 봐야 한다.
 
-![OpenHuman desktop demo](/images/tips/openhuman-demo.png)
+![OpenHuman desktop demo](/images/tips/openhuman-demo.webp)
 
 ## OpenHuman 개요
 
@@ -53,7 +53,7 @@ README와 문서가 반복해서 강조하는 구성 요소는 다음이다.
 
 OpenHuman 문서는 기존 vector database식 memory를 “비슷한 chunk 검색”에 치우친 구조로 보고, summary tree를 별도로 둔다. source adapter가 가져온 이메일·채팅·문서가 canonical Markdown으로 변환되고, deterministic chunk ID와 provenance metadata를 붙인 뒤, source tree/topic tree/global tree로 요약된다.
 
-![OpenHuman Memory Tree concept](/images/tips/openhuman-memory-tree.png)
+![OpenHuman Memory Tree concept](/images/tips/openhuman-memory-tree.webp)
 
 사용자 입장에서 좋은 점은 두 가지다. 첫째, memory가 opaque SaaS 내부에만 갇히지 않고 `memory_tree/chunks.db`와 `wiki/` vault로 로컬에 남는다. 둘째, Obsidian으로 열 수 있는 Markdown vault가 있으므로 “AI가 나에 대해 무엇을 기억하고 있는지”를 사람이 읽고 수정할 여지가 있다.
 

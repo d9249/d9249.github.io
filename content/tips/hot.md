@@ -31,7 +31,7 @@ Hot은 Mac의 발열 상태를 메뉴바에서 바로 확인하는 작은 macOS 
 
 저장소는 Swift 기반의 공개 macOS 앱이고, 라이선스는 MIT다. 최신 GitHub release는 `1.9.4`이며, release asset으로 `Hot.zip`이 제공된다. Homebrew cask도 같은 `1.9.4` ZIP을 사용한다.
 
-![Hot Intel menu](/images/tips/hot-intel-menu.png)
+![Hot Intel menu](/images/tips/hot-intel-menu.webp)
 
 ## Hot 개요
 
@@ -61,7 +61,7 @@ Intel Mac에서 Hot의 장점은 “CPU가 실제로 열 때문에 제한되고 
 
 ## Apple Silicon에서는 thermal pressure를 본다
 
-![Hot Apple Silicon menu](/images/tips/hot-apple-silicon-menu.png)
+![Hot Apple Silicon menu](/images/tips/hot-apple-silicon-menu.webp)
 
 Apple Silicon에서는 Intel Mac에서처럼 CPU speed limit과 scheduler limit을 같은 방식으로 표시할 수 없다. README도 이 차이를 명확히 적고 있다. Apple Silicon 버전은 CPU temperature와 함께 system thermal pressure를 보여준다.
 
@@ -71,7 +71,7 @@ Apple Silicon에서는 Intel Mac에서처럼 CPU speed limit과 scheduler limit�
 
 ## 전체 센서 그래프
 
-![Hot sensors](/images/tips/hot-sensors.png)
+![Hot sensors](/images/tips/hot-sensors.webp)
 
 Hot은 메뉴바 드롭다운뿐 아니라 센서 그래프 창도 제공한다. README 기준으로 Apple Silicon에서는 모든 센서에 대한 graph view를 볼 수 있다.
 

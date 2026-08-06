@@ -36,7 +36,7 @@ SmallCode의 문제의식은 여기서 나온다. 로컬 모델은 privacy, late
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/smallcode-local-agent-harness.png"
+    src="/images/blog/smallcode-local-agent-harness.webp"
     alt="Diagram of SmallCode local coding agent harness with context budget, compound tools, verification loop, code graph retrieval, decomposition, patch-first editing, and optional escalation around a small local LLM"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

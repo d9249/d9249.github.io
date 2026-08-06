@@ -10,7 +10,7 @@ tags:
   - Tool Use
   - Multi-Agent
   - RAG
-image: "/images/blog/six-agentic-design-patterns-selection-map.png"
+image: "/images/blog/six-agentic-design-patterns-selection-map.webp"
 draft: false
 ---
 
@@ -22,7 +22,7 @@ Akshay Pachaar가 LinkedIn에서 공유한 `6 popular Agentic design patterns`�
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/six-agentic-design-patterns-overview.png"
+    src="/images/blog/six-agentic-design-patterns-overview.webp"
     alt="Daily Dose of Data Science infographic describing six agentic design patterns: ReAct, CodeAct, Modern Tool Use, Self-Reflection, Multi-agent Workflow, and Agentic RAG"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -64,7 +64,7 @@ Agentic RAG는 검색을 한 번의 vector lookup으로 끝내지 않는다. age
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/six-agentic-design-patterns-selection-map.png"
+    src="/images/blog/six-agentic-design-patterns-selection-map.webp"
     alt="Editorial selection map grouping six agentic design patterns into control loop, action interface, tool access, quality loop, collaboration, and knowledge loop"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

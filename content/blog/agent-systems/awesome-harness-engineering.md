@@ -10,7 +10,7 @@ tags:
   - Evaluation
   - Observability
   - Coding Agents
-image: "/images/blog/awesome-harness-engineering-map.png"
+image: "/images/blog/awesome-harness-engineering-map.webp"
 draft: false
 ---
 
@@ -22,7 +22,7 @@ PyTorchKR 소개 글은 이 저장소를 한국어로 정리하면서 “일반�
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/awesome-harness-engineering-map.png"
+    src="/images/blog/awesome-harness-engineering-map.webp"
     alt="Awesome Harness Engineering reading map showing context, verification, runtime control, observability, and specs around an agent harness"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

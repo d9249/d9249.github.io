@@ -32,7 +32,7 @@ draft: false
 
 조사 시점 기준 저장소 `DeusData/codebase-memory-mcp`의 GitHub 최신 Release는 `v0.8.1`이고, npm·PyPI package도 `0.8.1`이다. GitHub API와 package manifest, checked-in license 모두 MIT로 확인된다. 구현 언어는 C이며, README는 “single static binary, zero runtime dependencies, no API key, all processing local”을 핵심 전제로 둔다.
 
-![codebase-memory-mcp graph visualization UI](/images/tips/codebase-memory-mcp-graph-ui.png)
+![codebase-memory-mcp graph visualization UI](/images/tips/codebase-memory-mcp-graph-ui.webp)
 
 ## 무엇을 해주는 도구인가
 

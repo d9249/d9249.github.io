@@ -19,7 +19,7 @@ Meta AI와 UCSD 연구진의 **Deep Think with Confidence(DeepConf)** 는 이 �
 
 흥미로운 점은 이 방법이 별도 학습 없이 test-time policy로 작동한다는 점이다. 논문은 AIME 2024/2025, HMMT 2025, BRUMO25, GPQA-Diamond와 DeepSeek-8B, Qwen3-8B/32B, GPT-OSS-20B/120B 계열에서 평가했고, 프로젝트 페이지와 GitHub 저장소는 vLLM 기반 병렬 추론 프레임워크와 confidence 기반 early stopping 예시를 함께 공개한다. 다만 vLLM upstream PR은 작성 시점 기준 closed / unmerged 상태였으므로, “서빙 프레임워크에 바로 들어간 표준 기능”이라기보다 “vLLM 위에 얹어 실험 가능한 연구 구현”에 가깝게 읽는 편이 안전하다.
 
-![DeepConf framework](/images/blog/deepconf-framework.png)
+![DeepConf framework](/images/blog/deepconf-framework.webp)
 
 _DeepConf 공식 저장소의 프레임워크 그림. 여러 reasoning trace를 생성하되 각 trace의 confidence를 함께 계산하고, confidence-based early stopping과 adaptive sampling으로 최종 답을 고른다._
 
@@ -39,7 +39,7 @@ DeepConf의 기본 단위는 토큰 confidence다. 논문은 각 위치에서 �
 
 여기서 논문이 특히 강조하는 지표가 **Lowest Group Confidence**다. 전체 trace의 평균이 아니라, 모든 구간 중 confidence가 가장 낮았던 구간을 trace의 품질 신호로 삼는다. 이는 “논리 사슬은 가장 약한 고리에서 끊어진다”는 직관에 가깝다. 추가로 bottom 10% group confidence, tail confidence, average trace confidence도 비교하지만, 온라인 조기 종료에는 lowest group confidence가 자연스럽게 쓰인다.
 
-![DeepConf confidence filtering](/images/blog/deepconf-confidence-filtering.png)
+![DeepConf confidence filtering](/images/blog/deepconf-confidence-filtering.webp)
 
 _공식 프로젝트 페이지의 confidence 측정 도식. 토큰 단위 confidence를 구간 단위로 묶고, 하위 confidence 구간이나 tail confidence를 이용해 trace를 필터링하거나 가중 투표한다._
 
@@ -60,7 +60,7 @@ DeepConf는 크게 두 모드로 동작한다.
 
 온라인 평가에서는 토큰 절감이 핵심이다. GPT-OSS-120B / AIME25 기준 Cons@512는 3.23×10^8 토큰과 97.1% 정확도를 보고하는 반면, DeepConf-low는 0.49×10^8 토큰으로 줄이면서 97.9% 정확도를 기록한다. 이는 논문 표기상 -84.7% 토큰 감소다. DeepSeek-8B도 AIME25에서 Cons@512 4.01×10^8 토큰, 82.3%에서 DeepConf-low 1.24×10^8 토큰, 86.4%로 이동한다.
 
-![DeepConf benchmark results](/images/blog/deepconf-confidence-reasoning-results.png)
+![DeepConf benchmark results](/images/blog/deepconf-confidence-reasoning-results.webp)
 
 _공식 프로젝트 페이지의 대표 결과. 왼쪽은 AIME 2025 offline accuracy, 오른쪽은 online setting에서 생성 토큰 수 감소를 보여준다. 그림 자체는 정보량이 많으므로, 핵심은 “정확도 유지/개선과 토큰 절감이 동시에 관찰된다”는 점이다._
 

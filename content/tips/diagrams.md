@@ -31,7 +31,7 @@ draft: false
 
 조사 시점 기준 저장소 `mingrammer/diagrams`는 Python 프로젝트이며 GitHub 최신 Release와 PyPI 패키지 모두 `0.25.1`이다. GitHub API와 checked-in `LICENSE`, PyPI metadata 모두 MIT 라이선스로 확인된다. README와 `pyproject.toml`/PyPI는 Python `~=3.9`를 요구하지만, 공식 docs의 installation 페이지 일부에는 아직 Python 3.7 이상이라고 남아 있어 실제 도입 기준은 패키지 metadata 쪽을 우선해서 보는 것이 안전하다.
 
-![Diagrams event processing example](/images/tips/diagrams-event-processing.png)
+![Diagrams event processing example](/images/tips/diagrams-event-processing.webp)
 
 ## Diagrams 개요
 

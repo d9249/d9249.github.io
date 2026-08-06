@@ -21,7 +21,7 @@ Product Hunt 기준 AppWizzy는 이번 주 런칭 제품으로 표시되고, AI 
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/appwizzy-vm-loop.png"
+    src="/images/blog/appwizzy-vm-loop.webp"
     alt="AppWizzy persistent VM architecture loop reconstructed diagram"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -46,7 +46,7 @@ AppWizzy의 구조는 네 단계로 이해하면 쉽다. 첫째, 사용자는 �
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/appwizzy-workflow-collage.png"
+    src="/images/blog/appwizzy-workflow-collage.webp"
     alt="AppWizzy official workflow screenshots collage"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

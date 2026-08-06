@@ -12,7 +12,7 @@ tags:
   - Knowledge Geometry Decoupling
   - BMTP
 draft: false
-image: "/images/blog/kgd-architecture.png"
+image: "/images/blog/kgd-architecture.webp"
 ---
 
 추천 모델을 한 번 학습하고 오래 쓰기는 어렵다.[3] 신규 상품, 캠페인, 사용자 유입이 바뀌면 행동 sequence의 분포도 함께 움직이고, pretrained encoder를 새 로그로 갱신하는 동안 ranking task의 fine-tuning이 같은 parameter를 덮어쓸 수 있다. `Knowledge–Geometry Decoupling: Refreshable Pretrained Transfer for Streaming Recommendation`은 이 문제를 **무엇을 pretrain할지**와 **그 지식을 task에 어떻게 넘길지**로 나눠 푼다.[1][2][3]
@@ -31,7 +31,7 @@ image: "/images/blog/kgd-architecture.png"
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/kgd-architecture.png"
+    src="/images/blog/kgd-architecture.webp"
     alt="KGD의 knowledge pretraining과 task-specific training을 분리한 구조. 왼쪽은 BMTP와 sequence encoder, 오른쪽은 Anchored Calibration Residual과 read-only task learner를 보여 준다."
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -63,7 +63,7 @@ industrial stream의 28일 비교에서는 KGD(BMTP)가 click AUC 0.7867, click 
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/kgd-90-day-results.png"
+    src="/images/blog/kgd-90-day-results.webp"
     alt="KGD와 여러 baseline의 90일 click AUC 및 order AUC 추세 비교 그래프"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

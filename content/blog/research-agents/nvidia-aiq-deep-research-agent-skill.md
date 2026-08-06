@@ -102,7 +102,7 @@ AI-Q v2.1.0 README와 architecture 문서는 이 Blueprint를 NeMo Agent Toolkit
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/nvidia-aiq-architecture.png"
+    src="/images/blog/nvidia-aiq-architecture.webp"
     alt="Official NVIDIA AI-Q architecture diagram from the AI-Q GitHub repository"
     style="width: 100%; max-width: 100%; height: auto; display: block; background: #fff;"
   />

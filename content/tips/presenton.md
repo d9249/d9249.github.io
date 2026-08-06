@@ -30,7 +30,7 @@ Gamma, Beautiful.ai, Decktopus류의 AI 슬라이드 도구는 빠르지만 대�
 
 조사 시점 기준 `presenton/presenton`은 Apache-2.0 라이선스의 공개 저장소이며, GitHub 설명은 “Open-Source AI Presentation Generator and API”다. README는 Docker self-hosting, macOS/Windows/Linux desktop app, BYOK model provider, Ollama/LM Studio 같은 local model path, 편집 가능한 PPTX export를 핵심 차별점으로 내세운다.
 
-![Presenton desktop editor](/images/tips/presenton-desktop.png)
+![Presenton desktop editor](/images/tips/presenton-desktop.webp)
 
 ## Presenton 개요
 
@@ -43,7 +43,7 @@ Presenton을 단순한 “프롬프트로 PPT 만드는 앱”으로만 보면 �
 
 Stack도 이 방향을 반영한다. UI 쪽은 Next.js/React, backend는 Python 3.11 + FastAPI, desktop shell은 Electron, 배포는 Dockerfile과 docker-compose가 중심이다. 문서 변환·OCR·export에는 LiteParse, Tesseract, LibreOffice, presentation-export runtime 등이 얽혀 있어 “가벼운 프론트엔드 앱”이라기보다는 슬라이드 생성/변환 파이프라인에 가깝다.
 
-![Presenton features overview](/images/tips/presenton-features.png)
+![Presenton features overview](/images/tips/presenton-features.webp)
 
 ## 왜 유용한가
 

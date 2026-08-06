@@ -28,7 +28,7 @@ OpenCodeReview는 Alibaba가 공개한 AI 코드 리뷰 CLI다. 단순히 “LLM
 
 README 기준으로 이 프로젝트는 Alibaba 내부의 공식 AI 코드 리뷰 어시스턴트에서 출발했고, 공개 버전은 Git diff를 읽어 변경 파일을 리뷰 단위로 나누고, 파일 내용 읽기·코드베이스 검색·관련 변경 파일 확인 같은 tool-use를 통해 라인 단위 리뷰 코멘트를 생성한다. 조사 시점에는 `@alibaba-group/open-code-review` NPM 패키지와 GitHub Release 바이너리 모두 `1.5.0` 버전까지 올라와 있었다.
 
-![OpenCodeReview highlights](/images/tips/open-code-review-highlights.png)
+![OpenCodeReview highlights](/images/tips/open-code-review-highlights.webp)
 
 ## 어떤 도구인가
 
@@ -122,7 +122,7 @@ CI 예시는 GitHub Actions와 GitLab CI 디렉터리에 들어 있다. GitHub A
 
 프로젝트 README는 50개 인기 오픈소스 저장소의 200개 실제 PR, 10개 언어, 80명 이상 시니어 엔지니어 교차 검증으로 구성한 benchmark를 제시한다. 핵심 메시지는 OpenCodeReview가 같은 기반 모델을 쓰는 범용 agent 대비 precision/F1과 토큰 효율을 끌어올렸다는 것이다.
 
-![OpenCodeReview benchmark](/images/tips/open-code-review-benchmark.png)
+![OpenCodeReview benchmark](/images/tips/open-code-review-benchmark.webp)
 
 다만 README도 recall은 범용 agent보다 낮을 수 있다고 설명한다. 이건 “모든 결함을 최대한 많이 찾는 도구”라기보다, CI나 PR 리뷰에서 사람이 확인할 만한 **고신뢰 코멘트**를 줄이는 방향에 가까운 설계다. 그래서 도입 판단도 benchmark 숫자를 절대값으로 보기보다, 실제 팀 repo에서 preview → 제한된 PR → 사람 리뷰와 비교하는 순서가 좋다.
 

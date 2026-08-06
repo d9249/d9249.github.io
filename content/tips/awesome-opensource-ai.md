@@ -28,13 +28,13 @@ draft: false
 
 PyTorchKR 소개 글은 이 저장소를 한국어로 길게 풀어, 14개 대분류와 각 영역의 대표 프로젝트를 한 번에 훑을 수 있게 정리했다. 원본 저장소 기준으로도 README는 14개 대분류, 101개 세부 섹션, 800개가 넘는 GitHub 프로젝트 링크를 담고 있어, 특정 영역의 후보군을 뽑는 출발점으로 쓰기 좋다.
 
-![Awesome Open Source AI 소개 이미지](/images/tips/awesome-opensource-ai-hero.png)
+![Awesome Open Source AI 소개 이미지](/images/tips/awesome-opensource-ai-hero.webp)
 
 ## 무엇을 담고 있나
 
 핵심은 “AI 개발자가 실제로 만지는 스택”을 기준으로 정리했다는 점이다. 일반적인 awesome list처럼 유명 프로젝트를 평면적으로 모으기보다, 프런티어 AI 개발·운영 흐름을 따라 영역을 나눈다.
 
-![Awesome Open Source AI 14개 카테고리](/images/tips/awesome-opensource-ai-categories.png)
+![Awesome Open Source AI 14개 카테고리](/images/tips/awesome-opensource-ai-categories.webp)
 
 저장소의 큰 축은 다음 14개다.
 

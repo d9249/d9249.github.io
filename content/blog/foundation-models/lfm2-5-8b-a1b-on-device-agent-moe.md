@@ -21,7 +21,7 @@ Liquid AI의 **LFM2.5-8B-A1B**는 이 문제를 정면으로 겨냥한 업데이
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/lfm2-5-benchmarks.png"
+    src="/images/blog/lfm2-5-benchmarks.webp"
     alt="Official LFM2.5-8B-A1B benchmark chart comparing instruction-following, tool-use, and agentic scores"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -44,7 +44,7 @@ LFM2.5가 풀려는 첫 번째 문제는 **작은 모델의 에이전트 신뢰�
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/lfm2-5-architecture.png"
+    src="/images/blog/lfm2-5-architecture.webp"
     alt="Official LFM2 architecture diagram showing gated short convolution or GQA sequence blocks followed by a Mixture-of-Experts block"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -103,7 +103,7 @@ Hallucination 개선도 조심해서 읽어야 한다. Liquid는 avg@k 기반 re
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/lfm2-5-cpu-inference.png"
+    src="/images/blog/lfm2-5-cpu-inference.webp"
     alt="Official CPU inference chart for LFM2.5-8B-A1B on M5 Max, Ryzen AI Max+ 395, and a phone-class device"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -118,7 +118,7 @@ GPU 쪽은 서버 배포 해석에 가깝다. Liquid는 단일 NVIDIA H100 SXM5�
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/lfm2-5-gpu-inference.png"
+    src="/images/blog/lfm2-5-gpu-inference.webp"
     alt="Official GPU inference throughput chart for LFM2.5-8B-A1B under SGLang on a single H100"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

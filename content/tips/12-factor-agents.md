@@ -29,7 +29,7 @@ draft: false
 
 README의 출발점은 꽤 현실적이다. 좋은 agent는 “프롬프트 하나와 도구 묶음을 주고 목표를 달성할 때까지 loop”하는 마법 같은 구조가 아니라, 대부분은 deterministic software이고 LLM은 적절한 지점에 들어가는 의사결정 함수라는 관찰이다. 그래서 이 저장소는 “어떤 agent framework가 최고인가?”보다 “프레임워크를 쓰더라도 우리가 직접 소유해야 할 경계는 무엇인가?”에 답하려고 한다.
 
-![12-Factor Agents의 네 구성요소](/images/tips/12-factor-agents-components.png)
+![12-Factor Agents의 네 구성요소](/images/tips/12-factor-agents-components.webp)
 
 ## 12-Factor Agents 개요
 
@@ -53,7 +53,7 @@ README가 제시하는 12개 항목은 다음 흐름으로 읽으면 이해가 �
 2. **Factor 3: Own your context window**  
    이 저장소에서 가장 실용적인 파트다. LLM 입력은 “지금까지 무슨 일이 있었고, 다음 단계는 무엇인가?”라는 질문에 가깝다. 그래서 standard chat message format에만 묶이지 말고, task에 맞는 XML/YAML/custom event format으로 context를 더 token-efficient하게 구성할 수 있어야 한다.
 
-![Context engineering 다이어그램](/images/tips/12-factor-agents-context-engineering.png)
+![Context engineering 다이어그램](/images/tips/12-factor-agents-context-engineering.webp)
 
 3. **Factor 5~8: state, pause/resume, human tool call, control flow**  
    실제 운영에서는 model이 “deploy_backend” 같은 고위험 다음 단계를 고른 순간 바로 실행하면 안 된다. Factor 7과 8은 `request_human_input`, `request_clarification`, `deploy_backend` 같은 structured intent에 따라 loop를 계속 돌릴지, 저장하고 끊을지, webhook 응답을 기다릴지 직접 결정하라고 말한다.

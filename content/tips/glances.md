@@ -34,7 +34,7 @@ Glances는 `top`이나 `htop`처럼 터미널에서 시스템 상태를 보는 �
 
 저장소 기준 Glances는 Python으로 작성된 오래된 오픈소스 프로젝트이며, 최신 릴리스는 `v4.5.4`다. PyPI 메타데이터는 Python `>=3.10`을 요구하고, 라이선스는 `LGPL-3.0-only`로 표시된다. 공식 README도 LGPL v3 배포라고 설명한다.
 
-![Glances TUI](/images/tips/glances-tui.png)
+![Glances TUI](/images/tips/glances-tui.webp)
 
 ## Glances 개요
 
@@ -121,7 +121,7 @@ Windows는 Python for Windows와 pip 설치 절차를 따른다. `pyproject.toml
 
 ## Web UI와 REST API
 
-![Glances Web UI](/images/tips/glances-web.png)
+![Glances Web UI](/images/tips/glances-web.webp)
 
 Glances를 웹 대시보드처럼 쓰려면 web server mode를 실행한다.
 
@@ -157,7 +157,7 @@ glances --stdout-json cpu,mem
 
 ## Fetch 모드와 빠른 상태 공유
 
-![Glances fetch mode](/images/tips/glances-fetch.png)
+![Glances fetch mode](/images/tips/glances-fetch.webp)
 
 `glances --fetch`는 `neofetch`나 `fastfetch`처럼 시스템 요약을 보기 좋게 출력하되, 현재 CPU/메모리/디스크/네트워크 사용량과 상위 프로세스까지 함께 보여준다.
 

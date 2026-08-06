@@ -32,7 +32,7 @@ DOT Studio는 “AI 에이전트 설정 파일을 직접 뒤지는 일”을 줄
 
 조사 시점 기준 저장소는 TypeScript 중심의 MIT 오픈소스이고, npm 패키지 `dot-studio`의 최신 버전은 `0.2.13`이다. GitHub의 latest release 페이지는 `v0.2.12`로 보이지만 태그와 npm 패키지는 `v0.2.13`까지 올라와 있어, 지금은 npm 배포와 태그를 함께 확인하는 편이 안전하다.
 
-![DOT Studio canvas](/images/tips/dot-studio-canvas.png)
+![DOT Studio canvas](/images/tips/dot-studio-canvas.webp)
 
 ## DOT Studio 개요
 

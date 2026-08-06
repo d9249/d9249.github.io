@@ -31,7 +31,7 @@ macOS Finder에서 `.md` 파일을 스페이스바로 미리 보면 기본 Quick
 
 작성 시점 기준 최신 GitHub Release는 `v1.0.1`이고, 배포 파일은 DMG와 ZIP이 함께 올라와 있다. 공식 웹사이트는 “free, native macOS Quick Look extension”, “no account, no cloud”를 핵심 메시지로 내세운다.
 
-![showmd official hero image](/images/tips/showmd-hero.png)
+![showmd official hero image](/images/tips/showmd-hero.webp)
 
 ## showmd 개요
 

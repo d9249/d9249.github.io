@@ -65,7 +65,7 @@ EverOS의 가장 좋은 설계 포인트는 저장소 역할을 명확히 나눴
 
 기본 memory root는 `~/.everos`다. `app_id`와 `project_id`가 먼저 디렉터리로 나뉘고, 기본값은 `default_app/default_project`로 물리화된다. 인덱스는 `.index/sqlite`와 `.index/lancedb` 아래에 놓이며, 문서에 따르면 `.index/`를 지워도 Markdown 원본에서 다시 만들 수 있다.
 
-![EverOS demo TUI](/images/tips/everos-demo-tui.png)
+![EverOS demo TUI](/images/tips/everos-demo-tui.webp)
 
 이 구조는 AI agent memory를 “나중에 export할 수 있는 DB”가 아니라 **처음부터 파일 시스템에 존재하는 지식 베이스**로 다루게 만든다. 장기적으로는 자동 추출 결과를 사람이 리뷰하거나, 팀에서 memory root를 백업·버전관리·검토하는 식의 운영이 가능해진다.
 

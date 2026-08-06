@@ -31,7 +31,7 @@ RepoBar는 여러 GitHub 저장소를 동시에 관리하는 개발자를 위한
 
 SwiftPM 기반의 네이티브 macOS 앱이며, 자동화와 디버깅을 위한 `repobar` CLI도 함께 제공한다. 라이선스는 MIT이고, 최신 공개 릴리스는 GitHub Releases 기준 v0.5.1이다.
 
-![RepoBar screenshot](/images/tips/repobar-screenshot.png)
+![RepoBar screenshot](/images/tips/repobar-screenshot.webp)
 
 ## RepoBar 개요
 

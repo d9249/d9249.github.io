@@ -23,7 +23,7 @@ AI 에이전트를 제품 안에 넣는다고 할 때, 가장 먼저 떠오르�
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/copilotkit-how-it-works-frame-20.png"
+    src="/images/blog/copilotkit-how-it-works-frame-20.webp"
     alt="CopilotKit agent interaction flow"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -61,7 +61,7 @@ CopilotKit의 구조는 크게 세 층으로 읽을 수 있다. 첫째는 사용
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/copilotkit-agent-connect-diagram.png"
+    src="/images/blog/copilotkit-agent-connect-diagram.webp"
     alt="CopilotKit connects user interfaces to agentic backends"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -109,7 +109,7 @@ Threads와 persistence도 제품 관점에서는 작지 않은 기능이다. 실
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/copilotkit-threads-persistence.png"
+    src="/images/blog/copilotkit-threads-persistence.webp"
     alt="CopilotKit threads and persistence example"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

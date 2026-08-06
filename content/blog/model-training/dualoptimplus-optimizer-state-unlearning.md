@@ -21,7 +21,7 @@ LLM에서 machine unlearning은 단순한 fine-tuning 문제가 아니다. 특�
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/dualoptimplus-state-bridge.png"
+    src="/images/blog/dualoptimplus-state-bridge.webp"
     alt="Reconstructed summary diagram of DualOptim+ base and delta optimizer states"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

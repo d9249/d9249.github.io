@@ -27,7 +27,7 @@ draft: false
 
 공식 사이트 기준 최신 버전은 `1.9`이고, 2024년 6월 릴리스에서 macOS 13.5 이상, Intel과 Apple Silicon을 지원한다. 소스는 GitHub에 공개되어 있으며 라이선스는 Apache-2.0이다.
 
-![Scroll Reverser overview](/images/tips/scroll-reverser-og.png)
+![Scroll Reverser overview](/images/tips/scroll-reverser-og.webp)
 
 ## 어떤 문제를 풀어주나
 
@@ -39,7 +39,7 @@ draft: false
 
 이렇게 하면 트랙패드 제스처는 macOS 기본 감각대로 유지하면서, 휠 마우스만 “휠을 아래로 굴리면 페이지가 아래로 간다”는 전통적인 방향으로 맞출 수 있다. 반대로 설정할 수도 있지만, 공식 FAQ는 이 조합이 제스처 감각을 덜 망가뜨린다고 설명한다.
 
-![Scroll Reverser preferences](/images/tips/scroll-reverser-preferences.png)
+![Scroll Reverser preferences](/images/tips/scroll-reverser-preferences.webp)
 
 환경설정 화면은 매우 단순하다. `Enable Scroll Reverser`로 전체 동작을 켜고, 축은 `Reverse Vertical`과 `Reverse Horizontal`로 나뉘며, 입력 장치는 `Reverse Trackpad`와 `Reverse Mouse`로 분리된다. Magic Mouse도 마우스 쪽 설정에 포함된다.
 

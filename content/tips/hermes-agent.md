@@ -32,7 +32,7 @@ Hermes Agent는 “터미널에서 실행하는 AI 코딩 도구”라고만 보
 
 저장소는 Python 중심의 MIT 오픈소스이며, 조사 시점 기준 `pyproject.toml`의 버전은 `0.13.0`이다. 최신 GitHub Release는 `v2026.5.7` / “The Tenacity Release”로, durable Kanban, `/goal`, `video_analyze`, Gateway auto-resume, `no_agent` cron mode, 보안 hardening 등이 핵심 변경점으로 정리되어 있다.
 
-![Hermes Agent banner](/images/tips/hermes-agent-banner.png)
+![Hermes Agent banner](/images/tips/hermes-agent-banner.webp)
 
 ## Hermes Agent 개요
 
@@ -103,7 +103,7 @@ Hermes는 CLI에서만 쓰는 도구가 아니다. Gateway를 띄우면 Telegram
 
 즉 출근길에는 Telegram DM으로 “어제 빌드 로그 확인하고 요약해줘”라고 보내고, 데스크톱에서는 TUI로 파일 수정 과정을 보며, 정기 보고서는 cron으로 돌리는 식의 구성이 가능하다. 이때 Gateway는 단순 relay가 아니라 session store, cron scheduler, platform adapter를 함께 가진 장기 실행 프로세스다.
 
-![Hermes Agent model dashboard](/images/tips/hermes-agent-dashboard-models.png)
+![Hermes Agent model dashboard](/images/tips/hermes-agent-dashboard-models.webp)
 
 ### 3. 모델과 실행 환경을 바꿔 끼울 수 있다
 
@@ -117,7 +117,7 @@ Hermes의 cron은 “몇 시에 알림 보내기”에서 끝나지 않는다. j
 
 짧은 병렬 작업은 `delegate_task`로 subagent를 spawn해 처리하고, 더 오래 가거나 여러 profile이 이어받아야 하는 작업은 Kanban을 쓴다. v0.13.0 release에서 강조한 durable Kanban은 task를 SQLite-backed board에 두고, worker heartbeat, reclaim, zombie detection, retry budget, blocked state 같은 운영 기능을 추가했다.
 
-![Hermes Agent Kanban dashboard](/images/tips/hermes-agent-kanban-board.png)
+![Hermes Agent Kanban dashboard](/images/tips/hermes-agent-kanban-board.webp)
 
 이 차이는 중요하다. `delegate_task`는 부모 agent가 결과를 기다리는 함수 호출에 가깝고, Kanban은 작업이 재시작·차단·재시도·인계될 수 있는 durable queue에 가깝다. 연구 triage, PR review pipeline, 반복 운영 보고서처럼 “한 번에 끝나지 않는 일”은 Kanban 쪽이 더 잘 맞는다.
 

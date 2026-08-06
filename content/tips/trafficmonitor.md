@@ -28,7 +28,7 @@ draft: false
 
 프로젝트는 C++ 기반 Windows 앱이고, GitHub 저장소는 2017년부터 이어져 왔다. 공개 저장소 기준으로 최신 릴리스는 `V1.86`이며, `x86`, `x64`, `ARM64EC` ZIP 파일과 Lite 빌드를 함께 제공한다. 설치형 앱이라기보다는 ZIP을 내려받아 실행하는 휴대용 유틸리티에 가깝다.
 
-![TrafficMonitor right click menu](/images/tips/trafficmonitor-menu.png)
+![TrafficMonitor right click menu](/images/tips/trafficmonitor-menu.webp)
 
 ## 무엇을 보여주나
 
@@ -49,7 +49,7 @@ draft: false
 
 TrafficMonitor는 기본적으로 플로팅 창을 띄우지만, 실제로 오래 쓰게 되는 지점은 작업표시줄 창이다. 플로팅 창 또는 트레이 아이콘을 오른쪽 클릭한 뒤 `Show Taskbar Window`를 켜면 작업표시줄 안에 작은 모니터가 들어간다.
 
-![TrafficMonitor taskbar display settings](/images/tips/trafficmonitor-taskbar-settings.png)
+![TrafficMonitor taskbar display settings](/images/tips/trafficmonitor-taskbar-settings.webp)
 
 작업표시줄 표시 항목은 `Display Settings`에서 고른다. 업로드, 다운로드, CPU 사용률, 메모리 사용률, CPU 온도, 전체 속도, CPU 주파수, 전체 트래픽 같은 항목을 체크박스로 켜고 끌 수 있고, 항목 순서도 조정할 수 있다. 그래서 “네트워크 속도만 보고 싶다”와 “CPU·메모리·온도까지 작은 시스템 모니터처럼 보고 싶다”를 같은 도구 안에서 모두 처리할 수 있다.
 
@@ -85,7 +85,7 @@ TrafficMonitor의 장점은 단순히 숫자를 보여주는 데서 끝나지 �
 
 스킨 시스템도 오래 유지된 기능이다. 기본 스킨 외에 별도 스킨 저장소에서 더 많은 스킨을 받을 수 있고, `skins` 디렉터리 아래에 스킨별 폴더를 두는 방식으로 관리한다. 스킨은 `background.bmp`, `background_l.bmp`, `skin.ini` 같은 파일로 구성되며, 최근 버전에서는 투명 PNG 배경과 `skin.xml` 기반 설정도 지원한다.
 
-![TrafficMonitor skin examples](/images/tips/trafficmonitor-skins.png)
+![TrafficMonitor skin examples](/images/tips/trafficmonitor-skins.webp)
 
 ## 플러그인과 하드웨어 모니터링
 

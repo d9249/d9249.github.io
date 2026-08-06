@@ -22,7 +22,7 @@ arXiv 논문 `LLMs Corrupt Your Documents When You Delegate`는 바로 이 지�
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/delegate52-teaser.png"
+    src="/images/blog/delegate52-teaser.webp"
     alt="DELEGATE-52 teaser showing document corruption examples across long delegated workflows"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -53,7 +53,7 @@ arXiv 논문 `LLMs Corrupt Your Documents When You Delegate`는 바로 이 지�
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/delegate52-domains.png"
+    src="/images/blog/delegate52-domains.webp"
     alt="DELEGATE-52 benchmark domains across five categories"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
@@ -97,7 +97,7 @@ companion source들도 흥미롭다. GitHub repo `microsoft/delegate52`는 확�
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/delegate52-results.png"
+    src="/images/blog/delegate52-results.webp"
     alt="DELEGATE-52 round-trip relay results across 19 LLMs"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

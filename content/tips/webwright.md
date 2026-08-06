@@ -114,9 +114,9 @@ Webwright가 잘 맞는 상황은 “한 번 클릭하고 끝나는 웹 browsing
 
 README와 project page는 Webwright가 Online-Mind2Web, Odysseys 같은 live-web benchmark에서 강한 결과를 냈다고 보고한다. 이 수치들은 모델, step budget, benchmark split, 평가 방식에 묶인 연구 결과이므로 그대로 제품 성능 보증처럼 받아들이기보다는, Webwright가 지향하는 code-as-action 패러다임의 근거로 보는 편이 좋다.
 
-![Webwright Odysseys evaluation chart](/images/tips/webwright-odysseys-eval-step100.png)
+![Webwright Odysseys evaluation chart](/images/tips/webwright-odysseys-eval-step100.webp)
 
-![Webwright Online-Mind2Web evaluation chart](/images/tips/webwright-om2w-autoeval-step100.png)
+![Webwright Online-Mind2Web evaluation chart](/images/tips/webwright-om2w-autoeval-step100.webp)
 
 ## 작업공간 산출물 중심 설계
 

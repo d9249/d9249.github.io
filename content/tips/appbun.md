@@ -100,7 +100,7 @@ appbun package --notarize
 
 Windows와 Linux도 `build:windows`, `build:linux` 스크립트를 갖지만, README와 template script가 말하는 원칙은 “해당 플랫폼 native runner에서 빌드”다. 즉 macOS에서 Windows/Linux까지 한 번에 cross-compile해준다고 기대하면 안 된다. 특히 Linux native webview 빌드는 런타임 패키지와 배포 방식 이슈가 남을 수 있고, README의 기여 영역에도 Windows installer helper와 Linux packaging helper가 따로 적혀 있다.
 
-![appbun showcase grid](/images/tips/appbun-showcase-grid.png)
+![appbun showcase grid](/images/tips/appbun-showcase-grid.webp)
 
 ## 에이전트 워크플로와 잘 맞는 지점
 

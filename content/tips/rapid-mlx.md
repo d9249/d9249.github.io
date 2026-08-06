@@ -29,7 +29,7 @@ Apple Silicon Mac에서 로컬 LLM을 돌릴 때 가장 귀찮은 부분은 모�
 
 `Rapid-MLX`는 이 지점을 겨냥한 MLX 기반 inference 서버다. Hugging Face의 MLX quantized 모델을 Apple Silicon 통합 메모리 위에서 로드하고, `http://localhost:8000/v1` 형태의 OpenAI-compatible API로 내보낸다. README 기준 최신 릴리스와 PyPI 버전은 `v0.6.35` / `0.6.35`, Python 요구사항은 3.10+, 라이선스는 Apache-2.0이다.
 
-![Rapid-MLX social preview](/images/tips/rapid-mlx-social-preview.png)
+![Rapid-MLX social preview](/images/tips/rapid-mlx-social-preview.webp)
 
 ## Rapid-MLX 개요
 
@@ -111,7 +111,7 @@ rapid-mlx serve qwen3-vl-4b --mllm --port 8000
 
 모델 선택에서 중요한 것은 “큰 모델이 무조건 좋다”보다 **RAM, KV cache, prompt 길이, tool calling 안정성**의 균형이다. Mac의 메모리 압박이 빨갛게 뜨거나 swap이 심해지면 더 작은 4bit 모델로 내려가는 편이 낫다.
 
-![Rapid-MLX benchmark comparison](/images/tips/rapid-mlx-benchmark-comparison.png)
+![Rapid-MLX benchmark comparison](/images/tips/rapid-mlx-benchmark-comparison.webp)
 
 ## 왜 유용한가
 

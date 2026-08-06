@@ -27,7 +27,7 @@ Pydantic AI를 써서 에이전트를 만들다 보면 금방 같은 질문에 �
 
 **Pydantic AI Harness**는 이런 기능을 Pydantic AI의 `capabilities`/`hooks` API 위에 올린 공식 capability 라이브러리다. Pydantic AI core가 에이전트 루프와 모델/도구 실행의 기본 런타임을 맡는다면, Harness는 코딩 에이전트·리서치 에이전트·운영용 에이전트에 필요한 선택형 배터리를 패키지처럼 붙이는 쪽에 가깝다.
 
-![Pydantic AI Harness CodeMode trace](/images/tips/pydantic-ai-harness-code-mode-trace.png)
+![Pydantic AI Harness CodeMode trace](/images/tips/pydantic-ai-harness-code-mode-trace.webp)
 
 ## 무엇이 들어 있나
 
@@ -46,7 +46,7 @@ Pydantic AI를 써서 에이전트를 만들다 보면 금방 같은 질문에 �
 
 README의 Quick start는 Hacker News MCP 서버와 웹 검색을 붙인 에이전트가 여러 피드, 댓글, 사용자 정보, 웹 검색을 엮는 예시를 보여준다. 일반적인 tool calling에서는 도구 호출마다 모델 왕복이 늘어나지만, `CodeMode`는 선택된 도구를 Monty 샌드박스 안의 단일 `run_code` 도구로 감싼다. 모델은 `asyncio.gather`, 루프, 조건문, 로컬 필터링을 써서 여러 도구 호출을 한 번의 코드 실행으로 묶을 수 있다.
 
-![Pydantic AI Harness quick start trace](/images/tips/pydantic-ai-harness-quick-start-trace.png)
+![Pydantic AI Harness quick start trace](/images/tips/pydantic-ai-harness-quick-start-trace.webp)
 
 첫 시도는 이렇게 작게 시작할 수 있다.
 

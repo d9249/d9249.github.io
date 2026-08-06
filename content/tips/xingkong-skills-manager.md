@@ -28,7 +28,7 @@ draft: false
 
 이 앱은 그 중간에 **중앙 Skills Library**를 두고, 필요한 스킬을 **Preset**으로 묶은 뒤, 전역 또는 프로젝트 워크스페이스에 적용하는 방식으로 관리한다. 이름이 같은 다른 Skills Manager 프로젝트들과 구분하면, 이 저장소는 Tauri 2 기반의 크로스플랫폼 데스크톱 앱이며 Git 백업, 마켓플레이스 검색, 여러 에이전트 경로 감지, symlink/copy 동기화까지 한 화면에 모아둔 쪽에 가깝다.
 
-![Skills Manager My Skills 화면](/images/tips/xingkong-skills-manager-my-skills.png)
+![Skills Manager My Skills 화면](/images/tips/xingkong-skills-manager-my-skills.webp)
 
 ## 무엇을 관리하는 도구인가
 
@@ -46,7 +46,7 @@ draft: false
 
 ## Preset과 Workspace 모델
 
-![Skills Manager concept map](/images/tips/xingkong-skills-manager-concept-map.png)
+![Skills Manager concept map](/images/tips/xingkong-skills-manager-concept-map.webp)
 
 이 앱에서 헷갈리기 쉬운 개념은 Preset과 Workspace다.
 
@@ -121,7 +121,7 @@ npm run cli:install
 
 ## 설정에서 봐야 할 것
 
-![Skills Manager Settings 화면](/images/tips/xingkong-skills-manager-settings.png)
+![Skills Manager Settings 화면](/images/tips/xingkong-skills-manager-settings.webp)
 
 Settings 화면은 이 앱의 성격을 가장 잘 보여준다. 각 AI 도구의 설치 여부와 skills 경로를 감지하고, 활성화할 에이전트를 고른 뒤, 중앙 저장소와 동기화 방식을 정한다.
 

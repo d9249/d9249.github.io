@@ -31,7 +31,7 @@ Maccy는 Mac에서 “방금 복사했던 것 어디 갔지?”를 빠르게 해
 
 현재 README와 Homebrew cask 기준 Maccy는 macOS Sonoma 14 이상을 요구한다. 이 사이트의 플랫폼 카테고리는 아직 macOS와 Linux가 하나의 `macos-linux` 버킷으로 묶여 있지만, Maccy 자체는 macOS 전용 앱으로 봐야 한다.
 
-![Maccy keyboard instructions](/images/tips/maccy-instructions.png)
+![Maccy keyboard instructions](/images/tips/maccy-instructions.webp)
 
 ## Maccy 개요
 
@@ -46,7 +46,7 @@ Maccy의 기본 사용 흐름은 간단하다.
 
 공식 데모 프레임을 보면 Maccy는 Spotlight나 런처처럼 큰 화면을 차지하지 않는다. 작은 팝업에 검색창과 히스토리 목록이 뜨고, 각 항목을 키보드로 빠르게 고르는 방식이다.
 
-![Maccy search demo](/images/tips/maccy-search-demo.png)
+![Maccy search demo](/images/tips/maccy-search-demo.webp)
 
 ## 왜 유용한가
 

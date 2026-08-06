@@ -33,7 +33,7 @@ draft: false
 
 조사 시점 기준 GitHub API에서 저장소는 stars 2,052, forks 193, open issues 52, 기본 브랜치 `main`, 주 언어 C++, top-level license Apache-2.0으로 확인된다. GitHub Release와 tag는 없고, 설치 가능한 PyPI/npm 패키지라기보다 `megakernel/`, `dflash/`, `pflash/` 하위 프로젝트마다 README, benchmark, blog writeup, 재현 명령을 제공하는 연구 코드 묶음이다.
 
-![Lucebox Hub banner](/images/tips/lucebox-hub-banner.png)
+![Lucebox Hub banner](/images/tips/lucebox-hub-banner.webp)
 
 ## Lucebox Hub 개요
 

@@ -21,7 +21,7 @@ draft: false
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/harness-1-stateful-harness-flow.png"
+    src="/images/blog/harness-1-stateful-harness-flow.webp"
     alt="Harness-1 state-externalizing search reinforcement learning flow"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />

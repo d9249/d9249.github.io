@@ -33,7 +33,7 @@ PortKiller는 이 반복 작업을 GUI로 묶어주는 도구다. 로컬에서 l
 
 GitHub 기준 Swift 중심의 오픈소스 프로젝트이며 라이선스는 MIT다. 최신 공개 릴리스는 `v3.3.1`이고, macOS DMG와 Windows x64/arm64 ZIP 자산을 함께 제공한다.
 
-![PortKiller macOS UI](/images/tips/port-killer-macos.png)
+![PortKiller macOS UI](/images/tips/port-killer-macos.webp)
 
 ## PortKiller 개요
 

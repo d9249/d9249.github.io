@@ -116,7 +116,7 @@ npx codeburn menubar
 
 공식 macOS README 기준 요구사항은 macOS 14+이고, 네이티브 Swift/SwiftUI 앱은 내부적으로 `codeburn status --format menubar-json --no-optimize`를 주기적으로 실행해 JSON을 읽는다. 메뉴바 아이콘에는 오늘 비용이 표시되고, 팝오버에서는 provider 탭, 기간 선택, Trend/Forecast/Pulse/Stats, 활동/모델 breakdown, export, full report 진입점을 제공한다.
 
-![CodeBurn macOS menubar](/images/tips/codeburn-menubar.png)
+![CodeBurn macOS menubar](/images/tips/codeburn-menubar.webp)
 
 Linux GNOME 환경도 별도 확장이 있다. `gnome/` 디렉터리의 install script로 `~/.local/share/gnome-shell/extensions/`에 설치하고, GNOME Shell 45 이상과 `codeburn` CLI가 필요하다. 다만 npm/Homebrew CLI처럼 완전히 패키징된 배포 채널보다는 저장소 기반 설치에 가깝기 때문에, Linux 데스크톱 패널 용도라면 문서를 확인하고 테스트 환경에서 먼저 써보는 편이 좋다.
 

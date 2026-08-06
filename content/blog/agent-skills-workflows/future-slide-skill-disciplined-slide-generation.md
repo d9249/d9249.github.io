@@ -19,7 +19,7 @@ AI로 슬라이드를 만드는 작업은 겉보기보다 훨씬 불안정하다
 
 중요한 점은 이 프로젝트가 슬라이드 제작을 단순한 이미지 생성 문제가 아니라, 에이전트가 지켜야 할 작업 계약의 문제로 본다는 것이다. 좋은 슬라이드 결과물은 모델의 미감만으로 나오지 않는다. 디자인 권한과 콘텐츠 권한을 분리하고, 계획이 끝나기 전에는 프롬프트를 쓰지 못하게 하며, 각 페이지가 같은 시각 언어를 공유하도록 강제해야 한다. Future Slide Skill의 의미는 바로 그 규율을 `SKILL.md` 패키지로 만든 데 있다.
 
-![Future Slide Skill의 4단계 워크플로 다이어그램](/images/blog/future-slide-skill-flow-ko.png)
+![Future Slide Skill의 4단계 워크플로 다이어그램](/images/blog/future-slide-skill-flow-ko.webp)
 
 ## 무엇을 해결하려는가
 

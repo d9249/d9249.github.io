@@ -50,7 +50,7 @@ README의 정의는 꽤 직접적이다. 하네스 엔지니어링은 모델 주
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/learn-harness-engineering-subsystems.png"
+    src="/images/blog/learn-harness-engineering-subsystems.webp"
     alt="Diagram of harness engineering subsystems: instructions, state, verification, scope, and session lifecycle"
     style="width: 100%; max-width: 100%; height: auto; display: block; border-radius: 12px;"
   />

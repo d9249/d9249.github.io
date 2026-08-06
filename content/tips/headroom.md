@@ -95,7 +95,7 @@ Headroom이 가장 잘 맞는 곳은 “LLM이 읽어야 하는 맥락이 크고
 
 특히 MCP 방식은 마음에 든다. 전체 요청을 proxy로 자동 압축하는 경로가 부담스럽다면, 처음에는 MCP tool로 큰 출력만 선택적으로 `headroom_compress`하고, 필요할 때 `headroom_retrieve`로 원문을 되돌려 받는 식으로 위험을 줄일 수 있다.
 
-![Headroom savings dashboard](/images/tips/headroom-savings.png)
+![Headroom savings dashboard](/images/tips/headroom-savings.webp)
 
 ## 버전과 배포 표면
 

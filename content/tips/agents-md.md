@@ -30,7 +30,7 @@ AI 코딩 에이전트를 여러 번 돌려보면, 모델 성능보다 “프로
 
 중요한 점은 “새 설정 언어”가 아니라는 것이다. 정해진 필드도, 전용 CLI도 필수는 아니다. 그래서 도입 비용은 낮지만, 내용을 대충 쓰면 그냥 또 하나의 긴 프롬프트 파일이 된다. 좋은 AGENTS.md는 사람에게도 읽히고, 에이전트에게도 바로 실행 가능한 체크리스트가 된다.
 
-![AGENTS.md 공식 소개 이미지](/images/tips/agents-md-og.png)
+![AGENTS.md 공식 소개 이미지](/images/tips/agents-md-og.webp)
 
 ## AGENTS.md 개요
 

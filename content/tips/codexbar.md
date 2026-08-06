@@ -27,13 +27,13 @@ draft: false
 
 핵심 문제는 단순하다. AI 코딩 도구를 하루 종일 쓰다 보면 “지금 긴 작업을 시작해도 되는가?”, “세션 리셋은 언제인가?”, “Claude와 Codex 중 무엇을 먼저 써야 하는가?”를 자주 확인하게 된다. CodexBar는 이 정보를 브라우저 대시보드 여러 개로 흩어 두지 않고 메뉴바의 작은 usage meter로 모은다.
 
-![CodexBar hero](/images/tips/codexbar-social.png)
+![CodexBar hero](/images/tips/codexbar-social.webp)
 
 ## 무엇을 보여주나
 
 공식 README의 한 줄 설명은 “Every AI coding limit, in your menu bar.”다. 앱 화면을 보면 provider 탭이 상단에 놓이고, 선택한 provider의 세션 사용량, 주간 사용량, 모델별 한도, 추가 사용량, 오늘 비용과 최근 30일 비용이 카드 형태로 표시된다.
 
-![CodexBar menu popover](/images/tips/codexbar-menu.png)
+![CodexBar menu popover](/images/tips/codexbar-menu.webp)
 
 Claude 예시 화면에서는 다음 정보가 한 번에 보인다.
 
@@ -107,7 +107,7 @@ CodexBar는 사용량을 보여주기 위해 인증 정보와 로컬 사용 기�
 - **Files & Folders prompts**: 일부 provider CLI나 local probe가 특정 프로젝트 디렉터리에서 실행될 때 macOS가 폴더 접근 권한을 요청할 수 있다.
 - **요청하지 않는 권한**: README 기준 CodexBar는 백그라운드에서 Screen Recording이나 Accessibility 권한을 요구하지 않는다고 밝힌다.
 
-![CodexBar Keychain access control](/images/tips/codexbar-keychain-allow.png)
+![CodexBar Keychain access control](/images/tips/codexbar-keychain-allow.webp)
 
 Keychain 알림을 줄이고 싶다면 공식 문서처럼 Keychain Access에서 해당 항목의 Access Control에 `CodexBar.app`만 추가하는 방식이 낫다. “Allow all applications”를 켜는 것은 범위가 너무 넓다. 또한 수동 cookie header나 API key를 `~/.codexbar/config.json`에 넣는 경우, 이 파일은 비밀정보로 취급해야 한다. 공식 docs는 CodexBar가 config 파일을 쓸 때 제한적인 권한을 적용한다고 설명하지만, 사용자가 직접 복사·백업·이슈 첨부를 할 때는 실제 토큰과 쿠키를 절대 포함하면 안 된다.
 

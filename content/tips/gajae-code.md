@@ -32,7 +32,7 @@ draft: false
 
 조사 시점 기준 GitHub API와 checked-in `LICENSE`는 MIT로 확인된다. 기본 언어는 TypeScript이고, 루트 `package.json`은 Bun `1.3.14` workspace를 기준으로 여러 `@gajae-code/*` 패키지를 묶는다. GitHub Releases의 최신 tag는 `v0.5.0`이며, release asset에는 `gjc-darwin-arm64`, `gjc-linux-arm64`, `gjc-linux-x64`, `gjc-windows-x64.exe`가 포함돼 있다.
 
-![Gajae-Code hero](/images/tips/gajae-code-hero.png)
+![Gajae-Code hero](/images/tips/gajae-code-hero.webp)
 
 ## Gajae-Code를 무엇으로 봐야 하나
 

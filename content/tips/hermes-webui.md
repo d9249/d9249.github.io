@@ -30,7 +30,7 @@ Hermes WebUI는 Hermes Agent를 터미널이 아니라 브라우저에서 쓰기
 
 중요한 점은 WebUI가 별도의 AI 제품이 아니라 **Hermes Agent의 control surface**라는 것이다. 대화만 하는 화면이 아니라 세션, 작업공간 파일, 프로필, 스킬, 메모리, 크론 작업, Todo, Spaces까지 한 화면에서 다루도록 설계되어 있다. 조사 시점 기준 저장소는 MIT 라이선스의 Python 중심 오픈소스이며, 최신 GitHub Release는 `v0.51.34`다.
 
-![Hermes WebUI three-panel layout](/images/tips/hermes-webui-hero.png)
+![Hermes WebUI three-panel layout](/images/tips/hermes-webui-hero.webp)
 
 ## Hermes WebUI 개요
 
@@ -61,7 +61,7 @@ Hermes Agent를 이미 쓰는 사람에게 가장 큰 장점은 접근 표면이
 
 특히 tool call card와 작업공간 패널은 Hermes의 “도구를 실행하는 에이전트” 성격을 잘 보여준다. 터미널 출력이나 파일 조작이 단순 텍스트로 묻히지 않고 접을 수 있는 카드와 파일 브라우저로 드러난다.
 
-![Hermes WebUI tool cards and sessions](/images/tips/hermes-webui-sessions.png)
+![Hermes WebUI tool cards and sessions](/images/tips/hermes-webui-sessions.webp)
 
 ## 작업공간 파일 브라우저
 
@@ -69,7 +69,7 @@ Hermes Agent를 이미 쓰는 사람에게 가장 큰 장점은 접근 표면이
 
 웹에서 Agent에게 “이 파일 열어봐”, “이 폴더 구조 설명해줘”라고 시키는 동시에 사람이 직접 파일 트리를 확인할 수 있으므로, 서버에 붙어 있는 원격 코딩/문서화 환경으로 쓰기 좋다. 다만 이 편의성은 곧 권한 문제이기도 하다. WebUI가 보는 workspace와 Hermes home에는 세션, 설정, 메모리, 자격증명 관련 파일이 있을 수 있으므로 노출 범위를 좁혀야 한다.
 
-![Hermes WebUI workspace browser](/images/tips/hermes-webui-workspace.png)
+![Hermes WebUI workspace browser](/images/tips/hermes-webui-workspace.webp)
 
 ## 설치와 첫 실행
 
@@ -156,7 +156,7 @@ ssh -N -L 8787:127.0.0.1:8787 user@your.server.com
 
 WebUI의 auth는 선택 사항이고 기본은 꺼져 있다. 비밀번호를 설정하면 signed HMAC HTTP-only cookie, 24시간 TTL, `/login` 페이지, API endpoint 보호가 켜진다. 서버 코드도 non-loopback host에 password가 없으면 “누구나 파일시스템과 agent에 접근할 수 있다”는 경고를 출력한다.
 
-![Hermes WebUI settings and password](/images/tips/hermes-webui-settings.png)
+![Hermes WebUI settings and password](/images/tips/hermes-webui-settings.webp)
 
 ## 주의할 점
 
