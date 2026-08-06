@@ -13,17 +13,11 @@ tags:
 draft: false
 ---
 
-문서 AI의 병목은 글자를 읽는 vision encoder보다, 읽은 결과를 길고 구조화된 Markdown이나 HTML로 한 token씩 이어 쓰는 decoder에 생기는 경우가 많다.[1]
+문서 AI의 병목은 글자를 읽는 vision encoder보다, 읽은 결과를 길고 구조화된 Markdown이나 HTML로 한 token씩 이어 쓰는 decoder에 생기는 경우가 많다.[1] 표가 크고 수식이 많고 다단 레이아웃까지 들어가면, unified VLM parser는 페이지 전체를 이해하고도 마지막 출력 token까지 하나의 autoregressive 경로를 따라가야 한다.[1][3]
 
-표가 크고 수식이 많고 다단 레이아웃까지 들어가면, unified VLM parser는 페이지 전체를 이해하고도 마지막 출력 token까지 하나의 autoregressive 경로를 따라가야 한다.[1][3]
+`HPD-Parsing: Hierarchical Parallel Document Parsing`은 이 경로를 통째로 짧게 만들려 하지 않는다.[1] 대신 페이지의 읽기 순서와 영역 관계만 main layout branch가 잡고, 각 영역의 텍스트·표·수식은 서로 다른 content branch가 동시에 생성하도록 바꾼다.[1][2]
 
-`HPD-Parsing: Hierarchical Parallel Document Parsing`은 이 경로를 통째로 짧게 만들려 하지 않는다.[1]
-
-대신 페이지의 읽기 순서와 영역 관계만 main layout branch가 잡고, 각 영역의 텍스트·표·수식은 서로 다른 content branch가 동시에 생성하도록 바꾼다.[1][2]
-
-저자들은 HPD-Parsing이 OmniDocBench v1.6에서 1B parameter로 overall 94.91을 기록했고, batch size 512의 A800 80GB 조건에서 4,752.1 TPS와 2.68 PPS를 기록했다고 보고한다.[1]
-
-이 값은 저자 측 benchmark·hardware·serving 조건의 결과이며, 일반적인 모든 OCR workload의 성능 보장은 아니다.[1][3]
+저자들은 HPD-Parsing이 OmniDocBench v1.6에서 1B parameter로 overall 94.91을 기록했고, batch size 512의 A800 80GB 조건에서 4,752.1 TPS와 2.68 PPS를 기록했다고 보고한다.[1] 이 값은 저자 측 benchmark·hardware·serving 조건의 결과이며, 일반적인 모든 OCR workload의 성능 보장은 아니다.[1][3]
 
 <figure style="margin: 1.8rem 0;">
   <a href="/images/blog/hpd-parsing-decoding-comparison.png">
@@ -40,17 +34,15 @@ draft: false
 
 ## 무엇을 해결하려는가
 
-문서 parsing은 layout, reading order, 표·수식·본문의 관계를 전역적으로 알아야 한다.[1]
+문서 parsing은 layout, reading order, 표·수식·본문의 관계를 전역적으로 알아야 한다.[1] 그러나 본문의 문자와 표 셀처럼 지역 visual evidence에 강하게 묶인 내용까지 먼 영역의 token history를 모두 기다릴 이유는 약하다.[1]
 
-그러나 본문의 문자와 표 셀처럼 지역 visual evidence에 강하게 묶인 내용까지 먼 영역의 token history를 모두 기다릴 이유는 약하다.[1]
+기존 unified parser는 이 두 종류의 의존성을 같은 token-by-token trajectory에 넣는다.[1] 출력이 길어질수록 decoder latency가 visual encoding 비용을 압도하며, 논문은 긴 output에서 decoding 시간이 encoder보다 거의 500배 길어질 수 있다고 측정했다.[1]
 
-기존 unified parser는 이 두 종류의 의존성을 같은 token-by-token trajectory에 넣는다.[1]
+HPD-Parsing의 출발점은 단순하다. **문서의 구조는 전역적으로 조정하되, 구조 아래의 내용은 가능한 한 지역적으로 풀자**는 것이다.[1]
 
-출력이 길어질수록 decoder latency가 visual encoding 비용을 압도하며, 논문은 긴 output에서 decoding 시간이 encoder보다 거의 500배 길어질 수 있다고 측정했다.[1]
+저자들의 profiling은 output length가 길어질수록 decoder latency가 중심 병목으로 커지는 모습을 보인다.[1]
 
-HPD-Parsing의 출발점은 단순하다.[1]
-
-**문서의 구조는 전역적으로 조정하되, 구조 아래의 내용은 가능한 한 지역적으로 풀자**는 것이다.[1]
+Figure 1은 이 decoding 재구성과 정확도·throughput을 함께 최적화하려는 목표를 요약한다.[7]
 
 | 생성 단위 | 기존 full-page autoregressive parser | HPD-Parsing |
 |---|---|---|
@@ -63,17 +55,11 @@ HPD-Parsing의 출발점은 단순하다.[1]
 
 ### main layout branch는 문서의 뼈대를 생성한다
 
-HPD-Parsing은 InternVL3.5-1B를 backbone으로 사용하며, 0.3B InternViT visual encoder와 약 0.8B Qwen3-0.6B 기반 decoder를 결합한다.[1]
+HPD-Parsing은 InternVL3.5-1B를 backbone으로 사용하며, 0.3B InternViT visual encoder와 약 0.8B Qwen3-0.6B 기반 decoder를 결합한다.[1] 입력 문서는 해상도와 aspect ratio에 따라 최대 24개의 448×448 tile로 나뉘어 visual representation으로 인코딩된다.[1]
 
-입력 문서는 해상도와 aspect ratio에 따라 최대 24개의 448×448 tile로 나뉘어 visual representation으로 인코딩된다.[1]
+main layout branch는 reading order에 따라 영역의 category와 normalized coordinate를 생성한다.[1] 각 layout unit 뒤의 `<FORK>` token은 해당 영역을 별도의 content branch가 처리할 수 있다는 routing signal이다.[1]
 
-main layout branch는 reading order에 따라 영역의 category와 normalized coordinate를 생성한다.[1]
-
-각 layout unit 뒤의 `<FORK>` token은 해당 영역을 별도의 content branch가 처리할 수 있다는 routing signal이다.[1]
-
-content branch는 shared visual context와 자신이 fork된 지점의 structural prefix를 이어받고 `<CHILD>` 뒤에서 해당 영역의 내용만 생성한다.[1]
-
-이 설계는 새 branch가 이미지 encoder를 다시 실행하거나 공통 prefill을 반복하지 않게 한다.[1]
+content branch는 shared visual context와 자신이 fork된 지점의 structural prefix를 이어받고 `<CHILD>` 뒤에서 해당 영역의 내용만 생성한다.[1] 이 설계는 새 branch가 이미지 encoder를 다시 실행하거나 공통 prefill을 반복하지 않게 한다.[1]
 
 <figure style="margin: 1.8rem 0;">
   <a href="/images/blog/hpd-parsing-architecture.png">
