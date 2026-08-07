@@ -4428,6 +4428,31 @@ body.project-lightbox-open {
   white-space: normal;
 }
 
+.post-source-list a[id] {
+  scroll-margin-top: 96px;
+}
+
+.post-source-list a:target {
+  border-radius: 6px;
+  background: color-mix(in oklch, var(--accent) 10%, transparent);
+  box-shadow: 0 0 0 6px color-mix(in oklch, var(--accent) 10%, transparent);
+}
+
+.article-body a.citation-ref {
+  padding: 0 1px;
+  color: color-mix(in oklch, var(--accent) 82%, var(--fg));
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  font-weight: 800;
+  text-decoration-line: none;
+}
+
+.article-body a.citation-ref:hover,
+.article-body a.citation-ref:focus-visible {
+  background: color-mix(in oklch, var(--accent) 14%, transparent);
+  border-radius: 4px;
+}
+
 .author-box {
   display: grid;
   grid-template-columns: 80px minmax(0, 1fr);

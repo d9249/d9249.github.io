@@ -100,5 +100,73 @@ const removePostSources = (html) =>
     .replace(/\s*<h2(?:\s[^>]*)?>\s*Sources\s*<\/h2>[\s\S]*$/i, "")
     .replace(/\s*<p>Sources:\s*[\s\S]*?<\/p>\s*$/i, "");
 
+const citationMarkerPattern = /\[(\d{1,3})\]/g;
+const htmlTagPattern = /<[^>]+>/g;
+const citationSuppressedTags = new Set([
+  "a",
+  "code",
+  "kbd",
+  "pre",
+  "samp",
+  "script",
+  "style",
+]);
+
+const getCitationTagName = (tag) => {
+  const match = tag.match(/^<\/?\s*([a-zA-Z0-9-]+)/);
+
+  return match ? match[1].toLowerCase() : "";
+};
+
+const linkTextCitations = (text, sourceCount) =>
+  text.replace(citationMarkerPattern, (marker, number) => {
+    const index = Number(number);
+
+    if (index < 1 || index > sourceCount) {
+      return marker;
+    }
+
+    return `<a class="citation-ref" href="#post-source-${index}" aria-label="Source ${index}">${marker}</a>`;
+  });
+
+const linkPostCitations = (html, sourceCount) => {
+  const source = String(html ?? "");
+
+  if (!sourceCount) {
+    return source;
+  }
+
+  let result = "";
+  let suppressedDepth = 0;
+  let cursor = 0;
+  let match;
+
+  htmlTagPattern.lastIndex = 0;
+
+  while ((match = htmlTagPattern.exec(source))) {
+    const text = source.slice(cursor, match.index);
+
+    result += suppressedDepth > 0 ? text : linkTextCitations(text, sourceCount);
+
+    const tag = match[0];
+    const tagName = getCitationTagName(tag);
+
+    if (citationSuppressedTags.has(tagName) && !/\/\s*>$/.test(tag)) {
+      suppressedDepth += /^<\//.test(tag) ? -1 : 1;
+      suppressedDepth = Math.max(0, suppressedDepth);
+    }
+
+    result += tag;
+    cursor = match.index + tag.length;
+  }
+
+  const tail = source.slice(cursor);
+
+  result += suppressedDepth > 0 ? tail : linkTextCitations(tail, sourceCount);
+
+  return result;
+};
+
 exports.getPostSources = getPostSources;
+exports.linkPostCitations = linkPostCitations;
 exports.removePostSources = removePostSources;

@@ -5,7 +5,11 @@ import BlogArticleBody from "../components/BlogArticleBody";
 import { PageViewCounter } from "../components/ViewCounter";
 import categories from "../data/categories.json";
 import { formatReadableArticleHtml } from "../utils/articleHtml";
-import { getPostSources, removePostSources } from "../utils/articleSources";
+import {
+  getPostSources,
+  linkPostCitations,
+  removePostSources,
+} from "../utils/articleSources";
 import { getTagPath } from "../utils/tags";
 
 const labelByCategory = new Map(
@@ -25,7 +29,10 @@ const BlogPostTemplate = ({ data, pageContext }) => {
   const articleHtml = postSources.length
     ? removePostSources(post.html)
     : post.html;
-  const postHtml = formatReadableArticleHtml(wrapArticleTables(articleHtml));
+  const postHtml = linkPostCitations(
+    formatReadableArticleHtml(wrapArticleTables(articleHtml)),
+    postSources.length,
+  );
 
   return (
     <Layout>
@@ -112,7 +119,11 @@ const BlogPostTemplate = ({ data, pageContext }) => {
                 <div className="meta">Sources</div>
                 <div className="post-source-list">
                   {postSources.map((source, index) => (
-                    <a key={source.href} href={source.href}>
+                    <a
+                      key={source.href}
+                      id={`post-source-${index + 1}`}
+                      href={source.href}
+                    >
                       <span>{String(index + 1).padStart(2, "0")}</span>
                       <strong>{source.label}</strong>
                       <code>{source.href}</code>
