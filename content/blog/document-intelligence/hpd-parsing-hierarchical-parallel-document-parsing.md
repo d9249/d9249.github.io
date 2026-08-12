@@ -122,11 +122,11 @@ input token budget을 함께 봐야 하는 이유도 있다. HPD-Parsing은 페�
 
 ## 모델·코드 공개 범위와 운영 조건
 
-공식 Hugging Face model page는 Apache-2.0 licensed checkpoint, `model.safetensors`, 별도 `P-MTP/` weight, evaluation script, 그리고 demo Space를 공개하고 있다. metadata API는 약 1.07B BF16 parameter와 2.81GB storage를 표시하며, base model은 `OpenGVLab/InternVL3_5-1B`로 기록한다.[4][5]
+공식 Hugging Face model page는 Apache-2.0 licensed checkpoint, `model.safetensors`, 별도 `P-MTP/` weight, evaluation script, 그리고 demo Space를 공개하고 있다. metadata API에는 base model이 `OpenGVLab/InternVL3_5-1B`로 기록돼 있고, repository tree에는 benchmark TPS 실행·출력 변환·OmniDocBench 평가를 분리한 `eval/` 도구도 포함돼 있다.[4][5][6]
 
-재현 path는 두 갈래다. model card는 `transformers`의 `generate_hpd(...)` reference implementation과 customized vLLM build를 모두 안내하지만, 실제 production throughput은 paged KV cache로 shared prefix를 zero-copy 재사용하는 customized vLLM path를 사용해야 한다고 명시한다.[6]
+재현 path는 두 갈래다. model card는 `transformers`의 `generate_hpd(...)` reference implementation과 customized vLLM build를 모두 안내한다. 다만 reference path는 기본적으로 child branch를 직렬로 처리해 parent KV cache를 제자리에서 재사용하는 단일 이미지·batch size 1용 구현이다. 진짜 동시 branch 실행과 zero-copy shared-prefix KV cache는 customized vLLM의 paged-KV 경로가 담당한다.[6]
 
-Docker image는 GPU와 host network를 요구하고, 수동 설치 경로는 Python 3.10–3.13과 CUDA 12.8 이상 NVIDIA driver용 customized vLLM wheel을 요구한다. 따라서 공개 checkpoint가 있다는 사실만으로 표준 `transformers`나 일반 vLLM 환경에서 논문 throughput이 즉시 재현된다고 보기는 어렵다.[6]
+Docker image는 GPU와 host network를 요구하고, 수동 설치 경로는 Python 3.10–3.13과 CUDA 12.8 이상 NVIDIA driver용 customized vLLM wheel을 요구한다. 따라서 공개 checkpoint와 evaluation code가 있다는 사실만으로 표준 `transformers`나 일반 vLLM 환경에서 논문 throughput이 즉시 재현된다고 보기는 어렵다. 이 공개물은 완전히 닫힌 결과물은 아니지만, 성능 핵심은 model weight보다 serving runtime까지 포함한 배포 구성에 있다.[6]
 
 ## 실무 관점에서의 해석
 
