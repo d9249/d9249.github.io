@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="850" viewBox="0 0 1400 850" role="img" aria-labelledby="title desc">
+  <title id="title">자동 하네스 적응의 진단·수정·검증 순환</title>
+  <desc id="desc">작은 언어 모델의 업무 실행에서 나온 실패 trajectory를 메타 에이전트가 도구 사용, 지시 이행, 지식, 긴 컨텍스트, 계획 범주로 진단한다. 이후 컨텍스트, 도구, 실행 루프를 수정해 검증하고 하네스 후보 풀을 갱신한다.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.eyebrow{font:600 18px -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;letter-spacing:1.8px;fill:#3564b8}.title{font:700 34px -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;fill:#12213b}.card-title{font:700 25px -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;fill:#16243c}.label{font:600 19px -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;fill:#253653}.small{font:500 17px -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;fill:#52647e}.metric{font:700 22px -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;fill:#0b5d46}.pill{font:600 16px -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;fill:#294568}.num{font:700 17px -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;fill:#fff}.arrowlabel{font:600 16px -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;fill:#64748b}
+    </style>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#172554" flood-opacity=".10"/></filter>
+    <marker id="arrowBlue" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M1,1 L10,5.5 L1,10 z" fill="#3b82f6"/></marker>
+    <marker id="arrowGreen" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M1,1 L10,5.5 L1,10 z" fill="#16a34a"/></marker>
+  </defs>
+  <rect class="bg" width="1400" height="850" rx="28"/>
+  <text x="70" y="75" class="eyebrow">AUTOMATED HARNESS ADAPTATION</text>
+  <text x="70" y="123" class="title">모델의 부담을 하네스로 옮기는 진단·수정·검증 순환</text>
+  <text x="70" y="157" class="small">논문 Figure 2·3과 실험 설계를 바탕으로 재구성 · 하네스는 모델 바깥의 context, tools, agent loop를 함께 바꾼다.</text>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="225" width="250" height="250" rx="20" fill="#fff" stroke="#d8e2f1" stroke-width="2"/>
+    <circle cx="112" cy="270" r="22" fill="#3b82f6"/><text x="106" y="277" class="num">1</text>
+    <text x="145" y="276" class="card-title">업무 실행</text>
+    <text x="100" y="325" class="label">일반 하네스 + SLM</text>
+    <text x="100" y="358" class="small">반복적인 비즈니스 task에서</text>
+    <text x="100" y="386" class="small">도구 호출·파일 작업·응답을 수행</text>
+    <rect x="99" y="416" width="190" height="35" rx="17" fill="#eaf2ff"/>
+    <text x="117" y="440" class="pill">실행 trajectory 생성</text>
+  </g>
+
+  <path d="M330 350 H400" stroke="#3b82f6" stroke-width="5" fill="none" marker-end="url(#arrowBlue)"/>
+  <text x="337" y="331" class="arrowlabel">실행 기록 + 평가</text>
+
+  <g filter="url(#shadow)">
+    <rect x="410" y="225" width="270" height="250" rx="20" fill="#fff" stroke="#d8e2f1" stroke-width="2"/>
+    <circle cx="452" cy="270" r="22" fill="#f97316"/><text x="446" y="277" class="num">2</text>
+    <text x="485" y="276" class="card-title">실패 진단</text>
+    <text x="440" y="322" class="small">메타 에이전트가 trajectory를 읽고</text>
+    <text x="440" y="350" class="small">실패 원인과 수정 후보를 연결</text>
+    <rect x="440" y="379" width="93" height="34" rx="17" fill="#fff0df"/><text x="462" y="402" class="pill">도구</text>
+    <rect x="543" y="379" width="103" height="34" rx="17" fill="#fff0df"/><text x="559" y="402" class="pill">지시</text>
+    <rect x="440" y="422" width="93" height="34" rx="17" fill="#fff0df"/><text x="459" y="445" class="pill">지식</text>
+    <rect x="543" y="422" width="103" height="34" rx="17" fill="#fff0df"/><text x="557" y="445" class="pill">계획·문맥</text>
+  </g>
+
+  <path d="M690 350 H760" stroke="#3b82f6" stroke-width="5" fill="none" marker-end="url(#arrowBlue)"/>
+  <text x="696" y="331" class="arrowlabel">원인별 수정 제안</text>
+
+  <g filter="url(#shadow)">
+    <rect x="770" y="225" width="315" height="250" rx="20" fill="#fff" stroke="#d8e2f1" stroke-width="2"/>
+    <circle cx="812" cy="270" r="22" fill="#16a34a"/><text x="806" y="277" class="num">3</text>
+    <text x="845" y="276" class="card-title">하네스 적응</text>
+    <rect x="802" y="314" width="250" height="40" rx="11" fill="#eaf2ff"/><text x="823" y="341" class="label">A · 컨텍스트</text><text x="984" y="341" class="small">계획·지식·압축</text>
+    <rect x="802" y="367" width="250" height="40" rx="11" fill="#e9f8ed"/><text x="823" y="394" class="label">T · 도구</text><text x="927" y="394" class="small">생성·필터·schema</text>
+    <rect x="802" y="420" width="250" height="40" rx="11" fill="#fff4df"/><text x="823" y="447" class="label">L · 실행 루프</text><text x="987" y="447" class="small">hook·분업</text>
+  </g>
+
+  <path d="M1095 350 H1165" stroke="#3b82f6" stroke-width="5" fill="none" marker-end="url(#arrowBlue)"/>
+  <text x="1102" y="331" class="arrowlabel">sanity check</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1175" y="225" width="155" height="250" rx="20" fill="#fff" stroke="#d8e2f1" stroke-width="2"/>
+    <circle cx="1215" cy="270" r="22" fill="#7c3aed"/><text x="1209" y="277" class="num">4</text>
+    <text x="1204" y="324" class="card-title">검증</text>
+    <text x="1204" y="363" class="small">같은 batch</text>
+    <text x="1204" y="390" class="small">평가 후</text>
+    <text x="1204" y="417" class="small">pool 갱신</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="555" width="1260" height="205" rx="22" fill="#fff" stroke="#d6eadc" stroke-width="2"/>
+    <text x="105" y="606" class="card-title">논문에서 확인된 결과와 적용 경계</text>
+    <rect x="105" y="635" width="300" height="89" rx="14" fill="#eaf8f0"/>
+    <text x="130" y="670" class="metric">16 / 21</text><text x="246" y="670" class="label">task–SLM pair 개선</text>
+    <text x="130" y="704" class="small">7개 조합은 frontier LLM과의</text>
+    <text x="130" y="728" class="small">격차를 닫음</text>
+    <rect x="430" y="635" width="365" height="89" rx="14" fill="#eef4ff"/>
+    <text x="455" y="670" class="metric">반복적 workflow에 더 유리</text>
+    <text x="455" y="704" class="small">task 다양성이 높아지면</text>
+    <text x="455" y="728" class="small">하네스 재사용은 어려워짐</text>
+    <rect x="820" y="635" width="475" height="89" rx="14" fill="#fff4e6"/>
+    <text x="845" y="670" class="metric">하네스는 핵심 능력을 대체하지 않는다</text>
+    <text x="845" y="704" class="small">기본 SLM 능력·검증 가능한 평가·운영 비용을</text>
+    <text x="845" y="728" class="small">함께 확인해야 함</text>
+  </g>
+  <path d="M1253 486 C1253 526 1118 524 960 524 C770 524 654 523 600 493" stroke="#16a34a" stroke-width="5" fill="none" stroke-dasharray="10 10" marker-end="url(#arrowGreen)"/>
+  <text x="824" y="517" class="arrowlabel" fill="#16834a">통과한 후보를 다음 탐색의 하네스 pool로</text>
+</svg>
