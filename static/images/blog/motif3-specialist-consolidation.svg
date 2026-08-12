@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="1080" viewBox="0 0 600 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Motif 3의 전문 교사 통합 post-training 흐름</title>
+  <desc id="desc">Motif 3가 큰 MoE backbone에서 일반 SFT 학생을 만들고, 여섯 RL 전문 교사와 한 소프트웨어 공학 SFT 교사의 역량을 MOPD로 단일 배포 정책에 통합하는 세로형 흐름도.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5f8ff"/><stop offset="1" stop-color="#fbfcff"/></linearGradient>
+    <linearGradient id="final" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#155eef"/><stop offset="1" stop-color="#5b8def"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#223b76" flood-opacity=".12"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#49617d"/></marker>
+    <style>
+      .kicker{font:700 16px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;letter-spacing:.8px;fill:#42617f}.title{font:700 33px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#15233b}.sub{font:500 21px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#56657d}.num{font:700 19px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#1957bb}.cardtitle{font:700 30px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#182640}.line{font:500 26px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#506078}.finaltitle{font:700 30px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#fff}.finalbody{font:500 23px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#eef4ff}.badge{font:700 19px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#fff}
+    </style>
+  </defs>
+  <rect width="600" height="1080" fill="url(#bg)"/>
+  <text x="48" y="61" class="kicker">MOTIF 3 · POST-TRAINING</text>
+  <text x="48" y="110" class="title">전문성을 하나의 정책으로 압축</text>
+  <text x="48" y="145" class="sub">큰 MoE → 학생 → 교사 → MOPD</text>
+  <line x1="48" y1="172" x2="552" y2="172" stroke="#d8e3f2" stroke-width="2"/>
+
+  <g filter="url(#shadow)"><rect x="48" y="215" width="504" height="160" rx="22" fill="#fff" stroke="#d7e3f5" stroke-width="2"/></g>
+  <circle cx="94" cy="268" r="25" fill="#e8f0ff"/><text x="94" y="275" class="num" text-anchor="middle">1</text>
+  <text x="144" y="274" class="cardtitle">희소 MoE backbone</text>
+  <text x="144" y="326" class="line">314B total · 13.2B active</text>
+  <text x="144" y="357" class="line">384 expert · top-8 routing</text>
+  <path d="M300 387 L300 430" stroke="#49617d" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)"><rect x="48" y="450" width="504" height="145" rx="22" fill="#fff" stroke="#d7e3f5" stroke-width="2"/></g>
+  <circle cx="94" cy="503" r="25" fill="#e8f0ff"/><text x="94" y="510" class="num" text-anchor="middle">2</text>
+  <text x="144" y="509" class="cardtitle">일반 SFT 학생</text>
+  <text x="144" y="559" class="line">instruction · reasoning · code</text>
+  <path d="M300 607 L300 647" stroke="#49617d" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)"><rect x="48" y="667" width="504" height="196" rx="22" fill="#fff" stroke="#d7e3f5" stroke-width="2"/></g>
+  <circle cx="94" cy="720" r="25" fill="#e8f0ff"/><text x="94" y="727" class="num" text-anchor="middle">3</text>
+  <text x="144" y="726" class="cardtitle">7개 전문 교사</text>
+  <rect x="144" y="758" width="182" height="48" rx="13" fill="#edf4ff"/><text x="235" y="790" class="line" text-anchor="middle" fill="#2457a0">6개 RL</text>
+  <rect x="344" y="758" width="160" height="48" rx="13" fill="#fff0e8"/><text x="424" y="790" class="line" text-anchor="middle" fill="#a85116">1개 SFT</text>
+  <text x="144" y="841" class="line">도구 · 업무 · 장문 · 수학 · 코드 · chat</text>
+  <path d="M300 875 L300 912" stroke="#49617d" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="34" y="932" width="532" height="110" rx="24" fill="url(#final)" filter="url(#shadow)"/>
+  <rect x="58" y="951" width="43" height="33" rx="16" fill="#ffffff30"/><text x="80" y="974" class="badge" text-anchor="middle">4</text>
+  <text x="122" y="976" class="finaltitle">MOPD → 하나의 Motif 3</text>
+  <text x="80" y="1017" class="finalbody">on-policy token 신호로 통합</text>
+</svg>
