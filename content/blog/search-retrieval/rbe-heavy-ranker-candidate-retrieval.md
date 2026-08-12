@@ -1,126 +1,167 @@
 ---
-title: "RBE는 heavy ranker를 ‘전체 정렬기’가 아니라 후보 선택용 측정기로 바꾼다"
-date: "2026-08-12T21:17:45+09:00"
-description: "Relevance-Based Embeddings(RBE)는 소수 support item에만 heavy ranker를 호출하고, CUR 행렬 근사로 전체 후보 relevance를 복원해 값비싼 reranking 호출을 후보 선택 단계로 압축하려는 연구형 코드 공개물이다."
+title: "RBE는 heavy ranker의 점수를 support 좌표로 바꿔 후보 검색을 다시 설계한다"
+date: "2026-08-12T21:48:59+09:00"
+description: "Relevance-Based Embeddings는 query와 item을 소수 support 집합에 대한 heavy-ranker relevance 벡터로 표현하고, CUR 또는 경량 신경 변환으로 별도 embedding을 만들어 후보 검색에 쓰는 방법이다."
 author: "Sangmin Lee"
 category: "search-retrieval"
 tags:
   - Relevance-Based Embeddings
   - Retrieval
   - Reranking
-  - CUR Decomposition
   - Candidate Selection
+  - Dual Encoder
 draft: false
 ---
 
-강한 cross-encoder나 LLM reranker는 query와 문서 쌍의 relevance를 정교하게 읽지만, corpus 전체에 적용하기에는 비싸다. 그래서 일반적인 검색 스택은 cheap embedding 또는 lexical retriever로 넓게 후보를 뽑고, heavy ranker는 작은 top-k에만 쓴다. `Relevance-Based Embeddings: Lightweight Candidate Selection via Heavy Ranker Calls`(RBE)는 여기서 한 단계 더 들어간다. heavy ranker를 최종 후보 모두에 호출하지 않고, **소수의 support item에 대한 점수만 계산한 뒤 그 신호로 전체 후보의 점수를 근사**하려 한다.[1][2]
+검색·추천 시스템의 final ranker는 대체로 가장 똑똑하다. query와 문서를 함께 읽는 cross-encoder, 사용자·아이템·문맥을 함께 보는 production ranker는 pairwise feature를 활용할 수 있다. 하지만 후보가 수십만~수억 개면 모든 쌍을 점수화할 수 없다. 그래서 보통은 query와 item을 따로 embedding하는 dual encoder로 후보를 빠르게 만들고, 그 뒤 작은 top-k만 heavy ranker로 다시 정렬한다.[1]
 
-이 공개물은 완성된 라이브러리나 논문 landing page보다 실험 notebook 묶음에 가깝다. 저장소 README도 추가 실험에는 재사용보다 재구현이 쉽다고 적고 있으며, 표별 실험 위치 중 일부는 아직 찾지 못했다고 명시한다.[2] 따라서 RBE는 당장 도입할 package라기보다, expensive relevance function을 저차원 관측으로 압축할 수 있는지 검토하기 위한 **후보 선택 설계와 재현 단서**로 읽는 편이 정확하다.
+`Relevance-Based Embeddings: Lightweight Candidate Retrieval via Heavy-Ranker Calls`는 이 분업을 다른 방식으로 잇는다. query를 **소수 support item에 대한 heavy-ranker 점수 벡터**로, item을 **소수 support query에 대한 점수 벡터**로 표현한다. 그리고 이 relevance vector를 CUR 근사 또는 작은 신경망에 넣어 query/item embedding을 만든다. 즉 “텍스트나 메타데이터만 따로 encode한 벡터” 대신, 강한 ranker가 이미 알고 있는 pairwise 판단을 좌표계로 삼는다.[1]
 
-<figure style="margin: 1.8rem 0;">
-  <div style="overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch;">
-    <a href="/images/blog/rbe-heavy-ranker-candidate-flow.svg" style="display: block; min-width: 760px;">
-      <img
-        src="/images/blog/rbe-heavy-ranker-candidate-flow.svg"
-        alt="소수 support item에만 heavy ranker를 호출하고 CUR 근사로 전체 후보를 복원해 top-k 후보를 고르는 RBE 흐름도"
-        style="width: 100%; min-width: 760px; max-width: none; height: auto; display: block; background: #fff;"
-      />
-    </a>
-  </div>
-  <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
-    저장소의 `AnnCUR`와 `CURApprox` 구현을 바탕으로 재구성한 후보 선택 흐름. 전체 corpus 점수를 직접 계산하는 대신 support item 점수로 근사한다.[3][4]
-  </figcaption>
-</figure>
+![논문 Figure 1: RBE가 support query와 support item에 대한 relevance로 전체 query-item 행렬을 근사하는 구조](/images/blog/rbe-paper-overview.png)
+
+*논문 Figure 1. 노란색은 support item, 빨간색은 support query, 파란색은 test query를 나타낸다. test query의 support-item relevance와 각 item의 support-query relevance를 독립 변환해 전체 relevance를 근사한다.[2]*
+
+이 글은 이전에 공개 GitHub notebook만 중심으로 설명했던 내용을 **OpenReview 원문과 대응 arXiv v1 본문을 기준으로 전면 정정**한 것이다. 핵심은 CUR 자체가 아니라, support relevance를 입력으로 쓰는 embedding family와 그 이론·실험이다. 논문은 2026년 7월 3일 공개된 arXiv v1이며, 공식 코드는 저자 저장소에 공개되어 있다.[1][2][3]
 
 ## 무엇을 해결하려는가
 
-Reranking 비용은 대체로 `query × 후보 수 × 문서 길이`에 비례한다. 후보를 1,000개로 넓히면 recall에는 유리할 수 있지만 heavy ranker의 GPU 시간과 latency가 빠르게 커진다. 반대로 처음 단계의 dense embedding만으로 후보 수를 아주 작게 자르면, heavy ranker가 되살릴 수 있었던 관련 문서를 놓칠 수 있다.
-
-RBE의 문제 설정은 둘 사이의 절충이다. 어떤 query와 모든 item의 heavy-ranker relevance를 행렬로 생각하면, 온라인에서 필요한 것은 그 행렬의 한 행이다. 하지만 이 행 전체를 계산하지 않고, 미리 고른 support item 열의 score만 얻어 전체 행을 추정할 수 있다면 heavy ranker의 호출 수를 corpus 크기에서 support-set 크기로 옮길 수 있다.[3][4]
-
-핵심은 support item이 무작위 샘플이 아니라 전체 relevance 구조를 대표해야 한다는 점이다. 저장소에는 K-means 계열, farthest-first에 가까운 `K_by_min`, popularity, co-item 기반 및 greedy 선택 실험이 함께 있다.[2][5] 즉 RBE의 성패는 “embedding dimension을 몇으로 둘까”보다 **어떤 item을 실제 측정 지점으로 선택할 것인가**에 크게 묶인다.
-
-## 핵심 아이디어: ranker score를 CUR 좌표로 바꾼다
-
-저장소의 `CURApprox`는 선택한 행·열로 행렬을 근사하는 CUR 분해를 구현한다. 코드 주석의 표기는 `M ≈ C U R`이다. `C`는 선택 열, `R`은 선택 행, `U`는 두 부분을 연결하는 작은 행렬이며, 기본 경로에서는 교차 부분행렬의 Moore–Penrose pseudoinverse를 사용한다.[3]
-
-RBE의 후보 선택 관점에서는 다음처럼 읽을 수 있다.
-
-| 단계 | 오프라인에 준비할 것 | query마다 계산할 것 | 목적 |
-|---|---|---|---|
-| 1. support 선택 | corpus에서 대표 item `S` 선택 | 없음 | 측정할 relevance 좌표를 제한 |
-| 2. CUR factor 구성 | 학습 relevance 행렬의 `C`, `U`, `R` 구성 | 없음 | support score에서 전체 점수를 복원할 선형 구조 준비 |
-| 3. support scoring | support item 목록 유지 | `q × S`만 heavy ranker로 점수화 | 비싼 호출을 `|S|`개로 제한 |
-| 4. 점수 복원 | factor cache | `q × S`에서 전체 item score 근사 | full corpus 후보를 재정렬하지 않고 top-k 추출 |
-| 5. 정밀 단계 | 선택 사항 | 근사 top-k만 추가 rerank | 근사 오차를 최종 품질 단계에서 완화 |
-
-`AnnCUR` notebook 구현도 이 흐름을 직접 드러낸다. 초기화 때 training relevance matrix에서 support item 열을 잡고 `CURApprox(..., approx_preference="rows")`를 구성한다. 이후 `recommend`는 새 request의 support-item relevance만 모아 `get_complete_row`에 넣고, 이 함수는 sparse row와 latent column의 곱으로 전체 score row를 만든다.[4]
+일반 dual encoder는 다음과 같이 동작한다.
 
 ```text
-support 점수 s(q, S)
-        ↓
-전체 relevance 근사  ŝ(q, I) = s(q, S) · latent_cols
-        ↓
-argsort(ŝ) → candidate top-k
+item → F_I(item) ┐
+                 ├─ dot product / cosine → ANN search → candidate top-k
+query → F_Q(query)┘
 ```
 
-여기서 RBE는 일반 semantic embedding처럼 텍스트만 독립적으로 encode하는 모델이 아니다. embedding의 좌표는 support item에 대한 relevance 관측에서 나온다. 그래서 support item을 바꾸면 representation도 바뀌고, underlying heavy ranker를 바꾸면 같은 후보 선택기의 의미도 달라진다.
+이 구조는 ANN index와 잘 맞지만, query와 item을 함께 봐야 계산되는 신호를 직접 넣기 어렵다. 예를 들어 검색에서는 query term과 document term의 상호작용, 추천에서는 사용자와 아이템의 최근 상호작용·문맥 feature가 중요할 수 있다. 이런 정보는 strong cross-encoder 또는 tabular ranker에는 들어가도, item과 query를 독립적으로 인코딩하는 dual encoder에는 그대로 남기기 어렵다.[2]
+
+RBE의 출발점은 이것이다. 이미 강한 relevance function `R(item, query)`가 있다면, 새 query를 support item `S_I`에 대한 점수 벡터 `R(S_I, q)`로 표현할 수 있다. 마찬가지로 item은 support query `S_Q`에 대한 점수 벡터 `R(i, S_Q)`로 표현한다. 이 벡터는 heavy ranker가 잡아낸 pairwise signal의 일부를 보존한 관측값이다.[2]
+
+| 방식 | 후보 검색에 쓰는 표현 | heavy ranker와의 관계 | 핵심 한계 |
+|---|---|---|---|
+| Dual encoder | 원본 query/item feature의 독립 embedding | 보통 distillation target 또는 final reranker | pairwise feature를 직접 담기 어렵다 |
+| CUR / AnnCUR | support relevance vector + 선형 복원 | support 점수에서 전체 score를 행렬 근사 | 선형 구조와 support 선택에 민감하다 |
+| RBE | support relevance vector를 경량 신경 변환한 embedding | heavy-ranker prediction 자체를 feature로 사용 | support score 호출과 offline 준비 비용이 남는다 |
+| Full reranking | 모든 `(query, item)` pair score | ranker를 직접 전체에 호출 | corpus 규모에서 latency·비용이 감당되지 않는다 |
+
+따라서 RBE는 heavy ranker를 제거하는 방법이 아니다. **heavy ranker를 소수 support 좌표를 측정하는 장치로 쓰고**, 이후 후보 탐색은 ANN-friendly embedding 공간에서 수행하려는 아키텍처다.
+
+## 핵심 아이디어 / 구조 / 동작 방식
+
+### support relevance가 embedding의 입력이 된다
+
+논문은 support item 집합 `S_I`와 support query 집합 `S_Q`를 둔다. query `q`의 입력은 `R(S_I, q)`, item `i`의 입력은 `R(i, S_Q)`다. 두 입력을 각각 변환한 뒤 내적으로 최종 근사 score를 만든다.
+
+```text
+query q
+  └─ heavy ranker on support items S_I ─→ R(S_I, q) ─→ f_Q ─→ e_Q(q)
+
+item i
+  └─ offline heavy ranker on support queries S_Q ─→ R(i, S_Q) ─→ f_I ─→ e_I(i)
+
+candidate score:  R̃(i, q) = < e_I(i), e_Q(q) >
+```
+
+여기서 `f_Q`, `f_I`는 identity/선형 변환일 수도 있고, 논문의 neural RBE에서는 MLP 같은 universal approximator가 된다. CUR은 이 family의 특별한 경우다. support submatrix의 pseudoinverse를 통해 item relevance vector를 선형 변환하고, query의 support-item relevance vector와 내적한다.[2]
+
+```text
+CUR: R̃(i, q) = < R(i, S_Q) · pinv(R(S_I, S_Q)), R(S_I, q) >
+
+RBE: R̃(i, q) = < f_I(R(i, S_Q), θ_I), f_Q(R(S_I, q), θ_Q) >
+```
+
+논문 구현에서는 CUR representation을 출발점으로 남겨 두고, 신경망이 그 오차를 추가 예측하도록 구성한다. 저자들은 이 분해가 수렴과 학습 안정성에 도움이 됐다고 보고한다. 학습은 sampled batch와 listwise loss, Adam을 사용한다.[2]
+
+### 이론적 주장: support가 충분하면 연속 relevance를 근사할 수 있다
+
+논문은 두 수준의 보장을 제시한다.
+
+1. **Regularized CUR 보장**: 적절히 많은 독립 표본 support item/query와 작은 regularization이 있으면, CUR 근사는 true relevance function에 `L2` 의미에서 임의로 가까워질 수 있다.
+2. **Neural RBE 보장**: query/item 공간이 compact이고 relevance function이 연속이면, support relevance vector를 입력으로 하는 두 신경 변환의 내적으로 true relevance를 균일 오차 기준에서 임의로 가깝게 근사할 수 있다.
+
+두 번째가 논문의 중심이다. 단순히 “CUR이 잘 된다”가 아니라, pairwise feature에 의존하는 연속 relevance function도 support relevance를 통한 별도 query/item embedding으로 표현할 수 있다는 존재 보장이다.[2]
+
+다만 이는 **충분히 큰 support set과 적합한 변환이 존재한다**는 근사 이론이다. 특정 support budget, 특정 ranker, 특정 catalog에서 정해진 recall·latency를 보장하는 production SLA는 아니다. 논문도 실제 성능과 호출 수를 맞추려면 support 선택과 원래 feature 보강이 중요하다고 적는다.[2]
+
+### support selection은 부수 옵션이 아니라 핵심 설계다
+
+random support는 기존 AnnCUR 계열의 기본 출발점이지만, 논문은 support item을 어떻게 고르느냐가 근사 품질을 크게 바꾼다고 본다. 비교한 선택 전략은 random, popular, cluster center, most diverse, 그리고 CUR의 train-query MSE를 greedy하게 줄이는 `l2-greedy`다.[2]
+
+| support 선택 | 직관 | 논문에서의 역할 |
+|---|---|---|
+| Random | 균일 샘플 | AnnCUR 계열의 기준선 |
+| Popular | 평균 relevance가 높은 item | 인기 분포가 강한 추천 영역에서 유용할 수 있음 |
+| Cluster centers | 대표적인 relevance vector 선택 | 간단한 clustering만으로도 random보다 개선되는 경우가 많음 |
+| Most diverse | 기존 support와 가장 먼 item을 순차 선택 | coverage를 넓히는 휴리스틱 |
+| `l2-greedy` | CUR reconstruction MSE를 직접 줄이도록 선택 | 논문의 주력 선택 전략 |
+
+`l2-greedy`의 비용도 함께 봐야 한다. 기본 형태의 popularity·cluster center·diversity·`l2-greedy` 선택은 item 전체와 support query 사이 relevance를 계산해야 하므로 offline `O(M·|S_Q|)` 비용이 든다. 이것이 불가능할 때 논문은 candidate downsampling, 더 싼 기존 embedding 사용, 사전 정의 category cluster 활용을 제안한다.[2]
 
 ## 공개된 근거에서 확인되는 점
 
-저장소가 실제로 무엇을 제공하는지와 무엇을 제공하지 않는지는 분리해서 봐야 한다.
+### 데이터와 heavy ranker의 범위
 
-| 확인 항목 | 공개물에서 확인한 내용 | 해석 |
-|---|---|---|
-| 저장소 성격 | Python 파일 1개와 다수 Jupyter notebook 실험으로 구성 | product-ready package보다 experiment archive에 가깝다 |
-| 핵심 근사 | `CURApprox`가 선택 행·열, pseudoinverse, latent row/column을 계산 | CUR 기반 전체 relevance 복원이 구현돼 있다 |
-| 후보 선택 | K-means, MiniBatch K-means, clustering, random, greedy 등 variant | support-item 선택 자체가 연구 변수다 |
-| heavy-ranker 신호 | README는 `QA sample, different heavy ranker` 실험 notebook을 지정 | ranker 교체에 대한 실험 의도는 보이나, 통합 API는 없다 |
-| 실험 자산 | README는 Table 1, 2, 4, 7, 8, 9의 notebook 위치를 연결 | 여러 실험 결과의 원자료는 남아 있다 |
-| 재현성 경고 | README가 새 구현을 권하고 일부 table data는 `tbd`로 표시 | 논문 수치 재현이나 확장 실험은 추가 정리가 필요하다 |
-| 릴리스·라이선스 | GitHub API 기준 tags·releases가 비어 있고, checked-in `LICENSE`도 없다 | 버전 고정과 법적 사용 조건은 별도 확인이 필요하다 |
+논문은 entity linking, QA, recommendation을 함께 다룬다. 공개 재현 측면에서 ZESHEL의 5개 domain에는 선행 연구의 cross-encoder를, MS MARCO 기반 QA에는 `all-mpnet-base-v2`를 heavy ranker로 사용한다. QA full setting은 약 1만 test query와 0.8M passage, support-selection table용 QA.Small은 82K passage다. recommendation 실험은 Yandex Games/Music의 CatBoost 기반 heavy ranker와 강한 production dual encoder를 사용한다.[2]
 
-한 가지 구체적인 실행 흔적도 있다. `proof-of-concept-open-data-round7-ms-query-ce9650.ipynb`의 `AnnCUR`은 100개 key item을 사용하며, `get_score`는 예측 top-100과 target score의 top-100 사이 교집합 비율을 평균한다.[4] 이 notebook에는 train 0.5138, test 0.4983의 출력이 남아 있다. 다만 이것은 표준 MS MARCO MRR이나 nDCG가 아니라 해당 notebook의 **top-100 overlap proxy**이며, 데이터 준비·heavy ranker·split·support 선택 조건이 함께 고정된 단일 실행 결과다.[4] 일반 benchmark SOTA나 다른 reranker 대비 우위로 옮겨 읽으면 안 된다.
-
-또한 코드가 말하는 약속은 score reconstruction이지 최종 answer quality가 아니다. `get_complete_row`는 작은 support score vector에 latent factor를 곱할 뿐이다.[3] 따라서 실제 도입에서는 최소한 후보 recall@k, 후보 수별 latency, final reranker의 nDCG/MRR, support selection 갱신 비용을 따로 봐야 한다.
-
-## 왜 ‘후보 선택기’로 해석해야 하는가
-
-RBE는 heavy ranker를 없애는 기술이 아니다. 오히려 heavy ranker의 relevance function을 더 적은 위치에서 호출하고, 그 결과를 후보 생성기로 재활용하는 방법이다. 이 차이가 중요하다.
-
-| 접근 | expensive model의 역할 | 전체 corpus에서의 계산 | 주된 실패 모드 |
+| 평가 영역 | 규모/예시 | heavy ranker | 주의할 점 |
 |---|---|---|---|
-| Dense retriever | 사전학습/encoding | query와 vector index 비교 | relevance 정의가 weak ranker에 제한 |
-| 일반 2-stage rerank | 최종 후보 재정렬 | cheap retriever가 먼저 후보를 좁힘 | 첫 단계 recall 손실 |
-| RBE 후보 선택 | support item의 relevance 측정 | CUR 근사로 전체 후보 score 생성 | support가 구조를 대표하지 못하면 근사 recall 하락 |
-| full cross-encoder | 모든 item 정밀 점수화 | 모든 `(query, item)`을 계산 | 비용과 latency가 corpus 크기에 묶임 |
+| ZESHEL entity linking | 5개 Wikia domain | 선행 연구 cross-encoder | 공개 academic benchmark |
+| QA / MS MARCO | QA는 약 0.8M passage, QA.Small 82K | `all-mpnet-base-v2` | 논문 자체의 candidate retrieval metric 사용 |
+| RecGames1/2 | 각 16,514 item | CatBoost production ranker | 내부 production data/feature에 의존 |
+| RecMusic | 8,950 item | CatBoost production ranker | 내부 production data/feature에 의존 |
 
-이 방식이 어울리는 조건도 비교적 명확하다. 첫째, heavy ranker의 score matrix가 어느 정도 저차원 또는 반복 구조를 가져야 한다. 둘째, support set을 오프라인에서 안정적으로 고를 수 있어야 한다. 셋째, 서비스는 근사 후보를 빠르게 만들고 그 뒤에 별도 precision layer를 둘 수 있어야 한다. 반대로 query distribution이나 catalog가 자주 바뀌면 factor와 support set이 오래된 relevance geometry를 반영할 수 있다.
+논문 전반의 후보 품질 지표는 `HitRate(k_r, k)`이며, predicted top-`k_r`와 heavy-ranker true top-`k` 사이 교집합 비율이다. 저자들은 이를 Yadav et al. (2022)의 Top-k Recall@`k_r`와 동등하다고 설명한다. 모든 기본 실험에서 test query 비중은 약 30%, support item 수는 100, support query 집합은 training query로 둔다.[2]
+
+### RBE의 neural mapping과 support selection 결과
+
+Table 2에서 `RBE + l2-greedy`는 `HitRate(100)`로 ZESHEL 5개 domain, RecGames1/2, RecMusic, QA를 비교한다. RBE mapping은 Military를 제외한 각 데이터셋에서 같은 support-selection의 AnnCUR보다 높다. 예를 들어 QA는 AnnCUR `0.5522`, AnnCUR + `l2-greedy` `0.5700`, RBE + `l2-greedy` `0.6022`다. RecMusic에서는 각각 `0.1478`, `0.1478`, `0.3964`로 neural RBE의 차이가 크게 나타난다.[2]
+
+| `HitRate(100)` 예시 | AnnCUR | AnnCUR + `l2-greedy` | RBE + `l2-greedy` |
+|---|---:|---:|---:|
+| Yugioh | 0.4724 | 0.5618 | **0.5849** |
+| RecGames1 | 0.5842 | 0.6565 | **0.6682** |
+| RecMusic | 0.1478 | 0.1478 | **0.3964** |
+| QA | 0.5522 | 0.5700 | **0.6022** |
+
+이 표는 final answer 품질이나 표준 nDCG/MRR을 뜻하지 않는다. heavy ranker가 정의한 top-100을 RBE candidate가 얼마나 회수하는가를 보는 candidate-retrieval 평가다. 특히 production recommendation 결과는 내부 데이터와 baseline 위에서 나온 것이므로 외부 시스템에 그대로 숫자를 이식할 수 없다.[2]
+
+### dual encoder와의 비용-품질 비교
+
+논문은 RecGames와 RecMusic에서 기존 production dual encoder와 직접 비교한다. Table 3의 trainable parameter 수는 RBE 약 50K, RecGames DE 약 300M, RecMusic DE 약 700M으로 제시된다. 이는 RBE의 변환부가 작다는 뜻이지, support score를 얻는 heavy-ranker 인프라 비용까지 50K parameter라는 뜻은 아니다.[2]
+
+공정한 비교를 위해 저자들은 RBE가 query당 support item 100개에 heavy ranker를 호출하는 비용을 반영한다. 즉 DE에는 RBE의 support-call 수만큼 더 큰 final reranking budget을 주고 비교한다. 그럼에도 RecGames1 Table 4에서 candidate budget이 커질수록 `RBE + l2-greedy`가 dual encoder/AXN DE보다 높은 HitRate를 보인다. 예컨대 predicted top-500과 heavy-ranker top-100을 비교하는 `HR(500,100)`은 Dual Encoder `0.9086`, AXN DE `0.9153`, RBE `0.9522`다.[2]
+
+| RecGames1, heavy-ranker top-100 회수 | Dual Encoder | AXN DE | RBE + `l2-greedy` |
+|---|---:|---:|---:|
+| `HR(200,100)` | 0.7977 | 0.7970 | **0.8359** |
+| `HR(500,100)` | 0.9086 | 0.9153 | **0.9522** |
+| `HR(900,100)` | 0.9561 | 0.9660 | **0.9799** |
+
+저자들의 해석은 “RBE가 작은 trainable mapping으로도 heavy ranker의 pairwise judgement를 후보 단계에 더 잘 전달할 수 있다”는 것이다. 하지만 이 비교 역시 해당 production data, support size 100, budget-adjusted protocol에 한정된다.[2]
 
 ## 실무 관점에서의 해석
 
-내가 보기에 RBE의 가장 흥미로운 지점은 “embedding 모델”이라는 이름보다 **expensive scorer를 약한 retriever의 teacher로만 쓰지 않고, 온라인 후보 선택의 측정 장치로도 쓴다**는 발상이다. 기존 distillation은 heavy ranker로 label을 만들고 lightweight bi-encoder를 훈련해 ranker를 대체하는 경우가 많다. RBE는 support item에 대한 actual score를 온라인에도 남겨 둔다. 그러므로 query가 바뀌어도 heavy ranker의 신호를 일부 직접 가져갈 수 있다.
+이 논문을 단순히 “heavy ranker를 덜 부르는 CUR trick”으로 보면 핵심을 놓친다. RBE는 **relevance function이 representation을 만드는 교사이자 feature provider**라는 관점이다. distillation이 heavy model의 output으로 새 bi-encoder를 훈련해 대체하려 한다면, RBE는 inference 시에도 support set에 대한 실제 heavy-ranker score를 남겨 둔다. 따라서 query가 바뀌어도 strong pairwise model의 signal 일부를 직접 사용한다.[2]
 
-그 대가로 운영 표면은 가벼워지지 않는다. support-size `m`을 잡으면 온라인에 최소 `m`회의 heavy-ranker pair scoring이 남는다. `m`이 너무 작으면 candidate recall이 떨어지고, 너무 크면 일반 reranking과의 비용 차이가 사라진다. support set 교체, matrix factor의 conditioning, score calibration, catalog 증분 반영도 모두 운영 변수다.
+대신 시스템 조건이 명확하다.
 
-도입 전에는 다음처럼 작은 검증으로 시작하는 편이 낫다.
-
-| 검증 | 이유 |
+| 도입 체크 | 왜 필요한가 |
 |---|---|
-| support size별 candidate recall@50/100/500 | RBE의 첫 번째 목적은 final rank가 아니라 후보 누락을 막는 것 |
-| random·popular·clustering·greedy support를 같은 budget에서 비교 | 저장소도 support-selection strategy를 핵심 실험 변수로 둔다 |
-| full heavy ranker 대비 p50/p95 latency와 GPU pair-score 수 측정 | 절감은 구조적 가능성이지 저장소가 보편 수치로 보장한 값은 아니다 |
-| RBE top-k 뒤 final rerank의 nDCG/MRR 측정 | 근사 단계의 score MSE가 최종 검색 품질과 같지 않다 |
-| catalog/query drift 후 factor 재생성 주기 측정 | 오래된 support와 factor는 relevance geometry를 놓칠 수 있다 |
-| 라이선스·재현성 검토 | 현재 저장소에는 release/tag와 LICENSE가 없고 README도 재구현을 권한다 |
+| strong하고 안정적인 heavy ranker | RBE는 그 ranker의 relevance를 근사하므로 teacher가 나쁘면 사용자 경험도 나빠질 수 있다 |
+| query당 support-call budget | inference마다 `|S_I|`개의 heavy-ranker score가 필요하다 |
+| offline support/index refresh | catalog drift와 ranker update가 있으면 item representation·support selection을 갱신해야 한다 |
+| candidate recall과 final metric 분리 | HitRate가 좋아도 final nDCG, CTR, answer quality가 자동으로 좋아지는 것은 아니다 |
+| filter-aware ANN 운영 | RBE embedding은 ANN index로 갈 수 있지만 서비스 filter·freshness 조건과 함께 검증해야 한다 |
+| support strategy A/B | random, category center, KMeans, `l2-greedy`는 같은 budget에서 결과가 크게 달라질 수 있다 |
 
-정리하면 RBE는 “작은 embedding 모델 하나를 내려받아 vector DB에 넣는” 형태의 기술이 아니다. heavy ranker가 가진 판단을 소수 support item에서 측정하고, CUR 근사로 넓은 후보군에 퍼뜨리는 retrieval architecture다. 코드 공개 범위는 아직 연구 노트에 가깝지만, ranker 비용을 줄이면서 약한 first-stage retriever의 recall 한계를 넘고 싶은 팀에는 충분히 검증할 가치가 있는 질문을 던진다: **모든 문서를 다시 점수화하지 않고도, relevance function의 구조를 얼마나 보존할 수 있는가.**
+동적 catalog에는 feature-based item RBE가 장점이 될 수 있다. 새 item은 support query에 대한 score를 구해 기존 `f_I`로 embedding할 수 있다. 반대로 item 집합이 작고 안정적이면 item별 trainable vector로 바꿔 offline heavy-ranker 호출을 더 줄일 수 있다. query는 열린 집합이므로 완전히 item lookup 방식으로 바꾸기 어렵다는 점도 논문이 구분한다.[2]
+
+한계도 분명하다. 이론 보장은 support set이 충분히 커지는 극한의 결과이고, 실제 시스템은 작은 support budget·ranker latency·drift·feature availability 안에서 움직인다. 특히 support score를 만드는 final ranker가 신뢰할 수 없으면 RBE가 heavy-ranker top-k를 더 잘 회수해도 실제 사용자 효용은 나빠질 수 있다. 논문도 바로 이 점을 limitation으로 든다.[2]
+
+그래도 RBE는 중요한 질문을 제기한다. 후보 검색 모델은 반드시 query와 item의 원본 feature만 따로 압축해야 할까? 이미 잘 작동하는 expensive relevance function이 있다면, 그 판단을 소수 support 축에서 관찰하고 별도 embedding 공간으로 옮기는 길도 있다. RBE는 그 길을 CUR, 신경 근사, support selection, ANN retrieval까지 하나의 설계로 연결한다.
 
 ## Sources
 
-[1] https://github.com/shevkunov/Relevance-Based-Embeddings-Lightweight-Candidate-Retrieval — 공식 저장소
-[2] https://raw.githubusercontent.com/shevkunov/Relevance-Based-Embeddings-Lightweight-Candidate-Retrieval/main/README.md — README, 실험 위치와 재사용 경고
-[3] https://raw.githubusercontent.com/shevkunov/Relevance-Based-Embeddings-Lightweight-Candidate-Retrieval/main/exps/matrix_approx_zeshel.py — CURApprox 구현
-[4] https://github.com/shevkunov/Relevance-Based-Embeddings-Lightweight-Candidate-Retrieval/blob/main/exps/proof-of-concept-open-data-round7-ms-query-ce9650.ipynb — AnnCUR, support item, 실행 출력
-[5] https://github.com/shevkunov/Relevance-Based-Embeddings-Lightweight-Candidate-Retrieval/blob/main/exps/greedy_item_choice_variants.ipynb — greedy support-item 선택 variant
-[6] https://api.github.com/repos/shevkunov/Relevance-Based-Embeddings-Lightweight-Candidate-Retrieval — GitHub API metadata, release/tag/license 상태
+[1] https://openreview.net/forum?id=0RNjyGzTSJ — 사용자 제공 OpenReview PDF 식별자
+[2] https://arxiv.org/abs/2607.03515v1 및 https://arxiv.org/html/2607.03515v1 — 논문 본문, 이론, Figure 1, 표와 실험 설정
+[3] https://github.com/shevkunov/Relevance-Based-Embeddings-Lightweight-Candidate-Retrieval — 저자 공개 코드 및 experiment notebook
