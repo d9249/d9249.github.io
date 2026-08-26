@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1120" viewBox="0 0 640 1120" role="img" aria-labelledby="title desc">
+  <title id="title">AutoDesign의 메타 하네스 최적화 흐름</title>
+  <desc id="desc">논문과 요구사항을 받아 inner loop가 산출물을 생성·렌더링·비평·수정한다. 실행 기록과 평가 신호는 outer loop로 전달되고, outer loop는 반복 실패를 분석해 제한된 하네스 변경을 제안한다. acceptance gate를 통과한 변경만 다음 작업에 쓰이는 DesignHarness에 반영된다.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f5f8ff"/><stop offset="1" stop-color="#f6fbf8"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#172554" flood-opacity=".12"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L9,5 L0,10 Z" fill="#476282"/></marker>
+  </defs>
+  <rect width="640" height="1120" rx="28" fill="url(#bg)"/>
+  <text x="48" y="66" fill="#14213d" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="28" font-weight="700">AutoDesign: 제작 시스템을 학습시키는 loop</text>
+  <text x="48" y="100" fill="#5b6b82" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="17">두 개의 feedback loop가 재사용 가능한 DesignHarness를 만든다</text>
+
+  <g filter="url(#shadow)"><rect x="48" y="138" width="544" height="94" rx="20" fill="#ffffff"/></g>
+  <text x="78" y="177" fill="#17395c" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="19" font-weight="700">1. 입력: 논문, 시각 근거, 산출물 요구사항</text>
+  <text x="78" y="208" fill="#44546a" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="16">학술 포스터처럼 출처 정확도와 렌더링 품질이 함께 필요한 작업</text>
+  <path d="M320 232 L320 276" stroke="#476282" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)"><rect x="48" y="294" width="544" height="250" rx="20" fill="#ffffff"/></g>
+  <rect x="72" y="316" width="148" height="31" rx="15.5" fill="#e6eeff"/><text x="146" y="338" text-anchor="middle" fill="#285ca8" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="15" font-weight="700">inner loop · 산출물 개선</text>
+  <text x="78" y="382" fill="#17395c" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="19" font-weight="700">2. 현재 DesignHarness로 한 산출물을 완성한다</text>
+  <rect x="78" y="408" width="214" height="78" rx="14" fill="#f1f5fb"/><text x="185" y="438" text-anchor="middle" fill="#35516f" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="16">생성·편집</text><text x="185" y="463" text-anchor="middle" fill="#5b6b82" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="14">editable artifact</text>
+  <path d="M292 447 L343 447" stroke="#476282" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="349" y="408" width="165" height="78" rx="14" fill="#edf8f2"/><text x="431" y="438" text-anchor="middle" fill="#246344" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="16">렌더링·검사</text><text x="431" y="463" text-anchor="middle" fill="#5b6b82" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="14">critic feedback</text>
+  <path d="M431 486 C431 518 185 518 185 486" fill="none" stroke="#6c7f94" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="320" y="525" text-anchor="middle" fill="#56657a" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="15">문제 위치를 찾아 국소 수정하고 다시 검증</text>
+  <path d="M320 544 L320 588" stroke="#476282" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)"><rect x="48" y="606" width="544" height="106" rx="20" fill="#ffffff"/></g>
+  <text x="78" y="646" fill="#17395c" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="19" font-weight="700">3. 실행 기록을 다음 개선의 근거로 남긴다</text>
+  <text x="78" y="679" fill="#44546a" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="16">산출물 · 렌더링 진단 · 평가 점수 · 실패 패턴</text>
+  <path d="M320 712 L320 756" stroke="#476282" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)"><rect x="48" y="774" width="544" height="218" rx="20" fill="#ffffff"/></g>
+  <rect x="72" y="796" width="185" height="31" rx="15.5" fill="#f2eaff"/><text x="164" y="818" text-anchor="middle" fill="#7041a2" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="15" font-weight="700">outer loop · 하네스 개선</text>
+  <text x="78" y="860" fill="#17395c" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="19" font-weight="700">4. 반복 실패를 하나의 시스템 변경으로 바꾼다</text>
+  <text x="78" y="893" fill="#44546a" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="16">context·tools·runtime·orchestration·evaluation 중 한 층을 제한적으로 수정</text>
+  <rect x="78" y="918" width="454" height="48" rx="13" fill="#fff5e9"/><text x="305" y="948" text-anchor="middle" fill="#92500b" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="700">acceptance gate: train 개선 + development 성능 저하 없음</text>
+  <path d="M320 992 L320 1034" stroke="#476282" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <rect x="48" y="1052" width="544" height="42" rx="21" fill="#17395c"/>
+  <text x="320" y="1080" text-anchor="middle" fill="#ffffff" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="17">통과한 변경만 versioned DesignHarness로 누적 → 다음 작업에 재사용</text>
+</svg>
