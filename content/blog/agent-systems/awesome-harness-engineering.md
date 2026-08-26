@@ -1,110 +1,120 @@
 ---
-title: "Awesome Harness Engineering은 에이전트 신뢰성을 모델 밖에서 설계하는 읽기 지도다"
-date: "2026-06-25T08:52:05"
-description: "walkinglabs의 Awesome Harness Engineering은 컨텍스트·평가·관측성·런타임 제어·안전한 자율성을 하나의 하네스 엔지니어링 문제로 묶어, 장기 실행 AI 에이전트를 더 신뢰할 수 있게 만드는 자료 지도를 제공한다."
+title: "Awesome Harness Engineering은 141개 자료를 에이전트 운영의 실패 지도로 바꾼다"
+date: "2026-08-26T22:52:52+09:00"
+description: "walkinglabs의 Awesome Harness Engineering은 141개 리소스를 컨텍스트·검증·권한·관측성·런타임 같은 여덟 설계면으로 분류해, 모델 밖에서 에이전트 신뢰성을 설계하는 읽기 지도를 제공한다."
 author: "Sangmin Lee"
 category: "agent-systems"
 tags:
   - Agent Harness
+  - Harness Engineering
   - Context Engineering
-  - Evaluation
-  - Observability
-  - Coding Agents
-image: "/images/blog/awesome-harness-engineering-map.webp"
+  - Agent Evaluation
+  - Agent Runtime
+image: "/images/blog/awesome-harness-engineering-taxonomy.svg"
 draft: false
 ---
 
-AI 에이전트 논의는 쉽게 “어떤 모델이 더 똑똑한가”로 좁아진다. 하지만 실제 코딩·리서치·운영 작업에서 실패를 가르는 것은 모델 하나가 아니다. 에이전트가 어떤 컨텍스트를 읽는지, 어떤 도구를 쓸 수 있는지, 실패를 누가 판정하는지, 다음 세션으로 상태가 어떻게 넘어가는지, 위험한 행동은 어디에서 멈추는지가 함께 품질을 만든다.
+AI 에이전트의 실패를 모델 능력 하나로 설명하면 중요한 절반을 놓치기 쉽다.[3]
+에이전트가 어떤 지시와 상태를 읽는지, 어떤 도구 경계 안에서 실행되는지, 완료를 무엇으로 검증하는지, 실패 기록을 다음 세션에 어떻게 넘기는지가 실제 업무 품질을 함께 결정한다.[3]
 
-**Awesome Harness Engineering**은 이 주변부를 정면으로 다루는 큐레이션 저장소다. walkinglabs는 하네스 엔지니어링을 “AI 에이전트가 신뢰성 있게 일할 수 있도록 주변 환경을 빚는 실천”으로 정의한다. 여기서 핵심은 더 강한 프롬프트 문장 하나를 찾는 것이 아니라, 에이전트가 장시간 작업을 수행할 수 있는 작업대, 상태 저장 방식, 검증 루프, 관측성, 제약 조건을 설계하는 것이다.
-
-PyTorchKR 소개 글은 이 저장소를 한국어로 정리하면서 “일반적인 에이전트 도구 목록”과 구분한다. 실제 README도 범위를 꽤 엄격하게 제한한다. 일반 agent tooling은 제외하고, context management, evaluation, runtime control, harness design primitive처럼 신뢰성에 직접 영향을 주는 자료만 다루겠다는 입장이다.
+**Awesome Harness Engineering**은 이 주변 환경을 독립된 engineering 대상이라고 보는 curated repository다.[1][3]
+저장소는 harness engineering을 “AI agent가 신뢰성 있게 일하도록 주변 환경을 형성하는 실천”으로 정의하고, context engineering·evaluation·observability·orchestration·safe autonomy·software architecture가 만나는 지점을 다룬다.[3]
+일반적인 agent tooling은 범위 밖이며, harness 설계·context management·evaluation·runtime control처럼 신뢰성에 직접 영향을 주는 자료만 포함하겠다는 경계도 README에 명시돼 있다.[3]
 
 <figure style="margin: 1.8rem 0;">
   <img
-    src="/images/blog/awesome-harness-engineering-map.webp"
-    alt="Awesome Harness Engineering reading map showing context, verification, runtime control, observability, and specs around an agent harness"
-    style="width: 100%; max-width: 100%; height: auto; display: block;"
+    src="/images/blog/awesome-harness-engineering-taxonomy.svg"
+    alt="Awesome Harness Engineering의 여덟 개 큐레이션 영역과 각 리소스 수를 세로 레이어로 정리한 한국어 지도"
+    style="width: 100%; max-width: 640px; height: auto; display: block; margin: 0 auto;"
   />
   <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
-    Awesome Harness Engineering이 묶는 문제 공간을 재구성한 도식. 핵심은 모델 자체보다 에이전트를 둘러싼 context, state, verification, runtime control, observability를 함께 설계해야 한다는 점이다.
+    2026년 8월 README 기준, 141개 자료를 여덟 개 에이전트 운영 설계면으로 나눈 구조다. 목록의 순서는 실행 단계가 아니라 서로 보완하는 읽기 축을 뜻한다.[3][10]
   </figcaption>
 </figure>
 
 ## 무엇을 해결하려는가
 
-에이전트가 짧은 데모에서는 그럴듯해도 실제 업무에서는 자주 깨지는 이유가 있다. 작업은 한 번의 답변으로 끝나지 않는다. 여러 파일을 바꾸고, 테스트를 돌리고, 실패를 기록하고, 다음 세션에 인계하고, 인간의 승인과 배포 절차를 지나야 한다. 이때 모델이 아무리 강해도 주변 환경이 약하면 같은 문제가 반복된다.
+짧은 demo에서는 그럴듯한 agent도 실제 업무에서는 상태를 잊고, 잘못된 파일을 수정하고, 테스트 실패를 완료로 오인하며, 권한 경계를 넘어설 수 있다.[3]
+이 문제는 prompt를 길게 쓰는 것만으로 해결되지 않는다.[3]
+작업 상태·tool access·검증 규칙·관측 기록·사람의 승인 지점을 model call 바깥의 실행 계약으로 설계해야 한다.[3]
 
-가장 흔한 실패는 세 가지다. 첫째, 컨텍스트가 정리되지 않아 에이전트가 오래된 지시나 잘못된 상태를 믿는다. 둘째, 검증 기준이 약해서 “돌아간 것처럼 보이는 코드”를 완료로 기록한다. 셋째, tool permission, sandbox, 승인 경계가 불명확해 불필요하게 위험한 행동을 하거나 반대로 필요한 실행을 못 한다.
+이 저장소는 바로 그 계약을 구성하는 자료를 찾기 위한 지도다.[3]
+실행 프레임워크나 설치 패키지를 제공하는 project가 아니라, 장기 실행 coding·research workflow에서 agent를 더 dependable하게 만드는 articles, playbooks, benchmarks, specifications, open-source projects를 정리한 reference index다.[2][3]
+따라서 “이 repo를 설치하면 agent가 좋아진다”가 아니라, 현재 workflow의 실패 원인에 맞는 설계 primitive를 고르는 데 쓰는 편이 정확하다.[3]
 
-Awesome Harness Engineering은 이런 실패를 “모델 능력 부족”으로만 보지 않는다. 저장소가 모은 OpenAI, Anthropic, LangChain, Martin Fowler, Inngest, HumanLayer 등의 글은 모두 비슷한 결론으로 모인다. 에이전트 품질은 **model + harness**의 결과이고, 하네스는 instruction file 몇 줄이 아니라 software architecture의 일부다.
+## 핵심 아이디어 / 구조 / 동작 방식
 
-## 핵심 아이디어: 하네스는 에이전트 주변의 운영 체계다
+현재 README는 eight top-level areas 아래에 141개의 resource entry를 둔다.[3][10]
+8월 19일 taxonomy 작업 계획은 resource count와 URL multiset을 유지하고, 각 resource를 정확히 한 개의 best-fit category에 넣는 것을 불변 조건으로 정했다.[10]
+즉 새 taxonomy는 링크 수를 부풀리는 방식이 아니라, 넓어진 목록을 더 빨리 scan하고 중복 없이 탐색하려는 정보 구조 개선이다.[10]
 
-이 저장소의 좋은 점은 하네스 엔지니어링을 추상 구호가 아니라 여러 설계면으로 나눈다는 데 있다. PyTorchKR 소개 글 기준으로 저장소는 100개 이상의 자료를 8개 주요 카테고리로 묶는다.
+- **학습 자료 (3) · 기반 개념 (12)** — harness 개념과 agent-first 개발의 출발점을 잡을 때 본다.
+- **컨텍스트 · 메모리 · 작업 상태 (12)** — 세션 간 handoff와 장기 작업 상태 보존이 문제일 때 본다.
+- **제약 · 가드레일 · 안전한 자율성 (10)** — tool scope, authorization, sandbox, policy를 분리할 때 본다.
+- **명세 · Agent 파일 · 워크플로 (10)** — `AGENTS.md`, spec-driven process, human oversight를 정리할 때 본다.
+- **평가 · 관측성 (18)** — quality gate, trace, telemetry, failure analysis가 약할 때 본다.
+- **벤치마크 (40)** — coding·웹·MCP·다중 agent·안전성 환경에서 비교 기준이 필요할 때 본다.
+- **런타임 · 하네스 · 참조 구현 (36)** — sandbox, orchestration, browser/tool integration, profile 운영 사례를 찾을 때 본다.
 
-| 분류 | 읽어야 하는 이유 |
-|---|---|
-| Courses & Learning Resources | Codex와 Claude Code를 실제 프로젝트에서 더 신뢰성 있게 쓰는 실습형 과정 |
-| Foundations | 하네스 엔지니어링의 정의, agent-first 개발, model+harness 프레임 |
-| Context, Memory & Working State | 제한된 컨텍스트 윈도우를 작업 메모리 예산처럼 관리하는 법 |
-| Constraints, Guardrails & Safe Autonomy | sandbox, 승인 정책, prompt injection 완화, tool boundary 설계 |
-| Specs, Agent Files & Workflow Design | `AGENTS.md`, `CLAUDE.md`, Spec Kit, 12-Factor Agents 같은 명세 기반 운영 |
-| Evals & Observability | trace, telemetry, 반복 가능한 eval, 실패 분석 루프 |
-| Benchmarks | SWE-bench, Terminal-Bench, OSWorld, WebArena처럼 하네스 품질을 비교하는 표면 |
-| Runtimes, Harnesses & Reference Implementations | SWE-agent, Deep Agents, Harbor, AgentKit 같은 구현 사례 |
+특히 Context 영역은 context delivery와 memory/knowledge systems로, Constraints는 tool boundary·security/authorization·operational autonomy로 세분화돼 있다.[3][10]
+Evals는 evaluation design·verification/quality gates·telemetry/tracing/performance로, Benchmarks는 coding/terminal·web/GUI·tools/MCP·multi-agent·safety/economic 영역으로 나뉜다.[3][10]
+Runtimes 역시 foundations, sandbox infrastructure, coding-agent harnesses, multi-agent orchestration, browser/MCP integration, workflow/profile assets로 분해된다.[3][10]
 
-여기서 중요한 포인트는 “자료가 많다”가 아니라 분류의 중심축이다. 저장소는 에이전트를 잘 쓰는 방법을 prompt template 모음으로 보지 않는다. 대신 컨텍스트, 검증, 관측성, 런타임 제어, 안전한 자율성, 소프트웨어 아키텍처가 만나는 지점으로 본다.
-
-OpenAI의 Codex 하네스 글은 이 관점을 현장 사례로 보여 준다. 대형 애플리케이션을 agent-first 방식으로 만들면서, 거대한 `AGENTS.md` 대신 저장소 안의 구조화된 문서, worktree별 실행 환경, 브라우저 검증, 로그·메트릭·트레이스 접근성을 강조한다. 핵심은 “Codex에게 1,000쪽짜리 매뉴얼을 넣는 것”이 아니라, 에이전트가 필요한 지식과 검증 신호를 찾을 수 있는 지도와 도구를 제공하는 것이다.
-
-Anthropic의 long-running agents 글도 같은 방향이다. 장기 실행 에이전트는 세션이 끊기고 새 컨텍스트에서 다시 시작한다. 따라서 initializer agent가 feature list, progress log, `init.sh`, 초기 git 상태를 만들고, 이후 coding agent는 한 번에 한 기능만 구현하고 테스트한 뒤 다음 세션을 위한 상태를 남긴다. 이것은 프롬프트 최적화라기보다 작업 수명주기 설계다.
+이 분류가 주는 실무적 이점은 “agent가 실패했다”는 모호한 문제를 설계 질문으로 바꾼다는 데 있다.[3]
+예를 들어 작업을 잊는다면 context·memory를, 결과가 깨져 있다면 verification·observability를, 위험한 command가 걱정된다면 tool boundary·authorization을 먼저 읽을 수 있다.[3]
+같은 model이라도 어느 축이 약한지에 따라 필요한 개선이 달라진다는 전제를 목록 자체의 탐색 구조로 표현한 셈이다.[3]
 
 ## 공개된 근거에서 확인되는 점
 
-GitHub 요약 기준 `walkinglabs/awesome-harness-engineering`은 CC0-1.0 라이선스의 큐레이션 저장소이며, 확인 시점에 약 3.3k stars, 262 forks, 61 commits로 소개된다. 루트는 단순하다. 핵심 파일은 `README.md`, `CONTRIBUTING.md`, `LICENSE`이고 별도 release는 공개되어 있지 않다. 즉 설치형 프레임워크라기보다, 빠르게 커지는 읽기 지도와 reference index에 가깝다.
+확인 시점의 GitHub API에서 `walkinglabs/awesome-harness-engineering`은 2026년 3월 29일 생성된 public repository이며, 기본 branch는 `main`이다.[2]
+API는 stars 3,931개, forks 332개, open issues 5개를 보고했고, 마지막 push는 2026년 8월 19일로 나타난다.[2]
+최근 commit도 taxonomy refinement와 issue에서 제안된 resource의 curator 반영을 가리켜, 이것이 release cadence를 가진 software product보다 편집·검토를 통해 자라는 index라는 해석을 뒷받침한다.[9]
 
-함께 연결된 `walkinglabs/learn-harness-engineering`은 더 실습적인 companion 성격을 가진다. GitHub 요약은 이 저장소를 “Harness engineering beginner tutorial, from 0 to 1”로 소개하고, Electron 기반 개인 지식 베이스 앱을 실습 소재로 삼는 프로젝트 기반 과정이라고 설명한다. 12개 강의, 6개 프로젝트, 14개 언어 지원, MIT 라이선스, `skills/harness-creator/` 같은 reusable skill까지 포함한다는 점에서 Awesome 목록의 “Courses & Learning Resources” 섹션이 단순 링크가 아니라 실제 학습 경로와 연결되어 있음을 보여 준다.
+Contributing guide는 primary source 또는 original technical write-up, 기존 항목과의 비중복, 접근 가능한 link, harness relevance가 드러나는 구체적 description을 quality bar로 제시한다.[4]
+제출 전에는 link 확인·중복 점검·focused diff·affiliation disclosure를 요구하고, company-maintained project라면 marketing page 대신 licensed public source를 직접 연결하라고 명시한다.[4]
+이 기준 덕분에 목록은 단순한 인기 도구 집계보다 “왜 이 항목이 harness에 해당하는가”라는 편집 판단을 보존하려는 catalog에 가깝다.[4]
 
-저장소가 특히 명확하게 잡는 선은 “일반 agent 도구”와 “하네스 primitive”의 차이다. 예컨대 benchmark 섹션은 모델 성능표를 나열하기보다, 같은 모델이라도 context handling, tool interface, environment control, verification logic, runtime setting에 따라 결과가 달라진다는 점을 강조한다. 이 관점에서는 SWE-bench나 Terminal-Bench도 단순 leaderboard가 아니라 agent harness의 품질을 드러내는 테스트베드다.
-
-| 확인 항목 | 관찰되는 형태 | 해석 |
-|---|---|---|
-| 저장소 성격 | README 중심 curated list | 실행 프레임워크보다 신뢰성 설계 자료 지도 |
-| 라이선스 | CC0-1.0 | 목록 자체는 재사용·확장하기 쉬운 형태 |
-| 릴리스 상태 | 공개 release 없음 | 버전 고정 도구라기보다 살아 있는 index |
-| companion course | `learn-harness-engineering` | 개념을 실제 프로젝트 기반 과정으로 연결 |
-| 핵심 범위 | context, evals, observability, orchestration, safe autonomy | model-only 성능 논의에서 운영 하네스 논의로 이동 |
+버전 배포 관점에서는 tags API가 빈 배열을 반환하고 `releases/latest` endpoint도 최신 release를 제공하지 않는다.[6][7]
+이 역시 package release를 pinning해 도입하는 도구보다, README의 현재 분류와 link health를 계속 갱신하는 reading map으로 읽어야 함을 뜻한다.[3][6][7]
+license metadata에는 작은 주의점도 있다.[2]
+GitHub API는 `Other`와 `NOASSERTION`을 표시하지만 checked-in `LICENSE`는 CC0 1.0 Universal 전문이고 README도 CC0 1.0을 가리킨다.[3][5]
+목록을 fork하거나 재배포할 때는 API badge만 믿기보다 실제 LICENSE 파일과 포함하려는 각 외부 resource의 개별 license를 분리해 검토하는 편이 안전하다.[5]
 
 ## 실무 관점에서의 해석
 
-이 저장소의 실무적 가치는 “좋은 링크 모음” 이상이다. 팀이 AI 에이전트를 도입할 때 무엇을 점검해야 하는지에 대한 체크리스트로 쓸 수 있다. 예를 들어 coding agent를 쓰는 팀이라면 단순히 모델과 IDE 확장을 고르는 데서 멈추면 안 된다. 다음 질문을 같이 물어야 한다.
+이 repository의 가장 좋은 활용법은 “읽을 링크를 많이 저장하는 일”이 아니라, 팀의 agent workflow를 audit하는 일이다.
+다음 다섯 질문으로 현재 실패를 분류하면 읽기 순서를 바로 정할 수 있다.
 
-| 질문 | 하네스 관점의 의미 |
-|---|---|
-| 에이전트가 첫 세션에서 무엇을 반드시 읽는가 | `AGENTS.md`, architecture docs, feature list의 progressive disclosure |
-| 작업 상태는 어디에 남는가 | progress file, git history, issue tracker, handoff note |
-| 완료 판정은 누가 하는가 | test, lint, smoke run, benchmark, human review의 조합 |
-| 위험한 action은 어디에서 막는가 | sandbox, permission tier, approval gate, credential boundary |
-| 실패 원인은 어떻게 재현되는가 | logs, traces, screenshots, eval artifacts, saved trajectories |
-| 여러 에이전트가 동시에 일하면 어떻게 합치는가 | worktree, branch policy, reviewer agent, conflict protocol |
+1. **첫 세션에 agent가 무엇을 읽는가?** 컨텍스트·명세 축에서 repo-local instruction, architecture map, task brief를 만든다.
+2. **다음 세션은 무엇을 이어받는가?** 메모리·작업 상태 축에서 progress log, handoff note, durable issue state를 남긴다.
+3. **완료를 누가 판정하는가?** 평가·관측성 축에서 tests, smoke run, evidence, trace, reviewer gate를 묶는다.
+4. **위험한 실행은 어디에서 차단되는가?** 제약·안전한 자율성 축에서 permission tier, sandbox, approval rule을 정한다.
+5. **여러 agent의 결과는 어떻게 합쳐지는가?** 런타임·참조 구현 축에서 worktree policy, merge contract, orchestration state를 정한다.
 
-이 질문들은 당장 화려하지 않지만, 장기 실행 에이전트에서는 핵심 자산이 된다. 모델은 계속 바뀐다. 하지만 좋은 작업 상태 파일, 검증 스크립트, benchmark adapter, 로그 조회 방식, 권한 모델, 인계 규약은 모델이 바뀌어도 남는다. 더 강한 모델을 붙였을 때 성능이 곱해지는 곳도 바로 이 주변부다.
-
-또 하나의 장점은 이 저장소가 “하네스”를 연구와 제품 사이의 공통 언어로 만든다는 점이다. OpenAI의 agent-first 개발 사례, Anthropic의 long-running agent pattern, LangChain의 model+harness 해부, Fowler의 context engineering·architectural constraint·garbage collection 프레임은 서로 다른 글이지만 같은 문제를 말한다. 에이전트를 신뢰하려면 모델의 말이 아니라, 에이전트가 놓인 환경과 그 환경이 만들어내는 검증 가능한 증거를 봐야 한다.
+여기서 핵심은 model을 바꾸지 않아도 개선할 수 있는 surface가 많다는 점이다.
+좋은 `AGENTS.md`, 재현 가능한 test command, 적절한 sandbox, 실패를 남기는 trace, versioned handoff는 모델 교체 뒤에도 남는 자산이다.
+반대로 이 목록에 좋은 링크가 많다고 해서 조직의 access control, 개인정보 처리, 배포 승인, accessibility 검증이 자동으로 해결되지는 않는다.
+각 팀은 catalog를 출발점으로 쓰되, 실제 위험과 product contract를 자체 policy·human review·rollback 절차로 연결해야 한다.
 
 ## 한계와 읽는 법
 
-Awesome 계열 저장소의 한계도 분명하다. 큐레이션은 빠르게 좋아질 수 있지만 빠르게 낡을 수도 있다. 항목의 품질과 최신성은 링크마다 다르고, 특정 자료가 “하네스 엔지니어링”이라는 이름을 직접 쓰지 않더라도 실제로는 중요한 primitive를 설명할 수 있다. 따라서 이 저장소를 정답 목록으로 읽기보다, 팀의 현재 agent workflow를 점검하는 출발점으로 읽는 편이 좋다.
+Awesome 계열 catalog는 빠르게 유용해지는 만큼 빠르게 낡을 수 있다.
+현재 open issue와 pull request도 대체로 새 resource 추가·분류 제안을 다루며, 목록의 항목 수와 순서는 계속 변할 수 있다.[8]
+그러므로 stars나 항목 수를 특정 tool의 품질 보증으로 읽기보다, 자료의 원문·maintainer·license·최근 변경·자신의 환경 적합성을 각 항목에서 다시 확인해야 한다.[2][4]
 
-특히 실무 팀이라면 목록을 그대로 따라가기보다 자기 환경의 실패 모드에 맞춰 읽는 순서를 정하는 것이 낫다. 에이전트가 자꾸 작업을 잊는다면 Context, Memory & Working State부터 읽고, “성공했다”고 말하지만 결과가 깨진다면 Evals & Observability와 Benchmarks를 먼저 봐야 한다. 위험한 command나 데이터 접근이 문제라면 Constraints, Guardrails & Safe Autonomy가 먼저다.
+Awesome Harness Engineering의 가치는 “하네스는 무엇인가”에 대한 단일 정답을 제공하는 데 있지 않다.
+대신 context, state, scope, verification, observability, benchmark, runtime을 한 화면에 올려, agent의 신뢰성은 모델 출력뿐 아니라 **모델이 행동하는 환경의 설계**로 결정된다는 질문을 계속 되돌려 준다.[3]
+그 질문을 product workflow의 체크리스트로 옮기는 순간, 이 repo는 링크 모음이 아니라 운영 가능한 agent system을 위한 설계 표면도가 된다.
 
-내가 보기에는 이 저장소의 가장 좋은 문장은 정의 자체다. 하네스 엔지니어링은 “AI 에이전트를 둘러싼 환경을 빚어 신뢰성 있게 일하도록 만드는 실천”이다. 이 정의는 에이전트 도입의 책임을 모델 제공사에만 넘기지 않는다. 팀이 어떤 환경을 만들었는지, 어떤 실패 신호를 수집하는지, 어떤 검증을 강제하는지까지 제품 품질의 일부로 본다.
+## Sources
 
-## 정리
-
-Awesome Harness Engineering은 지금 AI 에이전트 논의에서 필요한 방향 전환을 잘 포착한다. 에이전트를 잘 쓰는 팀은 더 긴 prompt만 가진 팀이 아니다. 에이전트가 읽을 문서, 유지할 상태, 실행할 도구, 통과해야 할 검증, 사람이 승인해야 할 경계를 설계한 팀이다.
-
-이 저장소는 바로 그 설계면들을 한곳에 모은다. 그래서 단순한 즐겨찾기 목록이 아니라, agent system을 운영 가능한 engineering artifact로 만들기 위한 지도에 가깝다. 앞으로 모델이 더 좋아질수록 하네스의 중요성은 줄어들기보다 커질 가능성이 높다. 모델이 일을 한다면, 하네스는 그 일이 반복 가능하고 관찰 가능하고 되돌릴 수 있는지 결정하기 때문이다.
-
-Sources: https://discuss.pytorch.kr/t/awesome-harness-engineering-ai/10556, https://github.com/walkinglabs/awesome-harness-engineering, https://github.com/walkinglabs/learn-harness-engineering, https://openai.com/index/harness-engineering/, https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents, https://blog.langchain.com/the-anatomy-of-an-agent-harness/, https://martinfowler.com/articles/exploring-gen-ai/harness-engineering.html
+[1] https://github.com/walkinglabs/awesome-harness-engineering?utm_source=pytorchkr&ref=pytorchkr
+[2] https://api.github.com/repos/walkinglabs/awesome-harness-engineering
+[3] https://raw.githubusercontent.com/walkinglabs/awesome-harness-engineering/main/README.md
+[4] https://raw.githubusercontent.com/walkinglabs/awesome-harness-engineering/main/CONTRIBUTING.md
+[5] https://raw.githubusercontent.com/walkinglabs/awesome-harness-engineering/main/LICENSE
+[6] https://api.github.com/repos/walkinglabs/awesome-harness-engineering/tags
+[7] https://api.github.com/repos/walkinglabs/awesome-harness-engineering/releases/latest
+[8] https://api.github.com/repos/walkinglabs/awesome-harness-engineering/issues?state=open&per_page=20
+[9] https://api.github.com/repos/walkinglabs/awesome-harness-engineering/commits?per_page=20
+[10] https://raw.githubusercontent.com/walkinglabs/awesome-harness-engineering/main/docs/plans/2026-08-19-readme-taxonomy-design.md

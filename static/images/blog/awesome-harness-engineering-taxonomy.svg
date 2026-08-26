@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1320" viewBox="0 0 640 1320" role="img" aria-labelledby="title desc">
+  <title id="title">Awesome Harness Engineering의 8개 큐레이션 영역</title>
+  <desc id="desc">141개 자료를 학습, 기반 개념, 컨텍스트와 메모리, 안전한 자율성, 명세와 워크플로, 평가와 관측성, 벤치마크, 런타임과 하네스로 나눈 세로형 분류 지도</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0f172a"/><stop offset="1" stop-color="#172554"/></linearGradient>
+    <style>
+      .title{font-family:Arial,'Apple SD Gothic Neo',sans-serif;font-weight:700;fill:#f8fafc}
+      .sub{font-family:Arial,'Apple SD Gothic Neo',sans-serif;fill:#cbd5e1}
+      .label{font-family:Arial,'Apple SD Gothic Neo',sans-serif;font-weight:700;fill:#12203d}
+      .small{font-family:Arial,'Apple SD Gothic Neo',sans-serif;fill:#475569}
+      .pill{font-family:Arial,'Apple SD Gothic Neo',sans-serif;font-weight:700;fill:#fff}
+    </style>
+  </defs>
+  <rect width="640" height="1320" rx="28" fill="url(#bg)"/>
+  <text class="title" x="46" y="68" font-size="32">Awesome Harness Engineering</text>
+  <text class="sub" x="46" y="102" font-size="18">모델 밖의 실행 환경을 설계하는 8개 읽기 축</text>
+  <rect x="46" y="132" width="548" height="70" rx="16" fill="#1e40af"/>
+  <text class="pill" x="72" y="161" font-size="18">2026년 8월 README 기준</text>
+  <text class="pill" x="472" y="161" font-size="18" text-anchor="middle">141개 리소스</text>
+  <text class="sub" x="72" y="184" font-size="14">각 링크는 한 개의 가장 적합한 범주에만 배치</text>
+
+  <g>
+    <rect x="46" y="234" width="548" height="104" rx="16" fill="#e0f2fe"/>
+    <rect x="46" y="234" width="12" height="104" rx="6" fill="#0284c7"/>
+    <text class="label" x="82" y="274" font-size="23">학습 자료</text><text class="small" x="82" y="304" font-size="16">코스와 실습형 학습 경로</text>
+    <rect x="512" y="257" width="56" height="40" rx="20" fill="#0284c7"/><text class="pill" x="540" y="283" font-size="19" text-anchor="middle">3</text>
+  </g>
+  <g>
+    <rect x="46" y="354" width="548" height="104" rx="16" fill="#ede9fe"/>
+    <rect x="46" y="354" width="12" height="104" rx="6" fill="#7c3aed"/>
+    <text class="label" x="82" y="394" font-size="23">기반 개념</text><text class="small" x="82" y="424" font-size="16">정의, 원칙, agent-first 개발</text>
+    <rect x="512" y="377" width="56" height="40" rx="20" fill="#7c3aed"/><text class="pill" x="540" y="403" font-size="19" text-anchor="middle">12</text>
+  </g>
+  <g>
+    <rect x="46" y="474" width="548" height="104" rx="16" fill="#dcfce7"/>
+    <rect x="46" y="474" width="12" height="104" rx="6" fill="#16a34a"/>
+    <text class="label" x="82" y="514" font-size="23">컨텍스트 · 메모리 · 작업 상태</text><text class="small" x="82" y="544" font-size="16">전달, 영속 지식, handoff</text>
+    <rect x="512" y="497" width="56" height="40" rx="20" fill="#16a34a"/><text class="pill" x="540" y="523" font-size="19" text-anchor="middle">12</text>
+  </g>
+  <g>
+    <rect x="46" y="594" width="548" height="104" rx="16" fill="#ffedd5"/>
+    <rect x="46" y="594" width="12" height="104" rx="6" fill="#ea580c"/>
+    <text class="label" x="82" y="634" font-size="23">제약 · 가드레일 · 안전한 자율성</text><text class="small" x="82" y="664" font-size="16">도구 경계, 권한, 신뢰성</text>
+    <rect x="512" y="617" width="56" height="40" rx="20" fill="#ea580c"/><text class="pill" x="540" y="643" font-size="19" text-anchor="middle">10</text>
+  </g>
+  <g>
+    <rect x="46" y="714" width="548" height="104" rx="16" fill="#fce7f3"/>
+    <rect x="46" y="714" width="12" height="104" rx="6" fill="#db2777"/>
+    <text class="label" x="82" y="754" font-size="23">명세 · Agent 파일 · 워크플로</text><text class="small" x="82" y="784" font-size="16">지시 파일, spec, human oversight</text>
+    <rect x="512" y="737" width="56" height="40" rx="20" fill="#db2777"/><text class="pill" x="540" y="763" font-size="19" text-anchor="middle">10</text>
+  </g>
+  <g>
+    <rect x="46" y="834" width="548" height="104" rx="16" fill="#cffafe"/>
+    <rect x="46" y="834" width="12" height="104" rx="6" fill="#0891b2"/>
+    <text class="label" x="82" y="874" font-size="23">평가 · 관측성</text><text class="small" x="82" y="904" font-size="16">품질 gate, trace, telemetry</text>
+    <rect x="512" y="857" width="56" height="40" rx="20" fill="#0891b2"/><text class="pill" x="540" y="883" font-size="19" text-anchor="middle">18</text>
+  </g>
+  <g>
+    <rect x="46" y="954" width="548" height="104" rx="16" fill="#fef3c7"/>
+    <rect x="46" y="954" width="12" height="104" rx="6" fill="#ca8a04"/>
+    <text class="label" x="82" y="994" font-size="23">벤치마크</text><text class="small" x="82" y="1024" font-size="16">코딩, 웹, MCP, 안전성, 경제성</text>
+    <rect x="512" y="977" width="56" height="40" rx="20" fill="#ca8a04"/><text class="pill" x="540" y="1003" font-size="19" text-anchor="middle">40</text>
+  </g>
+  <g>
+    <rect x="46" y="1074" width="548" height="104" rx="16" fill="#e0e7ff"/>
+    <rect x="46" y="1074" width="12" height="104" rx="6" fill="#4f46e5"/>
+    <text class="label" x="82" y="1114" font-size="23">런타임 · 하네스 · 참조 구현</text><text class="small" x="82" y="1144" font-size="16">sandbox, orchestration, browser, profile</text>
+    <rect x="512" y="1097" width="56" height="40" rx="20" fill="#4f46e5"/><text class="pill" x="540" y="1123" font-size="19" text-anchor="middle">36</text>
+  </g>
+  <line x1="46" y1="1218" x2="594" y2="1218" stroke="#475569" stroke-width="1"/>
+  <text class="sub" x="46" y="1256" font-size="17">링크 목록이 아니라, 에이전트 운영의</text>
+  <text class="sub" x="46" y="1282" font-size="17">실패 지점을 찾는 읽기 지도</text>
+</svg>
