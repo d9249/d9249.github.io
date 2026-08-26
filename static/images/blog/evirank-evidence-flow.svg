@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1080" viewBox="0 0 640 1080" role="img" aria-labelledby="title desc">
+  <title id="title">EviRank의 구조화 근거 기반 이미지 재정렬 흐름</title>
+  <desc id="desc">텍스트, 이미지, 조합 질의를 정규화하고, Required, Forbidden, Ignore 세 종류의 근거를 여섯 개 의미 슬롯에 채운 뒤, 후보별 루브릭 검증과 후보군 비교로 재정렬한다. 이 구조화 근거는 학생 모델 증류에도 쓰인다.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f7f9ff"/><stop offset="1" stop-color="#f5fbfa"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#172554" flood-opacity=".12"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L9,5 L0,10 Z" fill="#476282"/></marker>
+  </defs>
+  <rect width="640" height="1080" rx="28" fill="url(#bg)"/>
+  <text x="48" y="68" fill="#14213d" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="30" font-weight="700">EviRank: 유사도 대신 검증 가능한 근거</text>
+  <text x="48" y="102" fill="#5b6b82" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="17">멀티모달 질의를 제약 조건으로 바꾸는 이미지 재정렬 흐름</text>
+
+  <g filter="url(#shadow)"><rect x="48" y="142" width="544" height="118" rx="20" fill="#ffffff"/></g>
+  <text x="78" y="181" fill="#17395c" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="19" font-weight="700">1. 서로 다른 입력을 한 흐름으로 받는다</text>
+  <rect x="78" y="201" width="125" height="34" rx="17" fill="#e5efff"/><text x="140" y="224" text-anchor="middle" fill="#2057a6" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="16">텍스트 질의</text>
+  <rect x="218" y="201" width="125" height="34" rx="17" fill="#e9f9f2"/><text x="280" y="224" text-anchor="middle" fill="#17734e" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="16">이미지 질의</text>
+  <rect x="358" y="201" width="174" height="34" rx="17" fill="#f4ebff"/><text x="445" y="224" text-anchor="middle" fill="#7943a5" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="16">이미지 + 수정 지시</text>
+  <path d="M320 260 L320 304" stroke="#476282" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)"><rect x="48" y="322" width="544" height="104" rx="20" fill="#ffffff"/></g>
+  <text x="78" y="362" fill="#17395c" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="19" font-weight="700">2. 질의를 정규화한다</text>
+  <text x="78" y="394" fill="#44546a" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="17">보존할 요소, 바꿀 요소, 맥락 잡음을 드러낸다</text>
+  <path d="M320 426 L320 470" stroke="#476282" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)"><rect x="48" y="488" width="544" height="272" rx="20" fill="#ffffff"/></g>
+  <text x="78" y="528" fill="#17395c" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="19" font-weight="700">3. Evidence Frame: 고정된 슬롯의 제약</text>
+  <text x="78" y="557" fill="#44546a" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="16">엔터티 · 속성 · 행동 · 관계 · 장면 · 핵심 세부사항</text>
+  <rect x="78" y="585" width="454" height="43" rx="12" fill="#e6f4ee"/><text x="96" y="613" fill="#176b4a" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="700">Required</text><text x="220" y="613" fill="#315b4a" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="16">반드시 만족해야 할 조건</text>
+  <rect x="78" y="640" width="454" height="43" rx="12" fill="#fff0ef"/><text x="96" y="668" fill="#b93d32" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="700">Forbidden</text><text x="220" y="668" fill="#71504d" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="16">있으면 감점할 불일치 조건</text>
+  <rect x="78" y="695" width="454" height="43" rx="12" fill="#eef2f8"/><text x="96" y="723" fill="#56657a" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="18" font-weight="700">Ignore</text><text x="220" y="723" fill="#56657a" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="16">판단에서 허용할 비본질 조건</text>
+  <path d="M320 760 L320 804" stroke="#476282" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)"><rect x="48" y="822" width="544" height="148" rx="20" fill="#ffffff"/></g>
+  <text x="78" y="861" fill="#17395c" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="19" font-weight="700">4. 같은 근거로 후보를 두 번 검증한다</text>
+  <text x="78" y="894" fill="#44546a" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="17">후보별 루브릭 점수</text><text x="298" y="894" fill="#476282" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="20">+</text><text x="327" y="894" fill="#44546a" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="17">상위 후보 listwise 비교</text>
+  <text x="78" y="932" fill="#176b4a" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="17" font-weight="700">→ 재정렬 결과</text>
+  <path d="M320 970 L320 1004" stroke="#476282" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="48" y="1022" width="544" height="38" rx="19" fill="#17395c"/>
+  <text x="320" y="1048" text-anchor="middle" fill="#ffffff" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="16">구조화 근거는 선택적으로 경량 student 증류에도 사용된다</text>
+</svg>
