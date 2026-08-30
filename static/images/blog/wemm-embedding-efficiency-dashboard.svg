@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="750" viewBox="0 0 600 750" role="img" aria-labelledby="title desc">
+  <title id="title">WeMM-Embedding 규모 대비 MMEB-v2 성능과 차원 효율</title>
+  <desc id="desc">WeMM 2B는 MMEB-v2 평균 77.9로 Qwen3-VL 2B의 73.2와 8B의 77.8을 앞섰다. WeMM 9B는 80.6이며, WeMM 2B는 256차원에서 이미지와 비디오 성능의 98.7%를 유지한다.</desc>
+  <rect width="600" height="750" fill="#f7fafc"/>
+  <rect x="24" y="22" width="552" height="706" rx="24" fill="#ffffff" stroke="#dce5ee" stroke-width="2"/>
+  <text x="54" y="72" fill="#0f2a43" font-family="Apple SD Gothic Neo, Arial, sans-serif" font-size="30" font-weight="700">작은 모델, 큰 검색 성능</text>
+  <text x="54" y="104" fill="#52677a" font-family="Apple SD Gothic Neo, Arial, sans-serif" font-size="17">MMEB-v2 · 78개 데이터셋 평균 · 높을수록 좋음</text>
+  <rect x="54" y="132" width="492" height="78" rx="16" fill="#e9f7f1"/>
+  <text x="78" y="166" fill="#12715b" font-family="Apple SD Gothic Neo, Arial, sans-serif" font-size="20" font-weight="700">WeMM-Embedding-2B</text>
+  <text x="78" y="192" fill="#2b715e" font-family="Apple SD Gothic Neo, Arial, sans-serif" font-size="17">2B로 8B 공개 베이스라인보다 높음</text>
+  <text x="502" y="183" text-anchor="end" fill="#12715b" font-family="Arial, sans-serif" font-size="36" font-weight="700">77.9</text>
+  <text x="54" y="254" fill="#0f2a43" font-family="Apple SD Gothic Neo, Arial, sans-serif" font-size="20" font-weight="700">같은 벤치마크의 주요 비교</text>
+  <line x1="54" y1="274" x2="546" y2="274" stroke="#dce5ee" stroke-width="2"/>
+  <text x="54" y="311" fill="#334e68" font-family="Apple SD Gothic Neo, Arial, sans-serif" font-size="18">Qwen3-VL-Embedding-2B</text>
+  <rect x="54" y="326" width="430" height="24" rx="12" fill="#edf1f5"/>
+  <rect x="54" y="326" width="366" height="24" rx="12" fill="#a99ad8"/>
+  <text x="510" y="347" fill="#334e68" font-family="Arial, sans-serif" font-size="23" font-weight="700">73.2</text>
+  <text x="54" y="396" fill="#334e68" font-family="Apple SD Gothic Neo, Arial, sans-serif" font-size="18">Qwen3-VL-Embedding-8B</text>
+  <rect x="54" y="411" width="430" height="24" rx="12" fill="#edf1f5"/>
+  <rect x="54" y="411" width="389" height="24" rx="12" fill="#7455b3"/>
+  <text x="510" y="432" fill="#334e68" font-family="Arial, sans-serif" font-size="23" font-weight="700">77.8</text>
+  <text x="54" y="481" fill="#334e68" font-family="Apple SD Gothic Neo, Arial, sans-serif" font-size="18">WeMM-Embedding-9B</text>
+  <rect x="54" y="496" width="430" height="24" rx="12" fill="#edf1f5"/>
+  <rect x="54" y="496" width="403" height="24" rx="12" fill="#14755e"/>
+  <text x="510" y="517" fill="#334e68" font-family="Arial, sans-serif" font-size="23" font-weight="700">80.6</text>
+  <rect x="54" y="553" width="492" height="128" rx="18" fill="#eff6ff" stroke="#b9d7f5" stroke-width="2"/>
+  <text x="78" y="590" fill="#174b7a" font-family="Apple SD Gothic Neo, Arial, sans-serif" font-size="20" font-weight="700">차원을 줄여도 남는 성능</text>
+  <text x="78" y="620" fill="#3d6388" font-family="Apple SD Gothic Neo, Arial, sans-serif" font-size="17">WeMM-Embedding-2B · 256차원</text>
+  <text x="78" y="653" fill="#174b7a" font-family="Apple SD Gothic Neo, Arial, sans-serif" font-size="26" font-weight="700">이미지·비디오 성능 유지율</text>
+  <text x="516" y="654" text-anchor="end" fill="#174b7a" font-family="Arial, sans-serif" font-size="34" font-weight="700">98.7%</text>
+  <text x="54" y="708" fill="#74889b" font-family="Apple SD Gothic Neo, Arial, sans-serif" font-size="14">출처: Tencent WeMM-Embedding 기술 보고서·공개 저장소 (2026-08)</text>
+</svg>
