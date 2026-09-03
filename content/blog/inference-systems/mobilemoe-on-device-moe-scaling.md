@@ -1,6 +1,6 @@
 ---
 title: "MobileMoE는 MoE를 스마트폰 지연·메모리 문제로 다시 설계한다"
-date: "2026-05-27T20:33:41"
+date: "2026-09-03T17:58:15+09:00"
 description: "MobileMoE는 0.3–0.9B 활성 파라미터의 MoE를 온디바이스 메모리·연산 제약에 맞춰 설계하고, INT4 QAT와 ExecuTorch 커스텀 커널로 실제 스마트폰에서 dense MobileLLM-Pro 대비 빠른 prefill/decode를 보인 Meta의 연구다."
 author: "Sangmin Lee"
 category: "inference-systems"
@@ -17,16 +17,16 @@ MoE는 보통 클라우드의 거대 모델을 떠올리게 한다. 수십·수�
 
 Meta의 **MobileMoE: Scaling On-Device Mixture of Experts**는 그 질문을 정면으로 다룬다. 논문은 0.3B, 0.5B, 0.9B급 활성 파라미터를 갖는 MobileMoE-S/M/L을 제안하고, 총 파라미터는 1.3B, 2.8B, 5.3B까지 늘린다. 핵심은 단순히 “작은 MoE를 만들었다”가 아니다. 모바일 메모리, 토큰당 연산, INT4 가중치 크기, 실제 스마트폰 런타임을 함께 놓고 MoE 설계 공간을 다시 최적화했다는 점이다.
 
-이 글은 arXiv 원문·HTML·source tarball의 표와 그림을 직접 확인해 정리한 글이다. 현재 공개 표면도 함께 봐야 한다. Hugging Face와 GitHub 공개 검색 기준으로 MobileMoE 자체 체크포인트나 전용 구현 repo는 아직 확인되지 않는다. 대신 논문 소스에는 도표와 수치가 충분히 공개되어 있고, baseline으로 쓰인 `facebook/MobileLLM-Pro-base-int4-accelerator`, PyTorch ExecuTorch, 평가 harness와 데이터셋 링크가 동반 근거로 제시된다. 따라서 이 연구는 “즉시 내려받아 앱에 넣는 모델 릴리스”라기보다 **온디바이스 MoE 설계와 런타임 프로파일링을 보여 주는 연구 보고서**로 읽는 편이 정확하다.
+공개 상태는 최초 논문 공개 때와 달라졌다. Meta의 Hugging Face `MobileMoE` collection은 현재 11개 항목을 표시하며, 공개 모델 검색에서는 S/M/L 세 크기에 Base·SFT·QAT를 조합한 9개 checkpoint 저장소가 확인된다.[3][4] 즉 이제는 설계 연구만이 아니라 실제 가중치와 custom modeling code까지 제공하는 릴리스다. 다만 모든 checkpoint는 연락처 정보 공유와 라이선스 동의가 필요한 gated access이며, `FAIR Noncommercial Research License`로 배포된다.[4] 따라서 이 작업은 “즉시 앱에 넣을 drop-in 모델”보다는 **가중치·구조 코드·온디바이스 프로파일을 함께 공개한 연구용 레퍼런스 릴리스**로 읽는 편이 정확하다.
 
 <figure style="margin: 1.8rem 0;">
   <img
     src="/images/blog/mobilemoe-architecture.webp"
-    alt="MobileMoE architecture design space and S M L model sizes from the official arXiv source"
+    alt="토큰을 상위 k개 routed expert로 보내고 shared expert를 항상 함께 활성화하는 MobileMoE 계층 구조. expert 수와 세분화 정도를 조절하는 설계 공간도 함께 표시돼 있다."
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
   <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
-    공식 논문 Fig. 9. MobileMoE는 expert 수, expert granularity, shared expert라는 세 축을 조정해 S/M/L 세 스케일을 만든다. 총 파라미터는 커지지만 토큰당 활성 파라미터는 0.3–0.9B 영역에 머문다.
+    공식 논문 Fig. 2. MobileMoE는 expert 수, expert granularity, shared expert라는 세 축을 조정해 S/M/L 세 스케일을 만든다. 총 파라미터는 커지지만 토큰당 활성 파라미터는 0.3–0.9B 영역에 머문다.[2]
   </figcaption>
 </figure>
 
@@ -56,11 +56,11 @@ MobileMoE의 최종 설계는 논문이 말하는 온디바이스 sweet spot을 
 <figure style="margin: 1.8rem 0;">
   <img
     src="/images/blog/mobilemoe-training-recipe.webp"
-    alt="MobileMoE four stage training recipe: pre-training, mid-training, SFT, QAT"
+    alt="사전학습, 중간학습, instruction SFT, INT4 QAT로 이어지는 MobileMoE의 네 단계 학습 흐름도"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
   <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
-    공식 논문 Fig. 10. MobileMoE는 pre-training, mid-training, instruction SFT, INT4 quantization-aware training으로 이어지는 4단계 레시피를 사용한다.
+    공식 논문 Fig. 6. MobileMoE는 pre-training, mid-training, instruction SFT, INT4 quantization-aware training으로 이어지는 4단계 레시피를 사용한다.[2]
   </figcaption>
 </figure>
 
@@ -69,11 +69,11 @@ MobileMoE의 최종 설계는 논문이 말하는 온디바이스 sweet spot을 
 <figure style="margin: 1.8rem 0;">
   <img
     src="/images/blog/mobilemoe-data-mixture.webp"
-    alt="MobileMoE training data mixtures across pre-training mid-training and supervised fine-tuning"
+    alt="사전학습·중간학습·SFT 단계에서 웹·코드·수학·지식·과학 데이터 비중이 달라지는 MobileMoE 학습 데이터 혼합 비율"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
   <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
-    공식 논문 Fig. 11. 데이터 혼합은 PT의 web-heavy coverage에서 MT/SFT의 knowledge·code·math 중심 구성으로 이동한다. 모델 구조만이 아니라 데이터 단계도 온디바이스 품질 envelope을 만드는 일부다.
+    공식 논문 Fig. 7. 데이터 혼합은 PT의 web-heavy coverage에서 MT/SFT의 knowledge·code·math 중심 구성으로 이동한다. 모델 구조만이 아니라 데이터 단계도 온디바이스 품질 envelope을 만드는 일부다.[2]
   </figcaption>
 </figure>
 
@@ -88,11 +88,11 @@ instruction SFT 후에는 MobileMoE-L이 foundational benchmark 평균 60.1, adv
 <figure style="margin: 1.8rem 0;">
   <img
     src="/images/blog/mobilemoe-pareto-frontier.webp"
-    alt="MobileMoE Pareto frontier against inference FLOPs and INT4 weight memory from the official paper"
+    alt="MobileMoE와 dense·MoE 비교 모델의 평균 정확도를 토큰당 추론 FLOPs와 총 파라미터·예상 INT4 메모리에 각각 비교한 Pareto frontier"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
   <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
-    공식 논문 Fig. 5. MobileMoE의 주장은 평균 정확도 하나가 아니라 inference FLOPs와 INT4 weight memory를 함께 본 Pareto frontier에서 나온다.
+    공식 논문 Fig. 5. MobileMoE의 주장은 평균 정확도 하나가 아니라 inference FLOPs와 INT4 weight memory를 함께 본 Pareto frontier에서 나온다.[2]
   </figcaption>
 </figure>
 
@@ -114,7 +114,7 @@ QAT 결과도 중요하다. 논문은 BF16 SFT 대비 INT4 QAT 후 평균 하락
 <figure style="margin: 1.8rem 0;">
   <img
     src="/images/blog/mobilemoe-training-progression.webp"
-    alt="MobileMoE capability progression across pre-training mid-training and SFT stages"
+    alt="사전학습·중간학습·SFT가 진행될수록 상식·지식·과학·독해·추론 벤치마크 평균이 높아지는 MobileMoE 성능 변화"
     style="width: 100%; max-width: 100%; height: auto; display: block;"
   />
   <figcaption style="margin-top: 0.6rem; font-size: 0.95rem; color: #666;">
@@ -122,7 +122,9 @@ QAT 결과도 중요하다. 논문은 BF16 SFT 대비 INT4 QAT 후 평균 하락
   </figcaption>
 </figure>
 
-release 관점에서는 보수적으로 봐야 한다. arXiv HTML과 source에는 평가 harness, 데이터셋, ExecuTorch, baseline MobileLLM-Pro checkpoint 링크가 포함되어 있지만, 공개 검색 기준으로 MobileMoE 자체 모델 repo나 학습/추론 코드 repo는 확인되지 않았다. arXiv 라이선스는 CC BY 4.0이라 논문과 도표 재사용 조건은 비교적 명확하지만, 모델 가중치·커스텀 커널·QAT checkpoint가 공개 artifact로 패키징된 상태라고 말할 근거는 아직 부족하다.
+릴리스 표면은 명확하지만 바로 모바일 앱 배포용 패키지는 아니다. S/M/L 각각에 Base·SFT·QAT checkpoint가 있고, QAT 저장소에는 `model.safetensors`, tokenizer, `configuration_mobilemoe.py`, `modeling_mobilemoe.py`가 함께 들어 있다.[3][4] 그러나 custom `model_type: mobilemoe`는 upstream `transformers`에 아직 포함되지 않아 `trust_remote_code=True`가 필요하다. QAT 모델도 일반 `transformers` 경로에서는 첫 forward에 INT4 tensor를 BF16으로 materialize하며, 모델 카드가 vLLM의 직접 INT4 지원은 되지 않는다고 명시한다.[4] 가중치를 받을 수 있다는 사실과 스마트폰 runtime에 효율적으로 통합할 수 있다는 사실은 별개다.
+
+또한 릴리스 숫자와 논문 숫자를 섞지 않아야 한다. 공식 QAT model card는 배포 checkpoint가 technical report의 QAT checkpoint 이후 self-identity fine-tuning을 짧게 더 거쳤다고 설명하며, 14개 benchmark 평균을 S/M/L 순으로 43.9/52.7/58.1로 제시한다. 논문 표의 44.0/52.5/57.8과 작은 차이가 나는 이유다.[4] 재현·도입 검증에서는 논문 PDF의 수치가 아니라 선택한 checkpoint와 정확히 같은 evaluation recipe를 다시 실행해야 한다.
 
 ## 실무 관점에서의 해석
 
@@ -136,4 +138,14 @@ release 관점에서는 보수적으로 봐야 한다. arXiv HTML과 source에�
 
 그럼에도 이 논문은 볼 가치가 크다. MoE를 대형 클라우드 모델의 전유물로 보던 관성을 깨고, 스마트폰의 메모리와 compute budget 안에서 expert 수, granularity, shared expert, INT4 QAT, fused runtime kernel이 어떻게 같이 움직이는지 보여 준다. 앞으로 온디바이스 AI 경쟁은 단순히 “몇 B 모델인가”가 아니라, **활성 파라미터·총 파라미터·실제 RAM·first-token latency·decode throughput을 동시에 맞추는 sparse system design** 쪽으로 더 자주 이동할 가능성이 높다. MobileMoE는 그 방향의 꽤 선명한 early signal이다.
 
-Sources: https://arxiv.org/abs/2605.27358, https://arxiv.org/html/2605.27358v1, https://arxiv.org/pdf/2605.27358, https://huggingface.co/papers/2605.27358, https://huggingface.co/facebook/MobileLLM-Pro-base-int4-accelerator, https://github.com/pytorch/executorch
+## Sources
+
+[1] https://arxiv.org/abs/2605.27358 — MobileMoE arXiv 초록 및 논문 메타데이터
+
+[2] https://arxiv.org/html/2605.27358v1 — MobileMoE 논문 HTML, 그림·표·런타임 프로파일
+
+[3] https://huggingface.co/collections/facebook/mobilemoe — Meta의 MobileMoE 공식 collection
+
+[4] https://huggingface.co/facebook/MobileMoE-M-QAT — 공식 INT4 QAT 모델 카드, 배포 형식·라이선스·호환성·배포 checkpoint 평가
+
+[5] https://github.com/pytorch/executorch — 논문에서 사용하는 모바일 추론 런타임
