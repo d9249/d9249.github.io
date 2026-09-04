@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="1160" viewBox="0 0 660 1160" role="img" aria-labelledby="title desc">
+  <title id="title">Repo-To-Skill의 운영 지식 스택</title>
+  <desc id="desc">소스 또는 과제가 Creator의 네 단계 증류를 거쳐 AREX-Skill Library와 router에 들어가고, Researcher가 필요한 skill 분기를 로드해 실행하는 세로 구조도</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F7FBFA"/><stop offset="1" stop-color="#EEF5FF"/></linearGradient>
+    <linearGradient id="creator" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#007B78"/><stop offset="1" stop-color="#16A39A"/></linearGradient>
+    <linearGradient id="library" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#285CA8"/><stop offset="1" stop-color="#4B83D1"/></linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#123D5D" flood-opacity=".12"/></filter>
+    <style>
+      .t { font-family: "Apple SD Gothic Neo", "Noto Sans KR", Arial, sans-serif; fill: #183044; }
+      .small { font-size: 17px; font-weight: 700; letter-spacing: .2px; }
+      .label { font-size: 23px; font-weight: 750; }
+      .body { font-size: 18px; font-weight: 500; fill: #4A6172; }
+      .white { fill: #fff; }
+      .whitebody { fill: #E5F9F7; }
+    </style>
+  </defs>
+  <rect width="660" height="1160" rx="32" fill="url(#bg)"/>
+  <text class="t" x="52" y="64" font-size="31" font-weight="800">Repo-To-Skill: 운영 지식을 만드는 실행 경로</text>
+  <text class="t body" x="52" y="96">모델·harness는 유지하고, task에 필요한 지식만 검증해 로드한다</text>
+
+  <text class="t small" x="52" y="152" fill="#18726E">01 · anchor</text>
+  <g filter="url(#shadow)"><rect x="52" y="174" width="556" height="106" rx="20" fill="#FFFFFF" stroke="#9CCFCB" stroke-width="2"/></g>
+  <text class="t label" x="86" y="221">소스 또는 과제</text>
+  <text class="t body" x="86" y="254">repository · paper · target problem</text>
+  <path d="M330 280 V316" fill="none" stroke="#397B82" stroke-width="3"/>
+  <polygon points="320,316 340,316 330,338" fill="#397B82"/>
+
+  <text class="t small" x="52" y="376" fill="#18726E">02 · DisCo Creator: 지식 증류</text>
+  <g filter="url(#shadow)"><rect x="52" y="398" width="556" height="258" rx="24" fill="url(#creator)"/></g>
+  <text class="t label white" x="330" y="448" text-anchor="middle">Scope → Ground → Construct → Verify</text>
+  <line x1="88" y1="486" x2="572" y2="486" stroke="#AEE9E4" stroke-opacity=".55" stroke-width="2"/>
+  <text class="t body whitebody" x="88" y="528">• 적용 capability를 범위화</text>
+  <text class="t body whitebody" x="88" y="566">• 증거·검증·복구 경로를 연결</text>
+  <text class="t body whitebody" x="88" y="604">• candidate graph와 미해결 gap을 기록</text>
+  <path d="M330 656 V692" fill="none" stroke="#397B82" stroke-width="3"/>
+  <polygon points="320,692 340,692 330,714" fill="#397B82"/>
+
+  <text class="t small" x="52" y="752" fill="#3568AD">03 · AREX-Skill Library</text>
+  <g filter="url(#shadow)"><rect x="52" y="774" width="556" height="178" rx="24" fill="url(#library)"/></g>
+  <text class="t label white" x="330" y="826" text-anchor="middle">검증된 skill graph + construction record</text>
+  <text class="t body whitebody" x="330" y="862" text-anchor="middle">router가 area → family → repository → skill로 좁힘</text>
+  <text class="t body whitebody" x="330" y="898" text-anchor="middle">1,000 repositories · 5,000+ skills</text>
+  <path d="M330 952 V988" fill="none" stroke="#397B82" stroke-width="3"/>
+  <polygon points="320,988 340,988 330,1010" fill="#397B82"/>
+
+  <text class="t small" x="52" y="1048" fill="#7D5A1F">04 · DisCo Researcher: 실행</text>
+  <g filter="url(#shadow)"><rect x="52" y="1070" width="556" height="58" rx="17" fill="#FFF4DD" stroke="#D7AB59" stroke-width="2"/></g>
+  <text class="t label" x="330" y="1108" text-anchor="middle">필요한 분기만 로드 → 도구·실험·검증으로 완료</text>
+</svg>
