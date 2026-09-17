@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="920" viewBox="0 0 600 920" role="img" aria-labelledby="title desc">
+  <title id="title">COBRA-Skills의 밴딧 기반 스킬 진화 루프</title>
+  <desc id="desc">후보 스킬군에서 밴딧이 다음 평가 대상을 고르고, 타깃 에이전트 실행의 보상과 궤적이 증거 기반 진화를 거쳐 다음 후보군을 갱신하는 흐름도</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#99a7c2"/></marker>
+    <style>
+      .h{font:700 27px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#f5f7fb}
+      .t{font:600 20px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#f5f7fb}
+      .s{font:400 16px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#c9d2e3}
+      .tag{font:700 14px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#161b2a}
+    </style>
+  </defs>
+  <rect width="600" height="920" rx="28" fill="#101522"/>
+  <text x="48" y="62" class="h">COBRA-Skills: 평가 예산을 쓰는 루프</text>
+  <text x="48" y="92" class="s">밴딧 선택과 실행 증거 기반 진화를 분리한다</text>
+
+  <path d="M300 235 L300 285" stroke="#99a7c2" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M300 425 L300 475" stroke="#99a7c2" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M300 640 L300 690" stroke="#99a7c2" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M65 760 L34 760 L34 180 L65 180" fill="none" stroke="#99a7c2" stroke-width="4" marker-end="url(#arrow)"/>
+  <rect x="42" y="430" width="25" height="115" rx="12" fill="#101522" stroke="#99a7c2" stroke-width="1"/>
+  <text x="55" y="530" text-anchor="middle" transform="rotate(-90 55 530)" class="s" style="font-size:13px;">다음 후보군</text>
+
+  <rect x="65" y="125" width="470" height="110" rx="20" fill="#253453" stroke="#6ea8ff" stroke-width="2"/>
+  <rect x="88" y="148" width="76" height="28" rx="14" fill="#a9c6ff"/>
+  <text x="104" y="168" class="tag">입력</text>
+  <text x="188" y="172" class="t">후보 스킬군</text>
+  <text x="188" y="204" class="s">고정 크기 population · 기존 후보와 새 후보</text>
+
+  <rect x="65" y="285" width="470" height="140" rx="20" fill="#432b58" stroke="#c58cff" stroke-width="2"/>
+  <rect x="88" y="308" width="76" height="28" rx="14" fill="#dfbbff"/>
+  <text x="104" y="328" class="tag">선택</text>
+  <text x="188" y="332" class="t">밴딧 우선순위화</text>
+  <text x="188" y="364" class="s">예상 보상 + 불확실성 보너스</text>
+  <text x="188" y="392" class="s">유망하거나 덜 탐색된 스킬을 다음 평가로</text>
+
+  <rect x="65" y="475" width="470" height="165" rx="20" fill="#173f42" stroke="#55d4c6" stroke-width="2"/>
+  <rect x="88" y="498" width="76" height="28" rx="14" fill="#9be6de"/>
+  <text x="104" y="518" class="tag">관측</text>
+  <text x="188" y="522" class="t">타깃 에이전트 실행</text>
+  <text x="188" y="554" class="s">선택된 스킬을 실제 task에 적용</text>
+  <text x="188" y="584" class="s">보상과 trajectory를 optimization history에 축적</text>
+  <text x="188" y="614" class="s">평가 점수는 실행 결과에서만 얻는다</text>
+
+  <rect x="65" y="690" width="470" height="140" rx="20" fill="#5a371d" stroke="#f3ae62" stroke-width="2"/>
+  <rect x="88" y="713" width="76" height="28" rx="14" fill="#ffd1a0"/>
+  <text x="104" y="733" class="tag">갱신</text>
+  <text x="188" y="737" class="t">증거 기반 스킬 진화</text>
+  <text x="188" y="769" class="s">재생성 · rollout 변이 · 교차</text>
+  <text x="188" y="797" class="s">저우선순위 후보를 교체해 다음 population 구성</text>
+
+  <text x="78" y="870" class="s">핵심: 모든 후보를 실행하지 않고, 실행 결과로 후보 공간을 계속 바꾼다.</text>
+</svg>
