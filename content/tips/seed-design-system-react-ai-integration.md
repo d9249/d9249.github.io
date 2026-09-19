@@ -1,14 +1,16 @@
 ---
 title: "당근 SEED: 토큰·컴포넌트·AI 컨텍스트를 한 흐름으로 쓰는 법"
-date: "2026-09-20T01:02:03+09:00"
+date: "2026-09-20T01:40:29"
 description: "당근의 오픈소스 디자인 시스템 SEED를 React 프로젝트와 AI 에이전트 작업 흐름에 연결할 때 확인할 구조와 실전 도입 순서를 정리합니다."
+author: "Sangmin Lee"
 category: "dev-tip"
 tags: ["design-system-react-ai"]
 repository: "daangn/seed-design"
 sourceUrl: "https://seed-design.io/"
 license: "Apache-2.0"
-status: "open-source"
+status: "Open source"
 platforms: ["macos-linux", "winos"]
+draft: false
 highlights:
   - "토큰부터 패턴까지"
   - "React와 Lynx 지원"
@@ -113,6 +115,14 @@ SEED의 장점은 component 수가 많다는 데만 있지 않다.[1][2]
 **foundation → component → pattern → 개발 문서 → AI 컨텍스트**가 이어져 있어, 디자인 시스템을 단순 UI kit이 아니라 협업 규칙으로 운영하려는 팀에 맞는다.[1][2][4]
 
 반대로 이미 다른 token 체계와 component 플랫폼을 깊게 쓰고 있다면, 전체 교체보다 간격·색·상태 규칙을 비교하는 작은 pilot부터 시작하는 편이 낫다.[2] 먼저 한 화면에서 token drift와 상태 누락이 실제로 줄어드는지 확인하고 확장하자.[2]
+
+## 참고한 공개 자료
+
+- [1] [SEED Design System](https://seed-design.io/)
+- [2] [SEED Get Started](https://seed-design.io/get-started)
+- [3] [SEED React 문서](https://seed-design.io/react)
+- [4] [SEED AI & Tools 문서](https://seed-design.io/ai-integration)
+- [5] [daangn/seed-design GitHub 저장소](https://github.com/daangn/seed-design)
 
 Sources:
 [1] https://seed-design.io — SEED Design System
