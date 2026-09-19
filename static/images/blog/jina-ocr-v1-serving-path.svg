@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="805" viewBox="0 0 500 805" role="img" aria-labelledby="title desc">
+  <title id="title">jina-ocr-v1의 문서 파싱 경로</title>
+  <desc id="desc">문서 이미지 또는 PDF가 DeepEncoder 압축과 MoE decoder 및 FastMTP speculative decoding을 거쳐 Markdown 텍스트, 표, 수식으로 변환되는 세로 구조도</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#9eabc4"/></marker>
+    <style>
+      .h{font:700 26px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#f7f8fc}
+      .t{font:700 20px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#f7f8fc}
+      .s{font:400 16px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#d3dbea}
+      .b{font:700 13px -apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;fill:#18202c}
+    </style>
+  </defs>
+  <rect width="500" height="805" rx="28" fill="#101522"/>
+  <text x="38" y="56" class="h">jina-ocr-v1: 문서에서 Markdown까지</text>
+  <text x="38" y="84" class="s">파싱 품질뿐 아니라 decoding 비용을 겨냥한 경로</text>
+
+  <path d="M250 228 L250 278" stroke="#9eabc4" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M250 420 L250 470" stroke="#9eabc4" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M250 615 L250 665" stroke="#9eabc4" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <rect x="35" y="120" width="430" height="108" rx="20" fill="#233b58" stroke="#74b6ff" stroke-width="2"/>
+  <rect x="59" y="143" width="69" height="27" rx="13" fill="#aed0ff"/><text x="76" y="162" class="b">입력</text>
+  <text x="151" y="166" class="t">문서 이미지 · PDF</text>
+  <text x="151" y="198" class="s">한 page를 읽어 text·표·수식·읽기 순서를 복원</text>
+
+  <rect x="35" y="278" width="430" height="142" rx="20" fill="#3b315f" stroke="#c39aff" stroke-width="2"/>
+  <rect x="59" y="301" width="69" height="27" rx="13" fill="#e1c8ff"/><text x="76" y="320" class="b">압축</text>
+  <text x="151" y="324" class="t">DeepEncoder: 전체 + local tile</text>
+  <text x="151" y="355" class="s">1024×1024 전역 뷰 → 256 visual tokens</text>
+  <text x="151" y="383" class="s">페이지 세부도에 따라 dynamic tile을 추가</text>
+
+  <rect x="35" y="470" width="430" height="145" rx="20" fill="#174d4a" stroke="#68d8c8" stroke-width="2"/>
+  <rect x="59" y="493" width="69" height="27" rx="13" fill="#a9ede2"/><text x="76" y="512" class="b">생성</text>
+  <text x="151" y="516" class="t">MoE decoder + FastMTP</text>
+  <text x="151" y="547" class="s">3.4B total · 약 570M active per token</text>
+  <text x="151" y="575" class="s">K=3 draft token을 greedy verifier가 검증</text>
+
+  <rect x="35" y="665" width="430" height="95" rx="20" fill="#5b3b21" stroke="#f3b36b" stroke-width="2"/>
+  <rect x="59" y="688" width="69" height="27" rx="13" fill="#ffd5a6"/><text x="76" y="707" class="b">출력</text>
+  <text x="151" y="711" class="t">Markdown과 구조화된 문서 내용</text>
+  <text x="151" y="739" class="s">속도만 개선, greedy output은 유지</text>
+
+  <text x="38" y="790" class="s">핵심: visual token과 decoder pass를 함께 줄여 page/s를 높인다.</text>
+</svg>
