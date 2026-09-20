@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="820" viewBox="0 0 600 820" role="img" aria-labelledby="title desc">
+  <title id="title">Cua computer-use control plane</title>
+  <desc id="desc">중앙의 agent harness가 Cua Driver를 통해 기존 desktop을 조작하거나, Cua Sandbox와 Lume 및 Fleet로 격리된 computer를 사용한다. Cua-Bench는 task와 evaluator로 실행 trace를 독립 평가한다.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0a1629"/><stop offset="1" stop-color="#14223e"/></linearGradient>
+    <linearGradient id="core" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4a66f5"/><stop offset="1" stop-color="#6c9cff"/></linearGradient>
+    <linearGradient id="driver" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0c9d98"/><stop offset="1" stop-color="#4ed4c6"/></linearGradient>
+    <linearGradient id="sandbox" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8063e7"/><stop offset="1" stop-color="#b38dff"/></linearGradient>
+    <linearGradient id="bench" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d87a2e"/><stop offset="1" stop-color="#ffc260"/></linearGradient>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#a9c5e8"/></marker>
+    <style>.eyebrow{font:600 13px system-ui,sans-serif;letter-spacing:1.5px;fill:#a8c9f2}.heading{font:700 30px system-ui,sans-serif;fill:#f4f8ff}.sub{font:400 15px system-ui,sans-serif;fill:#c4d7f0}.title{font:700 20px system-ui,sans-serif;fill:#fff}.body{font:400 14px system-ui,sans-serif;fill:#eff6ff}.cap{font:600 12px system-ui,sans-serif;fill:#deebfa}.edge{font:600 12px system-ui,sans-serif;fill:#b9d7f5}.footer{font:400 13px system-ui,sans-serif;fill:#c6d9ef}</style>
+  </defs>
+  <rect width="600" height="820" rx="28" fill="url(#bg)"/>
+  <text x="44" y="56" class="eyebrow">CUA · COMPUTER-USE CONTROL PLANE</text>
+  <text x="44" y="95" class="heading">모델 하나가 아니라,</text>
+  <text x="44" y="130" class="heading">실행·격리·검증의 분업</text>
+  <text x="44" y="158" class="sub">같은 agent harness가 작업의 위험도와 환경에 맞는 surface를 고른다</text>
+
+  <path d="M300 280 L300 322" stroke="#a9c5e8" stroke-width="3" marker-end="url(#arr)"/>
+  <path d="M244 430 C165 444 123 480 123 531" fill="none" stroke="#a9c5e8" stroke-width="3" marker-end="url(#arr)"/>
+  <path d="M356 430 C435 444 477 480 477 531" fill="none" stroke="#a9c5e8" stroke-width="3" marker-end="url(#arr)"/>
+  <path d="M300 456 L300 654" stroke="#efbf76" stroke-width="3" stroke-dasharray="7 8" marker-end="url(#arr)"/>
+  <text x="72" y="478" class="edge">권한이 있는</text><text x="72" y="495" class="edge">실사용 desktop</text>
+  <text x="414" y="478" class="edge">새로운</text><text x="414" y="495" class="edge">격리 computer</text>
+
+  <rect x="120" y="190" width="360" height="90" rx="18" fill="url(#core)"/>
+  <text x="150" y="228" class="title">agent harness + model</text>
+  <text x="150" y="254" class="body">목표·memory·code·tool call을 조정</text>
+
+  <rect x="120" y="322" width="360" height="108" rx="18" fill="#17395e" stroke="#80aee0" stroke-width="1.2"/>
+  <text x="150" y="360" class="title">Cua: GUI action surface</text>
+  <text x="150" y="387" class="body">screenshot · accessibility tree · click · type</text>
+  <text x="150" y="410" class="cap">MCP · CLI · Python / TypeScript SDK</text>
+
+  <rect x="42" y="530" width="230" height="112" rx="18" fill="url(#driver)"/>
+  <text x="70" y="567" class="title">Cua Driver</text>
+  <text x="70" y="594" class="body">기존 macOS·Windows·Linux</text>
+  <text x="70" y="616" class="body">desktop의 native app을 drive</text>
+  <rect x="70" y="622" width="155" height="18" rx="9" fill="#fff" fill-opacity=".18"/><text x="79" y="635" class="cap">policy · bounded mode</text>
+
+  <rect x="328" y="530" width="230" height="112" rx="18" fill="url(#sandbox)"/>
+  <text x="356" y="567" class="title">Cua Sandbox</text>
+  <text x="356" y="594" class="body">code와 GUI가 같은 OS state</text>
+  <text x="356" y="616" class="body">Lume · local VM · Fleet</text>
+  <rect x="356" y="622" width="142" height="18" rx="9" fill="#fff" fill-opacity=".18"/><text x="365" y="635" class="cap">isolated computer</text>
+
+  <rect x="120" y="654" width="360" height="104" rx="18" fill="url(#bench)"/>
+  <text x="150" y="691" class="title">Cua-Bench</text>
+  <text x="150" y="718" class="body">task · starting state · evaluator를 분리</text>
+  <text x="150" y="741" class="body">agent와 infrastructure를 바꿔도 trace를 비교</text>
+
+  <rect x="44" y="780" width="512" height="24" rx="8" fill="#112b4a"/>
+  <text x="59" y="797" class="footer">통제의 핵심: 권한 정책만이 아니라, 격리와 독립 평가를 함께 설계한다</text>
+</svg>
