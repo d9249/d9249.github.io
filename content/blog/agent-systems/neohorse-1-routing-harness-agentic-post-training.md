@@ -1,7 +1,7 @@
 ---
 title: "NeoHorse-1은 라우팅 하네스를 ‘서빙 최적화’에서 다음 학습 분포를 만드는 관측 계층으로 확장한다"
 date: "2026-09-10T16:35:22+09:00"
-description: "NeoHorse-1은 에이전트 실행 중 남는 라우팅·도구·결과 기록을 커리큘럼과 온폴리시 증류, 다음 데이터 배분에 연결해 4B·9B 오픈 가중치 모델을 post-training한 초기 RSI 프로토타입이다."
+description: "NeoHorse-1은 라우팅·도구 실행 기록을 에이전트 post-training에 연결한 RSI 초기 프로토타입이며, 후속 NeoHorse-Jev는 같은 4B 계열을 구조화된 선택과 점수화에 활용한다."
 author: "Sangmin Lee"
 category: "agent-systems"
 tags:
@@ -72,7 +72,40 @@ Repository는 Apache-2.0 LICENSE, deployment README, `examples/` 및 technical r
 Hugging Face collection은 4B·9B BF16 가중치를 함께 배포하며, 두 model card는 text-only inference용 패키지이고 vision weights는 포함하지 않는다고 밝힌다.[5][6][7]
 README는 SGLang 0.5.17과 vLLM 예시를 통해 262,144-token context 설정, Qwen3 reasoning parser, tool-call parser를 안내한다.[4]
 
-반면 release maturity는 조심스럽게 읽어야 한다. 확인 시점에 repository에는 GitHub Release가 없고 tags endpoint도 비어 있으며, 최근 커밋은 평가 표와 모델 카드 결과의 동기화 성격이다.[9][10][13] 즉 공개 가중치와 serving recipe는 있으나, versioned SDK나 재현 가능한 end-to-end training pipeline이 갖춰진 일반-purpose framework로 보기는 이르다. 실무 팀은 우선 self-hosted text agent의 base checkpoint 후보로 평가하되, 자신의 tool schema·router policy·task 분포에서 별도 harness evaluation과 safety gate를 붙이는 편이 맞다.
+반면 공개 범위는 서로 구분해 읽어야 한다. GitHub Releases의 최신 릴리스 endpoint는 404를 반환하고 tags 목록도 비어 있다.[9][10]
+저장소 README는 9월 24일 NeoHorse-Jev-4B 공개를 알리고 있으며, 최근 변경에는 Jev 배포 가이드 갱신도 포함된다.[4][13]
+`jev/`에는 추론 코드와 backend adapter, 배포 예시가 있으나 이는 NeoHorse-1 논문이 설명하는 post-training 전체 파이프라인을 재현하는 코드와는 다르다.[14]
+따라서 공개 모델을 실행할 수 있다는 사실과 논문의 학습 레시피를 독립 재현할 수 있다는 주장은 분리해야 한다.
+
+## 후속 공개: NeoHorse-Jev-4B
+
+**2026년 9월 29일 업데이트.** 논문 공개 뒤 공식 저장소는 NeoHorse-1-4B를 바탕으로 한 별도 4B 구조화 의사결정 모델 NeoHorse-Jev-4B를 공개했다.[14][15]
+원 논문의 열 개 benchmark 결과에 포함된 체크포인트는 아니므로, 아래 평가는 논문의 NeoHorse-1 결과와 합산하거나 같은 실험으로 해석하면 안 된다.[2][14]
+
+Jev의 차이는 출력 인터페이스에 있다. 애플리케이션이 상태와 선택지·질문을 정하면, 모델은 자유 형식 텍스트를 autoregressive하게 이어 쓰는 대신 prefill-only 추론으로 후보 답의 결정과 확률을 반환한다.[14][15] 공식 문서는 세 가지 결정 유형을 제공한다.[14]
+
+- **Choice:** 앱이 정의한 후보 중 하나를 고르고 각 후보의 확률을 반환한다. 요청 라우팅이나 도구·행동 선택에 쓸 수 있다.[14]
+- **Noul:** 예/아니요 질문에 대해 조건이 참일 확률을 반환한다. 조건 검사나 workflow gate에 적합하다.[14]
+- **Score:** 낮은 값부터 순서가 있는 rating level의 확률 분포와 기대 점수를 반환해 품질·심각도·우선순위를 수치화한다.[14]
+
+저자 평가는 서로 다른 두 aggregate를 제시하므로, 같은 점수 축으로 합치지 않고 나눠 읽어야 한다.[14]
+
+| 평가 집계 | 보고 결과 |
+|---|---:|
+| 6-group 균등 평균 | 77.70 |
+| 3개 고정 subset 평균 | 83.26% |
+
+첫 번째 77.70은 여섯 group을 모두 보고한 네 open-weight decision model 중 가장 높은 값이라고 저자들은 보고한다.[14]
+하지만 각 benchmark를 모두 이긴 것은 아니다. Open-Jev-9B는 JevBench와 OpenJev text, Kev-4B는 MASSIVE, Laya는 VitaminC에서 더 높은 점수를 기록한다.[14]
+
+두 번째 83.26%는 Nimble·VitaminC·MASSIVE의 고정 subset 평균이며, 같은 비교에서 NeoHorse-1-4B가 기록한 71.76%보다 11.50 percentage point 높다.[14][15]
+77.70은 여섯 group의 비가중 평균이지 전체 예제를 합친 정확도가 아니며, subset 구성과 채점 방식도 benchmark마다 다르다.[14]
+따라서 이는 저자들이 제시한 비교 결과이지 독립 재현이나 하나의 통합 leaderboard로 읽을 숫자는 아니다.
+
+모델 카드는 텍스트와 이미지 한 장을 함께 넣는 입력도 지원한다고 명시하고, image-NLI 8,000개 예제에서 60.65%를 보고한다.[15]
+그러나 해당 표에는 비교 모델의 결과가 없어, 이 수치는 이미지 입력 성능을 측정한 단일 모델 결과이지 상대적 우위를 보여주는 근거는 아니다.[15]
+
+운영 신호도 함께 보수적으로 볼 필요가 있다. 저장소에는 NeoHorse-1-9B의 tool call이 특정 Windows 10·OpenAI Chat Completions 연동 환경에서 실패했다는 공개 이슈가 올라와 있다.[16] 이 한 건만으로 checkpoint 자체의 결함이나 일반적인 실패율을 단정할 수는 없지만, 배포 전에는 실제 serving backend·tool schema·client 조합에서 function-call 경로를 별도로 검증해야 한다.
 
 ## 실무 관점에서의 해석
 
@@ -82,16 +115,19 @@ NeoHorse-1의 가장 실용적인 기여는 RSI라는 큰 이름보다 **라우�
 
 ## Sources
 
-[1] https://arxiv.org/abs/2609.08183 — arXiv abstract
-[2] https://arxiv.org/html/2609.08183 — arXiv HTML
-[3] https://github.com/TokenRhythm/NeoHorse — NeoHorse official repository
-[4] https://raw.githubusercontent.com/TokenRhythm/NeoHorse/main/README.md — NeoHorse README
-[5] https://huggingface.co/collections/TokenRhythm/neohorse-1 — NeoHorse Hugging Face collection
-[6] https://huggingface.co/TokenRhythm/NeoHorse-1-4B — NeoHorse-1-4B model card
-[7] https://huggingface.co/TokenRhythm/NeoHorse-1-9B — NeoHorse-1-9B model card
-[8] https://api.github.com/repos/TokenRhythm/NeoHorse — NeoHorse GitHub metadata
-[9] https://api.github.com/repos/TokenRhythm/NeoHorse/tags — NeoHorse GitHub tags
-[10] https://api.github.com/repos/TokenRhythm/NeoHorse/releases/latest — NeoHorse GitHub latest release
-[11] https://api.github.com/repos/TokenRhythm/NeoHorse/contents — NeoHorse repository file list
-[12] https://api.github.com/repos/TokenRhythm/NeoHorse/license — NeoHorse repository license
-[13] https://api.github.com/repos/TokenRhythm/NeoHorse/commits?per_page=5 — NeoHorse recent commits
+[1] https://arxiv.org/abs/2609.08183
+[2] https://arxiv.org/html/2609.08183
+[3] https://github.com/TokenRhythm/NeoHorse
+[4] https://raw.githubusercontent.com/TokenRhythm/NeoHorse/main/README.md
+[5] https://huggingface.co/collections/TokenRhythm/neohorse-1
+[6] https://huggingface.co/TokenRhythm/NeoHorse-1-4B
+[7] https://huggingface.co/TokenRhythm/NeoHorse-1-9B
+[8] https://api.github.com/repos/TokenRhythm/NeoHorse
+[9] https://api.github.com/repos/TokenRhythm/NeoHorse/tags
+[10] https://api.github.com/repos/TokenRhythm/NeoHorse/releases/latest
+[11] https://api.github.com/repos/TokenRhythm/NeoHorse/contents
+[12] https://api.github.com/repos/TokenRhythm/NeoHorse/license
+[13] https://api.github.com/repos/TokenRhythm/NeoHorse/commits?per_page=5
+[14] https://raw.githubusercontent.com/TokenRhythm/NeoHorse/main/jev/README.md
+[15] https://huggingface.co/TokenRhythm/NeoHorse-Jev-4B
+[16] https://github.com/TokenRhythm/NeoHorse/issues/3
