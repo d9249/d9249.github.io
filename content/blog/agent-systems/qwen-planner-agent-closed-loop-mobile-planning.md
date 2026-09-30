@@ -26,13 +26,13 @@ draft: false
 
 ## 핵심 구조: 데이터, 학습, 하네스의 연결
 
-**AI for Data** 단계는 전문 에이전트가 과제를 만들고, 상호작용 궤적을 수집·정리하며, 실패 진단과 개발 세트 결과를 다음 샘플링에 반영한다. **AI for Training**은 계획 중심의 supervised cold start 뒤에 혼합 환경의 online agentic RL을 진행한다. 여기에는 reasoning과 도구 사용 비용을 줄이면서 성능을 유지하려는 Competence-Aware Reward-and-Advantage Engineering(CARE)이 들어간다.
+**AI for Data** 단계는 실행 가능한 과제와 시연 궤적을 만들고, 실패 진단과 개발 세트 결과를 다음 샘플링에 반영한다. **AI for Training**은 계획 중심의 supervised cold start 뒤에 sandbox, LLM 시뮬레이터, 선택적 실기기 세션을 결합한 online agentic RL을 진행한다. CARE는 과제 그룹의 성공률에 따라 학습 초점이 진행 shaping에서 완료·효율로 이동하도록 보상 일정을 조절하며, bounded LLM controller가 사전 정의된 schedule을 고른다. 성공 그룹에서도 효율 보상이 완료 보상을 압도하지 않도록 advantage 정규화 하한을 둔다.
 
 **AI for Harness**는 실행 시점에 필요한 기술(Skills), 영속 메모리, 도구, 실행 피드백을 결합한다. 모델 실행에서 얻은 실패 흔적은 이후 데이터와 하네스 개선에 활용되며, 변경 사항은 오프라인 검토를 거친다. 논문에서 말하는 폐루프는 자율적으로 운영 중 자기 코드를 무제한 변경하는 시스템이 아니라, AI가 개선 후보를 만들고 검증 가능한 개발 과정을 지원하는 반복 구조에 가깝다.
 
 ## 공개된 근거에서 확인되는 점
 
-MobilePA-Bench 비교에서 Qwen-Planner-Agent 27B는 Overall 77.05%를 기록해 논문에 포함된 모델·시스템 가운데 1위를 차지했다. Qwen 27B 기준 모델의 67.22%보다 높고, GPT 6 Astra(76.84%)와 Claude Opus 5(75.71%)보다도 근소하게 앞선다. 35B-A3B 구성도 기준 모델 54.90%에서 69.91%로 향상했다고 보고한다.
+논문 평가에 포함된 MobilePA-Bench 시스템 가운데 Qwen-Planner-Agent 27B는 Overall 77.05%로 가장 높은 점수를 기록했다. 이는 Qwen 27B 기준 모델의 67.22%보다 높고, GPT 6 Astra(76.84%)와 Claude Opus 5(75.71%)보다도 근소하게 앞선다. 35B-A3B 구성도 기준 모델 54.90%에서 69.91%로 향상했다고 보고한다. 이는 planner 단독 점수가 아니라 Harness까지 포함한 시스템 점수다.
 
 | 설정 | MobilePA-Bench Overall | 논문 내 비교 |
 |---|---:|---|
@@ -42,7 +42,9 @@ MobilePA-Bench 비교에서 Qwen-Planner-Agent 27B는 Overall 77.05%를 기록�
 | GPT 6 Astra | 76.84% | 비교 상용 모델 |
 | Claude Opus 5 | 75.71% | 비교 상용 모델 |
 
-세부 능력에서도 27B Agent가 Tool Use 77.79%, Memory 74.76%, Skills 86.25%를 기록했다고 보고한다. 이 수치는 모델 단독 성능과 Harness 지원을 구분하는 비교와 함께 읽어야 한다. 논문은 비용 또한 1,000개 작업당 출력 토큰 비용 2.41달러로 추정하지만, 입력 토큰, 외부 도구 요금, 기기 실행 비용, 추가 Harness 처리 비용은 제외한다고 명시한다. 따라서 전체 운영비가 아니라 논문의 가격·출력량 가정 아래 계산한 출력 비용 비교다.
+세부 능력에서도 27B Agent가 Tool Use 77.79%, Memory 74.76%, Skills 86.25%를 기록했다고 보고한다. Sub-agent coordination 점수는 Qwen 기준 모델 47.19%, Planner 55.06%, Agent 59.55%로 단계별 차이가 나타난다. 논문은 CARE ablation에서 Vanilla RL과 비슷한 학습 정확도를 유지하면서 최종 공유 step에서 출력 길이를 32.5% 줄였다고도 보고한다. 비용은 평균 출력 토큰과 당시 출력 단가를 이용해 추산한 값으로, 1,000개 작업당 2.41달러 대 비교 모델 3.06~67.76달러다. 이는 관찰된 전체 운영비가 아니다. 입력 토큰, 외부 도구 요금, 기기 실행, Harness 처리 비용을 제외하므로 논문 가격 가정 아래의 출력 토큰 비용 추정치로 한정한다.
+
+공개 범위 역시 재현 가능성 판단에 중요하다. 연결된 GitHub 저장소는 기술 보고서 웹사이트 저장소이며 모델 가중치·훈련 코드·에이전트 구현의 배포 저장소가 아니라고 명시한다. Hugging Face 링크도 논문 소개 페이지다. 따라서 논문의 높은 벤치마크 점수와 비용 추정은 저자 보고 결과이지, 지금 바로 동일한 모델과 전체 시스템을 내려받아 독립 재현할 수 있다는 의미는 아니다.
 
 ## 실무 관점에서의 해석
 
@@ -54,4 +56,5 @@ MobilePA-Bench 비교에서 Qwen-Planner-Agent 27B는 Overall 77.05%를 기록�
 
 - [논문](https://arxiv.org/abs/2609.29892)
 - [공식 프로젝트 페이지 및 기술 보고서](https://tongyi-mai.github.io/Qwen-Planner-Agent/)
+- [공식 GitHub 저장소 및 공개 범위 안내](https://github.com/Tongyi-MAI/Qwen-Planner-Agent)
 - [Hugging Face 논문 소개](https://huggingface.co/papers/2609.29892)
