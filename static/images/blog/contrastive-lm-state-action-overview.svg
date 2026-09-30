@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1040" viewBox="0 0 720 1040" role="img" aria-labelledby="title desc">
+  <title id="title">CLM은 상태에 맞는 행동 후보를 점수화한다</title>
+  <desc id="desc">상태와 행동 후보를 각각 Qwen3-8B 인코더와 별도 투영 헤드로 인코딩하고, 스케일된 코사인 유사도와 소프트맥스로 비교한다. 반복되는 행동 벡터는 캐시할 수 있다.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#091523"/><stop offset="1" stop-color="#172942"/></linearGradient>
+    <linearGradient id="mint" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#67e8d5"/><stop offset="1" stop-color="#53a6f5"/></linearGradient>
+    <linearGradient id="violet" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c4a7ff"/><stop offset="1" stop-color="#8f79ee"/></linearGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#000" flood-opacity=".24"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#91a8c6"/></marker>
+    <style>
+      .t{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#eef5ff}
+      .muted{fill:#b5c5da}.label{font-size:24px;font-weight:750;letter-spacing:1.2px}.small{font-size:25px}.head{font-size:42px;font-weight:780}.arrow{fill:none;stroke:#91a8c6;stroke-width:4;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="720" height="1040" rx="30" fill="url(#bg)"/>
+  <text class="t head" x="38" y="67">CLM은 행동 후보를 점수화한다</text>
+  <text class="t small muted" x="40" y="111">주어진 후보를 비교하며, 새 행동을 생성하지 않는다.</text>
+
+  <rect x="36" y="154" width="310" height="202" rx="22" fill="#10283a" stroke="#4fb5a7" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="374" y="154" width="310" height="202" rx="22" fill="#20203c" stroke="#9b87e4" stroke-width="2" filter="url(#shadow)"/>
+  <text class="t label" x="58" y="194" fill="#67e8d5">상태 입력</text>
+  <text class="t" x="58" y="239" font-size="32" font-weight="730">문맥 + 질문</text>
+  <text class="t small muted" x="58" y="281">무슨 일이 일어났나?</text>
+  <text class="t small muted" x="58" y="317">무엇을 결정할까?</text>
+  <text class="t label" x="396" y="194" fill="#c4a7ff">행동 후보</text>
+  <text class="t" x="396" y="239" font-size="32" font-weight="730">후보 집합</text>
+  <text class="t small muted" x="396" y="281">도구·답변·행동</text>
+  <text class="t small muted" x="396" y="317">호출자가 제공</text>
+
+  <path class="arrow" d="M191 356 V397"/><path class="arrow" d="M529 356 V397"/>
+  <rect x="36" y="414" width="310" height="230" rx="22" fill="#10283a" stroke="#4fb5a7" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="374" y="414" width="310" height="230" rx="22" fill="#20203c" stroke="#9b87e4" stroke-width="2" filter="url(#shadow)"/>
+  <text class="t label" x="58" y="455">고정 인코더</text>
+  <text class="t" x="58" y="502" font-size="36" font-weight="760">Qwen3-8B</text>
+  <text class="t small" x="58" y="546">상태 투영 헤드</text>
+  <text class="t small muted" x="58" y="594">→ 상태 벡터 1개</text>
+  <text class="t label" x="396" y="455">고정 인코더</text>
+  <text class="t" x="396" y="502" font-size="36" font-weight="760">Qwen3-8B</text>
+  <text class="t small" x="396" y="546">행동 투영 헤드</text>
+  <text class="t small muted" x="396" y="584">→ 행동 벡터</text>
+  <text class="t small muted" x="396" y="618">재사용 시 캐시 가능</text>
+
+  <path class="arrow" d="M191 644 V694 C191 713 222 722 266 739"/>
+  <path class="arrow" d="M529 644 V694 C529 713 498 722 454 739"/>
+  <rect x="36" y="756" width="648" height="210" rx="24" fill="#17313c" stroke="url(#mint)" stroke-width="3" filter="url(#shadow)"/>
+  <text class="t label" x="360" y="800" text-anchor="middle" fill="#67e8d5">공통 공간에서 비교</text>
+  <text class="t" x="360" y="855" text-anchor="middle" font-size="34" font-weight="760">스케일된 코사인 유사도 + 소프트맥스</text>
+  <line x1="118" y1="881" x2="602" y2="881" stroke="#4b6b82" stroke-width="2"/>
+  <text class="t" x="360" y="922" text-anchor="middle" font-size="31" font-weight="700">제공된 행동을 점수화해 순위화</text>
+  <text class="t small muted" x="360" y="1008" text-anchor="middle">확률은 주어진 후보 집합 안에서의 상대값</text>
+</svg>
