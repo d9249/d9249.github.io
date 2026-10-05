@@ -11,7 +11,8 @@ import {
   Mail,
 } from "lucide-react";
 import Layout from "../components/Layout";
-import { Button } from "../components/ui";
+import TreeCanvas from "../components/TreeCanvas";
+import { Button, PageHeader } from "../components/ui";
 import { heroLinks } from "../data/profile";
 
 const contactChannelMeta = {
@@ -66,29 +67,41 @@ const ContactPage = () => {
   return (
     <Layout>
       <div className="contact-page">
-        <section className="shell contact-hero" aria-labelledby="contact-title">
-          <div className="contact-intro">
-            <h1 id="contact-title">
-              연구를 제품으로, 제품을 신뢰로 연결합니다.
-            </h1>
-            <p>
-              RAG·Agents·OCR·Vision 연구를 실제 사용자가 신뢰할 수 있는 제품과
-              운영 흐름으로 만듭니다.
-            </p>
-            {emailChannel ? (
-              <Button
-                variant="primary"
-                className="contact-cta"
-                href={emailChannel.href}
-              >
-                <Mail aria-hidden="true" />
-                <span>이메일 보내기</span>
-                <ArrowUpRight aria-hidden="true" />
-              </Button>
-            ) : null}
-          </div>
+        <div className="shell">
+          <PageHeader
+            size="hero"
+            slate={{
+              label: "Contact",
+              count: heroLinks.length,
+              unit: "channels",
+            }}
+            title="연구를 제품으로, 제품을 신뢰로 연결합니다."
+            lead="RAG·Agents·OCR·Vision 연구를 실제 사용자가 신뢰할 수 있는 제품과 운영 흐름으로 만듭니다. 나무의 다음 가지가 될 일을 이야기해 주세요."
+            actions={
+              emailChannel ? (
+                <Button
+                  variant="primary"
+                  className="contact-cta"
+                  href={emailChannel.href}
+                >
+                  <Mail aria-hidden="true" />
+                  <span>이메일 보내기</span>
+                  <ArrowUpRight aria-hidden="true" />
+                </Button>
+              ) : null
+            }
+            aside={
+              <TreeCanvas
+                next
+                nextLabel="Next branch"
+                label="지금까지의 프로젝트가 가지로 난 나무와, 비어 있는 다음 가지"
+              />
+            }
+          />
+        </div>
 
-          <address className="contact-directory" aria-label="연락처 디렉터리">
+        <section className="shell contact-channels" aria-label="연락처">
+          <address className="channel-rows">
             {heroLinks.map((channel) => {
               const meta = contactChannelMeta[channel.label];
               const Icon = meta?.icon || ArrowUpRight;
@@ -96,23 +109,20 @@ const ContactPage = () => {
 
               return (
                 <a
-                  className="contact-channel"
+                  className="channel-row"
                   href={channel.href}
                   key={channel.label}
                   rel={isExternal ? "noreferrer" : undefined}
                   target={isExternal ? "_blank" : undefined}
                 >
-                  <span className="contact-channel-icon" aria-hidden="true">
+                  <span className="channel-row-icon" aria-hidden="true">
                     <Icon />
                   </span>
-                  <span className="contact-channel-copy">
-                    <strong>{channel.label}</strong>
-                    <span>{meta?.value || channel.href}</span>
+                  <strong>{channel.label}</strong>
+                  <span className="channel-row-value">
+                    {meta?.value || channel.href}
                   </span>
-                  <ArrowUpRight
-                    className="contact-channel-arrow"
-                    aria-hidden="true"
-                  />
+                  <ArrowUpRight className="channel-row-go" aria-hidden="true" />
                 </a>
               );
             })}

@@ -2,7 +2,7 @@ import * as React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
 import MobileCardCarousel from "../components/MobileCardCarousel";
-import PostCard from "../components/PostCard";
+import PostRows from "../components/PostRows";
 import SectionHeading from "../components/SectionHeading";
 import Showreel from "../components/Showreel";
 import { Chip } from "../components/ui";
@@ -14,16 +14,6 @@ import { getProjectProfileTags } from "../utils/projectProfileTags";
  * → contact), then the career timeline (#career) and the latest posts (#latest). Projects, research,
  * awards and competitions each have their own page; the reel links into them.
  */
-
-const POST_DECK_SIZE = 3;
-
-const getCardDecks = (items, deckSize) =>
-  Array.from({ length: Math.ceil(items.length / deckSize) }, (_, index) =>
-    items.slice(index * deckSize, (index + 1) * deckSize),
-  );
-
-const getDeckLabel = (index, total) =>
-  `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
 
 const TimelineCard = ({ item, compact = false }) => {
   const [expanded, setExpanded] = React.useState(false);
@@ -74,23 +64,6 @@ const IndexPage = ({ data }) => {
   const posts = data.posts.nodes;
   const projects = data.projects.nodes;
   const profileTags = getProjectProfileTags(projects);
-  const totalBlogPostCount = data.blogPosts.totalCount;
-  const postDecks = getCardDecks(posts, POST_DECK_SIZE);
-  const [postDeckIndex, setPostDeckIndex] = React.useState(0);
-  const activePostDeck = postDecks[postDeckIndex] || [];
-  const hasMultiplePostDecks = postDecks.length > 1;
-  const postDeckLabel = getDeckLabel(postDeckIndex, postDecks.length);
-  const postDeckStatus = `${postDeckLabel} · 블로그 전체 글 ${totalBlogPostCount}개`;
-  const goToPreviousPostDeck = () => {
-    setPostDeckIndex((currentIndex) =>
-      currentIndex === 0 ? postDecks.length - 1 : currentIndex - 1,
-    );
-  };
-  const goToNextPostDeck = () => {
-    setPostDeckIndex((currentIndex) =>
-      currentIndex === postDecks.length - 1 ? 0 : currentIndex + 1,
-    );
-  };
 
   return (
     <Layout>
@@ -187,52 +160,7 @@ const IndexPage = ({ data }) => {
           titleId="latest-title"
           action={<Link to="/blog/">전체 지식 보기 →</Link>}
         />
-        <div className="card-deck responsive-desktop-only">
-          <div className="card-deck-toolbar" aria-live="polite">
-            <span className="card-deck-status">Deck {postDeckStatus}</span>
-            <div className="card-deck-controls">
-              <button
-                type="button"
-                aria-label="이전 최근 지식 덱 보기"
-                disabled={!hasMultiplePostDecks}
-                onClick={goToPreviousPostDeck}
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m15 18-6-6 6-6" />
-                </svg>
-              </button>
-              <button
-                type="button"
-                aria-label="다음 최근 지식 덱 보기"
-                disabled={!hasMultiplePostDecks}
-                onClick={goToNextPostDeck}
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m9 6 6 6-6 6" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          <div
-            className="post-grid compact-posts card-deck-grid"
-            key={postDeckIndex}
-          >
-            {activePostDeck.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
-        </div>
-        <MobileCardCarousel
-          ariaLabel="모바일 최근 지식"
-          itemSelector=".post-card"
-          statusLabel="글 카드"
-        >
-          <div className="post-grid compact-posts mobile-carousel-track">
-            {posts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
-        </MobileCardCarousel>
+        <PostRows posts={posts} />
       </section>
     </Layout>
   );
@@ -252,14 +180,6 @@ export const Head = () => (
 
 export const query = graphql`
   query HomePage {
-    blogPosts: allMarkdownRemark(
-      filter: {
-        fields: { contentType: { eq: "blog-post" } }
-        frontmatter: { draft: { ne: true } }
-      }
-    ) {
-      totalCount
-    }
     posts: allMarkdownRemark(
       filter: {
         fields: { contentType: { eq: "blog-post" } }

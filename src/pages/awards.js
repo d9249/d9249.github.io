@@ -1,10 +1,10 @@
 import * as React from "react";
+import AwardSheet from "../components/AwardSheet";
 import InlineEvidenceViewer from "../components/InlineEvidenceViewer";
 import Layout from "../components/Layout";
-import SectionHeading from "../components/SectionHeading";
+import { PageHeader } from "../components/ui";
+import { colorStyle, RESULT_COLOR } from "../utils/treeColors";
 import { awardItems } from "../data/profile";
-
-const RECOGNITION_VIEWER_QUERY = "(max-width: 760px)";
 
 const getEvidenceKey = (item, link) => `${item.title}-${link.href}`;
 
@@ -33,119 +33,62 @@ const sortAwardsByDate = (items) =>
     )
     .map(({ item }) => item);
 
-const mobileAwardGroups = [
-  {
-    key: "product",
-    label: "제품",
-    items: sortAwardsByDate(
-      awardItems.filter((item) => item.category === "product"),
-    ),
-  },
-  {
-    key: "research",
-    label: "연구",
-    items: sortAwardsByDate(
-      awardItems.filter((item) => item.category === "research"),
-    ),
-  },
-];
-
-const useMediaQuery = (query) => {
-  const [matches, setMatches] = React.useState(false);
-
-  React.useEffect(() => {
-    const mediaQuery = window.matchMedia(query);
-    const updateMatches = () => setMatches(mediaQuery.matches);
-
-    updateMatches();
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener("change", updateMatches);
-    } else {
-      mediaQuery.addListener(updateMatches);
-    }
-
-    return () => {
-      if (mediaQuery.removeEventListener) {
-        mediaQuery.removeEventListener("change", updateMatches);
-      } else {
-        mediaQuery.removeListener(updateMatches);
-      }
-    };
-  }, [query]);
-
-  return matches;
-};
-
-const AwardCard = ({ item, activeEvidence, onToggleEvidence }) => {
+const LedgerRow = ({ item, activeEvidence, onToggleEvidence }) => {
   const inlineLinks = item.links?.filter(isInlineEvidenceLink) || [];
   const externalLinks =
     item.links?.filter((link) => !isInlineEvidenceLink(link)) || [];
 
   return (
-    <article className="project-card recognition-card award-project-card">
-      <div className="project-card-header">
-        <div className="meta">{item.period}</div>
-        <h3 className="project-title">
-          <span className="project-title-name">{item.title}</span>
-          <span className="project-title-tagline">{item.result}</span>
-        </h3>
-      </div>
-      <p>{item.description}</p>
-      <div className="project-metrics">
-        {item.facts.map((fact) => (
-          <span className="metric-chip" key={fact}>
-            {fact}
-          </span>
-        ))}
-      </div>
-      {inlineLinks.length || externalLinks.length || item.href ? (
-        <div
-          className="project-card-actions project-inline-actions"
-          aria-label={`${item.title} 증빙 링크`}
-        >
-          {externalLinks.map((link) => (
-            <a key={link.href} href={link.href}>
-              {link.label} →
-            </a>
-          ))}
-          {inlineLinks.map((link) => {
-            const evidenceKey = getEvidenceKey(item, link);
-            const isOpen = activeEvidence === evidenceKey;
+    <article className="ledger-row" style={colorStyle(RESULT_COLOR)}>
+      <p className="ledger-date">
+        <time>{item.period}</time>
+        <span>{item.category === "research" ? "연구" : "제품"}</span>
+      </p>
+      <div className="ledger-main">
+        <h2 className="ledger-title">{item.title}</h2>
+        <p className="ledger-result">{item.result}</p>
+        <p className="ledger-desc">{item.description}</p>
+        {inlineLinks.length || externalLinks.length || item.href ? (
+          <div
+            className="project-inline-actions ledger-actions"
+            aria-label={`${item.title} 증빙 링크`}
+          >
+            {externalLinks.map((link) => (
+              <a key={link.href} href={link.href}>
+                {link.label} →
+              </a>
+            ))}
+            {inlineLinks.map((link) => {
+              const evidenceKey = getEvidenceKey(item, link);
+              const isOpen = activeEvidence === evidenceKey;
 
-            return (
-              <button
-                key={link.href}
-                type="button"
-                className="paper-viewer-toggle"
-                aria-controls={getEvidenceId(item, link)}
-                aria-expanded={isOpen}
-                onClick={() => onToggleEvidence(evidenceKey)}
-              >
-                {isOpen ? `${link.label} 닫기` : link.label} →
-              </button>
-            );
-          })}
-          {item.href ? <a href={item.href}>증빙 보기 →</a> : null}
-        </div>
-      ) : null}
+              return (
+                <button
+                  key={link.href}
+                  type="button"
+                  className="paper-viewer-toggle"
+                  aria-controls={getEvidenceId(item, link)}
+                  aria-expanded={isOpen}
+                  onClick={() => onToggleEvidence(evidenceKey)}
+                >
+                  {isOpen ? `${link.label} 닫기` : link.label} →
+                </button>
+              );
+            })}
+            {item.href ? <a href={item.href}>증빙 보기 →</a> : null}
+          </div>
+        ) : null}
+      </div>
+      <span className="ledger-tick" aria-hidden="true" />
     </article>
   );
 };
 
-const awardRows = awardItems.reduce((rows, item, index) => {
-  if (index % 2 === 0) {
-    rows.push([item]);
-  } else {
-    rows[rows.length - 1].push(item);
-  }
-
-  return rows;
-}, []);
+const ledgerItems = sortAwardsByDate(awardItems);
 
 const AwardsPage = () => {
   const [activeEvidence, setActiveEvidence] = React.useState(null);
   const [isEvidenceFullView, setIsEvidenceFullView] = React.useState(false);
-  const isMobileEvidenceViewer = useMediaQuery(RECOGNITION_VIEWER_QUERY);
 
   React.useEffect(() => {
     document.body.classList.toggle(
@@ -186,87 +129,45 @@ const AwardsPage = () => {
 
   return (
     <Layout>
-      <section className="shell section recognition-page">
-        <SectionHeading as="h1" kicker="Awards" title="수상 기록" />
-        {isMobileEvidenceViewer ? (
-          <div className="recognition-list recognition-category-list">
-            {mobileAwardGroups.map((group) => {
-              const activeItem = group.items.find((item) =>
-                item.links?.some(
-                  (link) => activeEvidence === getEvidenceKey(item, link),
-                ),
-              );
-              const activeLink = activeItem?.links?.find(
-                (link) => activeEvidence === getEvidenceKey(activeItem, link),
-              );
+      <section className="shell recognition-page">
+        <PageHeader
+          size="hero"
+          slate={{
+            label: "Awards",
+            colors: ledgerItems.map(() => "var(--c-mandarin)"),
+            count: ledgerItems.length,
+            unit: "awards",
+          }}
+          title="수상 기록"
+          lead="정부, 산업계, 학회에서 받은 상입니다. 최근 것부터 적었고, 증빙은 각 줄에서 바로 열어 볼 수 있습니다."
+          aside={<AwardSheet />}
+        />
+        <div className="ledger">
+          {ledgerItems.map((item) => {
+            const activeLink = item.links?.find(
+              (link) => activeEvidence === getEvidenceKey(item, link),
+            );
 
-              return (
-                <section className="recognition-category-group" key={group.key}>
-                  <div className="recognition-category-heading">
-                    <div className="meta">Award type</div>
-                    <h2>{group.label}</h2>
-                  </div>
-                  <div className="recognition-row-grid recognition-category-rail">
-                    {group.items.map((item) => (
-                      <AwardCard
-                        key={item.title}
-                        item={item}
-                        activeEvidence={activeEvidence}
-                        onToggleEvidence={toggleEvidence}
-                      />
-                    ))}
-                  </div>
-                  {activeItem && activeLink ? (
-                    <InlineEvidenceViewer
-                      itemTitle={activeItem.title}
-                      evidence={activeLink}
-                      viewerId={getEvidenceId(activeItem, activeLink)}
-                      isFullView={isEvidenceFullView}
-                      onToggleFullView={toggleEvidenceFullView}
-                    />
-                  ) : null}
-                </section>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="recognition-list">
-            {awardRows.map((row) => {
-              const activeItem = row.find((item) =>
-                item.links?.some(
-                  (link) => activeEvidence === getEvidenceKey(item, link),
-                ),
-              );
-              const activeLink = activeItem?.links?.find(
-                (link) => activeEvidence === getEvidenceKey(activeItem, link),
-              );
-
-              return (
-                <React.Fragment key={row.map((item) => item.title).join("|")}>
-                  <div className="recognition-row-grid">
-                    {row.map((item) => (
-                      <AwardCard
-                        key={item.title}
-                        item={item}
-                        activeEvidence={activeEvidence}
-                        onToggleEvidence={toggleEvidence}
-                      />
-                    ))}
-                  </div>
-                  {activeItem && activeLink ? (
-                    <InlineEvidenceViewer
-                      itemTitle={activeItem.title}
-                      evidence={activeLink}
-                      viewerId={getEvidenceId(activeItem, activeLink)}
-                      isFullView={isEvidenceFullView}
-                      onToggleFullView={toggleEvidenceFullView}
-                    />
-                  ) : null}
-                </React.Fragment>
-              );
-            })}
-          </div>
-        )}
+            return (
+              <React.Fragment key={item.title}>
+                <LedgerRow
+                  item={item}
+                  activeEvidence={activeEvidence}
+                  onToggleEvidence={toggleEvidence}
+                />
+                {activeLink ? (
+                  <InlineEvidenceViewer
+                    itemTitle={item.title}
+                    evidence={activeLink}
+                    viewerId={getEvidenceId(item, activeLink)}
+                    isFullView={isEvidenceFullView}
+                    onToggleFullView={toggleEvidenceFullView}
+                  />
+                ) : null}
+              </React.Fragment>
+            );
+          })}
+        </div>
       </section>
     </Layout>
   );

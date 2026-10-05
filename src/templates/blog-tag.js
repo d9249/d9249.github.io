@@ -2,8 +2,8 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import CategoryNav from "../components/CategoryNav";
 import Layout from "../components/Layout";
-import PostCard from "../components/PostCard";
-import SectionHeading from "../components/SectionHeading";
+import PostRows from "../components/PostRows";
+import { PageHeader } from "../components/ui";
 import TagNav from "../components/TagNav";
 
 const BlogTagTemplate = ({ data, pageContext }) => {
@@ -12,18 +12,18 @@ const BlogTagTemplate = ({ data, pageContext }) => {
   return (
     <Layout>
       <section className="shell section">
-        <SectionHeading as="h1" kicker="Tag" title={`#${pageContext.tag}`} />
+        <PageHeader
+          slate={{ label: "Tag", count: posts.length, unit: "posts" }}
+          title={`#${pageContext.tag}`}
+        />
         <CategoryNav />
         <TagNav
           tagSummaries={pageContext.tagSummaries}
           activeTag={pageContext.tag}
         />
+        <h2 className="visually-hidden">글 목록</h2>
         {posts.length > 0 ? (
-          <div className="post-grid">
-            {posts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
+          <PostRows posts={posts} />
         ) : (
           <div className="empty-state">아직 공개된 글이 없습니다.</div>
         )}

@@ -39,12 +39,15 @@ const BlogPostTemplate = ({ data, pageContext }) => {
       <section className="shell section">
         <div className="article-shell">
           <article className="article">
-            <Link
-              className="article-kicker"
-              to={`/blog/${post.fields.category}/`}
-            >
-              {categoryLabel}
-            </Link>
+            <p className="ui-slate article-slate">
+              <b>
+                <Link to={`/blog/${post.fields.category}/`}>
+                  {categoryLabel}
+                </Link>
+              </b>
+              <span>{post.frontmatter.date}</span>
+              {post.timeToRead ? <span>{post.timeToRead} min read</span> : null}
+            </p>
             <h1>{post.frontmatter.title}</h1>
             <p className="deck">{post.frontmatter.description}</p>
             <BlogArticleBody html={postHtml} />

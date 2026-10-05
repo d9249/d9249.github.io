@@ -1,6 +1,6 @@
 ---
-title: "InVision OCR — 문서 OCR·표 구조 복원·벤치마크 플랫폼"
-projectName: "InVision OCR"
+title: "ONDOKS(온독스) — 문서 OCR·표 구조 복원·벤치마크 플랫폼"
+projectName: "ONDOKS"
 tagline: "로직 기반 표 구조 복원과 정량 벤치마크를 갖춘 Document AI 플랫폼"
 period: "AsianaIDT / 2026.01 - 진행 중"
 periodOrder: 20260625
@@ -12,7 +12,7 @@ metrics:
 stack:
   - "FastAPI"
   - "Next.js"
-  - "InVision OCR"
+  - "ONDOKS"
   - "Table Reconstruction"
   - "TEDS Benchmark"
   - "RSA-OAEP + AES-256-GCM"
@@ -28,7 +28,7 @@ draft: false
 
 <section class="ppocr-lead-panel">
   <span class="ppocr-kicker">단독 개발 · 2026.01 – 진행 중 · 특허 출원 중 · K사 공급 계약 수주</span>
-  <p><strong>OCR은 글자를 읽어주지만, 업무에서 필요한 것은 "이 값이 어느 행·어느 열에 속하는가"입니다. InVision OCR은 이 간극 — OCR 이후의 표 구조 복원 — 을 로직 기반 후보 생성·비교·선택 프레임으로 풀고, 그 품질을 TEDS 기반 벤치마크로 정량 증명한 프로젝트입니다.</strong></p>
+  <p><strong>OCR은 글자를 읽어주지만, 업무에서 필요한 것은 "이 값이 어느 행·어느 열에 속하는가"입니다. ONDOKS(온독스)는 이 간극 — OCR 이후의 표 구조 복원 — 을 로직 기반 후보 생성·비교·선택 프레임으로 풀고, 그 품질을 TEDS 기반 벤치마크로 정량 증명한 프로젝트입니다.</strong></p>
   <p>이 글은 세 가지 기술 문제를 다룹니다. ① 격자선이 없거나 끊긴 표를 어떻게 구조로 복원하는가, ② "그럴듯해 보이는 결과"가 아니라 측정 가능한 개선을 어떻게 만드는가, ③ 모델과 로직을 고객사 서버에 두고도 어떻게 보호하는가.</p>
 </section>
 
@@ -41,7 +41,7 @@ OCR 엔진의 출력은 텍스트와 bbox 좌표 목록입니다. 그러나 실�
 결론은 단일 알고리즘이 아니라 **여러 신호에서 후보를 만들고, 비교하고, 근거를 남기며 선택하는 구조**가 필요하다는 것이었습니다.
 
 <figure class="ppocr-diagram">
-  <img src="/images/projects/pp-ocr-overall-architecture.svg" alt="InVision OCR overall architecture diagram">
+  <img src="/images/projects/pp-ocr-overall-architecture.svg" alt="ONDOKS overall architecture diagram">
   <figcaption>전체 구조. 업로드, OCR·레이아웃 분석, 문서 복원, 표 구조화, 검수·벤치마크·보안 납품 운영이 하나의 제품 흐름으로 이어집니다.</figcaption>
 </figure>
 
@@ -73,7 +73,7 @@ OCR 엔진의 출력은 텍스트와 bbox 좌표 목록입니다. 그러나 실�
 가장 까다로웠던 케이스는 **격자선이 부분적으로 누락된 표**였습니다. 선분 기반 후보는 누락 구간에서 행을 병합해버리고, bbox 기반 후보는 전체 정렬을 놓칩니다. 해결은 하이브리드였습니다 — 텍스트 정렬 패턴에서 "있어야 할 선"을 역으로 추정해 격자를 복원하고, 선분·bbox 양쪽 후보의 강점 구간을 결합하는 방식입니다. 이 보정 규칙들의 구체 조건과 판정 로직은 특허 출원 중인 부분이라 여기서는 개념 수준까지만 적습니다.
 
 <figure class="ppocr-diagram">
-  <img src="/images/projects/pp-ocr-deepdive-candidates.svg" alt="InVision OCR table reconstruction candidate selection diagram">
+  <img src="/images/projects/pp-ocr-deepdive-candidates.svg" alt="ONDOKS table reconstruction candidate selection diagram">
   <figcaption>후보 생성·비교·선택 프레임. 선분 기반, bbox 기반, 헤더 추론, 보정 계층 후보를 함께 만들고 구조 안정성으로 선택합니다.</figcaption>
 </figure>
 
@@ -120,7 +120,7 @@ HTML table GT를 기준으로 지표를 계층화했습니다. **TEDS/TEDS-S**(�
 수치는 모두 명시된 데이터셋·실행 조건에 묶인 실험 결과입니다. 벤치마크 콘솔 자체도 함께 만들었습니다 — 실험을 비동기 job으로 실행하고 취소·재개·stale 처리까지 다루며, CI95 신뢰구간, 메서드 간 pairwise 비교, ablation 분석을 지원합니다. 외부 VLM 계열 방법을 비교군(baseline)으로 등록해 로직 기반 접근과 같은 조건에서 비교할 수 있게 했고, 실패 사례는 케이스북으로 축적해 18개 케이스 회귀 세트로 관리했습니다. "고치면 다른 게 깨지는" 문제를 회귀 세트 통과라는 명시적 게이트로 바꾼 것이 개선 속도를 만들었습니다.
 
 <figure class="ppocr-diagram">
-  <img src="/images/projects/pp-ocr-deepdive-benchmark.svg" alt="InVision OCR TEDS benchmark and regression gate diagram">
+  <img src="/images/projects/pp-ocr-deepdive-benchmark.svg" alt="ONDOKS TEDS benchmark and regression gate diagram">
   <figcaption>정량 평가 체계. GT 기반 지표 계층과 벤치마크 콘솔, 회귀 게이트로 표 구조 복원 개선을 통제합니다.</figcaption>
 </figure>
 
@@ -138,15 +138,15 @@ secure build 파이프라인은 두 층으로 보호합니다. 모델·설정 �
 
 <div class="ppocr-shot-grid">
   <figure class="ppocr-shot">
-    <img src="/images/projects/pp-ocr-main-page.jpg" alt="InVision OCR main upload and analysis screen">
+    <img src="/images/projects/pp-ocr-main-page.jpg" alt="ONDOKS main upload and analysis screen">
     <figcaption>메인 OCR 화면. 파일 업로드에서 결과·이력으로 이어집니다.</figcaption>
   </figure>
   <figure class="ppocr-shot">
-    <img src="/images/projects/pp-ocr-result-review.jpg" alt="InVision OCR result review screen">
+    <img src="/images/projects/pp-ocr-result-review.jpg" alt="ONDOKS result review screen">
     <figcaption>결과 검수 화면. 원본 페이지와 OCR/레이아웃/표 결과를 함께 봅니다.</figcaption>
   </figure>
   <figure class="ppocr-shot">
-    <img src="/images/projects/pp-ocr-template-report.jpg" alt="InVision OCR template report screen">
+    <img src="/images/projects/pp-ocr-template-report.jpg" alt="ONDOKS template report screen">
     <figcaption>템플릿 리포트. 반복 문서의 추출 결과를 저장·재확인합니다.</figcaption>
   </figure>
 </div>

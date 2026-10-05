@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "gatsby";
 import Layout from "./Layout";
 import Pagination from "./Pagination";
-import SectionHeading from "./SectionHeading";
+import { PageHeader } from "./ui";
 import TagNav from "./TagNav";
 import tipCategories from "../data/tipCategories.json";
 import { getTipTagPath } from "../utils/tags";
@@ -50,65 +50,72 @@ const TipCategoryNav = ({ activeCategory }) => (
   </nav>
 );
 
-const TipCard = ({ tip }) => {
+const TipRow = ({ tip }) => {
   const description = tip.frontmatter.description || tip.excerpt;
+  const notes = (tip.frontmatter.highlights || []).slice(0, 3);
 
   return (
-    <article className="tip-card">
-      <div className="tip-card-head">
-        <div className="meta">{tip.frontmatter.status}</div>
-        <span title={tip.frontmatter.license}>{tip.frontmatter.license}</span>
+    <article className="tip-row">
+      <p className="tip-row-meta">
+        <span>{tip.frontmatter.status}</span>
+        {tip.frontmatter.license ? (
+          <span title={tip.frontmatter.license}>{tip.frontmatter.license}</span>
+        ) : null}
+      </p>
+      <div className="tip-row-main">
+        <h3 className="tip-row-title">
+          <Link to={tip.fields.slug} title={tip.frontmatter.title}>
+            {tip.frontmatter.title}
+          </Link>
+        </h3>
+        <p className="tip-row-desc" title={description}>
+          {truncateText(description, 160)}
+        </p>
+        {notes.length ? (
+          <ul className="tip-row-notes">
+            {notes.map((note) => (
+              <li key={note} title={note}>
+                {truncateText(note, 92)}
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
-      <h3>
-        <Link
-          to={tip.fields.slug}
-          aria-label={tip.frontmatter.title}
-          title={tip.frontmatter.title}
-        >
-          {truncateText(tip.frontmatter.title, 48)}
-        </Link>
-      </h3>
-      <p title={description}>{truncateText(description, 124)}</p>
-      <div className="tip-platforms" aria-label="Supported platforms">
-        {getFrontmatterList(tip.frontmatter.platforms).map((platform) => (
-          <a
-            key={platform}
-            href={getTipCategoryPath(platform)}
-            title={getTipCategoryLabel(platform)}
-          >
-            {getTipCategoryLabel(platform)}
-          </a>
-        ))}
-      </div>
-      {tip.frontmatter.highlights?.length ? (
-        <ul className="tip-notes">
-          {tip.frontmatter.highlights.map((note) => (
-            <li key={note} title={note}>
-              {truncateText(note, 92)}
-            </li>
-          ))}
-        </ul>
-      ) : null}
-      {tip.frontmatter.tags?.length ? (
-        <div className="tip-tags">
-          {tip.frontmatter.tags.map((tag) => (
-            <Link key={tag} to={getTipTagPath(tag)} title={tag}>
-              {tag}
-            </Link>
+      <div className="tip-row-side">
+        <div className="tip-row-links" aria-label="Supported platforms">
+          {getFrontmatterList(tip.frontmatter.platforms).map((platform) => (
+            <a
+              key={platform}
+              href={getTipCategoryPath(platform)}
+              title={getTipCategoryLabel(platform)}
+            >
+              {getTipCategoryLabel(platform)}
+            </a>
           ))}
         </div>
-      ) : null}
-      <div className="tip-card-foot">
-        <span title={tip.frontmatter.repository}>
-          {tip.frontmatter.repository}
-        </span>
-        {tip.frontmatter.sourceUrl ? (
-          <a href={tip.frontmatter.sourceUrl} target="_blank" rel="noreferrer">
-            Source
-          </a>
-        ) : (
-          <span>Unavailable</span>
-        )}
+        {tip.frontmatter.tags?.length ? (
+          <div className="tip-row-links tip-row-tags">
+            {tip.frontmatter.tags.slice(0, 4).map((tag) => (
+              <Link key={tag} to={getTipTagPath(tag)} title={tag}>
+                #{tag}
+              </Link>
+            ))}
+          </div>
+        ) : null}
+        <p className="tip-row-repo">
+          <span title={tip.frontmatter.repository}>
+            {tip.frontmatter.repository}
+          </span>
+          {tip.frontmatter.sourceUrl ? (
+            <a
+              href={tip.frontmatter.sourceUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Source ↗
+            </a>
+          ) : null}
+        </p>
       </div>
     </article>
   );
@@ -135,7 +142,10 @@ const TipsIndex = ({
   return (
     <Layout>
       <section className="shell section">
-        <SectionHeading as="h1" kicker="Tips" title={pageTitle} />
+        <PageHeader
+          slate={{ label: "Tips", count: totalVisibleTips, unit: "tips" }}
+          title={pageTitle}
+        />
         <TipCategoryNav activeCategory={activeCategory} />
         <TagNav
           ariaLabel="Tip tags"
@@ -176,10 +186,11 @@ const TipsIndex = ({
             />
           </div>
         </div>
+        <h2 className="visually-hidden">팁 목록</h2>
         {visibleTips.length > 0 ? (
-          <div className="tip-grid">
+          <div className="tip-rows">
             {visibleTips.map((tip) => (
-              <TipCard key={tip.fields.slug} tip={tip} />
+              <TipRow key={tip.fields.slug} tip={tip} />
             ))}
           </div>
         ) : (
