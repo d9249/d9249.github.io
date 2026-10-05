@@ -2,12 +2,17 @@ import * as React from "react";
 import Label from "./ui/Label";
 
 /**
- * Kicker + title (+ action, + side note). The page header of list pages (as="h1") and the heading of
- * every section. Styles: .section-head in src/styles/site.css.
+ * Kicker (or slate) + title (+ action, + side note). The heading of every section.
+ *
+ *   slate  { label, count, unit, colors? } — the reel's slate strip instead of a plain kicker,
+ *          as on the page headers (see <PageHeader>)
+ *
+ * Styles: .section-head in src/styles/site.css, .ui-slate in components.css.
  */
 const SectionHeading = ({
   as: Heading = "h2",
   kicker,
+  slate,
   title,
   titleId,
   description,
@@ -15,7 +20,25 @@ const SectionHeading = ({
 }) => (
   <div className="section-head">
     <div className="section-heading-copy">
-      {kicker && <Label kicker>{kicker}</Label>}
+      {slate ? (
+        <p className="ui-slate">
+          <b>{slate.label}</b>
+          {slate.colors?.length ? (
+            <span className="ui-slate-bars" aria-hidden="true">
+              {slate.colors.map((c, i) => (
+                <i key={`${c}-${i}`} style={{ background: c }} />
+              ))}
+            </span>
+          ) : null}
+          {slate.count != null ? (
+            <span>
+              <em>{slate.count}</em> {slate.unit}
+            </span>
+          ) : null}
+        </p>
+      ) : (
+        kicker && <Label kicker>{kicker}</Label>
+      )}
       <div className="section-title-row">
         <Heading id={titleId}>{title}</Heading>
         {action && <div className="section-action">{action}</div>}

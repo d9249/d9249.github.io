@@ -92,7 +92,6 @@ select {
 .eyebrow,
 .meta,
 .article-kicker,
-.timeline-date,
 .tag-nav-label,
 .blog-list-meta,
 .deck-counter,
@@ -124,7 +123,6 @@ select {
 .pagination-step,
 .pagination-page,
 .section-action a,
-.timeline-detail-toggle,
 .project-backlink {
   display: inline-flex;
   min-height: var(--control-height);
@@ -159,8 +157,7 @@ select {
 /* tonal — quiet actions next to a heading or inside a card */
 .ui-button--tonal,
 .paper-viewer-toggle,
-.section-action a,
-.timeline-detail-toggle {
+.section-action a {
   border-color: transparent;
   background: color-mix(in oklab, var(--accent) 9%, transparent);
   color: var(--accent);
@@ -169,8 +166,7 @@ select {
 :is(
     .ui-button--tonal,
     .paper-viewer-toggle,
-    .section-action a,
-    .timeline-detail-toggle
+    .section-action a
   ):not(:disabled, .is-disabled):hover {
   background: color-mix(in oklab, var(--accent) 16%, transparent);
 }
@@ -196,14 +192,10 @@ select {
 /* ── Icon button — a control that is only an icon (masthead, decks, viewers) ─ */
 /* size and radius are set where each one lives; the look is set here */
 .ui-icon-button,
-.theme-toggle,
-.search-toggle,
-.menu-button,
 .search-clear,
 .search-close,
 .paper-viewer-control,
 .tag-nav-page-button,
-.mobile-card-carousel-arrow,
 .project-lightbox-close,
 .project-lightbox-rotate,
 .project-lightbox-zoom {
@@ -330,8 +322,6 @@ select {
 
 /* ── Card — flat paper sheet ────────────────────────────────────────────── */
 .ui-card,
-.profile-panel,
-.timeline,
 .article-shell,
 .project-detail-panel,
 .category-nav,

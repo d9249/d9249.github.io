@@ -1,10 +1,20 @@
 import * as React from "react";
 import { useLocation } from "@gatsbyjs/reach-router";
 import { Link } from "gatsby";
-import { navItems } from "../data/navigation";
+import { isHomeItem, navItems } from "../data/navigation";
 import BlogSearch from "./BlogSearch";
 
 const SECTION_ACTIVATION_RATIO = 0.3;
+// below this width the links move into the menu sheet (keep in step with site.css)
+const MENU_QUERY = "(max-width: 1180px)";
+const navGroups = [
+  { key: "home", label: "홈", items: navItems.filter(isHomeItem) },
+  {
+    key: "pages",
+    label: "페이지",
+    items: navItems.filter((item) => !isHomeItem(item)),
+  },
+];
 const SECTION_NAVIGATION_TIMEOUT = 1600;
 
 const getHomeSectionId = (to) => {
@@ -221,17 +231,45 @@ const Navbar = () => {
     };
   }, []);
 
+  // the open sheet covers the page: lock its scroll, take it out of the tab order, and close the
+  // sheet if the window grows past the menu breakpoint
+  React.useEffect(() => {
+    const root = document.documentElement;
+    const page = [
+      document.getElementById("main-content"),
+      document.querySelector(".site-footer"),
+    ].filter(Boolean);
+    root.classList.toggle("nav-is-open", open);
+    page.forEach((el) => {
+      if (open) el.setAttribute("inert", "");
+      else el.removeAttribute("inert");
+    });
+    if (!open) return undefined;
+    const menu = window.matchMedia(MENU_QUERY);
+    const closeOnWide = () => {
+      if (!menu.matches) setOpen(false);
+    };
+    menu.addEventListener?.("change", closeOnWide);
+    return () => {
+      menu.removeEventListener?.("change", closeOnWide);
+      root.classList.remove("nav-is-open");
+      page.forEach((el) => el.removeAttribute("inert"));
+    };
+  }, [open]);
+
   React.useEffect(() => {
     if (!open) return undefined;
 
     const focusFrame = window.requestAnimationFrame(() => {
-      navRef.current?.querySelector("a")?.focus();
+      navRef.current?.querySelector("a")?.focus({ preventScroll: true });
     });
     const handleKeyDown = (event) => {
       if (event.key !== "Escape") return;
       event.preventDefault();
       setOpen(false);
-      window.requestAnimationFrame(() => menuButtonRef.current?.focus());
+      window.requestAnimationFrame(() =>
+        menuButtonRef.current?.focus({ preventScroll: true }),
+      );
     };
     const handlePointerDown = (event) => {
       if (
@@ -278,11 +316,66 @@ const Navbar = () => {
     }
   };
 
+  const linkLabel = (item) => (
+    <>
+      <span className="nav-label">{item.label}</span>
+      <span className="nav-ko" aria-hidden="true">
+        {item.ko}
+      </span>
+    </>
+  );
+
+  const renderLink = (item) => {
+    const sectionId = getHomeSectionId(item.to);
+    const isReloadActive =
+      item.reloadDocument && location.pathname.startsWith(item.to);
+
+    if (item.reloadDocument) {
+      return (
+        <a
+          key={item.to}
+          href={item.to}
+          className={isReloadActive ? "is-active" : undefined}
+          aria-current={isReloadActive ? "page" : undefined}
+          onClick={() => handleNavigation(item)}
+        >
+          {linkLabel(item)}
+        </a>
+      );
+    }
+
+    return (
+      <Link
+        getProps={({ isPartiallyCurrent }) => {
+          const isActive = sectionId
+            ? isHome && activeSection === sectionId
+            : item.to === "/"
+              ? isHome && !activeSection
+              : item.to !== "/" && isPartiallyCurrent;
+
+          return {
+            className: isActive ? "is-active" : undefined,
+            "aria-current": isActive
+              ? sectionId
+                ? "location"
+                : "page"
+              : undefined,
+          };
+        }}
+        key={item.to}
+        partiallyActive={item.to !== "/" && !sectionId}
+        to={item.to}
+        onClick={() => handleNavigation(item)}
+      >
+        {linkLabel(item)}
+      </Link>
+    );
+  };
+
   return (
     <header className="masthead">
       <div className="shell masthead-inner">
         <Link className="wordmark" to="/">
-          <span className="prompt-dot" />
           <span className="wordmark-copy">
             <strong className="wordmark-name">Sangmin Lee</strong>
             <small className="wordmark-role">
@@ -297,52 +390,32 @@ const Navbar = () => {
           className={`nav ${open ? "is-open" : ""}`}
           aria-label="Primary navigation"
         >
-          {navItems.map((item) => {
-            const sectionId = getHomeSectionId(item.to);
-            const isReloadActive =
-              item.reloadDocument && location.pathname.startsWith(item.to);
-
-            if (item.reloadDocument) {
-              return (
-                <a
-                  key={item.to}
-                  href={item.to}
-                  className={isReloadActive ? "is-active" : undefined}
-                  aria-current={isReloadActive ? "page" : undefined}
-                  onClick={() => handleNavigation(item)}
-                >
-                  {item.label}
-                </a>
-              );
-            }
-
-            return (
-              <Link
-                getProps={({ isPartiallyCurrent }) => {
-                  const isActive = sectionId
-                    ? isHome && activeSection === sectionId
-                    : item.to === "/"
-                      ? isHome && !activeSection
-                      : item.to !== "/" && isPartiallyCurrent;
-
-                  return {
-                    className: isActive ? "is-active" : undefined,
-                    "aria-current": isActive
-                      ? sectionId
-                        ? "location"
-                        : "page"
-                      : undefined,
-                  };
-                }}
-                key={item.to}
-                partiallyActive={item.to !== "/" && !sectionId}
-                to={item.to}
-                onClick={() => handleNavigation(item)}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
+          <p className="ui-slate nav-slate" aria-hidden="true">
+            <b>Menu</b>
+            <span className="ui-slate-bars">
+              <i />
+              <i />
+              <i />
+              <i />
+              <i />
+            </span>
+            <span>
+              <em>{navItems.length}</em> pages
+            </span>
+          </p>
+          {navGroups.map((group) => (
+            <div
+              className="nav-group"
+              key={group.key}
+              role="group"
+              aria-labelledby={`nav-group-${group.key}`}
+            >
+              <p className="nav-group-h" id={`nav-group-${group.key}`}>
+                {group.label} <span>{group.items.length}</span>
+              </p>
+              {group.items.map(renderLink)}
+            </div>
+          ))}
         </nav>
         <div className="header-actions">
           <BlogSearch />
