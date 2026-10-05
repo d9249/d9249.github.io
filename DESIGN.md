@@ -117,6 +117,7 @@ picture in its header; the lists below it are quiet rows on hairlines.
 | Competitions    | A check sheet: ticks draw in, values with a mandarin highlighter              | Check rows: box, what, value, note                                   |
 | DACON           | Stat tiles                                                                    | A bar per field, a ledger of entries with rank and percentile        |
 | Blog, tag, tips | Slate with the count                                                          | Notebook rows: date and category in the margin, title, one line      |
+| Prompts         | A template on the ruled sheet (`--ruled-paper`), its slots as blanks that draw in once | Rows like the projects: use and AI in the margin, name and one line; pressing a row opens the blanks to fill, the text on the terminal (`--term`), copy · save · link and the source. Tabs set like the shot rail (라이브러리 · 빌더 · 숫자); 숫자 reuses the DACON tiles and bars. No palette colour: prompts are not research, projects or results |
 | Contact         | The tree with an empty "next branch" (the reel's end card)                    | Channels as a ledger                                                 |
 | Home, career    | Slate `CREDITS · 3 ROLES`: the credits after the reel's end card               | One line per role: dates, the organisation in Archivo wide with the role, what was done (three on a phone, the rest behind a button); then a short summary (research, domain, results). It does not repeat the end card's name, line or email |
 

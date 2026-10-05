@@ -3466,3 +3466,1341 @@ html[data-theme="dark"] .award-sheet .stamp {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* ── Prompts: a template on the ruled sheet, then the library as rows ─────── */
+/* the page reuses the reel's slate, the projects' disclosure rows, the terminal and the DACON
+   bars; nothing here carries a palette colour, since prompts are neither research, projects
+   nor results */
+
+.prompts-page .ui-button svg,
+.prompt-saved .ui-button svg {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+}
+
+.prompt-count {
+  font: 500 0.72rem/1 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  opacity: 0.72;
+}
+
+.prompt-text-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: var(--space-3);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  font: 600 0.8rem/1.4 var(--font-body);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.prompt-text-action svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.prompt-text-action:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* the header picture: one template on the ruled movement sheet, its slots left blank */
+.prompt-sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: end;
+  gap: var(--space-3);
+  min-width: 0;
+  margin: 0;
+}
+
+.prompt-sheet .ui-slate {
+  margin: 0;
+}
+
+.prompt-sheet-paper {
+  padding: 1rem 1.25rem 1.25rem 2.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--ruled-paper), var(--surface);
+  background-position:
+    0 0,
+    0 -0.375rem;
+  box-shadow: var(--shadow-card);
+  font: 400 0.9rem / 2rem var(--font-body);
+  word-break: keep-all;
+}
+
+.prompt-sheet-paper p {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prompt-sheet-slot {
+  position: relative;
+  display: inline-block;
+  min-width: 4.5em;
+  margin: 0 0.15em;
+  padding: 0 0.35em;
+  color: var(--muted);
+  font: 500 0.7rem/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-align: center;
+  vertical-align: 0.1em;
+}
+
+/* the blank's line draws in once, slot by slot */
+.prompt-sheet-slot::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.35em;
+  left: 0;
+  height: 1.5px;
+  background: var(--fg);
+  content: "";
+  transform-origin: left;
+  animation: prompt-blank 0.5s calc(0.25s + var(--i, 0) * 0.14s)
+    cubic-bezier(0.6, 0, 0.2, 1) both;
+}
+
+@keyframes prompt-blank {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.prompt-sheet-more {
+  color: var(--muted);
+}
+
+.prompt-sheet figcaption button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  cursor: pointer;
+  font: 600 0.88rem/1.4 var(--font-body);
+}
+
+.prompt-sheet figcaption svg {
+  width: 1rem;
+  height: 1rem;
+  transition: transform var(--motion-fast) var(--ease-fluid);
+}
+
+.prompt-sheet figcaption button:hover svg {
+  transform: translateX(3px);
+}
+
+/* library · builder · numbers, marked like the reel's shot rail */
+.prompt-rail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-8);
+  border-bottom: 1px solid var(--border);
+}
+
+.prompt-rail {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.prompt-rail-saved.ui-button {
+  min-height: 2.25rem;
+  padding: 0 var(--space-4);
+}
+
+.prompt-rail button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font: 500 0.8rem/1 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.prompt-rail button span {
+  font-size: 0.7rem;
+}
+
+.prompt-rail button:hover {
+  color: var(--fg);
+}
+
+.prompt-rail button[aria-selected="true"] {
+  color: var(--fg);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 6px;
+}
+
+/* filters */
+.prompt-filters {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.prompt-search {
+  display: flex;
+  min-height: var(--control-height);
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-2) 0 var(--space-4);
+  border: 1.5px solid var(--control-border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.prompt-search:focus-within {
+  border-color: var(--fg);
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.prompt-search > svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+}
+
+.prompt-search input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 2.5rem;
+  border: 0;
+  background: transparent;
+  color: var(--fg);
+  font-size: 0.95rem;
+}
+
+.prompt-search input:focus {
+  outline: none;
+}
+
+.prompt-search input::-webkit-search-cancel-button {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.prompt-search-clear {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--fg) 8%, transparent);
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.prompt-search-clear svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.prompt-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.prompt-filter-row > .ui-label {
+  min-width: 3rem;
+}
+
+.ui-filter small {
+  color: var(--muted);
+  font: 500 0.68rem/1 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.ui-filter[aria-pressed="true"] small {
+  color: inherit;
+  opacity: 0.7;
+}
+
+.prompt-results {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: var(--space-8) 0 var(--space-3);
+}
+
+.prompt-results .ui-label {
+  margin: 0;
+}
+
+.prompt-results em {
+  margin-right: 0.3em;
+  color: var(--fg);
+  font-style: normal;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.prompt-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.prompt-sort select {
+  min-height: 2.25rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--fg);
+  font: 500 0.78rem/1 var(--font-mono);
+}
+
+.prompt-sort select:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* rows: the use and the AI in the margin, the name and one line, then the facts */
+.prompt-rows {
+  border-top: 2px solid var(--fg);
+}
+
+.prompt-row {
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  transition: background-color var(--motion-fast) var(--ease-fluid);
+}
+
+.prompt-row:is(:hover, .is-open) {
+  background: color-mix(in oklab, var(--fg) 4%, transparent);
+}
+
+.prompt-row-top {
+  position: relative;
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr) minmax(11rem, 14rem);
+  gap: var(--space-3) var(--space-8);
+  padding: var(--space-6) calc(var(--space-4) + 2.25rem) var(--space-6) 0;
+}
+
+.prompt-row-top:has(.prompt-row-title button:focus-visible) {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+.prompt-row-meta {
+  display: grid;
+  align-content: start;
+  gap: 0.3rem;
+  margin: 0;
+  font: 500 0.72rem/1.4 var(--font-mono);
+}
+
+.prompt-row-meta span + span {
+  color: var(--muted);
+}
+
+.prompt-row-meta b {
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.prompt-row-title {
+  margin: 0;
+  font: 700 clamp(1.08rem, 1.5vw, 1.28rem) / 1.4 var(--font-display);
+  letter-spacing: -0.015em;
+}
+
+.prompt-row-title button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+}
+
+/* the whole line opens the row */
+.prompt-row-title button::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+.prompt-row-title button:focus-visible {
+  outline: none;
+}
+
+.prompt-row-en {
+  margin: 0.1rem 0 0;
+  color: var(--muted);
+  font: 500 0.72rem/1.4 var(--font-mono);
+}
+
+.prompt-row-desc {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.93rem;
+  line-height: 1.6;
+}
+
+.prompt-row-side {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--space-3);
+}
+
+.prompt-row-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.75rem;
+  margin: 0;
+  color: var(--muted);
+  font: 500 0.72rem/1.4 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* controls in a row sit above the row's own button */
+.prompt-row-tools {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: var(--space-2);
+}
+
+.prompt-row-tools .ui-icon-button,
+.studio-history .ui-icon-button,
+.prompt-saved .ui-icon-button {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: none;
+  place-items: center;
+  border-radius: var(--radius-pill);
+}
+
+.prompt-row-tools .ui-icon-button svg,
+.studio-history .ui-icon-button svg,
+.prompt-saved .ui-icon-button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.prompt-row-toggle {
+  top: var(--space-6);
+  right: 0;
+}
+
+.prompt-row-top:hover .prompt-row-toggle {
+  border-color: var(--fg);
+}
+
+.prompt-row.is-open .prompt-row-toggle {
+  border-color: var(--fg);
+  background: var(--fg);
+  color: var(--bg);
+  transform: rotate(180deg);
+}
+
+.prompt-row-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--motion-material) var(--ease-fluid);
+}
+
+.prompt-row.is-open .prompt-row-panel {
+  grid-template-rows: 1fr;
+}
+
+.prompt-row-panel-in {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.prompt-row-more {
+  display: grid;
+  gap: var(--space-6);
+  margin: 0 calc(var(--space-4) + 2.25rem) 0 calc(9.5rem + var(--space-8));
+  padding: var(--space-6) 0 var(--space-8);
+  border-top: 1px solid var(--border);
+}
+
+.prompt-row-slots .branch-row-h,
+.studio-history .branch-row-h {
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+
+.branch-row-h svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.prompt-row-reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  font: 600 0.72rem/1 var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+.prompt-row-reset svg {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.prompt-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3) var(--space-4);
+}
+
+.prompt-field {
+  display: grid;
+  min-width: 0;
+  gap: 0.35rem;
+}
+
+.prompt-field.is-wide {
+  grid-column: 1 / -1;
+}
+
+.prompt-field > span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.prompt-field :is(input, textarea),
+.studio-row-control :is(input[type="text"], textarea) {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--fg);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.prompt-field textarea,
+.studio-row-control textarea {
+  min-height: 5rem;
+  resize: vertical;
+}
+
+.prompt-field :is(input, textarea):focus-visible,
+.studio-row-control :is(input[type="text"], textarea):focus-visible {
+  border-color: var(--fg);
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+/* the prompt itself, on the reel's terminal */
+.prompt-term {
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--term-fg) 10%, transparent);
+  border-radius: var(--radius-card);
+  background: var(--term);
+  color: var(--term-fg);
+}
+
+.prompt-term-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--term-fg) 12%, transparent);
+  color: var(--term-dim);
+  font: 500 0.7rem/1.2 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.prompt-term-bar button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--term-fg);
+  cursor: pointer;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prompt-term pre {
+  max-height: 26rem;
+  margin: 0;
+  padding: 1rem 1.15rem 1.25rem;
+  overflow: auto;
+  font: 400 0.8rem/1.7 var(--font-mono);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.prompt-term pre[data-lang="ko"] {
+  font: 400 0.9rem/1.75 var(--font-body);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.prompt-term pre:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+.prompt-row-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.prompt-row-note svg {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  margin-top: 0.15rem;
+  color: var(--fg);
+}
+
+.prompt-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.prompt-row-source {
+  display: grid;
+  gap: var(--space-2);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.prompt-row-source dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-8);
+  margin: 0;
+}
+
+.prompt-row-source dt {
+  color: var(--muted);
+  font: 500 0.68rem/1.4 var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.prompt-row-source dd {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.prompt-row-source a,
+.prompt-note a,
+.prompt-sources a {
+  color: var(--accent);
+}
+
+.prompt-row-source a:hover,
+.prompt-note a:hover,
+.prompt-sources a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prompt-row-source p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.prompt-empty {
+  margin: 0;
+  padding: var(--space-10) 0;
+  border-top: 2px solid var(--fg);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  text-align: center;
+}
+
+.prompt-more {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-8);
+}
+
+/* builder: a form ruled like the rows, the output on the terminal */
+.studio {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.studio-toolbar {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.studio-choice,
+.studio-presets,
+.studio-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.studio-presets > .ui-label {
+  margin-right: var(--space-2);
+}
+
+.studio-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: var(--space-10);
+  align-items: start;
+}
+
+.studio-form {
+  border-top: 2px solid var(--fg);
+}
+
+.studio-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  font: 500 0.72rem/1 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.studio-progress b {
+  color: var(--fg);
+}
+
+.studio-progress span {
+  position: relative;
+  flex: 1 1 auto;
+  height: 3px;
+  overflow: hidden;
+  background: var(--border);
+}
+
+.studio-progress span::after {
+  position: absolute;
+  inset: 0;
+  background: var(--fg);
+  content: "";
+  transform: scaleX(var(--k, 0));
+  transform-origin: left;
+  transition: transform var(--motion-fast) var(--ease-fluid);
+}
+
+.studio-row {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: var(--space-2) var(--space-5);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.studio-row-label {
+  padding-top: 0.6rem;
+  color: var(--muted);
+  font: 500 0.74rem/1.4 var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+.studio-row-label b {
+  color: var(--fg);
+}
+
+.studio-row-control {
+  display: grid;
+  min-width: 0;
+  gap: var(--space-3);
+}
+
+.studio-chips .ui-filter {
+  min-height: 1.9rem;
+  font-size: 0.76rem;
+}
+
+.studio-toggles label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.9rem;
+}
+
+.studio-toggles input {
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: var(--fg);
+}
+
+.studio-output {
+  position: sticky;
+  top: 4.5rem;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.studio-output-options {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.studio-output-options .ui-label {
+  margin: var(--space-2) 0 0;
+}
+
+.studio-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.studio-output .prompt-term pre {
+  min-height: 9rem;
+}
+
+.studio-output .prompt-row-actions {
+  margin-top: 0;
+}
+
+.studio-history {
+  margin-top: var(--space-4);
+}
+
+.studio-history ol {
+  margin: 0;
+  padding: 0;
+  border-top: 2px solid var(--fg);
+  list-style: none;
+}
+
+.studio-history li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.studio-history-item {
+  display: grid;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 0.15rem;
+  padding: 0.3rem 0;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  cursor: pointer;
+  text-align: left;
+}
+
+.studio-history-item span {
+  color: var(--muted);
+  font: 500 0.68rem/1.3 var(--font-mono);
+}
+
+.studio-history-item strong {
+  overflow: hidden;
+  font: 500 0.78rem/1.4 var(--font-mono);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.studio-history-item:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* numbers: the DACON tiles and bars */
+.prompt-stats {
+  display: grid;
+  gap: var(--space-10);
+}
+
+.prompt-bars-h {
+  margin: 0 0 var(--space-3);
+  font: 700 1.15rem/1.3 var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.prompt-bars .bar-rows li {
+  display: block;
+  padding: 0;
+}
+
+.prompt-bars .bar-rows li > :is(button, div) {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(9rem, 13rem) minmax(0, 1fr) 3rem;
+  align-items: center;
+  gap: var(--space-2) var(--space-5);
+  padding: var(--space-4) 0;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  font: inherit;
+  text-align: left;
+}
+
+.prompt-bars .bar-rows li > button {
+  cursor: pointer;
+}
+
+.prompt-bars .bar-rows li > button:hover {
+  background: color-mix(in oklab, var(--fg) 4%, transparent);
+}
+
+.prompt-stats-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+/* share and sources: ledgers */
+.prompt-ledger,
+.prompt-sources {
+  margin: 0 0 var(--space-8);
+  padding: 0;
+  border-top: 2px solid var(--fg);
+  list-style: none;
+}
+
+.prompt-ledger li {
+  display: grid;
+  grid-template-columns: 4rem 11rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--space-2) var(--space-6);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.prompt-ledger-n,
+.prompt-sources-n {
+  font: 900 1.6rem/1 var(--font-brand);
+  font-stretch: 62%;
+  font-variant-numeric: tabular-nums;
+}
+
+.prompt-ledger strong {
+  font-size: 1.02rem;
+}
+
+.prompt-ledger p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.prompt-rules {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-10);
+  margin-bottom: var(--space-6);
+}
+
+.prompt-rules .branch-row-h {
+  margin-bottom: var(--space-3);
+}
+
+.prompt-rules ul {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  font-size: 0.93rem;
+  line-height: 1.6;
+}
+
+.prompt-note {
+  max-width: 48em;
+  margin: 0 0 var(--space-3);
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.prompt-note a svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  vertical-align: -0.1em;
+}
+
+.prompt-sources li {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr) 3.5rem;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-6);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.prompt-sources-license {
+  margin: 0;
+  font: 700 0.75rem/1.4 var(--font-mono);
+}
+
+.prompt-sources a {
+  font-weight: 700;
+}
+
+.prompt-sources li p:not([class]) {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.prompt-sources-n {
+  margin: 0;
+  text-align: right;
+}
+
+.prompt-notice {
+  margin: 0 0 var(--space-6);
+}
+
+.prompt-notice summary {
+  color: var(--accent);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.prompt-notice pre {
+  margin: var(--space-3) 0 0;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  color: var(--muted);
+  font: 400 0.72rem/1.6 var(--font-mono);
+  white-space: pre-wrap;
+}
+
+/* 내 모음: a full-height sheet like the menu */
+.prompt-saved {
+  width: min(28rem, 100%);
+  height: 100dvh;
+  max-width: none;
+  max-height: 100dvh;
+  margin: 0 0 0 auto;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid var(--border);
+  background: var(--bg);
+  box-shadow: var(--shadow-modal);
+  color: var(--fg);
+}
+
+.prompt-saved::backdrop {
+  background: var(--overlay);
+}
+
+.prompt-saved-in {
+  display: grid;
+  gap: var(--space-5);
+  padding: var(--space-6);
+}
+
+.prompt-saved-head {
+  position: relative;
+}
+
+.prompt-saved-head .ui-slate {
+  margin-bottom: var(--space-5);
+}
+
+.prompt-saved-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.prompt-saved-head h2 {
+  margin: 0;
+  font: 700 var(--type-section-title) / 1.05 var(--font-display);
+  letter-spacing: -0.035em;
+}
+
+.prompt-saved-note {
+  margin: var(--space-3) 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+.prompt-saved-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.prompt-saved-list {
+  margin: 0;
+  padding: 0;
+  border-top: 2px solid var(--fg);
+  list-style: none;
+}
+
+.prompt-saved-list li {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.prompt-saved-n {
+  font: 900 1.2rem/1 var(--font-brand);
+  font-stretch: 62%;
+  font-variant-numeric: tabular-nums;
+}
+
+.prompt-saved-open {
+  display: grid;
+  min-width: 0;
+  gap: 0.15rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  cursor: pointer;
+  text-align: left;
+}
+
+.prompt-saved-open strong {
+  overflow: hidden;
+  font-size: 0.95rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prompt-saved-open span {
+  color: var(--muted);
+  font: 500 0.7rem/1.3 var(--font-mono);
+}
+
+.prompt-saved-open:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prompt-saved-empty {
+  margin: 0;
+  color: var(--muted);
+}
+
+.prompt-status {
+  position: fixed;
+  z-index: var(--z-overlay);
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  left: 50%;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-pill);
+  background: var(--fg);
+  color: var(--bg);
+  font: 500 0.78rem/1.3 var(--font-mono);
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: opacity var(--motion-fast) var(--ease-fluid);
+}
+
+.prompt-status:empty {
+  opacity: 0;
+}
+
+@media (max-width: 1120px) {
+  .studio-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .studio-output {
+    position: static;
+  }
+}
+
+@media (max-width: 980px) {
+  .prompt-sheet {
+    align-content: start;
+  }
+
+  .prompts-page .ui-page-header--hero .ui-page-header-aside {
+    min-height: 0;
+  }
+
+  .prompt-row-top {
+    grid-template-columns: 8rem minmax(0, 1fr);
+  }
+
+  .prompt-row-side {
+    grid-column: 2;
+  }
+
+  .prompt-row-more {
+    margin-left: calc(8rem + var(--space-8));
+  }
+}
+
+@media (max-width: 760px) {
+  .prompt-rail {
+    gap: var(--space-4);
+  }
+
+  .prompt-rail-saved-label {
+    display: none;
+  }
+
+  .prompt-sheet-paper p:nth-child(n + 7) {
+    display: none;
+  }
+
+  .prompt-row-top {
+    grid-template-columns: minmax(0, 1fr);
+    padding: var(--space-5) calc(var(--space-2) + 2rem) var(--space-5) 0;
+  }
+
+  .prompt-row-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .prompt-row-side {
+    grid-column: 1;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .prompt-row-toggle {
+    top: calc(var(--space-5) - 0.35rem);
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .prompt-row-more {
+    margin: 0;
+    padding: var(--space-5) 0 var(--space-6);
+  }
+
+  .prompt-fields,
+  .prompt-rules,
+  .prompt-saved-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .studio-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .studio-row-label {
+    padding-top: 0;
+  }
+
+  .studio-row .studio-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .studio-row .studio-chips .ui-filter {
+    flex: none;
+  }
+
+  .prompt-ledger li {
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+  }
+
+  .prompt-ledger p {
+    grid-column: 2;
+  }
+
+  .prompt-sources li {
+    grid-template-columns: minmax(0, 1fr) 3rem;
+  }
+
+  .prompt-sources-license {
+    grid-column: 1 / -1;
+  }
+
+  .prompt-bars .bar-rows li > :is(button, div) {
+    grid-template-columns: minmax(6.5rem, 9rem) minmax(0, 1fr) 2.5rem;
+  }
+
+  .prompt-saved {
+    width: 100%;
+    border-left: 0;
+  }
+}
+
+@media (pointer: coarse) {
+  .prompt-row-tools .ui-icon-button,
+  .prompt-saved .ui-icon-button,
+  .studio-history .ui-icon-button {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prompt-sheet-slot::after {
+    animation: none;
+  }
+
+  .prompt-row-panel,
+  .prompt-row-toggle {
+    transition: none;
+  }
+}

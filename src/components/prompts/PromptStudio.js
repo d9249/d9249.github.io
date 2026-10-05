@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Copy, Download, History, RotateCcw } from "lucide-react";
 import { copyText, downloadText, useStoredList } from "./promptClient";
+import { Button } from "../ui";
 
 const HISTORY_KEY = "d9249:prompts:studio-history";
 const HISTORY_LIMIT = 8;
@@ -465,65 +466,59 @@ const StudioField = ({ field, value, onChange }) => {
   const Control = field.multiline ? "textarea" : "input";
 
   return (
-    <div className={`studio-field ${field.multiline ? "is-wide" : ""}`}>
-      <label htmlFor={id}>
+    <div className="studio-row">
+      <label htmlFor={id} className="studio-row-label">
         {field.label}
-        {field.required ? <span aria-hidden="true"> *</span> : null}
+        {field.required ? <b aria-hidden="true"> *</b> : null}
       </label>
-      <Control
-        id={id}
-        value={value}
-        placeholder={field.placeholder}
-        required={field.required}
-        rows={field.multiline ? 3 : undefined}
-        type={field.multiline ? undefined : "text"}
-        onChange={(event) => onChange(field.key, event.target.value)}
-      />
-      {field.chips.length ? (
-        <div
-          className="studio-chips"
-          role="group"
-          aria-label={`${field.label} 제안`}
-        >
-          {field.chips.map((chip) => {
-            const active = hasChip(value, chip, field);
-            return (
+      <div className="studio-row-control">
+        <Control
+          id={id}
+          value={value}
+          placeholder={field.placeholder}
+          required={field.required}
+          rows={field.multiline ? 3 : undefined}
+          type={field.multiline ? undefined : "text"}
+          onChange={(event) => onChange(field.key, event.target.value)}
+        />
+        {field.chips.length ? (
+          <div
+            className="studio-chips"
+            role="group"
+            aria-label={`${field.label} 제안`}
+          >
+            {field.chips.map((chip) => (
               <button
                 key={chip}
                 type="button"
-                className={`studio-chip ${active ? "is-active" : ""}`}
-                aria-pressed={active}
+                className="ui-filter"
+                aria-pressed={hasChip(value, chip, field)}
                 onClick={() =>
                   onChange(field.key, appendChip(value, chip, field))
                 }
               >
                 {chip}
               </button>
-            );
-          })}
-        </div>
-      ) : null}
+            ))}
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 };
 
-const Segmented = ({ label, options, value, onChange, name }) => (
-  <div className="studio-segmented" role="radiogroup" aria-label={label}>
+// a small set of mutually exclusive choices: pill buttons, the chosen one in ink
+const Choice = ({ label, options, value, onChange }) => (
+  <div className="studio-choice" role="group" aria-label={label}>
     {options.map((option) => (
-      <label
+      <Button
         key={option.slug}
-        className={value === option.slug ? "is-active" : ""}
+        aria-pressed={value === option.slug}
+        title={option.hint}
+        onClick={() => onChange(option.slug)}
       >
-        <input
-          type="radio"
-          name={name}
-          value={option.slug}
-          checked={value === option.slug}
-          onChange={() => onChange(option.slug)}
-        />
-        <span>{option.label}</span>
-        {option.hint ? <small>{option.hint}</small> : null}
-      </label>
+        {option.label}
+      </Button>
     ))}
   </div>
 );
@@ -552,6 +547,7 @@ const PromptStudio = ({ announce }) => {
   const filledCount = fieldsDef.filter((field) =>
     clean(fields[field.key]),
   ).length;
+  const targetHint = IMAGE_TARGETS.find((item) => item.slug === target)?.hint;
 
   const handleChange = (key, value) =>
     setFields((previous) => ({ ...previous, [key]: value }));
@@ -598,9 +594,8 @@ const PromptStudio = ({ announce }) => {
   return (
     <div className="studio">
       <div className="studio-toolbar">
-        <Segmented
+        <Choice
           label="만들 프롬프트 종류"
-          name="studio-mode"
           value={mode}
           onChange={setMode}
           options={[
@@ -609,12 +604,12 @@ const PromptStudio = ({ announce }) => {
           ]}
         />
         <div className="studio-presets" role="group" aria-label="빠른 시작">
-          <span className="studio-label">빠른 시작</span>
+          <span className="ui-label">빠른 시작</span>
           {presets.map((preset) => (
             <button
               key={preset.label}
               type="button"
-              className="studio-chip"
+              className="ui-filter"
               onClick={() => {
                 setFields({ ...preset.fields });
                 if (preset.aspect) setAspect(preset.aspect);
@@ -625,11 +620,11 @@ const PromptStudio = ({ announce }) => {
           ))}
           <button
             type="button"
-            className="prompt-text-button"
+            className="prompt-text-action"
             onClick={() => setFields({})}
           >
-            <RotateCcw aria-hidden="true" size={14} strokeWidth={2} />
-            초기화
+            <RotateCcw aria-hidden="true" />
+            비우기
           </button>
         </div>
       </div>
@@ -644,10 +639,13 @@ const PromptStudio = ({ announce }) => {
         >
           <p className="studio-progress" aria-live="polite">
             <span
-              style={{ "--studio-progress": filledCount / fieldsDef.length }}
+              style={{ "--k": filledCount / fieldsDef.length }}
               aria-hidden="true"
             />
-            {filledCount} / {fieldsDef.length} 채움
+            <b>
+              {filledCount} / {fieldsDef.length}
+            </b>{" "}
+            채움
           </p>
           {fieldsDef.map((field) => (
             <StudioField
@@ -658,55 +656,64 @@ const PromptStudio = ({ announce }) => {
             />
           ))}
           {mode === "text" ? (
-            <fieldset className="studio-toggles">
-              <legend>안전장치</legend>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={toggles.noGuess}
-                  onChange={(event) =>
-                    setToggles((previous) => ({
-                      ...previous,
-                      noGuess: event.target.checked,
-                    }))
-                  }
-                />
-                모르면 모른다고 답하게 하기
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={toggles.askFirst}
-                  onChange={(event) =>
-                    setToggles((previous) => ({
-                      ...previous,
-                      askFirst: event.target.checked,
-                    }))
-                  }
-                />
-                모호하면 먼저 질문하게 하기
-              </label>
-            </fieldset>
+            <div
+              className="studio-row studio-toggles"
+              role="group"
+              aria-labelledby="studio-toggles-label"
+            >
+              <span id="studio-toggles-label" className="studio-row-label">
+                안전장치
+              </span>
+              <div className="studio-row-control">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggles.noGuess}
+                    onChange={(event) =>
+                      setToggles((previous) => ({
+                        ...previous,
+                        noGuess: event.target.checked,
+                      }))
+                    }
+                  />
+                  모르면 모른다고 답하게 하기
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={toggles.askFirst}
+                    onChange={(event) =>
+                      setToggles((previous) => ({
+                        ...previous,
+                        askFirst: event.target.checked,
+                      }))
+                    }
+                  />
+                  모호하면 먼저 질문하게 하기
+                </label>
+              </div>
+            </div>
           ) : null}
         </form>
 
         <aside className="studio-output" aria-label="완성된 프롬프트">
           {mode === "image" ? (
             <div className="studio-output-options">
-              <Segmented
+              <span className="ui-label">대상 모델</span>
+              <Choice
                 label="대상 모델"
-                name="studio-target"
                 value={target}
                 onChange={setTarget}
                 options={IMAGE_TARGETS}
               />
-              <div className="studio-aspect" role="group" aria-label="화면비">
-                <span className="studio-label">화면비</span>
+              <p className="studio-hint">{targetHint}</p>
+              <span className="ui-label">화면비</span>
+              <div className="studio-chips" role="group" aria-label="화면비">
                 {ASPECT_RATIOS.map((ratio) => (
                   <button
                     key={ratio}
                     type="button"
-                    className={`studio-chip ${aspect === ratio ? "is-active" : ""}`}
+                    className="ui-filter"
                     aria-pressed={aspect === ratio}
                     onClick={() => setAspect(ratio)}
                   >
@@ -717,98 +724,86 @@ const PromptStudio = ({ announce }) => {
             </div>
           ) : null}
 
-          <div className="studio-result">
-            <div className="prompt-subhead">
-              <h3>실시간 프롬프트</h3>
-              <span className="studio-count">
+          <div className="prompt-term">
+            <p className="prompt-term-bar">
+              <span>
+                Output ·{" "}
                 {result.prompt
                   ? `${result.prompt.length.toLocaleString("ko-KR")}자`
                   : "대기 중"}
               </span>
-            </div>
-            <pre className="prompt-full studio-preview" tabIndex={0}>
+            </p>
+            <pre data-lang={mode === "text" ? "ko" : "en"} tabIndex={0}>
               {result.prompt ||
                 (mode === "image"
                   ? "주제를 입력하면 여기에 프롬프트가 만들어집니다."
                   : "할 일을 입력하면 여기에 프롬프트가 만들어집니다.")}
             </pre>
-            {result.negative ? (
-              <>
-                <div className="prompt-subhead">
-                  <h3>네거티브 프롬프트</h3>
-                </div>
-                <pre
-                  className="prompt-full studio-preview is-negative"
-                  tabIndex={0}
-                >
-                  {result.negative}
-                </pre>
-              </>
-            ) : null}
-            <div className="prompt-dialog-actions">
-              <button
-                type="button"
-                className="button-primary prompt-button"
-                onClick={() => handleCopy(result.prompt)}
-                disabled={!result.prompt}
-              >
-                <Copy aria-hidden="true" size={16} strokeWidth={2} />
-                복사
-              </button>
-              {result.negative ? (
-                <button
-                  type="button"
-                  className="button-secondary prompt-button"
-                  onClick={() => handleCopy(result.negative, "네거티브를")}
-                >
-                  <Copy aria-hidden="true" size={16} strokeWidth={2} />
-                  네거티브 복사
-                </button>
-              ) : null}
-              <button
-                type="button"
-                className="button-secondary prompt-button"
-                disabled={!result.prompt}
-                onClick={() => {
-                  const body = result.negative
-                    ? `${result.prompt}\n\nNegative prompt:\n${result.negative}\n`
-                    : `${result.prompt}\n`;
-                  downloadText(`prompt-${mode}.txt`, body);
-                  remember();
-                }}
-              >
-                <Download aria-hidden="true" size={16} strokeWidth={2} />
-                TXT
-              </button>
-            </div>
-            {mode === "image" ? (
-              <p className="studio-tip">
-                한국어로 써도 되지만 대부분의 이미지 모델은 영어 묘사에서 결과가
-                더 안정적입니다. 실존 인물·상표·캐릭터 이름은 넣지 않는 편이
-                안전합니다.
-              </p>
-            ) : null}
           </div>
+          {result.negative ? (
+            <div className="prompt-term">
+              <p className="prompt-term-bar">
+                <span>Negative prompt</span>
+              </p>
+              <pre data-lang="en" tabIndex={0}>
+                {result.negative}
+              </pre>
+            </div>
+          ) : null}
+          <div className="prompt-row-actions">
+            <Button
+              variant="primary"
+              onClick={() => handleCopy(result.prompt)}
+              disabled={!result.prompt}
+            >
+              <Copy aria-hidden="true" />
+              복사
+            </Button>
+            {result.negative ? (
+              <Button onClick={() => handleCopy(result.negative, "네거티브를")}>
+                <Copy aria-hidden="true" />
+                네거티브 복사
+              </Button>
+            ) : null}
+            <Button
+              disabled={!result.prompt}
+              onClick={() => {
+                const body = result.negative
+                  ? `${result.prompt}\n\nNegative prompt:\n${result.negative}\n`
+                  : `${result.prompt}\n`;
+                downloadText(`prompt-${mode}.txt`, body);
+                remember();
+              }}
+            >
+              <Download aria-hidden="true" />
+              TXT
+            </Button>
+          </div>
+          {mode === "image" ? (
+            <p className="studio-hint">
+              한국어로 써도 되지만 대부분의 이미지 모델은 영어 묘사에서 결과가
+              더 안정적입니다. 실존 인물·상표·캐릭터 이름은 넣지 않는 편이
+              안전합니다.
+            </p>
+          ) : null}
 
           <section
             className="studio-history"
             aria-labelledby="studio-history-title"
           >
-            <div className="prompt-subhead">
-              <h3 id="studio-history-title">
-                <History aria-hidden="true" size={15} strokeWidth={2} />
-                최근 기록 <span>{history.length}</span>
-              </h3>
+            <h3 id="studio-history-title" className="branch-row-h">
+              <History aria-hidden="true" />
+              최근 기록 <span>{history.length}</span>
               {history.length ? (
                 <button
                   type="button"
-                  className="prompt-text-button"
+                  className="prompt-row-reset"
                   onClick={() => setHistory([])}
                 >
                   비우기
                 </button>
               ) : null}
-            </div>
+            </h3>
             {history.length ? (
               <ol>
                 {history.map((entry) => (
@@ -827,18 +822,18 @@ const PromptStudio = ({ announce }) => {
                     </button>
                     <button
                       type="button"
-                      className="prompt-icon-button"
+                      className="ui-icon-button"
                       onClick={() => handleCopy(entry.text)}
                       aria-label="이 기록 복사"
                       title="복사"
                     >
-                      <Copy aria-hidden="true" size={15} strokeWidth={2} />
+                      <Copy aria-hidden="true" />
                     </button>
                   </li>
                 ))}
               </ol>
             ) : (
-              <p className="studio-empty">
+              <p className="studio-hint">
                 복사하거나 저장한 결과가 이 브라우저에 최근 {HISTORY_LIMIT}
                 개까지 남습니다.
               </p>

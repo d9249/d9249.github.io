@@ -58,6 +58,7 @@ node scripts/prompts/import-open-sources.mjs
 1. 방문자가 `.github/ISSUE_TEMPLATE/prompt-share.yml` 폼으로 이슈를 엽니다 (`prompt:submission` 라벨).
 2. 검토 후 `prompt:approved` 라벨을 붙이면 `.github/workflows/prompt-submission.yml`이
    `scripts/prompts/issue-to-prompt.cjs`로 `community.json`에 추가하고, main에 커밋한 뒤 배포를 실행하고 이슈를 닫습니다.
-3. 폼 값이 잘못되면 이슈에 고칠 점을 댓글로 남기고 라벨을 뗍니다.
+3. 반영된 프롬프트는 `https://d9249.github.io/prompts/#<id>`로 바로 열립니다.
+4. 폼 값이 잘못되면 이슈에 고칠 점을 댓글로 남기고 라벨을 뗍니다.
 
 파서 테스트: `node --test scripts/prompts/issue-form.test.cjs`

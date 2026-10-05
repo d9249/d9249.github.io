@@ -1,19 +1,9 @@
 import * as React from "react";
-import {
-  ArrowUpRight,
-  Bookmark,
-  ChartNoAxesColumn,
-  Library,
-  Search,
-  Send,
-  Shuffle,
-  WandSparkles,
-  X,
-} from "lucide-react";
+import { ArrowUpRight, Search, Send, Shuffle, Bookmark, X } from "lucide-react";
 import Layout from "../components/Layout";
-import SectionHeading from "../components/SectionHeading";
-import PromptCard from "../components/prompts/PromptCard";
-import PromptDialog from "../components/prompts/PromptDialog";
+import { Button, PageHeader, SectionHeading } from "../components/ui";
+import PromptRows from "../components/prompts/PromptRows";
+import PromptSheet from "../components/prompts/PromptSheet";
 import PromptStats from "../components/prompts/PromptStats";
 import PromptStudio from "../components/prompts/PromptStudio";
 import SavedPanel from "../components/prompts/SavedPanel";
@@ -33,14 +23,14 @@ import {
   promptSources,
   promptTargets,
 } from "../utils/prompts";
-import "../styles/prompts.css";
 
 const PAGE_SIZE = 24;
 const SAVED_KEY = "d9249:prompts:saved";
+const SHEET_ID = "sm-rag-grounded-answer";
 const TABS = [
-  { id: "library", label: "라이브러리", icon: Library },
-  { id: "builder", label: "프롬프트 빌더", icon: WandSparkles },
-  { id: "stats", label: "통계", icon: ChartNoAxesColumn },
+  { id: "library", label: "라이브러리" },
+  { id: "builder", label: "빌더" },
+  { id: "numbers", label: "숫자" },
 ];
 const SORTS = [
   { id: "recommended", label: "추천순" },
@@ -92,22 +82,38 @@ const sortPrompts = (items, sort) => {
   }
 };
 
-const setUrlState = ({ promptId, tab }) => {
-  const url = new URL(window.location.href);
-  if (promptId) url.searchParams.set("p", promptId);
-  else url.searchParams.delete("p");
-  url.hash = tab && tab !== "library" ? tab : "";
-  window.history.replaceState(window.history.state, "", url);
+const setHash = (hash) => {
+  try {
+    const { pathname, search } = window.location;
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `${pathname}${search}${hash ? `#${hash}` : ""}`,
+    );
+  } catch (e) {
+    // the URL is a convenience; the page works either way
+  }
 };
 
-const FilterChip = ({ active, onClick, children }) => (
+const countBy = (getKey) =>
+  allPrompts.reduce((map, item) => {
+    const key = getKey(item);
+    map.set(key, (map.get(key) || 0) + 1);
+    return map;
+  }, new Map());
+const categoryCounts = countBy((item) => item.category);
+const targetCounts = countBy((item) => item.target);
+const sourceCounts = countBy(getSourceKey);
+
+const Filter = ({ active, onClick, count, children }) => (
   <button
     type="button"
-    className={`prompt-filter-chip ${active ? "is-active" : ""}`}
+    className="ui-filter"
     aria-pressed={active}
     onClick={onClick}
   >
     {children}
+    {count != null ? <small>{count}</small> : null}
   </button>
 );
 
@@ -116,32 +122,21 @@ const PromptsPage = () => {
   const [query, setQuery] = React.useState("");
   const [category, setCategory] = React.useState("");
   const [target, setTarget] = React.useState("");
-  const [onlyTemplates, setOnlyTemplates] = React.useState(false);
+  const [onlySlots, setOnlySlots] = React.useState(false);
   const [onlyPicks, setOnlyPicks] = React.useState(false);
   const [onlySaved, setOnlySaved] = React.useState(false);
   const [onlyUploads, setOnlyUploads] = React.useState(false);
   const [sort, setSort] = React.useState("recommended");
   const [visibleCount, setVisibleCount] = React.useState(PAGE_SIZE);
-  const [openId, setOpenId] = React.useState(null);
+  const [open, setOpen] = React.useState(() => new Set());
   const [savedOpen, setSavedOpen] = React.useState(false);
   const [saved, setSaved] = useStoredList(SAVED_KEY);
   const [status, announce] = useStatusMessage();
+  const [pendingReveal, setPendingReveal] = React.useState(null);
   const deferredQuery = React.useDeferredValue(query);
   const tabRefs = React.useRef({});
 
   const savedSet = React.useMemo(() => new Set(saved), [saved]);
-
-  React.useEffect(() => {
-    const syncTabFromHash = () => {
-      const hash = window.location.hash.replace("#", "");
-      if (TABS.some((item) => item.id === hash)) setTab(hash);
-    };
-    syncTabFromHash();
-    const promptId = new URLSearchParams(window.location.search).get("p");
-    if (promptId && promptById.has(promptId)) setOpenId(promptId);
-    window.addEventListener("hashchange", syncTabFromHash);
-    return () => window.removeEventListener("hashchange", syncTabFromHash);
-  }, []);
 
   const filtered = React.useMemo(() => {
     const terms = deferredQuery
@@ -149,23 +144,25 @@ const PromptsPage = () => {
       .toLowerCase()
       .split(/\s+/)
       .filter(Boolean);
-    const matches = allPrompts.filter(
-      (item) =>
-        (!category || item.category === category) &&
-        (!target || item.target === target) &&
-        (!onlyTemplates || item.variables.length > 0) &&
-        (!onlyPicks || item.pick) &&
-        (!onlyUploads || item.needsUpload) &&
-        (!onlySaved || savedSet.has(item.id)) &&
-        terms.every((term) => item.searchText.includes(term)),
+    return sortPrompts(
+      allPrompts.filter(
+        (item) =>
+          (!category || item.category === category) &&
+          (!target || item.target === target) &&
+          (!onlySlots || item.variables.length > 0) &&
+          (!onlyPicks || item.pick) &&
+          (!onlyUploads || item.needsUpload) &&
+          (!onlySaved || savedSet.has(item.id)) &&
+          terms.every((term) => item.searchText.includes(term)),
+      ),
+      sort,
     );
-    return sortPrompts(matches, sort);
   }, [
     category,
     deferredQuery,
     onlyPicks,
     onlySaved,
-    onlyTemplates,
+    onlySlots,
     onlyUploads,
     savedSet,
     sort,
@@ -179,43 +176,109 @@ const PromptsPage = () => {
     deferredQuery,
     onlyPicks,
     onlySaved,
-    onlyTemplates,
+    onlySlots,
     onlyUploads,
     sort,
     target,
   ]);
 
-  const hasFilters =
+  const hasFilters = Boolean(
     query ||
     category ||
     target ||
-    onlyTemplates ||
+    onlySlots ||
     onlyPicks ||
     onlySaved ||
-    onlyUploads;
+    onlyUploads,
+  );
 
   const resetFilters = () => {
     setQuery("");
     setCategory("");
     setTarget("");
-    setOnlyTemplates(false);
+    setOnlySlots(false);
     setOnlyPicks(false);
     setOnlySaved(false);
     setOnlyUploads(false);
   };
 
-  const selectTab = (nextTab, { focus = false } = {}) => {
-    setTab(nextTab);
-    setUrlState({ promptId: openId, tab: nextTab });
-    if (focus) tabRefs.current[nextTab]?.focus();
+  // open a prompt from outside the list (the header sheet, a #link, the random pick):
+  // show the library, make sure the row is rendered, open it, then scroll to it
+  const reveal = React.useCallback(
+    (id, smooth = true) => {
+      if (!promptById.has(id)) return;
+      setTab("library");
+      const index = filtered.findIndex((item) => item.id === id);
+      if (index < 0) {
+        resetFilters();
+        const all = sortPrompts(allPrompts, sort);
+        const at = all.findIndex((item) => item.id === id);
+        setVisibleCount(Math.max(PAGE_SIZE, at + 1));
+      } else if (index >= visibleCount) {
+        setVisibleCount(index + 1);
+      }
+      setOpen((previous) =>
+        previous.has(id) ? previous : new Set(previous).add(id),
+      );
+      setHash(id);
+      setPendingReveal({ id, smooth });
+    },
+    [filtered, sort, visibleCount],
+  );
+
+  React.useEffect(() => {
+    if (!pendingReveal) return;
+    const row = document.getElementById(pendingReveal.id);
+    if (!row) return;
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    row.scrollIntoView({
+      behavior: pendingReveal.smooth && !reduce ? "smooth" : "auto",
+      block: "start",
+    });
+    row
+      .querySelector(".prompt-row-title button")
+      ?.focus({ preventScroll: true });
+    setPendingReveal(null);
+  });
+
+  React.useEffect(() => {
+    const fromHash = () => {
+      const hash = decodeURIComponent(window.location.hash.slice(1));
+      if (TABS.some((item) => item.id === hash)) setTab(hash);
+      else if (promptById.has(hash)) reveal(hash, false);
+    };
+    fromHash();
+    window.addEventListener("hashchange", fromHash);
+    return () => window.removeEventListener("hashchange", fromHash);
+    // run once: later reveals come from the page itself
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const toggle = (id) => {
+    const opening = !open.has(id);
+    setOpen((previous) => {
+      const next = new Set(previous);
+      if (opening) next.add(id);
+      else next.delete(id);
+      return next;
+    });
+    if (opening) setHash(id);
+    else if (window.location.hash === `#${id}`) setHash(null);
+  };
+
+  const selectTab = (next, { focus = false } = {}) => {
+    setTab(next);
+    setHash(next === "library" ? null : next);
+    if (focus) tabRefs.current[next]?.focus();
   };
 
   const handleTabKeyDown = (event) => {
     const index = TABS.findIndex((item) => item.id === tab);
+    const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
     let next = null;
-    if (event.key === "ArrowRight") next = TABS[(index + 1) % TABS.length];
-    if (event.key === "ArrowLeft")
-      next = TABS[(index - 1 + TABS.length) % TABS.length];
+    if (step) next = TABS[(index + step + TABS.length) % TABS.length];
     if (event.key === "Home") next = TABS[0];
     if (event.key === "End") next = TABS[TABS.length - 1];
     if (next) {
@@ -224,46 +287,28 @@ const PromptsPage = () => {
     }
   };
 
-  const openPrompt = React.useCallback(
-    (id) => {
-      setSavedOpen(false);
-      setOpenId(id);
-      setUrlState({ promptId: id, tab });
-    },
-    [tab],
-  );
-
-  const closePrompt = React.useCallback(() => {
-    setOpenId(null);
-    setUrlState({ promptId: null, tab });
-  }, [tab]);
-
   const openRandom = () => {
     const pool = filtered.length ? filtered : allPrompts;
-    const candidates =
-      pool.length > 1 ? pool.filter((item) => item.id !== openId) : pool;
-    const pick = candidates[Math.floor(Math.random() * candidates.length)];
-    if (pick) openPrompt(pick.id);
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    if (pick) reveal(pick.id);
   };
 
   const handleCopy = React.useCallback(
     async (item, text) => {
-      const body = text ?? fillPrompt(item.prompt);
-      const ok = await copyText(body);
+      const ok = await copyText(text ?? fillPrompt(item.prompt));
       announce(
-        ok
-          ? item.variables.length && text === undefined
-            ? "복사했습니다 · 변수는 기본값이나 [이름]으로 채웠습니다"
-            : "복사했습니다"
-          : "복사하지 못했습니다",
+        !ok
+          ? "복사하지 못했습니다"
+          : item.variables.length && text === undefined
+            ? "복사했습니다 · 빈칸은 기본값이나 [이름]으로 채웠습니다"
+            : "복사했습니다",
       );
     },
     [announce],
   );
 
   const handleCopyLink = async (item) => {
-    const url = `${window.location.origin}/prompts/?p=${item.id}`;
-    const ok = await copyText(url);
+    const ok = await copyText(`${window.location.origin}/prompts/#${item.id}`);
     announce(ok ? "링크를 복사했습니다" : "복사하지 못했습니다");
   };
 
@@ -283,103 +328,75 @@ const PromptsPage = () => {
   );
 
   const savedItems = saved.map((id) => promptById.get(id)).filter(Boolean);
-  const openItem = openId ? promptById.get(openId) : null;
   const visible = filtered.slice(0, visibleCount);
-  const sourceCounts = allPrompts.reduce((map, item) => {
-    const key = getSourceKey(item);
-    map.set(key, (map.get(key) || 0) + 1);
-    return map;
-  }, new Map());
 
   return (
     <Layout>
-      <section
-        className="shell section prompts-page"
-        aria-labelledby="prompts-title"
-      >
-        <SectionHeading
-          as="h1"
-          kicker="Prompts"
-          title="프롬프트 라이브러리"
-          titleId="prompts-title"
-          description="바로 복사해 쓰는 프롬프트를 용도와 AI별로 모았습니다. 항목마다 출처와 라이선스를 밝히고, 좋은 프롬프트는 누구나 공유할 수 있습니다."
+      <section className="shell prompts-page">
+        <PageHeader
+          size="hero"
+          slate={{
+            label: "Prompts",
+            count: allPrompts.length,
+            unit: "prompts",
+          }}
+          title="프롬프트"
+          lead="바로 복사해 쓰는 AI 프롬프트를 용도와 AI별로 모았습니다. 항목마다 출처와 라이선스를 밝힙니다. 빈칸이 있는 템플릿은 채우면 완성본이 바로 만들어집니다."
+          actions={
+            <>
+              <Button variant="primary" href={PROMPT_SHARE_URL}>
+                <Send aria-hidden="true" />
+                프롬프트 공유하기
+              </Button>
+              <Button onClick={openRandom}>
+                <Shuffle aria-hidden="true" />
+                아무거나 뽑기
+              </Button>
+            </>
+          }
+          aside={
+            <PromptSheet item={promptById.get(SHEET_ID)} onOpen={reveal} />
+          }
         />
 
-        <div className="prompts-intro">
-          <dl className="prompts-counts">
-            <div>
-              <dt>프롬프트</dt>
-              <dd>{allPrompts.length}</dd>
-            </div>
-            <div>
-              <dt>변수 템플릿</dt>
-              <dd>
-                {allPrompts.filter((item) => item.variables.length).length}
-              </dd>
-            </div>
-            <div>
-              <dt>출처</dt>
-              <dd>{[...sourceCounts.values()].filter(Boolean).length}</dd>
-            </div>
-          </dl>
-          <div className="prompts-intro-actions">
-            <a
-              className="button-primary prompt-button"
-              href={PROMPT_SHARE_URL}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Send aria-hidden="true" size={16} strokeWidth={2} />
-              프롬프트 공유하기
-            </a>
-            <button
-              type="button"
-              className="button-secondary prompt-button"
-              onClick={openRandom}
-            >
-              <Shuffle aria-hidden="true" size={16} strokeWidth={2} />
-              아무거나 뽑기
-            </button>
-            <button
-              type="button"
-              className="button-secondary prompt-button"
-              onClick={() => setSavedOpen(true)}
-            >
-              <Bookmark aria-hidden="true" size={16} strokeWidth={2} />내 모음
-              <span className="prompt-count-badge">{savedItems.length}</span>
-            </button>
+        <div className="prompt-rail-row">
+          <div
+            className="prompt-rail"
+            role="tablist"
+            aria-label="프롬프트 보기"
+          >
+            {TABS.map((item, index) => {
+              const selected = tab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  ref={(node) => {
+                    tabRefs.current[item.id] = node;
+                  }}
+                  type="button"
+                  role="tab"
+                  id={`prompt-tab-${item.id}`}
+                  aria-selected={selected}
+                  aria-controls={`prompt-panel-${item.id}`}
+                  tabIndex={selected ? 0 : -1}
+                  onClick={() => selectTab(item.id)}
+                  onKeyDown={handleTabKeyDown}
+                >
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  {item.label}
+                </button>
+              );
+            })}
           </div>
-        </div>
-
-        <div
-          className="prompt-tabs"
-          role="tablist"
-          aria-label="프롬프트 보기 방식"
-        >
-          {TABS.map((item) => {
-            const Icon = item.icon;
-            const selected = tab === item.id;
-            return (
-              <button
-                key={item.id}
-                ref={(node) => {
-                  tabRefs.current[item.id] = node;
-                }}
-                type="button"
-                role="tab"
-                id={`prompt-tab-${item.id}`}
-                aria-selected={selected}
-                aria-controls={`prompt-panel-${item.id}`}
-                tabIndex={selected ? 0 : -1}
-                className={selected ? "is-active" : ""}
-                onClick={() => selectTab(item.id)}
-                onKeyDown={handleTabKeyDown}
-              >
-                <Icon aria-hidden="true" size={16} strokeWidth={2} />
-                {item.label}
-              </button>
-            );
-          })}
+          <Button
+            className="prompt-rail-saved"
+            aria-label={`내 모음 ${savedItems.length}개`}
+            onClick={() => setSavedOpen(true)}
+          >
+            <Bookmark aria-hidden="true" />
+            <span className="prompt-rail-saved-label">내 모음</span>
+            <span className="prompt-count">{savedItems.length}</span>
+          </Button>
         </div>
 
         <div
@@ -390,7 +407,7 @@ const PromptsPage = () => {
         >
           <div className="prompt-filters">
             <div className="prompt-search">
-              <Search aria-hidden="true" size={17} strokeWidth={2} />
+              <Search aria-hidden="true" />
               <label htmlFor="prompt-search" className="visually-hidden">
                 프롬프트 검색
               </label>
@@ -398,7 +415,7 @@ const PromptsPage = () => {
                 id="prompt-search"
                 type="search"
                 value={query}
-                placeholder="제목, 내용, 기여자로 검색 — 예: 코드 리뷰, SQL, poster"
+                placeholder="제목, 내용, 기여자로 찾기 — 코드 리뷰, SQL, poster"
                 onChange={(event) => setQuery(event.target.value)}
                 autoComplete="off"
               />
@@ -409,81 +426,82 @@ const PromptsPage = () => {
                   onClick={() => setQuery("")}
                   aria-label="검색어 지우기"
                 >
-                  <X aria-hidden="true" size={15} strokeWidth={2} />
+                  <X aria-hidden="true" />
                 </button>
               ) : null}
             </div>
-
             <div className="prompt-filter-row" role="group" aria-label="용도">
-              <span className="prompt-filter-label">용도</span>
-              <FilterChip active={!category} onClick={() => setCategory("")}>
+              <span className="ui-label">용도</span>
+              <Filter active={!category} onClick={() => setCategory("")}>
                 전체
-              </FilterChip>
+              </Filter>
               {promptCategories.map((item) => (
-                <FilterChip
+                <Filter
                   key={item.slug}
                   active={category === item.slug}
+                  count={categoryCounts.get(item.slug) || 0}
                   onClick={() =>
                     setCategory(category === item.slug ? "" : item.slug)
                   }
                 >
                   {item.label}
-                </FilterChip>
+                </Filter>
               ))}
             </div>
             <div className="prompt-filter-row" role="group" aria-label="AI">
-              <span className="prompt-filter-label">AI</span>
-              <FilterChip active={!target} onClick={() => setTarget("")}>
+              <span className="ui-label">AI</span>
+              <Filter active={!target} onClick={() => setTarget("")}>
                 전체
-              </FilterChip>
+              </Filter>
               {promptTargets.map((item) => (
-                <FilterChip
+                <Filter
                   key={item.slug}
                   active={target === item.slug}
+                  count={targetCounts.get(item.slug) || 0}
                   onClick={() =>
                     setTarget(target === item.slug ? "" : item.slug)
                   }
                 >
-                  <span title={item.hint}>{item.label}</span>
-                </FilterChip>
+                  {item.label}
+                </Filter>
               ))}
             </div>
             <div className="prompt-filter-row" role="group" aria-label="조건">
-              <span className="prompt-filter-label">조건</span>
-              <FilterChip
+              <span className="ui-label">조건</span>
+              <Filter
                 active={onlyPicks}
                 onClick={() => setOnlyPicks((value) => !value)}
               >
                 에디터 픽
-              </FilterChip>
-              <FilterChip
-                active={onlyTemplates}
-                onClick={() => setOnlyTemplates((value) => !value)}
+              </Filter>
+              <Filter
+                active={onlySlots}
+                onClick={() => setOnlySlots((value) => !value)}
               >
-                변수 템플릿
-              </FilterChip>
-              <FilterChip
+                빈칸 있는 템플릿
+              </Filter>
+              <Filter
                 active={onlyUploads}
                 onClick={() => setOnlyUploads((value) => !value)}
               >
                 이미지 첨부형
-              </FilterChip>
-              <FilterChip
+              </Filter>
+              <Filter
                 active={onlySaved}
                 onClick={() => setOnlySaved((value) => !value)}
               >
                 내 모음만
-              </FilterChip>
+              </Filter>
             </div>
           </div>
 
-          <div className="prompt-results-bar">
-            <p aria-live="polite">
-              <strong>{filtered.length}</strong>개
+          <div className="prompt-results">
+            <p className="ui-label" aria-live="polite">
+              <em>{filtered.length}</em> prompts
               {hasFilters ? (
                 <button
                   type="button"
-                  className="prompt-text-button"
+                  className="prompt-text-action"
                   onClick={resetFilters}
                 >
                   필터 초기화
@@ -491,7 +509,7 @@ const PromptsPage = () => {
               ) : null}
             </p>
             <label className="prompt-sort">
-              <span>정렬</span>
+              <span className="ui-label">정렬</span>
               <select
                 value={sort}
                 onChange={(event) => setSort(event.target.value)}
@@ -505,43 +523,39 @@ const PromptsPage = () => {
             </label>
           </div>
 
+          <h2 className="visually-hidden">프롬프트 목록</h2>
           {visible.length ? (
-            <div className="prompt-grid">
-              {visible.map((item) => (
-                <PromptCard
-                  key={item.id}
-                  item={item}
-                  saved={savedSet.has(item.id)}
-                  onOpen={openPrompt}
-                  onCopy={handleCopy}
-                  onToggleSave={toggleSave}
-                />
-              ))}
-            </div>
+            <PromptRows
+              items={visible}
+              open={open}
+              saved={savedSet}
+              onToggle={toggle}
+              onCopy={handleCopy}
+              onCopyLink={handleCopyLink}
+              onToggleSave={toggleSave}
+            />
           ) : (
-            <div className="empty-state prompt-empty">
-              조건에 맞는 프롬프트가 없습니다.
-              {hasFilters ? (
-                <button
-                  type="button"
-                  className="prompt-text-button"
-                  onClick={resetFilters}
-                >
-                  필터 초기화
-                </button>
-              ) : null}
-            </div>
-          )}
-
-          {filtered.length > visible.length ? (
-            <div className="prompt-more">
+            <p className="prompt-empty">
+              조건에 맞는 프롬프트가 없습니다.{" "}
               <button
                 type="button"
-                className="button-secondary prompt-button"
+                className="prompt-text-action"
+                onClick={resetFilters}
+              >
+                필터 초기화
+              </button>
+            </p>
+          )}
+          {filtered.length > visible.length ? (
+            <div className="prompt-more">
+              <Button
                 onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
               >
-                더 보기 ({visible.length} / {filtered.length})
-              </button>
+                더 보기
+                <span className="prompt-count">
+                  {visible.length} / {filtered.length}
+                </span>
+              </Button>
             </div>
           ) : null}
         </div>
@@ -557,11 +571,11 @@ const PromptsPage = () => {
 
         <div
           role="tabpanel"
-          id="prompt-panel-stats"
-          aria-labelledby="prompt-tab-stats"
-          hidden={tab !== "stats"}
+          id="prompt-panel-numbers"
+          aria-labelledby="prompt-tab-numbers"
+          hidden={tab !== "numbers"}
         >
-          {tab === "stats" ? (
+          {tab === "numbers" ? (
             <PromptStats
               prompts={allPrompts}
               onSelectCategory={(slug) => {
@@ -588,76 +602,71 @@ const PromptsPage = () => {
           kicker="Share"
           title="프롬프트 공유하기"
           titleId="share-title"
-          description="GitHub 이슈 폼으로 보내 주시면 검토한 뒤 라이브러리에 올립니다. 승인 라벨이 붙으면 자동으로 추가되고 배포됩니다."
+          description="GitHub 이슈 폼으로 보내 주시면 검토한 뒤 올립니다. 승인 라벨이 붙으면 목록에 자동으로 추가되고 배포됩니다."
           action={
-            <a
-              className="button-primary prompt-button"
-              href={PROMPT_SHARE_URL}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Send aria-hidden="true" size={16} strokeWidth={2} />
+            <Button href={PROMPT_SHARE_URL}>
+              <Send aria-hidden="true" />
               GitHub으로 공유하기
-            </a>
+            </Button>
           }
         />
-        <ol className="share-steps">
+        <ol className="prompt-ledger">
           <li>
+            <span className="prompt-ledger-n">01</span>
             <strong>이슈 폼 작성</strong>
             <p>
-              제목, 프롬프트 원문, 용도와 AI, 공개 라이선스(CC0 1.0 또는 CC BY
+              제목, 프롬프트 원문, 용도와 AI, 공개 라이선스(CC0 1.0 · CC BY
               4.0)를 고릅니다. GitHub 계정이 필요합니다.
             </p>
           </li>
           <li>
+            <span className="prompt-ledger-n">02</span>
             <strong>검토</strong>
             <p>
-              권리 문제, 개인정보, 유해 요소를 확인합니다. 고칠 점이 있으면 이슈
+              권리 문제, 개인정보, 해로운 용도가 없는지 봅니다. 고칠 점은 이슈
               댓글로 이야기합니다.
             </p>
           </li>
           <li>
+            <span className="prompt-ledger-n">03</span>
             <strong>자동 반영</strong>
             <p>
-              승인되면 카드에 공유자 이름과 라이선스가 붙어 올라가고, 이슈가
-              닫히면서 링크가 달립니다.
+              승인되면 공유한 분의 이름과 라이선스를 달고 목록에 올라가며,
+              이슈에 링크를 남기고 닫습니다.
             </p>
           </li>
         </ol>
-        <div className="share-rules">
+        <div className="prompt-rules">
           <div>
-            <h3>받는 프롬프트</h3>
+            <h3 className="branch-row-h">받는 프롬프트</h3>
             <ul>
               <li>직접 쓴 프롬프트</li>
               <li>
-                CC0 · CC BY · MIT처럼 재배포가 허용된 출처의 원문 (출처 링크
+                CC0 · CC BY · MIT처럼 재배포가 허용된 출처의 원문 (원 출처 링크
                 필수)
               </li>
               <li>
                 {
-                  "변수는 ${이름:기본값} 형태로 쓰면 변수 채우기 화면이 생깁니다"
+                  "빈칸은 ${이름} 또는 ${이름:기본값}으로 쓰면 채우기 칸이 생깁니다"
                 }
               </li>
             </ul>
           </div>
           <div>
-            <h3>받지 않는 프롬프트</h3>
+            <h3 className="branch-row-h">받지 않는 프롬프트</h3>
             <ul>
               <li>라이선스 표기가 없는 다른 사이트·SNS의 프롬프트를 옮긴 것</li>
               <li>실존 인물의 얼굴이나 목소리를 동의 없이 합성하는 용도</li>
-              <li>개인정보, 성인물, 탈옥·악성코드 등 해로운 용도</li>
+              <li>개인정보, 성인물, 탈옥·악성코드처럼 해로운 용도</li>
             </ul>
           </div>
         </div>
-        <a
-          className="prompt-inline-link"
-          href={PROMPT_ISSUES_URL}
-          target="_blank"
-          rel="noreferrer"
-        >
-          공유된 프롬프트 이슈 보기
-          <ArrowUpRight aria-hidden="true" size={15} strokeWidth={2} />
-        </a>
+        <p className="prompt-note">
+          <a href={PROMPT_ISSUES_URL} target="_blank" rel="noreferrer">
+            공유된 프롬프트 이슈 보기
+            <ArrowUpRight aria-hidden="true" />
+          </a>
+        </p>
       </section>
 
       <section
@@ -666,42 +675,34 @@ const PromptsPage = () => {
         aria-labelledby="license-title"
       >
         <SectionHeading
-          kicker="Sources & License"
+          kicker="Sources"
           title="출처와 라이선스"
           titleId="license-title"
-          description="재배포가 허용된 출처만 원문으로 싣습니다. 권리 문제가 있는 항목은 이슈나 메일로 알려 주시면 확인 즉시 내립니다."
+          description="재배포가 허용된 출처만 원문으로 싣습니다. 권리 문제가 있는 항목은 알려 주시면 확인하는 대로 내립니다."
         />
-        <div className="license-table-wrap">
-          <table className="license-table">
-            <thead>
-              <tr>
-                <th scope="col">출처</th>
-                <th scope="col">라이선스</th>
-                <th scope="col">수록</th>
-                <th scope="col">비고</th>
-              </tr>
-            </thead>
-            <tbody>
-              {promptSources.map((source) => (
-                <tr key={source.key}>
-                  <th scope="row">
-                    <a href={source.url} target="_blank" rel="noreferrer">
-                      {source.name}
-                    </a>
-                  </th>
-                  <td>{source.license}</td>
-                  <td>{sourceCounts.get(source.key) || 0}</td>
-                  <td>{source.note}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <details className="license-notice">
-          <summary>DAIR.AI Prompt Engineering Guide MIT 라이선스 전문</summary>
+        <ol className="prompt-sources">
+          {promptSources.map((source) => (
+            <li key={source.key}>
+              <p className="prompt-sources-license">{source.license}</p>
+              <div>
+                <a href={source.url} target="_blank" rel="noreferrer">
+                  {source.name}
+                </a>
+                <p>{source.note}</p>
+              </div>
+              <p className="prompt-sources-n">
+                {sourceCounts.get(source.key) || 0}
+              </p>
+            </li>
+          ))}
+        </ol>
+        <details className="prompt-notice">
+          <summary>
+            DAIR.AI Prompt Engineering Guide — MIT 라이선스 전문
+          </summary>
           <pre>{MIT_NOTICE}</pre>
         </details>
-        <p className="license-related">
+        <p className="prompt-note">
           검색·필터, 아무거나 뽑기, 내 모음 내보내기, 프롬프트 빌더 같은 기능은{" "}
           <a href="https://builderlog.net/" target="_blank" rel="noreferrer">
             빌더로그 프롬프트 도감
@@ -715,10 +716,9 @@ const PromptsPage = () => {
             Reactor Prompts Magazine
           </a>
           을 보고 아이디어를 얻어 새로 만들었습니다. 두 사이트의 프롬프트와
-          설명은 각 운영자의 권리이므로 이곳에 옮기지 않았습니다. 더 많은
-          프롬프트는 해당 사이트에서 확인하세요.
+          설명은 각 운영자의 권리라 이곳에 옮기지 않았습니다.
         </p>
-        <p className="license-related">
+        <p className="prompt-note">
           권리 신고: <a href="mailto:dodo9249@gmail.com">dodo9249@gmail.com</a>{" "}
           ·{" "}
           <a
@@ -731,20 +731,14 @@ const PromptsPage = () => {
         </p>
       </section>
 
-      <PromptDialog
-        item={openItem}
-        saved={openItem ? savedSet.has(openItem.id) : false}
-        onClose={closePrompt}
-        onCopy={handleCopy}
-        onCopyLink={handleCopyLink}
-        onToggleSave={toggleSave}
-        onRandom={openRandom}
-      />
       <SavedPanel
         open={savedOpen}
         items={savedItems}
         onClose={() => setSavedOpen(false)}
-        onOpenItem={openPrompt}
+        onOpenItem={(id) => {
+          setSavedOpen(false);
+          reveal(id);
+        }}
         onRemove={toggleSave}
         onClear={() => setSaved([])}
         announce={announce}
@@ -763,7 +757,7 @@ export const Head = () => (
     <title>Prompts</title>
     <meta
       name="description"
-      content="출처와 라이선스를 밝힌 AI 프롬프트 라이브러리. 용도·AI별 검색, 변수 템플릿, 프롬프트 빌더, 공유 기능을 제공합니다."
+      content="출처와 라이선스를 밝힌 AI 프롬프트 라이브러리. 용도·AI별 검색, 빈칸 템플릿, 프롬프트 빌더, 공유 기능을 제공합니다."
     />
   </>
 );

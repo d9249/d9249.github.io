@@ -6,6 +6,9 @@ export const PROMPT_REPO = "d9249/d9249.github.io";
 export const PROMPT_SHARE_URL = `https://github.com/${PROMPT_REPO}/issues/new?template=prompt-share.yml`;
 export const PROMPT_ISSUES_URL = `https://github.com/${PROMPT_REPO}/issues?q=label%3Aprompt%3Asubmission`;
 
+// A prompt opens in place on /prompts/, like a project row on /projects/: its id is the hash.
+export const promptUrl = (id) => `https://d9249.github.io/prompts/#${id}`;
+
 export const promptCategories = [
   { slug: "dev", label: "개발·코드" },
   { slug: "prompting", label: "프롬프트 설계" },
@@ -62,6 +65,21 @@ export const getPromptVariables = (prompt) => {
   }
 
   return [...seen.values()];
+};
+
+// Split a prompt into text and slot segments (for drawing the slots as blanks).
+export const promptSegments = (prompt) => {
+  const segments = [];
+  let last = 0;
+  for (const match of prompt.matchAll(VARIABLE_PATTERN)) {
+    if (match.index > last)
+      segments.push({ type: "text", value: prompt.slice(last, match.index) });
+    segments.push({ type: "slot", name: match[1].trim() });
+    last = match.index + match[0].length;
+  }
+  if (last < prompt.length)
+    segments.push({ type: "text", value: prompt.slice(last) });
+  return segments;
 };
 
 export const fillPrompt = (prompt, values = {}) =>
@@ -124,6 +142,7 @@ export const promptById = new Map(allPrompts.map((item) => [item.id, item]));
 export const promptSources = [
   {
     key: "community",
+    short: "커뮤니티",
     name: "커뮤니티 공유",
     license: "항목별 표기",
     url: PROMPT_ISSUES_URL,
@@ -131,6 +150,7 @@ export const promptSources = [
   },
   {
     key: "original",
+    short: "직접 작성",
     name: "d9249.github.io 직접 작성",
     license: "CC BY 4.0",
     url: "https://creativecommons.org/licenses/by/4.0/deed.ko",
@@ -138,6 +158,7 @@ export const promptSources = [
   },
   {
     key: "acp",
+    short: "prompts.chat",
     name: "f/awesome-chatgpt-prompts (prompts.chat)",
     license: "CC0 1.0",
     url: "https://github.com/f/awesome-chatgpt-prompts",
@@ -145,6 +166,7 @@ export const promptSources = [
   },
   {
     key: "dair",
+    short: "DAIR.AI",
     name: "dair-ai/Prompt-Engineering-Guide",
     license: "MIT",
     url: "https://github.com/dair-ai/Prompt-Engineering-Guide",
@@ -176,7 +198,7 @@ export const formatPromptMarkdown = (items) =>
         "",
         `- 출처: ${item.source?.name || "-"}${authors ? ` · ${authors}` : ""}`,
         `- 라이선스: ${getLicenseLabel(item.source?.license)}`,
-        `- 링크: https://d9249.github.io/prompts/?p=${item.id}`,
+        `- 링크: ${promptUrl(item.id)}`,
       ].join("\n");
     })
     .join("\n\n");
