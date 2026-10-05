@@ -1767,8 +1767,9 @@ html[lang="ko"] body {
   letter-spacing: -0.01em;
 }
 
-/* the leaf, as on the project page: the row's key to its colour on the tree */
-.branch-row:not(.is-plain) .branch-row-name::before {
+/* the leaf, as on the project page: the row's key to its colour on the tree. It lives inside the
+   button so it flows with the first line — on the h2 it was left alone above long, wrapping names */
+.branch-row:not(.is-plain) .branch-row-name button::before {
   display: inline-block;
   width: 0.26em;
   height: 0.26em;

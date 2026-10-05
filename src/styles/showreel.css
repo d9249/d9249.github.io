@@ -1020,6 +1020,44 @@ html[data-theme="dark"] .reel {
     transform: scaleX(1);
   }
 }
+.reel .hook-quote {
+  margin-top: 22px;
+  max-width: 34em;
+  color: var(--fg);
+  font: 500 clamp(14px, 1.15vw, 17px)/1.6 var(--f-body);
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+  animation: reel-quote-in 0.7s 0.95s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+/* the source, set like the title's IDEAL / MEAN labels: a short rule, then mono */
+.reel .hook-quote cite {
+  position: relative;
+  display: block;
+  margin-bottom: 6px;
+  padding-left: 1.35em;
+  color: var(--sub);
+  font: 500 12px/1.4 var(--f-mono);
+  font-style: normal;
+  letter-spacing: 0.1em;
+}
+.reel .hook-quote cite::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0.9em;
+  border-top: 1.5px solid currentColor;
+}
+.reel .hook-quote span {
+  display: block;
+  text-wrap: balance;
+}
+@keyframes reel-quote-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
 .reel .hook-sub {
   margin-top: 22px;
   color: var(--sub);
@@ -1149,6 +1187,14 @@ html[data-theme="dark"] .reel {
   }
   .reel .hook-title {
     font-size: clamp(40px, 11.5vw, 58px);
+  }
+  .reel .hook-quote {
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .reel .hook-quote cite {
+    font-size: 11px;
   }
   .reel .hook-sub {
     margin-top: 12px;
@@ -2375,6 +2421,7 @@ html[data-theme="dark"] .reel .stamp {
   }
 @media (prefers-reduced-motion: reduce) {
   .reel .hook-title .w,
+  .reel .hook-quote,
   .reel .u::after,
   .reel .cue i,
   .reel .tcbox i {
