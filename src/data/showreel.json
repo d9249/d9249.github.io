@@ -1,0 +1,459 @@
+{
+  "trunk": {
+    "name": "석사 · 경기대학교",
+    "year": "2024",
+    "years": "2021–2024",
+    "out": "SCIE 3 · KCI 2 · 국제학회 3 · Best Paper 2",
+    "line": "추천 시스템에서 그래프 컨볼루션 네트워크 최적화 방법"
+  },
+  "roots": [
+    {
+      "name": "GNN 추천 시스템",
+      "n": 7,
+      "years": "2022–2024",
+      "line": "Egress 초기화 · Weighted Forwarding · LightGCN 임베딩 보강",
+      "out": "SCIE 2 · KCI 1 · 국제학회 3",
+      "href": "/research/"
+    },
+    {
+      "name": "의료 영상 분할",
+      "n": 1,
+      "years": "2022",
+      "line": "다중 연쇄 U-Net으로 췌장 영역 분할",
+      "out": "KCI · DSC 0.916",
+      "href": "/research/"
+    },
+    {
+      "name": "관절염 영상 분류",
+      "n": 2,
+      "years": "2022–2023",
+      "line": "딥러닝 모델 앙상블 · Xception 분류",
+      "out": "SCIE 1 · Best Paper",
+      "href": "/research/"
+    },
+    {
+      "name": "포즈 추정",
+      "n": 1,
+      "years": "2021",
+      "line": "PoseNet 헬스 트레이너 웹 서비스",
+      "out": "KIIT Best Paper",
+      "href": "/awards/"
+    },
+    {
+      "name": "경진대회",
+      "n": 3,
+      "years": "2021–2024",
+      "line": "DACON 39개 대회 · HD현대 AI Challenge 4위 · LG Aimers 팀리더",
+      "out": "Top 1% ×7",
+      "href": "/awards/"
+    }
+  ],
+  "stages": [
+    {
+      "name": "booxTory",
+      "leaf": "#2EC4D6",
+      "year": "2024",
+      "org": "ArtygenSpace",
+      "color": "cyan",
+      "verb": "READ",
+      "line": "종이책 페이지를 개인화 AI 독서 세션으로 바꿉니다",
+      "kpi": "CES 2025 Best of Innovation",
+      "fruit": "CES 2025 최고혁신상",
+      "href": "/projects/booxtory-ai-reading-product/"
+    },
+    {
+      "name": "arti",
+      "leaf": "#2B59E8",
+      "year": "2024",
+      "org": "ArtygenSpace",
+      "color": "blue",
+      "verb": "CREATE",
+      "line": "CATS · MERGE · CLEAR · NEXIS 4개 AI 솔루션 기술 리드",
+      "kpi": "CES 2025 Honoree",
+      "fruit": "CES 2025 혁신상",
+      "href": "/projects/arti-core-ai-solutions/"
+    },
+    {
+      "name": "Plan2Do",
+      "leaf": "#33B07E",
+      "year": "2025",
+      "org": "AsianaIDT",
+      "color": "amber",
+      "verb": "VERIFY",
+      "line": "법령 근거를 LLM이 재검증하는 위험성평가",
+      "kpi": "행정안전부 장관상",
+      "fruit": "행정안전부 장관상",
+      "href": "/projects/plan2do-industrial-safety-rag/"
+    },
+    {
+      "name": "AIO",
+      "leaf": "#6A5BDB",
+      "year": "2025",
+      "org": "AsianaIDT",
+      "color": "ink",
+      "verb": "CONNECT",
+      "line": "Graph + Vector 하이브리드 RAG, 검색 모드 5종",
+      "kpi": "RRF 4벡터 융합 k=60",
+      "href": "/projects/enterprise-ai-knowledge/"
+    },
+    {
+      "name": "Jeani",
+      "leaf": "#1690A6",
+      "year": "2025",
+      "org": "AsianaIDT",
+      "color": "cyan",
+      "verb": "SCOUT",
+      "line": "RFP 하나로 시장조사 에이전트 5종이 병렬 조사",
+      "kpi": "Supervisor + 5 agents",
+      "href": "/projects/market-intelligence-agents/"
+    },
+    {
+      "name": "ONDOKS",
+      "leaf": "#4C93F5",
+      "kr": "온독스",
+      "year": "2026",
+      "org": "AsianaIDT",
+      "color": "blue",
+      "verb": "PARSE",
+      "line": "표 구조까지 복원하는 문서 AI, 특허 출원 · 공급계약 수주",
+      "kpi": "TEDS 0.9188 · Cell F1 0.9702",
+      "fruit": "특허 출원 · 공급계약",
+      "href": "/projects/document-ocr-table-reconstruction/"
+    },
+    {
+      "name": "Harmony",
+      "leaf": "#7CC46A",
+      "year": "2026",
+      "org": "AsianaIDT",
+      "color": "amber",
+      "verb": "APPROVE",
+      "line": "사람이 승인해야 공식 지식이 되는 사내 에이전트",
+      "kpi": "Human-gated knowledge",
+      "href": "/projects/harmony-multitenant-ai/"
+    },
+    {
+      "name": "A-VLAN",
+      "leaf": "#283A9E",
+      "year": "2026",
+      "org": "AsianaIDT",
+      "color": "ink",
+      "verb": "WATCH",
+      "line": "목표만 주면 분석 스킬 조합이 바뀌는 영상 관제",
+      "kpi": "대한상의 회장상 (전신)",
+      "fruit": "대한상의 회장상",
+      "href": "/projects/avlan-aviation-ground-safety/"
+    }
+  ],
+  "fruits_extra": [
+    {
+      "name": "과기정통부 장관상",
+      "line": "WIS 2025 혁신상",
+      "href": "/awards/"
+    }
+  ],
+  "research": [
+    {
+      "id": "R1",
+      "short": "석사학위논문",
+      "title": "추천 시스템에서 그래프 컨볼루션 네트워크 최적화 방법",
+      "venue": "석사학위논문 · 경기대학교",
+      "year": "2024",
+      "note": "임베딩 값 손실과 깊은 층의 한계를 Egress 초기화와 Weighted Forwarding으로 완화 · 4개 벤치마크 검증",
+      "href": "http://www.dcollection.net/handler/kyonggi/000000057783",
+      "color": "#B8532F"
+    },
+    {
+      "id": "R2",
+      "short": "LightGCN 임베딩 보강",
+      "title": "Embedding Enhancement method for LightGCN in Recommendation Information Systems",
+      "venue": "SCIE Q2 · Electronics 13(12)",
+      "year": "2024",
+      "note": "1저자",
+      "href": "https://doi.org/10.3390/electronics13122282",
+      "color": "#C9952B"
+    },
+    {
+      "id": "R3",
+      "short": "Weighted Forwarding",
+      "title": "Weighted Forwarding in GCN for Recommendation",
+      "venue": "SCIE Q2 · CMC 78(2)",
+      "year": "2024",
+      "note": "1저자",
+      "href": "https://doi.org/10.32604/cmc.2023.046346",
+      "color": "#8E6A3E"
+    },
+    {
+      "id": "R4",
+      "short": "관절염 앙상블 분류",
+      "title": "Deep Learning Model Ensemble for Degenerative Arthritis",
+      "venue": "SCIE Q2 · CMC 75(1)",
+      "year": "2023",
+      "note": "Acc 77.05% · F1 0.78 · 같은 주제로 APIC-IST 2022 Best Paper(Xception 분류)",
+      "href": "https://doi.org/10.32604/cmc.2023.035245",
+      "color": "#A3473F"
+    },
+    {
+      "id": "R5",
+      "short": "국제학회 3편",
+      "title": "Egress Initialization · Thin GCN · Over-smoothing in LightGCN",
+      "venue": "ICONI 2023",
+      "year": "2023",
+      "note": "1저자 ×3",
+      "href": "https://d9249.github.io/research/",
+      "color": "#7D8A3A"
+    },
+    {
+      "id": "R6",
+      "short": "KCI · KIIT",
+      "title": "유저 행동 시간 기반 GNN 추천 분석 · 다중 연쇄 U-Net 췌장 분할",
+      "venue": "KCI JKIIT · KIIT",
+      "year": "2021–2023",
+      "note": "1저자 · DSC 0.916 · KIIT 2021 우수논문상(PoseNet 헬스 트레이너)",
+      "href": "https://d9249.github.io/research/",
+      "color": "#B07A55"
+    }
+  ],
+  "skills": [
+    {
+      "pkg": "foundation-models",
+      "kr": "파운데이션 모델",
+      "c": "#6A5BDB",
+      "items": [
+        "SLM",
+        "LLM",
+        "Embeddings",
+        "Prompting",
+        "Optimization",
+        "Serving"
+      ],
+      "used": "booxTory · Plan2Do · A-VLAN"
+    },
+    {
+      "pkg": "retrieval-agent",
+      "kr": "검색 · 에이전트",
+      "c": "#2B59E8",
+      "items": [
+        "Vector RAG",
+        "Graph RAG",
+        "Hybrid Search",
+        "Rank Fusion",
+        "Hierarchy Indexing",
+        "Vector Database",
+        "Single Agent",
+        "Multi-Agent",
+        "Agent Orchestration"
+      ],
+      "used": "AIO · Plan2Do · Jeani · A-VLAN · booxTory"
+    },
+    {
+      "pkg": "vision-ai",
+      "kr": "비전 AI",
+      "c": "#1690A6",
+      "items": [
+        "Object Detection",
+        "Prompt Detection",
+        "Open-World Detection",
+        "Segmentation",
+        "Classification",
+        "Pose Estimation"
+      ],
+      "used": "A-VLAN · booxTory · 연구 R4 · R6"
+    },
+    {
+      "pkg": "recsys-graph",
+      "kr": "추천 · 그래프",
+      "c": "#B8532F",
+      "items": [
+        "Recommender Systems",
+        "GNN",
+        "GCN",
+        "GIN",
+        "Graph Optimization"
+      ],
+      "used": "연구 R1 · R2 · R3 · R5"
+    },
+    {
+      "pkg": "predictive-modeling",
+      "kr": "예측 모델링",
+      "c": "#C9952B",
+      "items": [
+        "Prediction",
+        "Regression",
+        "Classification",
+        "Time Series",
+        "Ensemble",
+        "Structured Data",
+        "Unstructured Data",
+        "Hyperparameter Tuning"
+      ],
+      "used": "경진대회 39개 · 연구 R4"
+    },
+    {
+      "pkg": "nlp-dataops",
+      "kr": "문서 AI · 데이터옵스",
+      "c": "#33B07E",
+      "items": [
+        "NLP",
+        "Multilingual NLP",
+        "Document Layout",
+        "Document Parser",
+        "OCR",
+        "Table Reconstruction",
+        "OCR Benchmarking",
+        "Augmentation",
+        "Pre-processing",
+        "Post-processing",
+        "Observability",
+        "MLOps"
+      ],
+      "used": "ONDOKS · booxTory · Plan2Do"
+    }
+  ],
+  "cases": [
+    {
+      "name": "booxTory",
+      "period": "2024.07–2025.07",
+      "role": "페이지 인식부터 응답까지 전 과정 설계 · 구현",
+      "problem": "책을 AI가 읽을 수 있는 구조로 바꿔, 읽다가 묻고 듣고 이해를 확인하는 독서",
+      "grew": [
+        {
+          "skills": "OCR · Document Layout",
+          "pkg": "nlp-dataops",
+          "how": "페이지 텍스트와 위치를 뽑는 OCR + 레이아웃 분석"
+        },
+        {
+          "skills": "Vector RAG · Hybrid Search",
+          "pkg": "retrieval-agent",
+          "how": "사용자·책 단위로 나눈 개인화 RAG, 벡터 + BM25"
+        },
+        {
+          "skills": "LLM · Serving",
+          "pkg": "foundation-models",
+          "how": "연구 코드를 서비스 런타임으로, TTS·퀴즈·요약·번역 연동"
+        },
+        {
+          "skills": "Embeddings",
+          "pkg": "foundation-models",
+          "how": "장면 임베딩으로 배경 사운드 추천"
+        }
+      ],
+      "result": "CES 2025 Best of Innovation (AI)"
+    },
+    {
+      "name": "Plan2Do",
+      "period": "2025.07–2025.12",
+      "role": "AI 위험성평가 서비스 단독 개발",
+      "problem": "LLM이 법령명을 지어내거나 엉뚱한 조문을 인용하지 않는 위험성평가 보고서",
+      "grew": [
+        {
+          "skills": "Pre-processing · Hierarchy Indexing",
+          "pkg": "nlp-dataops",
+          "how": "법령 XML을 법령 → 조 → 항 → 호로 정규화"
+        },
+        {
+          "skills": "Hybrid Search",
+          "pkg": "retrieval-agent",
+          "how": "원문 + 키워드 강화 이중 검색, 법령·조문 인용 상한"
+        },
+        {
+          "skills": "Agent Orchestration",
+          "pkg": "retrieval-agent",
+          "how": "LangGraph 워크플로 + FastAPI 서비스"
+        },
+        {
+          "skills": "Post-processing · LLM",
+          "pkg": "foundation-models",
+          "how": "생성 후 LLM 재검증, 제거율까지 보고서에 표기"
+        }
+      ],
+      "result": "행정안전부 장관상('25) · 한국건설기술연구원 원장상('25)"
+    },
+    {
+      "name": "AIO",
+      "period": "2025.10–2026.02",
+      "role": "백엔드 핵심",
+      "problem": "벡터 검색으로는 안 되는 '규정 A와 절차 B는 어떻게 이어지나' 같은 관계 질문",
+      "grew": [
+        {
+          "skills": "Graph RAG · Vector RAG",
+          "pkg": "retrieval-agent",
+          "how": "Graph + Vector 이중 인덱싱, 검색 모드 5종"
+        },
+        {
+          "skills": "Rank Fusion · Vector Database",
+          "pkg": "retrieval-agent",
+          "how": "4벡터 RRF 융합, Milvus HNSW"
+        },
+        {
+          "skills": "Agent Orchestration",
+          "pkg": "retrieval-agent",
+          "how": "Vue Flow 캔버스를 LangGraph StateGraph로 컴파일"
+        },
+        {
+          "skills": "MLOps · Observability",
+          "pkg": "nlp-dataops",
+          "how": "DB 5종 정합성, 분산 저장소 삭제 파이프라인"
+        }
+      ],
+      "result": "엔드포인트 160여 개 · 노드 모듈 65개 · DB 5종 오케스트레이션"
+    },
+    {
+      "name": "ONDOKS",
+      "period": "2026.01–",
+      "role": "엔진 · 콘솔 · 복원 로직 · 벤치마크 · 보안 빌드 단독 개발",
+      "problem": "OCR 글자는 맞아도 병합 셀 · 다단 헤더 · 끊긴 선 때문에 표 구조가 무너지는 문서",
+      "grew": [
+        {
+          "skills": "Table Reconstruction",
+          "pkg": "nlp-dataops",
+          "how": "후보 생성 → 비교 → 선택 구조로 표 복원"
+        },
+        {
+          "skills": "OCR Benchmarking",
+          "pkg": "nlp-dataops",
+          "how": "TEDS · Cell F1 · CER 정량 평가와 회귀 게이트"
+        },
+        {
+          "skills": "Document Parser · Post-processing",
+          "pkg": "nlp-dataops",
+          "how": "선 · bbox · 헤더 신호를 합친 보정 레이어"
+        },
+        {
+          "skills": "MLOps",
+          "pkg": "nlp-dataops",
+          "how": "보안 빌드: Cython 컴파일, RSA-OAEP + AES-256-GCM"
+        }
+      ],
+      "result": "TEDS 0.9188 · Cell F1 0.9702 · K사 공급계약 · 특허 출원"
+    },
+    {
+      "name": "A-VLAN",
+      "period": "2026.06–2026.07",
+      "role": "전면 재설계 리드 아키텍트 · 개발",
+      "problem": "탐지 · 행동 · 거리 규칙 · 규정 조회 · 보고서까지, 한 번의 추론으로 끝나지 않는 영상 관제",
+      "grew": [
+        {
+          "skills": "Agent Orchestration",
+          "pkg": "retrieval-agent",
+          "how": "목표 기반 GoalOrchestrator: 선택 → 조합 → 평가 → 보완"
+        },
+        {
+          "skills": "Object Detection",
+          "pkg": "vision-ai",
+          "how": "탐지 · VLM 분석을 조합 가능한 스킬로 구성"
+        },
+        {
+          "skills": "Hybrid Search · Vector RAG",
+          "pkg": "retrieval-agent",
+          "how": "항공 규정 이중 RAG(정확 일치 + 벡터)"
+        },
+        {
+          "skills": "Pre-processing",
+          "pkg": "nlp-dataops",
+          "how": "50배 압축 영상의 실제 시각 ↔ 프레임 앵커링"
+        }
+      ],
+      "result": "대한상공회의소 회장상('25, 전신)"
+    }
+  ]
+}

@@ -11,6 +11,7 @@ import {
   Mail,
 } from "lucide-react";
 import Layout from "../components/Layout";
+import { Button } from "../components/ui";
 import { heroLinks } from "../data/profile";
 
 const contactChannelMeta = {
@@ -75,14 +76,15 @@ const ContactPage = () => {
               운영 흐름으로 만듭니다.
             </p>
             {emailChannel ? (
-              <a
-                className="button-primary contact-cta"
+              <Button
+                variant="primary"
+                className="contact-cta"
                 href={emailChannel.href}
               >
                 <Mail aria-hidden="true" />
                 <span>이메일 보내기</span>
                 <ArrowUpRight aria-hidden="true" />
-              </a>
+              </Button>
             ) : null}
           </div>
 

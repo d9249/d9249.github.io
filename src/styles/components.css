@@ -1,0 +1,550 @@
+/*
+ * components.css — shared primitives, each defined once.
+ *
+ * Load order: tokens.css → legacy.css → components.css → site.css → showreel.css
+ *
+ * React: src/components/ui/ renders these as <Button>, <Chip>, <FilterChip>,
+ * <Card>, <Label>, <PageHeader>. Older markup still carries its historical class
+ * names; those names are listed with the primitive they *are* (aliases, not
+ * variants) and are replaced by the ui-* class when their JSX is touched. Page
+ * files (site.css) may position or size a primitive, never re-skin it.
+ */
+
+/* ── Base ───────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  font: 100%/1.68 var(--font-body);
+  scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.68;
+  letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+::selection {
+  background: var(--selection);
+}
+
+.theme-is-transitioning *,
+.theme-is-transitioning *::before,
+.theme-is-transitioning *::after {
+  transition: none !important;
+}
+
+.page {
+  position: relative;
+  min-height: 100dvh;
+  overflow: clip;
+}
+
+.shell {
+  width: min(75rem, calc(100% - 3rem));
+  margin: 0 auto;
+}
+
+@media (max-width: 760px) {
+  .shell {
+    width: min(100% - 2rem, 75rem);
+  }
+}
+
+/* ── Label — eyebrow, meta, kicker ──────────────────────────────────────── */
+.ui-label,
+.eyebrow,
+.meta,
+.article-kicker,
+.timeline-date,
+.card-deck-status,
+.tag-nav-label,
+.blog-list-meta,
+.deck-counter,
+.section-kicker,
+.newsroom-panel-kicker {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--type-label);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.ui-label--strong,
+.eyebrow {
+  color: var(--fg);
+  font-weight: 700;
+}
+
+/* the kicker above a heading */
+.eyebrow {
+  margin: 0 0 var(--space-5);
+}
+
+/* ── Button ─────────────────────────────────────────────────────────────── */
+.ui-button,
+.button-primary,
+.button-secondary,
+.deck-button,
+.paper-viewer-toggle,
+.pagination-step,
+.pagination-page,
+.section-action a,
+.timeline-detail-toggle,
+.project-backlink {
+  display: inline-flex;
+  min-height: var(--control-height);
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-5);
+  border: 1.5px solid var(--control-border);
+  border-radius: var(--control-radius);
+  background: var(--control-surface);
+  color: var(--fg);
+  cursor: pointer;
+  font: 600 0.86rem/1.1 var(--font-body);
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform var(--motion-press) ease-out,
+    background-color var(--motion-fast) var(--ease-fluid),
+    border-color var(--motion-fast) var(--ease-fluid),
+    color var(--motion-fast) var(--ease-fluid);
+}
+
+/* primary — ink fill; one per view */
+.ui-button--primary,
+.button-primary,
+.deck-button-strong {
+  border-color: var(--control-primary-fill);
+  background: var(--control-primary-fill);
+  color: var(--on-accent);
+}
+
+:is(.ui-button--primary, .button-primary, .deck-button-strong):not(
+    :disabled,
+    .is-disabled
+  ):hover {
+  border-color: var(--control-primary-hover);
+  background: var(--control-primary-hover);
+  color: var(--on-accent);
+}
+
+/* tonal — quiet actions next to a heading or inside a card */
+.ui-button--tonal,
+.paper-viewer-toggle,
+.section-action a,
+.timeline-detail-toggle {
+  border-color: transparent;
+  background: color-mix(in oklab, var(--accent) 9%, transparent);
+  color: var(--accent);
+}
+
+:is(
+    .ui-button--tonal,
+    .paper-viewer-toggle,
+    .section-action a,
+    .timeline-detail-toggle
+  ):not(:disabled, .is-disabled):hover {
+  background: color-mix(in oklab, var(--accent) 16%, transparent);
+}
+
+/* selected — pagination, pressed toggles */
+.ui-button.is-active,
+.pagination-page.is-active,
+.deck-button[aria-pressed="true"],
+.ui-button[aria-pressed="true"] {
+  border-color: var(--fg);
+  background: var(--fg);
+  color: var(--bg);
+  cursor: default;
+}
+
+.ui-button--compact,
+.pagination-page,
+.pagination-step {
+  min-width: var(--control-height);
+  padding: 0 var(--space-3);
+}
+
+/* ── Icon button — a control that is only an icon (masthead, decks, viewers) ─ */
+/* size and radius are set where each one lives; the look is set here */
+.ui-icon-button,
+.theme-toggle,
+.search-toggle,
+.menu-button,
+.search-clear,
+.search-close,
+.card-deck-controls button,
+.paper-viewer-control,
+.tag-nav-page-button,
+.mobile-card-carousel-arrow,
+.project-lightbox-close,
+.project-lightbox-rotate,
+.project-lightbox-zoom {
+  border: 1px solid var(--control-border);
+  background: var(--control-surface);
+  box-shadow: var(--control-shadow);
+  color: var(--fg);
+  cursor: pointer;
+  transition:
+    transform var(--motion-press) ease-out,
+    box-shadow var(--motion-fast) var(--ease-fluid),
+    color var(--motion-fast) var(--ease-fluid),
+    border-color var(--motion-fast) var(--ease-fluid),
+    background-color var(--motion-fast) var(--ease-fluid);
+}
+
+:is(
+    .ui-icon-button,
+    .theme-toggle,
+    .search-toggle,
+    .menu-button,
+    .search-clear,
+    .search-close,
+    .card-deck-controls button,
+    .paper-viewer-control,
+    .tag-nav-page-button,
+    .mobile-card-carousel-arrow,
+    .project-lightbox-close,
+    .project-lightbox-rotate,
+    .project-lightbox-zoom
+  ):not(:disabled):hover {
+  border-color: var(--fg);
+  background: var(--control-surface-hover);
+  color: var(--fg);
+  transform: translateY(-1px);
+}
+
+:is(
+    .ui-icon-button,
+    .theme-toggle,
+    .search-toggle,
+    .menu-button,
+    .search-clear,
+    .search-close,
+    .card-deck-controls button,
+    .paper-viewer-control,
+    .tag-nav-page-button,
+    .mobile-card-carousel-arrow,
+    .project-lightbox-close,
+    .project-lightbox-rotate,
+    .project-lightbox-zoom
+  ):not(:disabled):active {
+  box-shadow: inset 0 2px 4px color-mix(in oklab, var(--fg) 16%, transparent);
+}
+
+:is(
+  .ui-icon-button,
+  .theme-toggle,
+  .search-toggle,
+  .menu-button,
+  .search-clear,
+  .search-close,
+  .card-deck-controls button,
+  .paper-viewer-control,
+  .tag-nav-page-button,
+  .mobile-card-carousel-arrow,
+  .project-lightbox-close,
+  .project-lightbox-rotate,
+  .project-lightbox-zoom
+):disabled {
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* pressed — the same ink fill as a selected button */
+.ui-icon-button[aria-pressed="true"],
+.paper-viewer-control.is-active,
+.paper-viewer-control[aria-pressed="true"] {
+  border-color: var(--fg);
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* ── Chip — metadata, never a mini card ─────────────────────────────────── */
+.ui-chip,
+.tag,
+.metric-chip,
+.paper-author-chip,
+.project-stack span,
+.research-facts span,
+.post-info-tags a,
+.post-info-tags span,
+.tip-tags a,
+.tip-platforms a,
+.tip-post-platforms a {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--muted);
+  font: 500 0.72rem/1.2 var(--font-mono);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* a chip that carries a colour (research · project · result) shows it as a swatch */
+.ui-chip[style*="--c"]::before {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 2px;
+  background: var(--c);
+  content: "";
+  flex: none;
+}
+
+.ui-chip--solid {
+  border-color: transparent;
+  background: var(--c, var(--fg));
+  color: var(--on-c, var(--bg));
+}
+
+.ui-chip--solid::before {
+  display: none;
+}
+
+/* ── Filter chip — category / tag filters ───────────────────────────────── */
+.ui-filter,
+.category-nav a,
+.tag-nav a,
+.tag-nav-chip,
+.tag-nav-measure-chip,
+.tag-nav-toggle,
+.tag-nav-link {
+  display: inline-flex;
+  min-height: 2.1rem;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  font: 500 0.8rem/1.2 var(--font-body);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--motion-fast) var(--ease-fluid),
+    border-color var(--motion-fast) var(--ease-fluid),
+    color var(--motion-fast) var(--ease-fluid);
+}
+
+:is(
+    .ui-filter,
+    .category-nav a,
+    .tag-nav a,
+    .tag-nav-chip,
+    .tag-nav-toggle,
+    .tag-nav-link
+  ):not(.is-active):hover {
+  border-color: var(--fg);
+}
+
+:is(.ui-filter, .category-nav a, .tag-nav a, .tag-nav-link).is-active,
+.ui-filter[aria-pressed="true"],
+.ui-filter[aria-current] {
+  border-color: var(--fg);
+  background: var(--fg);
+  color: var(--bg);
+}
+
+@media (max-width: 760px) {
+  .ui-filter,
+  .category-nav a,
+  .tag-nav a,
+  .tag-nav-toggle,
+  .tag-nav-link {
+    min-height: 2.5rem;
+  }
+}
+
+/* ── Card — flat paper sheet ────────────────────────────────────────────── */
+.ui-card,
+.profile-panel,
+.timeline,
+.post-list,
+.markdown-panel,
+.article-shell,
+.author-box,
+.post-card,
+.project-card,
+.project-detail-panel,
+.paper-card,
+.recognition-card,
+.research-card,
+.tip-card,
+.category-nav,
+.tag-nav,
+.empty-state,
+.newsroom-canvas-shell,
+.newsroom-panel,
+.evidence-card,
+.dacon-stat-card,
+.dacon-domain-card,
+.dacon-record,
+.portfolio-meta-card,
+.deck-stage,
+.related-card,
+.source-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--material-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* a card that is one big link lifts a little */
+.ui-card--interactive,
+.project-card,
+.post-card,
+.tip-card,
+.related-card {
+  transition:
+    transform var(--motion-fast) var(--ease-fluid),
+    box-shadow var(--motion-fast) var(--ease-fluid),
+    border-color var(--motion-fast) var(--ease-fluid);
+}
+
+:is(
+  .ui-card--interactive,
+  .project-card,
+  .post-card,
+  .tip-card,
+  .related-card
+):hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+:is(
+  .ui-card--interactive,
+  .project-card,
+  .post-card,
+  .tip-card,
+  .related-card
+):active {
+  transform: scale(0.99);
+}
+
+/* a card that belongs to a research / project / result carries its colour on top */
+.ui-card[style*="--c"] {
+  border-top: 3px solid var(--c);
+}
+
+/* ── Page header — the top of every page ────────────────────────────────── */
+.ui-page-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+  gap: var(--space-8) var(--space-12);
+  align-items: end;
+  padding: var(--space-16) 0 var(--space-10);
+  border-bottom: 1px solid var(--border);
+}
+
+.ui-page-header:not(:has(.ui-page-header-aside)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.ui-page-header h1 {
+  margin: var(--space-3) 0 0;
+  font: 700 var(--type-page-title) / 1.08 var(--font-display);
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.ui-page-header-lead {
+  max-width: 42rem;
+  margin: var(--space-5) 0 0;
+  color: var(--muted);
+  font-size: clamp(1.02rem, 1.4vw, 1.18rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.ui-page-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+}
+
+.ui-page-header-aside {
+  display: grid;
+  gap: var(--space-3);
+  align-self: stretch;
+  align-content: end;
+}
+
+@media (max-width: 760px) {
+  .ui-page-header {
+    grid-template-columns: minmax(0, 1fr);
+    padding: var(--space-10) 0 var(--space-8);
+  }
+}
+
+/* ── Preferences ────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    .ui-card--interactive,
+    .project-card,
+    .post-card,
+    .tip-card,
+    .related-card,
+    .recognition-card,
+    .research-card,
+    .paper-card
+  ):hover,
+  :is(
+    .ui-button,
+    .button-primary,
+    .button-secondary,
+    .deck-button,
+    .pagination-page,
+    .pagination-step,
+    .paper-viewer-toggle
+  ):active {
+    transform: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :is(.ui-chip, .tag, .metric-chip, .ui-filter, .category-nav a, .tag-nav a) {
+    border-color: var(--fg);
+    color: var(--fg);
+  }
+}

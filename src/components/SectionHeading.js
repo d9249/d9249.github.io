@@ -1,5 +1,10 @@
 import * as React from "react";
+import Label from "./ui/Label";
 
+/**
+ * Kicker + title (+ action, + side note). The page header of list pages (as="h1") and the heading of
+ * every section. Styles: .section-head in src/styles/site.css.
+ */
 const SectionHeading = ({
   as: Heading = "h2",
   kicker,
@@ -10,7 +15,7 @@ const SectionHeading = ({
 }) => (
   <div className="section-head">
     <div className="section-heading-copy">
-      {kicker && <p className="eyebrow">{kicker}</p>}
+      {kicker && <Label kicker>{kicker}</Label>}
       <div className="section-title-row">
         <Heading id={titleId}>{title}</Heading>
         {action && <div className="section-action">{action}</div>}
