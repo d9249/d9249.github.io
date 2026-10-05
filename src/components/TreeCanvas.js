@@ -199,10 +199,15 @@ const TreeCanvas = ({
             if (!b || i >= k.SL.length) return null;
             const c = k.SL[i].center,
               d = k.clusterR(i) * geo.F * 2;
+            // a tag centred on a branch near the frame's edge would hang out of it: anchor it inward
+            const x = geo.ox + c[0] * geo.F,
+              half = (b.label.length * 0.64 * 12 + 18) / 2;
+            const edge =
+              x + half > geo.W ? " is-end" : x - half < 0 ? " is-start" : "";
             return (
               <a
                 key={b.href}
-                className={`tree-canvas-hit${focus === i ? " is-on" : ""}`}
+                className={`tree-canvas-hit${focus === i ? " is-on" : ""}${edge}`}
                 href={b.href}
                 style={{ ...place(c), width: d, height: d }}
                 onMouseEnter={() => onFocusBranch && onFocusBranch(i)}

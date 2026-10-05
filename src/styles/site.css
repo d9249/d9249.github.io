@@ -2319,6 +2319,7 @@ html[lang="ko"] body {
 .project-hero-main {
   display: flex;
   min-width: 0;
+  container-type: inline-size;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
@@ -2339,20 +2340,27 @@ html[lang="ko"] body {
 }
 
 .project-hero-name {
-  display: flex;
-  align-items: center;
-  gap: 0.22em;
+  display: block;
   font: 800 clamp(3rem, 7.4vw, 7rem) / 0.95 var(--font-brand);
+  /* never wider than the column, never more than two lines: --fit is the name's widest line in
+     em (src/utils/brandFit.js), so a long name steps down instead of breaking inside a word */
+  font-size: max(
+    1.75rem,
+    min(clamp(3rem, 7.4vw, 7rem), calc(100cqi / var(--fit, 1)))
+  );
   font-stretch: 112%;
   letter-spacing: -0.015em;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  text-wrap: balance;
 }
 
-/* the leaf dot, as on the reel's case cut */
+/* the leaf dot, as on the reel's case cut: in front of the first line */
 .project-hero-name::before {
+  display: inline-block;
   width: 0.26em;
   height: 0.26em;
-  flex: none;
+  margin-right: 0.22em;
+  vertical-align: 0.2em;
   border-radius: 50%;
   background: var(--c, var(--fg));
   box-shadow:

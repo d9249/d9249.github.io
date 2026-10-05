@@ -5,6 +5,7 @@ import ProjectImageLightbox from "../components/ProjectImageLightbox";
 import SectionHeading from "../components/SectionHeading";
 import { formatReadableArticleHtml } from "../utils/articleHtml";
 import TreeCanvas from "../components/TreeCanvas";
+import { nameFit } from "../utils/brandFit";
 import {
   caseOf,
   colorStyle,
@@ -62,7 +63,12 @@ const ProjectPostTemplate = ({ data }) => {
             <span>{project.frontmatter.period}</span>
           </p>
           <h1 className="project-hero-title">
-            <span className="project-hero-name">{titleParts.name}</span>
+            <span
+              className="project-hero-name"
+              style={{ "--fit": nameFit(titleParts.name) }}
+            >
+              {titleParts.name}
+            </span>
             {titleParts.tagline && (
               <span className="project-hero-tagline">{titleParts.tagline}</span>
             )}
