@@ -14,6 +14,8 @@ import { colorStyle } from "../utils/treeColors";
  *   branches [{ href, label }] per branch → a link over each leaf cluster (keyboard + screen readers)
  *   pins     [{ href, label, short, color }] per root, left to right → a pin at each root tip
  *   onFocusBranch(k) hover / focus on a branch link (-1 on leave)
+ *   onSelectBranch(k) a plain click on a branch link; given, it replaces following the link (the
+ *            projects index opens that row instead). Modified clicks still open the project page.
  */
 
 let kit = null;
@@ -54,6 +56,7 @@ const TreeCanvas = ({
   branches = [],
   pins = [],
   onFocusBranch,
+  onSelectBranch,
   next = false,
   nextLabel,
   className,
@@ -206,6 +209,19 @@ const TreeCanvas = ({
                 onMouseLeave={() => onFocusBranch && onFocusBranch(-1)}
                 onFocus={() => onFocusBranch && onFocusBranch(i)}
                 onBlur={() => onFocusBranch && onFocusBranch(-1)}
+                onClick={(e) => {
+                  if (
+                    !onSelectBranch ||
+                    e.button !== 0 ||
+                    e.metaKey ||
+                    e.ctrlKey ||
+                    e.shiftKey ||
+                    e.altKey
+                  )
+                    return;
+                  e.preventDefault();
+                  onSelectBranch(i);
+                }}
               >
                 <span className="tree-canvas-tag">{b.label}</span>
               </a>

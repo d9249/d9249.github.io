@@ -1984,16 +1984,22 @@ html[lang="ko"] body {
 
 .branch-row {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-  gap: var(--space-4) var(--space-12);
-  padding: var(--space-8) var(--space-6);
   border-bottom: 1px solid var(--border);
   transition: background-color var(--motion-fast) var(--ease-fluid);
 }
 
-.branch-row:is(:hover, .is-on) {
+.branch-row:is(:hover, .is-on, .is-open) {
   background: color-mix(in oklab, var(--c, var(--fg)) 6%, transparent);
+}
+
+/* the summary: always shown; pressing anywhere on it opens the rest */
+.branch-row-top {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: var(--space-4) var(--space-12);
+  padding: var(--space-8) calc(var(--space-6) + 3rem) var(--space-8)
+    var(--space-6);
 }
 
 .branch-row-meta {
@@ -2044,23 +2050,29 @@ html[lang="ko"] body {
   vertical-align: 0.2em;
 }
 
-.branch-row-name a {
+.branch-row-name button {
+  padding: 0;
+  border: 0;
+  background: none;
   color: var(--fg);
-  text-decoration: none;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
-/* the whole row is the link */
-.branch-row-name a::after {
+/* the whole summary is the button */
+.branch-row-name button::after {
   position: absolute;
   inset: 0;
   content: "";
 }
 
-.branch-row-name a:focus-visible {
+.branch-row-name button:focus-visible {
   outline: none;
 }
 
-.branch-row:has(.branch-row-name a:focus-visible) {
+.branch-row-top:has(.branch-row-name button:focus-visible) {
   outline: 2px solid var(--focus-ring);
   outline-offset: -2px;
 }
@@ -2111,10 +2123,180 @@ html[lang="ko"] body {
   color: var(--fg);
 }
 
+/* open / closed: a chevron that turns over (decoration; the button carries aria-expanded) */
+.branch-row-toggle {
+  position: absolute;
+  top: var(--space-8);
+  right: var(--space-6);
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  color: var(--fg);
+  pointer-events: none;
+  transition:
+    transform var(--motion-material) var(--ease-fluid),
+    background-color var(--motion-fast) var(--ease-fluid),
+    border-color var(--motion-fast) var(--ease-fluid),
+    color var(--motion-fast) var(--ease-fluid);
+}
+
+.branch-row-toggle svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.branch-row-top:hover .branch-row-toggle {
+  border-color: var(--fg);
+}
+
+.branch-row.is-open .branch-row-toggle {
+  border-color: var(--fg);
+  background: var(--fg);
+  color: var(--bg);
+  transform: rotate(180deg);
+}
+
+/* the rest: what was done, the stack, and the way to the project page */
+.branch-row-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--motion-material) var(--ease-fluid);
+}
+
+.branch-row.is-open .branch-row-panel {
+  grid-template-rows: 1fr;
+}
+
+.branch-row-panel-in {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.branch-row-more {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: var(--space-8) var(--space-12);
+  margin: 0 calc(var(--space-6) + 3rem) 0 var(--space-6);
+  padding: var(--space-6) 0 var(--space-8);
+  border-top: 1px solid var(--border);
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  transition:
+    opacity var(--motion-fast) var(--ease-fluid),
+    transform var(--motion-material) var(--ease-fluid);
+}
+
+.branch-row.is-open .branch-row-more {
+  opacity: 1;
+  transform: none;
+  transition-delay: 60ms;
+}
+
+.branch-row-work {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.branch-row-side {
+  display: flex;
+  grid-column: 1;
+  grid-row: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.branch-row-h {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--muted);
+  font: 700 0.75rem/1 var(--font-mono);
+  letter-spacing: 0.12em;
+}
+
+.branch-row-h span {
+  color: var(--fg);
+}
+
+.branch-row-details {
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.branch-row-details li {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.branch-row-details li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.branch-row-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.branch-row-stack li {
+  padding: 0.3rem 0.55rem;
+  border-radius: var(--radius-xs);
+  background: color-mix(in oklab, var(--fg) 7%, transparent);
+  font: 500 0.75rem/1.2 var(--font-mono);
+}
+
+.branch-row-cta {
+  margin-top: var(--space-3);
+}
+
 @media (max-width: 860px) {
-  .branch-row {
+  .branch-row-top {
     grid-template-columns: minmax(0, 1fr);
     padding: var(--space-6) var(--space-2);
+  }
+
+  .branch-row-meta {
+    padding-right: 2.75rem;
+  }
+
+  .branch-row-toggle {
+    top: calc(var(--space-6) - 0.45rem);
+    right: var(--space-2);
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .branch-row-more {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+    margin: 0 var(--space-2);
+    padding-bottom: var(--space-6);
+  }
+
+  .branch-row-work,
+  .branch-row-side {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .branch-row-panel,
+  .branch-row-more,
+  .branch-row-toggle {
+    transition: none;
   }
 }
 
