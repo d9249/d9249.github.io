@@ -16,6 +16,17 @@ its card and its page.
 The emotion is **quiet confidence**: dense evidence and calm surfaces, with the motion kept in
 one place (the reel). The old Apple-glass look (translucent cards, cool blue light) is retired.
 
+### The mark
+
+The site icon is a lowercase **i** drawn from the tree: 이 (Lee), the "i" of _ideal_ (이상, the
+site's title) and of AI. The stem is the trunk in ink: it tapers upward and flares into the
+ground. The dot is the fruit in mandarin, so it means a result. It sits on a paper tile and uses
+no other colour.
+
+- `scripts/brand/mark.svg` is the master drawing, for 64px and up.
+- `static/favicon.svg` is the small optical size: the dot and the top of the stem sit on the 16px pixel grid, so the tab icon stays sharp.
+- `node scripts/brand/build-icons.mjs` renders `favicon.ico`, `apple-touch-icon.png` and the manifest icons (`site.webmanifest`) into `static/`. Re-run it after changing either SVG.
+
 ## 2. Colour
 
 All colours live in `src/styles/tokens.css`. No other stylesheet defines `:root` tokens.
