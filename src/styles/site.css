@@ -2826,6 +2826,16 @@ html[data-theme="dark"] .award-sheet .stamp {
 }
 
 
+/* a paper's PDF, opened under it */
+.paper-row:has(+ .paper-row-viewer) {
+  border-bottom-color: transparent;
+}
+
+.paper-row-viewer {
+  padding: 0 0 var(--space-6) calc(5rem + var(--space-6));
+  border-bottom: 1px solid var(--border);
+}
+
 .paper-row-year {
   margin: 0;
   font: 500 0.85rem/1.5 var(--font-mono);
@@ -2883,6 +2893,10 @@ html[data-theme="dark"] .award-sheet .stamp {
 
   .paper-row {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .paper-row-viewer {
+    padding-left: 0;
   }
 }
 

@@ -494,6 +494,23 @@ const ResearchPage = () => {
     setIsPdfFullView(false);
   };
 
+  // bring a newly opened PDF into view when it opens below the fold
+  const viewerRef = React.useRef(null);
+  React.useEffect(() => {
+    const viewer = viewerRef.current;
+    if (!activePdf || !viewer) return;
+    const { top } = viewer.getBoundingClientRect();
+    if (top < window.innerHeight * 0.55 && top > 0) return;
+    const row = viewer.previousElementSibling || viewer;
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    row.scrollIntoView({
+      behavior: reduce ? "auto" : "smooth",
+      block: "start",
+    });
+  }, [activePdf]);
+
   const changePdfZoom = (direction) => {
     setPdfFitMode("custom");
     setPdfZoom((currentZoom) =>
@@ -610,29 +627,34 @@ const ResearchPage = () => {
               <div className="paper-rows">
                 {group.items.map((item) => {
                   const paperKey = getPaperKey(item);
+                  const isOpen = activePdf === paperKey && item.pdfHref;
                   return (
-                    <PaperRow
-                      key={paperKey}
-                      item={item}
-                      activeViewerId={viewerId}
-                      isPdfOpen={activePdf === paperKey}
-                      onTogglePdf={togglePdf}
-                    />
+                    <React.Fragment key={paperKey}>
+                      <PaperRow
+                        item={item}
+                        activeViewerId={viewerId}
+                        isPdfOpen={activePdf === paperKey}
+                        onTogglePdf={togglePdf}
+                      />
+                      {/* the PDF opens under the paper it belongs to */}
+                      {isOpen ? (
+                        <div className="paper-row-viewer" ref={viewerRef}>
+                          <Viewer
+                            item={activeItem}
+                            viewerId={viewerId}
+                            pdfZoom={pdfZoom}
+                            pdfFitMode={pdfFitMode}
+                            isPdfFullView={isPdfFullView}
+                            onChangeZoom={changePdfZoom}
+                            onFitToView={fitPdfToView}
+                            onToggleFullView={togglePdfFullView}
+                          />
+                        </div>
+                      ) : null}
+                    </React.Fragment>
                   );
                 })}
               </div>
-              {activeItem?.pdfHref ? (
-                <Viewer
-                  item={activeItem}
-                  viewerId={viewerId}
-                  pdfZoom={pdfZoom}
-                  pdfFitMode={pdfFitMode}
-                  isPdfFullView={isPdfFullView}
-                  onChangeZoom={changePdfZoom}
-                  onFitToView={fitPdfToView}
-                  onToggleFullView={togglePdfFullView}
-                />
-              ) : null}
             </section>
           );
         })}
