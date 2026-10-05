@@ -1,6 +1,7 @@
 import * as React from "react";
 import cx from "./cx";
 import Label from "./Label";
+import { Sentences } from "../../utils/sentences";
 
 /**
  * The top of every list and overview page, framed like a shot from the home reel:
@@ -59,7 +60,11 @@ const PageHeader = ({
         kicker && <Label kicker>{kicker}</Label>
       )}
       <h1>{title}</h1>
-      {lead && <p className="ui-page-header-lead">{lead}</p>}
+      {lead && (
+        <p className="ui-page-header-lead">
+          <Sentences>{lead}</Sentences>
+        </p>
+      )}
       {actions && <div className="ui-page-header-actions">{actions}</div>}
     </div>
     {aside && <div className="ui-page-header-aside">{aside}</div>}

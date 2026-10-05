@@ -6,6 +6,7 @@ import SectionHeading from "../components/SectionHeading";
 import { formatReadableArticleHtml } from "../utils/articleHtml";
 import TreeCanvas from "../components/TreeCanvas";
 import { nameFit } from "../utils/brandFit";
+import { Sentences } from "../utils/sentences";
 import {
   caseOf,
   colorStyle,
@@ -73,7 +74,9 @@ const ProjectPostTemplate = ({ data }) => {
               <span className="project-hero-tagline">{titleParts.tagline}</span>
             )}
           </h1>
-          <p className="project-hero-copy">{project.frontmatter.description}</p>
+          <p className="project-hero-copy">
+            <Sentences>{project.frontmatter.description}</Sentences>
+          </p>
           {metrics.length ? (
             <ul
               className="branch-row-metrics project-hero-metrics"
@@ -198,7 +201,9 @@ const ProjectPostTemplate = ({ data }) => {
                     </span>
                   )}
                 </h3>
-                <p>{item.frontmatter.description}</p>
+                <p>
+                  <Sentences>{item.frontmatter.description}</Sentences>
+                </p>
               </Link>
             );
           })}

@@ -1,5 +1,6 @@
 import * as React from "react";
 import Label from "./ui/Label";
+import { Sentences } from "../utils/sentences";
 
 /**
  * Kicker (or slate) + title (+ action, + side note). The heading of every section.
@@ -46,7 +47,9 @@ const SectionHeading = ({
     </div>
     {description && (
       <div className="section-side">
-        <p className="section-note">{description}</p>
+        <p className="section-note">
+          <Sentences>{description}</Sentences>
+        </p>
       </div>
     )}
   </div>

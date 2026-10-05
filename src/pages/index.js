@@ -8,6 +8,7 @@ import Showreel from "../components/Showreel";
 import { Chip } from "../components/ui";
 import { timelineItems } from "../data/profile";
 import { getProjectProfileTags } from "../utils/projectProfileTags";
+import { Sentences } from "../utils/sentences";
 
 /*
  * Home: the eight-shot showreel (research → projects → skills → awards → evidence → numbers → cases
@@ -15,8 +16,9 @@ import { getProjectProfileTags } from "../utils/projectProfileTags";
  * awards and competitions each have their own page; the reel links into them.
  */
 
-// one role: date in the margin, the organisation set like a project name, then what was done.
-// On a phone the list of what was done stops at three, with a button for the rest.
+// the credits after the reel's end card: one role per line — dates, the organisation set like a
+// project name with the role under it, then what was done. On a phone the list of what was done
+// stops at three, with a button for the rest.
 const VISIBLE_ON_PHONE = 3;
 
 const CareerRow = ({ item }) => {
@@ -29,12 +31,14 @@ const CareerRow = ({ item }) => {
   return (
     <li className={`career-row${open ? " is-open" : ""}`}>
       <p className="career-row-date">{item.date}</p>
+      <h3 className="career-row-org">
+        {org}
+        {role ? <span className="career-row-role">{role}</span> : null}
+      </h3>
       <div className="career-row-main">
-        <h3 className="career-row-org">
-          {org}
-          {role ? <span className="career-row-role">{role}</span> : null}
-        </h3>
-        <p className="career-row-desc">{item.description}</p>
+        <p className="career-row-desc">
+          <Sentences>{item.description}</Sentences>
+        </p>
         <ul className="career-row-work" id={listId}>
           {item.bullets.map((bullet, i) => (
             <li
@@ -78,51 +82,35 @@ const IndexPage = ({ data }) => {
       >
         <SectionHeading
           slate={{
-            label: "Career",
+            label: "Credits",
             count: timelineItems.length,
             unit: "roles",
           }}
           title="실무 및 연구 경력"
           titleId="career-title"
         />
-        <div className="career-grid">
-          <aside className="career-profile" aria-label="프로필">
-            <p className="career-name">
-              이상민<span>Sangmin Lee</span>
-            </p>
-            <p className="career-role">AI Engineer &amp; Researcher</p>
-            <p className="career-bio">
-              연구의 언어를 제품·운영·비즈니스 가치의 언어로 번역합니다. 문제
-              정의, AI 아키텍처 설계, 백엔드, 관찰성, 배포, 검증까지 이어지는
-              실제 시스템을 만드는 데 집중합니다.
-            </p>
-            <dl className="career-facts">
-              <div>
-                <dt>email</dt>
-                <dd>
-                  <a href="mailto:dodo9249@gmail.com">dodo9249@gmail.com</a>
-                </dd>
-              </div>
-              <div>
-                <dt>research</dt>
-                <dd>SCIE 3 / KCI 2</dd>
-              </div>
-              <div>
-                <dt>domain</dt>
-                <dd>Knowledge AI / Safety RAG / OCR / Market Intel</dd>
-              </div>
-            </dl>
-            <div className="career-tags">
-              {profileTags.map((tag) => (
-                <Chip key={tag}>{tag}</Chip>
-              ))}
+        <ol className="career-rows">
+          {timelineItems.map((item) => (
+            <CareerRow key={`${item.date}-${item.title}`} item={item} />
+          ))}
+        </ol>
+        <div className="career-keys">
+          <p className="career-keys-h">요약</p>
+          <dl className="career-facts">
+            <div>
+              <dt>research</dt>
+              <dd>SCIE 3 / KCI 2</dd>
             </div>
-          </aside>
-          <ol className="career-rows">
-            {timelineItems.map((item) => (
-              <CareerRow key={`${item.date}-${item.title}`} item={item} />
+            <div>
+              <dt>domain</dt>
+              <dd>Knowledge AI / Safety RAG / OCR / Market Intel</dd>
+            </div>
+          </dl>
+          <div className="career-tags">
+            {profileTags.map((tag) => (
+              <Chip key={tag}>{tag}</Chip>
             ))}
-          </ol>
+          </div>
         </div>
       </section>
 

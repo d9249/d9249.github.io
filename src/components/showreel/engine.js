@@ -140,8 +140,8 @@ export function mountShowreel(root, DATA, TREE) {
   const tipOf = TIPS.map((p, k) => k).sort((a, b) => TIPS[a][0] - TIPS[b][0]);
   const RSN = Math.min(RS.length, TIPS.length);
   const resStart = (i) => TL.roots + 0.12 + i * 0.1;
-  $("#rpLede").textContent =
-    `석사 과정에서 쓴 논문들이 뿌리와 기둥이 됐고, 현업의 AI 프로젝트 ${N}개가 가지마다 잎으로 붙었습니다. 열매는 그 프로젝트가 낸 성과입니다.`;
+  $("#rpLede").innerHTML =
+    `석사 과정에서 쓴 논문들이 뿌리와 기둥이 됐고, 현업의 AI 프로젝트 ${N}개가 가지마다 잎으로 붙었습니다.<br>열매는 그 프로젝트가 낸 성과입니다.`;
   $("#rCount").textContent = String(RS.length);
   $("#bCount").textContent = String(N);
   const rRows = RS.map((r, i) => {

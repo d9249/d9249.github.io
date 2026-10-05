@@ -2,6 +2,7 @@ import * as React from "react";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "./ui";
 import { colorStyle, projectColor, stageOf } from "../utils/treeColors";
+import { Sentences } from "../utils/sentences";
 
 /*
  * The projects index: one row per project. A row shows the name, tagline, summary and metrics;
@@ -84,7 +85,9 @@ const ProjectRow = ({ project, focus, onFocus, open, onToggle }) => {
           {p.tagline && <p className="branch-row-tagline">{p.tagline}</p>}
         </div>
         <div className="branch-row-body">
-          <p className="branch-row-summary">{p.summary}</p>
+          <p className="branch-row-summary">
+            <Sentences>{p.summary}</Sentences>
+          </p>
           {p.metrics.length > 0 && (
             <ul
               className="branch-row-metrics"
@@ -117,7 +120,9 @@ const ProjectRow = ({ project, focus, onFocus, open, onToggle }) => {
                 </h3>
                 <ul className="branch-row-details">
                   {p.details.map((d) => (
-                    <li key={d}>{d}</li>
+                    <li key={d}>
+                      <Sentences>{d}</Sentences>
+                    </li>
                   ))}
                 </ul>
               </div>

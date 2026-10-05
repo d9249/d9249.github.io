@@ -67,6 +67,7 @@ All colours live in `src/styles/tokens.css`. No other stylesheet defines `:root`
 - Scale: `--type-hero`, `--type-page-title`, `--type-section-title`, `--type-card-title`, `--type-label`.
 - Korean text uses `word-break: keep-all`. Headings use `text-wrap: balance`.
 - Labels are mono, uppercase, `0.1em` tracking and `--muted`. The kicker above a heading (`.eyebrow`) is ink and bold.
+- **One sentence per line in short copy.** A lead, a lede, a summary or a description of two or three sentences breaks after each sentence (`<Sentences>` / `sentencesHTML` in `src/utils/sentences.js`; the reel's static ledes carry `<br>`). It breaks only where a new sentence follows, so `0.9188` or `vol. 78` stay whole. Long prose (posts, write-ups) and truncated summaries keep normal paragraphs.
 
 ## 4. Space, radius, surface, motion
 
@@ -117,7 +118,7 @@ picture in its header; the lists below it are quiet rows on hairlines.
 | DACON           | Stat tiles                                                                    | A bar per field, a ledger of entries with rank and percentile        |
 | Blog, tag, tips | Slate with the count                                                          | Notebook rows: date and category in the margin, title, one line      |
 | Contact         | The tree with an empty "next branch" (the reel's end card)                    | Channels as a ledger                                                 |
-| Home, career    | Slate with the count                                                          | The profile beside a ledger of roles: date in the margin, the organisation in Archivo wide, role, what was done (three on a phone, the rest behind a button) |
+| Home, career    | Slate `CREDITS · 3 ROLES`: the credits after the reel's end card               | One line per role: dates, the organisation in Archivo wide with the role, what was done (three on a phone, the rest behind a button); then a short summary (research, domain, results). It does not repeat the end card's name, line or email |
 
 - **Masthead** = the reel's top bar: a veil (`--material-floating`, blur on `.masthead::before` so the menu sheet is not trapped by the filter) and a hairline, `SANGMIN LEE` in Archivo 800 at 118%, the pages in mono capitals with the current one underlined like the reel's shot rail. It stays 45px (49px on a phone) with the hairline, because the reel measures it for `--hh`.
 - **Menu** (≤1180px) = a full-height sheet under the bar: the slate (`MENU · 12 PAGES`), then two groups, 홈 (sections of the home page) and 페이지, as rows in the brand face with the Korean name on the right and an ink dot on the current page. Open, it locks the page's scroll and makes `main` and the footer `inert`; Esc or the button closes it and focus goes back to the button without scrolling.

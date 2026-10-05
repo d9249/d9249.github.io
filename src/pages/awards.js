@@ -5,6 +5,7 @@ import Layout from "../components/Layout";
 import { PageHeader } from "../components/ui";
 import { colorStyle, RESULT_COLOR } from "../utils/treeColors";
 import { awardItems } from "../data/profile";
+import { Sentences } from "../utils/sentences";
 
 const getEvidenceKey = (item, link) => `${item.title}-${link.href}`;
 
@@ -47,7 +48,9 @@ const LedgerRow = ({ item, activeEvidence, onToggleEvidence }) => {
       <div className="ledger-main">
         <h2 className="ledger-title">{item.title}</h2>
         <p className="ledger-result">{item.result}</p>
-        <p className="ledger-desc">{item.description}</p>
+        <p className="ledger-desc">
+          <Sentences>{item.description}</Sentences>
+        </p>
         {inlineLinks.length || externalLinks.length || item.href ? (
           <div
             className="project-inline-actions ledger-actions"

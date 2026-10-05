@@ -4,6 +4,7 @@ import InlineEvidenceViewer from "../components/InlineEvidenceViewer";
 import Layout from "../components/Layout";
 import { PageHeader } from "../components/ui";
 import { competitionItems } from "../data/profile";
+import { Sentences } from "../utils/sentences";
 
 const COMPACT_COMPETITION_LAYOUT_QUERY = "(max-width: 980px)";
 
@@ -71,7 +72,9 @@ const CheckRow = ({ item, activeEvidence, onToggleEvidence }) => {
         <span />
       )}
       <div className="check-note">
-        <p>{item.description}</p>
+        <p>
+          <Sentences>{item.description}</Sentences>
+        </p>
         <div
           className="project-inline-actions competition-project-actions"
           aria-label={`${item.title} 증빙과 활동 링크`}
