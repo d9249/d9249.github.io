@@ -1020,6 +1020,37 @@ html[data-theme="dark"] .reel {
     transform: scaleX(1);
   }
 }
+.reel .hook-quote {
+  margin-top: 20px;
+  max-width: 34em;
+  padding-left: 14px;
+  border-left: 2px solid var(--green);
+  color: var(--fg);
+  font: 500 clamp(14px, 1.15vw, 17px)/1.6 var(--f-body);
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+  text-wrap: pretty;
+  animation: reel-quote-in 0.7s 0.95s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.reel .hook-quote cite {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 0.82em;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--green-t);
+}
+.reel .hook-quote span {
+  display: block;
+  text-wrap: balance;
+}
+@keyframes reel-quote-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
 .reel .hook-sub {
   margin-top: 22px;
   color: var(--sub);
@@ -1149,6 +1180,12 @@ html[data-theme="dark"] .reel {
   }
   .reel .hook-title {
     font-size: clamp(40px, 11.5vw, 58px);
+  }
+  .reel .hook-quote {
+    margin-top: 12px;
+    padding-left: 10px;
+    font-size: 13px;
+    line-height: 1.55;
   }
   .reel .hook-sub {
     margin-top: 12px;
@@ -2375,6 +2412,7 @@ html[data-theme="dark"] .reel .stamp {
   }
 @media (prefers-reduced-motion: reduce) {
   .reel .hook-title .w,
+  .reel .hook-quote,
   .reel .u::after,
   .reel .cue i,
   .reel .tcbox i {
