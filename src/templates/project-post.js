@@ -4,6 +4,17 @@ import Layout from "../components/Layout";
 import ProjectImageLightbox from "../components/ProjectImageLightbox";
 import SectionHeading from "../components/SectionHeading";
 import { formatReadableArticleHtml } from "../utils/articleHtml";
+import TreeCanvas from "../components/TreeCanvas";
+import { nameFit } from "../utils/brandFit";
+import { Sentences } from "../utils/sentences";
+import {
+  caseOf,
+  colorStyle,
+  projectColor,
+  skillPackage,
+  stageOf,
+  treeBranches,
+} from "../utils/treeColors";
 
 const getProjectTitleParts = (frontmatter) => {
   const name = frontmatter.projectName || frontmatter.title;
@@ -23,6 +34,10 @@ const ProjectPostTemplate = ({ data }) => {
   const metrics = project.frontmatter.metrics || [];
   const stack = project.frontmatter.stack || [];
   const titleParts = getProjectTitleParts(project.frontmatter);
+  const slug = project.fields?.slug;
+  const stage = stageOf(slug);
+  const color = stage?.leaf || projectColor(slug);
+  const growth = caseOf(slug);
   const projectHtml = React.useMemo(
     () => formatReadableArticleHtml(project.html),
     [project.html],
@@ -30,53 +45,98 @@ const ProjectPostTemplate = ({ data }) => {
 
   return (
     <Layout>
-      <section className="shell project-detail-hero">
-        <Link className="project-backlink" to="/projects/">
-          ← projects
-        </Link>
-        <div className="project-detail-hero-grid">
-          <div>
-            <p className="eyebrow">Project Detail</p>
-            <h1 className="project-detail-title">
-              <span className="project-detail-title-name">
-                {titleParts.name}
-              </span>
-              {titleParts.tagline && (
-                <span className="project-detail-title-tagline">
-                  {titleParts.tagline}
-                </span>
-              )}
-            </h1>
-            <p className="project-detail-copy">
-              {project.frontmatter.description}
-            </p>
-            <div
-              className="project-metrics"
-              aria-label={`${titleParts.displayTitle} metrics`}
+      <section className="shell project-hero" style={colorStyle(color)}>
+        <span className="ui-marks" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+          <i />
+        </span>
+        <div className="project-hero-main">
+          <Link className="project-backlink" to="/projects/">
+            ← 프로젝트
+          </Link>
+          <p className="ui-slate">
+            <b>Project</b>
+            <span className="ui-slate-bars" aria-hidden="true">
+              <i style={{ background: color || "var(--border-strong)" }} />
+            </span>
+            <span>{project.frontmatter.period}</span>
+          </p>
+          <h1 className="project-hero-title">
+            <span
+              className="project-hero-name"
+              style={{ "--fit": nameFit(titleParts.name) }}
+            >
+              {titleParts.name}
+            </span>
+            {titleParts.tagline && (
+              <span className="project-hero-tagline">{titleParts.tagline}</span>
+            )}
+          </h1>
+          <p className="project-hero-copy">
+            <Sentences>{project.frontmatter.description}</Sentences>
+          </p>
+          {metrics.length ? (
+            <ul
+              className="branch-row-metrics project-hero-metrics"
+              aria-label={`${titleParts.displayTitle} 성과 지표`}
             >
               {metrics.map((metric) => (
-                <span className="metric-chip" key={metric}>
-                  {metric}
-                </span>
+                <li key={metric}>{metric}</li>
               ))}
+            </ul>
+          ) : null}
+        </div>
+        {stage ? (
+          <div className="project-hero-tree">
+            <TreeCanvas
+              focus={stage.index}
+              branches={treeBranches()}
+              label={`이 프로젝트(${titleParts.name})의 가지만 밝힌 나무`}
+            />
+          </div>
+        ) : null}
+      </section>
+
+      {growth ? (
+        <section
+          className="project-case"
+          style={colorStyle(color)}
+          aria-labelledby="project-case-title"
+        >
+          <div className="shell project-case-in">
+            <div className="project-case-head">
+              <p className="project-case-kicker">
+                {growth.period} · {growth.role}
+              </p>
+              <h2 id="project-case-title" className="project-case-q">
+                {growth.problem}
+              </h2>
+              {growth.result ? (
+                <p className="project-case-result">{growth.result}</p>
+              ) : null}
+            </div>
+            <div className="project-case-grew">
+              <h3 className="project-case-h">
+                이 프로젝트에서 키운 역량 <span>{growth.grew.length}</span>
+              </h3>
+              <ul>
+                {growth.grew.map((g, i) => {
+                  const pkg = skillPackage(g.pkg);
+                  return (
+                    <li key={g.skills} style={{ "--c": pkg?.c, "--d": i }}>
+                      <code>{pkg ? pkg.kr : g.pkg}</code>
+                      <b>{g.skills}</b>
+                      <span>{g.how}</span>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           </div>
-          <aside className="project-detail-facts" aria-label="Project facts">
-            <div>
-              <span>period</span>
-              <strong>{project.frontmatter.period}</strong>
-            </div>
-            <div>
-              <span>focus</span>
-              <strong>{stack.slice(0, 3).join(" / ")}</strong>
-            </div>
-            <div>
-              <span>evidence</span>
-              <strong>{metrics.join(" / ")}</strong>
-            </div>
-          </aside>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <section className="shell project-detail-body">
         <article className="project-detail-main">
@@ -141,7 +201,9 @@ const ProjectPostTemplate = ({ data }) => {
                     </span>
                   )}
                 </h3>
-                <p>{item.frontmatter.description}</p>
+                <p>
+                  <Sentences>{item.frontmatter.description}</Sentences>
+                </p>
               </Link>
             );
           })}

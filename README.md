@@ -7,7 +7,7 @@
 
 ## What This Site Contains
 
-- AI Engineer & Researcher 프로필 홈
+- 홈 쇼릴: 연구(뿌리) → 프로젝트(가지·잎) → 성과(열매)를 8개 샷으로 보여주는 스크롤 릴
 - RAG, Document AI, multi-agent, 추천 시스템 중심 프로젝트 아카이브
 - 논문, 수상, 대회, 기술 스택, 경력 타임라인
 - Markdown 기반 기술 블로그와 프로젝트 사례
@@ -15,7 +15,8 @@
 - 출처·라이선스를 밝힌 프롬프트 라이브러리와 프롬프트 빌더 (`/prompts/`)
 
 주요 화면은 `src/pages/` 아래에 있으며 홈, 프로젝트, 연구, 수상, 대회,
-포트폴리오, 블로그, 프롬프트, 뉴스룸, 연락처 페이지로 구성됩니다.
+포트폴리오, 블로그, 팁, 프롬프트, 뉴스룸, 연락처 페이지로 구성됩니다. 색·타입·컴포넌트 규칙은
+[`DESIGN.md`](DESIGN.md)에 있습니다.
 
 ## Tech Stack
 
@@ -33,12 +34,20 @@ content/blog/<category>/<post>.md        Markdown blog posts
 content/projects/<project>.md            Markdown project case studies
 content/prompts/*.json                   Prompt library data (see content/prompts/README.md)
 src/components/                          Shared React components
-src/data/profile.js                      Profile, awards, papers, competitions data
+src/data/profile.js                      Profile, career, awards, papers, competitions data
 src/data/categories.json                 Blog category navigation and generated category pages
 src/data/portfolioSlides.json            Generated portfolio slide manifest
 src/pages/                               Gatsby page routes
 src/templates/                           Blog and project templates
-src/styles/global.css                    Site-wide design system
+src/components/ui/                       Shared UI primitives (Button, Card, Chip, Label)
+src/components/Showreel.js               Home showreel (markup + engine in src/components/showreel/)
+src/data/showreel.json                   Showreel content: research, projects, skills, cases
+src/styles/tokens.css                    Design tokens — the only place colours/sizes are defined
+src/styles/components.css                Shared primitives (label, button, chip, filter, card)
+src/styles/legacy.css · site.css         Page layouts and proven edge cases
+src/styles/showreel.css                  Home reel, scoped under .reel
+static/showreel/tree/                    Tree sprite atlases for the reel
+scripts/showreel/                        Tree render (Blender) + atlas build — see its README
 src/utils/tags.js                        Blog tag slug helpers
 static/portfolio/slides/                 Exported portfolio slide images
 static/evidence/                         Public evidence files

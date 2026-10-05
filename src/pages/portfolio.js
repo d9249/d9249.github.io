@@ -1,5 +1,6 @@
 import * as React from "react";
 import Layout from "../components/Layout";
+import { PageHeader } from "../components/ui";
 import deck from "../data/portfolioSlides.json";
 
 const MAX_PORTFOLIO_SLIDES = 36;
@@ -350,14 +351,16 @@ const PortfolioPage = () => {
   return (
     <Layout>
       <section className="portfolio-shell">
-        <div className="shell portfolio-hero">
-          <div>
-            <p className="eyebrow">Portfolio Deck</p>
-            <h1>이상민 포트폴리오</h1>
-            <p className="portfolio-copy">
-              AI 연구, 제품 개발 프로젝트들을 발표용 슬라이드로 정리했습니다.
-            </p>
-          </div>
+        <div className="shell">
+          <PageHeader
+            slate={{
+              label: "Portfolio",
+              count: deck.slides.length,
+              unit: "slides",
+            }}
+            title="이상민 포트폴리오"
+            lead="AI 연구, 제품 개발 프로젝트들을 발표용 슬라이드로 정리했습니다."
+          />
         </div>
 
         <section className="presentation-shell" aria-label="Portfolio slides">

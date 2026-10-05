@@ -2,8 +2,9 @@ import * as React from "react";
 import { Link } from "gatsby";
 import InlineEvidenceViewer from "../components/InlineEvidenceViewer";
 import Layout from "../components/Layout";
-import SectionHeading from "../components/SectionHeading";
+import { PageHeader } from "../components/ui";
 import { competitionItems } from "../data/profile";
+import { Sentences } from "../utils/sentences";
 
 const COMPACT_COMPETITION_LAYOUT_QUERY = "(max-width: 980px)";
 
@@ -47,44 +48,36 @@ const useMediaQuery = (query) => {
   return matches;
 };
 
-const competitionRows = competitionItems.reduce((rows, item, index) => {
-  if (index % 2 === 0) {
-    rows.push([item]);
-  } else {
-    rows[rows.length - 1].push(item);
-  }
-
-  return rows;
-}, []);
-
-const CompetitionCard = ({ item, activeEvidence, onToggleEvidence }) => {
+const CheckRow = ({ item, activeEvidence, onToggleEvidence }) => {
   const inlineLinks = item.links?.filter(isInlineEvidenceLink) || [];
-  const externalLinks =
-    item.links?.filter((link) => !isInlineEvidenceLink(link)) || [];
 
   return (
-    <article className="project-card competition-project-card">
-      <div className="project-card-header">
-        <div>
-          <div className="meta">{item.period}</div>
-          <h3 className="project-title">
-            <span className="project-title-name">{item.title}</span>
-            <span className="project-title-tagline">{item.result}</span>
-          </h3>
-        </div>
+    <article className="check-row">
+      <span className="check-box" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M5 12.5l4.2 4.2L19 7" />
+        </svg>
+      </span>
+      <div className="check-what">
+        <p className="check-period">{item.period}</p>
+        <h2 className="check-title">{item.title}</h2>
+        <p className="check-role">{item.result}</p>
       </div>
-      <p>{item.description}</p>
-      <div className="project-metrics" aria-label={`${item.title} 주요 성과`}>
-        {item.facts.map((fact) => (
-          <span className="metric-chip" key={fact}>
-            {fact}
-          </span>
-        ))}
-      </div>
-      {inlineLinks.length || externalLinks.length || item.href ? (
+      {item.score ? (
+        <p className="check-val">
+          <b>{item.score.value}</b>
+          <small>{item.score.label}</small>
+        </p>
+      ) : (
+        <span />
+      )}
+      <div className="check-note">
+        <p>
+          <Sentences>{item.description}</Sentences>
+        </p>
         <div
-          className="project-card-actions competition-project-actions"
-          aria-label={`${item.title} 관련 링크`}
+          className="project-inline-actions competition-project-actions"
+          aria-label={`${item.title} 증빙과 활동 링크`}
         >
           {inlineLinks.map((link) => {
             const evidenceKey = getEvidenceKey(item, link);
@@ -101,22 +94,15 @@ const CompetitionCard = ({ item, activeEvidence, onToggleEvidence }) => {
                   onToggleEvidence(evidenceKey, event.currentTarget)
                 }
               >
-                <span>{isOpen ? `${link.label} 닫기` : link.label} →</span>
+                {isOpen ? `${link.label} 닫기` : link.label} →
               </button>
             );
           })}
-          {externalLinks.map((link) => (
-            <a key={link.href} href={link.href}>
-              <span>{link.label} →</span>
-            </a>
-          ))}
           {item.href ? (
-            <ActivityLink href={item.href}>
-              <span>활동 보기 →</span>
-            </ActivityLink>
+            <ActivityLink href={item.href}>활동 보기 →</ActivityLink>
           ) : null}
         </div>
-      ) : null}
+      </div>
     </article>
   );
 };
@@ -182,75 +168,74 @@ const CompetitionsPage = () => {
     setIsEvidenceFullView((currentValue) => !currentValue);
   };
 
+  const ranked = competitionItems.filter((item) => item.score);
+
   return (
     <Layout>
-      <section className="shell section recognition-page">
-        <SectionHeading
-          as="h1"
-          kicker="Competitions"
+      <section className="shell recognition-page">
+        <PageHeader
+          slate={{
+            label: "Competitions",
+            count: competitionItems.length,
+            unit: "activities",
+          }}
           title="대회 및 외부 활동"
+          lead="데이터 경진대회와 연구 모임, 교육 과정입니다. 순위나 점수가 있는 것은 숫자로 먼저 보이게 했습니다."
+          aside={
+            <ol className="check-sheet" aria-label="숫자로 남은 결과">
+              {ranked.map((item, i) => (
+                <li key={item.title} style={{ "--d": i }}>
+                  <span className="check-box" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M5 12.5l4.2 4.2L19 7" />
+                    </svg>
+                  </span>
+                  <span className="check-sheet-what">
+                    <b>{item.title}</b>
+                    <small>{item.score.label}</small>
+                  </span>
+                  <span className="check-sheet-val">{item.score.value}</span>
+                </li>
+              ))}
+            </ol>
+          }
         />
-        {isCompactLayout ? (
-          <>
-            <div className="project-grid">
-              {competitionItems.map((item) => (
-                <CompetitionCard
-                  key={item.title}
+        <div className="check-rows">
+          {competitionItems.map((item) => {
+            const rowLink = item.links?.find(
+              (link) => activeEvidence === getEvidenceKey(item, link),
+            );
+
+            return (
+              <React.Fragment key={item.title}>
+                <CheckRow
                   item={item}
                   activeEvidence={activeEvidence}
                   onToggleEvidence={toggleEvidence}
                 />
-              ))}
-            </div>
-            {activeItem && activeLink ? (
-              <InlineEvidenceViewer
-                itemTitle={activeItem.title}
-                evidence={activeLink}
-                viewerId={getEvidenceId(activeItem, activeLink)}
-                isFullView
-                isModal
-                onClose={closeEvidence}
-              />
-            ) : null}
-          </>
-        ) : (
-          <div className="recognition-list">
-            {competitionRows.map((row) => {
-              const activeItem = row.find((item) =>
-                item.links?.some(
-                  (link) => activeEvidence === getEvidenceKey(item, link),
-                ),
-              );
-              const activeLink = activeItem?.links?.find(
-                (link) => activeEvidence === getEvidenceKey(activeItem, link),
-              );
-
-              return (
-                <React.Fragment key={row.map((item) => item.title).join("|")}>
-                  <div className="project-grid">
-                    {row.map((item) => (
-                      <CompetitionCard
-                        key={item.title}
-                        item={item}
-                        activeEvidence={activeEvidence}
-                        onToggleEvidence={toggleEvidence}
-                      />
-                    ))}
-                  </div>
-                  {activeItem && activeLink ? (
-                    <InlineEvidenceViewer
-                      itemTitle={activeItem.title}
-                      evidence={activeLink}
-                      viewerId={getEvidenceId(activeItem, activeLink)}
-                      isFullView={isEvidenceFullView}
-                      onToggleFullView={toggleEvidenceFullView}
-                    />
-                  ) : null}
-                </React.Fragment>
-              );
-            })}
-          </div>
-        )}
+                {!isCompactLayout && rowLink ? (
+                  <InlineEvidenceViewer
+                    itemTitle={item.title}
+                    evidence={rowLink}
+                    viewerId={getEvidenceId(item, rowLink)}
+                    isFullView={isEvidenceFullView}
+                    onToggleFullView={toggleEvidenceFullView}
+                  />
+                ) : null}
+              </React.Fragment>
+            );
+          })}
+        </div>
+        {isCompactLayout && activeItem && activeLink ? (
+          <InlineEvidenceViewer
+            itemTitle={activeItem.title}
+            evidence={activeLink}
+            viewerId={getEvidenceId(activeItem, activeLink)}
+            isFullView
+            isModal
+            onClose={closeEvidence}
+          />
+        ) : null}
       </section>
     </Layout>
   );

@@ -23,6 +23,22 @@ export const onRenderBody = ({ setHeadComponents, setHtmlAttributes }) => {
   setHtmlAttributes({ lang: "ko" });
   setHeadComponents([
     <link key="favicon" rel="icon" href="/favicon.svg" type="image/svg+xml" />,
+    <link
+      key="fonts-pre"
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />,
+    <link
+      key="fonts-pre-static"
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossOrigin="anonymous"
+    />,
+    <link
+      key="fonts"
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    />,
     <meta key="color-scheme" name="color-scheme" content="light dark" />,
     <script
       key="theme-init"

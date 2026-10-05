@@ -1,309 +1,177 @@
 # d9249.github.io Design System
 
-## 1. Atmosphere & Identity
+## 1. Identity — paper, ink and a tree
 
-`d9249.github.io` is a calm, high-craft technical portfolio: precise enough for
-research evidence, warm enough to feel personal, and immediate enough to behave
-like a native Apple surface. The emotion is **quiet confidence**. Apple KR is a
-runtime reference for restraint, spacing, and responsive behavior rather than a
-brand or asset source.
+The site reads like an animator's movement sheet laid on warm paper: ink type, hairline
+rules, mono labels and a slate in the corner. One picture carries the story: **a tree**.
 
-The memorable moment is the home hero: a soft field of cool daylight behind a
-floating profile console. It preserves the owner's engineering identity without
-making the whole site look like a terminal. Information stays dense, while
-hierarchy, translucency, and breathing room make the common path obvious.
+- **Roots** are the research of the master's course (earth colours).
+- **Branches** are projects. Each project has its own leaf colour, and its leaves attach one at a time.
+- **Fruit** is what a project earned, such as an award, a patent or a contract (mandarin).
 
-The source of truth is `skills/apple-design/SKILL.md`, especially Purpose,
-Familiarity, Simplicity, Craft, instant response, spatial consistency,
-translucent hierarchy, optical typography, and reduced-motion equivalents.
+The home page tells that story as an eight-shot reel (§7), and the inner pages reuse its devices (§6). Every other page uses the same
+paper, ink and colour meanings, so a project's colour on the home tree is the same colour on
+its card and its page.
 
-## 2. Color
+The emotion is **quiet confidence**: dense evidence and calm surfaces, with the motion kept in
+one place (the reel). The old Apple-glass look (translucent cards, cool blue light) is retired.
 
-### Palette
+## 2. Colour
 
-| Role           | Token                    | Light                         | Dark                          | Usage                                  |
-| -------------- | ------------------------ | ----------------------------- | ----------------------------- | -------------------------------------- |
-| Canvas         | `--bg`                   | `oklch(97.8% 0.007 250)`      | `oklch(14.5% 0.012 255)`      | Page atmosphere                        |
-| Elevated solid | `--surface`              | `oklch(100% 0 0)`             | `oklch(20.5% 0.014 255)`      | Opaque fallback and article canvas     |
-| Primary text   | `--fg`                   | `oklch(20% 0.016 255)`        | `oklch(96% 0.006 250)`        | Headings, body, icons                  |
-| Secondary text | `--muted`                | `oklch(48% 0.018 255)`        | `oklch(72% 0.014 250)`        | Supporting text and metadata           |
-| Separator      | `--border`               | `oklch(86% 0.012 250 / 0.78)` | `oklch(34% 0.014 255 / 0.78)` | Hairlines and surface rims             |
-| System blue    | `--accent`               | `oklch(57% 0.19 252)`         | `oklch(70% 0.16 248)`         | Links, selected accents, focus         |
-| Primary fill   | `--control-primary-fill` | `oklch(52% 0.18 252)`         | `oklch(52% 0.18 248)`         | AA-safe solid and gradient CTA fill    |
-| On accent      | `--on-accent`            | `oklch(99% 0 0)`              | `oklch(99% 0 0)`              | Legible text on solid accent fills     |
-| Sky light      | `--accent-soft`          | `oklch(88% 0.07 240)`         | `oklch(39% 0.08 245)`         | Atmospheric light and selected fills   |
-| Cyan signal    | `--accent-2`             | `oklch(68% 0.13 218)`         | `oklch(76% 0.12 218)`         | Technical/evidence accents             |
-| Warm signal    | `--accent-3`             | `oklch(72% 0.14 55)`          | `oklch(76% 0.13 55)`          | Limited warning or recognition accents |
-| Scrim          | `--overlay`              | `oklch(8% 0.012 255 / 0.58)`  | `oklch(2% 0.006 255 / 0.72)`  | Modal focus                            |
+All colours live in `src/styles/tokens.css`. No other stylesheet defines `:root` tokens.
+
+### Palette (raw)
+
+| Group             | Tokens                                                                                    | Meaning                       |
+| ----------------- | ----------------------------------------------------------------------------------------- | ----------------------------- |
+| Base              | `--paper #f2ede3` · `--sheet #fbf8f1` · `--ink #16171b`                                   | The page and its type         |
+| Research (roots)  | `--c-rust` `--c-ochre` `--c-umber` `--c-brick` `--c-olive` `--c-clay`                     | One per paper / research line |
+| Projects (leaves) | `--c-cyan` `--c-blue` `--c-green` `--c-violet` `--c-teal` `--c-sky` `--c-lime` `--c-navy` | One per project               |
+| Results (fruit)   | `--c-mandarin`                                                                            | Awards, patents, contracts    |
+
+### Semantic (what components use)
+
+| Role           | Token                          | Light           | Dark         |
+| -------------- | ------------------------------ | --------------- | ------------ |
+| Canvas         | `--bg`                         | paper `#f2ede3` | `#121316`    |
+| Sheet          | `--surface`                    | `#fbf8f1`       | `#1a1b1f`    |
+| Text           | `--fg`                         | ink `#16171b`   | `#eee8dc`    |
+| Secondary text | `--muted`                      | `#5c5850`       | `#a6a095`    |
+| Hairline       | `--border` / `--border-strong` | fg 14% / 34%    | fg 13% / 36% |
+| Link · focus   | `--accent`                     | `#2347c4`       | `#86a2ff`    |
+| Evidence       | `--accent-2`                   | `#0e7487`       | `#4fc6d8`    |
+| Recognition    | `--accent-3`                   | `#9a4b00`       | `#f5a050`    |
+| Result fill    | `--result`                     | mandarin        | mandarin     |
+| Primary fill   | `--control-primary-fill`       | ink             | `#eee8dc`    |
+| Primary hover  | `--control-primary-hover`      | `--c-green`     | `#5fd3a0`    |
 
 ### Rules
 
-- System blue carries agency: links, selected state, focus, and primary actions.
-- Cool sky/cyan light creates atmosphere but never replaces semantic contrast.
-- Color is applied on the solid/background layer, never as low-contrast text on
-  translucent foregrounds.
-- Dark mode is tuned independently, not produced by inverting light mode.
-- Project diagrams and screenshots retain neutral backgrounds so evidence is not
-  color-shifted.
+- **One colour, one meaning.** Earth means research, a leaf colour means that project, and mandarin means a result. Don't use a palette colour for decoration.
+- Pages outside the reel use the same colours. `src/utils/treeColors.js` maps a project slug to its leaf colour and a research id to its root colour, and results use mandarin. An element that carries a colour gets it as `--c` and shows it as a dot, a chip, a pin or the tree itself.
+- **No colour stripes.** A card, row, panel or quote never gets a coloured (or ink) bar along one edge to set it apart: no `border-left: 3px`, no top edge, no `::before` tab. Rows are set apart by hairlines, spacing and type; a colour appears only where it names something.
+- `--accent` is for links, focus and selection only. Primary actions are ink, not blue.
+- Palette colours go on fills and swatches. Text uses `--fg`, `--muted` or the text-safe `--accent-*`.
+- Colour never carries state alone. Pair it with a label, a weight or a shape.
+- Mix colours **`in oklab`**, never `in oklch`. With near-grey inputs, oklch has no hue, and Chromium then tints the mix pink.
+- Dark mode is a separate set of values, not an inversion. `gatsby-ssr.js` sets `html[data-theme]` before paint, so stylesheets use `html[data-theme="dark"]` and never `prefers-color-scheme`.
 
 ## 3. Typography
 
-### Font stacks
+| Family                   | Token          | Use                                                           |
+| ------------------------ | -------------- | ------------------------------------------------------------- |
+| IBM Plex Sans KR 400–700 | `--font-body`  | Everything you read: body, headings (`--font-display` = body) |
+| Archivo (width 62–125)   | `--font-brand` | Numerals and names set large: counters, scores, case names    |
+| JetBrains Mono 400–700   | `--font-mono`  | Labels, meta, chips, timecodes                                |
 
-- Display: `--font-display`, `-apple-system`, `BlinkMacSystemFont`,
-  `SF Pro Display`, system UI.
-- Body: `--font-body`, `-apple-system`, `BlinkMacSystemFont`, `SF Pro Text`,
-  system UI.
-- Mono: `--font-mono`, `SFMono-Regular`, Menlo, Monaco, Consolas.
+- Scale: `--type-hero`, `--type-page-title`, `--type-section-title`, `--type-card-title`, `--type-label`.
+- Korean text uses `word-break: keep-all`. Headings use `text-wrap: balance`.
+- Labels are mono, uppercase, `0.1em` tracking and `--muted`. The kicker above a heading (`.eyebrow`) is ink and bold.
+- **One sentence per line in short copy.** A lead, a lede, a summary or a description of two or three sentences breaks after each sentence (`<Sentences>` / `sentencesHTML` in `src/utils/sentences.js`; the reel's static ledes carry `<br>`). It breaks only where a new sentence follows, so `0.9188` or `vol. 78` stay whole. Long prose (posts, write-ups) and truncated summaries keep normal paragraphs.
 
-### Optical scale
+## 4. Space, radius, surface, motion
 
-| Level      | Size                             | Weight  | Leading | Tracking   | Usage                        |
-| ---------- | -------------------------------- | ------- | ------- | ---------- | ---------------------------- |
-| Display    | `clamp(2.75rem, 4.6vw, 3.5rem)`  | 700     | `1.08`  | `-0.035em` | Home hero                    |
-| Page title | `clamp(2.25rem, 4vw, 3.5rem)`    | 720     | `1.05`  | `-0.04em`  | Projects, research, articles |
-| Section    | `clamp(1.9rem, 3.2vw, 2.8rem)`   | 720     | `1.04`  | `-0.04em`  | Section headings             |
-| Card title | `1.25rem-2rem`                   | 650-700 | `1.16`  | `-0.02em`  | Cards and panels             |
-| Lead       | `clamp(1.12rem, 1.8vw, 1.42rem)` | 430     | `1.55`  | `-0.012em` | Hero and page summaries      |
-| Body       | `1rem`                           | 400     | `1.68`  | `-0.006em` | Default copy                 |
-| Small      | `0.84rem-0.92rem`                | 450     | `1.5`   | `0`        | Supporting copy              |
-| Label      | `0.68rem-0.76rem`                | 650     | `1.25`  | `0.065em`  | Metadata and controls        |
-
-### Rules
-
-- Use optical sizing where available. Large headings tighten; small labels open.
-- Korean copy uses `word-break: keep-all`, `text-wrap: pretty`, and enough line
-  height for legibility. One-line locking is reserved for genuinely short labels.
-- The root remains `100%`; spacing and type use `rem` so browser text scaling
-  grows the layout instead of clipping it.
-- Mono is a precise accent for code and metadata, not the site's primary voice.
-
-## 4. Spacing & Layout
-
-Layout spacing derives from a 4px base and is exposed as tokens. Optical type,
-icon, and material values may use fractional units when rendered alignment
-requires it.
-
-| Token        | Value     | Usage             |
-| ------------ | --------- | ----------------- |
-| `--space-1`  | `0.25rem` | Optical nudges    |
-| `--space-2`  | `0.5rem`  | Compact icon gaps |
-| `--space-3`  | `0.75rem` | Labels and chips  |
-| `--space-4`  | `1rem`    | Control padding   |
-| `--space-5`  | `1.25rem` | Compact cards     |
-| `--space-6`  | `1.5rem`  | Default cards     |
-| `--space-8`  | `2rem`    | Groups            |
-| `--space-10` | `2.5rem`  | Large groups      |
-| `--space-12` | `3rem`    | Section internals |
-| `--space-16` | `4rem`    | Mobile sections   |
-| `--space-24` | `6rem`    | Desktop sections  |
-
-- Reading shell: `min(1200px, calc(100% - 48px))`; article measure: 760px.
-- Mobile shell: `min(100% - 32px, 1200px)`.
-- The layout shifts at content pressure, not device names: 1060px navigation,
-  980px detail grids, 760px multi-column cards, 680px compact mobile.
-- At 760px and below, repeated card collections use horizontally scrollable
-  snap rails with a visible next-card edge. This preserves every item while
-  preventing long research, project, and blog lists from dominating the
-  vertical page.
-- Mobile skills are an exception: they use a natural-height dense board in the
-  page scroll, never a nested horizontal or vertical scroller. Compact panels
-  may share a row, while panels with many skills span the full board width. At
-  narrow content pressure the board becomes one column and each panel uses a
-  compact two-column skill list. Titles, labels, counts, icons, and every skill
-  remain visible without a disclosure control.
-- Compact category filters wrap in place so every destination remains visible
-  without a sideways gesture. Large tag collections keep a concise initial
-  set, then open into a bounded, paged vertical browser instead of extending
-  the page, mounting the entire taxonomy, or hiding newly revealed tags
-  off-screen.
-- Primary sections have no box around the whole section. Cards group meaningful
-  sub-objects; white space groups the larger narrative.
-- Rounded geometry follows scale: 12px controls, 18px cards, 24-30px large
-  surfaces. Nested radii decrease inward.
-- Standard text controls use `--control-height: 2.75rem` and
-  `--control-radius: 0.875rem`. Compact desktop navigation may be visually
-  smaller only when its surrounding row preserves a clear target; touch layouts
-  return to the full 44px geometry.
+- Space: `--space-1 … --space-24` (a 4px base: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 96).
+- Radius: `--radius-xs` (swatches, code), `--radius-control` (inputs), `--radius-card`, `--radius-large` (media), `--radius-pill` (buttons, chips).
+- Surface: flat paper. A card is `--surface` with a 1px `--border` and a 1px `--shadow-card`. Hover adds `--shadow-card-hover` and a 2px lift. There is no glass and no blur, except the floating masthead and the reel HUD (`--material-floating`).
+- Paper details: `--ruled-paper` is ruled lines with a rust margin line, layered over a surface (post card headers, the reel's shot 02). `--term`, `--term-fg` and `--term-dim` set code blocks and the reel's terminal. `--stage*` is the slide deck's surround, which stays dark in both themes.
+- Motion: `--motion-press` 100ms · `--motion-fast` 180ms · `--motion-material` 320ms · `--motion-reveal` 480ms, with `--ease-fluid`. Pages stay still; motion belongs to the reel.
+- Z: `--z-sticky` masthead · `--z-hud` reel HUD · `--z-overlay` search · `--z-modal` lightbox · `--z-skip` · `--z-fullscreen` deck.
+- Layout: `.shell` is `min(75rem, 100% − 3rem)` (`− 2rem` ≤ 760px). Breakpoints are 1120 · 980 · 760 · 420.
 
 ## 5. Components
 
-### Global Navigation
+Each primitive is defined **once** in `src/styles/components.css`. React wrappers live in
+`src/components/ui/`. Markup that can't use React (markdown, the reel) uses the class directly.
 
-- A full-width translucent bar stays at the top of the page. Its content row is
-  44px on desktop and 48px on touch layouts, with no capsule radius or floating
-  shadow. The bar uses a restrained 20px blur and a single quiet separator.
-- Desktop navigation exposes every destination. The active destination is blue
-  and receives a quiet filled capsule. Mobile uses an anchored sheet below the
-  header and exits through the same path it entered.
-- Search, theme, and menu controls are 44px or larger on touch layouts, show
-  pointer-down scale immediately, and retain visible focus rings.
+| Primitive    | Class                                                              | React                                              | Notes                                                                                                                             |
+| ------------ | ------------------------------------------------------------------ | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Label        | `.ui-label`, `.ui-label--strong`, `.eyebrow`                       | `<Label>`, `<Label kicker>`                        | Mono uppercase meta; `kicker` is the label above a heading                                                                        |
+| Button       | `.ui-button` + `--primary` / `--tonal` / `--compact`, `.is-active` | `<Button to / href / onClick variant>`             | Pill with a 1.5px border. Primary is an ink fill (one per view) with green hover                                                  |
+| Chip         | `.ui-chip`, `.ui-chip--solid`                                      | `<Chip color solid>`                               | Metadata only. `color` shows a swatch; `solid` fills                                                                              |
+| Filter chip  | `.ui-filter` + `.is-active` / `aria-current`                       | (CategoryNav, TagNav)                              | Category and tag filters; active is an ink fill                                                                                   |
+| Card         | `.ui-card`, `.ui-card--interactive`                                | `<Card interactive color>`                         | For panels only (sidebars, filters, viewers). Lists are rows, not cards (§6)                                                      |
+| Page header  | `.ui-page-header` (+ `--hero`, `.ui-slate`, `.ui-marks`)           | `<PageHeader slate title lead actions aside size>` | A shot from the reel: crop marks, a slate (page · colours of what it lists · count), a big title, the page's picture on the right |
+| Section head | `.section-head`                                                    | `<SectionHeading kicker title action>`             | Every h2 section heading inside a page                                                                                            |
+| Text action  | `.ui-actions a` (aliases `.project-inline-actions`, `.paper-link`) | —                                                  | "보기 →" links in a card. On touch screens the hit area grows to ~44px without moving anything                                    |
+| Hidden text  | `.visually-hidden`                                                 | —                                                  | Screen-reader-only text, e.g. the h2 between a page's h1 and its card list                                                        |
 
-### Hero Profile Console
+**Legacy aliases.** The families also list the classes the pages already use. For example,
+`.button-primary`, `.pagination-page` and `.section-action a` are buttons; `.tag`,
+`.metric-chip` and `.project-stack span` are chips; `.post-card`, `.project-card` and
+`.paper-card` are cards. Their look comes only from `components.css`. The page files keep
+layout only, such as margins, grid placement and page-context variants (`.career-tags .ui-chip`).
+When you touch a page, prefer the `ui-*` class or the React wrapper and drop the alias.
 
-- The home hero is a two-column editorial composition: decisive statement and
-  one elevated console. Atmospheric light belongs to the page layer; the console
-  uses thick translucent material, a bright rim, and a deep diffuse shadow.
-- The ASCII portrait remains a personal signature, but terminal chrome is
-  secondary to the person's name, role, and direct paths.
-- Route discovery belongs to the global navigation; the hero does not repeat
-  project, research, awards, competition, portfolio, blog, or tips shortcuts.
-- External profile links remain compact glass pills so direct identity and
-  contact paths stay available without competing with the hero statement.
-- On touch layouts, the four external profile pills stay in one row with
-  unbroken labels and 44px hit height. The row may pan horizontally only when
-  browser text scaling makes it wider than the available viewport.
+## 6. Pages — the reel's vocabulary
 
-### Content Cards
+The inner pages reuse the reel's devices instead of a card grid. Each page puts its boldness into one
+picture in its header; the lists below it are quiet rows on hairlines.
 
-- Evidence, project, research, recognition, post, tip, skill, and supporting
-  cards share the `--material-card` recipe, 18-22px radius, and a top-light rim.
-- In desktop two-column collections, cards in the same visual row share their
-  semantic content tracks so headings, summaries, metadata, and actions retain
-  matching horizontal baselines even when copy length differs. Single-column
-  and mobile carousel cards keep their natural content flow.
-- Hover raises only interactive cards by 3px and strengthens the shadow. Press
-  immediately scales them to `0.985`. Non-interactive cards do not animate.
-- Cards avoid decorative nesting. Chips are metadata, not miniature cards.
+| Page            | Header picture                                                                | List                                                                 |
+| --------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Projects        | The tree (`<TreeCanvas grow>`); a branch opens its row, hovering a row lights it | Branch rows: leaf dot, name in Archivo wide, KPI chip in leaf. Pressing a row opens what was done, the stack and "자세히 보기" (the project page) |
+| Project page    | The tree with only this branch lit; the name set like the reel's case cut     | A cut (`--cut-*`): problem, capabilities grown, result (shot 07)     |
+| Research        | The roots (`variant="roots"`) with R1–R6 pins; counts as condensed numerals   | Root rows R1–R6, then every paper by type                            |
+| Awards          | The award sheet (`<AwardSheet>`): the reel's stamps land one by one           | Ledger: date, award, result in mandarin, evidence links, a tick      |
+| Competitions    | A check sheet: ticks draw in, values with a mandarin highlighter              | Check rows: box, what, value, note                                   |
+| DACON           | Stat tiles                                                                    | A bar per field, a ledger of entries with rank and percentile        |
+| Blog, tag, tips | Slate with the count                                                          | Notebook rows: date and category in the margin, title, one line      |
+| Contact         | The tree with an empty "next branch" (the reel's end card)                    | Channels as a ledger                                                 |
+| Home, career    | Slate `CREDITS · 3 ROLES`: the credits after the reel's end card               | One line per role: dates, the organisation in Archivo wide with the role, what was done (three on a phone, the rest behind a button); then a short summary (research, domain, results). It does not repeat the end card's name, line or email |
 
-### Skill Board
+- **Masthead** = the reel's top bar: a veil (`--material-floating`, blur on `.masthead::before` so the menu sheet is not trapped by the filter) and a hairline, `SANGMIN LEE` in Archivo 800 at 118%, the pages in mono capitals with the current one underlined like the reel's shot rail. It stays 45px (49px on a phone) with the hairline, because the reel measures it for `--hh`.
+- **Menu** (≤1180px) = a full-height sheet under the bar: the slate (`MENU · 12 PAGES`), then two groups, 홈 (sections of the home page) and 페이지, as rows in the brand face with the Korean name on the right and an ink dot on the current page. Open, it locks the page's scroll and makes `main` and the footer `inert`; Esc or the button closes it and focus goes back to the button without scrolling.
+- `src/components/TreeCanvas.js` draws the reel's tree with the compositor in `showreel/tree.js` (shared with the reel). It grows once (skipped for reduced motion), redraws on theme and size changes, and puts real links over branches and roots.
+- Colours on the pages come from `src/utils/treeColors.js` (`stageOf`, `caseOf`, `onColor`, `solidOf`), so a project is the same colour on the tree, its row and its page.
+- The projects index keeps the full card content one press away: a row is a disclosure (`button[aria-expanded]` over the summary, the panel `inert` while closed). Open rows put their id in the URL hash (`/projects/#harmony-multitenant-ai`), so a link or the back button reopens the row. The tree's branch links open the row on a plain click and still go to the project page on a modified click.
+- Motion on the pages is limited to one moment per page header: the tree growing, the stamps landing, the ticks drawing.
 
-- Desktop skills use the existing dense masonry grid. Mobile preserves the
-  same cards in a tighter two-column board, with high-density or long-title
-  panels spanning both columns and compact panels filling available space
-  greedily.
-- Card height follows content. Skill lists do not receive fixed heights,
-  truncation, or internal scrolling; the document owns the vertical gesture.
-- When a two-column card would pressure labels, the board switches to one card
-  per row while retaining two skill columns inside each card.
+## 7. The home reel
 
-### Section Heading
+`src/pages/index.js` = `<Showreel/>` + career timeline (`#career`) + latest posts (`#latest`).
 
-- The eyebrow establishes context; the title carries the story. Actions remain
-  on the title row, adjacent to the section they affect, and use direct labels.
-- Mobile carousel controls sit between the section heading and the cards they
-  move.
-- Section dividers are atmospheric spacing or a short gradient hairline, never a
-  full-width grid rule.
+| Shot        | id        | What it shows                                                              |
+| ----------- | --------- | -------------------------------------------------------------------------- |
+| 01 Hook     | `#hook`   | The tree, with a title                                                     |
+| 02 Grow     | `#run`    | Roots = research R1–R6 (pins + list), branches = projects, fruit = results |
+| 03 Skills   | `#skills` | Six skill packages filling up (`/#skills` in the nav)                      |
+| 04 Stamp    | `#stamp`  | Awards stamped onto a sheet                                                |
+| 05 Mosaic   | `#mosaic` | Evidence tiles                                                             |
+| 06 Check    | `#check`  | Numbers, checked off                                                       |
+| 07 Cases    | `#flip`   | Five projects: the problem, the capabilities grown, the result             |
+| 08 End card | `#end`    | Contact                                                                    |
 
-### Actions & Controls
+- Files: `src/components/Showreel.js` mounts `showreel/markup.js` (static HTML, rendered at build time) and `showreel/engine.js`. The engine returns a teardown, so route changes leave no listeners behind.
+- Content: `src/data/showreel.json`. A new project goes at the end of `stages`; no render is needed for up to 11 projects. The tree's sprites and anchors come from `scripts/showreel/` (see its README).
+- Styles: `src/styles/showreel.css`, scoped under `.reel`. It aliases its old names onto the tokens (`--sub` → `--muted`, `--rule` → `--border`, and so on). Only reel-only inks stay local; the stamp inks, terminal and tree wood are tokens because the pages use them too.
+- The reel slides under the sticky masthead (`margin-top: −var(--hh)`; the engine measures the masthead). Its gutters line up with `.shell`. The HUD hides once the reel is over.
+- Scrolling is native, with sticky shots. After the wheel stops, the page settles to the nearest cut. ▶ plays the reel and pauses on any wheel, touch or key input.
 
-- The shared control material is defined by `--control-surface`,
-  `--control-surface-hover`, `--control-border`, `--control-highlight`,
-  `--control-shadow`, and `--control-shadow-hover`. It uses a quiet top light,
-  one crisp rim, and a short diffuse shadow so controls read as tactile without
-  becoming floating glass ornaments.
-- Primary actions keep an AA-safe `--control-primary-fill`, white label, and
-  `--control-primary-shadow` through hover. Hover may lift by one pixel; it never
-  demotes the action to a pale outline. Pointer-down removes the lift and
-  compresses to `0.98`.
-- Secondary and evidence actions use the neutral control material. Selected or
-  emphasized secondary actions receive a restrained blue tonal fill rather than
-  a second competing solid CTA.
-- Icon-only controls use the same state model. In the global header, search,
-  theme, and menu stay as inline glyphs on transparent hit areas without
-  individual fills, rims, or shadows; desktop keeps compact 36px geometry while
-  touch layouts expand to 44px. Focus and press feedback remain visible.
-  Directional controls may be circular, while other utility controls use a
-  compact squircle and the shared control material.
-- Filter, tag, and page controls are flatter members of the same family: neutral
-  by default, tonal blue when selected, and visibly structural when disabled.
-- Text actions remain text actions. They gain color or arrow movement on hover
-  instead of being boxed merely for decorative consistency.
-- Compact external profile pills retain their semantic pill shape but share the
-  control rim and top-light recipe. Button labels, card copy, and existing
-  typography are not rewritten to manufacture visual novelty.
+## 8. Files and load order
 
-### Article & Evidence Media
+`gatsby-browser.js` imports, in order:
 
-- Articles use an opaque reading surface with generous measure and quiet chrome.
-- Images and diagrams use neutral inspection frames. Wide analytical images pan
-  horizontally on mobile rather than shrinking labels below readability.
-- In figures, only the media viewport pans horizontally; captions remain outside
-  that scroll layer so article text never follows an image gesture.
-- The shared lightbox preserves its existing fitted stage, rotation, keyboard
-  activation, Escape dismissal, focus containment, and mobile visualViewport
-  behavior. Its material is updated, not its proven geometry.
-- Project evidence media always renders on an opaque neutral white inspection
-  surface with no saturation, opacity, or blend filter.
+1. `tokens.css` holds the single source of tokens: palette, semantic, type, space, radius, shadow, motion, z and dark theme.
+2. `legacy.css` keeps the proven edge cases: article body, PDF viewer, lightbox, decks, newsroom and responsive fixes. It has no tokens and no primitive looks.
+3. `components.css` sets the base element styles, then the primitives (§5).
+4. `site.css` holds the page layouts: masthead, footer, list and detail pages.
+5. `showreel.css` holds the home reel, scoped under `.reel`.
 
-### Global Footer
+Rules of the road:
 
-- The footer is a full-width neutral information surface, not a collection of
-  floating pills. It uses compact directory columns, plain text links, a small
-  status row, and one legal separator.
-- Desktop uses three directory columns; narrow layouts use two columns without
-  hiding destinations.
+- Put a new colour or size in `tokens.css` first, then use the token.
+- Never restyle a primitive in a page file. Add a variant in `components.css`, or a layout-only page rule.
+- New page-level rules go in `site.css`. `legacy.css` only shrinks.
 
-### Primitive states
+## 9. Accessibility & accepted debt
 
-Every interactive primitive implements default, hover, pointer-down, focus,
-disabled, and reduced-motion states. Search additionally implements empty,
-results, and dismiss states; deck controls expose unavailable navigation.
+- Text and controls meet WCAG AA in both themes. Focus is always visible (`--focus-ring`). Icon-only controls keep Korean `aria-label`s. Touch targets are 44px where space allows.
+- `prefers-reduced-motion`: the reel jumps between cuts instead of easing, and title and stamp animations are off. `prefers-contrast: more` strengthens borders and muted text.
+- The reel's canvases have `role="img"` with a description. Each shot's content is also real text and links.
 
-Disabled controls remove lift and depth, lower contrast, and preserve their
-geometry so toolbars do not move. Focus uses the global 3px blue ring outside the
-control; focus is never represented by color fill alone.
+Accepted debt:
 
-## 6. Motion & Interaction
-
-| Behavior            | Token                      | Curve                      | Usage                               |
-| ------------------- | -------------------------- | -------------------------- | ----------------------------------- |
-| Immediate press     | `--motion-press: 100ms`    | `ease-out`                 | `scale(0.97-0.985)` on pointer-down |
-| Micro response      | `--motion-fast: 180ms`     | `cubic-bezier(.2,.8,.2,1)` | Color, rim, small transforms        |
-| Material arrival    | `--motion-material: 320ms` | `cubic-bezier(.16,1,.3,1)` | Search, mobile nav, dialog          |
-| Page/section reveal | `--motion-reveal: 480ms`   | `cubic-bezier(.16,1,.3,1)` | First-view content only             |
-
-- The interface responds on pointer-down; no artificial delay is introduced.
-- Enter and exit paths are spatially symmetric and anchored to the trigger.
-- Only `transform`, `opacity`, `filter`, and color/rim properties animate.
-- No decorative perpetual motion. The old prompt-dot breathing loop is removed.
-- `prefers-reduced-motion` replaces movement with a short cross-fade.
-- `prefers-reduced-transparency` removes blur and raises material opacity.
-- `prefers-contrast: more` uses solid surfaces and strong separators.
-
-## 7. Depth & Surface
-
-The page uses six distinct material weights.
-
-| Level             | Token/recipe                                                        | Usage                        |
-| ----------------- | ------------------------------------------------------------------- | ---------------------------- |
-| Canvas light      | radial sky and cyan glow over `--bg`                                | Atmosphere behind content    |
-| Card material     | translucent surface + 18px blur + bright inset rim + diffuse shadow | Cards                        |
-| Control material  | `--control-surface` + `--control-border` + top light + short shadow | Buttons, toggles, pagination |
-| Floating material | translucent surface + 28px blur + saturation + stronger rim/shadow  | Navigation, search, console  |
-| Opaque reading    | `--surface` + subtle border/shadow                                  | Long articles and evidence   |
-| Modal             | `--overlay` + floating material                                     | Lightbox and focused tasks   |
-
-- Translucency communicates hierarchy; it is not stacked on another translucent
-  foreground surface.
-- Larger surfaces read thicker through stronger blur and deeper shadow.
-- Shadows stay cool and diffuse. There are no hard black drop shadows.
-- Dark mode uses lighter rims and lower-opacity shadows to keep material edges
-  legible without glowing every card.
-
-## 8. Accessibility, Responsibility & Accepted Debt
-
-### Constraints
-
-- Text and controls target WCAG AA contrast in both themes.
-- Keyboard focus is always visible. Icon-only controls keep explicit Korean
-  `aria-label` text. Touch targets are at least 44px where space permits.
-- Color never carries state alone. Current navigation, disabled deck controls,
-  and errors retain a structural or textual cue.
-- Browser zoom, text scaling, reduced motion, reduced transparency, and increased
-  contrast are first-class states.
-- The design adds no tracking, autoplay media, sound, vibration, or unexpected
-  consent request. Existing view counting behavior is unchanged.
-
-### Accepted debt
-
-- The 5,000+ line legacy `global.css` remains because it contains proven article,
-  PDF, lightbox, and responsive edge-case behavior. The Apple redesign is loaded
-  afterward from `apple-design.css`, allowing a reversible visual migration
-  without weakening those behaviors.
-- The ASCII portrait remains fixed-width art and may become compact on very small
-  screens; the adjacent semantic profile facts remain fully accessible.
-- Gatsby's route transitions are not gesture-driven, so the current redesign uses
-  interruptible CSS micro-interactions rather than introducing a large motion
-  runtime solely for page navigation.
+- `legacy.css` (~3.5k lines) and `site.css` (~3.4k lines) still mix page layouts with older one-off visuals.
+- The legacy aliases in `components.css` should shrink as pages move to `ui-*` and the React wrappers.
+- `legacy.css` still carries the article body, PDF viewer, lightbox and deck rules; new page styles go in `site.css` under "Pages in the reel's vocabulary".

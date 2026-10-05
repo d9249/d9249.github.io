@@ -17,45 +17,6 @@ export const heroLinks = [
   },
 ];
 
-export const evidenceItems = [
-  {
-    label: "product ai",
-    value: "CES 2025",
-    description:
-      "booxTory Best of Innovation과 arti Honoree 두 제품에서 개인화 독서 AI 엔진과 CATS·MERGE·CLEAR·NEXIS 4개 핵심 AI 솔루션을 기술 리드했습니다.",
-  },
-  {
-    label: "product engineering",
-    value: "AI 제품 8종",
-    description:
-      "ArtygenSpace booxTory·arti(콘텐츠 AI)부터 AsianaIDT AIO·Harmony·Plan2Do·Jeani·InVision OCR·A-VLAN(엔터프라이즈 AI)까지, 8개 AI 제품을 RAG·멀티에이전트·비전으로 설계·구축했습니다.",
-  },
-  {
-    label: "awards",
-    value: "장관상 · 회장상",
-    description:
-      "행정안전부(Plan2Do)·과학기술정보통신부(WIS 2025) 장관상과 대한상공회의소 회장상(AI 항공조업 안전기술)까지, AI 제품화 성과를 정부·산업에서 3회 수상했습니다.",
-  },
-  {
-    label: "productization",
-    value: "특허 · 공급계약",
-    description:
-      "InVision OCR에서 표 구조 복원을 TEDS 0.9188까지 고도화하고, 관련 기술 특허 출원과 K사 솔루션 공급 계약 수주로 연구를 사업 성과로 연결했습니다.",
-  },
-  {
-    label: "research",
-    value: "SCIE Q2 3편",
-    description:
-      "추천 시스템(LightGCN·WF-GCN)과 의료영상 딥러닝에서 SCIE(Q2) 저널 3편을 1저자로 발표하고, Best Paper 2회를 수상했습니다.",
-  },
-  {
-    label: "modeling",
-    value: "Top 1% 7회",
-    description:
-      "DACON 39개 대회 상위 1% 7회, HD현대 AI Challenge 4위, LG Aimers 4기 팀리더로 실전 데이터 분석·모델링 역량을 검증했습니다.",
-  },
-];
-
 export const timelineItems = [
   {
     date: "2025.07 - now",
@@ -66,7 +27,7 @@ export const timelineItems = [
       "AIO·Harmony에서 사내 지식 에이전트 플랫폼을 설계 — Graph + Vector 하이브리드 RAG에 ACL 기반 permission-aware retrieval을 결합해 팀·직급별로 답이 달라지는 접근 제어를 구현하고, persona·session·tool trace와 human review queue로 운영 신뢰성까지 확보했습니다.",
       "Plan2Do에서 현장 이미지·문서와 산업안전 법령 corpus를 Qdrant 검색·LangGraph workflow로 엮어 위험성평가를 자동 생성하는 산업안전 RAG API를 제품화 — 행정안전부 장관상을 받은 AI 산업안전 플랫폼의 핵심 기능으로 탑재됐습니다.",
       "Jeani에서 RFP를 넣으면 market·competitor·tech 에이전트가 병렬로 조사하고 synthesizer가 리포트를 합성하는 멀티에이전트 시장조사 시스템을 구축 — Bedrock Knowledge Base sync와 S3 산출물 lifecycle로 반복 가능한 운영 루프까지 완성했습니다.",
-      "InVision OCR에서 표 구조 복원 정확도를 TEDS 0.9188 / TEDS-S 0.9506 / Cell F1 0.9702까지 끌어올린 문서 OCR 스택을 구축 — 레이아웃 분석, 로직 기반 표 복원, parser 기반 문서 재조립을 벤치마크 콘솔과 함께 운영형으로 통합했습니다.",
+      "ONDOKS(온독스)에서 표 구조 복원 정확도를 TEDS 0.9188 / TEDS-S 0.9506 / Cell F1 0.9702까지 끌어올린 문서 OCR 스택을 구축 — 레이아웃 분석, 로직 기반 표 복원, parser 기반 문서 재조립을 벤치마크 콘솔과 함께 운영형으로 통합했습니다.",
       "A-VLAN에서 영상·탐지·매뉴얼·항공법령을 근거로 조합하는 목표기반 멀티에이전트 관제 시스템을 설계 — GoalOrchestrator의 SELECT→COMPOSE→EVALUATE→REFINE 루프로 스킬을 동적 조합하고, Text2SQL·Chroma RAG·듀얼 RAG(리터럴+벡터)를 엮어 지상조업 상황을 자동 판정·브리핑하도록 구현했습니다.",
       "BEV에서 단일 카메라 주기장 영상만으로 미터 척도 3D 조감도를 복원하는 파이프라인을 연구·구현 — 개방어휘 검출과 VLM 공시제원으로 실척을 추정하고 지면 호모그래피로 조감도·위험영역을 생성, 소실점·화면밖 처리로 정확도(R2)를 고도화했습니다.",
     ],
@@ -461,6 +422,7 @@ export const awardItems = [
 export const competitionItems = [
   {
     title: "LG Aimers 4기",
+    score: { value: "0.752", label: "F1-score" },
     result: "팀리더",
     period: "2024.01 - 2024.02",
     description:
@@ -476,6 +438,7 @@ export const competitionItems = [
   },
   {
     title: "HD현대 AI Challenge",
+    score: { value: "4위", label: "Public 98.214" },
     result: "4위",
     period: "2023",
     description:
@@ -491,6 +454,7 @@ export const competitionItems = [
   },
   {
     title: "DACON 경진대회",
+    score: { value: "39", label: "대회 참가" },
     result: "39개 대회 참여",
     period: "2021 - 2024",
     description:
@@ -927,182 +891,5 @@ export const daconCompetitionItems = [
     description:
       "시간 흐름이 있는 데이터에서 lag feature, rolling statistic, 검증 구간 설계를 다룬 기록입니다.",
     facts: ["Time Series", "Forecasting", "집계"],
-  },
-];
-
-export const skillGroups = [
-  {
-    title: "O/S",
-    summary: "운영체제 및 서버 운영 환경",
-    skills: ["Linux (Ubuntu)", "Windows", "UNIX"],
-  },
-  {
-    title: "언어 (Language)",
-    summary: "주요 개발 언어",
-    skills: ["Python", "JavaScript"],
-  },
-  {
-    title: "프레임워크 (Framework)",
-    summary: "웹, AI, 데이터 처리 프레임워크와 라이브러리",
-    skills: [
-      "Next.js",
-      "React.js",
-      "Vue.js",
-      "Django",
-      "Nest.js",
-      "MyBatis",
-      "Tailwind CSS",
-      "Langsmith",
-      "Langfuse",
-      "Langchain",
-      "Langgraph",
-      "PyTorch",
-      "NumPy",
-      "Pandas",
-      "OpenCV",
-      "Pillow",
-      "ImageHash",
-      "Scikit-learn",
-      "TensorFlow",
-      "FastAPI",
-      "Uvicorn",
-      "Gunicorn",
-      "aiohttp",
-      "Streamlit",
-    ],
-  },
-  {
-    title: "DBMS",
-    summary: "관계형, 문서형, 벡터, 그래프 데이터베이스",
-    skills: [
-      "MySQL",
-      "PostgreSQL",
-      "Oracle",
-      "MongoDB",
-      "Qdrant",
-      "Milvus",
-      "Neo4j",
-    ],
-  },
-  {
-    title: "클라우드 및 미들웨어",
-    summary: "클라우드, 서버리스, 메시징, 검색, 컨테이너 운영 스택",
-    skills: [
-      "AWS SageMaker",
-      "AWS Lambda",
-      "EventBridge",
-      "SQS",
-      "DynamoDB",
-      "AWS CLI",
-      "NCP",
-      "Redis",
-      "Kafka",
-      "Docker",
-      "Docker-Compose",
-      "Kubernetes",
-      "Elasticsearch",
-      "Logstash",
-      "Kibana",
-      "Prometheus",
-      "Grafana",
-      "Loki",
-      "Terraform",
-      "wandb",
-    ],
-  },
-  {
-    title: "업무도구 (Work Tools)",
-    summary: "협업, API 테스트, 품질 검증, 자동화 도구",
-    skills: [
-      "Git",
-      "Jira",
-      "Confluence",
-      "Postman",
-      "Notion",
-      "pytest",
-      "Github Actions",
-    ],
-  },
-  {
-    title: "AI Skill",
-    summary: "AI 모델 개발, 최적화, 검색, 비전, 추천, MLOps 역량",
-    skillClusters: [
-      {
-        title: "Foundation Models",
-        skills: [
-          "SLM",
-          "LLM",
-          "Embeddings",
-          "Prompting",
-          "Optimization",
-          "Serving",
-        ],
-      },
-      {
-        title: "Retrieval / Agent",
-        skills: [
-          "Vector RAG",
-          "Graph RAG",
-          "Hybrid Search",
-          "Rank Fusion",
-          "Hierarchy Indexing",
-          "Vector Database",
-          "Single Agent",
-          "Multi-Agent",
-          "Agent Orchestration",
-        ],
-      },
-      {
-        title: "Vision AI",
-        skills: [
-          "Object Detection",
-          "Prompt Detection",
-          "Open-World Detection",
-          "Segmentation",
-          "Classification",
-          "Pose Estimation",
-        ],
-      },
-      {
-        title: "RecSys / Graph",
-        skills: [
-          "Recommender Systems",
-          "GNN",
-          "GCN",
-          "GIN",
-          "Graph Optimization",
-        ],
-      },
-      {
-        title: "Predictive Modeling",
-        skills: [
-          "Prediction",
-          "Regression",
-          "Classification",
-          "Time Series",
-          "Ensemble",
-          "Structured Data",
-          "Unstructured Data",
-          "Hyperparameter Tuning",
-        ],
-      },
-      {
-        title: "NLP / Data Ops",
-        skills: [
-          "NLP",
-          "Multilingual NLP",
-          "Document Layout",
-          "Document Parser",
-          "OCR",
-          "Table Reconstruction",
-          "OCR Benchmarking",
-          "Augmentation",
-          "Pre-processing",
-          "Post-processing",
-          "Observability",
-          "MLOps",
-        ],
-      },
-    ],
   },
 ];

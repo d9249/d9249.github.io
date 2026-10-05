@@ -6,3 +6,6 @@ npm-debug.log*
 /.omx
 /.omo
 /.gjc
+
+# showreel renders (reproducible with scripts/showreel/tree2.py)
+scripts/showreel/render/
