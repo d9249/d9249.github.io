@@ -1021,25 +1021,32 @@ html[data-theme="dark"] .reel {
   }
 }
 .reel .hook-quote {
-  margin-top: 20px;
+  margin-top: 22px;
   max-width: 34em;
-  padding-left: 14px;
-  border-left: 2px solid var(--green);
   color: var(--fg);
   font: 500 clamp(14px, 1.15vw, 17px)/1.6 var(--f-body);
   letter-spacing: -0.01em;
   word-break: keep-all;
-  text-wrap: pretty;
   animation: reel-quote-in 0.7s 0.95s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
+/* the source, set like the title's IDEAL / MEAN labels: a short rule, then mono */
 .reel .hook-quote cite {
+  position: relative;
   display: block;
-  margin-bottom: 2px;
-  font-size: 0.82em;
+  margin-bottom: 6px;
+  padding-left: 1.35em;
+  color: var(--sub);
+  font: 500 12px/1.4 var(--f-mono);
   font-style: normal;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--green-t);
+  letter-spacing: 0.1em;
+}
+.reel .hook-quote cite::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0.9em;
+  border-top: 1.5px solid currentColor;
 }
 .reel .hook-quote span {
   display: block;
@@ -1182,10 +1189,12 @@ html[data-theme="dark"] .reel {
     font-size: clamp(40px, 11.5vw, 58px);
   }
   .reel .hook-quote {
-    margin-top: 12px;
-    padding-left: 10px;
+    margin-top: 14px;
     font-size: 13px;
     line-height: 1.55;
+  }
+  .reel .hook-quote cite {
+    font-size: 11px;
   }
   .reel .hook-sub {
     margin-top: 12px;
