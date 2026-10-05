@@ -3,158 +3,27 @@ import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
 import MobileCardCarousel from "../components/MobileCardCarousel";
 import PostCard from "../components/PostCard";
-import ProjectGrid from "../components/ProjectGrid";
 import SectionHeading from "../components/SectionHeading";
-import SkillGrid from "../components/SkillGrid";
-import {
-  awardItems,
-  competitionItems,
-  evidenceItems,
-  heroLinks,
-  paperItems,
-  skillGroups,
-  timelineItems,
-} from "../data/profile";
+import Showreel from "../components/Showreel";
+import { Chip } from "../components/ui";
+import { timelineItems } from "../data/profile";
 import { getProjectProfileTags } from "../utils/projectProfileTags";
 
-const CARD_DECK_SIZE = 4;
-const PROJECT_DECK_SIZE = 2;
+/*
+ * Home: the eight-shot showreel (research → projects → skills → awards → evidence → numbers → cases
+ * → contact), then the career timeline (#career) and the latest posts (#latest). Projects, research,
+ * awards and competitions each have their own page; the reel links into them.
+ */
+
 const POST_DECK_SIZE = 3;
-const PROFILE_ASCII = String.raw`               ..:.
-           .=*###%##=.
-          -%@%%###%%%#*+:
-         :%@@@%@@@%%%%@@%*
-        =%@@@@%%@@@@@@@@@@#
-       :%%@%%%%%@@@@@@@@@%@*
-       *%%%%%%%@@@%@@@@@%@@@:
-      .%@@%#%%@@%%%@%%@@@@@@=
-      .%@@%%#######%#*%@@@@@-
-       #@@@@%%%%%###**%%@@@@:
-       =%%@@%%%##++*##%@@@@#
-        %%+=--==-..-=+++*#@+
-        =#..--*=: .--*++=+#-.
-       =:+:  .:.  .::::--+*=-
-       .:+:       .-:...:++-
-        ..:    .. .=-...-++.
-         .-:.   :-=+-..:==:
-           ::..  .:--::-+.
-           ::..:===++--==
-            -::..::---==.
-            :=:....::-+=
-            .==:..::-++-
-            .:---=++++=-
-            :..:--===--=
-          .::...:::--::---:
-        .+%:... ...::::-=*@*:
-      =#%@@+  . ...:::::-#@@@*:
-   -*%%%%%%%+    ......-#@@@@@@#=
--*%%%%%%%%%%@#=:....:-+%@@@@@%%@@%+:
-%%%%%%%%%%%%@@@%%###%%@@@@@@@@@@@@@%
-%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@
-%%%%@%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@`;
-const PROFILE_FACT_GROUPS = [
-  {
-    title: "Profile",
-    items: [
-      { label: "Name", value: "Sangmin Lee" },
-      { label: "Role", value: "AI Engineer & Researcher" },
-      { label: "Current", value: "AsianaIDT · AI/ML" },
-      { label: "Focus", value: "RAG · Agents · OCR · Vision" },
-    ],
-  },
-  {
-    title: "Stack",
-    items: [
-      { label: "Languages", value: "Python · JavaScript" },
-      { label: "AI / Data", value: "PyTorch · LangGraph · FastAPI" },
-      { label: "Infra", value: "AWS · Docker · Kubernetes" },
-    ],
-  },
-  {
-    title: "Highlights",
-    items: [
-      { label: "Products", value: "AI products ×8" },
-      { label: "Research", value: "SCIE Q2 ×3 · KCI ×2" },
-      { label: "Awards", value: "CES 2025 · Minister ×2" },
-    ],
-  },
-  {
-    title: "Contact",
-    items: [
-      {
-        label: "Email",
-        value: "dodo9249@gmail.com",
-        href: "mailto:dodo9249@gmail.com",
-      },
-      {
-        label: "GitHub",
-        value: "github.com/d9249",
-        href: "https://github.com/d9249",
-      },
-    ],
-  },
-];
-const getCardDecks = (items, deckSize = CARD_DECK_SIZE) =>
+
+const getCardDecks = (items, deckSize) =>
   Array.from({ length: Math.ceil(items.length / deckSize) }, (_, index) =>
     items.slice(index * deckSize, (index + 1) * deckSize),
   );
 
 const getDeckLabel = (index, total) =>
   `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
-
-const PaperSummaryCard = ({ item }) => (
-  <article className="paper-card">
-    <div className="paper-card-top">
-      <div className="meta">{item.type}</div>
-      <span>{item.year}</span>
-    </div>
-    <h3>{item.title}</h3>
-    <div className="paper-venue">{item.venue}</div>
-    <p>{item.description}</p>
-    <div className="research-facts">
-      {item.facts.map((fact) => (
-        <span key={fact}>{fact}</span>
-      ))}
-    </div>
-    {item.href ? (
-      <a className="paper-link" href={item.href}>
-        {item.linkLabel || "논문 보기"} →
-      </a>
-    ) : null}
-  </article>
-);
-
-const RecognitionSummaryCard = ({
-  item,
-  actionLabel = "증빙 보기",
-  className = "",
-}) => (
-  <article className={`recognition-card${className ? ` ${className}` : ""}`}>
-    <div className="meta">{item.period}</div>
-    <h3>{item.title}</h3>
-    <strong>{item.result}</strong>
-    <p>{item.description}</p>
-    <div className="research-facts">
-      {item.facts.map((fact) => (
-        <span key={fact}>{fact}</span>
-      ))}
-    </div>
-    {item.links?.length ? (
-      <div className="research-links" aria-label={`${item.title} 증빙 링크`}>
-        {item.links.map((link) => (
-          <a key={link.href} href={link.href}>
-            {link.label} →
-          </a>
-        ))}
-      </div>
-    ) : null}
-    {item.href ? (
-      <a className="paper-link" href={item.href}>
-        {actionLabel} →
-      </a>
-    ) : null}
-  </article>
-);
 
 const TimelineCard = ({ item, compact = false }) => {
   const [expanded, setExpanded] = React.useState(false);
@@ -206,58 +75,12 @@ const IndexPage = ({ data }) => {
   const projects = data.projects.nodes;
   const profileTags = getProjectProfileTags(projects);
   const totalBlogPostCount = data.blogPosts.totalCount;
-  const paperDecks = getCardDecks(paperItems);
-  const awardDecks = getCardDecks(awardItems);
-  const projectDecks = getCardDecks(projects, PROJECT_DECK_SIZE);
   const postDecks = getCardDecks(posts, POST_DECK_SIZE);
-  const [paperDeckIndex, setPaperDeckIndex] = React.useState(0);
-  const [awardDeckIndex, setAwardDeckIndex] = React.useState(0);
-  const [projectDeckIndex, setProjectDeckIndex] = React.useState(0);
   const [postDeckIndex, setPostDeckIndex] = React.useState(0);
-  const activePaperDeck = paperDecks[paperDeckIndex] || [];
-  const activeAwardDeck = awardDecks[awardDeckIndex] || [];
-  const activeProjectDeck = projectDecks[projectDeckIndex] || [];
   const activePostDeck = postDecks[postDeckIndex] || [];
-  const hasMultiplePaperDecks = paperDecks.length > 1;
-  const hasMultipleAwardDecks = awardDecks.length > 1;
-  const hasMultipleProjectDecks = projectDecks.length > 1;
   const hasMultiplePostDecks = postDecks.length > 1;
-  const paperDeckLabel = getDeckLabel(paperDeckIndex, paperDecks.length);
-  const awardDeckLabel = getDeckLabel(awardDeckIndex, awardDecks.length);
-  const projectDeckLabel = getDeckLabel(projectDeckIndex, projectDecks.length);
   const postDeckLabel = getDeckLabel(postDeckIndex, postDecks.length);
-  const projectDeckStatus = `Deck ${projectDeckLabel} · 2개씩 보기`;
   const postDeckStatus = `${postDeckLabel} · 블로그 전체 글 ${totalBlogPostCount}개`;
-  const goToPreviousPaperDeck = () => {
-    setPaperDeckIndex((currentIndex) =>
-      currentIndex === 0 ? paperDecks.length - 1 : currentIndex - 1,
-    );
-  };
-  const goToNextPaperDeck = () => {
-    setPaperDeckIndex((currentIndex) =>
-      currentIndex === paperDecks.length - 1 ? 0 : currentIndex + 1,
-    );
-  };
-  const goToPreviousAwardDeck = () => {
-    setAwardDeckIndex((currentIndex) =>
-      currentIndex === 0 ? awardDecks.length - 1 : currentIndex - 1,
-    );
-  };
-  const goToNextAwardDeck = () => {
-    setAwardDeckIndex((currentIndex) =>
-      currentIndex === awardDecks.length - 1 ? 0 : currentIndex + 1,
-    );
-  };
-  const goToPreviousProjectDeck = () => {
-    setProjectDeckIndex((currentIndex) =>
-      currentIndex === 0 ? projectDecks.length - 1 : currentIndex - 1,
-    );
-  };
-  const goToNextProjectDeck = () => {
-    setProjectDeckIndex((currentIndex) =>
-      currentIndex === projectDecks.length - 1 ? 0 : currentIndex + 1,
-    );
-  };
   const goToPreviousPostDeck = () => {
     setPostDeckIndex((currentIndex) =>
       currentIndex === 0 ? postDecks.length - 1 : currentIndex - 1,
@@ -271,95 +94,7 @@ const IndexPage = ({ data }) => {
 
   return (
     <Layout>
-      <section className="shell hero">
-        <div>
-          <p className="eyebrow">AI Engineer &amp; Researcher</p>
-          <h1>
-            <span className="hero-title-nowrap">이상(Ideal)은 높게,</span>{" "}
-            <span className="hero-title-nowrap">평균(Mean)은 넘게</span>
-          </h1>
-          <p className="hero-copy">
-            이상은 연구가 그리고, 평균은 엔지니어링이 넘습니다.
-            <br />그 사이를{" "}
-            <span className="hero-copy-nowrap">
-              운영 가능한 시스템으로
-            </span>{" "}
-            잇습니다.
-          </p>
-          <div className="link-row" aria-label="Profile links">
-            {heroLinks.map((link) => (
-              <a key={link.href} href={link.href}>
-                {link.label}
-              </a>
-            ))}
-          </div>
-        </div>
-        <aside className="terminal-card" aria-labelledby="whoami-title">
-          <div className="terminal-top">
-            <div className="traffic" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </div>
-            <span>~/portfolio/whoami</span>
-          </div>
-          <div className="terminal-body whoami-body">
-            <figure
-              className="ascii-portrait"
-              role="img"
-              aria-label="이상민의 프로필 사진을 표현한 ASCII 아트"
-            >
-              <pre aria-hidden="true">{PROFILE_ASCII}</pre>
-            </figure>
-            <div className="whoami-profile">
-              <p className="whoami-command">
-                <span className="cmd">$</span> whoami
-              </p>
-              <p className="whoami-host" id="whoami-title">
-                <strong>sangmin</strong>@d9249
-                <span aria-hidden="true" />
-              </p>
-              {PROFILE_FACT_GROUPS.map((group) => (
-                <section className="whoami-group" key={group.title}>
-                  <h2>{group.title}</h2>
-                  <dl className="whoami-facts">
-                    {group.items.map((item) => (
-                      <div className="whoami-fact" key={item.label}>
-                        <dt>{item.label}</dt>
-                        <span className="whoami-leader" aria-hidden="true" />
-                        <dd>
-                          {item.href ? (
-                            <a href={item.href}>{item.value}</a>
-                          ) : (
-                            item.value
-                          )}
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-                </section>
-              ))}
-            </div>
-          </div>
-        </aside>
-      </section>
-
-      <section className="shell section" aria-labelledby="proof-title">
-        <SectionHeading
-          kicker="Highlights"
-          title="주요 성과"
-          titleId="proof-title"
-        />
-        <div className="evidence-grid">
-          {evidenceItems.map((item) => (
-            <article className="evidence-card" key={item.label}>
-              <div className="meta">{item.label}</div>
-              <div className="value">{item.value}</div>
-              <p>{item.description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+      <Showreel />
 
       <section
         className="shell section"
@@ -400,9 +135,7 @@ const IndexPage = ({ data }) => {
             </dl>
             <div className="tag-cloud">
               {profileTags.map((tag) => (
-                <span className="tag" key={tag}>
-                  {tag}
-                </span>
+                <Chip key={tag}>{tag}</Chip>
               ))}
             </div>
           </aside>
@@ -441,222 +174,6 @@ const IndexPage = ({ data }) => {
             </div>
           </MobileCardCarousel>
         </div>
-      </section>
-
-      <section
-        className="shell section"
-        id="projects"
-        aria-labelledby="projects-title"
-      >
-        <SectionHeading
-          kicker="Projects"
-          title="프로젝트"
-          titleId="projects-title"
-          action={<Link to="/projects/">전체 프로젝트 보기 →</Link>}
-        />
-        <div className="card-deck project-card-deck responsive-desktop-only">
-          <div className="card-deck-toolbar" aria-live="polite">
-            <span className="card-deck-status">{projectDeckStatus}</span>
-            <div className="card-deck-controls">
-              <button
-                type="button"
-                aria-label="이전 프로젝트 덱 보기"
-                disabled={!hasMultipleProjectDecks}
-                onClick={goToPreviousProjectDeck}
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m15 18-6-6 6-6" />
-                </svg>
-              </button>
-              <button
-                type="button"
-                aria-label="다음 프로젝트 덱 보기"
-                disabled={!hasMultipleProjectDecks}
-                onClick={goToNextProjectDeck}
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m9 6 6 6-6 6" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          <ProjectGrid
-            className="card-deck-grid"
-            key={projectDeckIndex}
-            projects={activeProjectDeck}
-          />
-        </div>
-        <MobileCardCarousel
-          ariaLabel="모바일 프로젝트"
-          itemSelector=".project-card"
-          statusLabel="프로젝트 카드"
-        >
-          <ProjectGrid className="mobile-carousel-track" projects={projects} />
-        </MobileCardCarousel>
-      </section>
-
-      <section
-        className="shell section"
-        id="research"
-        aria-labelledby="research-title"
-      >
-        <SectionHeading
-          kicker="Research"
-          title="연구 목록"
-          titleId="research-title"
-          action={<Link to="/research/">전체 연구 보기 →</Link>}
-        />
-        <div className="card-deck responsive-desktop-only">
-          <div className="card-deck-toolbar" aria-live="polite">
-            <span className="card-deck-status">Deck {paperDeckLabel}</span>
-            <div className="card-deck-controls">
-              <button
-                type="button"
-                aria-label="이전 연구 덱 보기"
-                disabled={!hasMultiplePaperDecks}
-                onClick={goToPreviousPaperDeck}
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m15 18-6-6 6-6" />
-                </svg>
-              </button>
-              <button
-                type="button"
-                aria-label="다음 연구 덱 보기"
-                disabled={!hasMultiplePaperDecks}
-                onClick={goToNextPaperDeck}
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m9 6 6 6-6 6" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          <div className="paper-grid card-deck-grid" key={paperDeckIndex}>
-            {activePaperDeck.map((item) => (
-              <PaperSummaryCard item={item} key={item.title} />
-            ))}
-          </div>
-        </div>
-        <MobileCardCarousel
-          ariaLabel="모바일 연구 목록"
-          itemSelector=".paper-card"
-          statusLabel="연구 카드"
-        >
-          <div className="paper-grid mobile-carousel-track">
-            {paperItems.map((item) => (
-              <PaperSummaryCard item={item} key={item.title} />
-            ))}
-          </div>
-        </MobileCardCarousel>
-      </section>
-
-      <section
-        className="shell section"
-        id="awards"
-        aria-labelledby="awards-title"
-      >
-        <SectionHeading
-          kicker="Awards"
-          title="수상 기록"
-          titleId="awards-title"
-          action={<Link to="/awards/">전체 수상 보기 →</Link>}
-        />
-        <div className="card-deck responsive-desktop-only">
-          <div className="card-deck-toolbar" aria-live="polite">
-            <span className="card-deck-status">Deck {awardDeckLabel}</span>
-            <div className="card-deck-controls">
-              <button
-                type="button"
-                aria-label="이전 수상 덱 보기"
-                disabled={!hasMultipleAwardDecks}
-                onClick={goToPreviousAwardDeck}
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m15 18-6-6 6-6" />
-                </svg>
-              </button>
-              <button
-                type="button"
-                aria-label="다음 수상 덱 보기"
-                disabled={!hasMultipleAwardDecks}
-                onClick={goToNextAwardDeck}
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m9 6 6 6-6 6" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          <div className="recognition-grid card-deck-grid" key={awardDeckIndex}>
-            {activeAwardDeck.map((item) => (
-              <RecognitionSummaryCard item={item} key={item.title} />
-            ))}
-          </div>
-        </div>
-        <MobileCardCarousel
-          ariaLabel="모바일 수상 기록"
-          itemSelector=".recognition-card"
-          statusLabel="수상 카드"
-        >
-          <div className="recognition-grid mobile-carousel-track">
-            {awardItems.map((item) => (
-              <RecognitionSummaryCard item={item} key={item.title} />
-            ))}
-          </div>
-        </MobileCardCarousel>
-      </section>
-
-      <section
-        className="shell section"
-        id="competitions"
-        aria-labelledby="competitions-title"
-      >
-        <SectionHeading
-          kicker="Competitions"
-          title="대회 및 외부 활동"
-          titleId="competitions-title"
-          action={<Link to="/competitions/">전체 대회 보기 →</Link>}
-        />
-        <div className="recognition-grid responsive-desktop-only">
-          {competitionItems.map((item) => (
-            <RecognitionSummaryCard
-              actionLabel="활동 보기"
-              className="competition-card"
-              item={item}
-              key={item.title}
-            />
-          ))}
-        </div>
-        <MobileCardCarousel
-          ariaLabel="모바일 대회 및 외부 활동"
-          itemSelector=".recognition-card"
-          statusLabel="대회 카드"
-        >
-          <div className="recognition-grid mobile-carousel-track">
-            {competitionItems.map((item) => (
-              <RecognitionSummaryCard
-                actionLabel="활동 보기"
-                className="competition-card"
-                item={item}
-                key={item.title}
-              />
-            ))}
-          </div>
-        </MobileCardCarousel>
-      </section>
-
-      <section
-        className="shell section"
-        id="skills"
-        aria-labelledby="skills-title"
-      >
-        <SectionHeading
-          kicker="Skills"
-          title="기술 스택"
-          titleId="skills-title"
-        />
-        <SkillGrid groups={skillGroups} />
       </section>
 
       <section

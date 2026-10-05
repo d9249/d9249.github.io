@@ -26,15 +26,19 @@ const getActiveHomeSection = () => {
 
   const activationLine = getSectionActivationLine();
 
-  return homeSectionIds.reduce((activeSection, sectionId) => {
-    const section = document.getElementById(sectionId);
+  // the section under the activation line, in document order (the reel's #skills shot sits above
+  // #career, so "last passed" would light the wrong item)
+  const current = homeSectionIds
+    .map((sectionId) => ({
+      sectionId,
+      rect: document.getElementById(sectionId)?.getBoundingClientRect(),
+    }))
+    .filter(({ rect }) => rect && rect.top <= activationLine)
+    .sort((a, b) => b.rect.top - a.rect.top)[0];
 
-    if (section && section.getBoundingClientRect().top <= activationLine) {
-      return sectionId;
-    }
-
-    return activeSection;
-  }, null);
+  return current && current.rect.bottom > activationLine
+    ? current.sectionId
+    : null;
 };
 
 const getStoredTheme = () => {
