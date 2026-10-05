@@ -13,6 +13,7 @@ export const navItems = [
     to: "/tips/",
     reloadDocument: true,
   },
+  { label: "prompts", to: "/prompts/" },
   { label: "newsroom", to: "/newsroom/" },
   { label: "contact", to: "/contact/" },
 ];
