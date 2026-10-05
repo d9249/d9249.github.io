@@ -16,6 +16,7 @@ export const navItems = [
     to: "/tips/",
     reloadDocument: true,
   },
+  { label: "prompts", ko: "프롬프트", to: "/prompts/" },
   { label: "newsroom", ko: "뉴스룸", to: "/newsroom/" },
   { label: "contact", ko: "연락처", to: "/contact/" },
 ];

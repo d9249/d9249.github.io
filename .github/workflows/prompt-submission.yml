@@ -1,0 +1,77 @@
+name: Publish shared prompt
+
+# A maintainer adds the `prompt:approved` label to a "프롬프트 공유하기" issue.
+# The issue body is read from the event payload file inside Node — it is never
+# interpolated into a shell command.
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: prompt-submission
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.event.label.name == 'prompt:approved'
+    runs-on: ubuntu-latest
+    env:
+      ISSUE_NUMBER: ${{ github.event.issue.number }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Add prompt from issue
+        id: add
+        run: node scripts/prompts/issue-to-prompt.cjs
+
+      - name: Commit to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/prompts/community.json
+          if git diff --cached --quiet; then
+            echo "No change to commit."
+            exit 0
+          fi
+          git commit -m "prompts: add community prompt from #${ISSUE_NUMBER}"
+          git push origin HEAD:main
+
+      # Pushes made with GITHUB_TOKEN do not trigger other workflows, so the
+      # Pages deploy is dispatched explicitly.
+      - name: Deploy site
+        run: gh workflow run github-pages.yml --ref main --repo "$GITHUB_REPOSITORY"
+
+      - name: Close issue
+        run: |
+          gh issue close "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --comment "라이브러리에 추가했습니다. 배포가 끝나면 https://d9249.github.io/prompts/#${{ steps.add.outputs.id }} 에서 볼 수 있습니다. 공유해 주셔서 고맙습니다."
+
+      - name: Report problems
+        if: failure()
+        env:
+          ERRORS: ${{ steps.add.outputs.errors }}
+        run: |
+          {
+            echo "자동 반영에 실패했습니다. 아래 내용을 고친 뒤 이슈 본문을 수정하고, 라벨을 다시 붙여 주세요."
+            echo
+            if [ -n "$ERRORS" ]; then
+              printf '%s\n' "$ERRORS"
+            else
+              echo "- 워크플로 로그를 확인해 주세요: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            fi
+          } > comment.md
+          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --body-file comment.md
+          gh issue edit "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --remove-label "prompt:approved"

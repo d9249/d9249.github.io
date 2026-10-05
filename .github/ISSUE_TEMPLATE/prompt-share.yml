@@ -1,0 +1,112 @@
+name: 프롬프트 공유하기
+description: d9249.github.io/prompts 라이브러리에 프롬프트를 공유합니다.
+title: "[프롬프트] "
+labels: ["prompt:submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        공유해 주셔서 고맙습니다. 검토 후 `prompt:approved` 라벨이 붙으면 자동으로 [프롬프트 라이브러리](https://d9249.github.io/prompts/)에 올라가고 이 이슈가 닫힙니다.
+
+        - 직접 쓴 프롬프트, 또는 CC0 · CC BY · MIT처럼 재배포가 허용된 출처의 원문만 받습니다.
+        - 라이선스 표기가 없는 다른 사이트나 SNS의 프롬프트는 옮겨 오지 말아 주세요.
+        - 변수는 `${이름:기본값}` 형태로 쓰면 변수 채우기 화면이 생깁니다.
+  - type: input
+    id: title
+    attributes:
+      label: 제목
+      description: 카드에 표시될 제목 (40자 이내)
+      placeholder: 예) 회의록 → 액션 아이템
+    validations:
+      required: true
+  - type: input
+    id: summary
+    attributes:
+      label: 한 줄 설명
+      description: 언제 쓰는 프롬프트인지 한 문장으로 (100자 이내)
+      placeholder: 예) 회의 기록에서 결정 사항과 담당자, 기한만 뽑아냅니다
+    validations:
+      required: true
+  - type: textarea
+    id: prompt
+    attributes:
+      label: 프롬프트 원문
+      description: "변수는 ${이름} 또는 ${이름:기본값} 형태로 표시해 주세요."
+      render: text
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: 용도
+      options:
+        - 개발·코드
+        - 프롬프트 설계
+        - 데이터·분석
+        - 글쓰기·번역
+        - 학습·교육
+        - 업무·커리어
+        - 이미지 생성
+        - 창작·놀이
+        - 생활·취미
+    validations:
+      required: true
+  - type: dropdown
+    id: target
+    attributes:
+      label: 주로 쓰는 AI
+      options:
+        - 챗봇 (ChatGPT · Claude · Gemini)
+        - 코딩 에이전트 (Claude Code · Codex · Cursor)
+        - 이미지 모델 (Nano Banana · GPT Image · Midjourney)
+    validations:
+      required: true
+  - type: dropdown
+    id: upload
+    attributes:
+      label: 이미지를 함께 첨부해야 하나요?
+      options:
+        - 아니요
+        - 예 (사진이나 참고 이미지를 첨부해야 함)
+    validations:
+      required: true
+  - type: dropdown
+    id: origin
+    attributes:
+      label: 출처
+      options:
+        - 제가 직접 썼습니다
+        - 재배포가 허용된 공개 출처에서 가져왔습니다
+    validations:
+      required: true
+  - type: input
+    id: source_url
+    attributes:
+      label: 원 출처 링크
+      description: 공개 출처에서 가져온 경우 필수입니다. 라이선스를 확인할 수 있는 페이지면 더 좋습니다.
+      placeholder: https://
+  - type: dropdown
+    id: license
+    attributes:
+      label: 공개 라이선스
+      description: 공개 출처에서 가져왔다면 원 출처의 라이선스를 고르세요.
+      options:
+        - CC BY 4.0 (출처를 밝히면 자유롭게 이용)
+        - CC0 1.0 (조건 없이 자유롭게 이용)
+        - MIT (원 출처가 MIT인 경우)
+    validations:
+      required: true
+  - type: input
+    id: author
+    attributes:
+      label: 표시할 이름
+      description: 카드에 작성자로 표시됩니다. 비워두면 GitHub 아이디를 씁니다.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 확인
+      options:
+        - label: 이 프롬프트를 위 라이선스로 공개할 권리가 있습니다 (직접 썼거나 원 출처가 재배포를 허용합니다).
+          required: true
+        - label: 실존 인물의 얼굴·목소리 합성, 개인정보, 성인물, 해로운 용도의 프롬프트가 아닙니다.
+          required: true

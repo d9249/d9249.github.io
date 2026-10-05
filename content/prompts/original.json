@@ -1,0 +1,427 @@
+[
+  {
+    "id": "sm-rag-grounded-answer",
+    "title": "근거 인용형 RAG 답변",
+    "titleEn": "",
+    "summary": "검색된 문서 조각만 근거로 답하고, 문장마다 출처 번호를 붙이게 하는 템플릿",
+    "category": "prompting",
+    "target": "chat",
+    "pick": true,
+    "needsUpload": false,
+    "lang": "ko",
+    "prompt": "당신은 사내 문서 기반 질의응답 어시스턴트입니다. 아래 <context>에 있는 문서 조각만 근거로 답하세요.\n\n규칙\n1. 사실을 말하는 문장 끝에는 근거가 된 조각 번호를 [1], [2]처럼 붙입니다.\n2. context에 답이 없으면 추측하지 말고 \"제공된 문서에서 찾을 수 없습니다\"라고 답한 뒤, 어떤 문서가 더 있으면 답할 수 있는지 한 줄로 제안합니다.\n3. 조각끼리 내용이 충돌하면 양쪽을 모두 인용하고 충돌한다는 사실을 밝힙니다.\n4. 답변은 ${답변 언어:한국어}로, ${분량:5문장 이내}로 씁니다.\n\n<context>\n${검색된 문서 조각:[1] ...\n[2] ...}\n</context>\n\n질문: ${질문}",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-llm-judge-rubric",
+    "title": "LLM 답변 채점 루브릭",
+    "titleEn": "",
+    "summary": "정답·근거·형식을 항목별로 채점하고 JSON으로만 결과를 내는 LLM-as-judge 템플릿",
+    "category": "prompting",
+    "target": "chat",
+    "pick": true,
+    "needsUpload": false,
+    "lang": "ko",
+    "prompt": "당신은 LLM 응답 품질을 평가하는 채점자입니다. 아래 질문, 기준 답안, 모델 답변을 읽고 루브릭에 따라 채점하세요.\n\n루브릭 (각 1~5점)\n- correctness: 기준 답안과 사실관계가 일치하는가\n- grounding: 주장마다 제공된 근거로 뒷받침되는가, 근거 밖 내용을 지어내지 않았는가\n- completeness: 질문이 요구한 항목을 빠짐없이 다뤘는가\n- format: 요구한 형식(${요구 형식:불릿 3개 이내})을 지켰는가\n\n절차\n1. 점수를 매기기 전에 각 항목마다 판단 근거를 한 문장으로 적습니다.\n2. 기준 답안이 틀렸다고 판단되면 점수와 별개로 note에 남깁니다.\n3. 아래 JSON 한 개만 출력합니다. 다른 텍스트는 쓰지 않습니다.\n\n{\"correctness\": {\"score\": 0, \"reason\": \"\"}, \"grounding\": {\"score\": 0, \"reason\": \"\"}, \"completeness\": {\"score\": 0, \"reason\": \"\"}, \"format\": {\"score\": 0, \"reason\": \"\"}, \"note\": \"\"}\n\n[질문]\n${질문}\n\n[기준 답안]\n${기준 답안}\n\n[모델 답변]\n${모델 답변}",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-paper-review-note",
+    "title": "논문 3분 리뷰 노트",
+    "titleEn": "",
+    "summary": "초록이나 본문을 주면 문제·방법·기여·한계·재현 포인트로 정리",
+    "category": "learning",
+    "target": "chat",
+    "pick": false,
+    "needsUpload": false,
+    "lang": "ko",
+    "prompt": "아래 논문 내용을 읽고 연구 노트를 작성해 주세요. 독자는 ${독자:같은 분야 석사 수준 엔지니어}입니다.\n\n형식\n## 한 줄 요약\n## 문제 정의 — 기존 방법이 무엇을 못 했는가\n## 방법 — 핵심 아이디어 3개 이내, 수식이 있으면 직관적으로 풀어서\n## 실험 — 데이터셋, 비교 대상, 핵심 수치 (원문에 있는 숫자만)\n## 기여와 한계 — 저자가 주장한 것 / 내가 보기에 약한 부분을 구분\n## 재현하거나 실무에 쓰려면 — 필요한 자원, 막힐 만한 지점\n\n원문에 없는 수치나 인용은 만들지 말고, 불확실하면 \"원문 확인 필요\"라고 적습니다.\n\n논문 내용:\n${논문 초록 또는 본문}",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-diff-code-review",
+    "title": "diff 기반 코드 리뷰 (심각도별)",
+    "titleEn": "",
+    "summary": "diff를 주면 버그·보안·성능 문제를 심각도 순으로 정리하고 수정안을 제시",
+    "category": "dev",
+    "target": "agent",
+    "pick": true,
+    "needsUpload": false,
+    "lang": "ko",
+    "prompt": "당신은 ${언어/프레임워크:TypeScript + React} 코드베이스의 시니어 리뷰어입니다. 아래 diff만 보고 리뷰하세요.\n\n우선순위\n1. 실제로 동작을 깨뜨리는 버그 (경계값, null, 경쟁 조건, 잘못된 조건문)\n2. 보안 문제 (입력 검증, 인증/인가 누락, 비밀값 노출, 주입)\n3. 성능 문제 (불필요한 재계산, N+1, 큰 데이터 복사)\n4. 유지보수성 — 위 세 가지가 없을 때만 짧게\n\n출력 형식\n- 항목마다: [심각도: 높음/중간/낮음] 파일:줄 — 문제 한 문장 → 실패하는 구체적 입력이나 상황 → 수정 제안 (코드 조각)\n- 확신이 없는 지적은 \"확인 필요\"로 표시하고, 추측을 사실처럼 쓰지 않습니다.\n- 문제가 없으면 \"차단할 문제 없음\"이라고만 씁니다. 칭찬이나 요약은 쓰지 않습니다.\n\n```diff\n${diff}\n```",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-pr-description",
+    "title": "PR 설명 작성",
+    "titleEn": "",
+    "summary": "변경 diff와 맥락으로 리뷰어가 읽기 좋은 PR 설명을 작성",
+    "category": "dev",
+    "target": "agent",
+    "pick": false,
+    "needsUpload": false,
+    "lang": "ko",
+    "prompt": "아래 변경 사항으로 Pull Request 설명을 작성하세요. 리뷰어는 이 코드베이스를 알지만 이번 작업의 맥락은 모릅니다.\n\n형식\n## 왜\n- 이 변경이 필요한 이유 1~2문장 (이슈 번호: ${이슈 번호:없음})\n## 무엇을\n- 사용자나 시스템 관점에서 달라지는 점을 불릿으로\n## 어떻게 검증했나\n- 실행한 테스트와 결과, 수동 확인 절차\n## 리뷰 포인트\n- 특히 봐줬으면 하는 부분, 의도적으로 하지 않은 것\n\n과장된 표현을 쓰지 말고, diff에서 확인되지 않는 내용은 쓰지 않습니다.\n\n작업 메모: ${작업 메모}\n\n```diff\n${diff}\n```",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-error-log-hypotheses",
+    "title": "에러 로그 → 원인 가설",
+    "titleEn": "",
+    "summary": "로그와 증상을 주면 가능성 높은 원인부터 가설과 확인 방법을 정리",
+    "category": "dev",
+    "target": "agent",
+    "pick": false,
+    "needsUpload": false,
+    "lang": "ko",
+    "prompt": "아래 에러 로그와 상황을 보고 디버깅을 도와주세요.\n\n1. 로그에서 실제로 확인되는 사실만 먼저 정리합니다 (발생 위치, 예외 타입, 직전 이벤트).\n2. 원인 가설을 가능성 높은 순서로 최대 4개 제시합니다. 각 가설마다:\n   - 근거가 되는 로그 줄\n   - 이 가설이 맞다면 추가로 보일 증상\n   - 가장 싸게 확인하는 방법 (명령어, 로그 추가 위치, 재현 절차)\n3. 바로 시도할 첫 번째 확인 작업 하나를 추천합니다.\n\n환경: ${환경:Python 3.11, FastAPI, Docker}\n최근 변경: ${최근 변경:없음}\n재현 빈도: ${재현 빈도:간헐적}\n\n```\n${에러 로그}\n```",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-agents-md-draft",
+    "title": "AGENTS.md 초안 만들기",
+    "titleEn": "",
+    "summary": "저장소 구조와 명령을 주면 코딩 에이전트용 규칙 파일 초안을 작성",
+    "category": "dev",
+    "target": "agent",
+    "pick": true,
+    "needsUpload": false,
+    "lang": "ko",
+    "prompt": "이 저장소에서 일할 AI 코딩 에이전트를 위한 AGENTS.md 초안을 작성하세요. 사람이 읽어도 바로 이해되는 짧은 체크리스트여야 합니다.\n\n포함할 섹션\n- Project overview: 무엇을 하는 저장소인지 3줄\n- Setup & commands: 설치, 개발 서버, 빌드, 테스트, 린트 명령 (아래 정보에 있는 것만)\n- Code style: 실제 설정 파일에서 확인되는 규칙만\n- Testing: 무엇을 바꾸면 어떤 테스트를 돌려야 하는지\n- Boundaries: 건드리면 안 되는 파일·디렉터리, 생성 파일, 비밀값 처리\n- PR rules: 브랜치·커밋·PR 제목 규칙\n\n확인되지 않은 규칙은 만들지 말고 \"TODO: 확인 필요\"로 남깁니다.\n\n저장소 정보:\n${디렉터리 트리 / package.json / 설정 파일 요약}",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-plan-act-verify",
+    "title": "계획 → 실행 → 검증 루프 지시문",
+    "titleEn": "",
+    "summary": "코딩 에이전트가 작게 계획하고 바꾸고 직접 검증하도록 만드는 작업 지시문",
+    "category": "dev",
+    "target": "agent",
+    "pick": false,
+    "needsUpload": false,
+    "lang": "ko",
+    "prompt": "작업: ${작업 내용}\n\n다음 순서를 지켜 진행하세요.\n1. 계획: 수정할 파일과 이유를 5줄 이내로 적습니다. 요구사항이 모호하면 가장 합리적인 해석을 고르고 그 해석을 명시합니다.\n2. 실행: 한 번에 한 가지 변경만 하고, 관련 없는 리팩터링은 하지 않습니다.\n3. 검증: ${검증 명령:npm test && npm run build}를 실행하고 결과를 그대로 보고합니다. 실패하면 원인을 고친 뒤 다시 실행합니다.\n4. 보고: 바꾼 것, 검증 결과, 남은 위험이나 하지 않은 것을 짧게 정리합니다.\n\n금지\n- 테스트를 통과시키려고 테스트를 삭제하거나 약화하지 않습니다.\n- 검증하지 않은 것을 완료했다고 말하지 않습니다.",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-meeting-actions",
+    "title": "회의록 → 결정·액션 아이템",
+    "titleEn": "",
+    "summary": "회의 녹취나 메모에서 결정 사항, 담당자, 기한, 미결 질문만 뽑아냄",
+    "category": "business",
+    "target": "chat",
+    "pick": true,
+    "needsUpload": false,
+    "lang": "ko",
+    "prompt": "아래 회의 기록에서 다음 네 가지만 정리하세요. 기록에 없는 담당자나 기한은 만들지 말고 \"미정\"으로 둡니다.\n\n1. 결정된 것 — 한 줄씩, 근거가 된 발언 요약\n2. 액션 아이템 — 표: | 할 일 | 담당자 | 기한 | 완료 기준 |\n3. 미결 질문 — 누가 답해야 하는지 함께\n4. 다음 회의 전에 확인할 것\n\n회의 이름: ${회의 이름:주간 프로젝트 점검}\n기록:\n${회의 기록}",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-tech-blog-outline",
+    "title": "기술 블로그 아웃라인",
+    "titleEn": "",
+    "summary": "주제와 독자를 주면 문제-시도-결과 구조의 기술 글 개요를 잡아줌",
+    "category": "writing",
+    "target": "chat",
+    "pick": false,
+    "needsUpload": false,
+    "lang": "ko",
+    "prompt": "아래 주제로 기술 블로그 글의 개요를 잡아 주세요.\n\n독자: ${독자:실무 2~5년 차 백엔드/ML 엔지니어}\n주제: ${주제}\n내가 실제로 한 것: ${작업 내용과 결과 수치}\n\n구성 원칙\n- 도입은 독자가 겪는 문제 한 장면으로 시작합니다.\n- \"문제 → 처음 시도와 실패 → 바꾼 접근 → 결과(수치) → 남은 한계\" 순서로 섹션을 나눕니다.\n- 섹션마다 핵심 문장 1개와 넣을 코드/그림 후보를 적습니다.\n- 내가 하지 않은 실험이나 수치는 추가하지 않습니다.\n\n마지막에 제목 후보 5개를 붙입니다. 과장형 제목은 피합니다.",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-system-prompt-review",
+    "title": "시스템 프롬프트 리뷰",
+    "titleEn": "",
+    "summary": "시스템 프롬프트의 모호함·충돌·누락 규칙을 찾아 수정안을 제안",
+    "category": "prompting",
+    "target": "chat",
+    "pick": false,
+    "needsUpload": false,
+    "lang": "ko",
+    "prompt": "아래 시스템 프롬프트를 리뷰하세요. 이 프롬프트는 ${용도:고객 문의 응대 챗봇}에 쓰입니다.\n\n점검 항목\n1. 모호한 지시 — 모델이 두 가지 이상으로 해석할 수 있는 문장\n2. 서로 충돌하는 규칙 — 어떤 규칙이 이겨야 하는지 불분명한 경우\n3. 빠진 규칙 — 거절, 모르는 질문, 개인정보, 형식 위반 시 행동\n4. 불필요하게 긴 부분 — 삭제해도 행동이 바뀌지 않는 문장\n5. 프롬프트 인젝션에 취약한 지점\n\n각 문제마다 원문 인용 → 왜 문제인지 → 고친 문장을 제시하고, 마지막에 전체 수정본을 출력합니다.\n\n<system_prompt>\n${시스템 프롬프트}\n</system_prompt>",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-eval-set-generator",
+    "title": "평가용 질문 세트 생성",
+    "titleEn": "",
+    "summary": "문서를 주면 난이도·유형별 평가 질문과 정답, 근거 위치를 생성",
+    "category": "data",
+    "target": "chat",
+    "pick": false,
+    "needsUpload": false,
+    "lang": "ko",
+    "prompt": "아래 문서로 RAG 시스템을 평가할 질문 세트를 만드세요.\n\n요구사항\n- 총 ${질문 수:12}개, 유형을 고르게 섞습니다: 단순 사실 / 여러 문단 종합 / 수치 비교 / 문서에 답이 없는 질문(전체의 20%)\n- 각 질문은 문서만 읽으면 답할 수 있어야 하며, 답이 없는 질문은 정답을 \"문서에 없음\"으로 둡니다.\n- 질문에 정답 단어를 그대로 넣지 않습니다.\n\n출력은 JSON Lines, 한 줄에 하나씩:\n{\"id\": 1, \"type\": \"fact|synthesis|numeric|unanswerable\", \"question\": \"\", \"answer\": \"\", \"evidence\": \"근거 문장 원문 그대로\", \"difficulty\": \"easy|medium|hard\"}\n\n문서:\n${문서 내용}",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-ocr-table-rebuild",
+    "title": "OCR 결과 → 표 재구성",
+    "titleEn": "",
+    "summary": "줄 단위 OCR 텍스트를 원래 표 구조의 Markdown/JSON으로 복원",
+    "category": "data",
+    "target": "chat",
+    "pick": false,
+    "needsUpload": false,
+    "lang": "ko",
+    "prompt": "아래는 표가 포함된 문서를 OCR한 결과입니다. 줄 순서가 섞이거나 셀이 한 줄로 이어 붙었을 수 있습니다. 원래 표 구조를 복원하세요.\n\n규칙\n1. 헤더 행을 먼저 추정하고, 추정 근거를 한 줄로 적습니다.\n2. 숫자, 날짜, 금액은 OCR 원문 그대로 옮기고 단위를 바꾸지 않습니다.\n3. 판독이 의심되는 셀은 값 뒤에 (?)를 붙이고, 비어 있는 셀은 빈칸으로 둡니다.\n4. 병합 셀은 같은 값을 반복하지 말고 첫 셀에만 적은 뒤 note에 병합 범위를 기록합니다.\n\n출력: ${출력 형식:Markdown 표}로 한 번, 아래 JSON으로 한 번\n{\"columns\": [], \"rows\": [[]], \"notes\": []}\n\nOCR 결과:\n${OCR 텍스트}",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-blog-thumbnail-cover",
+    "title": "블로그 썸네일 추상 커버",
+    "titleEn": "",
+    "summary": "글 주제를 상징하는 텍스트 없는 추상 커버 이미지",
+    "category": "image",
+    "target": "image",
+    "pick": false,
+    "needsUpload": false,
+    "lang": "en",
+    "prompt": "Abstract editorial cover image for a technical blog post about ${topic:retrieval-augmented generation}. Represent the idea through simple geometric forms rather than literal objects: ${visual metaphor:layered translucent panels connected by thin light paths}. Calm, precise, minimal composition with generous negative space on the ${text side:left} for a title overlay. Soft studio lighting, subtle grain, color palette of ${palette:cool off-white, slate blue, and one cyan accent}. Aspect ratio ${aspect ratio:16:9}. No text, no letters, no logos, no people.",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-isometric-architecture",
+    "title": "아이소메트릭 시스템 아키텍처 일러스트",
+    "titleEn": "",
+    "summary": "서비스 구성 요소를 아이소메트릭 블록과 데이터 흐름으로 표현",
+    "category": "image",
+    "target": "image",
+    "pick": true,
+    "needsUpload": false,
+    "lang": "en",
+    "prompt": "Clean isometric 3D illustration of a software system architecture: ${components:an API gateway, three microservices, a message queue, a vector database, and an object storage bucket}, each shown as a distinct matte block on a light grid floor. Glowing directional lines show data flowing ${flow:from the gateway through the services into the databases}. Consistent 30-degree isometric angle, soft ambient occlusion, pastel materials with ${accent color:blue} highlights, gentle shadows, white background. Simple icon-like shapes on each block instead of text labels. No readable text, no brand logos.",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-studio-product-shot",
+    "title": "스튜디오 제품 컷",
+    "titleEn": "",
+    "summary": "업로드한 제품 사진을 깨끗한 스튜디오 광고 컷으로 재구성",
+    "category": "image",
+    "target": "image",
+    "pick": false,
+    "needsUpload": true,
+    "lang": "en",
+    "prompt": "Use the uploaded product photo as the only reference for the product's shape, color, and details — keep them exactly unchanged. Place the ${product:product} on a ${surface:matte stone pedestal} in a minimal studio set with a ${background:soft warm gray} seamless backdrop. Large softbox key light from the upper left, gentle fill from the right, a soft contact shadow under the product, realistic reflections on glossy parts. Crisp focus on the product, shallow depth of field in the background. Commercial catalog look, aspect ratio ${aspect ratio:4:5}. Do not add text, logos, or extra products.",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  },
+  {
+    "id": "sm-one-page-infographic",
+    "title": "한 장 인포그래픽",
+    "titleEn": "",
+    "summary": "핵심 수치와 단계를 한 장의 세로 인포그래픽 레이아웃으로",
+    "category": "image",
+    "target": "image",
+    "pick": false,
+    "needsUpload": false,
+    "lang": "en",
+    "prompt": "Vertical one-page infographic about ${subject:how a document OCR pipeline works}, aspect ratio 2:3. Layout from top to bottom: a bold header area, ${step count:four} numbered steps connected by a single flowing line, each step with a simple flat icon, and a bottom band with ${stat count:three} large statistic callouts. Flat vector style, consistent stroke width, ${palette:navy, white, and coral accent} palette, generous spacing, clear visual hierarchy. Use the following labels exactly and nothing else: ${labels:\"Scan\", \"Detect\", \"Recognize\", \"Rebuild tables\"}.",
+    "addedAt": "2026-10-05",
+    "source": {
+      "name": "d9249.github.io 직접 작성",
+      "url": "https://d9249.github.io/prompts/",
+      "authors": [
+        {
+          "name": "Sangmin Lee",
+          "url": "https://github.com/d9249"
+        }
+      ],
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/deed.ko"
+    }
+  }
+]
