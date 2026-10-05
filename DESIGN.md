@@ -48,9 +48,10 @@ All colours live in `src/styles/tokens.css`. No other stylesheet defines `:root`
 ### Rules
 
 - **One colour, one meaning.** Earth means research, a leaf colour means that project, and mandarin means a result. Don't use a palette colour for decoration.
-- Cards outside the reel use the same colours. `src/utils/treeColors.js` maps a project slug to its leaf colour and a paper to its root colour, and award cards use mandarin. A card that carries a colour gets it as `--c`, drawn as a 3px top edge.
+- Pages outside the reel use the same colours. `src/utils/treeColors.js` maps a project slug to its leaf colour and a research id to its root colour, and results use mandarin. An element that carries a colour gets it as `--c` and shows it as a dot, a chip, a pin or the tree itself.
+- **No colour stripes.** A card, row, panel or quote never gets a coloured (or ink) bar along one edge to set it apart: no `border-left: 3px`, no top edge, no `::before` tab. Rows are set apart by hairlines, spacing and type; a colour appears only where it names something.
 - `--accent` is for links, focus and selection only. Primary actions are ink, not blue.
-- Palette colours go on fills, swatches and top edges. Text uses `--fg`, `--muted` or the text-safe `--accent-*`.
+- Palette colours go on fills and swatches. Text uses `--fg`, `--muted` or the text-safe `--accent-*`.
 - Colour never carries state alone. Pair it with a label, a weight or a shape.
 - Mix colours **`in oklab`**, never `in oklch`. With near-grey inputs, oklch has no hue, and Chromium then tints the mix pink.
 - Dark mode is a separate set of values, not an inversion. `gatsby-ssr.js` sets `html[data-theme]` before paint, so stylesheets use `html[data-theme="dark"]` and never `prefers-color-scheme`.
@@ -108,9 +109,9 @@ picture in its header; the lists below it are quiet rows on hairlines.
 
 | Page            | Header picture                                                                | List                                                                 |
 | --------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| Projects        | The tree (`<TreeCanvas grow>`), one link per branch; hovering a row lights it | Branch rows: leaf-colour tab, name in Archivo wide, KPI chip in leaf |
+| Projects        | The tree (`<TreeCanvas grow>`), one link per branch; hovering a row lights it | Branch rows: leaf dot, name in Archivo wide, KPI chip in leaf        |
 | Project page    | The tree with only this branch lit; the name set like the reel's case cut     | A cut (`--cut-*`): problem, capabilities grown, result (shot 07)     |
-| Research        | The roots (`variant="roots"`) with R1–R6 pins; counts as condensed numerals   | Root rows R1–R6, then every paper by type, root colour on the margin |
+| Research        | The roots (`variant="roots"`) with R1–R6 pins; counts as condensed numerals   | Root rows R1–R6, then every paper by type                            |
 | Awards          | The award sheet (`<AwardSheet>`): the reel's stamps land one by one           | Ledger: date, award, result in mandarin, evidence links, a tick      |
 | Competitions    | A check sheet: ticks draw in, values with a mandarin highlighter              | Check rows: box, what, value, note                                   |
 | DACON           | Stat tiles                                                                    | A bar per field, a ledger of entries with rank and percentile        |
@@ -118,7 +119,7 @@ picture in its header; the lists below it are quiet rows on hairlines.
 | Contact         | The tree with an empty "next branch" (the reel's end card)                    | Channels as a ledger                                                 |
 
 - `src/components/TreeCanvas.js` draws the reel's tree with the compositor in `showreel/tree.js` (shared with the reel). It grows once (skipped for reduced motion), redraws on theme and size changes, and puts real links over branches and roots.
-- Colours on the pages come from `src/utils/treeColors.js` (`stageOf`, `caseOf`, `paperColor`, `onColor`), so a project is the same colour on the tree, its row and its page.
+- Colours on the pages come from `src/utils/treeColors.js` (`stageOf`, `caseOf`, `onColor`, `solidOf`), so a project is the same colour on the tree, its row and its page.
 - Motion on the pages is limited to one moment per page header: the tree growing, the stamps landing, the ticks drawing.
 
 ## 7. The home reel

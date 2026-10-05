@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import TreeCanvas from "../components/TreeCanvas";
 import { PageHeader } from "../components/ui";
 import showreel from "../data/showreel.json";
-import { colorStyle, paperColor, rootColors } from "../utils/treeColors";
+import { colorStyle, rootColors } from "../utils/treeColors";
 import { paperItems } from "../data/profile";
 
 const PDF_ZOOM_MIN = 60;
@@ -399,7 +399,7 @@ const PaperRow = ({ item, activeViewerId, isPdfOpen, onTogglePdf }) => {
   const paperKey = getPaperKey(item);
 
   return (
-    <article className="paper-row" style={colorStyle(paperColor(item))}>
+    <article className="paper-row">
       <p className="paper-row-year">
         <time>{item.year}</time>
       </p>

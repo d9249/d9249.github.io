@@ -180,7 +180,6 @@ const ProjectPostTemplate = ({ data }) => {
                 className="related-card"
                 key={item.id}
                 to={item.fields.slug}
-                style={colorStyle(projectColor(item.fields.slug))}
               >
                 <div className="thumb" aria-hidden="true" />
                 <h3 className="related-project-title">

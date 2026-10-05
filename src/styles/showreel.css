@@ -2020,8 +2020,6 @@ html[data-theme="dark"] .reel .stamp {
 .reel .case-q {
   font: 500 clamp(17px, 1.5vw, 21px)/1.45 var(--f-body);
   max-width: 30em;
-  padding-left: 14px;
-  border-left: 3px solid var(--leaf, var(--oc));
 }
 .reel .case-foot {
   display: flex;

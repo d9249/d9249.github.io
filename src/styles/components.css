@@ -357,9 +357,6 @@ select {
     border-color var(--motion-fast) var(--ease-fluid);
 }
 
-/* a card that belongs to a research / project / result carries its colour on top
-   (src/utils/treeColors.js — the same colours as the home tree) */
-
 /* ── Page header — a shot from the reel: crop marks, slate, big title ───────── */
 .ui-page-header {
   position: relative;

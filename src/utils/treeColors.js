@@ -2,8 +2,10 @@ import showreel from "../data/showreel.json";
 
 /*
  * One colour, one meaning (DESIGN.md §2) — the same colours the home tree uses:
- *   a project's leaf colour, a paper's root (research) colour, mandarin for a result.
- * Cards take the colour as `--c`, which components.css draws as the card's top edge.
+ *   a project's leaf colour, a root (research) colour, mandarin for a result.
+ * Elements take the colour as `--c` (plus `--c-solid` / `--on-c` when it carries text) and use it
+ * only where the colour means something: a leaf dot, a KPI chip, a root id, the tree itself.
+ * Never as a stripe along a card or row edge (DESIGN.md §6).
  */
 
 const withSlash = (path) => (path.endsWith("/") ? path : `${path}/`);
@@ -61,20 +63,6 @@ export const projectColor = (slug) =>
       researchProjects[withSlash(slug)] ||
       null
     : null;
-
-const rootByHref = new Map(
-  showreel.research
-    .filter((item) => /^https?:\/\/(?!d9249\.github\.io)/.test(item.href))
-    .map((item) => [item.href, item.color]),
-);
-
-const rootByType = {
-  "International Conference": root.R5,
-  "KCI Journal": root.R6,
-};
-
-export const paperColor = (paper) =>
-  rootByHref.get(paper.href) || rootByType[paper.type] || null;
 
 export const RESULT_COLOR = "var(--c-mandarin)";
 
