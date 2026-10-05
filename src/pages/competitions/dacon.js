@@ -1,6 +1,7 @@
 import * as React from "react";
 import Layout from "../../components/Layout";
 import { PageHeader } from "../../components/ui";
+import { Sentences } from "../../utils/sentences";
 import {
   daconCompetitionItems,
   daconDomainSummary,
@@ -62,7 +63,9 @@ const DaconCompetitionsPage = () => (
                   <i />
                 </span>
                 <span className="bar-rows-n">{n}</span>
-                <p>{item.description}</p>
+                <p>
+                  <Sentences>{item.description}</Sentences>
+                </p>
               </li>
             );
           })}
@@ -81,7 +84,9 @@ const DaconCompetitionsPage = () => (
                 <p className="dacon-row-period">{item.period}</p>
                 <div className="dacon-row-main">
                   <h3>{item.title}</h3>
-                  <p>{item.description}</p>
+                  <p>
+                    <Sentences>{item.description}</Sentences>
+                  </p>
                   <ul className="paper-row-facts">
                     {item.facts.map((fact) => (
                       <li key={fact}>{fact}</li>

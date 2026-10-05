@@ -67,6 +67,7 @@ All colours live in `src/styles/tokens.css`. No other stylesheet defines `:root`
 - Scale: `--type-hero`, `--type-page-title`, `--type-section-title`, `--type-card-title`, `--type-label`.
 - Korean text uses `word-break: keep-all`. Headings use `text-wrap: balance`.
 - Labels are mono, uppercase, `0.1em` tracking and `--muted`. The kicker above a heading (`.eyebrow`) is ink and bold.
+- **One sentence per line in short copy.** A lead, a lede, a summary or a description of two or three sentences breaks after each sentence (`<Sentences>` / `sentencesHTML` in `src/utils/sentences.js`; the reel's static ledes carry `<br>`). It breaks only where a new sentence follows, so `0.9188` or `vol. 78` stay whole. Long prose (posts, write-ups) and truncated summaries keep normal paragraphs.
 
 ## 4. Space, radius, surface, motion
 
@@ -99,7 +100,7 @@ Each primitive is defined **once** in `src/styles/components.css`. React wrapper
 `.button-primary`, `.pagination-page` and `.section-action a` are buttons; `.tag`,
 `.metric-chip` and `.project-stack span` are chips; `.post-card`, `.project-card` and
 `.paper-card` are cards. Their look comes only from `components.css`. The page files keep
-layout only, such as margins, grid placement and page-context variants (`.profile-panel .ui-chip`).
+layout only, such as margins, grid placement and page-context variants (`.career-tags .ui-chip`).
 When you touch a page, prefer the `ui-*` class or the React wrapper and drop the alias.
 
 ## 6. Pages — the reel's vocabulary
@@ -117,7 +118,10 @@ picture in its header; the lists below it are quiet rows on hairlines.
 | DACON           | Stat tiles                                                                    | A bar per field, a ledger of entries with rank and percentile        |
 | Blog, tag, tips | Slate with the count                                                          | Notebook rows: date and category in the margin, title, one line      |
 | Contact         | The tree with an empty "next branch" (the reel's end card)                    | Channels as a ledger                                                 |
+| Home, career    | Slate `CREDITS · 3 ROLES`: the credits after the reel's end card               | One line per role: dates, the organisation in Archivo wide with the role, what was done (three on a phone, the rest behind a button); then a short summary (research, domain, results). It does not repeat the end card's name, line or email |
 
+- **Masthead** = the reel's top bar: a veil (`--material-floating`, blur on `.masthead::before` so the menu sheet is not trapped by the filter) and a hairline, `SANGMIN LEE` in Archivo 800 at 118%, the pages in mono capitals with the current one underlined like the reel's shot rail. It stays 45px (49px on a phone) with the hairline, because the reel measures it for `--hh`.
+- **Menu** (≤1180px) = a full-height sheet under the bar: the slate (`MENU · 12 PAGES`), then two groups, 홈 (sections of the home page) and 페이지, as rows in the brand face with the Korean name on the right and an ink dot on the current page. Open, it locks the page's scroll and makes `main` and the footer `inert`; Esc or the button closes it and focus goes back to the button without scrolling.
 - `src/components/TreeCanvas.js` draws the reel's tree with the compositor in `showreel/tree.js` (shared with the reel). It grows once (skipped for reduced motion), redraws on theme and size changes, and puts real links over branches and roots.
 - Colours on the pages come from `src/utils/treeColors.js` (`stageOf`, `caseOf`, `onColor`, `solidOf`), so a project is the same colour on the tree, its row and its page.
 - The projects index keeps the full card content one press away: a row is a disclosure (`button[aria-expanded]` over the summary, the panel `inert` while closed). Open rows put their id in the URL hash (`/projects/#harmony-multitenant-ai`), so a link or the back button reopens the row. The tree's branch links open the row on a plain click and still go to the project page on a modified click.

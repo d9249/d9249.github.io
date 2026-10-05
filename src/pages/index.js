@@ -1,13 +1,14 @@
 import * as React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
-import MobileCardCarousel from "../components/MobileCardCarousel";
+import { ChevronDown } from "lucide-react";
 import PostRows from "../components/PostRows";
 import SectionHeading from "../components/SectionHeading";
 import Showreel from "../components/Showreel";
 import { Chip } from "../components/ui";
 import { timelineItems } from "../data/profile";
 import { getProjectProfileTags } from "../utils/projectProfileTags";
+import { Sentences } from "../utils/sentences";
 
 /*
  * Home: the eight-shot showreel (research → projects → skills → awards → evidence → numbers → cases
@@ -15,48 +16,53 @@ import { getProjectProfileTags } from "../utils/projectProfileTags";
  * awards and competitions each have their own page; the reel links into them.
  */
 
-const TimelineCard = ({ item, compact = false }) => {
-  const [expanded, setExpanded] = React.useState(false);
-  const detailsId = React.useId();
-  const hasMoreDetails = compact && item.bullets.length > 3;
-  const visibleBullets =
-    hasMoreDetails && !expanded ? item.bullets.slice(0, 3) : item.bullets;
+// the credits after the reel's end card: one role per line — dates, the organisation set like a
+// project name with the role under it, then what was done. On a phone the list of what was done
+// stops at three, with a button for the rest.
+const VISIBLE_ON_PHONE = 3;
+
+const CareerRow = ({ item }) => {
+  const [open, setOpen] = React.useState(false);
+  const listId = React.useId();
+  const [org, ...rest] = item.title.split(", ");
+  const role = rest.join(", ");
+  const more = item.bullets.length - VISIBLE_ON_PHONE;
 
   return (
-    <article
-      className={`timeline-item${compact ? " is-compact" : ""}${
-        expanded ? " is-expanded" : ""
-      }`}
-    >
-      <div className="timeline-date">{item.date}</div>
-      <div>
-        <h3>{item.title}</h3>
-        <p>{item.description}</p>
-        <ul className="timeline-bullets" id={detailsId}>
-          {visibleBullets.map((bullet) => (
-            <li key={bullet}>{bullet}</li>
+    <li className={`career-row${open ? " is-open" : ""}`}>
+      <p className="career-row-date">{item.date}</p>
+      <h3 className="career-row-org">
+        {org}
+        {role ? <span className="career-row-role">{role}</span> : null}
+      </h3>
+      <div className="career-row-main">
+        <p className="career-row-desc">
+          <Sentences>{item.description}</Sentences>
+        </p>
+        <ul className="career-row-work" id={listId}>
+          {item.bullets.map((bullet, i) => (
+            <li
+              key={bullet}
+              className={i >= VISIBLE_ON_PHONE ? "is-more" : undefined}
+            >
+              {bullet}
+            </li>
           ))}
         </ul>
-        {hasMoreDetails ? (
+        {more > 0 ? (
           <button
-            className="timeline-detail-toggle"
+            className="career-row-toggle"
             type="button"
-            aria-controls={detailsId}
-            aria-expanded={expanded}
-            onClick={() => setExpanded((current) => !current)}
+            aria-controls={listId}
+            aria-expanded={open}
+            onClick={() => setOpen((current) => !current)}
           >
-            <span>
-              {expanded
-                ? "간략히 보기"
-                : `전체 ${item.bullets.length}개 항목 보기`}
-            </span>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m6 9 6 6 6-6" />
-            </svg>
+            <span>{open ? "접기" : `${more}개 더 보기`}</span>
+            <ChevronDown aria-hidden="true" />
           </button>
         ) : null}
       </div>
-    </article>
+    </li>
   );
 };
 
@@ -70,82 +76,41 @@ const IndexPage = ({ data }) => {
       <Showreel />
 
       <section
-        className="shell section"
+        className="shell section career"
         id="career"
         aria-labelledby="career-title"
       >
         <SectionHeading
-          kicker="Experience"
+          slate={{
+            label: "Credits",
+            count: timelineItems.length,
+            unit: "roles",
+          }}
           title="실무 및 연구 경력"
           titleId="career-title"
         />
-        <div className="career-layout responsive-desktop-only">
-          <aside className="profile-panel">
-            <div className="avatar-large">SM</div>
-            <h3>
-              이상민
-              <br />
-              AI Engineer &amp; Researcher
-            </h3>
-            <p>
-              연구의 언어를 제품·운영·비즈니스 가치의 언어로 번역합니다. 문제
-              정의, AI 아키텍처 설계, 백엔드, 관찰성, 배포, 검증까지 이어지는
-              실제 시스템을 만드는 데 집중합니다.
-            </p>
-            <dl className="profile-facts">
-              <div>
-                <dt>email</dt>
-                <dd>dodo9249@gmail.com</dd>
-              </div>
-              <div>
-                <dt>research</dt>
-                <dd>SCIE 3 / KCI 2</dd>
-              </div>
-              <div>
-                <dt>domain</dt>
-                <dd>Knowledge AI / Safety RAG / OCR / Market Intel</dd>
-              </div>
-            </dl>
-            <div className="tag-cloud">
-              {profileTags.map((tag) => (
-                <Chip key={tag}>{tag}</Chip>
-              ))}
+        <ol className="career-rows">
+          {timelineItems.map((item) => (
+            <CareerRow key={`${item.date}-${item.title}`} item={item} />
+          ))}
+        </ol>
+        <div className="career-keys">
+          <p className="career-keys-h">요약</p>
+          <dl className="career-facts">
+            <div>
+              <dt>research</dt>
+              <dd>SCIE 3 / KCI 2</dd>
             </div>
-          </aside>
-          <div className="timeline">
-            {timelineItems.map((item) => (
-              <TimelineCard key={`${item.date}-${item.title}`} item={item} />
+            <div>
+              <dt>domain</dt>
+              <dd>Knowledge AI / Safety RAG / OCR / Market Intel</dd>
+            </div>
+          </dl>
+          <div className="career-tags">
+            {profileTags.map((tag) => (
+              <Chip key={tag}>{tag}</Chip>
             ))}
           </div>
-        </div>
-        <div className="mobile-career-layout">
-          <MobileCardCarousel
-            ariaLabel="모바일 실무 및 연구 경력"
-            beforeCards={
-              <div className="mobile-career-summary">
-                <span className="avatar-large" aria-hidden="true">
-                  SM
-                </span>
-                <div>
-                  <strong>이상민</strong>
-                  <span>AI Engineer &amp; Researcher</span>
-                </div>
-                <a href="mailto:dodo9249@gmail.com">Email</a>
-              </div>
-            }
-            itemSelector=".timeline-item"
-            statusLabel="경력 카드"
-          >
-            <div className="timeline mobile-carousel-track">
-              {timelineItems.map((item) => (
-                <TimelineCard
-                  compact
-                  key={`${item.date}-${item.title}`}
-                  item={item}
-                />
-              ))}
-            </div>
-          </MobileCardCarousel>
         </div>
       </section>
 
@@ -155,7 +120,7 @@ const IndexPage = ({ data }) => {
         aria-labelledby="latest-title"
       >
         <SectionHeading
-          kicker="Blog"
+          slate={{ label: "Blog", count: posts.length, unit: "latest" }}
           title="최근 지식"
           titleId="latest-title"
           action={<Link to="/blog/">전체 지식 보기 →</Link>}

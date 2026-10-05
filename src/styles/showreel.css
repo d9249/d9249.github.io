@@ -2327,16 +2327,6 @@ html[data-theme="dark"] .reel .stamp {
 .reel .track .cap {
   bottom: auto;
 }
-.reel .credit {
-  font: 400 12px/1.5 var(--f-mono);
-  color: var(--sub);
-  border-top: 1px solid var(--rule);
-  padding-top: 14px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 18px;
-  justify-content: space-between;
-}
 @media (max-width: 860px) {
   .reel .end {
     grid-template-columns: minmax(0, 1fr);
@@ -2382,11 +2372,7 @@ html[data-theme="dark"] .reel .stamp {
   .reel .mail {
     margin-top: 14px;
   }
-  .reel .credit {
-    padding-top: 10px;
-    font-size: 11px;
   }
-}
 @media (prefers-reduced-motion: reduce) {
   .reel .hook-title .w,
   .reel .u::after,
