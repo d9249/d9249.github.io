@@ -109,7 +109,7 @@ picture in its header; the lists below it are quiet rows on hairlines.
 
 | Page            | Header picture                                                                | List                                                                 |
 | --------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| Projects        | The tree (`<TreeCanvas grow>`), one link per branch; hovering a row lights it | Branch rows: leaf dot, name in Archivo wide, KPI chip in leaf        |
+| Projects        | The tree (`<TreeCanvas grow>`); a branch opens its row, hovering a row lights it | Branch rows: leaf dot, name in Archivo wide, KPI chip in leaf. Pressing a row opens what was done, the stack and "자세히 보기" (the project page) |
 | Project page    | The tree with only this branch lit; the name set like the reel's case cut     | A cut (`--cut-*`): problem, capabilities grown, result (shot 07)     |
 | Research        | The roots (`variant="roots"`) with R1–R6 pins; counts as condensed numerals   | Root rows R1–R6, then every paper by type                            |
 | Awards          | The award sheet (`<AwardSheet>`): the reel's stamps land one by one           | Ledger: date, award, result in mandarin, evidence links, a tick      |
@@ -120,6 +120,7 @@ picture in its header; the lists below it are quiet rows on hairlines.
 
 - `src/components/TreeCanvas.js` draws the reel's tree with the compositor in `showreel/tree.js` (shared with the reel). It grows once (skipped for reduced motion), redraws on theme and size changes, and puts real links over branches and roots.
 - Colours on the pages come from `src/utils/treeColors.js` (`stageOf`, `caseOf`, `onColor`, `solidOf`), so a project is the same colour on the tree, its row and its page.
+- The projects index keeps the full card content one press away: a row is a disclosure (`button[aria-expanded]` over the summary, the panel `inert` while closed). Open rows put their id in the URL hash (`/projects/#harmony-multitenant-ai`), so a link or the back button reopens the row. The tree's branch links open the row on a plain click and still go to the project page on a modified click.
 - Motion on the pages is limited to one moment per page header: the tree growing, the stamps landing, the ticks drawing.
 
 ## 7. The home reel

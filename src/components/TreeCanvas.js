@@ -14,6 +14,8 @@ import { colorStyle } from "../utils/treeColors";
  *   branches [{ href, label }] per branch → a link over each leaf cluster (keyboard + screen readers)
  *   pins     [{ href, label, short, color }] per root, left to right → a pin at each root tip
  *   onFocusBranch(k) hover / focus on a branch link (-1 on leave)
+ *   onSelectBranch(k) a plain click on a branch link; given, it replaces following the link (the
+ *            projects index opens that row instead). Modified clicks still open the project page.
  */
 
 let kit = null;
@@ -54,6 +56,7 @@ const TreeCanvas = ({
   branches = [],
   pins = [],
   onFocusBranch,
+  onSelectBranch,
   next = false,
   nextLabel,
   className,
@@ -196,16 +199,34 @@ const TreeCanvas = ({
             if (!b || i >= k.SL.length) return null;
             const c = k.SL[i].center,
               d = k.clusterR(i) * geo.F * 2;
+            // a tag centred on a branch near the frame's edge would hang out of it: anchor it inward
+            const x = geo.ox + c[0] * geo.F,
+              half = (b.label.length * 0.64 * 12 + 18) / 2;
+            const edge =
+              x + half > geo.W ? " is-end" : x - half < 0 ? " is-start" : "";
             return (
               <a
                 key={b.href}
-                className={`tree-canvas-hit${focus === i ? " is-on" : ""}`}
+                className={`tree-canvas-hit${focus === i ? " is-on" : ""}${edge}`}
                 href={b.href}
                 style={{ ...place(c), width: d, height: d }}
                 onMouseEnter={() => onFocusBranch && onFocusBranch(i)}
                 onMouseLeave={() => onFocusBranch && onFocusBranch(-1)}
                 onFocus={() => onFocusBranch && onFocusBranch(i)}
                 onBlur={() => onFocusBranch && onFocusBranch(-1)}
+                onClick={(e) => {
+                  if (
+                    !onSelectBranch ||
+                    e.button !== 0 ||
+                    e.metaKey ||
+                    e.ctrlKey ||
+                    e.shiftKey ||
+                    e.altKey
+                  )
+                    return;
+                  e.preventDefault();
+                  onSelectBranch(i);
+                }}
               >
                 <span className="tree-canvas-tag">{b.label}</span>
               </a>

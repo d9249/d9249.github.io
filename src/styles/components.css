@@ -604,6 +604,26 @@ select {
   transform: translate(-50%, -50%) scale(1);
 }
 
+.tree-canvas-hit.is-start .tree-canvas-tag,
+.tree-canvas-hit.is-end .tree-canvas-tag {
+  transform: translate(0, -50%) scale(0.92);
+}
+
+.tree-canvas-hit.is-end .tree-canvas-tag {
+  right: 50%;
+  left: auto;
+  transform-origin: right center;
+}
+
+.tree-canvas-hit.is-start .tree-canvas-tag {
+  transform-origin: left center;
+}
+
+.tree-canvas-hit:is(.is-start, .is-end):is(:hover, :focus-visible, .is-on)
+  .tree-canvas-tag {
+  transform: translate(0, -50%) scale(1);
+}
+
 /* a research pin on a root tip */
 .tree-canvas-pin {
   position: absolute;
