@@ -41,21 +41,9 @@
   /* reel-only inks */
   --green-t: #1f7f57;
   --amber-t: #9a5a00;
-  --st-green: #2e8f66;
-  --st-violet: #5b4fc9;
-  --st-navy: #283a9e;
-  --st-teal: #138fa3;
-  --st-brick: #a3473f;
-  --st-umber: #8e6a3e;
-  --st-amber: #d9861a;
-  --st-blue: #2b59e8;
-  --st-cyan: #1497a6;
-  --st-ink: var(--ink);
   --ruled: color-mix(in oklab, var(--c-blue) 16%, transparent);
   --margin: color-mix(in oklab, #d66040 35%, transparent);
   --tile-ink: var(--ink);
-  --tint-me: #2a2c33;
-  --tint-ink: #3a3d47;
 
   /* frame: gutters line up with the site's .shell; --hh is the masthead (measured by engine.js) */
   --gut: max(1.5rem, calc((100vw - 75rem) / 2));
@@ -80,21 +68,9 @@
 html[data-theme="dark"] .reel {
   --green-t: #5fd3a0;
   --amber-t: #f0a030;
-  --st-green: #5fd3a0;
-  --st-violet: #a69cf7;
-  --st-navy: #8c9cf0;
-  --st-teal: #4fc6d8;
-  --st-brick: #e58a78;
-  --st-umber: #cda97e;
-  --st-amber: #f0a030;
-  --st-blue: #7e9cff;
-  --st-cyan: #4fd6e6;
-  --st-ink: var(--fg);
   --ruled: color-mix(in oklab, #7e9cff 14%, transparent);
   --margin: color-mix(in oklab, #f0785a 30%, transparent);
   --tile-ink: #2a2c33;
-  --tint-me: #e6e0d3;
-  --tint-ink: #aeb3c0;
 }
 .reel a {
   color: inherit;
