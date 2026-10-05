@@ -55,15 +55,33 @@
   --accent: #2347c4; /* links, selection, focus — AA on paper */
   --accent-soft: color-mix(in oklab, var(--c-blue) 14%, var(--bg));
   --accent-2: #0e7487; /* technical / evidence (teal, text-safe) */
-  --accent-3: #b85a00; /* recognition / results (mandarin, text-safe) */
+  --accent-3: #9a4b00; /* recognition / results (mandarin, text-safe: 5.3:1 on paper) */
   --result: var(--c-mandarin);
   --on-accent: var(--paper);
   --overlay: color-mix(in oklab, var(--ink) 58%, transparent);
   --focus-ring: var(--accent);
   --selection: color-mix(in oklab, var(--c-blue) 22%, transparent);
+  --tint-me: #2a2c33; /* the tree's wood (trunk, branches, roots) */
+  --tint-ink: #3a3d47;
   --term: var(--ink); /* code blocks, the reel's terminal */
   --term-fg: #ede7da;
   --term-dim: #8c877d;
+  /* stamp inks (the award sheet: reel shot 04 and the awards page) */
+  --st-green: #2e8f66;
+  --st-violet: #5b4fc9;
+  --st-navy: #283a9e;
+  --st-teal: #138fa3;
+  --st-brick: #a3473f;
+  --st-umber: #8e6a3e;
+  --st-amber: #d9861a;
+  --st-blue: #2b59e8;
+  --st-cyan: #1497a6;
+  --st-ink: var(--ink);
+  /* a "cut": a band that inverts the page, like the reel's ink / paper cuts */
+  --cut-bg: var(--ink);
+  --cut-fg: #f2ede3;
+  --cut-muted: #a6a095;
+  --cut-line: color-mix(in oklab, #f2ede3 16%, transparent);
   /* the slide deck's stage — dark in both themes, like a projector screen's surround */
   --stage: #0b0c0e;
   --stage-raised: #16171b;
@@ -175,6 +193,22 @@ html[data-theme="dark"] {
   --on-accent: var(--ink);
   --overlay: color-mix(in oklab, black 72%, transparent);
   --selection: color-mix(in oklab, var(--c-sky) 34%, transparent);
+  --tint-me: #e6e0d3;
+  --tint-ink: #aeb3c0;
+  --st-green: #5fd3a0;
+  --st-violet: #a69cf7;
+  --st-navy: #8c9cf0;
+  --st-teal: #4fc6d8;
+  --st-brick: #e58a78;
+  --st-umber: #cda97e;
+  --st-amber: #f0a030;
+  --st-blue: #7e9cff;
+  --st-cyan: #4fd6e6;
+  --st-ink: var(--fg);
+  --cut-bg: #f2ede3;
+  --cut-fg: #16171b;
+  --cut-muted: #5c5850;
+  --cut-line: color-mix(in oklab, #16171b 14%, transparent);
   --term: #0b0c0e;
   --term-fg: #eee8dc;
   --term-dim: #7e796f;

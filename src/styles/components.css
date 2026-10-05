@@ -93,11 +93,9 @@ select {
 .meta,
 .article-kicker,
 .timeline-date,
-.card-deck-status,
 .tag-nav-label,
 .blog-list-meta,
 .deck-counter,
-.section-kicker,
 .newsroom-panel-kicker {
   color: var(--muted);
   font-family: var(--font-mono);
@@ -121,8 +119,6 @@ select {
 
 /* ── Button ─────────────────────────────────────────────────────────────── */
 .ui-button,
-.button-primary,
-.button-secondary,
 .deck-button,
 .paper-viewer-toggle,
 .pagination-step,
@@ -154,19 +150,9 @@ select {
 
 /* primary — ink fill; one per view */
 .ui-button--primary,
-.button-primary,
 .deck-button-strong {
   border-color: var(--control-primary-fill);
   background: var(--control-primary-fill);
-  color: var(--on-accent);
-}
-
-:is(.ui-button--primary, .button-primary, .deck-button-strong):not(
-    :disabled,
-    .is-disabled
-  ):hover {
-  border-color: var(--control-primary-hover);
-  background: var(--control-primary-hover);
   color: var(--on-accent);
 }
 
@@ -215,7 +201,6 @@ select {
 .menu-button,
 .search-clear,
 .search-close,
-.card-deck-controls button,
 .paper-viewer-control,
 .tag-nav-page-button,
 .mobile-card-carousel-arrow,
@@ -235,64 +220,6 @@ select {
     background-color var(--motion-fast) var(--ease-fluid);
 }
 
-:is(
-    .ui-icon-button,
-    .theme-toggle,
-    .search-toggle,
-    .menu-button,
-    .search-clear,
-    .search-close,
-    .card-deck-controls button,
-    .paper-viewer-control,
-    .tag-nav-page-button,
-    .mobile-card-carousel-arrow,
-    .project-lightbox-close,
-    .project-lightbox-rotate,
-    .project-lightbox-zoom
-  ):not(:disabled):hover {
-  border-color: var(--fg);
-  background: var(--control-surface-hover);
-  color: var(--fg);
-  transform: translateY(-1px);
-}
-
-:is(
-    .ui-icon-button,
-    .theme-toggle,
-    .search-toggle,
-    .menu-button,
-    .search-clear,
-    .search-close,
-    .card-deck-controls button,
-    .paper-viewer-control,
-    .tag-nav-page-button,
-    .mobile-card-carousel-arrow,
-    .project-lightbox-close,
-    .project-lightbox-rotate,
-    .project-lightbox-zoom
-  ):not(:disabled):active {
-  box-shadow: inset 0 2px 4px color-mix(in oklab, var(--fg) 16%, transparent);
-}
-
-:is(
-  .ui-icon-button,
-  .theme-toggle,
-  .search-toggle,
-  .menu-button,
-  .search-clear,
-  .search-close,
-  .card-deck-controls button,
-  .paper-viewer-control,
-  .tag-nav-page-button,
-  .mobile-card-carousel-arrow,
-  .project-lightbox-close,
-  .project-lightbox-rotate,
-  .project-lightbox-zoom
-):disabled {
-  box-shadow: none;
-  cursor: not-allowed;
-}
-
 /* pressed — the same ink fill as a selected button */
 .ui-icon-button[aria-pressed="true"],
 .paper-viewer-control.is-active,
@@ -305,14 +232,9 @@ select {
 /* ── Chip — metadata, never a mini card ─────────────────────────────────── */
 .ui-chip,
 .tag,
-.metric-chip,
-.paper-author-chip,
 .project-stack span,
-.research-facts span,
 .post-info-tags a,
 .post-info-tags span,
-.tip-tags a,
-.tip-platforms a,
 .tip-post-platforms a {
   display: inline-flex;
   width: fit-content;
@@ -410,27 +332,13 @@ select {
 .ui-card,
 .profile-panel,
 .timeline,
-.post-list,
-.markdown-panel,
 .article-shell,
-.author-box,
-.post-card,
-.project-card,
 .project-detail-panel,
-.paper-card,
-.recognition-card,
-.research-card,
-.tip-card,
 .category-nav,
 .tag-nav,
 .empty-state,
 .newsroom-canvas-shell,
 .newsroom-panel,
-.evidence-card,
-.dacon-stat-card,
-.dacon-domain-card,
-.dacon-record,
-.portfolio-meta-card,
 .deck-stage,
 .related-card,
 .source-card {
@@ -442,9 +350,6 @@ select {
 
 /* a card that is one big link lifts a little */
 .ui-card--interactive,
-.project-card,
-.post-card,
-.tip-card,
 .related-card {
   transition:
     transform var(--motion-fast) var(--ease-fluid),
@@ -452,77 +357,150 @@ select {
     border-color var(--motion-fast) var(--ease-fluid);
 }
 
-:is(
-  .ui-card--interactive,
-  .project-card,
-  .post-card,
-  .tip-card,
-  .related-card
-):hover {
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-card-hover);
-  transform: translateY(-2px);
-}
-
-:is(
-  .ui-card--interactive,
-  .project-card,
-  .post-card,
-  .tip-card,
-  .related-card
-):active {
-  transform: scale(0.99);
-}
-
 /* a card that belongs to a research / project / result carries its colour on top
    (src/utils/treeColors.js — the same colours as the home tree) */
-:is(
-  .ui-card,
-  .project-card,
-  .paper-card,
-  .recognition-card,
-  .related-card
-)[style*="--c"] {
-  border-top: 3px solid var(--c);
-}
 
-/* ── Page header — the top of every list / overview page ──────────────────── */
+/* ── Page header — a shot from the reel: crop marks, slate, big title ───────── */
 .ui-page-header {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-8) var(--space-12);
   align-items: end;
-  padding: clamp(4.5rem, 7vw, 5.5rem) 0 var(--space-10);
+  margin: clamp(2.5rem, 5vw, 4rem) 0 clamp(2rem, 4vw, 3rem);
+  padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1.25rem, 2.5vw, 2.25rem);
 }
 
-/* inside a .section, the section already gives the top space */
 .section > .ui-page-header:first-child {
-  padding-top: 0;
+  margin-top: 0;
 }
 
-.ui-page-header:not(:has(.ui-page-header-aside)) {
-  grid-template-columns: minmax(0, 1fr);
+.ui-page-header.has-aside {
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.75fr);
+}
+
+.ui-page-header--hero.has-aside {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  min-height: min(68svh, 44rem);
+  align-items: stretch;
+}
+
+.ui-page-header--hero .ui-page-header-main {
+  align-self: end;
+}
+
+/* the four corner marks of the reel's frame */
+.ui-marks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ui-marks i {
+  position: absolute;
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 0 solid var(--border-strong);
+}
+
+.ui-marks i:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-width: 1px 0 0 1px;
+}
+
+.ui-marks i:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-width: 1px 1px 0 0;
+}
+
+.ui-marks i:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  border-width: 0 0 1px 1px;
+}
+
+.ui-marks i:nth-child(4) {
+  right: 0;
+  bottom: 0;
+  border-width: 0 1px 1px 0;
 }
 
 .ui-page-header-main {
   min-width: 0;
 }
 
+/* the slate: page | the colours of what it lists | how many */
+.ui-slate {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: stretch;
+  margin: 0 0 var(--space-6);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xs);
+  background: var(--bg);
+  color: var(--fg);
+  font: 500 0.6875rem/1 var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ui-slate > * {
+  display: flex;
+  align-items: center;
+  padding: 0.45rem 0.65rem;
+  white-space: nowrap;
+}
+
+.ui-slate > * + * {
+  border-left: 1px solid var(--border-strong);
+}
+
+.ui-slate b {
+  font-weight: 700;
+}
+
+.ui-slate em {
+  margin-right: 0.35em;
+  font-style: normal;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ui-slate span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted);
+  text-overflow: ellipsis;
+}
+
+.ui-slate-bars {
+  gap: 0;
+  padding: 0 !important;
+}
+
+.ui-slate-bars i {
+  width: 0.5625rem;
+  align-self: stretch;
+  min-height: 1.6rem;
+}
+
 .ui-page-header h1 {
   margin: 0;
-  font: 700 var(--type-page-title) / 1.05 var(--font-display);
-  letter-spacing: -0.04em;
+  font: 700 clamp(2.75rem, 6.2vw, 5.75rem) / 1.02 var(--font-display);
+  letter-spacing: -0.035em;
   overflow-wrap: break-word;
   text-wrap: balance;
   word-break: keep-all;
 }
 
 .ui-page-header-lead {
-  max-width: 42rem;
+  max-width: 34em;
   margin: var(--space-5) 0 0;
   color: var(--muted);
-  font-size: clamp(1.02rem, 1.4vw, 1.18rem);
-  line-height: 1.6;
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.65;
   text-wrap: pretty;
 }
 
@@ -531,46 +509,135 @@ select {
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2) var(--space-4);
-  margin-top: var(--space-5);
+  margin-top: var(--space-6);
 }
 
 .ui-page-header-aside {
+  position: relative;
   display: grid;
   min-width: 0;
   gap: var(--space-3);
   align-self: end;
 }
 
+.ui-page-header--hero .ui-page-header-aside {
+  align-self: stretch;
+  min-height: 22rem;
+}
+
 @media (max-width: 980px) {
-  .ui-page-header {
+  .ui-page-header.has-aside,
+  .ui-page-header--hero.has-aside {
     grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .ui-page-header--hero .ui-page-header-aside {
+    order: -1;
+    min-height: min(56svh, 26rem);
   }
 }
 
 @media (max-width: 760px) {
   .ui-page-header {
     gap: var(--space-6);
-    padding: var(--space-10) 0 var(--space-6);
+    margin: var(--space-6) 0 var(--space-6);
+    padding: var(--space-6) var(--space-4);
   }
 
   .ui-page-header h1 {
-    font-size: clamp(2rem, 8.8vw, 2.4rem);
-    line-height: 1.08;
+    font-size: clamp(2.25rem, 10.5vw, 3rem);
+    line-height: 1.06;
   }
+
+  .ui-slate {
+    margin-bottom: var(--space-5);
+  }
+}
+
+/* ── Tree — the reel's tree on a page (src/components/TreeCanvas.js) ───────── */
+.tree-canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+}
+
+.tree-canvas canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* a link over each leaf cluster; its tag shows on hover / focus */
+.tree-canvas-hit {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.tree-canvas-hit:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.tree-canvas-tag {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 0.3rem 0.55rem;
+  border-radius: var(--radius-xs);
+  background: var(--fg);
+  color: var(--bg);
+  font: 700 0.75rem/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.92);
+  transition:
+    opacity var(--motion-fast),
+    transform var(--motion-fast) var(--ease-fluid);
+  white-space: nowrap;
+}
+
+.tree-canvas-hit:is(:hover, :focus-visible, .is-on) .tree-canvas-tag {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* a research pin on a root tip */
+.tree-canvas-pin {
+  position: absolute;
+  display: grid;
+  min-width: 1.75rem;
+  height: 1.375rem;
+  place-items: center;
+  padding: 0 0.3rem;
+  border: 1.5px solid var(--c-solid, var(--c, var(--fg)));
+  border-radius: var(--radius-xs);
+  background: var(--c-solid, var(--c, var(--fg)));
+  color: var(--on-c, #f7f3ea);
+  font: 700 0.6875rem/1 var(--font-mono);
+  text-decoration: none;
+  transform: translate(-50%, -50%);
+  transition: transform var(--motion-fast) var(--ease-fluid);
+}
+
+.tree-canvas-pin:hover,
+.tree-canvas-pin:focus-visible {
+  transform: translate(-50%, -50%) scale(1.12);
 }
 
 /* ── Text action — the "보기 →" links in a card's action row ─────────────────── */
 /* small on screen; on a touch screen the target grows to ~44px without moving anything */
 @media (pointer: coarse) {
-  :is(.ui-actions, .project-inline-actions, .competition-project-actions)
-    :is(a, button):not(.project-card-link),
   .paper-link,
   .article-kicker {
     position: relative;
   }
 
-  :is(.ui-actions, .project-inline-actions, .competition-project-actions)
-    :is(a, button):not(.project-card-link)::before,
   .paper-link::before,
   .article-kicker::before {
     position: absolute;
@@ -588,33 +655,18 @@ select {
 }
 
 /* ── Preferences ────────────────────────────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  :is(
-    .ui-card--interactive,
-    .project-card,
-    .post-card,
-    .tip-card,
-    .related-card,
-    .recognition-card,
-    .research-card,
-    .paper-card
-  ):hover,
-  :is(
-    .ui-button,
-    .button-primary,
-    .button-secondary,
-    .deck-button,
-    .pagination-page,
-    .pagination-step,
-    .paper-viewer-toggle
-  ):active {
-    transform: none;
-  }
-}
 
-@media (prefers-contrast: more) {
-  :is(.ui-chip, .tag, .metric-chip, .ui-filter, .category-nav a, .tag-nav a) {
-    border-color: var(--fg);
-    color: var(--fg);
-  }
+/* the empty branch on the contact page: where the next project grows */
+.tree-canvas-next {
+  position: absolute;
+  padding: 0.35rem 0.6rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-xs);
+  background: var(--bg);
+  color: var(--fg);
+  font: 700 0.72rem/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
 }

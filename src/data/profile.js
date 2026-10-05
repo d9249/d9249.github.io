@@ -422,6 +422,7 @@ export const awardItems = [
 export const competitionItems = [
   {
     title: "LG Aimers 4기",
+    score: { value: "0.752", label: "F1-score" },
     result: "팀리더",
     period: "2024.01 - 2024.02",
     description:
@@ -437,6 +438,7 @@ export const competitionItems = [
   },
   {
     title: "HD현대 AI Challenge",
+    score: { value: "4위", label: "Public 98.214" },
     result: "4위",
     period: "2023",
     description:
@@ -452,6 +454,7 @@ export const competitionItems = [
   },
   {
     title: "DACON 경진대회",
+    score: { value: "39", label: "대회 참가" },
     result: "39개 대회 참여",
     period: "2021 - 2024",
     description:

@@ -3,7 +3,7 @@ import { graphql } from "gatsby";
 import CategoryNav from "../components/CategoryNav";
 import Layout from "../components/Layout";
 import Pagination from "../components/Pagination";
-import PostCard from "../components/PostCard";
+import PostRows from "../components/PostRows";
 import { PageHeader } from "../components/ui";
 import TagNav from "../components/TagNav";
 
@@ -22,7 +22,11 @@ const BlogIndexTemplate = ({ data, pageContext }) => {
   return (
     <Layout>
       <section className="shell section">
-        <PageHeader kicker="Blog" title="Knowledge WIKI" />
+        <PageHeader
+          slate={{ label: "Blog", count: totalPosts, unit: "posts" }}
+          title="Knowledge WIKI"
+          lead="AI 에이전트, 검색, 문서 AI, 모델 학습을 읽고 만들면서 정리한 글입니다. 분야와 태그로 좁혀 볼 수 있습니다."
+        />
         <CategoryNav />
         <TagNav tagSummaries={tagSummaries} />
         <div className="blog-list-summary" aria-live="polite">
@@ -47,13 +51,8 @@ const BlogIndexTemplate = ({ data, pageContext }) => {
           </div>
         </div>
         <h2 className="visually-hidden">글 목록</h2>
-        {featured && <PostCard post={featured} featured />}
-        {listedPosts.length > 0 ? (
-          <div className="post-grid">
-            {listedPosts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
+        {featured || listedPosts.length > 0 ? (
+          <PostRows featured={featured} posts={listedPosts} />
         ) : (
           <div className="empty-state">아직 공개된 글이 없습니다.</div>
         )}

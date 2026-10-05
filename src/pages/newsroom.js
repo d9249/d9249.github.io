@@ -24,7 +24,15 @@ const NewsroomPage = ({ data }) => {
   return (
     <Layout>
       <section className="shell section newsroom-page">
-        <PageHeader kicker="Newsroom" title="지식 그래프" />
+        <PageHeader
+          slate={{
+            label: "Newsroom",
+            count: graph.nodes.length,
+            unit: "pages",
+          }}
+          title="지식 그래프"
+          lead="블로그와 팁 전체 글을 태그 관계로 이은 그래프입니다. 점 하나가 글 하나이고, 같은 태그를 가진 글끼리 이어집니다."
+        />
         <div className="blog-list-summary">
           <span className="blog-list-count">
             {graph.nodes.length} pages, {graph.links.length} links,{" "}

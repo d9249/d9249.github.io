@@ -353,7 +353,11 @@ const PortfolioPage = () => {
       <section className="portfolio-shell">
         <div className="shell">
           <PageHeader
-            kicker="Portfolio Deck"
+            slate={{
+              label: "Portfolio",
+              count: deck.slides.length,
+              unit: "slides",
+            }}
             title="이상민 포트폴리오"
             lead="AI 연구, 제품 개발 프로젝트들을 발표용 슬라이드로 정리했습니다."
           />

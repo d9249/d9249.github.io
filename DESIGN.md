@@ -9,7 +9,7 @@ rules, mono labels and a slate in the corner. One picture carries the story: **a
 - **Branches** are projects. Each project has its own leaf colour, and its leaves attach one at a time.
 - **Fruit** is what a project earned, such as an award, a patent or a contract (mandarin).
 
-The home page tells that story as an eight-shot reel (§6). Every other page uses the same
+The home page tells that story as an eight-shot reel (§7), and the inner pages reuse its devices (§6). Every other page uses the same
 paper, ink and colour meanings, so a project's colour on the home tree is the same colour on
 its card and its page.
 
@@ -40,7 +40,7 @@ All colours live in `src/styles/tokens.css`. No other stylesheet defines `:root`
 | Hairline       | `--border` / `--border-strong` | fg 14% / 34%    | fg 13% / 36% |
 | Link · focus   | `--accent`                     | `#2347c4`       | `#86a2ff`    |
 | Evidence       | `--accent-2`                   | `#0e7487`       | `#4fc6d8`    |
-| Recognition    | `--accent-3`                   | `#b85a00`       | `#f5a050`    |
+| Recognition    | `--accent-3`                   | `#9a4b00`       | `#f5a050`    |
 | Result fill    | `--result`                     | mandarin        | mandarin     |
 | Primary fill   | `--control-primary-fill`       | ink             | `#eee8dc`    |
 | Primary hover  | `--control-primary-hover`      | `--c-green`     | `#5fd3a0`    |
@@ -82,17 +82,17 @@ All colours live in `src/styles/tokens.css`. No other stylesheet defines `:root`
 Each primitive is defined **once** in `src/styles/components.css`. React wrappers live in
 `src/components/ui/`. Markup that can't use React (markdown, the reel) uses the class directly.
 
-| Primitive    | Class                                                              | React                                          | Notes                                                                                          |
-| ------------ | ------------------------------------------------------------------ | ---------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| Label        | `.ui-label`, `.ui-label--strong`, `.eyebrow`                       | `<Label>`, `<Label kicker>`                    | Mono uppercase meta; `kicker` is the label above a heading                                     |
-| Button       | `.ui-button` + `--primary` / `--tonal` / `--compact`, `.is-active` | `<Button to / href / onClick variant>`         | Pill with a 1.5px border. Primary is an ink fill (one per view) with green hover               |
-| Chip         | `.ui-chip`, `.ui-chip--solid`                                      | `<Chip color solid>`                           | Metadata only. `color` shows a swatch; `solid` fills                                           |
-| Filter chip  | `.ui-filter` + `.is-active` / `aria-current`                       | (CategoryNav, TagNav)                          | Category and tag filters; active is an ink fill                                                |
-| Card         | `.ui-card`, `.ui-card--interactive`                                | `<Card interactive color>`                     | Flat sheet; `color` puts the project/research colour on the top edge                           |
-| Page header  | `.ui-page-header` (+ `-lead`, `-actions`, `-aside`)                | `<PageHeader kicker title lead actions aside>` | The h1 of every list and overview page. Detail pages (post, project) keep their article header |
-| Section head | `.section-head`                                                    | `<SectionHeading kicker title action>`         | Every h2 section heading inside a page                                                         |
-| Text action  | `.ui-actions a` (aliases `.project-inline-actions`, `.paper-link`) | —                                              | "보기 →" links in a card. On touch screens the hit area grows to ~44px without moving anything |
-| Hidden text  | `.visually-hidden`                                                 | —                                              | Screen-reader-only text, e.g. the h2 between a page's h1 and its card list                     |
+| Primitive    | Class                                                              | React                                              | Notes                                                                                                                             |
+| ------------ | ------------------------------------------------------------------ | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Label        | `.ui-label`, `.ui-label--strong`, `.eyebrow`                       | `<Label>`, `<Label kicker>`                        | Mono uppercase meta; `kicker` is the label above a heading                                                                        |
+| Button       | `.ui-button` + `--primary` / `--tonal` / `--compact`, `.is-active` | `<Button to / href / onClick variant>`             | Pill with a 1.5px border. Primary is an ink fill (one per view) with green hover                                                  |
+| Chip         | `.ui-chip`, `.ui-chip--solid`                                      | `<Chip color solid>`                               | Metadata only. `color` shows a swatch; `solid` fills                                                                              |
+| Filter chip  | `.ui-filter` + `.is-active` / `aria-current`                       | (CategoryNav, TagNav)                              | Category and tag filters; active is an ink fill                                                                                   |
+| Card         | `.ui-card`, `.ui-card--interactive`                                | `<Card interactive color>`                         | For panels only (sidebars, filters, viewers). Lists are rows, not cards (§6)                                                      |
+| Page header  | `.ui-page-header` (+ `--hero`, `.ui-slate`, `.ui-marks`)           | `<PageHeader slate title lead actions aside size>` | A shot from the reel: crop marks, a slate (page · colours of what it lists · count), a big title, the page's picture on the right |
+| Section head | `.section-head`                                                    | `<SectionHeading kicker title action>`             | Every h2 section heading inside a page                                                                                            |
+| Text action  | `.ui-actions a` (aliases `.project-inline-actions`, `.paper-link`) | —                                                  | "보기 →" links in a card. On touch screens the hit area grows to ~44px without moving anything                                    |
+| Hidden text  | `.visually-hidden`                                                 | —                                                  | Screen-reader-only text, e.g. the h2 between a page's h1 and its card list                                                        |
 
 **Legacy aliases.** The families also list the classes the pages already use. For example,
 `.button-primary`, `.pagination-page` and `.section-action a` are buttons; `.tag`,
@@ -101,7 +101,27 @@ Each primitive is defined **once** in `src/styles/components.css`. React wrapper
 layout only, such as margins, grid placement and page-context variants (`.profile-panel .ui-chip`).
 When you touch a page, prefer the `ui-*` class or the React wrapper and drop the alias.
 
-## 6. The home reel
+## 6. Pages — the reel's vocabulary
+
+The inner pages reuse the reel's devices instead of a card grid. Each page puts its boldness into one
+picture in its header; the lists below it are quiet rows on hairlines.
+
+| Page            | Header picture                                                                | List                                                                 |
+| --------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Projects        | The tree (`<TreeCanvas grow>`), one link per branch; hovering a row lights it | Branch rows: leaf-colour tab, name in Archivo wide, KPI chip in leaf |
+| Project page    | The tree with only this branch lit; the name set like the reel's case cut     | A cut (`--cut-*`): problem, capabilities grown, result (shot 07)     |
+| Research        | The roots (`variant="roots"`) with R1–R6 pins; counts as condensed numerals   | Root rows R1–R6, then every paper by type, root colour on the margin |
+| Awards          | The award sheet (`<AwardSheet>`): the reel's stamps land one by one           | Ledger: date, award, result in mandarin, evidence links, a tick      |
+| Competitions    | A check sheet: ticks draw in, values with a mandarin highlighter              | Check rows: box, what, value, note                                   |
+| DACON           | Stat tiles                                                                    | A bar per field, a ledger of entries with rank and percentile        |
+| Blog, tag, tips | Slate with the count                                                          | Notebook rows: date and category in the margin, title, one line      |
+| Contact         | The tree with an empty "next branch" (the reel's end card)                    | Channels as a ledger                                                 |
+
+- `src/components/TreeCanvas.js` draws the reel's tree with the compositor in `showreel/tree.js` (shared with the reel). It grows once (skipped for reduced motion), redraws on theme and size changes, and puts real links over branches and roots.
+- Colours on the pages come from `src/utils/treeColors.js` (`stageOf`, `caseOf`, `paperColor`, `onColor`), so a project is the same colour on the tree, its row and its page.
+- Motion on the pages is limited to one moment per page header: the tree growing, the stamps landing, the ticks drawing.
+
+## 7. The home reel
 
 `src/pages/index.js` = `<Showreel/>` + career timeline (`#career`) + latest posts (`#latest`).
 
@@ -118,11 +138,11 @@ When you touch a page, prefer the `ui-*` class or the React wrapper and drop the
 
 - Files: `src/components/Showreel.js` mounts `showreel/markup.js` (static HTML, rendered at build time) and `showreel/engine.js`. The engine returns a teardown, so route changes leave no listeners behind.
 - Content: `src/data/showreel.json`. A new project goes at the end of `stages`; no render is needed for up to 11 projects. The tree's sprites and anchors come from `scripts/showreel/` (see its README).
-- Styles: `src/styles/showreel.css`, scoped under `.reel`. It aliases its old names onto the tokens (`--sub` → `--muted`, `--rule` → `--border`, and so on). Only reel-only inks stay local, such as the stamp colours, the terminal and the ruled paper.
+- Styles: `src/styles/showreel.css`, scoped under `.reel`. It aliases its old names onto the tokens (`--sub` → `--muted`, `--rule` → `--border`, and so on). Only reel-only inks stay local; the stamp inks, terminal and tree wood are tokens because the pages use them too.
 - The reel slides under the sticky masthead (`margin-top: −var(--hh)`; the engine measures the masthead). Its gutters line up with `.shell`. The HUD hides once the reel is over.
 - Scrolling is native, with sticky shots. After the wheel stops, the page settles to the nearest cut. ▶ plays the reel and pauses on any wheel, touch or key input.
 
-## 7. Files and load order
+## 8. Files and load order
 
 `gatsby-browser.js` imports, in order:
 
@@ -138,7 +158,7 @@ Rules of the road:
 - Never restyle a primitive in a page file. Add a variant in `components.css`, or a layout-only page rule.
 - New page-level rules go in `site.css`. `legacy.css` only shrinks.
 
-## 8. Accessibility & accepted debt
+## 9. Accessibility & accepted debt
 
 - Text and controls meet WCAG AA in both themes. Focus is always visible (`--focus-ring`). Icon-only controls keep Korean `aria-label`s. Touch targets are 44px where space allows.
 - `prefers-reduced-motion`: the reel jumps between cuts instead of easing, and title and stamp animations are off. `prefers-contrast: more` strengthens borders and muted text.
@@ -146,6 +166,6 @@ Rules of the road:
 
 Accepted debt:
 
-- `legacy.css` (~4.6k lines) and `site.css` (~2.6k lines) still mix page layouts with older one-off visuals.
+- `legacy.css` (~3.5k lines) and `site.css` (~3.4k lines) still mix page layouts with older one-off visuals.
 - The legacy aliases in `components.css` should shrink as pages move to `ui-*` and the React wrappers.
-- The project detail hero and the contact page keep their own header compositions. Every list and overview page uses `<PageHeader>`.
+- `legacy.css` still carries the article body, PDF viewer, lightbox and deck rules; new page styles go in `site.css` under "Pages in the reel's vocabulary".
