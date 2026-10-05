@@ -74,6 +74,19 @@ select {
   }
 }
 
+/* text for screen readers only (section headings of list pages, link context) */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  margin: -1px !important;
+  border: 0 !important;
+}
+
 /* ── Label — eyebrow, meta, kicker ──────────────────────────────────────── */
 .ui-label,
 .eyebrow,
@@ -461,30 +474,47 @@ select {
   transform: scale(0.99);
 }
 
-/* a card that belongs to a research / project / result carries its colour on top */
-.ui-card[style*="--c"] {
+/* a card that belongs to a research / project / result carries its colour on top
+   (src/utils/treeColors.js — the same colours as the home tree) */
+:is(
+  .ui-card,
+  .project-card,
+  .paper-card,
+  .recognition-card,
+  .related-card
+)[style*="--c"] {
   border-top: 3px solid var(--c);
 }
 
-/* ── Page header — the top of every page ────────────────────────────────── */
+/* ── Page header — the top of every list / overview page ──────────────────── */
 .ui-page-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
   gap: var(--space-8) var(--space-12);
   align-items: end;
-  padding: var(--space-16) 0 var(--space-10);
-  border-bottom: 1px solid var(--border);
+  padding: clamp(4.5rem, 7vw, 5.5rem) 0 var(--space-10);
+}
+
+/* inside a .section, the section already gives the top space */
+.section > .ui-page-header:first-child {
+  padding-top: 0;
 }
 
 .ui-page-header:not(:has(.ui-page-header-aside)) {
   grid-template-columns: minmax(0, 1fr);
 }
 
+.ui-page-header-main {
+  min-width: 0;
+}
+
 .ui-page-header h1 {
-  margin: var(--space-3) 0 0;
-  font: 700 var(--type-page-title) / 1.08 var(--font-display);
-  letter-spacing: -0.035em;
+  margin: 0;
+  font: 700 var(--type-page-title) / 1.05 var(--font-display);
+  letter-spacing: -0.04em;
+  overflow-wrap: break-word;
   text-wrap: balance;
+  word-break: keep-all;
 }
 
 .ui-page-header-lead {
@@ -499,21 +529,61 @@ select {
 .ui-page-header-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-top: var(--space-6);
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-5);
 }
 
 .ui-page-header-aside {
   display: grid;
+  min-width: 0;
   gap: var(--space-3);
-  align-self: stretch;
-  align-content: end;
+  align-self: end;
+}
+
+@media (max-width: 980px) {
+  .ui-page-header {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 @media (max-width: 760px) {
   .ui-page-header {
-    grid-template-columns: minmax(0, 1fr);
-    padding: var(--space-10) 0 var(--space-8);
+    gap: var(--space-6);
+    padding: var(--space-10) 0 var(--space-6);
+  }
+
+  .ui-page-header h1 {
+    font-size: clamp(2rem, 8.8vw, 2.4rem);
+    line-height: 1.08;
+  }
+}
+
+/* ── Text action — the "보기 →" links in a card's action row ─────────────────── */
+/* small on screen; on a touch screen the target grows to ~44px without moving anything */
+@media (pointer: coarse) {
+  :is(.ui-actions, .project-inline-actions, .competition-project-actions)
+    :is(a, button):not(.project-card-link),
+  .paper-link,
+  .article-kicker {
+    position: relative;
+  }
+
+  :is(.ui-actions, .project-inline-actions, .competition-project-actions)
+    :is(a, button):not(.project-card-link)::before,
+  .paper-link::before,
+  .article-kicker::before {
+    position: absolute;
+    inset: -0.75rem -0.375rem;
+    content: "";
+  }
+
+  /* stacked link lists grow instead */
+  .toc > a,
+  .project-detail-panel > a {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
   }
 }
 

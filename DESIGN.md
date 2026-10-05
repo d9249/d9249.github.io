@@ -48,6 +48,7 @@ All colours live in `src/styles/tokens.css`. No other stylesheet defines `:root`
 ### Rules
 
 - **One colour, one meaning.** Earth means research, a leaf colour means that project, and mandarin means a result. Don't use a palette colour for decoration.
+- Cards outside the reel use the same colours. `src/utils/treeColors.js` maps a project slug to its leaf colour and a paper to its root colour, and award cards use mandarin. A card that carries a colour gets it as `--c`, drawn as a 3px top edge.
 - `--accent` is for links, focus and selection only. Primary actions are ink, not blue.
 - Palette colours go on fills, swatches and top edges. Text uses `--fg`, `--muted` or the text-safe `--accent-*`.
 - Colour never carries state alone. Pair it with a label, a weight or a shape.
@@ -71,7 +72,7 @@ All colours live in `src/styles/tokens.css`. No other stylesheet defines `:root`
 - Space: `--space-1 … --space-24` (a 4px base: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 96).
 - Radius: `--radius-xs` (swatches, code), `--radius-control` (inputs), `--radius-card`, `--radius-large` (media), `--radius-pill` (buttons, chips).
 - Surface: flat paper. A card is `--surface` with a 1px `--border` and a 1px `--shadow-card`. Hover adds `--shadow-card-hover` and a 2px lift. There is no glass and no blur, except the floating masthead and the reel HUD (`--material-floating`).
-- Paper details: `--ruled-paper` is ruled lines with a rust margin line, layered over a surface (post headers, related-project thumbs, the reel's shot 02). `--term`, `--term-fg` and `--term-dim` set code blocks and the reel's terminal.
+- Paper details: `--ruled-paper` is ruled lines with a rust margin line, layered over a surface (post card headers, the reel's shot 02). `--term`, `--term-fg` and `--term-dim` set code blocks and the reel's terminal. `--stage*` is the slide deck's surround, which stays dark in both themes.
 - Motion: `--motion-press` 100ms · `--motion-fast` 180ms · `--motion-material` 320ms · `--motion-reveal` 480ms, with `--ease-fluid`. Pages stay still; motion belongs to the reel.
 - Z: `--z-sticky` masthead · `--z-hud` reel HUD · `--z-overlay` search · `--z-modal` lightbox · `--z-skip` · `--z-fullscreen` deck.
 - Layout: `.shell` is `min(75rem, 100% − 3rem)` (`− 2rem` ≤ 760px). Breakpoints are 1120 · 980 · 760 · 420.
@@ -81,15 +82,17 @@ All colours live in `src/styles/tokens.css`. No other stylesheet defines `:root`
 Each primitive is defined **once** in `src/styles/components.css`. React wrappers live in
 `src/components/ui/`. Markup that can't use React (markdown, the reel) uses the class directly.
 
-| Primitive    | Class                                                              | React                                     | Notes                                                                            |
-| ------------ | ------------------------------------------------------------------ | ----------------------------------------- | -------------------------------------------------------------------------------- |
-| Label        | `.ui-label`, `.ui-label--strong`, `.eyebrow`                       | `<Label>`, `<Label kicker>`               | Mono uppercase meta; `kicker` is the label above a heading                       |
-| Button       | `.ui-button` + `--primary` / `--tonal` / `--compact`, `.is-active` | `<Button to / href / onClick variant>`    | Pill with a 1.5px border. Primary is an ink fill (one per view) with green hover |
-| Chip         | `.ui-chip`, `.ui-chip--solid`                                      | `<Chip color solid>`                      | Metadata only. `color` shows a swatch; `solid` fills                             |
-| Filter chip  | `.ui-filter` + `.is-active` / `aria-current`                       | (CategoryNav, TagNav)                     | Category and tag filters; active is an ink fill                                  |
-| Card         | `.ui-card`, `.ui-card--interactive`                                | `<Card interactive color>`                | Flat sheet; `color` puts the project/research colour on the top edge             |
-| Section head | `.section-head`                                                    | `<SectionHeading as kicker title action>` | Page header of list pages (`as="h1"`) and every section heading                  |
-| Page header  | `.ui-page-header` (+ `-lead`, `-actions`, `-aside`)                | —                                         | For new pages; existing detail heroes keep their own layout for now              |
+| Primitive    | Class                                                              | React                                          | Notes                                                                                          |
+| ------------ | ------------------------------------------------------------------ | ---------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Label        | `.ui-label`, `.ui-label--strong`, `.eyebrow`                       | `<Label>`, `<Label kicker>`                    | Mono uppercase meta; `kicker` is the label above a heading                                     |
+| Button       | `.ui-button` + `--primary` / `--tonal` / `--compact`, `.is-active` | `<Button to / href / onClick variant>`         | Pill with a 1.5px border. Primary is an ink fill (one per view) with green hover               |
+| Chip         | `.ui-chip`, `.ui-chip--solid`                                      | `<Chip color solid>`                           | Metadata only. `color` shows a swatch; `solid` fills                                           |
+| Filter chip  | `.ui-filter` + `.is-active` / `aria-current`                       | (CategoryNav, TagNav)                          | Category and tag filters; active is an ink fill                                                |
+| Card         | `.ui-card`, `.ui-card--interactive`                                | `<Card interactive color>`                     | Flat sheet; `color` puts the project/research colour on the top edge                           |
+| Page header  | `.ui-page-header` (+ `-lead`, `-actions`, `-aside`)                | `<PageHeader kicker title lead actions aside>` | The h1 of every list and overview page. Detail pages (post, project) keep their article header |
+| Section head | `.section-head`                                                    | `<SectionHeading kicker title action>`         | Every h2 section heading inside a page                                                         |
+| Text action  | `.ui-actions a` (aliases `.project-inline-actions`, `.paper-link`) | —                                              | "보기 →" links in a card. On touch screens the hit area grows to ~44px without moving anything |
+| Hidden text  | `.visually-hidden`                                                 | —                                              | Screen-reader-only text, e.g. the h2 between a page's h1 and its card list                     |
 
 **Legacy aliases.** The families also list the classes the pages already use. For example,
 `.button-primary`, `.pagination-page` and `.section-action a` are buttons; `.tag`,
@@ -143,6 +146,6 @@ Rules of the road:
 
 Accepted debt:
 
-- `legacy.css` (~4.8k lines) and `site.css` (~2.9k lines) still mix page layouts with older one-off visuals. Some literal `oklch()` colours remain in the lightbox and terminal blocks.
+- `legacy.css` (~4.6k lines) and `site.css` (~2.6k lines) still mix page layouts with older one-off visuals.
 - The legacy aliases in `components.css` should shrink as pages move to `ui-*` and the React wrappers.
-- The project and research detail heroes, the portfolio deck and the newsroom keep their own header layouts. `.ui-page-header` is ready for when they're next touched.
+- The project detail hero and the contact page keep their own header compositions. Every list and overview page uses `<PageHeader>`.

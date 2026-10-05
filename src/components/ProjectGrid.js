@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "gatsby";
+import { colorStyle, projectColor } from "../utils/treeColors";
 
 const normalizeProject = (project) => {
   const frontmatter = project.frontmatter || project;
@@ -27,7 +28,11 @@ const ProjectGrid = ({ className, projects }) => (
       const project = normalizeProject(rawProject);
 
       return (
-        <article className="project-card" key={project.key}>
+        <article
+          className="project-card"
+          key={project.key}
+          style={colorStyle(projectColor(project.slug))}
+        >
           <div className="project-card-header">
             <div>
               <div className="meta">{project.period}</div>

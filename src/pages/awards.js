@@ -1,7 +1,8 @@
 import * as React from "react";
 import InlineEvidenceViewer from "../components/InlineEvidenceViewer";
 import Layout from "../components/Layout";
-import SectionHeading from "../components/SectionHeading";
+import { PageHeader } from "../components/ui";
+import { colorStyle, RESULT_COLOR } from "../utils/treeColors";
 import { awardItems } from "../data/profile";
 
 const RECOGNITION_VIEWER_QUERY = "(max-width: 760px)";
@@ -82,7 +83,10 @@ const AwardCard = ({ item, activeEvidence, onToggleEvidence }) => {
     item.links?.filter((link) => !isInlineEvidenceLink(link)) || [];
 
   return (
-    <article className="project-card recognition-card award-project-card">
+    <article
+      className="project-card recognition-card award-project-card"
+      style={colorStyle(RESULT_COLOR)}
+    >
       <div className="project-card-header">
         <div className="meta">{item.period}</div>
         <h3 className="project-title">
@@ -187,7 +191,8 @@ const AwardsPage = () => {
   return (
     <Layout>
       <section className="shell section recognition-page">
-        <SectionHeading as="h1" kicker="Awards" title="수상 기록" />
+        <PageHeader kicker="Awards" title="수상 기록" />
+        <h2 className="visually-hidden">수상 목록</h2>
         {isMobileEvidenceViewer ? (
           <div className="recognition-list recognition-category-list">
             {mobileAwardGroups.map((group) => {

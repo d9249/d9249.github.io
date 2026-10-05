@@ -4,7 +4,7 @@ import CategoryNav from "../components/CategoryNav";
 import Layout from "../components/Layout";
 import Pagination from "../components/Pagination";
 import PostCard from "../components/PostCard";
-import SectionHeading from "../components/SectionHeading";
+import { PageHeader } from "../components/ui";
 import TagNav from "../components/TagNav";
 
 const getBlogPagePath = (page) =>
@@ -22,7 +22,7 @@ const BlogIndexTemplate = ({ data, pageContext }) => {
   return (
     <Layout>
       <section className="shell section">
-        <SectionHeading as="h1" kicker="Blog" title="Knowledge WIKI" />
+        <PageHeader kicker="Blog" title="Knowledge WIKI" />
         <CategoryNav />
         <TagNav tagSummaries={tagSummaries} />
         <div className="blog-list-summary" aria-live="polite">
@@ -46,6 +46,7 @@ const BlogIndexTemplate = ({ data, pageContext }) => {
             />
           </div>
         </div>
+        <h2 className="visually-hidden">글 목록</h2>
         {featured && <PostCard post={featured} featured />}
         {listedPosts.length > 0 ? (
           <div className="post-grid">

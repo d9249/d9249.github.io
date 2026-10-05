@@ -2,12 +2,13 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import Layout from "../components/Layout";
 import ProjectGrid from "../components/ProjectGrid";
-import SectionHeading from "../components/SectionHeading";
+import { PageHeader } from "../components/ui";
 
 const ProjectsPage = ({ data }) => (
   <Layout>
     <section className="shell section projects-page">
-      <SectionHeading as="h1" kicker="Projects" title="프로젝트" />
+      <PageHeader kicker="Projects" title="프로젝트" />
+      <h2 className="visually-hidden">프로젝트 목록</h2>
       <ProjectGrid projects={data.projects.nodes} />
     </section>
   </Layout>

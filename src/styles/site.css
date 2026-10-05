@@ -80,6 +80,7 @@ textarea:focus-visible,
 }
 
 .wordmark {
+  min-height: 2.75rem; /* a full tap target, even when the role line is hidden */
   gap: var(--space-3);
   color: var(--fg);
   font-family: var(--font-body);
@@ -353,17 +354,6 @@ html[lang="ko"] body {
   font-weight: 720;
   letter-spacing: -0.04em;
   line-height: 1.05;
-}
-
-.visually-hidden {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  clip: rect(0 0 0 0) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
 }
 
 .research-overview-section {
@@ -691,7 +681,7 @@ html[lang="ko"] body {
 
 /* a post's header strip is a piece of ruled paper with its category on it */
 .post-thumb {
-  min-height: clamp(6rem, 10vw, 7.5rem);
+  min-height: clamp(4.5rem, 7vw, 5.5rem);
   border: 0;
   border-bottom: 1px solid var(--border);
   background: var(--ruled-paper), var(--surface);
@@ -720,8 +710,7 @@ html[lang="ko"] body {
 }
 
 .article h1,
-.project-detail-hero h1,
-.portfolio-hero h1 {
+.project-detail-hero h1 {
   font-size: var(--type-page-title);
   font-weight: 740;
   letter-spacing: -0.04em;
@@ -754,9 +743,9 @@ html[lang="ko"] body {
 }
 
 .article-body blockquote {
-  border-left-color: var(--accent);
-  border-radius: 0 var(--radius-control) var(--radius-control) 0;
-  background: color-mix(in oklab, var(--accent) 6%, var(--surface));
+  border-left-color: var(--fg); /* an ink rule, like the reel's case quotes */
+  border-radius: 0;
+  background: none;
 }
 
 .project-detail-hero {
@@ -816,12 +805,22 @@ html[lang="ko"] body {
   opacity: 1;
 }
 
-.related-card .thumb {
-  display: none;
+/* the diagram frame stays white in dark mode, so its caption keeps the light-theme ink */
+.project-markdown-body
+  :is(
+    .harmony-diagram,
+    .market-diagram,
+    .aio-diagram,
+    .project-diagram,
+    .ppocr-diagram,
+    .ppocr-shot
+  )
+  figcaption {
+  color: #5c5850;
 }
 
-.portfolio-hero {
-  padding-top: clamp(4rem, 6vw, 5rem);
+.related-card .thumb {
+  display: none;
 }
 
 .deck-stage {
@@ -1120,8 +1119,7 @@ html[lang="ko"] body {
   }
 
   .article h1,
-  .project-detail-hero h1,
-  .portfolio-hero h1 {
+  .project-detail-hero h1 {
     font-size: clamp(2rem, 8.8vw, 2.4rem);
     line-height: 1.08;
   }
@@ -1714,33 +1712,6 @@ html[lang="ko"] body {
      carousels. */
   .mobile-card-carousel-pagination[data-dense="true"] {
     gap: 0.2rem;
-  }
-
-  .competition-card-actions {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-2);
-    width: 100%;
-  }
-
-  .competition-card-actions > :is(a, button) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-height: 2.75rem;
-    padding: 0 var(--space-3);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-control);
-    background: color-mix(in oklab, var(--surface) 92%, transparent);
-    color: var(--accent);
-    font-family: var(--font-body);
-    font-size: 0.78rem;
-    font-weight: 650;
-    line-height: 1.2;
-    text-align: center;
-    text-decoration: none;
-    white-space: normal;
   }
 
   .paper-category-list,
@@ -2358,13 +2329,6 @@ html[lang="ko"] body {
     background: color-mix(in oklab, var(--fg) 6%, var(--surface));
     box-shadow: var(--control-shadow);
   }
-
-  .competition-card-actions > :is(a, button) {
-    border-color: var(--control-border);
-    border-radius: var(--control-radius);
-    background: var(--control-surface);
-    box-shadow: var(--control-shadow);
-  }
 }
 
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
@@ -2606,4 +2570,11 @@ html[lang="ko"] body {
   box-shadow: inset 0 1px 0 var(--control-highlight);
   color: var(--muted);
   transform: none;
+}
+
+/* DACON: the header's aside is a 3×2 stat grid, so it gets the wider column */
+@media (min-width: 981px) {
+  .dacon-page .ui-page-header {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
 }

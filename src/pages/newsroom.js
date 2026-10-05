@@ -2,7 +2,7 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import Layout from "../components/Layout";
 import NewsroomGraph from "../components/NewsroomGraph";
-import SectionHeading from "../components/SectionHeading";
+import { PageHeader } from "../components/ui";
 import { buildNewsroomGraph } from "../utils/newsroom";
 
 const NewsroomPage = ({ data }) => {
@@ -24,7 +24,7 @@ const NewsroomPage = ({ data }) => {
   return (
     <Layout>
       <section className="shell section newsroom-page">
-        <SectionHeading as="h1" kicker="Newsroom" title="지식 그래프" />
+        <PageHeader kicker="Newsroom" title="지식 그래프" />
         <div className="blog-list-summary">
           <span className="blog-list-count">
             {graph.nodes.length} pages, {graph.links.length} links,{" "}
@@ -36,6 +36,7 @@ const NewsroomPage = ({ data }) => {
             </div>
           )}
         </div>
+        <h2 className="visually-hidden">그래프 탐색</h2>
         <NewsroomGraph graph={graph} />
       </section>
     </Layout>

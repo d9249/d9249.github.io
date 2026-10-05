@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "gatsby";
 import InlineEvidenceViewer from "../components/InlineEvidenceViewer";
 import Layout from "../components/Layout";
-import SectionHeading from "../components/SectionHeading";
+import { PageHeader } from "../components/ui";
 import { competitionItems } from "../data/profile";
 
 const COMPACT_COMPETITION_LAYOUT_QUERY = "(max-width: 980px)";
@@ -185,11 +185,8 @@ const CompetitionsPage = () => {
   return (
     <Layout>
       <section className="shell section recognition-page">
-        <SectionHeading
-          as="h1"
-          kicker="Competitions"
-          title="대회 및 외부 활동"
-        />
+        <PageHeader kicker="Competitions" title="대회 및 외부 활동" />
+        <h2 className="visually-hidden">대회·활동 목록</h2>
         {isCompactLayout ? (
           <>
             <div className="project-grid">

@@ -64,6 +64,12 @@
   --term: var(--ink); /* code blocks, the reel's terminal */
   --term-fg: #ede7da;
   --term-dim: #8c877d;
+  /* the slide deck's stage — dark in both themes, like a projector screen's surround */
+  --stage: #0b0c0e;
+  --stage-raised: #16171b;
+  --stage-line: #34353a;
+  --stage-fg: #ece6da;
+  --stage-dim: #b9b3a8;
 
   /* 3 ── type ────────────────────────────────────────────────────────────── */
   --font-body:

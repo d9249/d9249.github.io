@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import ProjectImageLightbox from "../components/ProjectImageLightbox";
 import SectionHeading from "../components/SectionHeading";
 import { formatReadableArticleHtml } from "../utils/articleHtml";
+import { colorStyle, projectColor } from "../utils/treeColors";
 
 const getProjectTitleParts = (frontmatter) => {
   const name = frontmatter.projectName || frontmatter.title;
@@ -129,6 +130,7 @@ const ProjectPostTemplate = ({ data }) => {
                 className="related-card"
                 key={item.id}
                 to={item.fields.slug}
+                style={colorStyle(projectColor(item.fields.slug))}
               >
                 <div className="thumb" aria-hidden="true" />
                 <h3 className="related-project-title">

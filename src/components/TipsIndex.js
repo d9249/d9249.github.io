@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "gatsby";
 import Layout from "./Layout";
 import Pagination from "./Pagination";
-import SectionHeading from "./SectionHeading";
+import { PageHeader } from "./ui";
 import TagNav from "./TagNav";
 import tipCategories from "../data/tipCategories.json";
 import { getTipTagPath } from "../utils/tags";
@@ -135,7 +135,7 @@ const TipsIndex = ({
   return (
     <Layout>
       <section className="shell section">
-        <SectionHeading as="h1" kicker="Tips" title={pageTitle} />
+        <PageHeader kicker="Tips" title={pageTitle} />
         <TipCategoryNav activeCategory={activeCategory} />
         <TagNav
           ariaLabel="Tip tags"
@@ -176,6 +176,7 @@ const TipsIndex = ({
             />
           </div>
         </div>
+        <h2 className="visually-hidden">팁 목록</h2>
         {visibleTips.length > 0 ? (
           <div className="tip-grid">
             {visibleTips.map((tip) => (

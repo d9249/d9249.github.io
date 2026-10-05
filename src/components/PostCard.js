@@ -26,7 +26,8 @@ const PostCard = ({ post, featured = false }) => {
         <span>{categoryLabel}</span>
       </Link>
       <div className="post-card-body">
-        <div className="meta">{categoryLabel}</div>
+        {/* the header strip already names the category; the featured card has no strip */}
+        {featured && <div className="meta">{categoryLabel}</div>}
         <h3>
           <Link
             to={fields.slug}

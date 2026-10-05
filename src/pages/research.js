@@ -1,6 +1,8 @@
 import * as React from "react";
 import Layout from "../components/Layout";
 import SectionHeading from "../components/SectionHeading";
+import { PageHeader } from "../components/ui";
+import { colorStyle, paperColor } from "../utils/treeColors";
 import { paperItems } from "../data/profile";
 
 const PDF_ZOOM_MIN = 60;
@@ -462,7 +464,10 @@ const PaperCard = ({ item, activeViewerId, isPdfOpen, onTogglePdf }) => {
   const paperKey = getPaperKey(item);
 
   return (
-    <article className="project-card paper-card research-project-card">
+    <article
+      className="project-card paper-card research-project-card"
+      style={colorStyle(paperColor(item))}
+    >
       <div className="project-card-header">
         <div className="paper-card-top">
           <div className="meta">{item.type}</div>
@@ -594,37 +599,34 @@ const ResearchPage = () => {
 
   return (
     <Layout>
-      <section className="shell project-detail-hero">
-        <div className="project-detail-hero-grid">
-          <div>
-            <p className="eyebrow">Research</p>
-            <h1>논문 및 연구 성과</h1>
-            <p className="project-detail-copy">
-              그래프 추천 시스템, 의료영상 딥러닝, 이상탐지와 응용 AI를 중심으로
-              진행한 학위논문, 저널, 학회 논문 목록입니다.
-            </p>
-          </div>
-          <aside className="project-detail-facts" aria-label="Research facts">
-            <div>
-              <span>total papers</span>
-              <strong>{paperItems.length}</strong>
-            </div>
-            <div>
-              <span>journal papers</span>
-              <strong>
-                {
-                  paperItems.filter((item) => item.type.includes("Journal"))
-                    .length
-                }
-              </strong>
-            </div>
-            <div>
-              <span>primary areas</span>
-              <strong>Recommendation / Medical Imaging / GNN</strong>
-            </div>
-          </aside>
-        </div>
-      </section>
+      <div className="shell">
+        <PageHeader
+          kicker="Research"
+          title="논문 및 연구 성과"
+          lead="그래프 추천 시스템, 의료영상 딥러닝, 이상탐지와 응용 AI를 중심으로 진행한 학위논문, 저널, 학회 논문 목록입니다."
+          aside={
+            <aside className="project-detail-facts" aria-label="Research facts">
+              <div>
+                <span>total papers</span>
+                <strong>{paperItems.length}</strong>
+              </div>
+              <div>
+                <span>journal papers</span>
+                <strong>
+                  {
+                    paperItems.filter((item) => item.type.includes("Journal"))
+                      .length
+                  }
+                </strong>
+              </div>
+              <div>
+                <span>primary areas</span>
+                <strong>Recommendation / Medical Imaging / GNN</strong>
+              </div>
+            </aside>
+          }
+        />
+      </div>
 
       <section
         className="shell section research-overview-section"
