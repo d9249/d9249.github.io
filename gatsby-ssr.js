@@ -22,7 +22,15 @@ const themeScript = `
 export const onRenderBody = ({ setHeadComponents, setHtmlAttributes }) => {
   setHtmlAttributes({ lang: "ko" });
   setHeadComponents([
+    // the site mark (i) — sources and the raster build in scripts/brand/
+    <link key="favicon-ico" rel="icon" href="/favicon.ico" sizes="32x32" />,
     <link key="favicon" rel="icon" href="/favicon.svg" type="image/svg+xml" />,
+    <link
+      key="apple-touch-icon"
+      rel="apple-touch-icon"
+      href="/apple-touch-icon.png"
+    />,
+    <link key="manifest" rel="manifest" href="/site.webmanifest" />,
     <link
       key="fonts-pre"
       rel="preconnect"

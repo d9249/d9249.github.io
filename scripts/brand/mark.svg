@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- The site mark: a lowercase i drawn from the reel's tree.
+       stem  ink trunk — tapers upward and flares into the ground
+       dot   mandarin fruit — mandarin means a result on this site
+       Paper tile, ink and mandarin come from src/styles/tokens.css.
+       Master drawing for 64px and up; static/favicon.svg is the small optical size. -->
+  <rect id="tile" width="64" height="64" rx="14" fill="#f2ede3"/>
+  <g id="glyph">
+    <circle cx="32" cy="15" r="7.5" fill="#f08a24"/>
+    <path d="M27 27H37L38.5 47Q38.5 56 47.5 56H16.5Q25.5 56 25.5 47Z" fill="#16171b"/>
+  </g>
+</svg>
