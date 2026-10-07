@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="460" height="760" viewBox="0 0 460 760" role="img" aria-labelledby="title desc">
+  <title id="title">Vela 2.0의 질문 처리 구조</title>
+  <desc id="desc">공통 요청 상태를 공유하고 다섯 유형의 질문을 분리해 구조화된 결과를 만드는 세로형 구조도</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#efb95d" />
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="458" height="758" rx="24" fill="#101827" stroke="#34465b" stroke-width="2" />
+  <text x="230" y="44" text-anchor="middle" fill="#f5f3ed" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="24" font-weight="700">상태는 공유하고, 질문은 분리</text>
+  <text x="230" y="70" text-anchor="middle" fill="#9fb1c8" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="16">Vela 2.0 · 하나의 요청에 여러 판정</text>
+
+  <rect x="28" y="92" width="404" height="104" rx="16" fill="#182b40" stroke="#6ca7d9" stroke-width="2" />
+  <text x="230" y="130" text-anchor="middle" fill="#f5f3ed" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="22" font-weight="700">공통 요청 상태</text>
+  <text x="230" y="163" text-anchor="middle" fill="#b8c9da" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="18">request · context · answer</text>
+
+  <line x1="230" y1="198" x2="230" y2="222" stroke="#efb95d" stroke-width="3" marker-end="url(#arrow)" />
+
+  <rect x="28" y="232" width="404" height="344" rx="16" fill="#172232" stroke="#d4a94f" stroke-width="2" />
+  <text x="52" y="272" fill="#f5f3ed" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="20" font-weight="700">질문 유형</text>
+  <text x="408" y="272" text-anchor="end" fill="#91a5bb" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="15">질문별 조건은 호출자가 정의</text>
+  <line x1="48" y1="292" x2="412" y2="292" stroke="#34465b" stroke-width="1" />
+
+  <text x="54" y="328" fill="#f0c979" font-family="Arial, sans-serif" font-size="19" font-weight="700">Choice</text>
+  <text x="164" y="328" fill="#e6ebf1" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="18">선택지 중 하나</text>
+  <line x1="48" y1="345" x2="412" y2="345" stroke="#2b3a4c" stroke-width="1" />
+
+  <text x="54" y="374" fill="#f0c979" font-family="Arial, sans-serif" font-size="19" font-weight="700">Noul</text>
+  <text x="164" y="374" fill="#e6ebf1" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="18">예 / 아니오 판단</text>
+  <line x1="48" y1="391" x2="412" y2="391" stroke="#2b3a4c" stroke-width="1" />
+
+  <text x="54" y="420" fill="#f0c979" font-family="Arial, sans-serif" font-size="19" font-weight="700">Score</text>
+  <text x="164" y="420" fill="#e6ebf1" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="18">순서형 기준 점수</text>
+  <line x1="48" y1="437" x2="412" y2="437" stroke="#2b3a4c" stroke-width="1" />
+
+  <text x="54" y="466" fill="#f0c979" font-family="Arial, sans-serif" font-size="19" font-weight="700">Span</text>
+  <text x="164" y="466" fill="#e6ebf1" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="18">텍스트 구간과 위치</text>
+  <line x1="48" y1="483" x2="412" y2="483" stroke="#2b3a4c" stroke-width="1" />
+
+  <text x="54" y="512" fill="#f0c979" font-family="Arial, sans-serif" font-size="19" font-weight="700">Set</text>
+  <text x="164" y="512" fill="#e6ebf1" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="18">라벨별 확률</text>
+  <text x="230" y="552" text-anchor="middle" fill="#91a5bb" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="15">각 질문은 같은 상태에서 독립적으로 판정</text>
+
+  <line x1="230" y1="578" x2="230" y2="608" stroke="#efb95d" stroke-width="3" marker-end="url(#arrow)" />
+
+  <rect x="28" y="618" width="404" height="108" rx="16" fill="#202b38" stroke="#6ca7d9" stroke-width="2" />
+  <text x="230" y="656" text-anchor="middle" fill="#f5f3ed" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="21" font-weight="700">구조화된 결과</text>
+  <text x="230" y="687" text-anchor="middle" fill="#b8c9da" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="17">선택값 · 점수 · 텍스트 위치 · 라벨</text>
+  <text x="230" y="712" text-anchor="middle" fill="#91a5bb" font-family="Noto Sans KR, Apple SD Gothic Neo, Arial, sans-serif" font-size="15">한 요청에 여러 질문을 담을 수 있음</text>
+</svg>
