@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="790" viewBox="0 0 520 790" role="img" aria-labelledby="title desc">
+<title id="title">REA: 관찰과 해석 사이의 근거 흐름</title>
+<desc id="desc">권한 있는 대상과 질문을 선택하고 MCP나 CLI로 분석한다. Evidence는 관찰 결과, 출처, 범위와 미확인 사항을 담는다. 에이전트의 설명이나 재구현은 별도 동작 검증이 필요하다.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#648783" stroke-width="2"/></marker></defs>
+<rect width="520" height="790" rx="20" fill="#f4f7f6"/>
+<g font-family="Apple SD Gothic Neo,Noto Sans KR,sans-serif">
+<text x="32" y="47" font-size="29" font-weight="700" fill="#183c38">REA: 관찰에서 검증까지</text>
+<text x="32" y="80" font-size="21" fill="#526963">근거의 범위를 해석의 범위와 함께 유지한다</text>
+<g stroke="#648783" stroke-width="2" marker-end="url(#arrow)"><path d="M58 174 V259"/><path d="M58 329 V414"/><path d="M58 484 V569"/></g>
+<g fill="#1d6558"><circle cx="58" cy="150" r="24"/><circle cx="58" cy="305" r="24"/><circle cx="58" cy="460" r="24"/><circle cx="58" cy="615" r="24"/></g>
+<g fill="white" font-size="24" font-weight="700" text-anchor="middle"><text x="58" y="159">1</text><text x="58" y="314">2</text><text x="58" y="469">3</text><text x="58" y="624">4</text></g>
+<g fill="#173b35" font-size="27" font-weight="700"><text x="106" y="146">대상과 질문 선택</text><text x="106" y="301">REA로 범위별 분석</text><text x="106" y="456">Evidence 보존</text><text x="106" y="611">설명·재구현·동작 검증</text></g>
+<g fill="#455e58" font-size="23"><text x="106" y="183">소유하거나 분석 권한이 있는 대상</text><text x="106" y="215">한 기능·경로부터 질문한다</text><text x="106" y="338">MCP·CLI와 선택한 분석 엔진</text><text x="106" y="370">정적 분석과 실행 관찰은 구분</text><text x="106" y="493">결과·출처·대상 식별·분석 범위</text><text x="106" y="525">미확인 사항은 지우지 않는다</text><text x="106" y="648">에이전트가 근거를 읽어 해석</text><text x="106" y="680">관찰하지 않은 동작은 별도 확인</text></g>
+<rect x="28" y="716" width="464" height="49" rx="8" fill="#e2eae6"/>
+<text x="260" y="748" font-size="22" text-anchor="middle" fill="#214e43">정적 연결 관계 ≠ 실제 실행 ≠ 동등성 증명</text>
+</g></svg>
