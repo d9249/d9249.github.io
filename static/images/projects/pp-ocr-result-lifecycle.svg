@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="960" viewBox="0 0 640 960" role="img" aria-labelledby="title desc">
+<title id="title">추출 결과를 업무로 전달하기</title>
+<desc id="desc">페이지별 열람·검수·저장·내보내기</desc>
+<!-- Paper and ink values mirror DESIGN.md and src/styles/tokens.css. -->
+<style>
+  svg { --paper: #f2ede3; --sheet: #fbf8f1; --ink: #16171b; --muted: #5c5850; --rule: #a6a095; }
+  .canvas { fill: var(--paper); }
+  .node rect { fill: var(--sheet); stroke: var(--rule); stroke-width: 1.5; }
+  text { fill: var(--ink); font-family: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', sans-serif; text-anchor: middle; }
+  .heading { font-size: 30px; font-weight: 700; }
+  .subheading, .detail { font-size: 20px; fill: var(--muted); }
+  .label { font-size: 26px; font-weight: 700; }
+  .link { fill: none; stroke: var(--muted); stroke-width: 2; marker-end: url(#arrow); }
+</style>
+<defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 4 L0 8Z" fill="#5c5850"/></marker></defs>
+<rect class="canvas" width="640" height="960" rx="8"/>
+<text class="heading" x="320" y="55"><tspan x="320">추출 결과를 업무로 전달하기</tspan></text>
+<text class="subheading" x="320" y="90"><tspan x="320">페이지별 열람·검수·저장·내보내기</tspan></text>
+<path class="link" d="M320 240V280"/>
+<path class="link" d="M165 380V440"/>
+<path class="link" d="M290 510H350"/>
+<path class="link" d="M475 580V615H320V650"/>
+<path class="link" d="M320 770V830"/>
+<g class="node"><rect x="40" y="130" width="560" height="110" rx="8"/><text class="label" x="320" y="170"><tspan x="320">페이지별 처리 결과</tspan></text><text class="detail" x="320" y="204"><tspan x="320">글자 · 좌표 · 영역 · 표 · 문서 블록</tspan></text></g>
+<g class="node"><rect x="40" y="280" width="560" height="100" rx="8"/><text class="label" x="320" y="320"><tspan x="320">요약 먼저, 필요한 페이지만</tspan></text><text class="detail" x="320" y="354"><tspan x="320">페이지 색인 → 범위 조회</tspan></text></g>
+<g class="node"><rect x="40" y="440" width="250" height="140" rx="8"/><text class="label" x="165" y="480"><tspan x="165">원본과 검수</tspan></text><text class="detail" x="165" y="514"><tspan x="165">검토 항목 확인</tspan></text><text class="detail" x="165" y="542"><tspan x="165">수정 · 확정 · 되돌리기</tspan></text></g>
+<g class="node"><rect x="350" y="440" width="250" height="140" rx="8"/><text class="label" x="475" y="480"><tspan x="475">이력 저장</tspan></text><text class="detail" x="475" y="514"><tspan x="475">원본 결과 + 수정분</tspan></text><text class="detail" x="475" y="542"><tspan x="475">페이지 색인 갱신</tspan></text></g>
+<g class="node"><rect x="40" y="650" width="560" height="120" rx="8"/><text class="label" x="320" y="690"><tspan x="320">범위를 골라 내보내기</tspan></text><text class="detail" x="320" y="724"><tspan x="320">Word · 검색 PDF · CSV</tspan></text><text class="detail" x="320" y="752"><tspan x="320">Markdown · XML의 블록 구조</tspan></text></g>
+<g class="node"><rect x="40" y="830" width="560" height="100" rx="8"/><text class="label" x="320" y="870"><tspan x="320">업무 시스템 · 문서 · 에이전트</tspan></text><text class="detail" x="320" y="904"><tspan x="320">REST API · MCP로 조회·활용</tspan></text></g>
+</svg>

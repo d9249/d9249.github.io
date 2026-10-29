@@ -115,8 +115,8 @@
       "org": "AsianaIDT",
       "color": "blue",
       "verb": "PARSE",
-      "line": "표 구조까지 복원하는 문서 AI, 특허 출원 · 공급계약 수주",
-      "kpi": "TEDS 0.9188 · Cell F1 0.9702",
+      "line": "문서 복원부터 검수·내보내기·업무 연동까지",
+      "kpi": "문서 복원 · API/MCP",
       "fruit": "특허 출원 · 공급계약",
       "href": "/projects/document-ocr-table-reconstruction/"
     },
@@ -400,8 +400,8 @@
     {
       "name": "ONDOKS",
       "period": "2026.01–",
-      "role": "엔진 · 콘솔 · 복원 로직 · 벤치마크 · 보안 빌드 단독 개발",
-      "problem": "OCR 글자는 맞아도 병합 셀 · 다단 헤더 · 끊긴 선 때문에 표 구조가 무너지는 문서",
+      "role": "엔진 · 문서 복원 · 검수 · 업무 연동 · 보호 납품 단독 개발",
+      "problem": "문서의 표와 읽기 순서를 복원하고, 큰 문서의 검수 결과까지 업무에 전달하는 일",
       "grew": [
         {
           "skills": "Table Reconstruction",
@@ -409,22 +409,22 @@
           "how": "후보 생성 → 비교 → 선택 구조로 표 복원"
         },
         {
-          "skills": "OCR Benchmarking",
+          "skills": "Document Parser · Text Layer",
           "pkg": "nlp-dataops",
-          "how": "TEDS · Cell F1 · CER 정량 평가와 회귀 게이트"
+          "how": "디지털 PDF 글자 재사용 · 읽기 순서 · 여러 페이지 문서 조립"
         },
         {
-          "skills": "Document Parser · Post-processing",
+          "skills": "Async Jobs · Review · Export",
           "pkg": "nlp-dataops",
-          "how": "선 · bbox · 헤더 신호를 합친 보정 레이어"
+          "how": "페이지 분산 처리 · 검수 저장 · Word·검색 PDF 내보내기"
         },
         {
           "skills": "MLOps",
           "pkg": "nlp-dataops",
-          "how": "보안 빌드: Cython 컴파일, RSA-OAEP + AES-256-GCM"
+          "how": "API·MCP 연동 · 역할별 서빙 · 암호화·서명 보호 납품"
         }
       ],
-      "result": "TEDS 0.9188 · Cell F1 0.9702 · K사 공급계약 · 특허 출원"
+      "result": "문서 복원 · API/MCP · 공급계약 · 특허 출원"
     },
     {
       "name": "A-VLAN",
