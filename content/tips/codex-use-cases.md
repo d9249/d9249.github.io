@@ -63,7 +63,7 @@ OpenAI Developers의 `Codex Use Cases`는 이 범위를 카드형 카탈로그�
 6. `Run verified operations` — 자동화가 실제로 끝났는지 검증하고 보고하는 방식이 필요한 팀에 맞다.
 7. `Run a deep security scan`, `Scan code changes for security`, `Remediate a vulnerability backlog` — “보안도 AI가 해준다”가 아니라, authorized code와 검토 가능한 evidence를 전제로 어떻게 다뤄야 하는지 확인하는 용도다.
 
-![Codex Computer Use use case](https://developers.openai.com/codex/use-cases/use-your-computer-with-codex-featured.png)
+![Codex Computer Use use case](/images/tips/codex-computer-use.webp)
 
 ## 팀에서 쓰는 방법
 

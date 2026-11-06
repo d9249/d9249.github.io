@@ -19,7 +19,7 @@ LLM 애플리케이션의 품질 문제는 이제 모델 선택 하나로 끝나
 
 이 프로젝트가 특히 눈에 띄는 이유는 local-first 철학과 제품형 확장성이 동시에 보인다는 점이다. docs introduction은 DeepEval을 로컬 환경에서 실행되는 오픈소스 프레임워크로 설명하면서, 팀 단위 대시보드·회귀 추적·관측성·프로덕션 모니터링이 필요할 때만 Confident AI와 네이티브하게 연결하라고 안내한다. 이런 구조는 오픈소스 평가 러너와 상용 품질 플랫폼 사이를 깔끔하게 분리하면서도, 둘을 자연스럽게 이어 붙이려는 전략으로 읽힌다.
 
-![DeepEval test case diagram](https://deepeval-docs.s3.amazonaws.com/docs:llm-test-case.png)
+![DeepEval test case diagram](/images/blog/deepeval-test-case.webp)
 
 ## 무엇을 해결하려는가
 
@@ -51,7 +51,7 @@ quickstart와 introduction은 DeepEval이 end-to-end evals뿐 아니라 componen
 
 최근 릴리스에서 agentic evals를 전면에 세운 것도 이 레이어와 연결된다. release notes는 최종 답이 그럴듯해 보이는지보다, agent가 실제로 task를 완수했는지, 적절한 도구를 썼는지, 인자를 올바르게 구성했는지, 불필요한 detour 없이 효율적으로 움직였는지를 측정하는 방향을 강조한다. DeepEval은 에이전트를 "대화형 모델"이 아니라 **실행 trace를 남기는 프로그램**처럼 평가하려는 쪽에 가깝다.
 
-![DeepEval component-level evals](https://deepeval-docs.s3.us-east-1.amazonaws.com/component-level-evals.png)
+![DeepEval component-level evals](/images/blog/deepeval-component-evals.webp)
 
 ### 4) 합성 데이터와 multi-turn goldens
 

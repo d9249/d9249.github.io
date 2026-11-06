@@ -43,7 +43,7 @@ draft: false
 | `gpt-image-2` | `1.0.3` | GPT Image 2 또는 OpenAI 호환 이미지 API를 대상으로 이미지 생성·편집 prompt를 구성하고, 환경에 따라 로컬 실행·호스트 도구 위임·prompt advisor 모드로 분기한다. |
 | `kb-retriever` | `1.0.0` | `knowledge/` 같은 로컬 문서 폴더를 계층 인덱스와 검색 라운드로 좁혀 읽고, PDF/Excel은 처리 방법을 먼저 확인한 뒤 근거 중심으로 답하게 한다. |
 
-![Garden Skills web design skill card](https://raw.githubusercontent.com/ConardLi/garden-skills/main/dist/imgs/web-design-skill.png)
+![Garden Skills web design skill card](/images/tips/garden-web-design-engineer.webp)
 
 특히 `web-design-engineer`는 단순히 “예쁘게 만들어라”가 아니라, 요구사항 확인 → 맥락 수집 → 디자인 시스템 선언 → v0 확인 → 전체 구현 → 검증으로 이어지는 6단계 워크플로를 강하게 둔다. Linear, Aesop, Pentagram, Bloomberg, Stripe Press, Mid-Century 같은 스타일 레시피 25개와 OKLCH, container query, reduced motion 같은 구현 규칙도 포함한다.
 

@@ -17,7 +17,7 @@ draft: false
 
 ldj7672.github.io의 "Large-scale Model 핵심 기술: Architecture, Norm, Positional Encoding" 페이지는 바로 이 흩어진 선택지를 하나의 설계 지도처럼 다시 정리하려는 글이다. 이 페이지는 새로운 방법을 제안하는 원논문이라기보다, 최신 대규모 모델에서 사실상 표준이 된 조합을 Architecture & Norm, Positional Encoding, Attention 세 축으로 묶어 설명한다. 특히 decoder-only 구조에서 RMSNorm, SwiGLU, Pre-Norm, RoPE, FlashAttention, GQA가 왜 함께 자주 등장하는지 한 번에 복기하게 해준다는 점에서 실무자용 테크 리포트에 가깝다.
 
-![Transformer Architecture](https://ldj7672.github.io/figures/large_scale_model/transformer_architecture.png)
+![Transformer Architecture](/images/blog/large-model-transformer.png)
 
 ## 무엇을 해결하려는가
 
@@ -31,17 +31,17 @@ ldj7672.github.io의 "Large-scale Model 핵심 기술: Architecture, Norm, Posit
 
 정규화와 FFN 파트에서는 LayerNorm 대비 RMSNorm, ReLU/GELU 대비 SwiGLU, Post-Norm 대비 Pre-Norm이 왜 더 자주 채택되는지 설명한다. 이 리포트의 논지는 명확하다. 최신 계열이 RMSNorm을 선호하는 이유는 평균 제거를 생략해 연산량과 메모리 부담을 줄이면서도 대규모 모델에서 충분한 안정성을 확보하기 쉽기 때문이고, SwiGLU는 gate 구조를 통해 FFN의 표현력을 높이면서 gradient 흐름도 더 부드럽게 만든다. 또한 Pre-Norm은 깊은 네트워크에서 gradient vanishing/exploding 문제를 줄이기 때문에 GPT-2 이후 세대에서 사실상 표준으로 자리 잡았다는 식으로 연결된다.
 
-![SwiGLU Architecture](https://ldj7672.github.io/figures/large_scale_model/swiglu.jpeg)
+![SwiGLU Architecture](/images/blog/large-model-swiglu.jpeg)
 
-![Pre-Normalization Structure](https://ldj7672.github.io/figures/large_scale_model/pre_LN.png)
+![Pre-Normalization Structure](/images/blog/large-model-pre-ln.png)
 
 위치 인코딩 파트에서는 RoPE를 단순히 "요즘 많이 쓰는 positional encoding"이라고 넘기지 않고, 상대적 위치 관계를 보존한다는 점을 핵심으로 잡는다. 절대 위치 임베딩이 긴 컨텍스트 extrapolation에 약한 반면, RoPE는 query와 key를 회전시켜 상대 거리 정보를 attention score에 직접 남긴다. 여기에 더해 Qwen2-VL, Qwen3-VL 계열에서 중요한 mRoPE와 Interleaved-MRoPE를 소개하면서, 텍스트 전용 LLM 설계가 멀티모달 확장으로 어떻게 이어지는지도 짚는다. 이 부분은 단순한 수학 요약을 넘어서, 왜 VLM이 시간·높이·너비 축을 함께 다뤄야 하는지 감각적으로 연결해 준다는 점이 좋다.
 
 attention 파트의 핵심은 "정확한 attention을 유지하면서 메모리 병목을 줄이는 방법"이다. FlashAttention은 QK^T 전체를 메모리에 올려두는 대신 tiling, recomputation, online softmax를 활용해 O(N^2) 메모리 부담을 O(N) 수준으로 낮춘다. 이어서 GQA와 MQA는 KV cache 메모리 문제를 해결하기 위해 key/value 공유 범위를 조정하는 방식으로 소개된다. 이 리포트는 MHA, GQA, MQA를 단순 정의 비교가 아니라 "표현력과 메모리 효율성 사이의 trade-off"로 배열해, 왜 최신 모델들이 GQA를 선호하는지 실전적인 시각으로 설명한다.
 
-![FlashAttention Architecture](https://ldj7672.github.io/figures/large_scale_model/flash_attention.png)
+![FlashAttention Architecture](/images/blog/large-model-flash-attention.png)
 
-![GQA and MQA Comparison](https://ldj7672.github.io/figures/large_scale_model/gqa_mqa.png)
+![GQA and MQA Comparison](/images/blog/large-model-gqa-mqa.png)
 
 | 설계 축 | 이 리포트가 묶는 핵심 선택 | 실무적으로 중요한 이유 |
 |---|---|---|

@@ -19,7 +19,7 @@ draft: false
 
 내가 보기엔 Open Design의 핵심은 단순한 “AI 디자인 앱”이 아니라, 디자인 작업을 에이전트 오케스트레이션 문제로 재정의한다는 데 있다. 좋은 산출물을 만드는 비결을 하나의 폐쇄형 모델에 숨기기보다, 질문 폼·스킬·디자인 시스템·체크리스트·프리뷰 런타임을 파일과 데몬으로 분해해서 조합 가능한 운영체제로 만들려는 것이다.
 
-![Open Design banner](https://github.com/nexu-io/open-design/raw/main/docs/assets/banner.png)
+![Open Design banner](/images/blog/open-design-banner.svg)
 
 ## 무엇을 해결하려는가
 

@@ -32,7 +32,7 @@ DeepSeek++는 DeepSeek의 새 모델이나 별도 챗봇이 아니라, **DeepSee
 
 내가 보기엔 이 프로젝트의 포인트는 “DeepSeek 웹판을 계속 쓰고 싶은데 Claude Code나 Codex처럼 도구 실행 루프가 있었으면 좋겠다”는 사람에게 있다. 독립 IDE나 터미널 에이전트를 새로 띄우는 대신, 이미 로그인한 DeepSeek 화면 위에 사이드패널과 실행 기록을 붙이는 접근이다.
 
-![DeepSeek++ inline tool execution](https://raw.githubusercontent.com/zhu1090093659/deepseek-pp/main/assets/screenshot-inline-tools.svg)
+![DeepSeek++ inline tool execution](/images/tips/deepseek-pp-inline-tools.png)
 
 ## DeepSeek++ 개요
 
@@ -57,7 +57,7 @@ DeepSeek++는 DeepSeek의 새 모델이나 별도 챗봇이 아니라, **DeepSee
 
 세 번째는 Office 문서 작업이다. v0.4.0부터 Shell MCP와 OfficeCLI 연동이 들어가서 DOCX, XLSX, PPTX 검사·조회·수정·검증 흐름을 DeepSeek 대화에서 호출하는 구성을 제안한다. 문서 편집 자동화에 관심이 있다면 이 부분이 가장 차별적이다.
 
-![DeepSeek++ MCP side panel](https://raw.githubusercontent.com/zhu1090093659/deepseek-pp/main/assets/screenshot-sidepanel-mcp.svg)
+![DeepSeek++ MCP side panel](/images/tips/deepseek-pp-mcp.png)
 
 ## 설치와 첫 사용법
 

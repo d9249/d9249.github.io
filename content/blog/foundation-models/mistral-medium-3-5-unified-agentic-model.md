@@ -66,7 +66,7 @@ Mistral Medium 3.5가 푸는 문제는 단순한 리더보드 경쟁이 아니�
 | Math/instruction chart | Collie 95.8은 강하지만 AIME/IfBench/Beyond AIME는 항목별 편차 존재 | reasoning·instruction 측면에서도 균형형 포지셔닝 |
 | Official blog | Le Chat 기본 모델, Vibe/Work mode 백엔드, API 가격 및 remote agents 공개 | 모델 릴리스를 곧바로 제품 운영 계층과 연결 |
 
-![Mistral Vibe remote agent diagram](https://cms.mistral.ai/assets/fa1b8643-d907-49f7-b21e-59b452db2706.jpg?width=1200&height=551)
+![Mistral Vibe remote agent diagram](/images/blog/mistral-vibe-remote-agents.webp)
 
 ## 실무 관점에서의 해석
 

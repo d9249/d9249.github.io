@@ -39,9 +39,9 @@ Understand Anything의 첫 번째 핵심은 **멀티 에이전트 파이프라�
 
 네 번째 핵심은 멀티플랫폼 배포 방식이다. 루트 README와 각 플러그인 manifest를 보면 이 프로젝트는 Claude Code 네이티브 플러그인일 뿐 아니라 Cursor·Copilot용 auto-discovery 패키지와 Codex·OpenCode·Gemini CLI용 설치 가이드를 함께 제공한다. `.claude-plugin/plugin.json`, `.cursor-plugin/plugin.json`, `.copilot-plugin/plugin.json` 모두 `version: 2.6.0`, `license: MIT`, `skills`/`agents` 경로를 명시하고 있어, 저장소가 단일 CLI 확장이라기보다 **에이전트 생태계 전반을 겨냥한 배포 패키지**로 진화했음을 보여준다.
 
-![Structural graph overview](https://raw.githubusercontent.com/Lum1104/Understand-Anything/main/assets/overview-structural.gif)
+![Structural graph overview](/images/blog/understand-anything-structural.gif)
 
-![Domain graph overview](https://raw.githubusercontent.com/Lum1104/Understand-Anything/main/assets/overview-domain.gif)
+![Domain graph overview](/images/blog/understand-anything-domain.gif)
 
 | 레이어 | 공개 문서에서 확인되는 구성 | 실무적 의미 |
 |---|---|---|

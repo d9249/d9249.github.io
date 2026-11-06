@@ -131,7 +131,7 @@ WrenAI는 이 과정을 프롬프트 엔지니어링으로 수습하지 않고, 
 
 그럼에도 방향은 꽤 강력하다. 앞으로 BI agent의 경쟁력은 “SQL을 얼마나 그럴듯하게 생성하느냐”보다, **여러 agent와 tool이 같은 governed business context를 얼마나 안정적으로 공유하느냐**로 이동할 가능성이 크다. 그런 관점에서 WrenAI는 또 하나의 text-to-SQL 데모가 아니라, **AI agent 시대의 semantic query plane**을 오픈소스로 밀어붙이는 프로젝트로 읽힌다.
 
-![Wren AI semantic layer positioning](https://www.getwren.ai/_next/image?url=%2Fsite-assets%2Fsite%2Fdevelopers-page%2Fdeveloper_before_8a7f53cbd2.webp&w=3840&q=75&dpl=dpl_23VzZ2C7tXNng7M6cJDeStgwwvoy)
+![Wren AI semantic layer positioning](/images/blog/wrenai-architecture.png)
 
 ## 한 줄로 요약하면
 
