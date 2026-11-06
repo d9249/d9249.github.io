@@ -11,6 +11,8 @@
     "portfolio:export": "node scripts/portfolio/export-keynote.js",
     "serve": "gatsby serve",
     "start": "npm run develop",
+    "test": "node --test src/utils/*.test.js scripts/prompts/issue-form.test.cjs",
+    "test:ui": "node --test scripts/qa/*.test.mjs",
     "doctor": "react-doctor --no-telemetry"
   },
   "dependencies": {
@@ -23,6 +25,7 @@
     "gatsby-transformer-remark": "^6.13.0",
     "lucide-react": "^1.24.0",
     "pdfjs-dist": "^5.7.284",
+    "photoswipe": "5.4.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "simple-icons": "^16.19.0"

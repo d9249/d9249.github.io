@@ -242,8 +242,9 @@ const TreeCanvas = ({
           {nextLabel}
         </span>
       ) : null}
-      {k && variant === "roots"
-        ? tipsLeftToRight().map((tip, i) => {
+      {k && variant === "roots" ? (
+        <nav className="tree-canvas-pins" aria-label="연구 바로가기">
+          {tipsLeftToRight().map((tip, i) => {
             const p = pins[i];
             if (!p) return null;
             return (
@@ -257,8 +258,9 @@ const TreeCanvas = ({
                 {p.short}
               </a>
             );
-          })
-        : null}
+          })}
+        </nav>
+      ) : null}
     </div>
   );
 };

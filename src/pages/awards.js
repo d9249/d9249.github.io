@@ -164,6 +164,7 @@ const AwardsPage = () => {
                     evidence={activeLink}
                     viewerId={getEvidenceId(item, activeLink)}
                     isFullView={isEvidenceFullView}
+                    onClose={() => setIsEvidenceFullView(false)}
                     onToggleFullView={toggleEvidenceFullView}
                   />
                 ) : null}

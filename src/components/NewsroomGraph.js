@@ -943,6 +943,21 @@ const NewsroomGraph = ({ graph }) => {
               ))}
             </div>
           )}
+          {searchOpen && query.trim() && searchResults.length === 0 ? (
+            <div className="newsroom-search-empty" role="status">
+              <p>검색 결과가 없습니다. 다른 제목이나 태그로 찾아보세요.</p>
+              <button
+                type="button"
+                onClick={() => {
+                  setQuery("");
+                  setSearchOpen(true);
+                  searchBoxRef.current?.querySelector("input")?.focus();
+                }}
+              >
+                검색어 지우기
+              </button>
+            </div>
+          ) : null}
         </div>
         <div
           className="newsroom-zoom"

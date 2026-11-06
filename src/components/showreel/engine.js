@@ -971,6 +971,10 @@ export function mountShowreel(root, DATA, TREE) {
       : atEnd
         ? "처음부터"
         : "재생";
+    playBtn.setAttribute(
+      "aria-label",
+      playBtn.querySelector("span").textContent,
+    );
     playBtn.dataset.icon = play.on ? "pause" : atEnd ? "again" : "play";
   }
   function pausePlay() {

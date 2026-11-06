@@ -219,6 +219,7 @@ const CompetitionsPage = () => {
                     evidence={rowLink}
                     viewerId={getEvidenceId(item, rowLink)}
                     isFullView={isEvidenceFullView}
+                    onClose={() => setIsEvidenceFullView(false)}
                     onToggleFullView={toggleEvidenceFullView}
                   />
                 ) : null}

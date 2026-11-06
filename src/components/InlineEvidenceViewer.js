@@ -1,9 +1,11 @@
 import * as React from "react";
+import ImageViewer from "./ImageViewer";
+import useModalDialog from "./useModalDialog";
 
 const IMAGE_EVIDENCE_PATTERN = /\.(avif|gif|jpe?g|png|webp)$/i;
 
 const getEvidenceFrameSrc = (href) =>
-  `${href}#toolbar=0&navpanes=0&scrollbar=1&view=Fit`;
+  `${href}#toolbar=1&navpanes=0&scrollbar=1&view=Fit`;
 
 const InlineEvidenceViewer = ({
   itemTitle,
@@ -15,19 +17,40 @@ const InlineEvidenceViewer = ({
   onToggleFullView,
 }) => {
   const isImageEvidence = IMAGE_EVIDENCE_PATTERN.test(evidence.href);
-  const closeButtonRef = React.useRef(null);
+  const dialogRef = React.useRef(null);
+  const openerRef = React.useRef(null);
   const titleId = React.useId();
   const isExpandedView = isFullView || isModal;
 
-  React.useEffect(() => {
-    if (!isModal) {
-      return undefined;
-    }
+  useModalDialog(
+    dialogRef,
+    isExpandedView && !isImageEvidence,
+    openerRef.current,
+  );
+  const closeExpanded = onClose;
+  const Panel = isExpandedView ? "dialog" : "div";
+  const openFullView = () => {
+    openerRef.current = document.querySelector(
+      `button[aria-controls="${CSS.escape(viewerId)}"]`,
+    );
+    onToggleFullView();
+  };
 
-    const focusId = window.setTimeout(() => closeButtonRef.current?.focus(), 0);
-
-    return () => window.clearTimeout(focusId);
-  }, [isModal]);
+  if (isImageEvidence && isExpandedView) {
+    return (
+      <ImageViewer
+        images={[
+          {
+            key: evidence.href,
+            src: evidence.href,
+            alt: `${itemTitle} · ${evidence.label}`,
+          },
+        ]}
+        onClose={closeExpanded}
+        returnFocus={openerRef.current}
+      />
+    );
+  }
 
   const handleViewerClick = (event) => {
     if (isModal) {
@@ -36,11 +59,18 @@ const InlineEvidenceViewer = ({
   };
 
   return (
-    <div
+    <Panel
+      ref={dialogRef}
       className={`paper-viewer-panel${isExpandedView ? " paper-viewer-panel-full" : ""}${isModal ? " paper-viewer-panel-modal" : ""}`}
-      role={isModal ? "dialog" : undefined}
-      aria-modal={isModal ? "true" : undefined}
-      aria-labelledby={isModal ? titleId : undefined}
+      aria-labelledby={isExpandedView ? titleId : undefined}
+      onCancel={
+        isExpandedView
+          ? (event) => {
+              event.preventDefault();
+              closeExpanded();
+            }
+          : undefined
+      }
       onClick={isModal ? onClose : undefined}
     >
       <div className="paper-viewer" id={viewerId} onClick={handleViewerClick}>
@@ -56,7 +86,7 @@ const InlineEvidenceViewer = ({
             <button
               type="button"
               className="paper-viewer-control paper-viewer-control-text"
-              onClick={isModal ? onClose : onToggleFullView}
+              onClick={isExpandedView ? closeExpanded : openFullView}
               aria-pressed={isModal ? undefined : isFullView}
               aria-label={
                 isModal
@@ -68,7 +98,7 @@ const InlineEvidenceViewer = ({
               title={
                 isModal ? "닫기" : isFullView ? "전체 보기 닫기" : "전체 보기"
               }
-              ref={closeButtonRef}
+              autoFocus={isExpandedView}
             >
               {isModal ? "닫기" : isFullView ? "복귀" : "전체"}
             </button>
@@ -78,11 +108,18 @@ const InlineEvidenceViewer = ({
           className={`paper-viewer-stage${isImageEvidence ? " evidence-viewer-stage-image" : ""}`}
         >
           {isImageEvidence ? (
-            <img
-              className="evidence-viewer-image"
-              src={evidence.href}
-              alt={`${itemTitle} ${evidence.label}`}
-            />
+            <button
+              type="button"
+              className="evidence-image-open"
+              aria-label={`${itemTitle} ${evidence.label} 확대 보기`}
+              onClick={openFullView}
+            >
+              <img
+                className="evidence-viewer-image"
+                src={evidence.href}
+                alt={`${itemTitle} ${evidence.label}`}
+              />
+            </button>
           ) : (
             <iframe
               title={`${itemTitle} ${evidence.label}`}
@@ -93,7 +130,7 @@ const InlineEvidenceViewer = ({
           )}
         </div>
       </div>
-    </div>
+    </Panel>
   );
 };
 

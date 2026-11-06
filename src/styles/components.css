@@ -163,11 +163,10 @@ select {
   color: var(--accent);
 }
 
-:is(
-    .ui-button--tonal,
-    .paper-viewer-toggle,
-    .section-action a
-  ):not(:disabled, .is-disabled):hover {
+:is(.ui-button--tonal, .paper-viewer-toggle, .section-action a):not(
+    :disabled,
+    .is-disabled
+  ):hover {
   background: color-mix(in oklab, var(--accent) 16%, transparent);
 }
 
@@ -195,10 +194,7 @@ select {
 .search-clear,
 .search-close,
 .paper-viewer-control,
-.tag-nav-page-button,
-.project-lightbox-close,
-.project-lightbox-rotate,
-.project-lightbox-zoom {
+.tag-nav-page-button {
   border: 1px solid var(--control-border);
   background: var(--control-surface);
   box-shadow: var(--control-shadow);
@@ -242,6 +238,9 @@ select {
   letter-spacing: 0.01em;
   text-decoration: none;
   white-space: nowrap;
+}
+.project-stack span {
+  white-space: normal;
 }
 
 /* a chip that carries a colour (research · project · result) shows it as a swatch */
@@ -308,6 +307,11 @@ select {
   border-color: var(--fg);
   background: var(--fg);
   color: var(--bg);
+}
+
+.tag-nav .is-active strong {
+  background: color-mix(in oklab, currentColor 16%, transparent);
+  color: inherit;
 }
 
 @media (max-width: 760px) {
@@ -520,8 +524,16 @@ select {
   }
 
   .ui-page-header--hero .ui-page-header-aside {
-    order: -1;
-    min-height: min(56svh, 26rem);
+    order: 0;
+    min-height: 0;
+    height: clamp(12rem, 30svh, 16rem);
+  }
+  .ui-page-header-aside > .award-sheet {
+    height: 100%;
+    min-height: 0;
+    width: min(100%, 16rem);
+    max-width: 100%;
+    justify-self: center;
   }
 }
 

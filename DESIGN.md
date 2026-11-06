@@ -92,6 +92,28 @@ All colours live in `src/styles/tokens.css`. No other stylesheet defines `:root`
 
 ## 5. Components
 
+### Image reading and navigation
+
+- Primary action: read the selected image. The image owns the stage; controls stay
+  at the screen edges and tapping the image hides secondary controls; Close stays visible.
+- Priorities: image, caption and position in the gallery, then zoom / fit / rotate.
+- Required content: every article image and caption, the original-image link,
+  rotation, close, loading / failure feedback, and all existing portfolio slides.
+- Interactions: pinch and double-tap zoom, drag to pan, swipe or arrow keys to
+  change images, explicit previous / next buttons, and Escape to close. Opening
+  traps focus; closing restores the element that opened the viewer. Long captions expand
+  through a native disclosure. A viewer download failure keeps the article and offers the original.
+- The surround uses the existing `--stage`, `--stage-fg`, `--stage-dim`,
+  `--stage-line`, and `--z-modal` tokens in both themes. Controls use the existing
+  44px control size and a stage-foreground focus ring. The viewer is loaded on demand.
+- Left out on purpose: autoplay, sharing integrations, and a second image library.
+
+Layout: image viewer - keep image reading separate from controls -> scroll-body-shell (https://github.com/changeroa/StyleGallery/blob/main/patterns/viewport-shell/scroll-body-shell.md); scroll owners: the image gesture stage, the horizontal thumbnail strip, and the bounded caption disclosure when expanded; anti-patterns: document scrolling behind the modal and controls covering image content or captions.
+
+Layout: mobile page headers - show the page's purpose before its illustration -> stack (https://github.com/changeroa/StyleGallery/blob/main/patterns/stacking/stack.md); scroll owner: document; anti-patterns: an illustration preceding the title or pushing the first useful action past the first viewport.
+
+Layout: site search - keep the query and result count visible above the result list -> scroll-body-shell (https://github.com/changeroa/StyleGallery/blob/main/patterns/viewport-shell/scroll-body-shell.md); scroll owner: `.search-results`; anti-patterns: clipping matches at an undisclosed limit and navigating behind an open dialog.
+
 Each primitive is defined **once** in `src/styles/components.css`. React wrappers live in
 `src/components/ui/`. Markup that can't use React (markdown, the reel) uses the class directly.
 
@@ -119,18 +141,18 @@ When you touch a page, prefer the `ui-*` class or the React wrapper and drop the
 The inner pages reuse the reel's devices instead of a card grid. Each page puts its boldness into one
 picture in its header; the lists below it are quiet rows on hairlines.
 
-| Page            | Header picture                                                                | List                                                                 |
-| --------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| Projects        | The tree (`<TreeCanvas grow>`); a branch opens its row, hovering a row lights it | Branch rows: leaf dot, name in Archivo wide, KPI chip in leaf. Pressing a row opens what was done, the stack and "자세히 보기" (the project page) |
-| Project page    | The tree with only this branch lit; the name set like the reel's case cut     | A cut (`--cut-*`): problem, capabilities grown, result (shot 07)     |
-| Research        | The roots (`variant="roots"`) with R1–R6 pins; counts as condensed numerals   | Root rows R1–R6, then every paper by type                            |
-| Awards          | The award sheet (`<AwardSheet>`): the reel's stamps land one by one           | Ledger: date, award, result in mandarin, evidence links, a tick      |
-| Competitions    | A check sheet: ticks draw in, values with a mandarin highlighter              | Check rows: box, what, value, note                                   |
-| DACON           | Stat tiles                                                                    | A bar per field, a ledger of entries with rank and percentile        |
-| Blog, tag, tips | Slate with the count                                                          | Notebook rows: date and category in the margin, title, one line      |
+| Page            | Header picture                                                                         | List                                                                                                                                                                                                                                                                                                                                                 |
+| --------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Projects        | The tree (`<TreeCanvas grow>`); a branch opens its row, hovering a row lights it       | Branch rows: leaf dot, name in Archivo wide, KPI chip in leaf. Pressing a row opens what was done, the stack and "자세히 보기" (the project page)                                                                                                                                                                                                    |
+| Project page    | The tree with only this branch lit; the name set like the reel's case cut              | A cut (`--cut-*`): problem, capabilities grown, result (shot 07)                                                                                                                                                                                                                                                                                     |
+| Research        | The roots (`variant="roots"`) with R1–R6 pins; counts as condensed numerals            | Root rows R1–R6, then every paper by type                                                                                                                                                                                                                                                                                                            |
+| Awards          | The award sheet (`<AwardSheet>`): the reel's stamps land one by one                    | Ledger: date, award, result in mandarin, evidence links, a tick                                                                                                                                                                                                                                                                                      |
+| Competitions    | A check sheet: ticks draw in, values with a mandarin highlighter                       | Check rows: box, what, value, note                                                                                                                                                                                                                                                                                                                   |
+| DACON           | Stat tiles                                                                             | A bar per field, a ledger of entries with rank and percentile                                                                                                                                                                                                                                                                                        |
+| Blog, tag, tips | Slate with the count                                                                   | Notebook rows: date and category in the margin, title, one line                                                                                                                                                                                                                                                                                      |
 | Prompts         | A template on the ruled sheet (`--ruled-paper`), its slots as blanks that draw in once | Rows like the projects: use and AI in the margin, name and one line; pressing a row opens the blanks to fill, the text on the terminal (`--term`), copy · save · link and the source. Tabs set like the shot rail (라이브러리 · 빌더 · 숫자); 숫자 reuses the DACON tiles and bars. No palette colour: prompts are not research, projects or results |
-| Contact         | The tree with an empty "next branch" (the reel's end card)                    | Channels as a ledger                                                 |
-| Home, career    | Slate `CREDITS · 3 ROLES`: the credits after the reel's end card               | One line per role: dates, the organisation in Archivo wide with the role, what was done (three on a phone, the rest behind a button); then a short summary (research, domain, results). It does not repeat the end card's name, line or email |
+| Contact         | The tree with an empty "next branch" (the reel's end card)                             | Channels as a ledger                                                                                                                                                                                                                                                                                                                                 |
+| Home, career    | Slate `CREDITS · 3 ROLES`: the credits after the reel's end card                       | One line per role: dates, the organisation in Archivo wide with the role, what was done (three on a phone, the rest behind a button); then a short summary (research, domain, results). It does not repeat the end card's name, line or email                                                                                                        |
 
 - **Masthead** = the reel's top bar: a veil (`--material-floating`, blur on `.masthead::before` so the menu sheet is not trapped by the filter) and a hairline, `SANGMIN LEE` in Archivo 800 at 118%, the pages in mono capitals with the current one underlined like the reel's shot rail. It stays 45px (49px on a phone) with the hairline, because the reel measures it for `--hh`.
 - **Menu** (≤1180px) = a full-height sheet under the bar: the slate (`MENU · 12 PAGES`), then two groups, 홈 (sections of the home page) and 페이지, as rows in the brand face with the Korean name on the right and an ink dot on the current page. Open, it locks the page's scroll and makes `main` and the footer `inert`; Esc or the button closes it and focus goes back to the button without scrolling.
@@ -169,6 +191,7 @@ picture in its header; the lists below it are quiet rows on hairlines.
 3. `components.css` sets the base element styles, then the primitives (§5).
 4. `site.css` holds the page layouts: masthead, footer, list and detail pages.
 5. `showreel.css` holds the home reel, scoped under `.reel`.
+6. PhotoSwipe's base CSS and `image-viewer.css` keep the shared viewer overrides in a fixed order.
 
 Rules of the road:
 

@@ -4,6 +4,8 @@ import "./src/styles/legacy.css";
 import "./src/styles/components.css";
 import "./src/styles/site.css";
 import "./src/styles/showreel.css";
+import "photoswipe/style.css";
+import "./src/styles/image-viewer.css";
 
 if (process.env.NODE_ENV === "development") {
   void import("react-grab");
